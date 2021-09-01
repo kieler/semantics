@@ -13,10 +13,8 @@
 package de.cau.cs.kieler.simulation.internal
 
 import com.google.gson.JsonObject
-import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.kicool.compilation.VariableInformation
-import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /**
  * @author als

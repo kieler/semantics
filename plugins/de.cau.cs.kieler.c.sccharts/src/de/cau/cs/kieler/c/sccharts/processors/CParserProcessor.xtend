@@ -12,20 +12,17 @@
  */
 package de.cau.cs.kieler.c.sccharts.processors
 
-import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import org.eclipse.cdt.core.model.ITranslationUnit
-import org.eclipse.cdt.internal.ui.editor.CEditor
-import org.eclipse.ui.texteditor.IDocumentProvider
-import org.eclipse.jface.text.IDocument
-import org.eclipse.cdt.core.parser.FileContent
+import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.util.HashMap
-import org.eclipse.cdt.core.parser.ScannerInfo
+import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
+import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage
+import org.eclipse.cdt.core.parser.DefaultLogService
+import org.eclipse.cdt.core.parser.FileContent
 import org.eclipse.cdt.core.parser.IParserLogService
 import org.eclipse.cdt.core.parser.IncludeFileContentProvider
-import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
-import org.eclipse.cdt.core.parser.DefaultLogService
-import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage
+import org.eclipse.cdt.core.parser.ScannerInfo
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

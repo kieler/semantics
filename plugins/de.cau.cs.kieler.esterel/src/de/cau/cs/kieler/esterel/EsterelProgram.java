@@ -4,12 +4,9 @@ package de.cau.cs.kieler.esterel;
 
 import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.Pragmatable;
-import de.cau.cs.kieler.kexpressions.ValueType;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
-import de.cau.cs.kieler.scl.Module;
 import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->

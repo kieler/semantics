@@ -12,8 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.ui.view.registry
 
-import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
-
 /**
  * @author ssm
  *

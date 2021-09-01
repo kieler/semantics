@@ -314,6 +314,26 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case SCChartsPackage.ODE_ACTION: {
+                OdeAction odeAction = (OdeAction)theEObject;
+                T result = caseOdeAction(odeAction);
+                if (result == null) result = caseLocalAction(odeAction);
+                if (result == null) result = caseAction(odeAction);
+                if (result == null) result = caseAnnotatable(odeAction);
+                if (result == null) result = caseLinkable(odeAction);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.MODULE_SCOPE_CALL: {
+                ModuleScopeCall moduleScopeCall = (ModuleScopeCall)theEObject;
+                T result = caseModuleScopeCall(moduleScopeCall);
+                if (result == null) result = caseScopeCall(moduleScopeCall);
+                if (result == null) result = caseCall(moduleScopeCall);
+                if (result == null) result = caseExpression(moduleScopeCall);
+                if (result == null) result = caseSchedulable(moduleScopeCall);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -675,6 +695,36 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseBaseStateReference(BaseStateReference object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Ode Action</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Ode Action</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseOdeAction(OdeAction object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Module Scope Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Module Scope Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseModuleScopeCall(ModuleScopeCall object) {
         return null;
     }
 

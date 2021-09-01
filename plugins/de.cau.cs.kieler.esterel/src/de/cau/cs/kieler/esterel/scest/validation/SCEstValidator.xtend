@@ -15,18 +15,10 @@ package de.cau.cs.kieler.esterel.scest.validation
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.esterel.Constant
-import de.cau.cs.kieler.esterel.DelayExpression
-import de.cau.cs.kieler.esterel.ElsIf
 import de.cau.cs.kieler.esterel.Emit
 import de.cau.cs.kieler.esterel.EsterelFunctionCall
 import de.cau.cs.kieler.esterel.EsterelVariableDeclaration
-import de.cau.cs.kieler.esterel.Exit
-import de.cau.cs.kieler.esterel.IfTest
-import de.cau.cs.kieler.esterel.Repeat
-import de.cau.cs.kieler.esterel.Sensor
-import de.cau.cs.kieler.esterel.Set
 import de.cau.cs.kieler.esterel.Signal
-import de.cau.cs.kieler.esterel.Sustain
 import de.cau.cs.kieler.esterel.TrapSignal
 import de.cau.cs.kieler.esterel.Variable
 import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
@@ -41,11 +33,8 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.scl.Assignment
-import de.cau.cs.kieler.scl.Conditional
-import org.eclipse.xtext.validation.Check
-import org.eclipse.xtext.validation.CheckType
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import org.eclipse.xtext.validation.Check
 
 /**
  * @author mrb

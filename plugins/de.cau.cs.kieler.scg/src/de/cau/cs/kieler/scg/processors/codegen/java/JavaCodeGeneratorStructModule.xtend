@@ -14,12 +14,14 @@ package de.cau.cs.kieler.scg.processors.codegen.java
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
@@ -42,9 +44,11 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension SCGMethodExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension AnnotationsExtensions
+    @Inject extension PragmaExtensions
     @Accessors @Inject JavaCodeSerializeHRExtensions javaSerializer
     @Accessors var JavaCodeGeneratorLogicModule logic
     
@@ -83,6 +87,8 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
         
         code.globalObjectAdditions(serializer)
         
+        code.hostcodeInnerClassAdditions
+        
         addRootConstructor()  
         
         // Add methods
@@ -104,7 +110,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     }
     
     override void generateDeclarations(List<Declaration> declarations, int depth, extension CCodeSerializeHRExtensions serializer) {
-        for (declaration : declarations.filter(VariableDeclaration)) {
+        for (declaration : declarations.filter(VariableDeclaration).filter[!it.isEnum]) {
             for (valuedObject : declaration.valuedObjects) {
                 indent(depth+1)
                 if (!valuedObject.localVariable) code.append("public ")
@@ -130,7 +136,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     }
     
     protected def void generateClassDeclarations(List<Declaration> declarations, int depth, extension CCodeSerializeHRExtensions serializer) {
-        for (declaration : declarations.filter(ClassDeclaration)) {
+        for (declaration : declarations.filter(ClassDeclaration).filter[!it.isEnum]) {
             if (!declaration.host) {
                 hasClasses = true
                 indent(depth+1)
@@ -210,13 +216,11 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
         if (!additionalCode.nullOrEmpty) {
             code.append("  " + additionalCode)
         }
-        
         for (declaration : declarations.filter(VariableDeclaration)) {
-            val isClass = declaration instanceof ClassDeclaration
             for (valuedObject : declaration.valuedObjects) {
                 if (valuedObject.isArray) {
                     valuedObject.createArrayForCardinalityIndex(0, serializer)
-                } else if (isClass && !valuedObject.hasAnnotation("skipClassInit")) {
+                } else if (declaration.isClass && !valuedObject.hasAnnotation("skipClassInit")) {
                     indent(depth+2)
                     if (valuedObject.initialValue instanceof TextExpression) {
                         code.append(valuedObject.name + " = " + (valuedObject.initialValue as TextExpression).text + ";\n")
@@ -290,5 +294,22 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
         }
         
     }  
-        
+    
+    /**
+     * Adds hostcode additions for header. These can come from internal sources like the serialization, 
+     * but also from the model via hostcode pragmas.
+     */
+    protected def void hostcodeInnerClassAdditions(StringBuilder sb) {
+        val hostcodePragmas = SCGraphs.getStringPragmas(JavaCodeGeneratorModule.HOSTCODE_JAVA_INNER)
+        for (pragma : hostcodePragmas) {
+            sb.append(pragma.values.head + "\n")
+        }
+        val hostcodeAnnotations = scg.getStringAnnotations(JavaCodeGeneratorModule.HOSTCODE_JAVA_INNER)
+        for (anno : hostcodeAnnotations) {
+            sb.append(anno.values.head + "\n")
+        }
+        if (hostcodePragmas.size > 0 || hostcodeAnnotations.size > 0) {
+            sb.append("\n")
+        }
+    }
 }

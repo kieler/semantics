@@ -14,10 +14,12 @@
 package de.cau.cs.kieler.c.sccharts.processors
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -26,16 +28,31 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.EntryAction
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import java.util.ArrayList
+import java.util.List
+import java.util.Set
 import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
 import org.eclipse.cdt.core.dom.ast.IASTExpression
 import org.eclipse.cdt.core.dom.ast.IASTNode
 import org.eclipse.cdt.core.dom.ast.IASTStatement
+import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
 import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 import org.eclipse.cdt.core.model.ITranslationUnit
+import org.eclipse.cdt.internal.core.dom.parser.ASTNode
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTBinaryExpression
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTBreakStatement
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTCaseStatement
@@ -43,6 +60,7 @@ import org.eclipse.cdt.internal.core.dom.parser.c.CASTCompoundStatement
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarationStatement
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarator
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTDefaultStatement
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTDoStatement
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTEqualsInitializer
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTExpressionStatement
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTForStatement
@@ -51,6 +69,7 @@ import org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionDeclarator
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionDefinition
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTIfStatement
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTLiteralExpression
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTParameterDeclaration
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTProblem
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTReturnStatement
@@ -62,30 +81,6 @@ import org.eclipse.cdt.internal.core.dom.parser.c.CASTWhileStatement
 import org.eclipse.cdt.internal.ui.editor.CEditor
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.ui.IEditorPart
-import de.cau.cs.kieler.sccharts.EntryAction
-import org.eclipse.cdt.internal.core.dom.parser.ASTNode
-import java.util.ArrayList
-import java.util.List
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.sccharts.Transition
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTDoStatement
-import de.cau.cs.kieler.sccharts.SCCharts
-import org.eclipse.cdt.internal.core.dom.parser.ASTAttributeOwner
-import de.cau.cs.kieler.c.sccharts.processors.CbasedSCChartFeature
-import org.eclipse.cdt.core.dom.ast.IASTExpressionList
-import java.util.Set
-import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
-import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager
-import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTLiteralExpression
-import de.cau.cs.kieler.kexpressions.ParameterAccessType
 
 /**
  * @author ssm
@@ -990,7 +985,7 @@ class CDTProcessor extends ExogenousProcessor<IASTTranslationUnit, SCCharts> {
         }
         
         // Check whether a else clause exists.
-        if (ifs.elseClause != null) {
+        if (ifs.elseClause !== null) {
             // Body of statements, if condition is not met.
             var State falseBody = null;
             
@@ -1042,7 +1037,7 @@ class CDTProcessor extends ExogenousProcessor<IASTTranslationUnit, SCCharts> {
         }
         
         // If needed, add an extra endState and transitions.
-        if (ifs.elseClause == null || needExtraEndState || extraEndStateOption) {
+        if (ifs.elseClause === null || needExtraEndState || extraEndStateOption) {
             // In case that trueBody and falseBody are both final, then we do not need an endState regardless.
             if (!bothBodiesFinal) {
                 // Final state of loop. It is reached when loop condition is not met anymore.
@@ -1495,13 +1490,13 @@ class CDTProcessor extends ExogenousProcessor<IASTTranslationUnit, SCCharts> {
 
     def ValuedObjectReference createVOReference(CASTIdExpression idExp) {
         val VO = VOSet.filter[name.equals(idExp.children.head.toString)].head
-        if (VO != null) {
+        if (VO !== null) {
             return VO.reference
         }
         return null
     }
 
-    def printASTNodes(Iterable<IASTNode> nodes, String indent) {
+    def void printASTNodes(Iterable<IASTNode> nodes, String indent) {
         if(nodes === null) return;
         for (node : nodes) {
             System.out.println(indent + node.toString)

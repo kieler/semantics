@@ -163,10 +163,10 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
                     val optionConfig = newHashMap
                     for (entry : synthesisOptions.entrySet) {
                         val key = entry.key
-                        var option = options.findFirst[!id.nullOrEmpty && id.equals(key)]
+                        var option = options.findFirst[!it.id.nullOrEmpty && it.id.equals(key)]
                         if (option === null) {
-                            if (verbose) println("Could not find synthesis option with id %s.".format(key))
-                            option = options.findFirst[!name.nullOrEmpty && name.startsWith(key)]
+                            if (verbose) println("Could not find synthesis option with id \"%s\".".format(key))
+                            option = options.findFirst[!it.name.nullOrEmpty && (it.name.startsWith(key) || it.name.equalsIgnoreCase(key))]
                             if (verbose) {
                                 if (option === null) {
                                     println("Could not find synthesis option with name \"%s\" either.".format(key))
@@ -176,7 +176,7 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
                             }
                         }
                         if (option !== null) {
-                            val v = option.parseOptionValue(entry.key)
+                            val v = option.parseOptionValue(entry.value)
                             if (v !== null) {
                                 optionConfig.put(option, v)
                             }
@@ -250,12 +250,13 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
                 } else if (option.isRangeOption()) {
                     return Float.parseFloat(value);
                 } else if (option.isChoiceOption()) {
-                    val hash = Integer.parseInt(value);
-                    for (Object match : option.getValues()) {
-                        if (match !== null && match.toString().hashCode() == hash) {
-                            return match;
+                    for (Object choice : option.getValues()) {
+                        if (choice !== null && choice.toString().equalsIgnoreCase(value)) {
+                            return choice;
                         }
                     }
+                    // If not explicit match, try index
+                    return option.getValues().get(Integer.parseInt(value))
                 } else if (option.isTextOption()) {
                     return value;
                 }

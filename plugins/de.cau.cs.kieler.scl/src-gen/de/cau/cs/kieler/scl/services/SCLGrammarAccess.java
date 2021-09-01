@@ -37,12 +37,14 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cModulesAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cModulesModuleParserRuleCall_1_0 = (RuleCall)cModulesAssignment_1.eContents().get(0);
 		
-		//SCLProgram:
-		//	pragmas+=Pragma*
-		//	modules+=Module*;
+		//SCLProgram returns SCLProgram:
+		//    pragmas+=Pragma*
+		//    modules+=Module*
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//pragmas+=Pragma* modules+=Module*
+		//pragmas+=Pragma*
+		//modules+=Module*
 		public Group getGroup() { return cGroup; }
 		
 		//pragmas+=Pragma*
@@ -71,17 +73,21 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cStatementsAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cStatementsStatementParserRuleCall_5_0 = (RuleCall)cStatementsAssignment_5.eContents().get(0);
 		
-		//Module:
-		//	annotations+=Annotation*
-		//	'module' name=ID ':'?
-		//	declarations+=Declaration*
-		//	statements+=Statement*;
+		//Module returns Module:
+		//    (annotations += Annotation)*
+		//    'module' name = ID ':'?
+		//    (declarations += Declaration)*
+		//    (statements += Statement)*
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//annotations+=Annotation* 'module' name=ID ':'? declarations+=Declaration* statements+=Statement*
+		//(annotations += Annotation)*
+		//'module' name = ID ':'?
+		//(declarations += Declaration)*
+		//(statements += Statement)*
 		public Group getGroup() { return cGroup; }
 		
-		//annotations+=Annotation*
+		//(annotations += Annotation)*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
 		//Annotation
@@ -90,7 +96,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'module'
 		public Keyword getModuleKeyword_1() { return cModuleKeyword_1; }
 		
-		//name=ID
+		//name = ID
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 		
 		//ID
@@ -99,13 +105,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//':'?
 		public Keyword getColonKeyword_3() { return cColonKeyword_3; }
 		
-		//declarations+=Declaration*
+		//(declarations += Declaration)*
 		public Assignment getDeclarationsAssignment_4() { return cDeclarationsAssignment_4; }
 		
 		//Declaration
 		public RuleCall getDeclarationsDeclarationParserRuleCall_4_0() { return cDeclarationsDeclarationParserRuleCall_4_0; }
 		
-		//statements+=Statement*
+		//(statements += Statement)*
 		public Assignment getStatementsAssignment_5() { return cStatementsAssignment_5; }
 		
 		//Statement
@@ -129,25 +135,38 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final RuleCall cForLoopParserRuleCall_12 = (RuleCall)cAlternatives.eContents().get(12);
 		private final RuleCall cWhileLoopParserRuleCall_13 = (RuleCall)cAlternatives.eContents().get(13);
 		
-		//Statement:
-		//	SclAssignment
-		//	| SclPostfixAssignment
-		//	| Label
-		//	| SclEffectAssignment
-		//	| Conditional
-		//	| LegacyConditional
-		//	| Goto
-		//	| Parallel
-		//	| Pause
-		//	| ModuleCall
-		//	| ScopeStatement
-		//	| Return
-		//	| ForLoop
-		//	| WhileLoop;
+		//Statement returns Statement:
+		//      SclAssignment
+		//    | SclPostfixAssignment
+		//    | Label
+		//    | SclEffectAssignment
+		//    | Conditional
+		//    | LegacyConditional
+		//    | Goto
+		//    | Parallel
+		//    | Pause
+		//    | ModuleCall
+		//    | ScopeStatement
+		//    | Return
+		//    | ForLoop
+		//    | WhileLoop
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//SclAssignment | SclPostfixAssignment | Label | SclEffectAssignment | Conditional | LegacyConditional | Goto | Parallel |
-		//Pause | ModuleCall | ScopeStatement | Return | ForLoop | WhileLoop
+		//  SclAssignment
+		//| SclPostfixAssignment
+		//| Label
+		//| SclEffectAssignment
+		//| Conditional
+		//| LegacyConditional
+		//| Goto
+		//| Parallel
+		//| Pause
+		//| ModuleCall
+		//| ScopeStatement
+		//| Return
+		//| ForLoop
+		//| WhileLoop
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//SclAssignment
@@ -202,19 +221,24 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cSemicolonAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final Keyword cSemicolonSemicolonKeyword_3_0 = (Keyword)cSemicolonAssignment_3.eContents().get(0);
 		
-		//Pause:
-		//	{Pause} annotations+=Annotation*
-		//	'pause'
-		//	semicolon?=';'?;
+		//Pause returns Pause:
+		//    {Pause}
+		//    (annotations += Annotation)*
+		//    'pause'
+		//    semicolon?=';'?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Pause} annotations+=Annotation* 'pause' semicolon?=';'?
+		//{Pause}
+		//(annotations += Annotation)*
+		//'pause'
+		//semicolon?=';'?
 		public Group getGroup() { return cGroup; }
 		
 		//{Pause}
 		public Action getPauseAction_0() { return cPauseAction_0; }
 		
-		//annotations+=Annotation*
+		//(annotations += Annotation)*
 		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
 		
 		//Annotation
@@ -238,21 +262,23 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		
-		//Label:
-		//	annotations+=Annotation*
-		//	name=ID ':';
+		//Label returns Label:
+		//    (annotations += Annotation)*
+		//    name = ID ':'
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//annotations+=Annotation* name=ID ':'
+		//(annotations += Annotation)*
+		//name = ID ':'
 		public Group getGroup() { return cGroup; }
 		
-		//annotations+=Annotation*
+		//(annotations += Annotation)*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
-		//name=ID
+		//name = ID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
 		//ID
@@ -273,15 +299,19 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cSemicolonAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final Keyword cSemicolonSemicolonKeyword_3_0 = (Keyword)cSemicolonAssignment_3.eContents().get(0);
 		
-		//Goto:
-		//	annotations+=Annotation*
-		//	'goto' target=[Label] semicolon?=';'?;
+		//Goto returns Goto:
+		//    (annotations += Annotation)*
+		//    'goto' target = [Label|ID]
+		//    semicolon?=';'?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//annotations+=Annotation* 'goto' target=[Label] semicolon?=';'?
+		//(annotations += Annotation)*
+		//'goto' target = [Label|ID]
+		//semicolon?=';'?
 		public Group getGroup() { return cGroup; }
 		
-		//annotations+=Annotation*
+		//(annotations += Annotation)*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
 		//Annotation
@@ -290,10 +320,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'goto'
 		public Keyword getGotoKeyword_1() { return cGotoKeyword_1; }
 		
-		//target=[Label]
+		//target = [Label|ID]
 		public Assignment getTargetAssignment_2() { return cTargetAssignment_2; }
 		
-		//[Label]
+		//[Label|ID]
 		public CrossReference getTargetLabelCrossReference_2_0() { return cTargetLabelCrossReference_2_0; }
 		
 		//ID
@@ -323,37 +353,43 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cSemicolonAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final Keyword cSemicolonSemicolonKeyword_5_0 = (Keyword)cSemicolonAssignment_5.eContents().get(0);
 		
-		//SclAssignment Assignment:
-		//	annotations+=Annotation*
-		//	reference=ValuedObjectReference
-		//	operator=AssignOperator
-		//	expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?
-		//	semicolon?=';'?;
+		//SclAssignment returns Assignment:
+		//    (annotations += Annotation)*
+		//    reference = ValuedObjectReference
+		//    operator = AssignOperator
+		//    expression = Expression
+		//    ('schedule' schedule+=ScheduleObjectReference+)?
+		//    semicolon?=';'?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//annotations+=Annotation* reference=ValuedObjectReference operator=AssignOperator expression=Expression ('schedule'
-		//schedule+=ScheduleObjectReference+)? semicolon?=';'?
+		//(annotations += Annotation)*
+		//reference = ValuedObjectReference
+		//operator = AssignOperator
+		//expression = Expression
+		//('schedule' schedule+=ScheduleObjectReference+)?
+		//semicolon?=';'?
 		public Group getGroup() { return cGroup; }
 		
-		//annotations+=Annotation*
+		//(annotations += Annotation)*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
-		//reference=ValuedObjectReference
+		//reference = ValuedObjectReference
 		public Assignment getReferenceAssignment_1() { return cReferenceAssignment_1; }
 		
 		//ValuedObjectReference
 		public RuleCall getReferenceValuedObjectReferenceParserRuleCall_1_0() { return cReferenceValuedObjectReferenceParserRuleCall_1_0; }
 		
-		//operator=AssignOperator
+		//operator = AssignOperator
 		public Assignment getOperatorAssignment_2() { return cOperatorAssignment_2; }
 		
 		//AssignOperator
 		public RuleCall getOperatorAssignOperatorEnumRuleCall_2_0() { return cOperatorAssignOperatorEnumRuleCall_2_0; }
 		
-		//expression=Expression
+		//expression = Expression
 		public Assignment getExpressionAssignment_3() { return cExpressionAssignment_3; }
 		
 		//Expression
@@ -393,18 +429,23 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cSemicolonAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final Keyword cSemicolonSemicolonKeyword_4_0 = (Keyword)cSemicolonAssignment_4.eContents().get(0);
 		
-		//SclPostfixAssignment Assignment:
-		//	annotations+=Annotation*
-		//	reference=ValuedObjectReference
-		//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?
-		//	semicolon?=';'?;
+		//SclPostfixAssignment returns Assignment:
+		//    (annotations+=Annotation)*
+		//    reference=ValuedObjectReference
+		//    operator=PostfixOperator
+		//    ('schedule' schedule+=ScheduleObjectReference+)?
+		//    semicolon?=';'?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//annotations+=Annotation* reference=ValuedObjectReference operator=PostfixOperator ('schedule'
-		//schedule+=ScheduleObjectReference+)? semicolon?=';'?
+		//(annotations+=Annotation)*
+		//reference=ValuedObjectReference
+		//operator=PostfixOperator
+		//('schedule' schedule+=ScheduleObjectReference+)?
+		//semicolon?=';'?
 		public Group getGroup() { return cGroup; }
 		
-		//annotations+=Annotation*
+		//(annotations+=Annotation)*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
 		//Annotation
@@ -459,30 +500,70 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cSemicolonAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final Keyword cSemicolonSemicolonKeyword_3_0 = (Keyword)cSemicolonAssignment_3.eContents().get(0);
 		
-		//SclEffectAssignment Assignment:
-		//	annotations+=Annotation*
-		//	expression=(ReferenceCall
-		//	| TextExpression
-		//	| PrintCall
-		//	| RandomizeCall
-		//	| FunctionCall) ('schedule' schedule+=ScheduleObjectReference+)?
-		//	semicolon?=';'?;
+		//SclEffectAssignment returns Assignment:
+		//    (annotations += Annotation)*
+		//    expression = (
+		//        ReferenceCall
+		//    |
+		//        TextExpression
+		//    |
+		//        PrintCall
+		//    |
+		//        RandomizeCall
+		//    |
+		//        FunctionCall
+		//    )
+		//    ('schedule' schedule+=ScheduleObjectReference+)?
+		//    semicolon?=';'?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//annotations+=Annotation* expression=(ReferenceCall | TextExpression | PrintCall | RandomizeCall | FunctionCall)
-		//('schedule' schedule+=ScheduleObjectReference+)? semicolon?=';'?
+		//(annotations += Annotation)*
+		//expression = (
+		//    ReferenceCall
+		//|
+		//    TextExpression
+		//|
+		//    PrintCall
+		//|
+		//    RandomizeCall
+		//|
+		//    FunctionCall
+		//)
+		//('schedule' schedule+=ScheduleObjectReference+)?
+		//semicolon?=';'?
 		public Group getGroup() { return cGroup; }
 		
-		//annotations+=Annotation*
+		//(annotations += Annotation)*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
-		//expression=(ReferenceCall | TextExpression | PrintCall | RandomizeCall | FunctionCall)
+		//expression = (
+		//    ReferenceCall
+		//|
+		//    TextExpression
+		//|
+		//    PrintCall
+		//|
+		//    RandomizeCall
+		//|
+		//    FunctionCall
+		//)
 		public Assignment getExpressionAssignment_1() { return cExpressionAssignment_1; }
 		
-		//(ReferenceCall | TextExpression | PrintCall | RandomizeCall | FunctionCall)
+		//(
+		//       ReferenceCall
+		//   |
+		//       TextExpression
+		//   |
+		//       PrintCall
+		//   |
+		//       RandomizeCall
+		//   |
+		//       FunctionCall
+		//   )
 		public Alternatives getExpressionAlternatives_1_0() { return cExpressionAlternatives_1_0; }
 		
 		//ReferenceCall
@@ -527,16 +608,19 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cExpressionExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
 		
-		//Return:
-		//	annotations+=Annotation*
-		//	'return'
-		//	expression=Expression;
+		//Return returns Return:
+		//    (annotations += Annotation)*
+		//    'return'
+		//    expression = Expression
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//annotations+=Annotation* 'return' expression=Expression
+		//(annotations += Annotation)*
+		//'return'
+		//expression = Expression
 		public Group getGroup() { return cGroup; }
 		
-		//annotations+=Annotation*
+		//(annotations += Annotation)*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
 		//Annotation
@@ -545,7 +629,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'return'
 		public Keyword getReturnKeyword_1() { return cReturnKeyword_1; }
 		
-		//expression=Expression
+		//expression = Expression
 		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
 		
 		//Expression
@@ -573,20 +657,27 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cSemicolonAssignment_7_1 = (Assignment)cAlternatives_7.eContents().get(1);
 		private final Keyword cSemicolonSemicolonKeyword_7_1_0 = (Keyword)cSemicolonAssignment_7_1.eContents().get(0);
 		
-		//Conditional:
-		//	annotations+=Annotation*
-		//	'if' expression=(BoolScheduleExpression | AtomicExpression)
-		//	'{'
-		//	declarations+=Declaration*
-		//	statements+=Statement*
-		//	'}' (else=ElseScope | semicolon?=';')?;
+		//Conditional returns Conditional:
+		//    (annotations += Annotation)*
+		//    'if' expression = (BoolScheduleExpression | AtomicExpression)
+		//    '{'
+		//    (declarations+=Declaration)*
+		//    (statements += Statement)*
+		//    '}'
+		//    (else = ElseScope | semicolon?=';')?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//annotations+=Annotation* 'if' expression=(BoolScheduleExpression | AtomicExpression) '{' declarations+=Declaration*
-		//statements+=Statement* '}' (else=ElseScope | semicolon?=';')?
+		//(annotations += Annotation)*
+		//'if' expression = (BoolScheduleExpression | AtomicExpression)
+		//'{'
+		//(declarations+=Declaration)*
+		//(statements += Statement)*
+		//'}'
+		//(else = ElseScope | semicolon?=';')?
 		public Group getGroup() { return cGroup; }
 		
-		//annotations+=Annotation*
+		//(annotations += Annotation)*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
 		//Annotation
@@ -595,7 +686,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'if'
 		public Keyword getIfKeyword_1() { return cIfKeyword_1; }
 		
-		//expression=(BoolScheduleExpression | AtomicExpression)
+		//expression = (BoolScheduleExpression | AtomicExpression)
 		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
 		
 		//(BoolScheduleExpression | AtomicExpression)
@@ -610,13 +701,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 		
-		//declarations+=Declaration*
+		//(declarations+=Declaration)*
 		public Assignment getDeclarationsAssignment_4() { return cDeclarationsAssignment_4; }
 		
 		//Declaration
 		public RuleCall getDeclarationsDeclarationParserRuleCall_4_0() { return cDeclarationsDeclarationParserRuleCall_4_0; }
 		
-		//statements+=Statement*
+		//(statements += Statement)*
 		public Assignment getStatementsAssignment_5() { return cStatementsAssignment_5; }
 		
 		//Statement
@@ -625,10 +716,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_6() { return cRightCurlyBracketKeyword_6; }
 		
-		//(else=ElseScope | semicolon?=';')?
+		//(else = ElseScope | semicolon?=';')?
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
 		
-		//else=ElseScope
+		//else = ElseScope
 		public Assignment getElseAssignment_7_0() { return cElseAssignment_7_0; }
 		
 		//ElseScope
@@ -656,22 +747,30 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cSemicolonAssignment_7 = (Assignment)cGroup.eContents().get(7);
 		private final Keyword cSemicolonSemicolonKeyword_7_0 = (Keyword)cSemicolonAssignment_7.eContents().get(0);
 		
-		//ElseScope:
-		//	{ElseScope} annotations+=Annotation*
-		//	'else' '{'
-		//	declarations+=Declaration*
-		//	statements+=Statement*
-		//	'}'
-		//	semicolon?=';'?;
+		//ElseScope returns ElseScope:
+		//    {ElseScope}
+		//    (annotations += Annotation)*
+		//    'else' '{'
+		//    (declarations+=Declaration)*
+		//    (statements += Statement)*
+		//    '}'
+		//    semicolon?=';'?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{ElseScope} annotations+=Annotation* 'else' '{' declarations+=Declaration* statements+=Statement* '}' semicolon?=';'?
+		//{ElseScope}
+		//(annotations += Annotation)*
+		//'else' '{'
+		//(declarations+=Declaration)*
+		//(statements += Statement)*
+		//'}'
+		//semicolon?=';'?
 		public Group getGroup() { return cGroup; }
 		
 		//{ElseScope}
 		public Action getElseScopeAction_0() { return cElseScopeAction_0; }
 		
-		//annotations+=Annotation*
+		//(annotations += Annotation)*
 		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
 		
 		//Annotation
@@ -683,13 +782,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 		
-		//declarations+=Declaration*
+		//(declarations+=Declaration)*
 		public Assignment getDeclarationsAssignment_4() { return cDeclarationsAssignment_4; }
 		
 		//Declaration
 		public RuleCall getDeclarationsDeclarationParserRuleCall_4_0() { return cDeclarationsDeclarationParserRuleCall_4_0; }
 		
-		//statements+=Statement*
+		//(statements += Statement)*
 		public Assignment getStatementsAssignment_5() { return cStatementsAssignment_5; }
 		
 		//Statement
@@ -721,21 +820,27 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cSemicolonAssignment_7 = (Assignment)cGroup.eContents().get(7);
 		private final Keyword cSemicolonSemicolonKeyword_7_0 = (Keyword)cSemicolonAssignment_7.eContents().get(0);
 		
-		//LegacyConditional Conditional:
-		//	annotations+=Annotation*
-		//	'if' expression=BoolExpression
-		//	'then'
-		//	statements+=Statement*
-		//	else=LegacyElseScope?
-		//	'end'
-		//	semicolon?=';'?;
+		//LegacyConditional returns Conditional:
+		//    (annotations += Annotation)*
+		//    'if' expression = BoolExpression
+		//    'then'
+		//    (statements += Statement)*
+		//    (else = LegacyElseScope)?
+		//    'end'
+		//    semicolon?=';'?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//annotations+=Annotation* 'if' expression=BoolExpression 'then' statements+=Statement* else=LegacyElseScope? 'end'
+		//(annotations += Annotation)*
+		//'if' expression = BoolExpression
+		//'then'
+		//(statements += Statement)*
+		//(else = LegacyElseScope)?
+		//'end'
 		//semicolon?=';'?
 		public Group getGroup() { return cGroup; }
 		
-		//annotations+=Annotation*
+		//(annotations += Annotation)*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
 		//Annotation
@@ -744,7 +849,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'if'
 		public Keyword getIfKeyword_1() { return cIfKeyword_1; }
 		
-		//expression=BoolExpression
+		//expression = BoolExpression
 		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
 		
 		//BoolExpression
@@ -753,13 +858,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'then'
 		public Keyword getThenKeyword_3() { return cThenKeyword_3; }
 		
-		//statements+=Statement*
+		//(statements += Statement)*
 		public Assignment getStatementsAssignment_4() { return cStatementsAssignment_4; }
 		
 		//Statement
 		public RuleCall getStatementsStatementParserRuleCall_4_0() { return cStatementsStatementParserRuleCall_4_0; }
 		
-		//else=LegacyElseScope?
+		//(else = LegacyElseScope)?
 		public Assignment getElseAssignment_5() { return cElseAssignment_5; }
 		
 		//LegacyElseScope
@@ -784,19 +889,24 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cStatementsAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cStatementsStatementParserRuleCall_3_0 = (RuleCall)cStatementsAssignment_3.eContents().get(0);
 		
-		//LegacyElseScope ElseScope:
-		//	{ElseScope} annotations+=Annotation*
-		//	'else'
-		//	statements+=Statement*;
+		//LegacyElseScope returns ElseScope:
+		//    {ElseScope}
+		//    (annotations += Annotation)*
+		//    'else'
+		//    (statements += Statement)*
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{ElseScope} annotations+=Annotation* 'else' statements+=Statement*
+		//{ElseScope}
+		//(annotations += Annotation)*
+		//'else'
+		//(statements += Statement)*
 		public Group getGroup() { return cGroup; }
 		
 		//{ElseScope}
 		public Action getElseScopeAction_0() { return cElseScopeAction_0; }
 		
-		//annotations+=Annotation*
+		//(annotations += Annotation)*
 		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
 		
 		//Annotation
@@ -805,7 +915,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'else'
 		public Keyword getElseKeyword_2() { return cElseKeyword_2; }
 		
-		//statements+=Statement*
+		//(statements += Statement)*
 		public Assignment getStatementsAssignment_3() { return cStatementsAssignment_3; }
 		
 		//Statement
@@ -828,28 +938,62 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cStatementsAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
 		private final RuleCall cStatementsStatementParserRuleCall_1_1_0 = (RuleCall)cStatementsAssignment_1_1.eContents().get(0);
 		
-		//Thread:
-		//	{Thread} (annotations+=Annotation*
-		//	'{'
-		//	declarations+=Declaration*
-		//	statements+=Statement*
-		//	'}'
-		//	| statements+=Statement*);
+		//Thread returns Thread:
+		//    {Thread}
+		//    (
+		//        (
+		//            (annotations += Annotation)*
+		//            '{'
+		//            (declarations+=Declaration)*
+		//            (statements += Statement)*
+		//            '}'
+		//        ) | (
+		//            (statements += Statement)*
+		//        )
+		//    )
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Thread} (annotations+=Annotation* '{' declarations+=Declaration* statements+=Statement* '}' | statements+=Statement*)
+		//{Thread}
+		//(
+		//    (
+		//        (annotations += Annotation)*
+		//        '{'
+		//        (declarations+=Declaration)*
+		//        (statements += Statement)*
+		//        '}'
+		//    ) | (
+		//        (statements += Statement)*
+		//    )
+		//)
 		public Group getGroup() { return cGroup; }
 		
 		//{Thread}
 		public Action getThreadAction_0() { return cThreadAction_0; }
 		
-		//(annotations+=Annotation* '{' declarations+=Declaration* statements+=Statement* '}' | statements+=Statement*)
+		//(
+		//    (
+		//        (annotations += Annotation)*
+		//        '{'
+		//        (declarations+=Declaration)*
+		//        (statements += Statement)*
+		//        '}'
+		//    ) | (
+		//        (statements += Statement)*
+		//    )
+		//)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
-		//annotations+=Annotation* '{' declarations+=Declaration* statements+=Statement* '}'
+		//(
+		//    (annotations += Annotation)*
+		//    '{'
+		//    (declarations+=Declaration)*
+		//    (statements += Statement)*
+		//    '}'
+		//)
 		public Group getGroup_1_0() { return cGroup_1_0; }
 		
-		//annotations+=Annotation*
+		//(annotations += Annotation)*
 		public Assignment getAnnotationsAssignment_1_0_0() { return cAnnotationsAssignment_1_0_0; }
 		
 		//Annotation
@@ -858,13 +1002,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_1_0_1() { return cLeftCurlyBracketKeyword_1_0_1; }
 		
-		//declarations+=Declaration*
+		//(declarations+=Declaration)*
 		public Assignment getDeclarationsAssignment_1_0_2() { return cDeclarationsAssignment_1_0_2; }
 		
 		//Declaration
 		public RuleCall getDeclarationsDeclarationParserRuleCall_1_0_2_0() { return cDeclarationsDeclarationParserRuleCall_1_0_2_0; }
 		
-		//statements+=Statement*
+		//(statements += Statement)*
 		public Assignment getStatementsAssignment_1_0_3() { return cStatementsAssignment_1_0_3; }
 		
 		//Statement
@@ -873,7 +1017,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_1_0_4() { return cRightCurlyBracketKeyword_1_0_4; }
 		
-		//statements+=Statement*
+		//(
+		//           (statements += Statement)*
+		//       )
 		public Assignment getStatementsAssignment_1_1() { return cStatementsAssignment_1_1; }
 		
 		//Statement
@@ -894,35 +1040,65 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cSemicolonAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final Keyword cSemicolonSemicolonKeyword_3_0 = (Keyword)cSemicolonAssignment_3.eContents().get(0);
 		
-		//Parallel:
-		//	'fork' (threads+=Thread ('par'
-		//	threads+=Thread)*)
-		//	'join'
-		//	semicolon?=';'?;
+		//Parallel returns Parallel:
+		//    'fork'
+		//    //(forkType=ForkType)?
+		//    (
+		//        threads += Thread
+		//        (
+		//            'par'
+		//            threads += Thread
+		//        )*
+		//    )
+		//    'join'
+		//    //joinAny?='any'
+		//    semicolon?=';'?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'fork' (threads+=Thread ('par' threads+=Thread)*) 'join' semicolon?=';'?
+		//'fork'
+		////(forkType=ForkType)?
+		//(
+		//    threads += Thread
+		//    (
+		//        'par'
+		//        threads += Thread
+		//    )*
+		//)
+		//'join'
+		////joinAny?='any'
+		//semicolon?=';'?
 		public Group getGroup() { return cGroup; }
 		
 		//'fork'
 		public Keyword getForkKeyword_0() { return cForkKeyword_0; }
 		
-		//(threads+=Thread ('par' threads+=Thread)*)
+		////(forkType=ForkType)?
+		//(
+		//    threads += Thread
+		//    (
+		//        'par'
+		//        threads += Thread
+		//    )*
+		//)
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//threads+=Thread
+		//threads += Thread
 		public Assignment getThreadsAssignment_1_0() { return cThreadsAssignment_1_0; }
 		
 		//Thread
 		public RuleCall getThreadsThreadParserRuleCall_1_0_0() { return cThreadsThreadParserRuleCall_1_0_0; }
 		
-		//('par' threads+=Thread)*
+		//(
+		//    'par'
+		//    threads += Thread
+		//)*
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
 		//'par'
 		public Keyword getParKeyword_1_1_0() { return cParKeyword_1_1_0; }
 		
-		//threads+=Thread
+		//threads += Thread
 		public Assignment getThreadsAssignment_1_1_1() { return cThreadsAssignment_1_1_1; }
 		
 		//Thread
@@ -931,6 +1107,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'join'
 		public Keyword getJoinKeyword_2() { return cJoinKeyword_2; }
 		
+		////joinAny?='any'
 		//semicolon?=';'?
 		public Assignment getSemicolonAssignment_3() { return cSemicolonAssignment_3; }
 		
@@ -950,21 +1127,30 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final RuleCall cStatementsStatementParserRuleCall_4_0 = (RuleCall)cStatementsAssignment_4.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
-		//ScopeStatement:
-		//	{ScopeStatement} annotations+=Annotation*
-		//	'{'
-		//	declarations+=Declaration*
-		//	statements+=Statement*
-		//	'}';
+		////enum ForkType returns ForkType:
+		////    SEQUENTIAL = 'seq' | SEQUENTIAL_PREEMPTIVE = 'seq-abort';
+		//ScopeStatement returns ScopeStatement:
+		//    {ScopeStatement}
+		//    (annotations += Annotation)*
+		//    '{'
+		//        (declarations+=Declaration)*
+		//        (statements += Statement)*
+		//    '}'
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{ScopeStatement} annotations+=Annotation* '{' declarations+=Declaration* statements+=Statement* '}'
+		//{ScopeStatement}
+		//(annotations += Annotation)*
+		//'{'
+		//    (declarations+=Declaration)*
+		//    (statements += Statement)*
+		//'}'
 		public Group getGroup() { return cGroup; }
 		
 		//{ScopeStatement}
 		public Action getScopeStatementAction_0() { return cScopeStatementAction_0; }
 		
-		//annotations+=Annotation*
+		//(annotations += Annotation)*
 		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
 		
 		//Annotation
@@ -973,13 +1159,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
 		
-		//declarations+=Declaration*
+		//(declarations+=Declaration)*
 		public Assignment getDeclarationsAssignment_3() { return cDeclarationsAssignment_3; }
 		
 		//Declaration
 		public RuleCall getDeclarationsDeclarationParserRuleCall_3_0() { return cDeclarationsDeclarationParserRuleCall_3_0; }
 		
-		//statements+=Statement*
+		//(statements += Statement)*
 		public Assignment getStatementsAssignment_4() { return cStatementsAssignment_4; }
 		
 		//Statement
@@ -1014,21 +1200,32 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cSemicolonAssignment_12 = (Assignment)cGroup.eContents().get(12);
 		private final Keyword cSemicolonSemicolonKeyword_12_0 = (Keyword)cSemicolonAssignment_12.eContents().get(0);
 		
-		//ForLoop Loop:
-		//	'for' '(' (initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)?
-		//	';'
-		//	condition=BoolExpression
-		//	';'
-		//	afterthought=EffectOrAssignment?
-		//	')' '{'
-		//	declarations+=Declaration*
-		//	statements+=Statement*
-		//	'}'
-		//	semicolon?=';'?;
+		//ForLoop returns Loop:
+		//    'for' '('
+		//    (initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)?
+		//    ';'
+		//    condition=BoolExpression
+		//    ';'
+		//    afterthought=EffectOrAssignment?
+		//    ')' '{'
+		//    (declarations += Declaration)*
+		//    (statements += Statement)*
+		//    '}'
+		//    semicolon?=';'?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'for' '(' (initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)? ';' condition=BoolExpression
-		//';' afterthought=EffectOrAssignment? ')' '{' declarations+=Declaration* statements+=Statement* '}' semicolon?=';'?
+		//'for' '('
+		//(initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)?
+		//';'
+		//condition=BoolExpression
+		//';'
+		//afterthought=EffectOrAssignment?
+		//')' '{'
+		//(declarations += Declaration)*
+		//(statements += Statement)*
+		//'}'
+		//semicolon?=';'?
 		public Group getGroup() { return cGroup; }
 		
 		//'for'
@@ -1076,13 +1273,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_8() { return cLeftCurlyBracketKeyword_8; }
 		
-		//declarations+=Declaration*
+		//(declarations += Declaration)*
 		public Assignment getDeclarationsAssignment_9() { return cDeclarationsAssignment_9; }
 		
 		//Declaration
 		public RuleCall getDeclarationsDeclarationParserRuleCall_9_0() { return cDeclarationsDeclarationParserRuleCall_9_0; }
 		
-		//statements+=Statement*
+		//(statements += Statement)*
 		public Assignment getStatementsAssignment_10() { return cStatementsAssignment_10; }
 		
 		//Statement
@@ -1113,44 +1310,61 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cValuedObjectsAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_2_0 = (RuleCall)cValuedObjectsAssignment_2.eContents().get(0);
 		
-		//LoopDeclaration kexpressions::VariableDeclaration:
-		//	annotations+=Annotation* (type=ValueType | type=HostType hostType=STRING) valuedObjects+=ValuedObject;
+		//LoopDeclaration returns kexpressions::VariableDeclaration:
+		//    annotations += Annotation*
+		//    (
+		//        (type = ValueType)
+		//    |
+		//        (type = HostType hostType = STRING)
+		//    )
+		//    valuedObjects += ValuedObject
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//annotations+=Annotation* (type=ValueType | type=HostType hostType=STRING) valuedObjects+=ValuedObject
+		//annotations += Annotation*
+		//(
+		//    (type = ValueType)
+		//|
+		//    (type = HostType hostType = STRING)
+		//)
+		//valuedObjects += ValuedObject
 		public Group getGroup() { return cGroup; }
 		
-		//annotations+=Annotation*
+		//annotations += Annotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
-		//(type=ValueType | type=HostType hostType=STRING)
+		//(
+		//    (type = ValueType)
+		//|
+		//    (type = HostType hostType = STRING)
+		//)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
-		//type=ValueType
+		//(type = ValueType)
 		public Assignment getTypeAssignment_1_0() { return cTypeAssignment_1_0; }
 		
 		//ValueType
 		public RuleCall getTypeValueTypeEnumRuleCall_1_0_0() { return cTypeValueTypeEnumRuleCall_1_0_0; }
 		
-		//type=HostType hostType=STRING
+		//(type = HostType hostType = STRING)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//type=HostType
+		//type = HostType
 		public Assignment getTypeAssignment_1_1_0() { return cTypeAssignment_1_1_0; }
 		
 		//HostType
 		public RuleCall getTypeHostTypeEnumRuleCall_1_1_0_0() { return cTypeHostTypeEnumRuleCall_1_1_0_0; }
 		
-		//hostType=STRING
+		//hostType = STRING
 		public Assignment getHostTypeAssignment_1_1_1() { return cHostTypeAssignment_1_1_1; }
 		
 		//STRING
 		public RuleCall getHostTypeSTRINGTerminalRuleCall_1_1_1_0() { return cHostTypeSTRINGTerminalRuleCall_1_1_1_0; }
 		
-		//valuedObjects+=ValuedObject
+		//valuedObjects += ValuedObject
 		public Assignment getValuedObjectsAssignment_2() { return cValuedObjectsAssignment_2; }
 		
 		//ValuedObject
@@ -1177,66 +1391,92 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cExpressionAssignment_1_2 = (Assignment)cAlternatives_1.eContents().get(2);
 		private final RuleCall cExpressionExpressionParserRuleCall_1_2_0 = (RuleCall)cExpressionAssignment_1_2.eContents().get(0);
 		
-		//EffectOrAssignment keffects::Assignment:
-		//	annotations+=Annotation* (reference=ValuedObjectReference
-		//	operator=PostfixOperator
-		//	| reference=ValuedObjectReference
-		//	operator=AssignOperator
-		//	expression=Expression
-		//	| expression=Expression);
+		//EffectOrAssignment returns keffects::Assignment:
+		//    (annotations += Annotation)*
+		//    (
+		//        reference = ValuedObjectReference
+		//        operator = PostfixOperator
+		//    |
+		//        reference = ValuedObjectReference
+		//        operator = AssignOperator
+		//        expression = Expression
+		//    |
+		//        expression = Expression
+		//    )
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//annotations+=Annotation* (reference=ValuedObjectReference operator=PostfixOperator | reference=ValuedObjectReference
-		//operator=AssignOperator expression=Expression | expression=Expression)
+		//(annotations += Annotation)*
+		//(
+		//    reference = ValuedObjectReference
+		//    operator = PostfixOperator
+		//|
+		//    reference = ValuedObjectReference
+		//    operator = AssignOperator
+		//    expression = Expression
+		//|
+		//    expression = Expression
+		//)
 		public Group getGroup() { return cGroup; }
 		
-		//annotations+=Annotation*
+		//(annotations += Annotation)*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
-		//(reference=ValuedObjectReference operator=PostfixOperator | reference=ValuedObjectReference operator=AssignOperator
-		//expression=Expression | expression=Expression)
+		//(
+		//    reference = ValuedObjectReference
+		//    operator = PostfixOperator
+		//|
+		//    reference = ValuedObjectReference
+		//    operator = AssignOperator
+		//    expression = Expression
+		//|
+		//    expression = Expression
+		//)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
-		//reference=ValuedObjectReference operator=PostfixOperator
+		//reference = ValuedObjectReference
+		//operator = PostfixOperator
 		public Group getGroup_1_0() { return cGroup_1_0; }
 		
-		//reference=ValuedObjectReference
+		//reference = ValuedObjectReference
 		public Assignment getReferenceAssignment_1_0_0() { return cReferenceAssignment_1_0_0; }
 		
 		//ValuedObjectReference
 		public RuleCall getReferenceValuedObjectReferenceParserRuleCall_1_0_0_0() { return cReferenceValuedObjectReferenceParserRuleCall_1_0_0_0; }
 		
-		//operator=PostfixOperator
+		//operator = PostfixOperator
 		public Assignment getOperatorAssignment_1_0_1() { return cOperatorAssignment_1_0_1; }
 		
 		//PostfixOperator
 		public RuleCall getOperatorPostfixOperatorEnumRuleCall_1_0_1_0() { return cOperatorPostfixOperatorEnumRuleCall_1_0_1_0; }
 		
-		//reference=ValuedObjectReference operator=AssignOperator expression=Expression
+		//reference = ValuedObjectReference
+		//operator = AssignOperator
+		//expression = Expression
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//reference=ValuedObjectReference
+		//reference = ValuedObjectReference
 		public Assignment getReferenceAssignment_1_1_0() { return cReferenceAssignment_1_1_0; }
 		
 		//ValuedObjectReference
 		public RuleCall getReferenceValuedObjectReferenceParserRuleCall_1_1_0_0() { return cReferenceValuedObjectReferenceParserRuleCall_1_1_0_0; }
 		
-		//operator=AssignOperator
+		//operator = AssignOperator
 		public Assignment getOperatorAssignment_1_1_1() { return cOperatorAssignment_1_1_1; }
 		
 		//AssignOperator
 		public RuleCall getOperatorAssignOperatorEnumRuleCall_1_1_1_0() { return cOperatorAssignOperatorEnumRuleCall_1_1_1_0; }
 		
-		//expression=Expression
+		//expression = Expression
 		public Assignment getExpressionAssignment_1_1_2() { return cExpressionAssignment_1_1_2; }
 		
 		//Expression
 		public RuleCall getExpressionExpressionParserRuleCall_1_1_2_0() { return cExpressionExpressionParserRuleCall_1_1_2_0; }
 		
-		//expression=Expression
+		//expression = Expression
 		public Assignment getExpressionAssignment_1_2() { return cExpressionAssignment_1_2; }
 		
 		//Expression
@@ -1259,17 +1499,24 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cSemicolonAssignment_8 = (Assignment)cGroup.eContents().get(8);
 		private final Keyword cSemicolonSemicolonKeyword_8_0 = (Keyword)cSemicolonAssignment_8.eContents().get(0);
 		
-		//WhileLoop Loop:
-		//	'while' '('
-		//	condition=BoolExpression
-		//	')' '{'
-		//	declarations+=Declaration*
-		//	statements+=Statement*
-		//	'}'
-		//	semicolon?=';'?;
+		//WhileLoop returns Loop:
+		//    'while' '('
+		//    condition=BoolExpression
+		//    ')' '{'
+		//    (declarations+=Declaration)*
+		//    (statements += Statement)*
+		//    '}'
+		//    semicolon?=';'?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'while' '(' condition=BoolExpression ')' '{' declarations+=Declaration* statements+=Statement* '}' semicolon?=';'?
+		//'while' '('
+		//condition=BoolExpression
+		//')' '{'
+		//(declarations+=Declaration)*
+		//(statements += Statement)*
+		//'}'
+		//semicolon?=';'?
 		public Group getGroup() { return cGroup; }
 		
 		//'while'
@@ -1290,13 +1537,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_4() { return cLeftCurlyBracketKeyword_4; }
 		
-		//declarations+=Declaration*
+		//(declarations+=Declaration)*
 		public Assignment getDeclarationsAssignment_5() { return cDeclarationsAssignment_5; }
 		
 		//Declaration
 		public RuleCall getDeclarationsDeclarationParserRuleCall_5_0() { return cDeclarationsDeclarationParserRuleCall_5_0; }
 		
-		//statements+=Statement*
+		//(statements += Statement)*
 		public Assignment getStatementsAssignment_6() { return cStatementsAssignment_6; }
 		
 		//Statement
@@ -1334,18 +1581,23 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Assignment cSemicolonAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final Keyword cSemicolonSemicolonKeyword_4_0 = (Keyword)cSemicolonAssignment_4.eContents().get(0);
 		
-		//ModuleCall:
-		//	annotations+=Annotation*
-		//	'run'
-		//	module=[Module] ('(' parameters+=ModuleCallParameter (',' parameters+=ModuleCallParameter)* ')' | '()')?
-		//	semicolon?=';'?;
+		//ModuleCall returns ModuleCall:
+		//    (annotations += Annotation)*
+		//    'run'
+		//    module = [Module|ID]
+		//    ('(' parameters += ModuleCallParameter (',' parameters += ModuleCallParameter)* ')' | '()')?
+		//    semicolon?=';'?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//annotations+=Annotation* 'run' module=[Module] ('(' parameters+=ModuleCallParameter (','
-		//parameters+=ModuleCallParameter)* ')' | '()')? semicolon?=';'?
+		//(annotations += Annotation)*
+		//'run'
+		//module = [Module|ID]
+		//('(' parameters += ModuleCallParameter (',' parameters += ModuleCallParameter)* ')' | '()')?
+		//semicolon?=';'?
 		public Group getGroup() { return cGroup; }
 		
-		//annotations+=Annotation*
+		//(annotations += Annotation)*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
 		//Annotation
@@ -1354,37 +1606,37 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//'run'
 		public Keyword getRunKeyword_1() { return cRunKeyword_1; }
 		
-		//module=[Module]
+		//module = [Module|ID]
 		public Assignment getModuleAssignment_2() { return cModuleAssignment_2; }
 		
-		//[Module]
+		//[Module|ID]
 		public CrossReference getModuleModuleCrossReference_2_0() { return cModuleModuleCrossReference_2_0; }
 		
 		//ID
 		public RuleCall getModuleModuleIDTerminalRuleCall_2_0_1() { return cModuleModuleIDTerminalRuleCall_2_0_1; }
 		
-		//('(' parameters+=ModuleCallParameter (',' parameters+=ModuleCallParameter)* ')' | '()')?
+		//('(' parameters += ModuleCallParameter (',' parameters += ModuleCallParameter)* ')' | '()')?
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 		
-		//'(' parameters+=ModuleCallParameter (',' parameters+=ModuleCallParameter)* ')'
+		//'(' parameters += ModuleCallParameter (',' parameters += ModuleCallParameter)* ')'
 		public Group getGroup_3_0() { return cGroup_3_0; }
 		
 		//'('
 		public Keyword getLeftParenthesisKeyword_3_0_0() { return cLeftParenthesisKeyword_3_0_0; }
 		
-		//parameters+=ModuleCallParameter
+		//parameters += ModuleCallParameter
 		public Assignment getParametersAssignment_3_0_1() { return cParametersAssignment_3_0_1; }
 		
 		//ModuleCallParameter
 		public RuleCall getParametersModuleCallParameterParserRuleCall_3_0_1_0() { return cParametersModuleCallParameterParserRuleCall_3_0_1_0; }
 		
-		//(',' parameters+=ModuleCallParameter)*
+		//(',' parameters += ModuleCallParameter)*
 		public Group getGroup_3_0_2() { return cGroup_3_0_2; }
 		
 		//','
 		public Keyword getCommaKeyword_3_0_2_0() { return cCommaKeyword_3_0_2_0; }
 		
-		//parameters+=ModuleCallParameter
+		//parameters += ModuleCallParameter
 		public Assignment getParametersAssignment_3_0_2_1() { return cParametersAssignment_3_0_2_1; }
 		
 		//ModuleCallParameter
@@ -1424,50 +1676,60 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final RuleCall cExplicitBindingIndicesExpressionParserRuleCall_1_2_1_0 = (RuleCall)cExplicitBindingIndicesAssignment_1_2_1.eContents().get(0);
 		private final Keyword cRightSquareBracketKeyword_1_2_2 = (Keyword)cGroup_1_2.eContents().get(2);
 		
-		//ModuleCallParameter kexpressions::Parameter:
-		//	(accessType=ParameterAccessType
-		//	expression=ValuedObjectReference | expression=Expression) ('to' explicitBinding=[kexpressions::ValuedObject] ('['
-		//	explicitBindingIndices+=Expression ']')*)?;
+		//ModuleCallParameter returns kexpressions::Parameter:
+		//    ((accessType = ParameterAccessType
+		//    expression = ValuedObjectReference)
+		//    |
+		//    expression = Expression)
+		//    ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(accessType=ParameterAccessType expression=ValuedObjectReference | expression=Expression) ('to'
-		//explicitBinding=[kexpressions::ValuedObject] ('[' explicitBindingIndices+=Expression ']')*)?
+		//((accessType = ParameterAccessType
+		//expression = ValuedObjectReference)
+		//|
+		//expression = Expression)
+		//('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?
 		public Group getGroup() { return cGroup; }
 		
-		//(accessType=ParameterAccessType expression=ValuedObjectReference | expression=Expression)
+		//((accessType = ParameterAccessType
+		//expression = ValuedObjectReference)
+		//|
+		//expression = Expression)
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 		
-		//accessType=ParameterAccessType expression=ValuedObjectReference
+		//(accessType = ParameterAccessType
+		//    expression = ValuedObjectReference)
 		public Group getGroup_0_0() { return cGroup_0_0; }
 		
-		//accessType=ParameterAccessType
+		//accessType = ParameterAccessType
 		public Assignment getAccessTypeAssignment_0_0_0() { return cAccessTypeAssignment_0_0_0; }
 		
 		//ParameterAccessType
 		public RuleCall getAccessTypeParameterAccessTypeEnumRuleCall_0_0_0_0() { return cAccessTypeParameterAccessTypeEnumRuleCall_0_0_0_0; }
 		
-		//expression=ValuedObjectReference
+		//expression = ValuedObjectReference
 		public Assignment getExpressionAssignment_0_0_1() { return cExpressionAssignment_0_0_1; }
 		
 		//ValuedObjectReference
 		public RuleCall getExpressionValuedObjectReferenceParserRuleCall_0_0_1_0() { return cExpressionValuedObjectReferenceParserRuleCall_0_0_1_0; }
 		
-		//expression=Expression
+		//expression = Expression
 		public Assignment getExpressionAssignment_0_1() { return cExpressionAssignment_0_1; }
 		
 		//Expression
 		public RuleCall getExpressionExpressionParserRuleCall_0_1_0() { return cExpressionExpressionParserRuleCall_0_1_0; }
 		
-		//('to' explicitBinding=[kexpressions::ValuedObject] ('[' explicitBindingIndices+=Expression ']')*)?
+		//('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//'to'
 		public Keyword getToKeyword_1_0() { return cToKeyword_1_0; }
 		
-		//explicitBinding=[kexpressions::ValuedObject]
+		//explicitBinding = [kexpressions::ValuedObject|ID]
 		public Assignment getExplicitBindingAssignment_1_1() { return cExplicitBindingAssignment_1_1; }
 		
-		//[kexpressions::ValuedObject]
+		//[kexpressions::ValuedObject|ID]
 		public CrossReference getExplicitBindingValuedObjectCrossReference_1_1_0() { return cExplicitBindingValuedObjectCrossReference_1_1_0; }
 		
 		//ID
@@ -1530,25 +1792,43 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final RuleCall cAnnotationsCommentAnnotatonSLParserRuleCall_8_0 = (RuleCall)cAnnotationsAssignment_8.eContents().get(0);
 		
 		//@Override
-		//MethodDeclaration kexpressions::MethodDeclaration:
-		//	{MethodImplementationDeclaration} annotations+=Annotation*
-		//	access=AccessModifier?
-		//	returnType=MethodReturnType?
-		//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-		//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
-		//	(';'
-		//	|
-		//	'{'
-		//	annotations+=CommentAnnotatonSL?
-		//	declarations+=Declaration*
-		//	statements+=Statement*
-		//	'}') annotations+=CommentAnnotatonSL?;
+		//MethodDeclaration returns kexpressions::MethodDeclaration:
+		//    {MethodImplementationDeclaration}
+		//    annotations+=Annotation*
+		//    access=AccessModifier?
+		//    returnType=MethodReturnType?
+		//    valuedObjects+=SimpleValuedObject
+		//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
+		//    ('schedule' schedule+=ScheduleObjectReference+)?
+		//    (
+		//        ';'
+		//        |
+		//        '{'
+		//        annotations+=CommentAnnotatonSL?
+		//        declarations+=Declaration*
+		//        statements+=Statement*
+		//        '}'
+		//    )
+		//    annotations+=CommentAnnotatonSL?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{MethodImplementationDeclaration} annotations+=Annotation* access=AccessModifier? returnType=MethodReturnType?
-		//valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-		//parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
-		//(';' | '{' annotations+=CommentAnnotatonSL? declarations+=Declaration* statements+=Statement* '}')
+		//{MethodImplementationDeclaration}
+		//annotations+=Annotation*
+		//access=AccessModifier?
+		//returnType=MethodReturnType?
+		//valuedObjects+=SimpleValuedObject
+		//(('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
+		//('schedule' schedule+=ScheduleObjectReference+)?
+		//(
+		//    ';'
+		//    |
+		//    '{'
+		//    annotations+=CommentAnnotatonSL?
+		//    declarations+=Declaration*
+		//    statements+=Statement*
+		//    '}'
+		//)
 		//annotations+=CommentAnnotatonSL?
 		public Group getGroup() { return cGroup; }
 		
@@ -1579,12 +1859,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//SimpleValuedObject
 		public RuleCall getValuedObjectsSimpleValuedObjectParserRuleCall_4_0() { return cValuedObjectsSimpleValuedObjectParserRuleCall_4_0; }
 		
-		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
-		//')' | '()')
+		//(('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 		
-		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
-		//')'
+		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')')
 		public Group getGroup_5_0() { return cGroup_5_0; }
 		
 		//'('
@@ -1626,13 +1904,25 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//ScheduleObjectReference
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_6_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_6_1_0; }
 		
-		//(';' | '{' annotations+=CommentAnnotatonSL? declarations+=Declaration* statements+=Statement* '}')
+		//(
+		//    ';'
+		//    |
+		//    '{'
+		//    annotations+=CommentAnnotatonSL?
+		//    declarations+=Declaration*
+		//    statements+=Statement*
+		//    '}'
+		//)
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
 		
 		//';'
 		public Keyword getSemicolonKeyword_7_0() { return cSemicolonKeyword_7_0; }
 		
-		//'{' annotations+=CommentAnnotatonSL? declarations+=Declaration* statements+=Statement* '}'
+		//'{'
+		//annotations+=CommentAnnotatonSL?
+		//declarations+=Declaration*
+		//statements+=Statement*
+		//'}'
 		public Group getGroup_7_1() { return cGroup_7_1; }
 		
 		//'{'
@@ -1703,23 +1993,34 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		private final Keyword cRightCurlyBracketKeyword_7_4 = (Keyword)cGroup_7.eContents().get(4);
 		
 		//@Override
-		//MethodDeclarationWOSemicolon kexpressions::MethodDeclaration:
-		//	{MethodImplementationDeclaration} annotations+=Annotation*
-		//	access=AccessModifier?
-		//	returnType=MethodReturnType?
-		//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-		//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
-		//	('{'
-		//	annotations+=CommentAnnotatonSL?
-		//	declarations+=Declaration*
-		//	statements+=Statement*
-		//	'}')?;
+		//MethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
+		//    {MethodImplementationDeclaration}
+		//    annotations+=Annotation*
+		//    access=AccessModifier?
+		//    returnType=MethodReturnType?
+		//    valuedObjects+=SimpleValuedObject
+		//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
+		//    ('schedule' schedule+=ScheduleObjectReference+)?
+		//    ('{'
+		//        annotations+=CommentAnnotatonSL?
+		//        declarations+=Declaration*
+		//        statements+=Statement*
+		//    '}')?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{MethodImplementationDeclaration} annotations+=Annotation* access=AccessModifier? returnType=MethodReturnType?
-		//valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-		//parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
-		//('{' annotations+=CommentAnnotatonSL? declarations+=Declaration* statements+=Statement* '}')?
+		//{MethodImplementationDeclaration}
+		//annotations+=Annotation*
+		//access=AccessModifier?
+		//returnType=MethodReturnType?
+		//valuedObjects+=SimpleValuedObject
+		//(('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
+		//('schedule' schedule+=ScheduleObjectReference+)?
+		//('{'
+		//    annotations+=CommentAnnotatonSL?
+		//    declarations+=Declaration*
+		//    statements+=Statement*
+		//'}')?
 		public Group getGroup() { return cGroup; }
 		
 		//{MethodImplementationDeclaration}
@@ -1749,12 +2050,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//SimpleValuedObject
 		public RuleCall getValuedObjectsSimpleValuedObjectParserRuleCall_4_0() { return cValuedObjectsSimpleValuedObjectParserRuleCall_4_0; }
 		
-		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
-		//')' | '()')
+		//(('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 		
-		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
-		//')'
+		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')')
 		public Group getGroup_5_0() { return cGroup_5_0; }
 		
 		//'('
@@ -1796,7 +2095,11 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		//ScheduleObjectReference
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_6_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_6_1_0; }
 		
-		//('{' annotations+=CommentAnnotatonSL? declarations+=Declaration* statements+=Statement* '}')?
+		//('{'
+		//    annotations+=CommentAnnotatonSL?
+		//    declarations+=Declaration*
+		//    statements+=Statement*
+		//'}')?
 		public Group getGroup_7() { return cGroup_7; }
 		
 		//'{'
@@ -1946,9 +2249,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 
 	
-	//SCLProgram:
-	//	pragmas+=Pragma*
-	//	modules+=Module*;
+	//SCLProgram returns SCLProgram:
+	//    pragmas+=Pragma*
+	//    modules+=Module*
+	//;
 	public SCLProgramElements getSCLProgramAccess() {
 		return pSCLProgram;
 	}
@@ -1957,11 +2261,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getSCLProgramAccess().getRule();
 	}
 	
-	//Module:
-	//	annotations+=Annotation*
-	//	'module' name=ID ':'?
-	//	declarations+=Declaration*
-	//	statements+=Statement*;
+	//Module returns Module:
+	//    (annotations += Annotation)*
+	//    'module' name = ID ':'?
+	//    (declarations += Declaration)*
+	//    (statements += Statement)*
+	//;
 	public ModuleElements getModuleAccess() {
 		return pModule;
 	}
@@ -1970,21 +2275,22 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getModuleAccess().getRule();
 	}
 	
-	//Statement:
-	//	SclAssignment
-	//	| SclPostfixAssignment
-	//	| Label
-	//	| SclEffectAssignment
-	//	| Conditional
-	//	| LegacyConditional
-	//	| Goto
-	//	| Parallel
-	//	| Pause
-	//	| ModuleCall
-	//	| ScopeStatement
-	//	| Return
-	//	| ForLoop
-	//	| WhileLoop;
+	//Statement returns Statement:
+	//      SclAssignment
+	//    | SclPostfixAssignment
+	//    | Label
+	//    | SclEffectAssignment
+	//    | Conditional
+	//    | LegacyConditional
+	//    | Goto
+	//    | Parallel
+	//    | Pause
+	//    | ModuleCall
+	//    | ScopeStatement
+	//    | Return
+	//    | ForLoop
+	//    | WhileLoop
+	//;
 	public StatementElements getStatementAccess() {
 		return pStatement;
 	}
@@ -1993,10 +2299,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getStatementAccess().getRule();
 	}
 	
-	//Pause:
-	//	{Pause} annotations+=Annotation*
-	//	'pause'
-	//	semicolon?=';'?;
+	//Pause returns Pause:
+	//    {Pause}
+	//    (annotations += Annotation)*
+	//    'pause'
+	//    semicolon?=';'?
+	//;
 	public PauseElements getPauseAccess() {
 		return pPause;
 	}
@@ -2005,9 +2313,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getPauseAccess().getRule();
 	}
 	
-	//Label:
-	//	annotations+=Annotation*
-	//	name=ID ':';
+	//Label returns Label:
+	//    (annotations += Annotation)*
+	//    name = ID ':'
+	//;
 	public LabelElements getLabelAccess() {
 		return pLabel;
 	}
@@ -2016,9 +2325,11 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getLabelAccess().getRule();
 	}
 	
-	//Goto:
-	//	annotations+=Annotation*
-	//	'goto' target=[Label] semicolon?=';'?;
+	//Goto returns Goto:
+	//    (annotations += Annotation)*
+	//    'goto' target = [Label|ID]
+	//    semicolon?=';'?
+	//;
 	public GotoElements getGotoAccess() {
 		return pGoto;
 	}
@@ -2027,12 +2338,14 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getGotoAccess().getRule();
 	}
 	
-	//SclAssignment Assignment:
-	//	annotations+=Annotation*
-	//	reference=ValuedObjectReference
-	//	operator=AssignOperator
-	//	expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?
-	//	semicolon?=';'?;
+	//SclAssignment returns Assignment:
+	//    (annotations += Annotation)*
+	//    reference = ValuedObjectReference
+	//    operator = AssignOperator
+	//    expression = Expression
+	//    ('schedule' schedule+=ScheduleObjectReference+)?
+	//    semicolon?=';'?
+	//;
 	public SclAssignmentElements getSclAssignmentAccess() {
 		return pSclAssignment;
 	}
@@ -2041,11 +2354,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getSclAssignmentAccess().getRule();
 	}
 	
-	//SclPostfixAssignment Assignment:
-	//	annotations+=Annotation*
-	//	reference=ValuedObjectReference
-	//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?
-	//	semicolon?=';'?;
+	//SclPostfixAssignment returns Assignment:
+	//    (annotations+=Annotation)*
+	//    reference=ValuedObjectReference
+	//    operator=PostfixOperator
+	//    ('schedule' schedule+=ScheduleObjectReference+)?
+	//    semicolon?=';'?
+	//;
 	public SclPostfixAssignmentElements getSclPostfixAssignmentAccess() {
 		return pSclPostfixAssignment;
 	}
@@ -2054,14 +2369,22 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getSclPostfixAssignmentAccess().getRule();
 	}
 	
-	//SclEffectAssignment Assignment:
-	//	annotations+=Annotation*
-	//	expression=(ReferenceCall
-	//	| TextExpression
-	//	| PrintCall
-	//	| RandomizeCall
-	//	| FunctionCall) ('schedule' schedule+=ScheduleObjectReference+)?
-	//	semicolon?=';'?;
+	//SclEffectAssignment returns Assignment:
+	//    (annotations += Annotation)*
+	//    expression = (
+	//        ReferenceCall
+	//    |
+	//        TextExpression
+	//    |
+	//        PrintCall
+	//    |
+	//        RandomizeCall
+	//    |
+	//        FunctionCall
+	//    )
+	//    ('schedule' schedule+=ScheduleObjectReference+)?
+	//    semicolon?=';'?
+	//;
 	public SclEffectAssignmentElements getSclEffectAssignmentAccess() {
 		return pSclEffectAssignment;
 	}
@@ -2070,10 +2393,11 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getSclEffectAssignmentAccess().getRule();
 	}
 	
-	//Return:
-	//	annotations+=Annotation*
-	//	'return'
-	//	expression=Expression;
+	//Return returns Return:
+	//    (annotations += Annotation)*
+	//    'return'
+	//    expression = Expression
+	//;
 	public ReturnElements getReturnAccess() {
 		return pReturn;
 	}
@@ -2082,13 +2406,15 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getReturnAccess().getRule();
 	}
 	
-	//Conditional:
-	//	annotations+=Annotation*
-	//	'if' expression=(BoolScheduleExpression | AtomicExpression)
-	//	'{'
-	//	declarations+=Declaration*
-	//	statements+=Statement*
-	//	'}' (else=ElseScope | semicolon?=';')?;
+	//Conditional returns Conditional:
+	//    (annotations += Annotation)*
+	//    'if' expression = (BoolScheduleExpression | AtomicExpression)
+	//    '{'
+	//    (declarations+=Declaration)*
+	//    (statements += Statement)*
+	//    '}'
+	//    (else = ElseScope | semicolon?=';')?
+	//;
 	public ConditionalElements getConditionalAccess() {
 		return pConditional;
 	}
@@ -2097,13 +2423,15 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getConditionalAccess().getRule();
 	}
 	
-	//ElseScope:
-	//	{ElseScope} annotations+=Annotation*
-	//	'else' '{'
-	//	declarations+=Declaration*
-	//	statements+=Statement*
-	//	'}'
-	//	semicolon?=';'?;
+	//ElseScope returns ElseScope:
+	//    {ElseScope}
+	//    (annotations += Annotation)*
+	//    'else' '{'
+	//    (declarations+=Declaration)*
+	//    (statements += Statement)*
+	//    '}'
+	//    semicolon?=';'?
+	//;
 	public ElseScopeElements getElseScopeAccess() {
 		return pElseScope;
 	}
@@ -2112,14 +2440,15 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getElseScopeAccess().getRule();
 	}
 	
-	//LegacyConditional Conditional:
-	//	annotations+=Annotation*
-	//	'if' expression=BoolExpression
-	//	'then'
-	//	statements+=Statement*
-	//	else=LegacyElseScope?
-	//	'end'
-	//	semicolon?=';'?;
+	//LegacyConditional returns Conditional:
+	//    (annotations += Annotation)*
+	//    'if' expression = BoolExpression
+	//    'then'
+	//    (statements += Statement)*
+	//    (else = LegacyElseScope)?
+	//    'end'
+	//    semicolon?=';'?
+	//;
 	public LegacyConditionalElements getLegacyConditionalAccess() {
 		return pLegacyConditional;
 	}
@@ -2128,10 +2457,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getLegacyConditionalAccess().getRule();
 	}
 	
-	//LegacyElseScope ElseScope:
-	//	{ElseScope} annotations+=Annotation*
-	//	'else'
-	//	statements+=Statement*;
+	//LegacyElseScope returns ElseScope:
+	//    {ElseScope}
+	//    (annotations += Annotation)*
+	//    'else'
+	//    (statements += Statement)*
+	//;
 	public LegacyElseScopeElements getLegacyElseScopeAccess() {
 		return pLegacyElseScope;
 	}
@@ -2140,13 +2471,20 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getLegacyElseScopeAccess().getRule();
 	}
 	
-	//Thread:
-	//	{Thread} (annotations+=Annotation*
-	//	'{'
-	//	declarations+=Declaration*
-	//	statements+=Statement*
-	//	'}'
-	//	| statements+=Statement*);
+	//Thread returns Thread:
+	//    {Thread}
+	//    (
+	//        (
+	//            (annotations += Annotation)*
+	//            '{'
+	//            (declarations+=Declaration)*
+	//            (statements += Statement)*
+	//            '}'
+	//        ) | (
+	//            (statements += Statement)*
+	//        )
+	//    )
+	//;
 	public ThreadElements getThreadAccess() {
 		return pThread;
 	}
@@ -2155,11 +2493,20 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getThreadAccess().getRule();
 	}
 	
-	//Parallel:
-	//	'fork' (threads+=Thread ('par'
-	//	threads+=Thread)*)
-	//	'join'
-	//	semicolon?=';'?;
+	//Parallel returns Parallel:
+	//    'fork'
+	//    //(forkType=ForkType)?
+	//    (
+	//        threads += Thread
+	//        (
+	//            'par'
+	//            threads += Thread
+	//        )*
+	//    )
+	//    'join'
+	//    //joinAny?='any'
+	//    semicolon?=';'?
+	//;
 	public ParallelElements getParallelAccess() {
 		return pParallel;
 	}
@@ -2168,12 +2515,16 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getParallelAccess().getRule();
 	}
 	
-	//ScopeStatement:
-	//	{ScopeStatement} annotations+=Annotation*
-	//	'{'
-	//	declarations+=Declaration*
-	//	statements+=Statement*
-	//	'}';
+	////enum ForkType returns ForkType:
+	////    SEQUENTIAL = 'seq' | SEQUENTIAL_PREEMPTIVE = 'seq-abort';
+	//ScopeStatement returns ScopeStatement:
+	//    {ScopeStatement}
+	//    (annotations += Annotation)*
+	//    '{'
+	//        (declarations+=Declaration)*
+	//        (statements += Statement)*
+	//    '}'
+	//;
 	public ScopeStatementElements getScopeStatementAccess() {
 		return pScopeStatement;
 	}
@@ -2182,17 +2533,19 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getScopeStatementAccess().getRule();
 	}
 	
-	//ForLoop Loop:
-	//	'for' '(' (initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)?
-	//	';'
-	//	condition=BoolExpression
-	//	';'
-	//	afterthought=EffectOrAssignment?
-	//	')' '{'
-	//	declarations+=Declaration*
-	//	statements+=Statement*
-	//	'}'
-	//	semicolon?=';'?;
+	//ForLoop returns Loop:
+	//    'for' '('
+	//    (initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)?
+	//    ';'
+	//    condition=BoolExpression
+	//    ';'
+	//    afterthought=EffectOrAssignment?
+	//    ')' '{'
+	//    (declarations += Declaration)*
+	//    (statements += Statement)*
+	//    '}'
+	//    semicolon?=';'?
+	//;
 	public ForLoopElements getForLoopAccess() {
 		return pForLoop;
 	}
@@ -2201,8 +2554,15 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getForLoopAccess().getRule();
 	}
 	
-	//LoopDeclaration kexpressions::VariableDeclaration:
-	//	annotations+=Annotation* (type=ValueType | type=HostType hostType=STRING) valuedObjects+=ValuedObject;
+	//LoopDeclaration returns kexpressions::VariableDeclaration:
+	//    annotations += Annotation*
+	//    (
+	//        (type = ValueType)
+	//    |
+	//        (type = HostType hostType = STRING)
+	//    )
+	//    valuedObjects += ValuedObject
+	//;
 	public LoopDeclarationElements getLoopDeclarationAccess() {
 		return pLoopDeclaration;
 	}
@@ -2211,13 +2571,19 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getLoopDeclarationAccess().getRule();
 	}
 	
-	//EffectOrAssignment keffects::Assignment:
-	//	annotations+=Annotation* (reference=ValuedObjectReference
-	//	operator=PostfixOperator
-	//	| reference=ValuedObjectReference
-	//	operator=AssignOperator
-	//	expression=Expression
-	//	| expression=Expression);
+	//EffectOrAssignment returns keffects::Assignment:
+	//    (annotations += Annotation)*
+	//    (
+	//        reference = ValuedObjectReference
+	//        operator = PostfixOperator
+	//    |
+	//        reference = ValuedObjectReference
+	//        operator = AssignOperator
+	//        expression = Expression
+	//    |
+	//        expression = Expression
+	//    )
+	//;
 	public EffectOrAssignmentElements getEffectOrAssignmentAccess() {
 		return pEffectOrAssignment;
 	}
@@ -2226,14 +2592,15 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getEffectOrAssignmentAccess().getRule();
 	}
 	
-	//WhileLoop Loop:
-	//	'while' '('
-	//	condition=BoolExpression
-	//	')' '{'
-	//	declarations+=Declaration*
-	//	statements+=Statement*
-	//	'}'
-	//	semicolon?=';'?;
+	//WhileLoop returns Loop:
+	//    'while' '('
+	//    condition=BoolExpression
+	//    ')' '{'
+	//    (declarations+=Declaration)*
+	//    (statements += Statement)*
+	//    '}'
+	//    semicolon?=';'?
+	//;
 	public WhileLoopElements getWhileLoopAccess() {
 		return pWhileLoop;
 	}
@@ -2242,11 +2609,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getWhileLoopAccess().getRule();
 	}
 	
-	//ModuleCall:
-	//	annotations+=Annotation*
-	//	'run'
-	//	module=[Module] ('(' parameters+=ModuleCallParameter (',' parameters+=ModuleCallParameter)* ')' | '()')?
-	//	semicolon?=';'?;
+	//ModuleCall returns ModuleCall:
+	//    (annotations += Annotation)*
+	//    'run'
+	//    module = [Module|ID]
+	//    ('(' parameters += ModuleCallParameter (',' parameters += ModuleCallParameter)* ')' | '()')?
+	//    semicolon?=';'?
+	//;
 	public ModuleCallElements getModuleCallAccess() {
 		return pModuleCall;
 	}
@@ -2255,10 +2624,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getModuleCallAccess().getRule();
 	}
 	
-	//ModuleCallParameter kexpressions::Parameter:
-	//	(accessType=ParameterAccessType
-	//	expression=ValuedObjectReference | expression=Expression) ('to' explicitBinding=[kexpressions::ValuedObject] ('['
-	//	explicitBindingIndices+=Expression ']')*)?;
+	//ModuleCallParameter returns kexpressions::Parameter:
+	//    ((accessType = ParameterAccessType
+	//    expression = ValuedObjectReference)
+	//    |
+	//    expression = Expression)
+	//    ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?
+	//;
 	public ModuleCallParameterElements getModuleCallParameterAccess() {
 		return pModuleCallParameter;
 	}
@@ -2268,19 +2640,25 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//@Override
-	//MethodDeclaration kexpressions::MethodDeclaration:
-	//	{MethodImplementationDeclaration} annotations+=Annotation*
-	//	access=AccessModifier?
-	//	returnType=MethodReturnType?
-	//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
-	//	(';'
-	//	|
-	//	'{'
-	//	annotations+=CommentAnnotatonSL?
-	//	declarations+=Declaration*
-	//	statements+=Statement*
-	//	'}') annotations+=CommentAnnotatonSL?;
+	//MethodDeclaration returns kexpressions::MethodDeclaration:
+	//    {MethodImplementationDeclaration}
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    returnType=MethodReturnType?
+	//    valuedObjects+=SimpleValuedObject
+	//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
+	//    ('schedule' schedule+=ScheduleObjectReference+)?
+	//    (
+	//        ';'
+	//        |
+	//        '{'
+	//        annotations+=CommentAnnotatonSL?
+	//        declarations+=Declaration*
+	//        statements+=Statement*
+	//        '}'
+	//    )
+	//    annotations+=CommentAnnotatonSL?
+	//;
 	public MethodDeclarationElements getMethodDeclarationAccess() {
 		return pMethodDeclaration;
 	}
@@ -2290,17 +2668,20 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//@Override
-	//MethodDeclarationWOSemicolon kexpressions::MethodDeclaration:
-	//	{MethodImplementationDeclaration} annotations+=Annotation*
-	//	access=AccessModifier?
-	//	returnType=MethodReturnType?
-	//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
-	//	('{'
-	//	annotations+=CommentAnnotatonSL?
-	//	declarations+=Declaration*
-	//	statements+=Statement*
-	//	'}')?;
+	//MethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
+	//    {MethodImplementationDeclaration}
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    returnType=MethodReturnType?
+	//    valuedObjects+=SimpleValuedObject
+	//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
+	//    ('schedule' schedule+=ScheduleObjectReference+)?
+	//    ('{'
+	//        annotations+=CommentAnnotatonSL?
+	//        declarations+=Declaration*
+	//        statements+=Statement*
+	//    '}')?
+	//;
 	public MethodDeclarationWOSemicolonElements getMethodDeclarationWOSemicolonAccess() {
 		return pMethodDeclarationWOSemicolon;
 	}
@@ -2311,20 +2692,22 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	///**
 	// * @author ssm
-	// * @kieler.design 2015-08-23 proposed 
+	// * @kieler.design 2015-08-23 proposed
 	// * @kieler.rating 2015-08-23 proposed yellow
-	// */ /*
+	// */
+	///*
 	// * KEXT (KText) provides a general stub for subsequent grammars that will use kexpressions, keffects
-	// * and need some kind of declaration mechanism. It is also used to generate the textual KEXT language 
-	// * that is used for testing kexpressions and keffects.  
-	// */ // ------------ //
-	////  KEXT Rules  // 
+	// * and need some kind of declaration mechanism. It is also used to generate the textual KEXT language
+	// * that is used for testing kexpressions and keffects.
+	// */
+	//// ------------ //
+	////  KEXT Rules  //
 	//// ------------ //
 	//// KEXT Rule
-	//// The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of 
+	//// The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of
 	//// test entities may follow.
-	//Kext kext::Kext:
-	//	scopes+=RootScope;
+	//Kext returns kext::Kext:
+	//    scopes+=RootScope;
 	public KExtGrammarAccess.KextElements getKextAccess() {
 		return gaKExt.getKextAccess();
 	}
@@ -2333,9 +2716,11 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getKextAccess().getRule();
 	}
 	
-	//RootScope kext::KExtScope:
-	//	{kext::KExtScope} declarations+=Declaration*
-	//	entities+=TestEntity* ('scope' scopes+=Scope)*;
+	//RootScope returns kext::KExtScope:
+	//    {kext::KExtScope}
+	//    declarations+=Declaration*
+	//    entities+=TestEntity*
+	//    ('scope' scopes+=Scope)*;
 	public KExtGrammarAccess.RootScopeElements getRootScopeAccess() {
 		return gaKExt.getRootScopeAccess();
 	}
@@ -2344,10 +2729,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getRootScopeAccess().getRule();
 	}
 	
-	//Scope kext::KExtScope:
-	//	{kext::KExtScope} name=ID? '{'
-	//	declarations+=Declaration*
-	//	entities+=TestEntity* ('scope' scopes+=Scope)* '}';
+	//Scope returns kext::KExtScope:
+	//    {kext::KExtScope}
+	//    (name=ID)? '{'
+	//    declarations+=Declaration*
+	//    entities+=TestEntity*
+	//    ('scope' scopes+=Scope)* '}';
 	public KExtGrammarAccess.ScopeElements getScopeAccess() {
 		return gaKExt.getScopeAccess();
 	}
@@ -2358,8 +2745,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	//// Test Entity Rule
 	//// A test entity is either an annotation expression or an effect.
-	//TestEntity kext::TestEntity:
-	//	expression=(AnnotatedExpression | AnnotatedJsonExpression) | effect=Effect;
+	//TestEntity returns kext::TestEntity:
+	//    expression=(AnnotatedExpression | AnnotatedJsonExpression) | effect=Effect;
 	public KExtGrammarAccess.TestEntityElements getTestEntityAccess() {
 		return gaKExt.getTestEntityAccess();
 	}
@@ -2371,10 +2758,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// Annotated Expression Rule
 	//// An annotated expression is declared with the keyword "expression". It may be preceded by a list
 	//// of annotations. The expression itself follows the keyword.
-	//AnnotatedExpression kext::AnnotatedExpression:
-	//	annotations+=Annotation*
-	//	'expression'
-	//	expression=Expression;
+	//AnnotatedExpression returns kext::AnnotatedExpression:
+	//    annotations+=Annotation*
+	//    'expression'
+	//    expression=Expression;
 	public KExtGrammarAccess.AnnotatedExpressionElements getAnnotatedExpressionAccess() {
 		return gaKExt.getAnnotatedExpressionAccess();
 	}
@@ -2383,10 +2770,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getAnnotatedExpressionAccess().getRule();
 	}
 	
-	//AnnotatedJsonExpression kext::AnnotatedExpression:
-	//	annotations+=Annotation*
-	//	'json'
-	//	expression=JsonObjectValue;
+	//AnnotatedJsonExpression returns kext::AnnotatedExpression:
+	//    annotations+=Annotation*
+	//    'json'
+	//    expression=JsonObjectValue;
 	public KExtGrammarAccess.AnnotatedJsonExpressionElements getAnnotatedJsonExpressionAccess() {
 		return gaKExt.getAnnotatedJsonExpressionAccess();
 	}
@@ -2400,9 +2787,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// this centralized declaration rule should replace any other declaration in drived grammars.
 	//// It may start with arbitrary many declarations followed by keywords affecting the type of the
 	//// valued objects that follow.
-	//// Examples: const float pi = 3.14, input signal I, output bool z  
-	//Declaration kexpressions::Declaration:
-	//	VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration | ClassDeclaration;
+	//// Examples: const float pi = 3.14, input signal I, output bool z
+	//Declaration returns kexpressions::Declaration:
+	//    VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration | ClassDeclaration;
 	public KExtGrammarAccess.DeclarationElements getDeclarationAccess() {
 		return gaKExt.getDeclarationAccess();
 	}
@@ -2411,9 +2798,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getDeclarationAccess().getRule();
 	}
 	
-	//DeclarationWOSemicolon kexpressions::Declaration:
-	//	VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon |
-	//	ClassDeclarationWOSemicolon;
+	//DeclarationWOSemicolon returns kexpressions::Declaration:
+	//    VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon | ClassDeclarationWOSemicolon;
 	public KExtGrammarAccess.DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
 		return gaKExt.getDeclarationWOSemicolonAccess();
 	}
@@ -2422,16 +2808,20 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getDeclarationWOSemicolonAccess().getRule();
 	}
 	
-	//VariableDeclaration kexpressions::VariableDeclaration:
-	//	annotations+=Annotation*
-	//	access=AccessModifier?
-	//	const?='const'?
-	//	input?='input'?
-	//	output?='output'?
-	//	global?='global'?
-	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING)
-	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
-	//	annotations+=CommentAnnotatonSL?;
+	//VariableDeclaration returns kexpressions::VariableDeclaration:
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    const?='const'?
+	//    input?='input'?
+	//    output?='output'?
+	//    global?='global'?
+	//    static?='static'?
+	//    ((signal?='signal'? type = ValueType) |
+	//        signal?='signal' |
+	//        (type = HostType hostType = STRING)
+	//    )
+	//    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	//    annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.VariableDeclarationElements getVariableDeclarationAccess() {
 		return gaKExt.getVariableDeclarationAccess();
 	}
@@ -2440,16 +2830,20 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getVariableDeclarationAccess().getRule();
 	}
 	
-	//VariableDeclarationWOSemicolon kexpressions::VariableDeclaration:
-	//	annotations+=Annotation*
-	//	access=AccessModifier?
-	//	const?='const'?
-	//	input?='input'?
-	//	output?='output'?
-	//	global?='global'?
-	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING)
-	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
-	//	annotations+=CommentAnnotatonSL?;
+	//VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    const?='const'?
+	//    input?='input'?
+	//    output?='output'?
+	//    global?='global'?
+	//    static?='static'?
+	//    ((signal?='signal'? type = ValueType) |
+	//        signal?='signal' |
+	//        (type = HostType hostType = STRING)
+	//    )
+	//    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//    annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.VariableDeclarationWOSemicolonElements getVariableDeclarationWOSemicolonAccess() {
 		return gaKExt.getVariableDeclarationWOSemicolonAccess();
 	}
@@ -2458,26 +2852,33 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getVariableDeclarationWOSemicolonAccess().getRule();
 	}
 	
-	//ClassDeclaration kext::ClassDeclaration:
-	//	{kext::ClassDeclaration} annotations+=Annotation*
-	//	access=AccessModifier?
-	//	const?='const'?
-	//	input?='input'?
-	//	output?='output'?
-	//	global?='global'?
-	//	static?='static'?
-	//	host?='host'? (type=ClassType
-	//	name=EString?
-	//	'{'
-	//	declarations+=DeclarationOrMethod*
-	//	'}'
-	//	| type=StructType
-	//	name=EString?
-	//	'{'
-	//	declarations+=Declaration*
-	//	'}') (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
-	//	';'
-	//	annotations+=CommentAnnotatonSL?;
+	//ClassDeclaration returns kext::ClassDeclaration:
+	//    {kext::ClassDeclaration}
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    const?='const'?
+	//    input?='input'?
+	//    output?='output'?
+	//    global?='global'?
+	//    static?='static'?
+	//    host?='host'?
+	//    ((
+	//        type = ClassType
+	//        (name = EString)?
+	//        '{'
+	//            declarations+=DeclarationOrMethod*
+	//        '}'
+	//    )|(
+	//        type = StructType
+	//        (name = EString)?
+	//        '{'
+	//            declarations+=Declaration*
+	//        '}'
+	//    ))
+	//    (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+	//    ';'
+	//    annotations+=CommentAnnotatonSL?
+	//;
 	public KExtGrammarAccess.ClassDeclarationElements getClassDeclarationAccess() {
 		return gaKExt.getClassDeclarationAccess();
 	}
@@ -2486,8 +2887,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getClassDeclarationAccess().getRule();
 	}
 	
-	//DeclarationOrMethod kexpressions::Declaration:
-	//	Declaration | super::MethodDeclaration;
+	//DeclarationOrMethod returns kexpressions::Declaration:
+	//    Declaration | EnumDeclaration | MethodDeclaration
+	//;
 	public KExtGrammarAccess.DeclarationOrMethodElements getDeclarationOrMethodAccess() {
 		return gaKExt.getDeclarationOrMethodAccess();
 	}
@@ -2496,25 +2898,32 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getDeclarationOrMethodAccess().getRule();
 	}
 	
-	//ClassDeclarationWOSemicolon kext::ClassDeclaration:
-	//	{kext::ClassDeclaration} annotations+=Annotation*
-	//	access=AccessModifier?
-	//	const?='const'?
-	//	input?='input'?
-	//	output?='output'?
-	//	global?='global'?
-	//	static?='static'?
-	//	host?='host'? (type=ClassType
-	//	name=EString?
-	//	'{'
-	//	declarations+=DeclarationOrMethodWOSemicolon*
-	//	'}'
-	//	| type=StructType
-	//	name=EString?
-	//	'{'
-	//	declarations+=DeclarationWOSemicolon*
-	//	'}') (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
-	//	annotations+=CommentAnnotatonSL?;
+	//ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
+	//    {kext::ClassDeclaration}
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    const?='const'?
+	//    input?='input'?
+	//    output?='output'?
+	//    global?='global'?
+	//    static?='static'?
+	//    host?='host'?
+	//    ((
+	//        type = ClassType
+	//        (name = EString)?
+	//        '{'
+	//            declarations+=DeclarationOrMethodWOSemicolon*
+	//        '}'
+	//    )|(
+	//        type = StructType
+	//        (name = EString)?
+	//        '{'
+	//            declarations+=DeclarationWOSemicolon*
+	//        '}'
+	//    ))
+	//    (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+	//    annotations+=CommentAnnotatonSL?
+	//;
 	public KExtGrammarAccess.ClassDeclarationWOSemicolonElements getClassDeclarationWOSemicolonAccess() {
 		return gaKExt.getClassDeclarationWOSemicolonAccess();
 	}
@@ -2523,8 +2932,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getClassDeclarationWOSemicolonAccess().getRule();
 	}
 	
-	//DeclarationOrMethodWOSemicolon kexpressions::Declaration:
-	//	DeclarationWOSemicolon | super::MethodDeclarationWOSemicolon;
+	//DeclarationOrMethodWOSemicolon returns kexpressions::Declaration:
+	//    DeclarationWOSemicolon | EnumDeclarationWOSemicolon | MethodDeclarationWOSemicolon
+	//;
 	public KExtGrammarAccess.DeclarationOrMethodWOSemicolonElements getDeclarationOrMethodWOSemicolonAccess() {
 		return gaKExt.getDeclarationOrMethodWOSemicolonAccess();
 	}
@@ -2533,14 +2943,78 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getDeclarationOrMethodWOSemicolonAccess().getRule();
 	}
 	
-	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation*
-	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] ('<'
-	//	genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')?
-	//	|
-	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ReferenceValuedObject (','
-	//	valuedObjects+=ReferenceValuedObject)* ';'
-	//	annotations+=CommentAnnotatonSL?;
+	//EnumDeclaration returns kext::ClassDeclaration:
+	//    {kext::ClassDeclaration}
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    host?='host'?
+	//    type = EnumType
+	//    valuedObjects+=SimpleValuedObject
+	//    (hostType=STRING)?
+	//    '{'
+	//        declarations+=EnumMemberDeclaration
+	//        ';'
+	//    '}'
+	//    ';'
+	//    annotations+=CommentAnnotatonSL?
+	//;
+	public KExtGrammarAccess.EnumDeclarationElements getEnumDeclarationAccess() {
+		return gaKExt.getEnumDeclarationAccess();
+	}
+	
+	public ParserRule getEnumDeclarationRule() {
+		return getEnumDeclarationAccess().getRule();
+	}
+	
+	//EnumMemberDeclaration returns kexpressions::VariableDeclaration:
+	//    annotations+=QuotedStringAnnotation*
+	//    valuedObjects+=SimpleValuedObject (',' valuedObjects+=SimpleValuedObject)*
+	//    annotations+=CommentAnnotatonSL?
+	//;
+	public KExtGrammarAccess.EnumMemberDeclarationElements getEnumMemberDeclarationAccess() {
+		return gaKExt.getEnumMemberDeclarationAccess();
+	}
+	
+	public ParserRule getEnumMemberDeclarationRule() {
+		return getEnumMemberDeclarationAccess().getRule();
+	}
+	
+	//EnumDeclarationWOSemicolon returns kext::ClassDeclaration:
+	//    {kext::ClassDeclaration}
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    host?='host'?
+	//    type = EnumType
+	//    valuedObjects+=SimpleValuedObject
+	//    (hostType = STRING)?
+	//    '{'
+	//        declarations+=EnumMemberDeclaration
+	//    '}'
+	//    annotations+=CommentAnnotatonSL?
+	//;
+	public KExtGrammarAccess.EnumDeclarationWOSemicolonElements getEnumDeclarationWOSemicolonAccess() {
+		return gaKExt.getEnumDeclarationWOSemicolonAccess();
+	}
+	
+	public ParserRule getEnumDeclarationWOSemicolonRule() {
+		return getEnumDeclarationWOSemicolonAccess().getRule();
+	}
+	
+	//ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    ((
+	//        'ref'
+	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
+	//        reference = [annotations::NamedObject|PrimeID]
+	//        ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+	//        valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)*
+	//    ) | (
+	//        'extern' extern += ExternString (',' extern += ExternString)*
+	//        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//    ))
+	//    ';'
+	//    annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ReferenceDeclarationElements getReferenceDeclarationAccess() {
 		return gaKExt.getReferenceDeclarationAccess();
 	}
@@ -2549,14 +3023,20 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getReferenceDeclarationAccess().getRule();
 	}
 	
-	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation*
-	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] ('<'
-	//	genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')?
-	//	|
-	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ReferenceValuedObject (','
-	//	valuedObjects+=ReferenceValuedObject)*
-	//	annotations+=CommentAnnotatonSL?;
+	//ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    ((
+	//        'ref'
+	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
+	//        reference = [annotations::NamedObject|PrimeID]
+	//        ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+	//        valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)*
+	//    ) | (
+	//        'extern' extern += ExternString (',' extern += ExternString)*
+	//        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//    ))
+	//    annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
 		return gaKExt.getReferenceDeclarationWOSemicolonAccess();
 	}
@@ -2565,9 +3045,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getReferenceDeclarationWOSemicolonAccess().getRule();
 	}
 	
-	//ExternString kexpressions::ExternString:
-	//	annotations+=TagAnnotation*
-	//	code=STRING;
+	//ExternString returns kexpressions::ExternString:
+	//    annotations+=TagAnnotation*
+	//    code = STRING
+	//;
 	public KExtGrammarAccess.ExternStringElements getExternStringAccess() {
 		return gaKExt.getExternStringAccess();
 	}
@@ -2579,10 +3060,15 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// ---
 	////  Generics
 	//// ---
-	//GenericParameterDeclaration kexpressions::GenericParameterDeclaration:
-	//	annotations+=QuotedStringAnnotation*
-	//	valuedObjects+=SimpleValuedObject ('is' valueType=ValueType | 'is' reference?='ref'?
-	//	type=[annotations::NamedObject|PrimeID])?;
+	//GenericParameterDeclaration returns kexpressions::GenericParameterDeclaration:
+	//    annotations+=QuotedStringAnnotation*
+	//    valuedObjects+=SimpleValuedObject
+	//    (
+	//        ('is' valueType = ValueType)
+	//        |
+	//        ('is' (reference?='ref')? type = [annotations::NamedObject|PrimeID])
+	//    )?
+	//;
 	public KExtGrammarAccess.GenericParameterDeclarationElements getGenericParameterDeclarationAccess() {
 		return gaKExt.getGenericParameterDeclarationAccess();
 	}
@@ -2591,14 +3077,21 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getGenericParameterDeclarationAccess().getRule();
 	}
 	
-	//GenericParameter kexpressions::Parameter:
-	//	expression=(ValueTypeReference
-	//	| AnyValue
-	//	| GenericParameter_GenericTypeReference_Parameterized
-	//	| GenericParameter_ValuedObjectReference_Array
-	//	| GenericParameter_ValuedObjectReference_Sub
-	//	| GenericTypeReference
-	//	| ValuedObjectReference);
+	//GenericParameter returns kexpressions::Parameter:
+	//    // Both VOReference and GenericTypeReference will always match for simple names (PrimeID).
+	//    // Here GenericTypeReference has precedence and has to cover certain
+	//    // references to VOs. This needs to be specifically handled in the scoper and in the resource
+	//    // by using the KExtGenericParamterConverter.
+	//    // Furthermore, optional parts may cause VORs accepted by GTRs even if there is an array
+	//    // index or sub reference specified, this is why there are special non-optional rules.
+	//    expression = (ValueTypeReference
+	//                 | AnyValue
+	//                 | GenericParameter_GenericTypeReference_Parameterized
+	//                 | GenericParameter_ValuedObjectReference_Array
+	//                 | GenericParameter_ValuedObjectReference_Sub
+	//                 | GenericTypeReference
+	//                 | ValuedObjectReference)
+	//;
 	public KExtGrammarAccess.GenericParameterElements getGenericParameterAccess() {
 		return gaKExt.getGenericParameterAccess();
 	}
@@ -2607,8 +3100,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getGenericParameterAccess().getRule();
 	}
 	
-	//ValueTypeReference kexpressions::ValueTypeReference:
-	//	valueType=ValueType;
+	//ValueTypeReference returns kexpressions::ValueTypeReference:
+	//    valueType = ValueType
+	//;
 	public KExtGrammarAccess.ValueTypeReferenceElements getValueTypeReferenceAccess() {
 		return gaKExt.getValueTypeReferenceAccess();
 	}
@@ -2617,9 +3111,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getValueTypeReferenceAccess().getRule();
 	}
 	
-	//GenericTypeReference kexpressions::GenericTypeReference:
-	//	type=[annotations::NamedObject|PrimeID] ('<' genericParameters+=GenericParameter (','
-	//	genericParameters+=GenericParameter)* '>')?;
+	//GenericTypeReference returns kexpressions::GenericTypeReference:
+	//    type = [annotations::NamedObject|PrimeID]
+	//    ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+	//;
 	public KExtGrammarAccess.GenericTypeReferenceElements getGenericTypeReferenceAccess() {
 		return gaKExt.getGenericTypeReferenceAccess();
 	}
@@ -2629,9 +3124,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// Special rules for GenericParameter parsing
-	//GenericParameter_GenericTypeReference_Parameterized kexpressions::GenericTypeReference:
-	//	type=[annotations::NamedObject|PrimeID]
-	//	'<' genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>' // mandatory
+	//GenericParameter_GenericTypeReference_Parameterized returns kexpressions::GenericTypeReference:
+	//    type = [annotations::NamedObject|PrimeID]
+	//    '<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>' // mandatory
 	//;
 	public KExtGrammarAccess.GenericParameter_GenericTypeReference_ParameterizedElements getGenericParameter_GenericTypeReference_ParameterizedAccess() {
 		return gaKExt.getGenericParameter_GenericTypeReference_ParameterizedAccess();
@@ -2641,9 +3136,11 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getGenericParameter_GenericTypeReference_ParameterizedAccess().getRule();
 	}
 	
-	//GenericParameter_ValuedObjectReference_Array kexpressions::ValuedObjectReference:
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')+ ('.'
-	//	subReference=ValuedObjectReference)?;
+	//GenericParameter_ValuedObjectReference_Array returns kexpressions::ValuedObjectReference:
+	//    valuedObject=[kexpressions::ValuedObject|PrimeID]
+	//    ('[' indices+=Expression ']')+ // mandatory
+	//    ('.' subReference=ValuedObjectReference)?
+	//;
 	public KExtGrammarAccess.GenericParameter_ValuedObjectReference_ArrayElements getGenericParameter_ValuedObjectReference_ArrayAccess() {
 		return gaKExt.getGenericParameter_ValuedObjectReference_ArrayAccess();
 	}
@@ -2652,9 +3149,11 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getGenericParameter_ValuedObjectReference_ArrayAccess().getRule();
 	}
 	
-	//GenericParameter_ValuedObjectReference_Sub kexpressions::ValuedObjectReference:
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
-	//	subReference=ValuedObjectReference);
+	//GenericParameter_ValuedObjectReference_Sub returns kexpressions::ValuedObjectReference:
+	//    valuedObject=[kexpressions::ValuedObject|PrimeID]
+	//    ('[' indices+=Expression ']')*
+	//    ('.' subReference=ValuedObjectReference) // mandatory
+	//;
 	public KExtGrammarAccess.GenericParameter_ValuedObjectReference_SubElements getGenericParameter_ValuedObjectReference_SubAccess() {
 		return gaKExt.getGenericParameter_ValuedObjectReference_SubAccess();
 	}
@@ -2664,15 +3163,16 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// ---
-	////  Scheduling Directives 
+	////  Scheduling Directives
 	//// ---
-	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
-	//	annotations+=Annotation*
-	//	access=AccessModifier?
-	//	'schedule' name=STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
-	//	priorities+=PriorityProtocol)* '}')?
-	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
-	//	annotations+=CommentAnnotatonSL?;
+	//ScheduleDeclaration returns kexpressions::ScheduleDeclaration:
+	//    annotations += Annotation*
+	//    access=AccessModifier?
+	//    'schedule' name=STRING?
+	//    ('global' global = PriorityProtocol)?
+	//    ('{' priorities += PriorityProtocol (',' priorities += PriorityProtocol)* '}')?
+	//    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	//    annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ScheduleDeclarationElements getScheduleDeclarationAccess() {
 		return gaKExt.getScheduleDeclarationAccess();
 	}
@@ -2681,13 +3181,14 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getScheduleDeclarationAccess().getRule();
 	}
 	
-	//ScheduleDeclarationWOSemicolon kexpressions::ScheduleDeclaration:
-	//	annotations+=Annotation*
-	//	access=AccessModifier?
-	//	'schedule' name=STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
-	//	priorities+=PriorityProtocol)* '}')?
-	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
-	//	annotations+=CommentAnnotatonSL?;
+	//ScheduleDeclarationWOSemicolon returns kexpressions::ScheduleDeclaration:
+	//    annotations += Annotation*
+	//    access=AccessModifier?
+	//    'schedule' name=STRING?
+	//    ('global' global = PriorityProtocol)?
+	//    ('{' priorities += PriorityProtocol (',' priorities += PriorityProtocol)* '}')?
+	//    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//    annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ScheduleDeclarationWOSemicolonElements getScheduleDeclarationWOSemicolonAccess() {
 		return gaKExt.getScheduleDeclarationWOSemicolonAccess();
 	}
@@ -2697,7 +3198,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum PriorityProtocol returns kexpressions::PriorityProtocol:
-	//	CONFLICT="conflicting" | CONFLUENT="commuting";
+	//    CONFLICT="conflicting" | CONFLUENT="commuting";
 	public KExtGrammarAccess.PriorityProtocolElements getPriorityProtocolAccess() {
 		return gaKExt.getPriorityProtocolAccess();
 	}
@@ -2707,13 +3208,18 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// Valued Object Rule
-	//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
-	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
+	//// A valued object is identified by its name. Then, a part for its cardinalities and an initial
+	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part.
 	//// Examples: array[10], initial = false, z = 0 combine max
-	//ValuedObject kexpressions::ValuedObject:
-	//	annotations+=QuotedStringAnnotation*
-	//	name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
-	//	combineOperator=CombineOperator)? ('label' label=STRING)?;
+	//ValuedObject returns kexpressions::ValuedObject:
+	//    annotations+=QuotedStringAnnotation*
+	//    name=PrimeID
+	//    ('[' cardinalities+=Expression ']')*
+	//    ('=' initialValue=Expression)?
+	//    ( 'combine'
+	//      (combineOperator = CombineOperator)
+	//    )?
+	//    ('label' label=STRING)?;
 	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKExt.getValuedObjectAccess();
 	}
@@ -2722,11 +3228,15 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getValuedObjectAccess().getRule();
 	}
 	
-	//ReferenceValuedObject kexpressions::ValuedObject:
-	//	annotations+=QuotedStringAnnotation*
-	//	name=PrimeID ('[' cardinalities+=Expression ']')* ('<' genericParameters+=GenericParameter (','
-	//	genericParameters+=GenericParameter)* '>')? ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')?
-	//	('label' label=STRING)?;
+	//ReferenceValuedObject returns kexpressions::ValuedObject:
+	//    {kexpressions::ValuedObject}
+	//    annotations+=QuotedStringAnnotation*
+	//    name=PrimeID
+	//    ('[' cardinalities+=Expression ']')*
+	//    ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+	//    (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
+	//    ('=' initialValue=Expression)?
+	//    ('label' label=STRING)?;
 	public KExtGrammarAccess.ReferenceValuedObjectElements getReferenceValuedObjectAccess() {
 		return gaKExt.getReferenceValuedObjectAccess();
 	}
@@ -2735,9 +3245,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getReferenceValuedObjectAccess().getRule();
 	}
 	
-	//SimpleValuedObject kexpressions::ValuedObject:
-	//	annotations+=QuotedStringAnnotation*
-	//	name=PrimeID;
+	//SimpleValuedObject returns kexpressions::ValuedObject:
+	//    annotations+=QuotedStringAnnotation*
+	//    name=PrimeID;
 	public KExtGrammarAccess.SimpleValuedObjectElements getSimpleValuedObjectAccess() {
 		return gaKExt.getSimpleValuedObjectAccess();
 	}
@@ -2746,8 +3256,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getSimpleValuedObjectAccess().getRule();
 	}
 	
-	//NamespaceID:
-	//	ExtendedID (':' PrimeID)*;
+	//NamespaceID returns ecore::EString:
+	//  ExtendedID (':' PrimeID)*;
 	public KExtGrammarAccess.NamespaceIDElements getNamespaceIDAccess() {
 		return gaKExt.getNamespaceIDAccess();
 	}
@@ -2758,24 +3268,33 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	///**
 	// * @author ssm
-	// * @kieler.design 2015-08-23 proposed 
+	// * @kieler.design 2015-08-23 proposed
 	// * @kieler.rating 2015-08-23 proposed yellow
-	// */ /*
+	// */
+	///*
 	// * KEffects allow deriving grammars to use a range of different effects, namely assignments,
 	// * postfix effects, esterel like emissions, host code and function call effects.
 	// * Of course other grammars may extend this list.
-	// */ // ---------------- //
-	////  KEffects Rules  // 
+	// */
+	//// ---------------- //
+	////  KEffects Rules  //
 	//// ---------------- //
 	//// Effect Rule
-	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
+	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a
 	//// function call effect.
 	//// NOTE: Emission has precedence before ReferenceCallEffect and consumes simple refecerence call grammar using this rule
 	//// should to use the KEffectsEmissionReferenceCallConverter to convert these Emissions back to ReferenceCallEffects.
 	//// If precedence is changed the converter has to be adapted too.
-	//Effect keffects::Effect:
-	//	Assignment | PostfixEffect | ValuedEmission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect |
-	//	PrintCallEffect | RandomizeCallEffect | PureEmission;
+	//Effect returns keffects::Effect:
+	//    Assignment |
+	//    PostfixEffect |
+	//    ValuedEmission | // Will consume some ReferenceCallEffects
+	//    HostcodeEffect |
+	//    ReferenceCallEffect |
+	//    FunctionCallEffect |
+	//    PrintCallEffect |
+	//    RandomizeCallEffect |
+	//    PureEmission;
 	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
 		return gaKEffects.getEffectAccess();
 	}
@@ -2787,13 +3306,14 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// Emission Rule
 	//// An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
 	//// an emission for a specific signal to emit it. Additionally, emission may include a parameter part for
-	//// a new value in the case of valued signals. 
+	//// a new value in the case of valued signals.
 	//// Example: A, B(2)
-	//// Important: To help the parser and to avoid ambiguities, emissions may only allow restricted 
-	//// annotations defined in the annotations grammar.		
-	//PureEmission keffects::Emission:
-	//	annotations+=QuotedStringAnnotation*
-	//	reference=ValuedObjectReference ('schedule' schedule+=ScheduleObjectReference+)?;
+	//// Important: To help the parser and to avoid ambiguities, emissions may only allow restricted
+	//// annotations defined in the annotations grammar.
+	//PureEmission returns keffects::Emission:
+	//    (annotations+=QuotedStringAnnotation)*
+	//    reference=ValuedObjectReference
+	//    ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PureEmissionElements getPureEmissionAccess() {
 		return gaKEffects.getPureEmissionAccess();
 	}
@@ -2804,10 +3324,11 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	//// Valued emission must be separated from normal emission to allow correct parsing in combination with referece calls
 	//// Problematic case f(), here the emission rule must not even partially (optional value part) match to allow parsing as referece call
-	//ValuedEmission keffects::Emission:
-	//	annotations+=QuotedStringAnnotation*
-	//	reference=ValuedObjectReference
-	//	"(" newValue=Expression ")" ('schedule' schedule+=ScheduleObjectReference+)?;
+	//ValuedEmission returns keffects::Emission:
+	//    (annotations+=QuotedStringAnnotation)*
+	//    reference=ValuedObjectReference
+	//    "(" newValue = Expression ")"
+	//    ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.ValuedEmissionElements getValuedEmissionAccess() {
 		return gaKEffects.getValuedEmissionAccess();
 	}
@@ -2816,8 +3337,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getValuedEmissionAccess().getRule();
 	}
 	
-	//PureOrValuedEmission keffects::Emission:
-	//	ValuedEmission | PureEmission;
+	//PureOrValuedEmission returns keffects::Emission:
+	//    ValuedEmission | PureEmission;
 	public KEffectsGrammarAccess.PureOrValuedEmissionElements getPureOrValuedEmissionAccess() {
 		return gaKEffects.getPureOrValuedEmissionAccess();
 	}
@@ -2828,13 +3349,14 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	//// Assignment Rule
 	//// An assignment may start with a list of arbitrary annotatations.
-	//// Then, an arbitrary expression is assigned to a valued object. The object may be suffixed by an 
+	//// Then, an arbitrary expression is assigned to a valued object. The object may be suffixed by an
 	//// indices part. The type of assignment is determined by the type of the operator.
-	//// Example: A = true, I[0] = I[1], I += 1     
-	//Assignment keffects::Assignment:
-	//	annotations+=Annotation*
-	//	reference=ValuedObjectReference
-	//	operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?;
+	//// Example: A = true, I[0] = I[1], I += 1
+	//Assignment returns keffects::Assignment:
+	//    (annotations+=Annotation)*
+	//    reference=ValuedObjectReference
+	//    operator=AssignOperator expression = Expression
+	//    ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.AssignmentElements getAssignmentAccess() {
 		return gaKEffects.getAssignmentAccess();
 	}
@@ -2844,18 +3366,19 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	////SubReferenceAssignment returns keffects::Assignment:
-	////    (annotations+=Annotation)*    
+	////    (annotations+=Annotation)*
 	////    valuedObject=ValuedObjectReference
 	////     operator=AssignOperator expression = Expression
-	////     ('schedule' schedule+=ScheduleObjectReference+)?;	 
+	////     ('schedule' schedule+=ScheduleObjectReference+)?;
 	//// Postfix Effect
 	//// A postfix effect is an assignment missing the part beyond the operator. In this case the operator type
 	//// must be a postfix operator.
-	//// Example: I++, I-- 
-	//PostfixEffect keffects::Assignment:
-	//	annotations+=Annotation*
-	//	reference=ValuedObjectReference
-	//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?;
+	//// Example: I++, I--
+	//PostfixEffect returns keffects::Assignment:
+	//    (annotations+=Annotation)*
+	//    reference=ValuedObjectReference
+	//    operator=PostfixOperator
+	//    ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PostfixEffectElements getPostfixEffectAccess() {
 		return gaKEffects.getPostfixEffectAccess();
 	}
@@ -2866,9 +3389,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	//// Hostcode Effect Rule
 	//// A hostcode effect is an effect that include hostcode. It may be preceded by a list of annotations.
-	//HostcodeEffect keffects::HostcodeEffect:
-	//	annotations+=Annotation*
-	//	text=HOSTCODE;
+	//HostcodeEffect returns keffects::HostcodeEffect:
+	//    (annotations+=Annotation)*
+	//     text=HOSTCODE;
 	public KEffectsGrammarAccess.HostcodeEffectElements getHostcodeEffectAccess() {
 		return gaKEffects.getHostcodeEffectAccess();
 	}
@@ -2880,11 +3403,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// Reference Call Effect Rule
 	//// A reference call effect works similar to the reference call expression. Additionally, it may be
 	//// preceded by a list of annotations.
-	//ReferenceCallEffect keffects::ReferenceCallEffect:
-	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
-	//	subReference=ValuedObjectReference)? ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()') ('schedule'
-	//	schedule+=ScheduleObjectReference+)?;
+	//ReferenceCallEffect returns keffects::ReferenceCallEffect:
+	//    (annotations+=Annotation)*
+	//    valuedObject=[kexpressions::ValuedObject|PrimeID]
+	//    ('[' indices+=Expression ']')*
+	//    ('.' subReference=ValuedObjectReference)?
+	//    (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')
+	//    ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -2896,9 +3421,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// Function Call Effect Rule
 	//// A function call effect works similar to the function call expression. Additionally, it may be
 	//// preceded by a list of annotations.
-	//FunctionCallEffect keffects::FunctionCallEffect:
-	//	annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()'));
+	//FunctionCallEffect returns keffects::FunctionCallEffect:
+	//    (annotations+=Annotation)*
+	//    ('extern' functionName = ID
+	//        (('(' parameters += Parameter
+	//            (',' parameters += Parameter)* ')'
+	//        ) | '()')
+	//    );
 	public KEffectsGrammarAccess.FunctionCallEffectElements getFunctionCallEffectAccess() {
 		return gaKEffects.getFunctionCallEffectAccess();
 	}
@@ -2908,10 +3437,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// Print Call Effect Rule
-	//// A print functions that enables target-independent prints in the model.    
-	//PrintCallEffect keffects::PrintCallEffect:
-	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//// A print functions that enables target-independent prints in the model.
+	//PrintCallEffect returns keffects::PrintCallEffect:
+	//    (annotations+=Annotation)*
+	//    'print'
+	//    ('(' parameters += Parameter (',' parameters += Parameter)* ')')
+	//    ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -2920,10 +3451,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getPrintCallEffectAccess().getRule();
 	}
 	
-	//RandomizeCallEffect keffects::RandomizeCallEffect:
-	//	{keffects::RandomizeCallEffect} annotations+=Annotation*
-	//	'randomize' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()');
+	//RandomizeCallEffect returns keffects::RandomizeCallEffect:
+	//    {keffects::RandomizeCallEffect}
+	//    (annotations+=Annotation)*
+	//    'randomize'
+	//        (('(' parameters += Parameter
+	//            (',' parameters += Parameter)* ')'
+	//        ) | '()');
 	public KEffectsGrammarAccess.RandomizeCallEffectElements getRandomizeCallEffectAccess() {
 		return gaKEffects.getRandomizeCallEffectAccess();
 	}
@@ -2932,11 +3466,15 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getRandomizeCallEffectAccess().getRule();
 	}
 	
+	//// ---------------- //
+	////  KEffects Enums  //
+	//// ---------------- //
+	//// Assign Operator Enum
 	//enum AssignOperator returns keffects::AssignOperator:
-	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" |
-	//	ASSIGNMOD="%=" | ASSIGNAND="&=" | ASSIGNOR="|=" | ASSIGNXOR="^=" |
-	//	ASSIGNSHIFTLEFT="<<=" | ASSIGNSHIFTRIGHT=">>=" | ASSIGNSHIFTRIGHTUNSIGNED=">>>=" |
-	//	ASSIGNMIN="min=" | ASSIGNMAX="max=";
+	//    ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" |
+	//    ASSIGNMOD="%=" | ASSIGNAND="&=" | ASSIGNOR="|=" | ASSIGNXOR="^=" |
+	//    ASSIGNSHIFTLEFT="<<=" | ASSIGNSHIFTRIGHT=">>=" | ASSIGNSHIFTRIGHTUNSIGNED=">>>=" |
+	//    ASSIGNMIN="min=" | ASSIGNMAX="max=";
 	public KEffectsGrammarAccess.AssignOperatorElements getAssignOperatorAccess() {
 		return gaKEffects.getAssignOperatorAccess();
 	}
@@ -2945,8 +3483,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getAssignOperatorAccess().getRule();
 	}
 	
+	//// Postfix Operator Enum
 	//enum PostfixOperator returns keffects::AssignOperator:
-	//	POSTFIXADD="++" | POSTFIXSUB="--";
+	//    POSTFIXADD="++" | POSTFIXSUB="--";
 	public KEffectsGrammarAccess.PostfixOperatorElements getPostfixOperatorAccess() {
 		return gaKEffects.getPostfixOperatorAccess();
 	}
@@ -2957,12 +3496,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	///**
 	// * @author ssm
-	// * @kieler.design 2015-08-21 proposed 
+	// * @kieler.design 2015-08-21 proposed
 	// * @kieler.rating 2015-08-21 proposed yellow
-	// */ // -------------------- //
-	////  KExpressions Rules  // 
+	// */
 	//// -------------------- //
-	///* Expression rules are organized in a chain. They pass the actual instance to the next rule but may 
+	////  KExpressions Rules  //
+	//// -------------------- //
+	///* Expression rules are organized in a chain. They pass the actual instance to the next rule but may
 	// * consume tokens to create a specific expression element. Following this pattern, complex constructs
 	// * can be created. This also implies an order of precedence.
 	// *
@@ -2994,10 +3534,11 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	// *                 + FloatValue
 	// *                 + StringValue
 	// *                 + AtomicExpression
-	// */ // Root Rule
+	// */
+	//// Root Rule
 	//// Always return an expression.
-	//Root ecore::EObject:
-	//	Expression;
+	//Root returns ecore::EObject:
+	//    Expression;
 	public KExpressionsGrammarAccess.RootElements getRootAccess() {
 		return gaKExpressions.getRootAccess();
 	}
@@ -3008,8 +3549,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	//// Expression Rule
 	//// An expression is either a boolean expression or a valued expression.
-	//Expression:
-	//	BoolExpression | ValuedExpression;
+	//Expression returns Expression:
+	//     (BoolExpression | ValuedExpression);
 	public KExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
 		return gaKExpressions.getExpressionAccess();
 	}
@@ -3019,10 +3560,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// Boolean Expression Rule
-	//// Boolean expression directs to logical or expression and kept for overview (and legacy) reason. 
+	//// Boolean expression directs to logical or expression and kept for overview (and legacy) reason.
 	//// One could skip directly to the next rule.
-	//BoolExpression Expression:
-	//	LogicalOrExpression;
+	//BoolExpression returns Expression:
+	//    LogicalOrExpression;
 	public KExpressionsGrammarAccess.BoolExpressionElements getBoolExpressionAccess() {
 		return gaKExpressions.getBoolExpressionAccess();
 	}
@@ -3034,9 +3575,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// Logical Or Expression Rule
 	//// Directs to the 'logical and' rule and may create an operator expression for 'logical or' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
-	//LogicalOrExpression Expression:
-	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
-	//	subExpressions+=LogicalAndExpression) ('||' subExpressions+=LogicalAndExpression)*)?;
+	//LogicalOrExpression returns Expression:
+	//    LogicalAndExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)
+	//        ('||' subExpressions+=LogicalAndExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.LogicalOrExpressionElements getLogicalOrExpressionAccess() {
 		return gaKExpressions.getLogicalOrExpressionAccess();
 	}
@@ -3048,9 +3592,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// Logical And Expression Rule
 	//// Directs to the 'bitwise or' rule and may create an operator expression for 'logical and' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
-	//LogicalAndExpression Expression:
-	//	BitwiseOrExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator
-	//	subExpressions+=BitwiseOrExpression) ('&&' subExpressions+=BitwiseOrExpression)*)?;
+	//LogicalAndExpression returns Expression:
+	//    BitwiseOrExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=LogicalAndOperator subExpressions+=BitwiseOrExpression)
+	//        ('&&' subExpressions+=BitwiseOrExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.LogicalAndExpressionElements getLogicalAndExpressionAccess() {
 		return gaKExpressions.getLogicalAndExpressionAccess();
 	}
@@ -3062,9 +3609,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// Bitwiese Or Expression Rule
 	//// Directs to the 'bitwise and' rule and may create an operator expression for 'bitwise or' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
-	//BitwiseOrExpression Expression:
-	//	BitwiseXOrExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
-	//	subExpressions+=BitwiseXOrExpression) ('|' subExpressions+=BitwiseXOrExpression)*)?;
+	//BitwiseOrExpression returns Expression:
+	//    BitwiseXOrExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=BitwiseOrOperator subExpressions+=BitwiseXOrExpression)
+	//        ('|' subExpressions+=BitwiseXOrExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.BitwiseOrExpressionElements getBitwiseOrExpressionAccess() {
 		return gaKExpressions.getBitwiseOrExpressionAccess();
 	}
@@ -3073,9 +3623,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getBitwiseOrExpressionAccess().getRule();
 	}
 	
-	//BitwiseXOrExpression Expression:
-	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseXOrOperator
-	//	subExpressions+=BitwiseAndExpression) ('^' subExpressions+=BitwiseAndExpression)*)?;
+	//BitwiseXOrExpression returns Expression:
+	//    BitwiseAndExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=BitwiseXOrOperator subExpressions+=BitwiseAndExpression)
+	//        ('^' subExpressions+=BitwiseAndExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.BitwiseXOrExpressionElements getBitwiseXOrExpressionAccess() {
 		return gaKExpressions.getBitwiseXOrExpressionAccess();
 	}
@@ -3087,9 +3640,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// Bitwise And Expression Rule
 	//// Directs to the compare rule and may create an operator expression for 'bitwise and' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
-	//BitwiseAndExpression Expression:
-	//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-	//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?;
+	//BitwiseAndExpression returns Expression:
+	//    CompareOperation
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=BitwiseAndOperator subExpressions+=CompareOperation)
+	//        ('&' subExpressions+=CompareOperation)*
+	//    )?;
 	public KExpressionsGrammarAccess.BitwiseAndExpressionElements getBitwiseAndExpressionAccess() {
 		return gaKExpressions.getBitwiseAndExpressionAccess();
 	}
@@ -3099,11 +3655,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// Compare Operation Rule
-	//// Directs to the 'not or valued expression' rule and may create an operator expression for compares. 
+	//// Directs to the 'not or valued expression' rule and may create an operator expression for compares.
 	//// Example: 42 <= val(A)
-	//CompareOperation Expression:
-	//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
-	//	subExpressions+=NotOrValuedExpression)?;
+	//CompareOperation returns Expression:
+	//    NotOrValuedExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        operator=CompareOperator subExpressions+=NotOrValuedExpression
+	//    )?;
 	public KExpressionsGrammarAccess.CompareOperationElements getCompareOperationAccess() {
 		return gaKExpressions.getCompareOperationAccess();
 	}
@@ -3114,9 +3672,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	//// 'Not or Valued Expression' Rule
 	//// ORDER IS IMPORTANT!
-	//NotOrValuedExpression Expression:
-	//	ValuedExpression
-	//	| NotExpression;
+	//NotOrValuedExpression returns Expression:
+	//    ValuedExpression
+	//    | NotExpression;
 	public KExpressionsGrammarAccess.NotOrValuedExpressionElements getNotOrValuedExpressionAccess() {
 		return gaKExpressions.getNotOrValuedExpressionAccess();
 	}
@@ -3125,8 +3683,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getNotOrValuedExpressionAccess().getRule();
 	}
 	
-	//BitwiseNotExpression Expression:
-	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression;
+	//BitwiseNotExpression returns Expression:
+	//    {OperatorExpression} operator=BitwiseNotOperator subExpressions+=(BitwiseNotExpression)
+	//    | AtomicExpression;
 	public KExpressionsGrammarAccess.BitwiseNotExpressionElements getBitwiseNotExpressionAccess() {
 		return gaKExpressions.getBitwiseNotExpressionAccess();
 	}
@@ -3139,8 +3698,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// Example: !A, !false, !(A or B)
 	//// At the latter we need the parents to indicate the right binding.
 	//// A 'not expression' can also redirect to an 'atomic expression' to maintain the rule chain.
-	//NotExpression Expression:
-	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | BitwiseNotExpression;
+	//NotExpression returns Expression:
+	//    {OperatorExpression} operator=NotOperator subExpressions+=(NotExpression)
+	//    | BitwiseNotExpression;
 	public KExpressionsGrammarAccess.NotExpressionElements getNotExpressionAccess() {
 		return gaKExpressions.getNotExpressionAccess();
 	}
@@ -3149,11 +3709,11 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getNotExpressionAccess().getRule();
 	}
 	
-	//// Valued Expression Rule    
+	//// Valued Expression Rule
 	//// Everything that evaluates to a primitive number value.
 	//// Similar to the boolean rule this rule is there for overview reasons.
-	//ValuedExpression Expression:
-	//	ShiftExpressions;
+	//ValuedExpression returns Expression:
+	//    ShiftExpressions;
 	public KExpressionsGrammarAccess.ValuedExpressionElements getValuedExpressionAccess() {
 		return gaKExpressions.getValuedExpressionAccess();
 	}
@@ -3162,11 +3722,16 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getValuedExpressionAccess().getRule();
 	}
 	
-	//ShiftExpressions Expression:
-	//	SumExpression ({OperatorExpression.subExpressions+=current} operator=ShiftLeftOperator subExpressions+=SumExpression
-	//	('<<' subExpressions+=SumExpression)* | {OperatorExpression.subExpressions+=current} operator=ShiftRightOperator
-	//	subExpressions+=SumExpression ('>>' subExpressions+=SumExpression)* | {OperatorExpression.subExpressions+=current}
-	//	operator=ShiftRightUnsignedOperator subExpressions+=SumExpression ('>>>' subExpressions+=SumExpression)*)*;
+	//ShiftExpressions returns Expression:
+	//    SumExpression
+	//    (
+	//    ({OperatorExpression.subExpressions+=current} operator=ShiftLeftOperator subExpressions+=SumExpression ('<<' subExpressions+=SumExpression)*)
+	//    |
+	//    ({OperatorExpression.subExpressions+=current} operator=ShiftRightOperator subExpressions+=SumExpression ('>>' subExpressions+=SumExpression)*)
+	//    |
+	//    ({OperatorExpression.subExpressions+=current} operator=ShiftRightUnsignedOperator subExpressions+=SumExpression ('>>>' subExpressions+=SumExpression)*)
+	//    )*
+	//;
 	public KExpressionsGrammarAccess.ShiftExpressionsElements getShiftExpressionsAccess() {
 		return gaKExpressions.getShiftExpressionsAccess();
 	}
@@ -3175,9 +3740,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getShiftExpressionsAccess().getRule();
 	}
 	
-	//ShiftLeftExpression Expression:
-	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
-	//	subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?;
+	//ShiftLeftExpression returns Expression:
+	//    SumExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=ShiftLeftOperator subExpressions+=ShiftRightExpression)
+	//        ('<<' subExpressions+=ShiftRightExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.ShiftLeftExpressionElements getShiftLeftExpressionAccess() {
 		return gaKExpressions.getShiftLeftExpressionAccess();
 	}
@@ -3186,9 +3754,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getShiftLeftExpressionAccess().getRule();
 	}
 	
-	//ShiftRightExpression Expression:
-	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
-	//	subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?;
+	//ShiftRightExpression returns Expression:
+	//    SumExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=ShiftRightOperator subExpressions+=ShiftRightUnsignedExpression)
+	//        ('>>' subExpressions+=ShiftRightUnsignedExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.ShiftRightExpressionElements getShiftRightExpressionAccess() {
 		return gaKExpressions.getShiftRightExpressionAccess();
 	}
@@ -3197,9 +3768,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getShiftRightExpressionAccess().getRule();
 	}
 	
-	//ShiftRightUnsignedExpression Expression:
-	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-	//	subExpressions+=SumExpression) ('>>>' subExpressions+=SumExpression)*)?;
+	//ShiftRightUnsignedExpression returns Expression:
+	//    SumExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=ShiftRightUnsignedOperator subExpressions+=SumExpression)
+	//        ('>>>' subExpressions+=SumExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.ShiftRightUnsignedExpressionElements getShiftRightUnsignedExpressionAccess() {
 		return gaKExpressions.getShiftRightUnsignedExpressionAccess();
 	}
@@ -3208,10 +3782,14 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getShiftRightUnsignedExpressionAccess().getRule();
 	}
 	
-	//SumExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
-	//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
-	//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
+	//SumExpression returns Expression:
+	//    ProductExpression
+	//    (
+	//    ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)*)
+	//    |
+	//    ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)
+	//    )*
+	//;
 	public KExpressionsGrammarAccess.SumExpressionElements getSumExpressionAccess() {
 		return gaKExpressions.getSumExpressionAccess();
 	}
@@ -3224,9 +3802,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// The rule directs the 'sub expression' rule and creates an operator expression for additions
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 1 + 2
-	//AddExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
-	//	subExpressions+=ProductExpression)*;
+	//AddExpression returns Expression:
+	//    ProductExpression
+	//    ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression)*
+	//;
 	public KExpressionsGrammarAccess.AddExpressionElements getAddExpressionAccess() {
 		return gaKExpressions.getAddExpressionAccess();
 	}
@@ -3239,9 +3818,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// The rule directs the 'mult expression' rule and creates an operator expression for subtractions
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: var(A) - i
-	//SubExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator
-	//	subExpressions+=ProductExpression)*;
+	//SubExpression returns Expression:
+	//    ProductExpression
+	//    ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression)*
+	//;
 	public KExpressionsGrammarAccess.SubExpressionElements getSubExpressionAccess() {
 		return gaKExpressions.getSubExpressionAccess();
 	}
@@ -3250,11 +3830,16 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getSubExpressionAccess().getRule();
 	}
 	
-	//ProductExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=NegExpression ('*'
-	//	subExpressions+=NegExpression)* | {OperatorExpression.subExpressions+=current} operator=DivOperator
-	//	subExpressions+=NegExpression ('/' subExpressions+=NegExpression)* | {OperatorExpression.subExpressions+=current}
-	//	operator=ModOperator subExpressions+=NegExpression ('%' subExpressions+=NegExpression)*)*;
+	//ProductExpression returns Expression:
+	//    NegExpression
+	//    (
+	//    ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=NegExpression ('*' subExpressions+=NegExpression)*)
+	//    |
+	//    ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=NegExpression ('/' subExpressions+=NegExpression)*)
+	//    |
+	//    ({OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=NegExpression ('%' subExpressions+=NegExpression)*)
+	//    )*
+	//;
 	public KExpressionsGrammarAccess.ProductExpressionElements getProductExpressionAccess() {
 		return gaKExpressions.getProductExpressionAccess();
 	}
@@ -3267,9 +3852,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// The rule directs the 'div expression' rule and creates an operator expression for multiplications
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
-	//MultExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
-	//	subExpressions+=NegExpression)*)?;
+	//MultExpression returns Expression:
+	//    NegExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=MultOperator subExpressions+=NegExpression)
+	//        ('*' subExpressions+=NegExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -3282,9 +3870,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// The rule directs the 'mod expression' rule and creates an operator expression for divisions
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 / 4
-	//DivExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=NegExpression) ('/'
-	//	subExpressions+=NegExpression)*)?;
+	//DivExpression returns Expression:
+	//    NegExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=DivOperator subExpressions+=NegExpression)
+	//        ('/' subExpressions+=NegExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
 		return gaKExpressions.getDivExpressionAccess();
 	}
@@ -3297,9 +3888,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// The rule directs the 'neg expression' rule and creates an operator expression for modulo operations
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: i % j
-	//ModExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=NegExpression) ('%'
-	//	subExpressions+=NegExpression)*)?;
+	//ModExpression returns Expression:
+	//    NegExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=ModOperator subExpressions+=NegExpression)
+	//        ('%' subExpressions+=NegExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.ModExpressionElements getModExpressionAccess() {
 		return gaKExpressions.getModExpressionAccess();
 	}
@@ -3309,10 +3903,11 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// Neg Expression Rule
-	//// The rule negates the actual instance or directs the atomic value expression rule if necessary. 
+	//// The rule negates the actual instance or directs the atomic value expression rule if necessary.
 	//// Example: -i, -2
-	//NegExpression Expression:
-	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | TernaryOperation;
+	//NegExpression returns Expression:
+	//    {OperatorExpression} operator=SubOperator subExpressions+=(NegExpression)
+	//    | TernaryOperation;
 	public KExpressionsGrammarAccess.NegExpressionElements getNegExpressionAccess() {
 		return gaKExpressions.getNegExpressionAccess();
 	}
@@ -3321,10 +3916,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getNegExpressionAccess().getRule();
 	}
 	
-	//TernaryOperation Expression:
-	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
-	//	subExpressions+=AtomicValuedExpression (':' subExpressions+=AtomicValuedExpression)?
-	//	| InitExpression;
+	//TernaryOperation returns Expression:
+	//    {OperatorExpression}
+	//    subExpressions += AtomicValuedExpression operator=ConditionalOperator subExpressions += AtomicValuedExpression (':' subExpressions += AtomicValuedExpression)?
+	//    | InitExpression;
 	public KExpressionsGrammarAccess.TernaryOperationElements getTernaryOperationAccess() {
 		return gaKExpressions.getTernaryOperationAccess();
 	}
@@ -3333,9 +3928,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getTernaryOperationAccess().getRule();
 	}
 	
-	//InitExpression Expression:
-	//	FbyExpression ({OperatorExpression.subExpressions+=current} (operator=InitOperator subExpressions+=FbyExpression)
-	//	('->' subExpressions+=FbyExpression)*)?;
+	//InitExpression returns Expression:
+	//    FbyExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=InitOperator subExpressions+=FbyExpression)
+	//        ('->' subExpressions+=FbyExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.InitExpressionElements getInitExpressionAccess() {
 		return gaKExpressions.getInitExpressionAccess();
 	}
@@ -3344,9 +3942,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getInitExpressionAccess().getRule();
 	}
 	
-	//FbyExpression Expression:
-	//	SfbyExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator subExpressions+=SfbyExpression)
-	//	('fby' subExpressions+=SfbyExpression)*)?;
+	//FbyExpression returns Expression:
+	//    SfbyExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=FbyOperator subExpressions+=SfbyExpression)
+	//        ('fby' subExpressions+=SfbyExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.FbyExpressionElements getFbyExpressionAccess() {
 		return gaKExpressions.getFbyExpressionAccess();
 	}
@@ -3355,9 +3956,12 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getFbyExpressionAccess().getRule();
 	}
 	
-	//SfbyExpression Expression:
-	//	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} (operator=SfbyOperator
-	//	subExpressions+=AtomicValuedExpression) ('sfby' subExpressions+=AtomicValuedExpression)*)?;
+	//SfbyExpression returns Expression:
+	//    AtomicValuedExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=SfbyOperator subExpressions+=AtomicValuedExpression)
+	//        ('sfby' subExpressions+=AtomicValuedExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.SfbyExpressionElements getSfbyExpressionAccess() {
 		return gaKExpressions.getSfbyExpressionAccess();
 	}
@@ -3369,17 +3973,17 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// Atomic Expression Rule
 	//// An atomic expression is either a simple boolean value, a test expression, another boolean expression
 	//// encapsulated in braces, a function call or a text expression.
-	//// Basically, the rule chain may start over again at this point.     
-	//AtomicExpression Expression:
-	//	BoolValue
-	//	| '(' BoolExpression ')'
-	//	| ReferenceCall
-	//	| FunctionCall
-	//	| RandomCall
-	//	| RandomizeCall
-	//	| ValuedObjectTestExpression // Last to allow detection of calls
-	//	| StaticAccessExpression
-	//	| TextExpression;
+	//// Basically, the rule chain may start over again at this point.
+	//AtomicExpression returns Expression:
+	//    BoolValue
+	//    | '(' BoolExpression ')'
+	//    | ReferenceCall
+	//    | FunctionCall
+	//    | RandomCall
+	//    | RandomizeCall
+	//    | ValuedObjectTestExpression // Last to allow detection of calls
+	//    | StaticAccessExpression
+	//    | TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();
 	}
@@ -3391,14 +3995,14 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// Atomic Valued Expression Rule
 	//// An atomic valued expression is either a simple int float or string literal, another valued expression
 	//// encapsulated in braces, or a atomic expression.
-	//// Basically, the rule chain may start over again at this point.     
-	//AtomicValuedExpression Expression:
-	//	IntValue
-	//	| FloatValue
-	//	| StringValue
-	//	| VectorValue
-	//	| '(' ValuedExpression ')'
-	//	| AtomicExpression;
+	//// Basically, the rule chain may start over again at this point.
+	//AtomicValuedExpression returns Expression:
+	//    IntValue
+	//    | FloatValue
+	//    | StringValue
+	//    | VectorValue
+	//    | '(' ValuedExpression ')'
+	//    | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return gaKExpressions.getAtomicValuedExpressionAccess();
 	}
@@ -3408,9 +4012,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// Boolean expression with scheduling directives.
-	//// Is meant to be used in derived grammars. Do not delete this rule.     
-	//BoolScheduleExpression Expression:
-	//	LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
+	//// Is meant to be used in derived grammars. Do not delete this rule.
+	//BoolScheduleExpression returns Expression:
+	//    LogicalOrExpression
+	//    ('schedule' schedule += ScheduleObjectReference)?;
 	public KExpressionsGrammarAccess.BoolScheduleExpressionElements getBoolScheduleExpressionAccess() {
 		return gaKExpressions.getBoolScheduleExpressionAccess();
 	}
@@ -3423,10 +4028,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// This rules creates an operator expression for pre or val tests. Alternatively, it directs to a
 	//// valued object reference.
 	//// Example: pre(pre(val(A))), pre(val(pre(A))), val(A)
-	//ValuedObjectTestExpression Expression:
-	//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression (','
-	//	subExpressions+=ValuedObjectReference)? ')'
-	//	| ValuedObjectReference;
+	//ValuedObjectTestExpression returns Expression:
+	//    {OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression (',' subExpressions+=ValuedObjectReference)? ')'
+	//    | ValuedObjectReference;
 	public KExpressionsGrammarAccess.ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
 		return gaKExpressions.getValuedObjectTestExpressionAccess();
 	}
@@ -3437,9 +4041,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	//// Accesses a arbitrary target in a static way (needs to be adjusted in the scoper of the deriving language)
 	//// Example: static(Constants).MAX
-	//StaticAccessExpression:
-	//	'static' '(' target=[annotations::NamedObject|PrimeID] ')'
-	//	'.' subReference=ValuedObjectReference;
+	//StaticAccessExpression returns StaticAccessExpression:
+	//    'static' '(' target=[annotations::NamedObject|PrimeID] ')'
+	//    '.' subReference=ValuedObjectReference;
 	public KExpressionsGrammarAccess.StaticAccessExpressionElements getStaticAccessExpressionAccess() {
 		return gaKExpressions.getStaticAccessExpressionAccess();
 	}
@@ -3449,8 +4053,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// ID with primes
-	//PrimeID:
-	//	ID "'"*;
+	//PrimeID returns ecore::EString:
+	//  ID ("'")*;
 	public KExpressionsGrammarAccess.PrimeIDElements getPrimeIDAccess() {
 		return gaKExpressions.getPrimeIDAccess();
 	}
@@ -3462,8 +4066,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// Valued Object Reference Rule
 	//// References a valued object with arbitrary (including none) indices part.
 	//// Example: A, B
-	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)?;
+	//ValuedObjectReference returns ValuedObjectReference:
+	//    valuedObject=[ValuedObject|PrimeID]
+	//    ('[' indices+=Expression ']')*
+	//    ('.' subReference=ValuedObjectReference)?;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return gaKExpressions.getValuedObjectReferenceAccess();
 	}
@@ -3472,8 +4078,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getValuedObjectReferenceAccess().getRule();
 	}
 	
-	//ScheduleObjectReference:
-	//	valuedObject=[ValuedObject|PrimeID] priority=INT;
+	//ScheduleObjectReference returns ScheduleObjectReference:
+	//    valuedObject=[ValuedObject|PrimeID]
+	//    priority=INT;
 	public KExpressionsGrammarAccess.ScheduleObjectReferenceElements getScheduleObjectReferenceAccess() {
 		return gaKExpressions.getScheduleObjectReferenceAccess();
 	}
@@ -3483,11 +4090,16 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// Reference Call Rule
-	//// Calls to references. They may include a parameter list. 
-	//ReferenceCall:
-	//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)? ('('
-	//	parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()');
+	//// Calls to references. They may include a parameter list.
+	//ReferenceCall returns ReferenceCall:
+	//    valuedObject=[ValuedObject|PrimeID]
+	//    ('[' indices+=Expression ']')*
+	//    ('.' subReference=ValuedObjectReference)?
+	//    (
+	//        ('(' parameters += Parameter
+	//            (',' parameters += Parameter)* ')'
+	//        ) | '()'
+	//    );
 	public KExpressionsGrammarAccess.ReferenceCallElements getReferenceCallAccess() {
 		return gaKExpressions.getReferenceCallAccess();
 	}
@@ -3497,10 +4109,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// Random Call Rule
-	//// Calls the random function. 
-	//RandomCall:
-	//	{RandomCall}
-	//	'random' '()'?;
+	//// Calls the random function.
+	//RandomCall returns RandomCall:
+	//    {RandomCall}
+	//    'random' ('()')?;
 	public KExpressionsGrammarAccess.RandomCallElements getRandomCallAccess() {
 		return gaKExpressions.getRandomCallAccess();
 	}
@@ -3510,10 +4122,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// Random Call Rule
-	//// Calls the random function. 
-	//RandomizeCall:
-	//	{RandomizeCall}
-	//	'randomize' '()'?;
+	//// Calls the random function.
+	//RandomizeCall returns RandomizeCall:
+	//    {RandomizeCall}
+	//    'randomize' ('()')?;
 	public KExpressionsGrammarAccess.RandomizeCallElements getRandomizeCallAccess() {
 		return gaKExpressions.getRandomizeCallAccess();
 	}
@@ -3523,10 +4135,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// Function Call Rule
-	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
-	//FunctionCall:
-	//	'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()');
+	//// Calls to functions are indicated by angle brackets. They may include a parameter list.
+	//FunctionCall returns FunctionCall:
+	//    ('extern' functionName = ID
+	//        (('(' parameters += Parameter
+	//            (',' parameters += Parameter)* ')'
+	//        ) | '()')
+	//    );
 	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
 		return gaKExpressions.getFunctionCallAccess();
 	}
@@ -3538,10 +4153,14 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// Print Call Rule
 	//// Calls the print function. They may include a parameter list.
 	//// Do not use in expressions directly, use PrintCallEffect instead
-	//PrintCall:
-	//	{PrintCall}
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
-	//	'()');
+	//PrintCall returns PrintCall:
+	//    {PrintCall}
+	//    'print'
+	//    (
+	//        ('(' parameters += Parameter (',' parameters += Parameter)* ')' )
+	//    |
+	//        '()'
+	//    );
 	public KExpressionsGrammarAccess.PrintCallElements getPrintCallAccess() {
 		return gaKExpressions.getPrintCallAccess();
 	}
@@ -3554,9 +4173,11 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// The parameter rule is used by the function call rule. Every expression may be a paramter.
 	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
 	//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
-	//Parameter:
-	//	accessType=ParameterAccessType
-	//	expression=ValuedObjectReference | expression=Expression;
+	//Parameter returns Parameter:
+	//    (accessType = ParameterAccessType
+	//    expression = ValuedObjectReference)
+	//    |
+	//    expression = Expression;
 	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
 		return gaKExpressions.getParameterAccess();
 	}
@@ -3568,9 +4189,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// Text Expression Rule
 	//// The text expression rule returns a text expression. Most times text expressions are used for host code.
 	//// Example: 'printf(...)'
-	//TextExpression:
-	//	annotations+=Annotation*
-	//	text=HOSTCODE;
+	//TextExpression returns TextExpression:
+	//    (annotations += Annotation)*
+	//    text=HOSTCODE;
 	public KExpressionsGrammarAccess.TextExpressionElements getTextExpressionAccess() {
 		return gaKExpressions.getTextExpressionAccess();
 	}
@@ -3579,8 +4200,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getTextExpressionAccess().getRule();
 	}
 	
-	//IntValue:
-	//	value=INT;
+	//IntValue returns IntValue:
+	//    value=INT;
 	public KExpressionsGrammarAccess.IntValueElements getIntValueAccess() {
 		return gaKExpressions.getIntValueAccess();
 	}
@@ -3589,8 +4210,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getIntValueAccess().getRule();
 	}
 	
-	//FloatValue:
-	//	value=FLOAT;
+	//FloatValue returns FloatValue:
+	//    value=FLOAT;
 	public KExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
 		return gaKExpressions.getFloatValueAccess();
 	}
@@ -3599,8 +4220,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getFloatValueAccess().getRule();
 	}
 	
-	//BoolValue:
-	//	value=BOOLEAN;
+	//BoolValue returns BoolValue:
+	//    value=BOOLEAN;
 	public KExpressionsGrammarAccess.BoolValueElements getBoolValueAccess() {
 		return gaKExpressions.getBoolValueAccess();
 	}
@@ -3609,8 +4230,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getBoolValueAccess().getRule();
 	}
 	
-	//StringValue:
-	//	value=STRING;
+	//StringValue returns StringValue:
+	//    value=STRING;
 	public KExpressionsGrammarAccess.StringValueElements getStringValueAccess() {
 		return gaKExpressions.getStringValueAccess();
 	}
@@ -3619,8 +4240,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getStringValueAccess().getRule();
 	}
 	
-	//VectorValue:
-	//	'{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
+	//VectorValue returns VectorValue:
+	//    '{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
 	public KExpressionsGrammarAccess.VectorValueElements getVectorValueAccess() {
 		return gaKExpressions.getVectorValueAccess();
 	}
@@ -3629,8 +4250,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getVectorValueAccess().getRule();
 	}
 	
-	//VectorValueMember Expression:
-	//	BoolExpression | ValuedExpression | IgnoreValue;
+	//VectorValueMember returns Expression:
+	//    BoolExpression | ValuedExpression | IgnoreValue;
 	public KExpressionsGrammarAccess.VectorValueMemberElements getVectorValueMemberAccess() {
 		return gaKExpressions.getVectorValueMemberAccess();
 	}
@@ -3639,8 +4260,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getVectorValueMemberAccess().getRule();
 	}
 	
-	//IgnoreValue:
-	//	{IgnoreValue} '_';
+	//IgnoreValue returns IgnoreValue:
+	//    {IgnoreValue} '_';
 	public KExpressionsGrammarAccess.IgnoreValueElements getIgnoreValueAccess() {
 		return gaKExpressions.getIgnoreValueAccess();
 	}
@@ -3651,9 +4272,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	//// Any Type Rule
 	//// Data type rule allowing any kind of value to be accepted,
-	//// e.g. as initialValues of valued objects used in Kits.xtext. 
-	//AnyType:
-	//	BOOLEAN | INT | FLOAT | ID | STRING;
+	//// e.g. as initialValues of valued objects used in Kits.xtext.
+	//AnyType returns ecore::EString:
+	//    BOOLEAN | INT | FLOAT | ID | STRING;
 	public KExpressionsGrammarAccess.AnyTypeElements getAnyTypeAccess() {
 		return gaKExpressions.getAnyTypeAccess();
 	}
@@ -3662,8 +4283,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getAnyTypeAccess().getRule();
 	}
 	
-	//AnyValue Value:
-	//	IntValue | FloatValue | BoolValue | StringValue;
+	//AnyValue returns Value:
+	//    IntValue | FloatValue | BoolValue | StringValue;
 	public KExpressionsGrammarAccess.AnyValueElements getAnyValueAccess() {
 		return gaKExpressions.getAnyValueAccess();
 	}
@@ -3672,8 +4293,11 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getAnyValueAccess().getRule();
 	}
 	
+	//// -------------------- //
+	////  KExpressions Enums  //
+	//// -------------------- //
 	//enum CompareOperator returns OperatorType:
-	//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!=";
+	//    EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!=";
 	public KExpressionsGrammarAccess.CompareOperatorElements getCompareOperatorAccess() {
 		return gaKExpressions.getCompareOperatorAccess();
 	}
@@ -3683,7 +4307,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum PreOperator returns OperatorType:
-	//	PRE="pre";
+	//    PRE="pre";
 	public KExpressionsGrammarAccess.PreOperatorElements getPreOperatorAccess() {
 		return gaKExpressions.getPreOperatorAccess();
 	}
@@ -3693,7 +4317,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum BitwiseNotOperator returns OperatorType:
-	//	BITWISE_NOT="~";
+	//    BITWISE_NOT="~";
 	public KExpressionsGrammarAccess.BitwiseNotOperatorElements getBitwiseNotOperatorAccess() {
 		return gaKExpressions.getBitwiseNotOperatorAccess();
 	}
@@ -3703,7 +4327,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum BitwiseXOrOperator returns OperatorType:
-	//	BITWISE_XOR="^";
+	//    BITWISE_XOR="^";
 	public KExpressionsGrammarAccess.BitwiseXOrOperatorElements getBitwiseXOrOperatorAccess() {
 		return gaKExpressions.getBitwiseXOrOperatorAccess();
 	}
@@ -3713,7 +4337,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum BitwiseOrOperator returns OperatorType:
-	//	BITWISE_OR="|";
+	//    BITWISE_OR="|";
 	public KExpressionsGrammarAccess.BitwiseOrOperatorElements getBitwiseOrOperatorAccess() {
 		return gaKExpressions.getBitwiseOrOperatorAccess();
 	}
@@ -3723,7 +4347,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum BitwiseAndOperator returns OperatorType:
-	//	BITWISE_AND="&";
+	//    BITWISE_AND="&";
 	public KExpressionsGrammarAccess.BitwiseAndOperatorElements getBitwiseAndOperatorAccess() {
 		return gaKExpressions.getBitwiseAndOperatorAccess();
 	}
@@ -3733,7 +4357,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum NotOperator returns OperatorType:
-	//	NOT="!";
+	//    NOT="!";
 	public KExpressionsGrammarAccess.NotOperatorElements getNotOperatorAccess() {
 		return gaKExpressions.getNotOperatorAccess();
 	}
@@ -3743,7 +4367,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum AddOperator returns OperatorType:
-	//	ADD="+";
+	//    ADD="+";
 	public KExpressionsGrammarAccess.AddOperatorElements getAddOperatorAccess() {
 		return gaKExpressions.getAddOperatorAccess();
 	}
@@ -3753,7 +4377,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum SubOperator returns OperatorType:
-	//	SUB="-";
+	//    SUB="-";
 	public KExpressionsGrammarAccess.SubOperatorElements getSubOperatorAccess() {
 		return gaKExpressions.getSubOperatorAccess();
 	}
@@ -3763,7 +4387,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum MultOperator returns OperatorType:
-	//	MULT="*";
+	//    MULT="*";
 	public KExpressionsGrammarAccess.MultOperatorElements getMultOperatorAccess() {
 		return gaKExpressions.getMultOperatorAccess();
 	}
@@ -3773,7 +4397,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum ModOperator returns OperatorType:
-	//	MOD="%";
+	//    MOD="%";
 	public KExpressionsGrammarAccess.ModOperatorElements getModOperatorAccess() {
 		return gaKExpressions.getModOperatorAccess();
 	}
@@ -3783,7 +4407,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum DivOperator returns OperatorType:
-	//	DIV="/";
+	//    DIV="/";
 	public KExpressionsGrammarAccess.DivOperatorElements getDivOperatorAccess() {
 		return gaKExpressions.getDivOperatorAccess();
 	}
@@ -3793,7 +4417,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum ValOperator returns OperatorType:
-	//	VAL="val";
+	//    VAL="val";
 	public KExpressionsGrammarAccess.ValOperatorElements getValOperatorAccess() {
 		return gaKExpressions.getValOperatorAccess();
 	}
@@ -3803,7 +4427,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum LogicalOrOperator returns OperatorType:
-	//	LOGICAL_OR="||";
+	//    LOGICAL_OR="||";
 	public KExpressionsGrammarAccess.LogicalOrOperatorElements getLogicalOrOperatorAccess() {
 		return gaKExpressions.getLogicalOrOperatorAccess();
 	}
@@ -3813,7 +4437,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum LogicalAndOperator returns OperatorType:
-	//	LOGICAL_AND="&&";
+	//    LOGICAL_AND="&&";
 	public KExpressionsGrammarAccess.LogicalAndOperatorElements getLogicalAndOperatorAccess() {
 		return gaKExpressions.getLogicalAndOperatorAccess();
 	}
@@ -3823,7 +4447,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum ShiftLeftOperator returns OperatorType:
-	//	SHIFT_LEFT="<<";
+	//    SHIFT_LEFT="<<";
 	public KExpressionsGrammarAccess.ShiftLeftOperatorElements getShiftLeftOperatorAccess() {
 		return gaKExpressions.getShiftLeftOperatorAccess();
 	}
@@ -3833,7 +4457,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum ShiftRightOperator returns OperatorType:
-	//	SHIFT_RIGHT=">>";
+	//    SHIFT_RIGHT=">>";
 	public KExpressionsGrammarAccess.ShiftRightOperatorElements getShiftRightOperatorAccess() {
 		return gaKExpressions.getShiftRightOperatorAccess();
 	}
@@ -3843,7 +4467,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum ShiftRightUnsignedOperator returns OperatorType:
-	//	SHIFT_RIGHT_UNSIGNED=">>>";
+	//    SHIFT_RIGHT_UNSIGNED=">>>";
 	public KExpressionsGrammarAccess.ShiftRightUnsignedOperatorElements getShiftRightUnsignedOperatorAccess() {
 		return gaKExpressions.getShiftRightUnsignedOperatorAccess();
 	}
@@ -3853,7 +4477,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum PostfixAdd returns OperatorType:
-	//	POSTFIX_ADD="++";
+	//    POSTFIX_ADD="++";
 	public KExpressionsGrammarAccess.PostfixAddElements getPostfixAddAccess() {
 		return gaKExpressions.getPostfixAddAccess();
 	}
@@ -3863,7 +4487,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum PostfixSub returns OperatorType:
-	//	POSTFIX_SUB="--";
+	//    POSTFIX_SUB="--";
 	public KExpressionsGrammarAccess.PostfixSubElements getPostfixSubAccess() {
 		return gaKExpressions.getPostfixSubAccess();
 	}
@@ -3873,7 +4497,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum ConditionalOperator returns OperatorType:
-	//	CONDITIONAL="?";
+	//    CONDITIONAL = "?";
 	public KExpressionsGrammarAccess.ConditionalOperatorElements getConditionalOperatorAccess() {
 		return gaKExpressions.getConditionalOperatorAccess();
 	}
@@ -3883,7 +4507,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum InitOperator returns OperatorType:
-	//	INIT="->";
+	//    INIT = "->";
 	public KExpressionsGrammarAccess.InitOperatorElements getInitOperatorAccess() {
 		return gaKExpressions.getInitOperatorAccess();
 	}
@@ -3893,7 +4517,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum FbyOperator returns OperatorType:
-	//	FBY="fby";
+	//    FBY = "fby";
 	public KExpressionsGrammarAccess.FbyOperatorElements getFbyOperatorAccess() {
 		return gaKExpressions.getFbyOperatorAccess();
 	}
@@ -3903,7 +4527,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum SfbyOperator returns OperatorType:
-	//	SFBY="sfby";
+	//    SFBY = "sfby";
 	public KExpressionsGrammarAccess.SfbyOperatorElements getSfbyOperatorAccess() {
 		return gaKExpressions.getSfbyOperatorAccess();
 	}
@@ -3912,10 +4536,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getSfbyOperatorAccess().getRule();
 	}
 	
-	//enum ValueType:
-	//	PURE="pure" | BOOL="bool" |
-	//	INT="int" | FLOAT="float" |
-	//	STRING="string";
+	//enum ValueType returns ValueType:
+	//    PURE="pure" | BOOL="bool" |
+	//    INT="int" | FLOAT="float" |
+	//    STRING="string";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
 		return gaKExpressions.getValueTypeAccess();
 	}
@@ -3925,7 +4549,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum HostType returns ValueType:
-	//	HOST="host";
+	//    HOST="host";
 	public KExpressionsGrammarAccess.HostTypeElements getHostTypeAccess() {
 		return gaKExpressions.getHostTypeAccess();
 	}
@@ -3935,7 +4559,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum StructType returns ValueType:
-	//	STRUCT="struct";
+	//    STRUCT="struct";
 	public KExpressionsGrammarAccess.StructTypeElements getStructTypeAccess() {
 		return gaKExpressions.getStructTypeAccess();
 	}
@@ -3945,7 +4569,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum ClassType returns ValueType:
-	//	CLASS="class";
+	//    CLASS="class";
 	public KExpressionsGrammarAccess.ClassTypeElements getClassTypeAccess() {
 		return gaKExpressions.getClassTypeAccess();
 	}
@@ -3954,9 +4578,19 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getClassTypeAccess().getRule();
 	}
 	
-	//enum CombineOperator:
-	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
-	//	MIN="min" | OR="|" | AND="&" | HOST="host";
+	//enum EnumType returns ValueType:
+	//    ENUM="enum";
+	public KExpressionsGrammarAccess.EnumTypeElements getEnumTypeAccess() {
+		return gaKExpressions.getEnumTypeAccess();
+	}
+	
+	public EnumRule getEnumTypeRule() {
+		return getEnumTypeAccess().getRule();
+	}
+	
+	//enum CombineOperator returns CombineOperator:
+	//    NONE="none" | ADD="+" | MULT="*" | MAX="max" |
+	//    MIN="min" | OR="|" | AND="&" | HOST="host";
 	public KExpressionsGrammarAccess.CombineOperatorElements getCombineOperatorAccess() {
 		return gaKExpressions.getCombineOperatorAccess();
 	}
@@ -3965,8 +4599,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getCombineOperatorAccess().getRule();
 	}
 	
-	//enum AccessModifier:
-	//	PUBLIC='public' | PROTECTED='protected' | PRIVATE='private';
+	//enum AccessModifier returns AccessModifier:
+	//    PUBLIC = 'public' | PROTECTED = 'protected' | PRIVATE = 'private';
 	public KExpressionsGrammarAccess.AccessModifierElements getAccessModifierAccess() {
 		return gaKExpressions.getAccessModifierAccess();
 	}
@@ -3976,9 +4610,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//enum MethodReturnType returns ValueType:
-	//	VOID="void" |
-	//	BOOL="bool" | INT="int" | FLOAT="float" |
-	//	STRING="string";
+	//    VOID="void" |
+	//    BOOL="bool" | INT="int" | FLOAT="float" |
+	//    STRING="string";
 	public KExpressionsGrammarAccess.MethodReturnTypeElements getMethodReturnTypeAccess() {
 		return gaKExpressions.getMethodReturnTypeAccess();
 	}
@@ -3987,8 +4621,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getMethodReturnTypeAccess().getRule();
 	}
 	
-	//enum ParameterAccessType:
-	//	CALL_BY_REFERENCE="&" | PURE_OUTPUT="!&";
+	//enum ParameterAccessType returns ParameterAccessType:
+	//    CALL_BY_REFERENCE = "&" | PURE_OUTPUT = "!&"
+	//;
 	public KExpressionsGrammarAccess.ParameterAccessTypeElements getParameterAccessTypeAccess() {
 		return gaKExpressions.getParameterAccessTypeAccess();
 	}
@@ -3998,12 +4633,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// -------------------- //
-	////  JSON                // 
+	////  JSON                //
 	//// -------------------- //
-	//JsonObjectValue:
-	//	{JsonObjectValue}
-	//	'{' (members+=JsonObjectMember (',' members+=JsonObjectMember)*)?
-	//	'}';
+	//JsonObjectValue returns JsonObjectValue:
+	//    {JsonObjectValue}
+	//    '{'
+	//    ( (members+=JsonObjectMember) (',' members+=JsonObjectMember)* )?
+	//    '}';
 	public KExpressionsGrammarAccess.JsonObjectValueElements getJsonObjectValueAccess() {
 		return gaKExpressions.getJsonObjectValueAccess();
 	}
@@ -4012,8 +4648,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getJsonObjectValueAccess().getRule();
 	}
 	
-	//JsonObjectMember:
-	//	key=STRING ':' value=JsonValue;
+	//JsonObjectMember returns JsonObjectMember:
+	//    key=STRING ':' value=JsonValue;
 	public KExpressionsGrammarAccess.JsonObjectMemberElements getJsonObjectMemberAccess() {
 		return gaKExpressions.getJsonObjectMemberAccess();
 	}
@@ -4022,10 +4658,11 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getJsonObjectMemberAccess().getRule();
 	}
 	
-	//JsonArrayValue:
-	//	{JsonArrayValue}
-	//	'[' (elements+=JsonValue (',' elements+=JsonValue)*)?
-	//	']';
+	//JsonArrayValue returns JsonArrayValue:
+	//    {JsonArrayValue}
+	//    '['
+	//    ( (elements+=JsonValue) (',' elements+=JsonValue)* )?
+	//    ']';
 	public KExpressionsGrammarAccess.JsonArrayValueElements getJsonArrayValueAccess() {
 		return gaKExpressions.getJsonArrayValueAccess();
 	}
@@ -4034,8 +4671,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getJsonArrayValueAccess().getRule();
 	}
 	
-	//JsonValue Value:
-	//	JsonObjectValue | JsonArrayValue | NullValue | AnyValue;
+	//JsonValue returns Value:
+	//    JsonObjectValue | JsonArrayValue | NullValue | AnyValue;
 	public KExpressionsGrammarAccess.JsonValueElements getJsonValueAccess() {
 		return gaKExpressions.getJsonValueAccess();
 	}
@@ -4044,9 +4681,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getJsonValueAccess().getRule();
 	}
 	
-	//NullValue:
-	//	{NullValue}
-	//	'null';
+	//NullValue returns NullValue:
+	//    {NullValue}
+	//    'null';
 	public KExpressionsGrammarAccess.NullValueElements getNullValueAccess() {
 		return gaKExpressions.getNullValueAccess();
 	}
@@ -4056,8 +4693,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// New Json Annotations
-	//JsonPragma:
-	//	'#' name=ExtendedID value=JsonObjectValue;
+	//JsonPragma returns JsonPragma:
+	//    '#' name=ExtendedID value=JsonObjectValue;
 	public KExpressionsGrammarAccess.JsonPragmaElements getJsonPragmaAccess() {
 		return gaKExpressions.getJsonPragmaAccess();
 	}
@@ -4066,8 +4703,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getJsonPragmaAccess().getRule();
 	}
 	
-	//JsonAnnotation:
-	//	'@' name=ExtendedID value=JsonObjectValue;
+	//JsonAnnotation returns JsonAnnotation:
+	//    '@' name=ExtendedID value=JsonObjectValue;
 	public KExpressionsGrammarAccess.JsonAnnotationElements getJsonAnnotationAccess() {
 		return gaKExpressions.getJsonAnnotationAccess();
 	}
@@ -4077,8 +4714,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//@Override
-	//Pragma annotations::Pragma:
-	//	super | JsonPragma;
+	//Pragma returns annotations::Pragma:
+	//    super | JsonPragma;
 	public KExpressionsGrammarAccess.PragmaElements getPragmaAccess() {
 		return gaKExpressions.getPragmaAccess();
 	}
@@ -4088,8 +4725,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//@Override
-	//Annotation annotations::Annotation:
-	//	super | JsonAnnotation;
+	//Annotation returns annotations::Annotation:
+	//    super | JsonAnnotation;
 	public KExpressionsGrammarAccess.AnnotationElements getAnnotationAccess() {
 		return gaKExpressions.getAnnotationAccess();
 	}
@@ -4099,8 +4736,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//@Override
-	//ValuedAnnotation annotations::Annotation:
-	//	super | JsonAnnotation;
+	//ValuedAnnotation returns annotations::Annotation:
+	//    super | JsonAnnotation;
 	public KExpressionsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
 		return gaKExpressions.getValuedAnnotationAccess();
 	}
@@ -4110,8 +4747,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//@Override
-	//QuotedStringAnnotation annotations::Annotation:
-	//	super | JsonAnnotation;
+	//QuotedStringAnnotation returns annotations::Annotation:
+	//    super | JsonAnnotation;
 	public KExpressionsGrammarAccess.QuotedStringAnnotationElements getQuotedStringAnnotationAccess() {
 		return gaKExpressions.getQuotedStringAnnotationAccess();
 	}
@@ -4120,23 +4757,32 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getQuotedStringAnnotationAccess().getRule();
 	}
 	
-	//terminal HOSTCODE:
-	//	"`" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "`"))* "`";
+	//// ------------------------ //
+	////  KExpressions Terminals  //
+	//// ------------------------ //
+	//// Hostcode Terminals
+	//// Custom terminal rule allowing to save transition label string as they are
+	//terminal HOSTCODE returns ecore::EString:
+	//    "`" ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|"`") )* "`";
 	public TerminalRule getHOSTCODERule() {
 		return gaKExpressions.getHOSTCODERule();
 	}
 	
 	///**
 	// * @author ssm
-	// * @kieler.design 2015-08-21 proposed 
+	// * @kieler.design 2015-08-21 proposed
 	// * @kieler.rating 2015-08-21 proposed yellow
-	// */ // ------------------ //
-	////  Annotation Rules  // 
+	// */
+	//// ------------------ //
+	////  Annotation Rules  //
 	//// ------------------ //
 	//// General rule for annotations
-	//// The different annotation sub rules are tested in order. Hence, order matters! 
-	//Annotation:
-	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | TagAnnotation;
+	//// The different annotation sub rules are tested in order. Hence, order matters!
+	//Annotation returns Annotation:
+	//    CommentAnnotation |
+	//    KeyStringValueAnnotation |
+	//    TypedKeyStringValueAnnotation |
+	//    TagAnnotation;
 	public AnnotationsGrammarAccess.AnnotationElements getAnnotationsAnnotationAccess() {
 		return gaAnnotations.getAnnotationAccess();
 	}
@@ -4146,9 +4792,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// General rule for pragmas
-	//// We only have string and tag pragmas.    
-	//Pragma:
-	//	StringPragma | PragmaTag;
+	//// We only have string and tag pragmas.
+	//Pragma returns Pragma:
+	//    StringPragma |
+	//    PragmaTag;
 	public AnnotationsGrammarAccess.PragmaElements getAnnotationsPragmaAccess() {
 		return gaAnnotations.getPragmaAccess();
 	}
@@ -4161,8 +4808,10 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// Valued annotations must have a value. For instance, tag annotations are not allowed.
 	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
 	//// due to ambiguities.
-	//ValuedAnnotation Annotation:
-	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation;
+	//ValuedAnnotation returns Annotation:
+	//    CommentAnnotation |
+	//    KeyStringValueAnnotation |
+	//    TypedKeyStringValueAnnotation;
 	public AnnotationsGrammarAccess.ValuedAnnotationElements getAnnotationsValuedAnnotationAccess() {
 		return gaAnnotations.getValuedAnnotationAccess();
 	}
@@ -4172,10 +4821,13 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// Restricted Type Annotation Rule
-	//// The restricted type annotation rule does not allow typed string annotations. 
-	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
-	//RestrictedTypeAnnotation Annotation:
-	//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation;
+	//// The restricted type annotation rule does not allow typed string annotations.
+	//// You can use this rule in derived grammars if you don't want to permit typed strings.
+	//RestrictedTypeAnnotation returns Annotation:
+	//    CommentAnnotation |
+	//    RestrictedKeyStringValueAnnotation |
+	//    RestrictedTypedKeyStringValueAnnotation |
+	//    TagAnnotation;
 	public AnnotationsGrammarAccess.RestrictedTypeAnnotationElements getRestrictedTypeAnnotationAccess() {
 		return gaAnnotations.getRestrictedTypeAnnotationAccess();
 	}
@@ -4185,12 +4837,15 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	}
 	
 	//// Quoted String Annotation Rule
-	//// The quoted string annotation rules uses quoted key string annotations. You can use this rule in 
-	//// derived grammars if you don't want to permit unquoted strings. 
+	//// The quoted string annotation rules uses quoted key string annotations. You can use this rule in
+	//// derived grammars if you don't want to permit unquoted strings.
 	//// (If you are looking for an example, the keffects grammar uses this rule for their emission
-	//// rule and to avoid grammar ambiguities.)  
-	//QuotedStringAnnotation Annotation:
-	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation;
+	//// rule and to avoid grammar ambiguities.)
+	//QuotedStringAnnotation returns Annotation:
+	//    CommentAnnotation |
+	//    QuotedKeyStringValueAnnotation |
+	//    QuotedTypedKeyStringValueAnnotation |
+	//    TagAnnotation;
 	public AnnotationsGrammarAccess.QuotedStringAnnotationElements getAnnotationsQuotedStringAnnotationAccess() {
 		return gaAnnotations.getQuotedStringAnnotationAccess();
 	}
@@ -4201,8 +4856,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	//// CommentAnnotation
 	//// e.g.: /** semantic comment */
-	//CommentAnnotation:
-	//	values+=COMMENT_ANNOTATION;
+	//CommentAnnotation returns CommentAnnotation:
+	//    values += COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotationElements getCommentAnnotationAccess() {
 		return gaAnnotations.getCommentAnnotationAccess();
 	}
@@ -4211,8 +4866,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getCommentAnnotationAccess().getRule();
 	}
 	
-	//CommentAnnotatonSL CommentAnnotation:
-	//	values+=SL_COMMENT_ANNOTATION;
+	//CommentAnnotatonSL returns CommentAnnotation:
+	//    values += SL_COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotatonSLElements getCommentAnnotatonSLAccess() {
 		return gaAnnotations.getCommentAnnotatonSLAccess();
 	}
@@ -4223,8 +4878,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	//// TagAnnotation
 	//// e.g.: @HVlayout
-	//TagAnnotation:
-	//	'@' name=ExtendedID;
+	//TagAnnotation returns TagAnnotation:
+	//    '@' name=ExtendedID;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
 		return gaAnnotations.getTagAnnotationAccess();
 	}
@@ -4233,8 +4888,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getTagAnnotationAccess().getRule();
 	}
 	
-	//PragmaTag Pragma:
-	//	'#' name=ExtendedID;
+	//PragmaTag returns Pragma:
+	//    '#' name=ExtendedID;
 	public AnnotationsGrammarAccess.PragmaTagElements getPragmaTagAccess() {
 		return gaAnnotations.getPragmaTagAccess();
 	}
@@ -4245,9 +4900,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	//// KeyStringValueAnnotation
 	//// e.g.: @layouter dot
-	//// You may separate different values via comma.   
-	//KeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+	//// You may separate different values via comma.
+	//KeyStringValueAnnotation returns StringAnnotation:
+	//    '@' name=ExtendedID values += EStringAllTypes (',' values += EStringAllTypes)*;
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getKeyStringValueAnnotationAccess();
 	}
@@ -4256,8 +4911,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getKeyStringValueAnnotationAccess().getRule();
 	}
 	
-	//RestrictedKeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*;
+	//RestrictedKeyStringValueAnnotation returns StringAnnotation:
+	//    '@' name=ExtendedID values += EStringBoolean (',' values += EStringBoolean)*;
 	public AnnotationsGrammarAccess.RestrictedKeyStringValueAnnotationElements getRestrictedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getRestrictedKeyStringValueAnnotationAccess();
 	}
@@ -4266,8 +4921,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getRestrictedKeyStringValueAnnotationAccess().getRule();
 	}
 	
-	//StringPragma:
-	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+	//StringPragma returns StringPragma:
+	//    '#' name=ExtendedID values += EStringAllTypes (',' values += EStringAllTypes)*;
 	public AnnotationsGrammarAccess.StringPragmaElements getStringPragmaAccess() {
 		return gaAnnotations.getStringPragmaAccess();
 	}
@@ -4278,8 +4933,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	//// TypedKeyStringValueAnnotation
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
-	//TypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
+	//    '@' name=ExtendedID '[' type=ExtendedID ']' values += EStringAllTypes (',' values += EStringAllTypes)*;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getTypedKeyStringValueAnnotationAccess();
 	}
@@ -4288,8 +4943,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getTypedKeyStringValueAnnotationAccess().getRule();
 	}
 	
-	//RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*;
+	//RestrictedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
+	//    '@' name=ExtendedID '[' type=ExtendedID ']' values += EStringBoolean (',' values += EStringBoolean)*;
 	public AnnotationsGrammarAccess.RestrictedTypedKeyStringValueAnnotationElements getRestrictedTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getRestrictedTypedKeyStringValueAnnotationAccess();
 	}
@@ -4300,9 +4955,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	//// QuotedKeyStringValueAnnotation
 	//// The quoted key string value annotation is a replacement derived grammars may use
-	//// if they want to disallow quote-less strings in a key string annotation. 
-	//QuotedKeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=STRING (',' values+=STRING)*;
+	//// if they want to disallow quote-less strings in a key string annotation.
+	//QuotedKeyStringValueAnnotation returns StringAnnotation:
+	//    '@' name=ExtendedID values += STRING (',' values += STRING)*;
 	public AnnotationsGrammarAccess.QuotedKeyStringValueAnnotationElements getQuotedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getQuotedKeyStringValueAnnotationAccess();
 	}
@@ -4313,9 +4968,9 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	//// QuotedTypedKeyStringValueAnnotation
 	//// The quoted typed key string value annotation is a replacement derived grammars may use
-	//// if they want to disallow quote-less strings in a key string annotation. 
-	//QuotedTypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=STRING (',' values+=STRING)*;
+	//// if they want to disallow quote-less strings in a key string annotation.
+	//QuotedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
+	//    '@' name=ExtendedID '[' type=ExtendedID ']' values += STRING (',' values += STRING)*;
 	public AnnotationsGrammarAccess.QuotedTypedKeyStringValueAnnotationElements getQuotedTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getQuotedTypedKeyStringValueAnnotationAccess();
 	}
@@ -4327,8 +4982,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// EString
 	//// Allow strings without quotes if they don't contain spaces.
 	//// For quoteless strings the ExtendedID rule is used.
-	//EString:
-	//	STRING | ExtendedID;
+	//EString returns ecore::EString:
+	//    STRING | ExtendedID;
 	public AnnotationsGrammarAccess.EStringElements getEStringAccess() {
 		return gaAnnotations.getEStringAccess();
 	}
@@ -4337,8 +4992,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getEStringAccess().getRule();
 	}
 	
-	//EStringBoolean:
-	//	STRING | ExtendedID | BOOLEAN;
+	//EStringBoolean returns ecore::EString:
+	//    STRING | ExtendedID | BOOLEAN;
 	public AnnotationsGrammarAccess.EStringBooleanElements getEStringBooleanAccess() {
 		return gaAnnotations.getEStringBooleanAccess();
 	}
@@ -4347,8 +5002,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getEStringBooleanAccess().getRule();
 	}
 	
-	//EStringAllTypes:
-	//	STRING | ExtendedID | BOOLEAN | Integer | Floateger;
+	//EStringAllTypes returns ecore::EString:
+	//    STRING | ExtendedID | BOOLEAN | Integer | Floateger;
 	public AnnotationsGrammarAccess.EStringAllTypesElements getEStringAllTypesAccess() {
 		return gaAnnotations.getEStringAllTypesAccess();
 	}
@@ -4360,8 +5015,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	//// ExtendedID
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
-	//ExtendedID:
-	//	ID (('.' | '-') ID)* ('#' INT)?;
+	//ExtendedID returns ecore::EString:
+	//  ID (('.'|'-') ID)* (('#') INT)?;
 	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
 		return gaAnnotations.getExtendedIDAccess();
 	}
@@ -4370,8 +5025,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getExtendedIDAccess().getRule();
 	}
 	
-	//QualifiedID:
-	//	ID ("." ID)*;
+	//QualifiedID returns ecore::EString:
+	//  ID ("." ID)*;
 	public AnnotationsGrammarAccess.QualifiedIDElements getQualifiedIDAccess() {
 		return gaAnnotations.getQualifiedIDAccess();
 	}
@@ -4382,8 +5037,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	//// Integer
 	//// The integer rule extends the EInt terminal by an optional sign for negative numbers.
-	//Integer ecore::EInt:
-	//	'-'? INT;
+	//Integer returns ecore::EInt:
+	//    '-'? INT;
 	public AnnotationsGrammarAccess.IntegerElements getIntegerAccess() {
 		return gaAnnotations.getIntegerAccess();
 	}
@@ -4394,8 +5049,8 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	//// Floateger
 	//// The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
-	//Floateger ecore::EDouble:
-	//	'-'? FLOAT;
+	//Floateger returns ecore::EDouble:
+	//    '-'? FLOAT;
 	public AnnotationsGrammarAccess.FloategerElements getFloategerAccess() {
 		return gaAnnotations.getFloategerAccess();
 	}
@@ -4404,79 +5059,95 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 		return getFloategerAccess().getRule();
 	}
 	
-	//terminal COMMENT_ANNOTATION:
-	//	'/**'->'*/';
+	//// ---------------------- //
+	////  Annotation Terminals  //
+	//// ---------------------- //
+	//// Comment Annotation Terminal
+	//// Custom terminal rule introducing semantic comments.
+	//terminal COMMENT_ANNOTATION returns ecore::EString:
+	//    '/**' -> '*/';
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
 		return gaAnnotations.getCOMMENT_ANNOTATIONRule();
 	}
 	
+	//// Multiline Comment Terminal
+	//// Modified version of Terminals.ML_COMMENT as
+	//// COMMENT_ANNOTATION is not recognized correctly with original one.
 	//@Override
-	//terminal ML_COMMENT:
-	//	'/*' !'*'->'*/';
+	//terminal ML_COMMENT returns ecore::EString:
+	//    '/*'!'*' -> '*/';
 	public TerminalRule getML_COMMENTRule() {
 		return gaAnnotations.getML_COMMENTRule();
 	}
 	
-	//terminal SL_COMMENT_ANNOTATION:
-	//	'//*' !('\n' | '\r')* ('\r'? '\n')?;
+	//terminal SL_COMMENT_ANNOTATION returns ecore::EString:
+	//    '//*' !('\n'|'\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENT_ANNOTATIONRule() {
 		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
 	}
 	
 	//@Override
 	//terminal SL_COMMENT:
-	//	'//' !'*' !('\n' | '\r')* ('\r'? '\n')?;
+	//    '//' !'*' !('\n'|'\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
 		return gaAnnotations.getSL_COMMENTRule();
 	}
 	
-	//terminal fragment NUMBER:
-	//	'0'..'9';
+	//// Number Terminal
+	//terminal fragment NUMBER :
+	//    '0'..'9';
 	public TerminalRule getNUMBERRule() {
 		return gaAnnotations.getNUMBERRule();
 	}
 	
+	//// Integer Terminal
+	//// An INT is a list of numbers.
 	//@Override
 	//terminal INT returns ecore::EInt:
-	//	NUMBER+;
+	//    NUMBER+;
 	public TerminalRule getINTRule() {
 		return gaAnnotations.getINTRule();
 	}
 	
+	//// Float Terminal (internal precision: double!)
+	//// Make sure the Float rule does not shadow the INT rule
 	//terminal FLOAT returns ecore::EDouble:
-	//	NUMBER+ ('.' NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? 'f'? | NUMBER+ 'f';
+	//    NUMBER+ ('.' NUMBER*) (("e"|"E") ("+"|"-")? NUMBER+)? 'f'? |
+	//    NUMBER+ 'f';
 	public TerminalRule getFLOATRule() {
 		return gaAnnotations.getFLOATRule();
 	}
 	
-	//terminal BOOLEAN returns ecore::EBooleanObject:
-	//	'true' | 'false';
+	//// Boolean Terminal
+	//// Introduce boolean values.
+	//terminal BOOLEAN returns ecore::EBooleanObject :
+	//    'true' | 'false';
 	public TerminalRule getBOOLEANRule() {
 		return gaAnnotations.getBOOLEANRule();
 	}
 	
+	//// String Terminal
+	//// Custom terminal rule for strings, only use double quotes.
 	//@Override
-	//terminal STRING:
-	//	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | '"'))* '"';
+	//terminal STRING returns ecore::EString:
+	//    '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|'"') )* '"';
 	public TerminalRule getSTRINGRule() {
 		return gaAnnotations.getSTRINGRule();
 	}
 	
 	//@Override
 	//terminal ID:
-	//	'^'? (('_'? 'a'..'z' | '_'? 'A'..'Z') | '_' '0'..'9' | '__') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
+	//    '^'?(('_'?'a'..'z'|'_'?'A'..'Z')|'_''0'..'9'|'__') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 	public TerminalRule getIDRule() {
 		return gaAnnotations.getIDRule();
 	}
 	
-	//terminal WS:
-	//	' ' | '\t' | '\r' | '\n'+;
+	//terminal WS         : (' '|'\t'|'\r'|'\n')+;
 	public TerminalRule getWSRule() {
 		return gaTerminals.getWSRule();
 	}
 	
-	//terminal ANY_OTHER:
-	//	.;
+	//terminal ANY_OTHER: .;
 	public TerminalRule getANY_OTHERRule() {
 		return gaTerminals.getANY_OTHERRule();
 	}

@@ -64,6 +64,8 @@ import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
+import de.cau.cs.kieler.sccharts.ModuleScopeCall;
+import de.cau.cs.kieler.sccharts.OdeAction;
 import de.cau.cs.kieler.sccharts.PeriodAction;
 import de.cau.cs.kieler.sccharts.PolicyClassDeclaration;
 import de.cau.cs.kieler.sccharts.PolicyRegion;
@@ -910,7 +912,8 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					sequence_BoolScheduleExpression_StaticAccessExpression(context, (StaticAccessExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getRootRule()
+				else if (rule == grammarAccess.getStaticAccessExpressionRule()
+						|| rule == grammarAccess.getRootRule()
 						|| rule == grammarAccess.getExpressionRule()
 						|| rule == grammarAccess.getBoolExpressionRule()
 						|| rule == grammarAccess.getLogicalOrExpressionRule()
@@ -966,7 +969,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 						|| action == grammarAccess.getSfbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getStaticAccessExpressionRule()
 						|| rule == grammarAccess.getVectorValueMemberRule()) {
 					sequence_StaticAccessExpression(context, (StaticAccessExpression) semanticObject); 
 					return; 
@@ -1207,7 +1209,11 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case KExpressionsPackage.VARIABLE_DECLARATION:
-				if (rule == grammarAccess.getLoopDeclarationRule()) {
+				if (rule == grammarAccess.getEnumMemberDeclarationRule()) {
+					sequence_EnumMemberDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getLoopDeclarationRule()) {
 					sequence_LoopDeclaration(context, (VariableDeclaration) semanticObject); 
 					return; 
 				}
@@ -1310,8 +1316,27 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case KExtPackage.CLASS_DECLARATION:
-				sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getKExtDeclarationRule()
+						|| rule == grammarAccess.getClassDeclarationRule()) {
+					sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_ClassDeclaration_EnumDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
+						|| rule == grammarAccess.getEnumDeclarationWOSemicolonRule()) {
+					sequence_EnumDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEnumDeclarationRule()) {
+					sequence_EnumDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExtPackage.KEXT_SCOPE:
 				if (rule == grammarAccess.getRootScopeRule()) {
 					sequence_RootScope(context, (KExtScope) semanticObject); 
@@ -1362,6 +1387,12 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				return; 
 			case SCChartsPackage.EXIT_ACTION:
 				sequence_ExitAction(context, (ExitAction) semanticObject); 
+				return; 
+			case SCChartsPackage.MODULE_SCOPE_CALL:
+				sequence_ModuleScopeCall(context, (ModuleScopeCall) semanticObject); 
+				return; 
+			case SCChartsPackage.ODE_ACTION:
+				sequence_OdeAction(context, (OdeAction) semanticObject); 
 				return; 
 			case SCChartsPackage.PERIOD_ACTION:
 				sequence_PeriodAction(context, (PeriodAction) semanticObject); 
@@ -1529,6 +1560,18 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     )
 	 */
 	protected void sequence_BaseStateReference(ISerializationContext context, BaseStateReference semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     BoolScheduleExpression returns StaticAccessExpression
+	 *
+	 * Constraint:
+	 *     (target=[NamedObject|PrimeID] subReference=ValuedObjectReference schedule+=ScheduleObjectReference?)
+	 */
+	protected void sequence_BoolScheduleExpression_StaticAccessExpression(ISerializationContext context, StaticAccessExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1775,6 +1818,31 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     ModuleScopeCall returns ModuleScopeCall
+	 *
+	 * Constraint:
+	 *     (target=[NamedObject|ID] (parameters+=ScopeParameter parameters+=ScopeParameter*)?)
+	 */
+	protected void sequence_ModuleScopeCall(ISerializationContext context, ModuleScopeCall semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LocalAction returns OdeAction
+	 *     OdeAction returns OdeAction
+	 *
+	 * Constraint:
+	 *     (annotations+=RestrictedTypeAnnotation* effects+=Effect label=STRING?)
+	 */
+	protected void sequence_OdeAction(ISerializationContext context, OdeAction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     LocalAction returns PeriodAction
 	 *     PeriodAction returns PeriodAction
 	 *
@@ -1838,22 +1906,30 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *             annotations+=Annotation* 
 	 *             access=AccessModifier? 
 	 *             (
-	 *                 (reference=[NamedObject|NamespaceID] (genericParameters+=GenericParameter genericParameters+=GenericParameter*)?) | 
-	 *                 (extern+=ExternString extern+=ExternString*)
+	 *                 (
+	 *                     referenceContainer=[NamedObject|PrimeID]? 
+	 *                     reference=[NamedObject|PrimeID] 
+	 *                     (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
+	 *                     valuedObjects+=ReferenceValuedObject 
+	 *                     valuedObjects+=ReferenceValuedObject*
+	 *                 ) | 
+	 *                 (extern+=ExternString extern+=ExternString* valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
 	 *             ) 
-	 *             valuedObjects+=ReferenceValuedObject 
-	 *             valuedObjects+=ReferenceValuedObject* 
 	 *             annotations+=CommentAnnotatonSL?
 	 *         ) | 
 	 *         (
 	 *             annotations+=Annotation* 
 	 *             access=AccessModifier? 
 	 *             (
-	 *                 (reference=[NamedObject|NamespaceID] (genericParameters+=GenericParameter genericParameters+=GenericParameter*)?) | 
-	 *                 (extern+=ExternString extern+=ExternString*)
+	 *                 (
+	 *                     referenceContainer=[NamedObject|PrimeID]? 
+	 *                     reference=[NamedObject|PrimeID] 
+	 *                     (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
+	 *                     valuedObjects+=ReferenceValuedObject 
+	 *                     valuedObjects+=ReferenceValuedObject*
+	 *                 ) | 
+	 *                 (extern+=ExternString extern+=ExternString* valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
 	 *             ) 
-	 *             valuedObjects+=ReferenceValuedObject 
-	 *             valuedObjects+=ReferenceValuedObject* 
 	 *             annotations+=CommentAnnotatonSL?
 	 *         )
 	 *     )
@@ -1874,6 +1950,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         cardinalities+=Expression* 
 	 *         (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
 	 *         (parameters+=ScopeParameter parameters+=ScopeParameter*)? 
+	 *         initialValue=Expression? 
 	 *         label=STRING?
 	 *     )
 	 */
@@ -1996,6 +2073,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         label=STRING? 
 	 *         (
 	 *             (reference=ScopeCall schedule+=ScheduleObjectReference*) | 
+	 *             (reference=ModuleScopeCall schedule+=ScheduleObjectReference*) | 
 	 *             (
 	 *                 (baseStateReferences+=BaseStateReference baseStateReferences+=BaseStateReference*)? 
 	 *                 schedule+=ScheduleObjectReference* 
@@ -2009,6 +2087,84 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 */
 	protected void sequence_State(ISerializationContext context, State semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     StaticAccessExpression returns StaticAccessExpression
+	 *     Root returns StaticAccessExpression
+	 *     Expression returns StaticAccessExpression
+	 *     BoolExpression returns StaticAccessExpression
+	 *     LogicalOrExpression returns StaticAccessExpression
+	 *     LogicalOrExpression.OperatorExpression_1_0 returns StaticAccessExpression
+	 *     LogicalAndExpression returns StaticAccessExpression
+	 *     LogicalAndExpression.OperatorExpression_1_0 returns StaticAccessExpression
+	 *     BitwiseOrExpression returns StaticAccessExpression
+	 *     BitwiseOrExpression.OperatorExpression_1_0 returns StaticAccessExpression
+	 *     BitwiseXOrExpression returns StaticAccessExpression
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns StaticAccessExpression
+	 *     BitwiseAndExpression returns StaticAccessExpression
+	 *     BitwiseAndExpression.OperatorExpression_1_0 returns StaticAccessExpression
+	 *     CompareOperation returns StaticAccessExpression
+	 *     CompareOperation.OperatorExpression_1_0 returns StaticAccessExpression
+	 *     NotOrValuedExpression returns StaticAccessExpression
+	 *     BitwiseNotExpression returns StaticAccessExpression
+	 *     NotExpression returns StaticAccessExpression
+	 *     ValuedExpression returns StaticAccessExpression
+	 *     ShiftExpressions returns StaticAccessExpression
+	 *     ShiftExpressions.OperatorExpression_1_0_0 returns StaticAccessExpression
+	 *     ShiftExpressions.OperatorExpression_1_1_0 returns StaticAccessExpression
+	 *     ShiftExpressions.OperatorExpression_1_2_0 returns StaticAccessExpression
+	 *     ShiftLeftExpression returns StaticAccessExpression
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns StaticAccessExpression
+	 *     ShiftRightExpression returns StaticAccessExpression
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns StaticAccessExpression
+	 *     ShiftRightUnsignedExpression returns StaticAccessExpression
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns StaticAccessExpression
+	 *     SumExpression returns StaticAccessExpression
+	 *     SumExpression.OperatorExpression_1_0_0 returns StaticAccessExpression
+	 *     SumExpression.OperatorExpression_1_1_0 returns StaticAccessExpression
+	 *     AddExpression returns StaticAccessExpression
+	 *     AddExpression.OperatorExpression_1_0 returns StaticAccessExpression
+	 *     SubExpression returns StaticAccessExpression
+	 *     SubExpression.OperatorExpression_1_0 returns StaticAccessExpression
+	 *     ProductExpression returns StaticAccessExpression
+	 *     ProductExpression.OperatorExpression_1_0_0 returns StaticAccessExpression
+	 *     ProductExpression.OperatorExpression_1_1_0 returns StaticAccessExpression
+	 *     ProductExpression.OperatorExpression_1_2_0 returns StaticAccessExpression
+	 *     MultExpression returns StaticAccessExpression
+	 *     MultExpression.OperatorExpression_1_0 returns StaticAccessExpression
+	 *     DivExpression returns StaticAccessExpression
+	 *     DivExpression.OperatorExpression_1_0 returns StaticAccessExpression
+	 *     ModExpression returns StaticAccessExpression
+	 *     ModExpression.OperatorExpression_1_0 returns StaticAccessExpression
+	 *     NegExpression returns StaticAccessExpression
+	 *     TernaryOperation returns StaticAccessExpression
+	 *     InitExpression returns StaticAccessExpression
+	 *     InitExpression.OperatorExpression_1_0 returns StaticAccessExpression
+	 *     FbyExpression returns StaticAccessExpression
+	 *     FbyExpression.OperatorExpression_1_0 returns StaticAccessExpression
+	 *     SfbyExpression returns StaticAccessExpression
+	 *     SfbyExpression.OperatorExpression_1_0 returns StaticAccessExpression
+	 *     AtomicExpression returns StaticAccessExpression
+	 *     AtomicValuedExpression returns StaticAccessExpression
+	 *     VectorValueMember returns StaticAccessExpression
+	 *
+	 * Constraint:
+	 *     (target=[NamedObject|PrimeID] subReference=ValuedObjectReference)
+	 */
+	protected void sequence_StaticAccessExpression(ISerializationContext context, StaticAccessExpression semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.STATIC_ACCESS_EXPRESSION__TARGET) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.STATIC_ACCESS_EXPRESSION__TARGET));
+			if (transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.STATIC_ACCESS_EXPRESSION__SUB_REFERENCE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.STATIC_ACCESS_EXPRESSION__SUB_REFERENCE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getStaticAccessExpressionAccess().getTargetNamedObjectPrimeIDParserRuleCall_2_0_1(), semanticObject.eGet(KExpressionsPackage.Literals.STATIC_ACCESS_EXPRESSION__TARGET, false));
+		feeder.accept(grammarAccess.getStaticAccessExpressionAccess().getSubReferenceValuedObjectReferenceParserRuleCall_5_0(), semanticObject.getSubReference());
+		feeder.finish();
 	}
 	
 	

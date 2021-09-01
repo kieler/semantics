@@ -13,22 +13,19 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.ViewContext
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ISynthesisHooks
+import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
+import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks.Type
 import java.lang.reflect.ParameterizedType
 import java.util.Collections
 import java.util.List
 import org.eclipse.emf.ecore.EObject
-import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
-import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.klighd.ViewContext
-import de.cau.cs.kieler.klighd.kgraph.KGraphElement
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.sccharts.ui.SCChartsUiModule
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ISynthesisHooks
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks.Type
 
 /** 
  * Abstract class for partial syntheses, delegating helper methods.
@@ -79,7 +76,7 @@ abstract class AbstractSubSynthesis<I extends EObject, O extends KGraphElement> 
 
     /** 
      * The {@link SynthesisOption} this hook contributes to the synthesis.
-     * @see de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis#getDisplayedSynthesisOptions()
+     * @see AbstractDiagramSynthesis#getDisplayedSynthesisOptions()
      */
     def List<SynthesisOption> getDisplayedSynthesisOptions() {
         return Collections.emptyList()
@@ -92,7 +89,7 @@ abstract class AbstractSubSynthesis<I extends EObject, O extends KGraphElement> 
      * @param derived
      * @param source
      * @return
-     * @see de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis#associateWith(org.eclipse.emf.ecore.EObject, java.lang.Object)
+     * @see AbstractDiagramSynthesis#associateWith(org.eclipse.emf.ecore.EObject, java.lang.Object)
      */
     def <T extends EObject> T associateWith(T derived, Object source) {
         return parent.associateWith(derived, source)
@@ -101,7 +98,7 @@ abstract class AbstractSubSynthesis<I extends EObject, O extends KGraphElement> 
     /** 
      * @param option
      * @return
-     * @see de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis#getObjectValue(de.cau.cs.kieler.klighd.SynthesisOption)
+     * @see AbstractDiagramSynthesis#getObjectValue(de.cau.cs.kieler.klighd.SynthesisOption)
      */
     def Object getObjectValue(SynthesisOption option) {
         return parent.getObjectValue(option)
@@ -110,7 +107,7 @@ abstract class AbstractSubSynthesis<I extends EObject, O extends KGraphElement> 
     /** 
      * @param option
      * @return
-     * @see de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis#getBooleanValue(de.cau.cs.kieler.klighd.SynthesisOption)
+     * @see AbstractDiagramSynthesis#getBooleanValue(de.cau.cs.kieler.klighd.SynthesisOption)
      */
     def boolean getBooleanValue(SynthesisOption option) {
         return parent.getBooleanValue(option)
@@ -119,7 +116,7 @@ abstract class AbstractSubSynthesis<I extends EObject, O extends KGraphElement> 
     /** 
      * @param option
      * @return
-     * @see de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis#getIntValue(de.cau.cs.kieler.klighd.SynthesisOption)
+     * @see AbstractDiagramSynthesis#getIntValue(de.cau.cs.kieler.klighd.SynthesisOption)
      */
     def int getIntValue(SynthesisOption option) {
         return parent.getIntValue(option)
@@ -128,7 +125,7 @@ abstract class AbstractSubSynthesis<I extends EObject, O extends KGraphElement> 
     /** 
      * @param option
      * @return
-     * @see de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis#getFloatValue(de.cau.cs.kieler.klighd.SynthesisOption)
+     * @see AbstractDiagramSynthesis#getFloatValue(de.cau.cs.kieler.klighd.SynthesisOption)
      */
     def float getFloatValue(SynthesisOption option) {
         return parent.getFloatValue(option)

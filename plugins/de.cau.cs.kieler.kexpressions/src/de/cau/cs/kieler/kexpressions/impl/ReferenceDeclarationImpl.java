@@ -28,6 +28,7 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#getReference <em>Reference</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#getReferenceContainer <em>Reference Container</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#getExtern <em>Extern</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#getGenericParameters <em>Generic Parameters</em>}</li>
@@ -45,6 +46,16 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
      * @ordered
      */
     protected EObject reference;
+
+    /**
+     * The cached value of the '{@link #getReferenceContainer() <em>Reference Container</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getReferenceContainer()
+     * @generated
+     * @ordered
+     */
+    protected EObject referenceContainer;
 
     /**
      * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
@@ -141,6 +152,46 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
      * @generated
      */
     @Override
+    public EObject getReferenceContainer() {
+        if (referenceContainer != null && referenceContainer.eIsProxy()) {
+            InternalEObject oldReferenceContainer = (InternalEObject)referenceContainer;
+            referenceContainer = eResolveProxy(oldReferenceContainer);
+            if (referenceContainer != oldReferenceContainer) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE_CONTAINER, oldReferenceContainer, referenceContainer));
+            }
+        }
+        return referenceContainer;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EObject basicGetReferenceContainer() {
+        return referenceContainer;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setReferenceContainer(EObject newReferenceContainer) {
+        EObject oldReferenceContainer = referenceContainer;
+        referenceContainer = newReferenceContainer;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE_CONTAINER, oldReferenceContainer, referenceContainer));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EList<ExternString> getExtern() {
         if (extern == null) {
             extern = new EObjectContainmentEList<ExternString>(ExternString.class, this, KExpressionsPackage.REFERENCE_DECLARATION__EXTERN);
@@ -203,6 +254,9 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 if (resolve) return getReference();
                 return basicGetReference();
+            case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE_CONTAINER:
+                if (resolve) return getReferenceContainer();
+                return basicGetReferenceContainer();
             case KExpressionsPackage.REFERENCE_DECLARATION__PARAMETERS:
                 return getParameters();
             case KExpressionsPackage.REFERENCE_DECLARATION__EXTERN:
@@ -224,6 +278,9 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
         switch (featureID) {
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 setReference((EObject)newValue);
+                return;
+            case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE_CONTAINER:
+                setReferenceContainer((EObject)newValue);
                 return;
             case KExpressionsPackage.REFERENCE_DECLARATION__PARAMETERS:
                 getParameters().clear();
@@ -252,6 +309,9 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 setReference((EObject)null);
                 return;
+            case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE_CONTAINER:
+                setReferenceContainer((EObject)null);
+                return;
             case KExpressionsPackage.REFERENCE_DECLARATION__PARAMETERS:
                 getParameters().clear();
                 return;
@@ -275,6 +335,8 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
         switch (featureID) {
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 return reference != null;
+            case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE_CONTAINER:
+                return referenceContainer != null;
             case KExpressionsPackage.REFERENCE_DECLARATION__PARAMETERS:
                 return parameters != null && !parameters.isEmpty();
             case KExpressionsPackage.REFERENCE_DECLARATION__EXTERN:

@@ -12,19 +12,18 @@
  */
 package de.cau.cs.kieler.sccharts.ui.debug.view
 
-import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
-import de.cau.cs.kieler.klighd.ui.DiagramViewManager
+import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
+import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.klighd.kgraph.KEdge
 import org.eclipse.swt.SWT
-import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.layout.FillLayout
-import org.eclipse.swt.widgets.Text
-import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
+import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Display
-import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
+import org.eclipse.swt.widgets.Text
 
 /**
  * Custom DiagramView that only displays diagrams associated with generated code open in an editor.

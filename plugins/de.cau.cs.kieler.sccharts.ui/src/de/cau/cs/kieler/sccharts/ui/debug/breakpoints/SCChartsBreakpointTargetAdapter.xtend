@@ -12,31 +12,25 @@
  */
 package de.cau.cs.kieler.sccharts.ui.debug.breakpoints
 
+import de.cau.cs.kieler.kicool.ui.klighd.ModelReaderUtil
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.ui.debug.SCChartsDebugModelPresentation
 import java.util.HashMap
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.CoreException
-import org.eclipse.core.runtime.IPath
 import org.eclipse.debug.core.DebugPlugin
-import org.eclipse.debug.core.model.IBreakpoint
 import org.eclipse.debug.core.model.LineBreakpoint
 import org.eclipse.debug.ui.actions.IToggleBreakpointsTarget
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.text.source.IVerticalRulerInfo
 import org.eclipse.jface.viewers.ISelection
-import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.IWorkbenchPart
-import org.eclipse.ui.IWorkbenchWindow
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.texteditor.ITextEditor
-import org.eclipse.xtext.nodemodel.ICompositeNode
-import org.eclipse.xtext.nodemodel.ILeafNode
 import org.eclipse.xtext.nodemodel.impl.HiddenLeafNode
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.ui.editor.XtextEditor
-import de.cau.cs.kieler.kicool.ui.klighd.ModelReaderUtil
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.ui.debug.SCChartsDebugModelPresentation
 
 /** 
  * An Adapter to create breakpoints in .sct-files using the XText Editor. This class gets

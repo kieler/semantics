@@ -13,6 +13,7 @@ import de.cau.cs.kieler.esterel.Constant
 import de.cau.cs.kieler.esterel.ConstantDeclaration
 import de.cau.cs.kieler.esterel.ConstantExpression
 import de.cau.cs.kieler.esterel.ConstantRenaming
+import de.cau.cs.kieler.esterel.DelayExpression
 import de.cau.cs.kieler.esterel.Do
 import de.cau.cs.kieler.esterel.ElsIf
 import de.cau.cs.kieler.esterel.Emit
@@ -61,7 +62,9 @@ import de.cau.cs.kieler.esterel.TypeDeclaration
 import de.cau.cs.kieler.esterel.TypeDefinition
 import de.cau.cs.kieler.esterel.TypeIdentifier
 import de.cau.cs.kieler.esterel.Variable
+import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
 import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess
+import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
@@ -70,11 +73,6 @@ import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.formatting2.SCLFormatter
 import org.eclipse.xtext.formatting2.IFormattableDocument
-import de.cau.cs.kieler.esterel.DelayExpression
-import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
-import de.cau.cs.kieler.scl.Pause
-import de.cau.cs.kieler.scl.Label
-import de.cau.cs.kieler.kexpressions.Declaration
 
 class EsterelFormatter extends SCLFormatter {
 	

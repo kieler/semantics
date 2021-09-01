@@ -45,7 +45,7 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
 	private def CharSequence serialize(Transition transition, boolean hr) {
 		val label = new StringBuilder();
 
-		if (transition.trigger != null) {
+		if (transition.trigger !== null) {
 			if (transition.delay > 1) {
 				label.append(transition.delay.toString).append(" ");
 			}
@@ -99,7 +99,7 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
 			default: ""
 		})
 
-		if (action.trigger != null) {
+		if (action.trigger !== null) {
 			components.addText(if (hr) {
 				action.trigger.serializeHR
 			} else {
@@ -182,7 +182,7 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
 			} else {
 				vo.serialize
 			})
-			if (vo.initialValue != null) {
+			if (vo.initialValue !== null) {
 				components.addText("=");
 				components.addText(if (hr) {
 					vo.initialValue.serializeHR;
@@ -190,7 +190,7 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
 					vo.initialValue.serialize;
 				})
 			}
-			if (vo.combineOperator != null && vo.combineOperator != CombineOperator.NONE) {
+			if (vo.combineOperator !== null && vo.combineOperator != CombineOperator.NONE) {
 				components.addKeyword("combine");
 				components.addText(if (hr) {
 					vo.combineOperator.serializeHR;
@@ -232,7 +232,7 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
             default: ""
         }
 
-        if (action.trigger != null) {
+        if (action.trigger !== null) {
             if (hr) {
                 content += action.trigger.serializeHR as String
             }else{
@@ -303,7 +303,7 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
             }else{
                 text.append(vo.serialize)
             }
-            if (vo.initialValue != null) {
+            if (vo.initialValue !== null) {
                 text.append(" = ");
                 if (hr) {
                     text.append(vo.initialValue.serializeHR);

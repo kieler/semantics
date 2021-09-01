@@ -18,7 +18,6 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.Parameter
@@ -251,6 +250,7 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
                     vor.valuedObject = call.valuedObject
                     vor.indices += call.indices.map[copy]
                     // remaining sub refs
+                    val tail = vor.subReference
                     var subVOR = call as ValuedObjectReference
                     var insertAt = vor
                     while (subVOR !== null && subVOR.subReference !== null) {
@@ -258,7 +258,7 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
                         if (subVOR.subReference !== null) { // skip last because it is the method
                             val insert = subVOR.valuedObject.reference
                             insert.indices += subVOR.indices.map[copy]
-                            insert.subReference = vor.subReference
+                            insert.subReference = tail
                             insertAt.subReference = insert
                             insertAt = insert
                         } else {
@@ -304,6 +304,9 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
             }
         }
         
+        // Get final returns
+        val returns = scg.nodes.filter(Assignment).filter[isReturn].toList
+        
         // Connect
         callNode.allPrevious.toList.forEach[target = entry.next.target]
         entry.next.target = null
@@ -336,8 +339,23 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
             || (callContainer instanceof Assignment && (callContainer as Assignment).valuedObject !== null)
         if (isRead) {
             if (returnVO !== null) {
-                call.replace(returnVO.reference)
-                voStore.update(returnVO, "method-inlining")
+                if (returns.size == 1) { // inline return expression
+                    val retAsm = returns.head
+                    retAsm.allPrevious.toList.forEach[target = retAsm.next.target]
+                    retAsm.next.target = null
+                    retAsm.remove
+                    
+                    if (returnVO.declaration.valuedObjects.size == 1) {
+                        returnVO.declaration.remove
+                    }
+                    returnVO.remove
+                    voStore.remove(returnVO)
+                    
+                    call.replace(retAsm.expression)
+                } else {
+                    call.replace(returnVO.reference)
+                    voStore.update(returnVO, "method-inlining")
+                }
             } else {
                 environment.errors.add("The method does not return any value!", callNode)
             } 
@@ -346,7 +364,6 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
             callNode.next.target = null
             callNode.remove
         }
-    }
-    
+    }   
 
 }

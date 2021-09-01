@@ -1035,13 +1035,22 @@ public interface KExpressionsPackage extends EPackage {
     int REFERENCE_DECLARATION__REFERENCE = DECLARATION_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Reference Container</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_DECLARATION__REFERENCE_CONTAINER = DECLARATION_FEATURE_COUNT + 1;
+
+    /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION__PARAMETERS = DECLARATION_FEATURE_COUNT + 1;
+    int REFERENCE_DECLARATION__PARAMETERS = DECLARATION_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Extern</b></em>' containment reference list.
@@ -1050,7 +1059,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION__EXTERN = DECLARATION_FEATURE_COUNT + 2;
+    int REFERENCE_DECLARATION__EXTERN = DECLARATION_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Generic Parameters</b></em>' containment reference list.
@@ -1059,7 +1068,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION__GENERIC_PARAMETERS = DECLARATION_FEATURE_COUNT + 3;
+    int REFERENCE_DECLARATION__GENERIC_PARAMETERS = DECLARATION_FEATURE_COUNT + 4;
 
     /**
      * The number of structural features of the '<em>Reference Declaration</em>' class.
@@ -1068,7 +1077,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 4;
+    int REFERENCE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 5;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.GenericParameterDeclarationImpl <em>Generic Parameter Declaration</em>}' class.
@@ -2529,6 +2538,17 @@ public interface KExpressionsPackage extends EPackage {
     EReference getReferenceDeclaration_Reference();
 
     /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getReferenceContainer <em>Reference Container</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Reference Container</em>'.
+     * @see de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getReferenceContainer()
+     * @see #getReferenceDeclaration()
+     * @generated
+     */
+    EReference getReferenceDeclaration_ReferenceContainer();
+
+    /**
      * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getParameters <em>Parameters</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3563,6 +3583,14 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EReference REFERENCE_DECLARATION__REFERENCE = eINSTANCE.getReferenceDeclaration_Reference();
+
+        /**
+         * The meta object literal for the '<em><b>Reference Container</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference REFERENCE_DECLARATION__REFERENCE_CONTAINER = eINSTANCE.getReferenceDeclaration_ReferenceContainer();
 
         /**
          * The meta object literal for the '<em><b>Parameters</b></em>' containment reference list feature.

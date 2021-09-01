@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.scg.processors.analyzer
 
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.Node
 
 /** 
  * This class is part of the SCG transformation chain. In particular analyzers are called by the scheduler

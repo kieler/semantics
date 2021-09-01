@@ -75,9 +75,9 @@ class XtextSerializationSynthesis extends AbstractDiagramSynthesis<EObject> {
                     "No serialization available. Maybe the model is not based on a XText grammar"), usedContext);
         } else {
             var title = "Unknown Resource";
-            if (usedContext.sourceWorkbenchPart != null) {
+            if (usedContext.sourceWorkbenchPart !== null) {
                 title = usedContext.sourceWorkbenchPart.title;
-            } else if (model.eResource != null && model.eResource.getURI != null) {
+            } else if (model.eResource !== null && model.eResource.getURI !== null) {
                 title = model.eResource.getURI.lastSegment;
             }
             val resourceExtension = ModelInformation.getResourceExtension(model);

@@ -104,7 +104,7 @@ class SCLFormatter extends KExtFormatter {
         conditional.regionFor.keywordPairs("{", "}").head?.interior[ indent ]
         conditional.regionFor.keyword("{").append[ newLine ]
         conditional.regionFor.keyword("}").prepend[ newLine ]
-        if (conditional.^else == null ) conditional.regionFor.keyword("}").append[ newLine ]     
+        if (conditional.^else === null ) conditional.regionFor.keyword("}").append[ newLine ]     
 	}
 
 	def dispatch void format(ElseScope elsescope, extension IFormattableDocument document) {

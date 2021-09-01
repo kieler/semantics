@@ -12,27 +12,25 @@
  */
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
-import java.util.HashMap
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
-import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
-import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.InputDeclaration
-import de.cau.cs.kieler.esterel.OutputDeclaration
 import de.cau.cs.kieler.esterel.InputOutputDeclaration
-import de.cau.cs.kieler.esterel.Signal
-import de.cau.cs.kieler.esterel.extensions.NewSignals
 import de.cau.cs.kieler.esterel.LocalSignalDeclaration
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.scl.Module
-import de.cau.cs.kieler.esterel.SignalDeclaration
-import de.cau.cs.kieler.kexpressions.CombineOperator
-import de.cau.cs.kieler.esterel.TypeDeclaration
-import de.cau.cs.kieler.esterel.RelationDeclaration
-import de.cau.cs.kieler.esterel.TaskDeclaration
-import de.cau.cs.kieler.scl.Label
-import de.cau.cs.kieler.scl.Thread
+import de.cau.cs.kieler.esterel.OutputDeclaration
 import de.cau.cs.kieler.esterel.ProcedureDeclaration
+import de.cau.cs.kieler.esterel.RelationDeclaration
+import de.cau.cs.kieler.esterel.Signal
+import de.cau.cs.kieler.esterel.SignalDeclaration
+import de.cau.cs.kieler.esterel.TaskDeclaration
+import de.cau.cs.kieler.esterel.TypeDeclaration
+import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
+import de.cau.cs.kieler.esterel.extensions.NewSignals
+import de.cau.cs.kieler.kexpressions.CombineOperator
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Module
+import de.cau.cs.kieler.scl.Thread
+import java.util.HashMap
 
 /**
  * @author mrb

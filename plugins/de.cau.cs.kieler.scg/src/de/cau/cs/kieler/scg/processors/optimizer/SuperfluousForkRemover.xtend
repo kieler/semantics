@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.scg.processors.optimizer
 
-import com.google.inject.Guice
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property

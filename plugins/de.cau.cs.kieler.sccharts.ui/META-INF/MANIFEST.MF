@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SCCharts UI
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.ui;singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.3.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Eclipse-UI: True
 Require-Bundle: de.cau.cs.kieler.klighd,
@@ -62,3 +62,4 @@ Export-Package: de.cau.cs.kieler.sccharts.ui,
  de.cau.cs.kieler.sccharts.ui.text.sctgenerator.extensions
 Import-Package: org.apache.log4j
 Bundle-Activator: de.cau.cs.kieler.sccharts.ui.SCChartsUiModule
+Automatic-Module-Name: de.cau.cs.kieler.sccharts.ui

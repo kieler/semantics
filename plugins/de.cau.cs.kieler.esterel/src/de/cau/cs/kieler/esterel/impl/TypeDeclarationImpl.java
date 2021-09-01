@@ -4,22 +4,12 @@ package de.cau.cs.kieler.esterel.impl;
 
 import de.cau.cs.kieler.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.TypeDeclaration;
-import de.cau.cs.kieler.esterel.TypeDefinition;
 
 import de.cau.cs.kieler.kexpressions.impl.DeclarationImpl;
 
-import java.util.Collection;
 
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Type Declaration</b></em>'.
