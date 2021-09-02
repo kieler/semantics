@@ -132,6 +132,7 @@ public class GuardImpl extends NodeImpl implements Guard {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, ScgPackage.GUARD__SCHEDULE);
@@ -144,6 +145,7 @@ public class GuardImpl extends NodeImpl implements Guard {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObjectReference getReference() {
         return reference;
     }
@@ -168,6 +170,7 @@ public class GuardImpl extends NodeImpl implements Guard {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setReference(ValuedObjectReference newReference) {
         if (newReference != reference) {
             NotificationChain msgs = null;
@@ -187,6 +190,7 @@ public class GuardImpl extends NodeImpl implements Guard {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getExpression() {
         return expression;
     }
@@ -211,6 +215,7 @@ public class GuardImpl extends NodeImpl implements Guard {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExpression(Expression newExpression) {
         if (newExpression != expression) {
             NotificationChain msgs = null;
@@ -230,6 +235,7 @@ public class GuardImpl extends NodeImpl implements Guard {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public AssignOperator getOperator() {
         return operator;
     }
@@ -239,6 +245,7 @@ public class GuardImpl extends NodeImpl implements Guard {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperator(AssignOperator newOperator) {
         AssignOperator oldOperator = operator;
         operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;

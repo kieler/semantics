@@ -105,6 +105,7 @@ class EsterelHighlighting implements IHighlighting {
         "sustain",
         "task",
         "then",
+        "this",
         "tick",
         "timeout",
         "times",

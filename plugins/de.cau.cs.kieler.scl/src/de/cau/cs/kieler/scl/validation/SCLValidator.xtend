@@ -5,7 +5,7 @@ package de.cau.cs.kieler.scl.validation
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.StaticAccessExpression
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -65,7 +65,7 @@ class SCLValidator extends AbstractSCLValidator {
                     val ini = vo.initialValue
                     val enumVal = if (ini instanceof ValuedObjectReference) {
                         ini.lowermostReference
-                    } else if (ini instanceof StaticAccessExpression) {
+                    } else if (ini instanceof SpecialAccessExpression) {
                         ini.subReference.lowermostReference
                     }
                     if (enumVal !== null) {
@@ -87,7 +87,7 @@ class SCLValidator extends AbstractSCLValidator {
             val exp = asm.expression
             val enumVal = if (exp instanceof ValuedObjectReference) {
                 exp.lowermostReference
-            } else if (exp instanceof StaticAccessExpression) {
+            } else if (exp instanceof SpecialAccessExpression) {
                 exp.subReference.lowermostReference
             }
             if (enumVal !== null) {

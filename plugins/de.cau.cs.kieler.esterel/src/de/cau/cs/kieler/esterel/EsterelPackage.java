@@ -310,6 +310,33 @@ public interface EsterelPackage extends EPackage {
     int TYPE_DEFINITION__CARDINALITIES = KExpressionsPackage.VALUED_OBJECT__CARDINALITIES;
 
     /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TYPE_DEFINITION__LABEL = KExpressionsPackage.VALUED_OBJECT__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Generic Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TYPE_DEFINITION__GENERIC_PARAMETERS = KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TYPE_DEFINITION__PARAMETERS = KExpressionsPackage.VALUED_OBJECT__PARAMETERS;
+
+    /**
      * The number of structural features of the '<em>Type Definition</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -418,6 +445,33 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int CONSTANT__CARDINALITIES = KExpressionsPackage.VALUED_OBJECT__CARDINALITIES;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONSTANT__LABEL = KExpressionsPackage.VALUED_OBJECT__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Generic Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONSTANT__GENERIC_PARAMETERS = KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONSTANT__PARAMETERS = KExpressionsPackage.VALUED_OBJECT__PARAMETERS;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -537,6 +591,33 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int FUNCTION__CARDINALITIES = KExpressionsPackage.VALUED_OBJECT__CARDINALITIES;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FUNCTION__LABEL = KExpressionsPackage.VALUED_OBJECT__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Generic Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FUNCTION__GENERIC_PARAMETERS = KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FUNCTION__PARAMETERS = KExpressionsPackage.VALUED_OBJECT__PARAMETERS;
 
     /**
      * The feature id for the '<em><b>Parameter Types</b></em>' containment reference list.
@@ -667,6 +748,33 @@ public interface EsterelPackage extends EPackage {
     int PROCEDURE__CARDINALITIES = KExpressionsPackage.VALUED_OBJECT__CARDINALITIES;
 
     /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PROCEDURE__LABEL = KExpressionsPackage.VALUED_OBJECT__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Generic Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PROCEDURE__GENERIC_PARAMETERS = KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PROCEDURE__PARAMETERS = KExpressionsPackage.VALUED_OBJECT__PARAMETERS;
+
+    /**
      * The feature id for the '<em><b>Reference Arguments</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -793,6 +901,33 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int TASK__CARDINALITIES = KExpressionsPackage.VALUED_OBJECT__CARDINALITIES;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TASK__LABEL = KExpressionsPackage.VALUED_OBJECT__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Generic Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TASK__GENERIC_PARAMETERS = KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TASK__PARAMETERS = KExpressionsPackage.VALUED_OBJECT__PARAMETERS;
 
     /**
      * The feature id for the '<em><b>Reference Arguments</b></em>' containment reference list.
@@ -1107,6 +1242,33 @@ public interface EsterelPackage extends EPackage {
     int SIGNAL__CARDINALITIES = KExpressionsPackage.VALUED_OBJECT__CARDINALITIES;
 
     /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SIGNAL__LABEL = KExpressionsPackage.VALUED_OBJECT__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Generic Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SIGNAL__GENERIC_PARAMETERS = KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SIGNAL__PARAMETERS = KExpressionsPackage.VALUED_OBJECT__PARAMETERS;
+
+    /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1242,6 +1404,33 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int SENSOR__CARDINALITIES = KExpressionsPackage.VALUED_OBJECT__CARDINALITIES;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SENSOR__LABEL = KExpressionsPackage.VALUED_OBJECT__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Generic Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SENSOR__GENERIC_PARAMETERS = KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SENSOR__PARAMETERS = KExpressionsPackage.VALUED_OBJECT__PARAMETERS;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -3095,6 +3284,33 @@ public interface EsterelPackage extends EPackage {
     int VARIABLE__CARDINALITIES = KExpressionsPackage.VALUED_OBJECT__CARDINALITIES;
 
     /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VARIABLE__LABEL = KExpressionsPackage.VALUED_OBJECT__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Generic Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VARIABLE__GENERIC_PARAMETERS = KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VARIABLE__PARAMETERS = KExpressionsPackage.VALUED_OBJECT__PARAMETERS;
+
+    /**
      * The number of structural features of the '<em>Variable</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3682,6 +3898,33 @@ public interface EsterelPackage extends EPackage {
      * @ordered
      */
     int TRAP_SIGNAL__CARDINALITIES = SIGNAL__CARDINALITIES;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TRAP_SIGNAL__LABEL = SIGNAL__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Generic Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TRAP_SIGNAL__GENERIC_PARAMETERS = SIGNAL__GENERIC_PARAMETERS;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TRAP_SIGNAL__PARAMETERS = SIGNAL__PARAMETERS;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.

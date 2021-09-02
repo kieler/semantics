@@ -68,6 +68,7 @@ public class TraceImpl extends PragmatableImpl implements Trace {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Tick> getTicks() {
         if (ticks == null) {
             ticks = new EObjectContainmentEList<Tick>(Tick.class, this, KTracePackage.TRACE__TICKS);

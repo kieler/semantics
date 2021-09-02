@@ -76,10 +76,11 @@ ModuleScopeCall returns sccharts::ScopeCall:
     (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '()')?;
     
 ScopeParameter returns kexpressions::Parameter:
-    ((accessType = ParameterAccessType
-    expression = ValuedObjectReference)
+    (
+        (accessType = ParameterAccessType expression = ValuedObjectReference)
     |
-    expression = Expression)
+        expression = (ThisExpression | Expression)
+    )
     ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?;
     
 BaseStateReference returns sccharts::BaseStateReference:
@@ -274,11 +275,6 @@ ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
     {sccharts::PolicyClassDeclaration}
     annotations+=Annotation*
     access=AccessModifier?
-    const?='const'?
-    input?='input'? 
-    output?='output'?
-    global?='global'?
-    static?='static'?
     host?='host'?
     ((
         type = ClassType
@@ -350,12 +346,22 @@ ReferenceValuedObject returns kexpressions::ValuedObject:
     (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '()')? // This is the important difference to the original definition!
     ('=' initialValue=Expression)?
     ('label' label=STRING)?;
-    
+
 @Override
-StaticAccessExpression returns kexpressions::StaticAccessExpression:
-    // Adjusted keyword!
-    'scchart' '(' target=[annotations::NamedObject|PrimeID] ')'
-    '.' subReference=ValuedObjectReference; 
+SpecialAccessExpression returns kexpressions::SpecialAccessExpression:
+    SCChartAccessExpression | StateAccessExpression;
+    
+SCChartAccessExpression returns kexpressions::SpecialAccessExpression:
+    access='scchart' '('
+    target=[annotations::NamedObject|PrimeID]
+    ')' '.' subReference=ValuedObjectReference;
+    
+StateAccessExpression returns kexpressions::SpecialAccessExpression:
+    access='state' '('
+    ( (container=[sccharts::ControlflowRegion] | container=[sccharts::DataflowRegion]) '.')? target=[sccharts::State]
+    ')'
+    ('schedule' schedule += ScheduleObjectReference)?;
+
 
 // ------------ //
 //  Enum Rules  // 

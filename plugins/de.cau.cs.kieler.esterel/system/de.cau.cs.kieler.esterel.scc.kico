@@ -1,5 +1,5 @@
 system de.cau.cs.kieler.esterel.scc
-    label "Extended Esterel SCC"
+    label "Extended Esterel SSC"
     config {
         "de.cau.cs.kieler.kicool.kitt.tracingActive": true,
         "de.cau.cs.kieler.esterel.processors.transformators.kernel.strict": false
