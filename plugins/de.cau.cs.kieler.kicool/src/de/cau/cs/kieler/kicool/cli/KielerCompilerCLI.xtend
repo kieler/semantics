@@ -205,6 +205,7 @@ class KielerCompilerCLI implements Runnable, Observer {
             val folderMatcher = FileSystems.getDefault().getPathMatcher("glob:**/" + filter)
             val fileMatcher = FileSystems.getDefault().getPathMatcher("glob:" + filter)
             val modelFiles = newArrayList
+            val modelBaseDirs = newHashMap // If a model file was retrieved from a given source folder, this map will provide the original directory
             if (files !== null) {
                 for (file : files) {
                     if (file.isFile) {
@@ -214,7 +215,12 @@ class KielerCompilerCLI implements Runnable, Observer {
                             println("Source file %s does not match input pattern %s!".format(file, filter))
                         }
                     } else if (file.isDirectory) {
-                        modelFiles += Files.walk(file.toPath).filter[Files.isRegularFile(it) && (fileMatcher.matches(it) || folderMatcher.matches(it))].map[toFile].iterator.toIterable
+                        for (childFile : Files.walk(file.toPath).filter[
+                            Files.isRegularFile(it) && (fileMatcher.matches(it) || folderMatcher.matches(it))
+                        ].map[toFile].iterator.toIterable) {
+                            modelFiles += childFile
+                            modelBaseDirs.put(childFile, file)
+                        }
                     } else {
                         println("%s does not exist".format(file))
                     }
@@ -366,22 +372,42 @@ class KielerCompilerCLI implements Runnable, Observer {
                     
                     if (!noOutput && cc.allErrors.empty) {
                         if (verbose) println("Saving compilation result")
-                        val dest = if (output === null) {
-                            file.canonicalFile.parentFile
-                        } else if (output.exists) {
-                            output
-                        } else if (modelFiles.size > 1) {
-                            if (!output.mkdirs) {
-                                println("Could not create output directory: %s".format(output))
-                                if (tryall) {
-                                    error = true
+                        var dest = file.canonicalFile.parentFile // if no output is given, results are placed next to source file
+                        if (output !== null) {
+                            if (output.exists && output.isFile) { // Output is specified as single existing file
+                                dest = output // Take it as is
+                            } else if (!output.exists && modelFiles.size == 1 && modelBaseDirs.empty) { // Output is specified but does not exist and only as single source file is given explicitly
+                                dest = output // saveModel will decide whether to create output as a folder for multiple result files or as single file
+                            } else { // Output target does not exist yet and must be created as directory or is an existing directory
+                                if (!output.exists) {
+                                    if (!output.mkdirs) {
+                                        println("Could not create output directory: %s".format(output))
+                                        if (tryall) {
+                                            error = true
+                                        } else {
+                                            System.exit(-1)
+                                        }
+                                    }
+                                }
+                                // For any source that is specified as a directory, the internal directory structure must be create at the destination
+                                if (modelBaseDirs.containsKey(file)) {
+                                    // Recreate relative source path.
+                                    // Example: output = ./out, modelBaseDir (user input) = ./src, file = ./src/mymodel/supermodel.sctx => dest = ./out/mymodel/
+                                    dest = output.toPath.resolve(modelBaseDirs.get(file).toPath.relativize(file.parentFile.toPath)).toFile
+                                    if (!dest.exists) {
+                                        if (!dest.mkdirs) {
+                                            println("Could not create output sub-directory: %s".format(dest))
+                                            if (tryall) {
+                                                error = true
+                                            } else {
+                                                System.exit(-1)
+                                            }
+                                        }
+                                    }
                                 } else {
-                                    System.exit(-1)
+                                    dest = output
                                 }
                             }
-                            output
-                        } else {
-                            output
                         }
                         
                         if (!cc.result.model.saveModel(dest, file, cc)) {
@@ -541,6 +567,12 @@ class KielerCompilerCLI implements Runnable, Observer {
                 }
                 if (!dest.exists) {
                     if (model.files.size == 1) {
+                        if (dest.parentFile !== null && !dest.parentFile.exists) {
+                            if (!dest.parentFile.mkdirs) {
+                                println("Could not create output directory: %s".format(dest.parentFile))
+                                return false
+                            }
+                        }
                         dest.createNewFile
                     } else {
                         if (!dest.mkdirs) {
@@ -561,6 +593,12 @@ class KielerCompilerCLI implements Runnable, Observer {
                 }
             } else {
                 if (!dest.exists) {
+                    if (dest.parentFile !== null && !dest.parentFile.exists) {
+                        if (!dest.parentFile.mkdirs) {
+                            println("Could not create output directory: %s".format(dest.parentFile))
+                            return false
+                        }
+                    }
                     dest.createNewFile
                 }
                 if (model instanceof EObject) {
