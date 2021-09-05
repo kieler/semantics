@@ -200,6 +200,8 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
                     println("Rendering finished in %.2fms".format((System.nanoTime - startTimestamp) as double / 1000_000))
                 }
             } catch (Exception e) {
+                println("Rendering diagram failed.")
+                if(verbose) e.printStackTrace
                 if(onlyDiagram) return false
             }
             return true
