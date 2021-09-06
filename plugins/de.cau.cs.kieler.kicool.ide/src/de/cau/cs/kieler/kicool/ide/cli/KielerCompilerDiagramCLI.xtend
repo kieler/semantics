@@ -102,7 +102,7 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
                     synthesis = kdm.getDiagramSynthesisById(requestedSynthesisId)
                     if (synthesis === null) {
                         println("No registered diagram synthesis with ID %s.".format(requestedSynthesisId))
-                    } else if (synthesis.supports(model, null)) {
+                    } else if (!synthesis.supports(model, null)) {
                         println("Diagram synthesis (%s) does not support the given model (%s).".format(requestedSynthesisId, model.class.simpleName))
                         synthesis = null // fallback
                     }
@@ -114,20 +114,22 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
                         return !onlyDiagram
                     } else {
                         synthesis = syntheses.head
-                        if (verbose) {
-//                            println("Available diagram synthesis for model type %s:".format(model.class.simpleName))
-//                            for (s : syntheses) {
-//                            	println("  %s".format(kdm.getSynthesisID(s)))
-//                            }
-                            println("Using diagram synthesis: %s".format(kdm.getSynthesisID(synthesis)))
-                        }
                     }
+                }
+                if (verbose) {
+                    println("Using diagram synthesis: %s".format(kdm.getSynthesisID(synthesis)))
                 }
                 
                 // Determine target
                 var File target
-                val name = (source.name.contains(".")) ? source.name.substring(0, source.name.indexOf(".")) : source.name
+                val name = (source.name.contains(".")) ? source.name.substring(0, source.name.lastIndexOf(".")) : source.name
                 if (!dest.exists) {
+                    if (dest.parentFile !== null && !dest.parentFile.exists) {
+                        if (!dest.parentFile.mkdirs) {
+                            println("Could not create output directory: %s".format(dest.parentFile))
+                            return !onlyDiagram
+                        }
+                    }
                     dest.createNewFile
                 }
                 if (dest.isFile) {
