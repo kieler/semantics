@@ -338,11 +338,11 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     def List<Pair<? extends CharSequence, TextFormat>> serializeMethodHighlighted(MethodDeclaration method, boolean hr, boolean body) {
         val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
         
-        if (method.access != AccessModifier.PUBLIC) {
+        if (method.access != AccessModifier.UNDEF) {
             components.addKeyword(switch(method.access) {
-                case PRIVATE: "public"
+                case PUBLIC: "public"
                 case PROTECTED: "protected"
-                case PUBLIC: "private"
+                case PRIVATE: "private"
                 default: ""
             })
         }
