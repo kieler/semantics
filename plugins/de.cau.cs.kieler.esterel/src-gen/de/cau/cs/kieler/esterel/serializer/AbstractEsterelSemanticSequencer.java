@@ -105,9 +105,10 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
-import de.cau.cs.kieler.kexpressions.StaticAccessExpression;
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ThisExpression;
 import de.cau.cs.kieler.kexpressions.ValueTypeReference;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
@@ -1179,8 +1180,8 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE:
 				sequence_ScheduleObjectReference(context, (ScheduleObjectReference) semanticObject); 
 				return; 
-			case KExpressionsPackage.STATIC_ACCESS_EXPRESSION:
-				sequence_StaticAccessExpression(context, (StaticAccessExpression) semanticObject); 
+			case KExpressionsPackage.SPECIAL_ACCESS_EXPRESSION:
+				sequence_SpecialAccessExpression(context, (SpecialAccessExpression) semanticObject); 
 				return; 
 			case KExpressionsPackage.STRING_VALUE:
 				sequence_StringValue(context, (StringValue) semanticObject); 
@@ -1257,6 +1258,9 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.THIS_EXPRESSION:
+				sequence_ThisExpression(context, (ThisExpression) semanticObject); 
+				return; 
 			case KExpressionsPackage.VALUE_TYPE_REFERENCE:
 				sequence_ValueTypeReference(context, (ValueTypeReference) semanticObject); 
 				return; 

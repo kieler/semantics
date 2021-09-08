@@ -381,11 +381,19 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case KExpressionsPackage.STATIC_ACCESS_EXPRESSION: {
-                StaticAccessExpression staticAccessExpression = (StaticAccessExpression)theEObject;
-                T result = caseStaticAccessExpression(staticAccessExpression);
-                if (result == null) result = caseExpression(staticAccessExpression);
-                if (result == null) result = caseSchedulable(staticAccessExpression);
+            case KExpressionsPackage.SPECIAL_ACCESS_EXPRESSION: {
+                SpecialAccessExpression specialAccessExpression = (SpecialAccessExpression)theEObject;
+                T result = caseSpecialAccessExpression(specialAccessExpression);
+                if (result == null) result = caseExpression(specialAccessExpression);
+                if (result == null) result = caseSchedulable(specialAccessExpression);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.THIS_EXPRESSION: {
+                ThisExpression thisExpression = (ThisExpression)theEObject;
+                T result = caseThisExpression(thisExpression);
+                if (result == null) result = caseExpression(thisExpression);
+                if (result == null) result = caseSchedulable(thisExpression);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -769,17 +777,32 @@ public class KExpressionsSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Static Access Expression</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Special Access Expression</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Static Access Expression</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Special Access Expression</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseStaticAccessExpression(StaticAccessExpression object) {
+    public T caseSpecialAccessExpression(SpecialAccessExpression object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>This Expression</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>This Expression</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseThisExpression(ThisExpression object) {
         return null;
     }
 

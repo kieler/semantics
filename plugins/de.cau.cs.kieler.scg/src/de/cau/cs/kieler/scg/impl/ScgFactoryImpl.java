@@ -121,6 +121,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public SCGraphs createSCGraphs() {
         SCGraphsImpl scGraphs = new SCGraphsImpl();
         return scGraphs;
@@ -131,6 +132,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Node createNode() {
         NodeImpl node = new NodeImpl();
         return node;
@@ -141,6 +143,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Conditional createConditional() {
         ConditionalImpl conditional = new ConditionalImpl();
         return conditional;
@@ -151,6 +154,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Surface createSurface() {
         SurfaceImpl surface = new SurfaceImpl();
         return surface;
@@ -161,6 +165,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Depth createDepth() {
         DepthImpl depth = new DepthImpl();
         return depth;
@@ -171,6 +176,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Assignment createAssignment() {
         AssignmentImpl assignment = new AssignmentImpl();
         return assignment;
@@ -181,6 +187,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Fork createFork() {
         ForkImpl fork = new ForkImpl();
         return fork;
@@ -191,6 +198,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Join createJoin() {
         JoinImpl join = new JoinImpl();
         return join;
@@ -201,6 +209,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public SCGraph createSCGraph() {
         SCGraphImpl scGraph = new SCGraphImpl();
         return scGraph;
@@ -211,6 +220,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Entry createEntry() {
         EntryImpl entry = new EntryImpl();
         return entry;
@@ -221,6 +231,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Exit createExit() {
         ExitImpl exit = new ExitImpl();
         return exit;
@@ -231,6 +242,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ControlFlow createControlFlow() {
         ControlFlowImpl controlFlow = new ControlFlowImpl();
         return controlFlow;
@@ -241,6 +253,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public BasicBlock createBasicBlock() {
         BasicBlockImpl basicBlock = new BasicBlockImpl();
         return basicBlock;
@@ -251,6 +264,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public SchedulingBlock createSchedulingBlock() {
         SchedulingBlockImpl schedulingBlock = new SchedulingBlockImpl();
         return schedulingBlock;
@@ -261,6 +275,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Predecessor createPredecessor() {
         PredecessorImpl predecessor = new PredecessorImpl();
         return predecessor;
@@ -271,7 +286,8 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public ExpressionDependency createExpressionDependency() {
+	@Override
+    public ExpressionDependency createExpressionDependency() {
         ExpressionDependencyImpl expressionDependency = new ExpressionDependencyImpl();
         return expressionDependency;
     }
@@ -281,7 +297,8 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public GuardDependency createGuardDependency() {
+	@Override
+    public GuardDependency createGuardDependency() {
         GuardDependencyImpl guardDependency = new GuardDependencyImpl();
         return guardDependency;
     }
@@ -291,7 +308,8 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public ScheduleDependency createScheduleDependency() {
+	@Override
+    public ScheduleDependency createScheduleDependency() {
         ScheduleDependencyImpl scheduleDependency = new ScheduleDependencyImpl();
         return scheduleDependency;
     }
@@ -301,6 +319,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TickBoundaryDependency createTickBoundaryDependency() {
         TickBoundaryDependencyImpl tickBoundaryDependency = new TickBoundaryDependencyImpl();
         return tickBoundaryDependency;
@@ -331,6 +350,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Guard createGuard() {
         GuardImpl guard = new GuardImpl();
         return guard;
@@ -361,6 +381,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ScgPackage getScgPackage() {
         return (ScgPackage)getEPackage();
     }

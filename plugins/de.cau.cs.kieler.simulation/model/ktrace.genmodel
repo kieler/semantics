@@ -3,7 +3,7 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.simulation/src" editDirectory="/de.cau.cs.kieler.simulation.edit/src"
     editorDirectory="/de.cau.cs.kieler.simulation.editor/src" modelPluginID="de.cau.cs.kieler.simulation"
     forceOverwrite="true" modelName="ktrace" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    complianceLevel="6.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.simulation.edit"
+    complianceLevel="11.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.simulation.edit"
     editorPluginID="de.cau.cs.kieler.simulation.editor" runtimeVersion="2.12" usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.kexpressions/model/keffects.genmodel#//keffects ../../de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions ../../de.cau.cs.kieler.kexpressions/model/kext.genmodel#//kext">
   <genPackages prefix="KTrace" basePackage="de.cau.cs.kieler.simulation.trace" disposableProviderFactory="true"
       ecorePackage="ktrace.ecore#/">

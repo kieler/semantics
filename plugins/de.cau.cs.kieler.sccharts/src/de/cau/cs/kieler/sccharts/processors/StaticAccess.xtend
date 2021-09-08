@@ -15,7 +15,7 @@ package de.cau.cs.kieler.sccharts.processors
 
 import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.StaticAccessExpression
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -38,8 +38,8 @@ class StaticAccess extends SCChartsProcessor implements Traceable {
     @Inject extension KExtEnumExtensions
     
     public static val ID = "de.cau.cs.kieler.sccharts.processors.staticAccess"
-    
-    static public final String GENERATED_PREFIX = "_"
+    public static val GENERATED_PREFIX = "_"
+    public static val ACCESS_KEYWORD = "scchart"
     
     override getId() {
         ID
@@ -58,7 +58,7 @@ class StaticAccess extends SCChartsProcessor implements Traceable {
     def void handleStaticAccesses(State root) {
         // Collect
         val accessMap = HashMultimap.create
-        for (access : root.eAllContents.filter(StaticAccessExpression).toList) {
+        for (access : root.eAllContents.filter(SpecialAccessExpression).filter[isStaticAccess].toList) {
             if (access.target !== null && access.subReference !== null) {
                 var ref = access.subReference.lowermostReference
                 if (ref !== null && ref.valuedObject !== null) {
@@ -118,5 +118,9 @@ class StaticAccess extends SCChartsProcessor implements Traceable {
                 }
             }
         }
+    }
+    
+    static def isStaticAccess(SpecialAccessExpression exp) {
+        return ACCESS_KEYWORD.equals(exp.access)
     }
 }

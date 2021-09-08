@@ -122,7 +122,16 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
                 
                 // Determine target
                 var File target
-                val name = (source.name.contains(".")) ? source.name.substring(0, source.name.indexOf(".")) : source.name
+                val name = (source.name.contains(".")) ? source.name.substring(0, source.name.lastIndexOf(".")) : source.name
+                if (!dest.exists) {
+                    if (dest.parentFile !== null && !dest.parentFile.exists) {
+                        if (!dest.parentFile.mkdirs) {
+                            println("Could not create output directory: %s".format(dest.parentFile))
+                            return !onlyDiagram
+                        }
+                    }
+                    dest.createNewFile
+                }
                 if (dest.isFile) {
                     if (onlyDiagram) {
                         target = dest
@@ -136,8 +145,6 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
                         return !onlyDiagram
                     }
                 }
-                target.parentFile.mkdirs()
-                target.createNewFile
                 
                 // Properties and options
                 val properties = new KlighdSynthesisProperties
@@ -195,7 +202,8 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
                     println("Rendering finished in %.2fms".format((System.nanoTime - startTimestamp) as double / 1000_000))
                 }
             } catch (Exception e) {
-                e.printStackTrace
+                println("Rendering diagram failed.")
+                if(verbose) e.printStackTrace
                 if(onlyDiagram) return false
             }
             return true

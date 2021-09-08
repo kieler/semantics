@@ -80,6 +80,8 @@ class LustreHighlighting implements IHighlighting {
         "struct",
         "tel",
         "then",
+        "this",
+        "to",
         "type",
         "unless",
         "unsafe",

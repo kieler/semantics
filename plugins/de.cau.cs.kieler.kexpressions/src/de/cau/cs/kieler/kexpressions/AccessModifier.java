@@ -19,26 +19,14 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum AccessModifier implements Enumerator {
     /**
-     * The '<em><b>PUBLIC</b></em>' literal object.
+     * The '<em><b>UNDEF</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #PUBLIC_VALUE
+     * @see #UNDEF_VALUE
      * @generated
      * @ordered
      */
-    PUBLIC(0, "PUBLIC", "PUBLIC"),
-
-    /**
-     * The '<em><b>PROTECTED</b></em>' literal object.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #PROTECTED_VALUE
-     * @generated
-     * @ordered
-     */
-    PROTECTED(1, "PROTECTED", "PROTECTED"),
-
-    /**
+    UNDEF(0, "UNDEF", "UNDEF"), /**
      * The '<em><b>PRIVATE</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -46,29 +34,34 @@ public enum AccessModifier implements Enumerator {
      * @generated
      * @ordered
      */
-    PRIVATE(2, "PRIVATE", "PRIVATE");
-
-    /**
-     * The '<em><b>PUBLIC</b></em>' literal value.
+    PRIVATE(1, "PRIVATE", "PRIVATE"), /**
+     * The '<em><b>PROTECTED</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #PUBLIC
+     * @see #PROTECTED_VALUE
+     * @generated
+     * @ordered
+     */
+    PROTECTED(2, "PROTECTED", "PROTECTED"), /**
+     * The '<em><b>PUBLIC</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #PUBLIC_VALUE
+     * @generated
+     * @ordered
+     */
+    PUBLIC(3, "PUBLIC", "PUBLIC");
+
+    /**
+     * The '<em><b>UNDEF</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #UNDEF
      * @model
      * @generated
      * @ordered
      */
-    public static final int PUBLIC_VALUE = 0;
-
-    /**
-     * The '<em><b>PROTECTED</b></em>' literal value.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #PROTECTED
-     * @model
-     * @generated
-     * @ordered
-     */
-    public static final int PROTECTED_VALUE = 1;
+    public static final int UNDEF_VALUE = 0;
 
     /**
      * The '<em><b>PRIVATE</b></em>' literal value.
@@ -79,7 +72,29 @@ public enum AccessModifier implements Enumerator {
      * @generated
      * @ordered
      */
-    public static final int PRIVATE_VALUE = 2;
+    public static final int PRIVATE_VALUE = 1;
+
+    /**
+     * The '<em><b>PROTECTED</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #PROTECTED
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int PROTECTED_VALUE = 2;
+
+    /**
+     * The '<em><b>PUBLIC</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #PUBLIC
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int PUBLIC_VALUE = 3;
 
     /**
      * An array of all the '<em><b>Access Modifier</b></em>' enumerators.
@@ -89,9 +104,10 @@ public enum AccessModifier implements Enumerator {
      */
     private static final AccessModifier[] VALUES_ARRAY =
         new AccessModifier[] {
-            PUBLIC,
-            PROTECTED,
+            UNDEF,
             PRIVATE,
+            PROTECTED,
+            PUBLIC,
         };
 
     /**
@@ -148,9 +164,10 @@ public enum AccessModifier implements Enumerator {
      */
     public static AccessModifier get(int value) {
         switch (value) {
-            case PUBLIC_VALUE: return PUBLIC;
-            case PROTECTED_VALUE: return PROTECTED;
+            case UNDEF_VALUE: return UNDEF;
             case PRIVATE_VALUE: return PRIVATE;
+            case PROTECTED_VALUE: return PROTECTED;
+            case PUBLIC_VALUE: return PUBLIC;
         }
         return null;
     }

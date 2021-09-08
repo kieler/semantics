@@ -471,10 +471,9 @@
     </editor>
  </extension>
  <extension
-       point="de.cau.cs.kieler.klighd.diagramSyntheses">
-    <diagramSynthesis
-          class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.lustre.ui.synthesis.LustreSCChartsSynthesis"
-          id="de.cau.cs.kieler.lustre.ui.synthesis.LustreSCChartsSynthesis">
-    </diagramSynthesis>
+       point="de.cau.cs.kieler.klighd.extensions">
+    <startupHook
+          class="de.cau.cs.kieler.lustre.ui.synthesis.LustreKlighdSetup">
+    </startupHook>
  </extension>
 </plugin>

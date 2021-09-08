@@ -74,6 +74,7 @@ public class CommentAnnotationImpl extends StringAnnotationImpl implements Comme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Annotation> getAnnotations() {
         if (annotations == null) {
             annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, AnnotationsPackage.COMMENT_ANNOTATION__ANNOTATIONS);

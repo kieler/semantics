@@ -24,6 +24,7 @@ import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -41,6 +42,7 @@ import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
+import de.cau.cs.kieler.sccharts.OdeAction
 import de.cau.cs.kieler.sccharts.PeriodAction
 import de.cau.cs.kieler.sccharts.PolicyRegion
 import de.cau.cs.kieler.sccharts.Region
@@ -48,12 +50,12 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.processors.For
+import de.cau.cs.kieler.sccharts.processors.StaticAccess
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import de.cau.cs.kieler.scl.extensions.SCLSerializeExtensions
 import java.util.List
 
 import static de.cau.cs.kieler.sccharts.PreemptionType.*
-import de.cau.cs.kieler.sccharts.OdeAction
 
 /**
  * @author ssm
@@ -173,6 +175,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             if (declaration.access == AccessModifier.PROTECTED) {
                 components.addKeyword("protected")
             }
+            if (declaration.access == AccessModifier.PUBLIC) {
+                components.addKeyword("public")
+            }
             if (declaration.isExtern) {
                 components.addKeyword("extern")
             }
@@ -212,6 +217,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }  else if (type == ValueType.CLASS) {
                 if ((declaration as ClassDeclaration).host) components.addKeyword("host")
                 components.addKeyword("class")
+            }  else if (type == ValueType.ENUM) {
+                if ((declaration as ClassDeclaration).host) components.addKeyword("host")
+                components.addKeyword("enum")
             } else {
                 components.addKeyword(if (hr) {
                     type.serializeHR
@@ -233,8 +241,10 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                 }
                 if (declaration.reference instanceof NamedObject) {
                     components.addHighlight(containerPrefix + (declaration.reference as NamedObject).name)
-                } else {
+                } else if (declaration.reference instanceof ClassDeclaration) {
                     components.addHighlight(containerPrefix + declaration.reference.class.name)
+                } else {
+                    components.addHighlight("<BROKEN-REFERENCE>")
                 }
             } else {
                 components.addKeyword("extern")
@@ -333,6 +343,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                 case PRIVATE: "public"
                 case PROTECTED: "protected"
                 case PUBLIC: "private"
+                default: ""
             })
         }
         
@@ -586,6 +597,15 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }
         } else {
             return emission.reference.valuedObject.name.applySymbolTable
+        }
+    }
+    
+    override dispatch CharSequence serialize(SpecialAccessExpression access) {
+        switch(access.access) {
+            case StaticAccess.ACCESS_KEYWORD: {
+                return access.target?.name + "." + access.subReference?.serialize
+            }
+            default: return super.serialize(access)
         }
     }
     
