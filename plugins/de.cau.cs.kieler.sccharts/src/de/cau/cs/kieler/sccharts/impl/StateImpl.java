@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.sccharts.BaseStateReference;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
+import de.cau.cs.kieler.sccharts.PolicyRegion;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
@@ -55,6 +56,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getIncomingTransitions <em>Incoming Transitions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getBaseStateReferences <em>Base State References</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getPolicy <em>Policy</em>}</li>
  * </ul>
  *
  * @generated
@@ -186,6 +188,16 @@ public class StateImpl extends ScopeImpl implements State {
      * @ordered
      */
     protected EList<BaseStateReference> baseStateReferences;
+
+    /**
+     * The cached value of the '{@link #getPolicy() <em>Policy</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getPolicy()
+     * @generated
+     * @ordered
+     */
+    protected PolicyRegion policy;
 
     /**
      * <!-- begin-user-doc -->
@@ -398,6 +410,51 @@ public class StateImpl extends ScopeImpl implements State {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public PolicyRegion getPolicy() {
+        return policy;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetPolicy(PolicyRegion newPolicy, NotificationChain msgs) {
+        PolicyRegion oldPolicy = policy;
+        policy = newPolicy;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__POLICY, oldPolicy, newPolicy);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setPolicy(PolicyRegion newPolicy) {
+        if (newPolicy != policy) {
+            NotificationChain msgs = null;
+            if (policy != null)
+                msgs = ((InternalEObject)policy).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.STATE__POLICY, null, msgs);
+            if (newPolicy != null)
+                msgs = ((InternalEObject)newPolicy).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.STATE__POLICY, null, msgs);
+            msgs = basicSetPolicy(newPolicy, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__POLICY, newPolicy, newPolicy));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -434,6 +491,8 @@ public class StateImpl extends ScopeImpl implements State {
                 return ((InternalEList<?>)getIncomingTransitions()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.STATE__BASE_STATE_REFERENCES:
                 return ((InternalEList<?>)getBaseStateReferences()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.STATE__POLICY:
+                return basicSetPolicy(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -478,6 +537,8 @@ public class StateImpl extends ScopeImpl implements State {
                 return getIncomingTransitions();
             case SCChartsPackage.STATE__BASE_STATE_REFERENCES:
                 return getBaseStateReferences();
+            case SCChartsPackage.STATE__POLICY:
+                return getPolicy();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -522,6 +583,9 @@ public class StateImpl extends ScopeImpl implements State {
                 getBaseStateReferences().clear();
                 getBaseStateReferences().addAll((Collection<? extends BaseStateReference>)newValue);
                 return;
+            case SCChartsPackage.STATE__POLICY:
+                setPolicy((PolicyRegion)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -561,6 +625,9 @@ public class StateImpl extends ScopeImpl implements State {
             case SCChartsPackage.STATE__BASE_STATE_REFERENCES:
                 getBaseStateReferences().clear();
                 return;
+            case SCChartsPackage.STATE__POLICY:
+                setPolicy((PolicyRegion)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -591,6 +658,8 @@ public class StateImpl extends ScopeImpl implements State {
                 return incomingTransitions != null && !incomingTransitions.isEmpty();
             case SCChartsPackage.STATE__BASE_STATE_REFERENCES:
                 return baseStateReferences != null && !baseStateReferences.isEmpty();
+            case SCChartsPackage.STATE__POLICY:
+                return policy != null;
         }
         return super.eIsSet(featureID);
     }

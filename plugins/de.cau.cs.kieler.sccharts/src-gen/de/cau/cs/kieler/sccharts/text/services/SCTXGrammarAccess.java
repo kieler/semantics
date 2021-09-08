@@ -123,16 +123,18 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Assignment cBaseStateReferencesAssignment_5_2_1 = (Assignment)cGroup_5_2.eContents().get(1);
 		private final RuleCall cBaseStateReferencesBaseStateReferenceParserRuleCall_5_2_1_0 = (RuleCall)cBaseStateReferencesAssignment_5_2_1.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
-		private final Assignment cDeclarationsAssignment_7 = (Assignment)cGroup.eContents().get(7);
-		private final RuleCall cDeclarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_7_0 = (RuleCall)cDeclarationsAssignment_7.eContents().get(0);
-		private final Assignment cActionsAssignment_8 = (Assignment)cGroup.eContents().get(8);
-		private final RuleCall cActionsLocalActionParserRuleCall_8_0 = (RuleCall)cActionsAssignment_8.eContents().get(0);
-		private final Alternatives cAlternatives_9 = (Alternatives)cGroup.eContents().get(9);
-		private final Assignment cRegionsAssignment_9_0 = (Assignment)cAlternatives_9.eContents().get(0);
-		private final RuleCall cRegionsImplicitControlflowRegionParserRuleCall_9_0_0 = (RuleCall)cRegionsAssignment_9_0.eContents().get(0);
-		private final Assignment cRegionsAssignment_9_1 = (Assignment)cAlternatives_9.eContents().get(1);
-		private final RuleCall cRegionsRegionParserRuleCall_9_1_0 = (RuleCall)cRegionsAssignment_9_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_10 = (Keyword)cGroup.eContents().get(10);
+		private final Assignment cPolicyAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cPolicyPolicyRegionParserRuleCall_7_0 = (RuleCall)cPolicyAssignment_7.eContents().get(0);
+		private final Assignment cDeclarationsAssignment_8 = (Assignment)cGroup.eContents().get(8);
+		private final RuleCall cDeclarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_8_0 = (RuleCall)cDeclarationsAssignment_8.eContents().get(0);
+		private final Assignment cActionsAssignment_9 = (Assignment)cGroup.eContents().get(9);
+		private final RuleCall cActionsLocalActionParserRuleCall_9_0 = (RuleCall)cActionsAssignment_9.eContents().get(0);
+		private final Alternatives cAlternatives_10 = (Alternatives)cGroup.eContents().get(10);
+		private final Assignment cRegionsAssignment_10_0 = (Assignment)cAlternatives_10.eContents().get(0);
+		private final RuleCall cRegionsImplicitControlflowRegionParserRuleCall_10_0_0 = (RuleCall)cRegionsAssignment_10_0.eContents().get(0);
+		private final Assignment cRegionsAssignment_10_1 = (Assignment)cAlternatives_10.eContents().get(1);
+		private final RuleCall cRegionsRegionParserRuleCall_10_1_0 = (RuleCall)cRegionsAssignment_10_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_11 = (Keyword)cGroup.eContents().get(11);
 		
 		//// ------------- //
 		////  State Rules  //
@@ -143,6 +145,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//    ('<' genericParameterDeclarations += GenericParameterDeclaration (',' genericParameterDeclarations += GenericParameterDeclaration)* '>')?
 		//    ('extends' baseStateReferences += BaseStateReference (',' baseStateReferences += BaseStateReference)*)?
 		//    '{'
+		//        policy=PolicyRegion?
 		//        declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
 		//        actions+=LocalAction*
 		//        (regions+=ImplicitControlflowRegion | regions+=Region*)
@@ -154,6 +157,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//('<' genericParameterDeclarations += GenericParameterDeclaration (',' genericParameterDeclarations += GenericParameterDeclaration)* '>')?
 		//('extends' baseStateReferences += BaseStateReference (',' baseStateReferences += BaseStateReference)*)?
 		//'{'
+		//    policy=PolicyRegion?
 		//    declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
 		//    actions+=LocalAction*
 		//    (regions+=ImplicitControlflowRegion | regions+=Region*)
@@ -235,35 +239,41 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_6() { return cLeftCurlyBracketKeyword_6; }
 		
+		//policy=PolicyRegion?
+		public Assignment getPolicyAssignment_7() { return cPolicyAssignment_7; }
+		
+		//PolicyRegion
+		public RuleCall getPolicyPolicyRegionParserRuleCall_7_0() { return cPolicyPolicyRegionParserRuleCall_7_0; }
+		
 		//declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
-		public Assignment getDeclarationsAssignment_7() { return cDeclarationsAssignment_7; }
+		public Assignment getDeclarationsAssignment_8() { return cDeclarationsAssignment_8; }
 		
 		//DeclarationOrMethodWithKeywordWOSemicolon
-		public RuleCall getDeclarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_7_0() { return cDeclarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_7_0; }
+		public RuleCall getDeclarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_8_0() { return cDeclarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_8_0; }
 		
 		//actions+=LocalAction*
-		public Assignment getActionsAssignment_8() { return cActionsAssignment_8; }
+		public Assignment getActionsAssignment_9() { return cActionsAssignment_9; }
 		
 		//LocalAction
-		public RuleCall getActionsLocalActionParserRuleCall_8_0() { return cActionsLocalActionParserRuleCall_8_0; }
+		public RuleCall getActionsLocalActionParserRuleCall_9_0() { return cActionsLocalActionParserRuleCall_9_0; }
 		
 		//(regions+=ImplicitControlflowRegion | regions+=Region*)
-		public Alternatives getAlternatives_9() { return cAlternatives_9; }
+		public Alternatives getAlternatives_10() { return cAlternatives_10; }
 		
 		//regions+=ImplicitControlflowRegion
-		public Assignment getRegionsAssignment_9_0() { return cRegionsAssignment_9_0; }
+		public Assignment getRegionsAssignment_10_0() { return cRegionsAssignment_10_0; }
 		
 		//ImplicitControlflowRegion
-		public RuleCall getRegionsImplicitControlflowRegionParserRuleCall_9_0_0() { return cRegionsImplicitControlflowRegionParserRuleCall_9_0_0; }
+		public RuleCall getRegionsImplicitControlflowRegionParserRuleCall_10_0_0() { return cRegionsImplicitControlflowRegionParserRuleCall_10_0_0; }
 		
 		//regions+=Region*
-		public Assignment getRegionsAssignment_9_1() { return cRegionsAssignment_9_1; }
+		public Assignment getRegionsAssignment_10_1() { return cRegionsAssignment_10_1; }
 		
 		//Region
-		public RuleCall getRegionsRegionParserRuleCall_9_1_0() { return cRegionsRegionParserRuleCall_9_1_0; }
+		public RuleCall getRegionsRegionParserRuleCall_10_1_0() { return cRegionsRegionParserRuleCall_10_1_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_10() { return cRightCurlyBracketKeyword_10; }
+		public Keyword getRightCurlyBracketKeyword_11() { return cRightCurlyBracketKeyword_11; }
 	}
 	public class StateElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.State");
@@ -4365,6 +4375,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    ('<' genericParameterDeclarations += GenericParameterDeclaration (',' genericParameterDeclarations += GenericParameterDeclaration)* '>')?
 	//    ('extends' baseStateReferences += BaseStateReference (',' baseStateReferences += BaseStateReference)*)?
 	//    '{'
+	//        policy=PolicyRegion?
 	//        declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
 	//        actions+=LocalAction*
 	//        (regions+=ImplicitControlflowRegion | regions+=Region*)

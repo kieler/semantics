@@ -66,6 +66,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/outgoingTransitions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/incomingTransitions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/baseStateReferences"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/policy"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//Region">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference sccharts.ecore#//Region/parentState"/>

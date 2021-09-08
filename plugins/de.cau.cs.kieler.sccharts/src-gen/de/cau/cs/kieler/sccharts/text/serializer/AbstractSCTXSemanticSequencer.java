@@ -2050,6 +2050,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         label=STRING? 
 	 *         (genericParameterDeclarations+=GenericParameterDeclaration genericParameterDeclarations+=GenericParameterDeclaration*)? 
 	 *         (baseStateReferences+=BaseStateReference baseStateReferences+=BaseStateReference*)? 
+	 *         policy=PolicyRegion? 
 	 *         declarations+=DeclarationOrMethodWithKeywordWOSemicolon* 
 	 *         actions+=LocalAction* 
 	 *         (regions+=ImplicitControlflowRegion | regions+=Region+)?

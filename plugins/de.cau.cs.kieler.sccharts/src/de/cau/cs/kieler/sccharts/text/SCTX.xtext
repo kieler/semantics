@@ -30,6 +30,7 @@ RootState returns sccharts::State:
 	('<' genericParameterDeclarations += GenericParameterDeclaration (',' genericParameterDeclarations += GenericParameterDeclaration)* '>')?
 	('extends' baseStateReferences += BaseStateReference (',' baseStateReferences += BaseStateReference)*)?
 	'{'
+		policy=PolicyRegion?
 		declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
 		actions+=LocalAction*
 		(regions+=ImplicitControlflowRegion | regions+=Region*)

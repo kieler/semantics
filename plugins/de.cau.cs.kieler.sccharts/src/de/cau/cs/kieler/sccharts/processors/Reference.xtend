@@ -873,6 +873,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                         valuedObjects += ref.valuedObjects
                         declarations += newState.declarations
                         annotations += newState.annotations
+                        policy = newState.policy
                     ]
                     classDecl.addStringAnnotation(REF_CLASS_ORIGIN, Iterables.concat(#[refTarget.name], refTarget.baseStates.map[name]))
                     

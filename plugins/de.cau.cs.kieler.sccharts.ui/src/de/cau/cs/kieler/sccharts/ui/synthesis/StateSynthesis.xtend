@@ -332,6 +332,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         
         if(PolicySynthesis.SHOW_POLICIES.booleanValue) {
             val policies = newArrayList
+            if (state.policy !== null) policies += state.policy
             policies += state.declarations.filter(PolicyClassDeclaration).map[policy].filterNull
             policies += state.regions.map[declarations].flatten.filter(PolicyClassDeclaration).map[policy].filterNull
             for (policy : policies.reverseView) {

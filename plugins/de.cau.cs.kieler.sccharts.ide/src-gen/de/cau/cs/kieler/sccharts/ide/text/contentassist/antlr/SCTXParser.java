@@ -32,7 +32,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 		
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, SCTXGrammarAccess grammarAccess) {
 			builder.put(grammarAccess.getSCChartsAccess().getAlternatives_0(), "rule__SCCharts__Alternatives_0");
-			builder.put(grammarAccess.getRootStateAccess().getAlternatives_9(), "rule__RootState__Alternatives_9");
+			builder.put(grammarAccess.getRootStateAccess().getAlternatives_10(), "rule__RootState__Alternatives_10");
 			builder.put(grammarAccess.getStateAccess().getAlternatives_8(), "rule__State__Alternatives_8");
 			builder.put(grammarAccess.getStateAccess().getAlternatives_8_2_5(), "rule__State__Alternatives_8_2_5");
 			builder.put(grammarAccess.getScopeCallAccess().getAlternatives_3(), "rule__ScopeCall__Alternatives_3");
@@ -567,10 +567,11 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getRootStateAccess().getGenericParameterDeclarationsAssignment_4_2_1(), "rule__RootState__GenericParameterDeclarationsAssignment_4_2_1");
 			builder.put(grammarAccess.getRootStateAccess().getBaseStateReferencesAssignment_5_1(), "rule__RootState__BaseStateReferencesAssignment_5_1");
 			builder.put(grammarAccess.getRootStateAccess().getBaseStateReferencesAssignment_5_2_1(), "rule__RootState__BaseStateReferencesAssignment_5_2_1");
-			builder.put(grammarAccess.getRootStateAccess().getDeclarationsAssignment_7(), "rule__RootState__DeclarationsAssignment_7");
-			builder.put(grammarAccess.getRootStateAccess().getActionsAssignment_8(), "rule__RootState__ActionsAssignment_8");
-			builder.put(grammarAccess.getRootStateAccess().getRegionsAssignment_9_0(), "rule__RootState__RegionsAssignment_9_0");
-			builder.put(grammarAccess.getRootStateAccess().getRegionsAssignment_9_1(), "rule__RootState__RegionsAssignment_9_1");
+			builder.put(grammarAccess.getRootStateAccess().getPolicyAssignment_7(), "rule__RootState__PolicyAssignment_7");
+			builder.put(grammarAccess.getRootStateAccess().getDeclarationsAssignment_8(), "rule__RootState__DeclarationsAssignment_8");
+			builder.put(grammarAccess.getRootStateAccess().getActionsAssignment_9(), "rule__RootState__ActionsAssignment_9");
+			builder.put(grammarAccess.getRootStateAccess().getRegionsAssignment_10_0(), "rule__RootState__RegionsAssignment_10_0");
+			builder.put(grammarAccess.getRootStateAccess().getRegionsAssignment_10_1(), "rule__RootState__RegionsAssignment_10_1");
 			builder.put(grammarAccess.getStateAccess().getAnnotationsAssignment_0(), "rule__State__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getStateAccess().getInitialAssignment_1(), "rule__State__InitialAssignment_1");
 			builder.put(grammarAccess.getStateAccess().getFinalAssignment_2(), "rule__State__FinalAssignment_2");

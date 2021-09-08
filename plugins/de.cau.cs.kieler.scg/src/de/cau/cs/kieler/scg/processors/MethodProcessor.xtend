@@ -212,7 +212,7 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
             return
         }
         
-        if (!call.schedule.nullOrEmpty) {
+        if (!call.schedule.nullOrEmpty || (callNode instanceof Assignment && !(callNode as Assignment).schedule.nullOrEmpty)) {
             environment.errors.add("User schedules are not supported in combination with method inlining!")
             return
         }

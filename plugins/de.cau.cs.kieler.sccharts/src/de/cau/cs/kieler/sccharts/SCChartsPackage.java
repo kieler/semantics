@@ -701,13 +701,22 @@ public interface SCChartsPackage extends EPackage {
     int STATE__BASE_STATE_REFERENCES = SCOPE_FEATURE_COUNT + 8;
 
     /**
+     * The feature id for the '<em><b>Policy</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATE__POLICY = SCOPE_FEATURE_COUNT + 9;
+
+    /**
      * The number of structural features of the '<em>State</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 9;
+    int STATE_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 10;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
@@ -3064,6 +3073,17 @@ public interface SCChartsPackage extends EPackage {
     EReference getState_BaseStateReferences();
 
     /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.State#getPolicy <em>Policy</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Policy</em>'.
+     * @see de.cau.cs.kieler.sccharts.State#getPolicy()
+     * @see #getState()
+     * @generated
+     */
+    EReference getState_Policy();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Region <em>Region</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3808,6 +3828,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference STATE__BASE_STATE_REFERENCES = eINSTANCE.getState_BaseStateReferences();
+
+        /**
+         * The meta object literal for the '<em><b>Policy</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference STATE__POLICY = eINSTANCE.getState_Policy();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.

@@ -68,6 +68,8 @@
         eType="#//Transition" eOpposite="#//Transition/targetState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="baseStateReferences" upperBound="-1"
         eType="#//BaseStateReference" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="policy" eType="#//PolicyRegion"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Region" abstract="true" eSuperTypes="#//Scope">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentState" eType="#//State"

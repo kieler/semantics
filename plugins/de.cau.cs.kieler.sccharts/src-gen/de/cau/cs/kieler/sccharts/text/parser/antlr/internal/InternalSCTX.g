@@ -339,9 +339,28 @@ ruleRootState returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getRootStateAccess().getDeclarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_7_0());
+					newCompositeNode(grammarAccess.getRootStateAccess().getPolicyPolicyRegionParserRuleCall_7_0());
 				}
-				lv_declarations_14_0=ruleDeclarationOrMethodWithKeywordWOSemicolon
+				lv_policy_14_0=rulePolicyRegion
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getRootStateRule());
+					}
+					set(
+						$current,
+						"policy",
+						lv_policy_14_0,
+						"de.cau.cs.kieler.sccharts.text.SCTX.PolicyRegion");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)?
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getRootStateAccess().getDeclarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_8_0());
+				}
+				lv_declarations_15_0=ruleDeclarationOrMethodWithKeywordWOSemicolon
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getRootStateRule());
@@ -349,7 +368,7 @@ ruleRootState returns [EObject current=null]
 					add(
 						$current,
 						"declarations",
-						lv_declarations_14_0,
+						lv_declarations_15_0,
 						"de.cau.cs.kieler.sccharts.text.SCTX.DeclarationOrMethodWithKeywordWOSemicolon");
 					afterParserOrEnumRuleCall();
 				}
@@ -358,9 +377,9 @@ ruleRootState returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getRootStateAccess().getActionsLocalActionParserRuleCall_8_0());
+					newCompositeNode(grammarAccess.getRootStateAccess().getActionsLocalActionParserRuleCall_9_0());
 				}
-				lv_actions_15_0=ruleLocalAction
+				lv_actions_16_0=ruleLocalAction
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getRootStateRule());
@@ -368,7 +387,7 @@ ruleRootState returns [EObject current=null]
 					add(
 						$current,
 						"actions",
-						lv_actions_15_0,
+						lv_actions_16_0,
 						"de.cau.cs.kieler.sccharts.text.SCTX.LocalAction");
 					afterParserOrEnumRuleCall();
 				}
@@ -378,9 +397,9 @@ ruleRootState returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getRootStateAccess().getRegionsImplicitControlflowRegionParserRuleCall_9_0_0());
+						newCompositeNode(grammarAccess.getRootStateAccess().getRegionsImplicitControlflowRegionParserRuleCall_10_0_0());
 					}
-					lv_regions_16_0=ruleImplicitControlflowRegion
+					lv_regions_17_0=ruleImplicitControlflowRegion
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getRootStateRule());
@@ -388,7 +407,7 @@ ruleRootState returns [EObject current=null]
 						add(
 							$current,
 							"regions",
-							lv_regions_16_0,
+							lv_regions_17_0,
 							"de.cau.cs.kieler.sccharts.text.SCTX.ImplicitControlflowRegion");
 						afterParserOrEnumRuleCall();
 					}
@@ -398,9 +417,9 @@ ruleRootState returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getRootStateAccess().getRegionsRegionParserRuleCall_9_1_0());
+						newCompositeNode(grammarAccess.getRootStateAccess().getRegionsRegionParserRuleCall_10_1_0());
 					}
-					lv_regions_17_0=ruleRegion
+					lv_regions_18_0=ruleRegion
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getRootStateRule());
@@ -408,16 +427,16 @@ ruleRootState returns [EObject current=null]
 						add(
 							$current,
 							"regions",
-							lv_regions_17_0,
+							lv_regions_18_0,
 							"de.cau.cs.kieler.sccharts.text.SCTX.Region");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)*
 		)
-		otherlv_18='}'
+		otherlv_19='}'
 		{
-			newLeafNode(otherlv_18, grammarAccess.getRootStateAccess().getRightCurlyBracketKeyword_10());
+			newLeafNode(otherlv_19, grammarAccess.getRootStateAccess().getRightCurlyBracketKeyword_11());
 		}
 	)
 ;
