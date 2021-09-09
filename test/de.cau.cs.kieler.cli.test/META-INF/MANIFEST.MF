@@ -12,6 +12,7 @@ Require-Bundle: org.junit,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
  org.eclipse.xtend.lib.macro,
- de.cau.cs.kieler.core
+ de.cau.cs.kieler.core,
+ de.cau.cs.kieler.pragmatics.integration
 Automatic-Module-Name: de.cau.cs.kieler.cli.test
 
