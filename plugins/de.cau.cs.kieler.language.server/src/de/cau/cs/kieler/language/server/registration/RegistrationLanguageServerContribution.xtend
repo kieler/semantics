@@ -22,7 +22,9 @@ import com.google.inject.Injector
 class RegistrationLanguageServerContribution implements ILanguageServerContribution {
     
     override getLanguageServerExtension(Injector injector) {
-        return injector.getInstance(RegistrationLanguageServerExtension)
+        val registration = injector.getInstance(RegistrationLanguageServerExtension)
+        registration.languages
+        return registration
     }
     
 }
