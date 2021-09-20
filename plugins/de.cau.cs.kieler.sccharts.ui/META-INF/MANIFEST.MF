@@ -41,7 +41,11 @@ Require-Bundle: de.cau.cs.kieler.klighd,
  org.eclipse.jdt.core;bundle-version="3.19.0",
  de.cau.cs.kieler.kicool.ide,
  de.cau.cs.kieler.annotations.ide,
- org.eclipse.elk.core.service
+ org.eclipse.elk.core.service,
+ de.cau.cs.kieler.grana.text.ui;bundle-version="0.49.0",
+ de.cau.cs.kieler.grana.text.ide;bundle-version="0.49.0",
+ de.cau.cs.kieler.grana.text;bundle-version="0.49.0",
+ de.cau.cs.kieler.grana;bundle-version="0.49.0"
 Bundle-Vendor: Kiel University
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sccharts.ui,

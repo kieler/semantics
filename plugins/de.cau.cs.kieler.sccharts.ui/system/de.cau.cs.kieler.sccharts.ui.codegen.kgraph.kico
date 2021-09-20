@@ -1,0 +1,4 @@
+developer system de.cau.cs.kieler.sccharts.ui.codegen.kgraph
+	label "SCChart to KGraph chunks"
+
+de.cau.cs.kieler.sccharts.ui.processors.codegen.kraph

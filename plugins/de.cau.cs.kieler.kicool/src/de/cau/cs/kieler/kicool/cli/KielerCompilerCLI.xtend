@@ -51,6 +51,7 @@ import org.apache.log4j.ConsoleAppender
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import org.apache.log4j.PatternLayout
+import org.eclipse.elk.core.util.BasicProgressMonitor
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
@@ -293,6 +294,7 @@ class KielerCompilerCLI implements Runnable, Observer {
             for (file : modelFiles) {
                 // Read model
                 var Object model
+                BasicProgressMonitor.CURRENT_MODEL_URI = files.get(0).toURI().relativize(file.toURI)
                 if (verbose) println("Reading model from file %s".format(file))
                 val ext = file.name.substring(file.name.lastIndexOf(".") + 1)
                 if (!languages.containsKey(ext)) {
