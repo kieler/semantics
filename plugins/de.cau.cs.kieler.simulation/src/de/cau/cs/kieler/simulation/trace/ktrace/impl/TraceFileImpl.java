@@ -82,6 +82,7 @@ public class TraceFileImpl extends PragmatableImpl implements TraceFile {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Trace> getTraces() {
         if (traces == null) {
             traces = new EObjectContainmentEList<Trace>(Trace.class, this, KTracePackage.TRACE_FILE__TRACES);
@@ -94,6 +95,7 @@ public class TraceFileImpl extends PragmatableImpl implements TraceFile {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ValuedObject> getAggregatedValuedObjects() {
         if (aggregatedValuedObjects == null) {
             aggregatedValuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, KTracePackage.TRACE_FILE__AGGREGATED_VALUED_OBJECTS);

@@ -16,6 +16,7 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.NullValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.PrintCall
@@ -105,4 +106,8 @@ class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
         }
         combineOperatorsHR(expression.subExpressions.iterator, " == ")
     }
+    
+    override dispatch CharSequence serialize(NullValue expression) {
+        "null"
+    } 
 }

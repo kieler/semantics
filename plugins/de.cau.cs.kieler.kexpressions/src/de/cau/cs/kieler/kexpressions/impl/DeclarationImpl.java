@@ -57,7 +57,7 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
      * @generated
      * @ordered
      */
-    protected static final AccessModifier ACCESS_EDEFAULT = AccessModifier.PUBLIC;
+    protected static final AccessModifier ACCESS_EDEFAULT = AccessModifier.UNDEF;
 
     /**
      * The cached value of the '{@link #getAccess() <em>Access</em>}' attribute.

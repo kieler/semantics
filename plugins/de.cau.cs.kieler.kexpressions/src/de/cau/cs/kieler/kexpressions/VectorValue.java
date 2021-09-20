@@ -14,6 +14,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.VectorValue#getValues <em>Values</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.VectorValue#isRange <em>Range</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getVectorValue()
@@ -36,5 +37,28 @@ public interface VectorValue extends Value {
      * @generated
      */
     EList<Expression> getValues();
+
+    /**
+     * Returns the value of the '<em><b>Range</b></em>' attribute.
+     * The default value is <code>"false"</code>.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Range</em>' attribute.
+     * @see #setRange(boolean)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getVectorValue_Range()
+     * @model default="false"
+     * @generated
+     */
+    boolean isRange();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.VectorValue#isRange <em>Range</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Range</em>' attribute.
+     * @see #isRange()
+     * @generated
+     */
+    void setRange(boolean value);
 
 } // VectorValue

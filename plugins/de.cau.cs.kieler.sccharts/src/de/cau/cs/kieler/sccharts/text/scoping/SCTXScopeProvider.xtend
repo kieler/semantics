@@ -6,7 +6,6 @@ package de.cau.cs.kieler.sccharts.text.scoping
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
 import de.cau.cs.kieler.kexpressions.GenericTypeReference
@@ -14,10 +13,11 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.StaticAccessExpression
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -37,6 +37,8 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.processors.MethodSignaling
+import de.cau.cs.kieler.sccharts.processors.StaticAccess
 import de.cau.cs.kieler.scl.Loop
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import org.eclipse.emf.ecore.EObject
@@ -62,6 +64,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsGenericParameterExtensions
+    @Inject extension KExpressionsAccessVisibilityExtensions
     
     @Inject SCTXQualifiedNameProvider nameProvider
 
@@ -73,7 +76,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
             GenericTypeReference: return getScopeForGenericTypeReference(context, reference)
             GenericParameterDeclaration: return getScopeForGenericParameterDeclaration(context, reference)
             BaseStateReference: return getScopeForBaseStateReference(context, reference)
-            StaticAccessExpression: return getScopeForStaticStateAccess(context, reference)
+            SpecialAccessExpression: return getScopeForSpecialAccess(context, reference)
         }
         
         return super.getScope(context, reference);
@@ -239,14 +242,44 @@ class SCTXScopeProvider extends KExtScopeProvider {
         return IScope.NULLSCOPE
     }
     
-    def IScope getScopeForStaticStateAccess(StaticAccessExpression context, EReference reference) {
-        return SCTXScopes.scopeFor(context.eResource.getAllAvailableRootStates)
+    def IScope getScopeForSpecialAccess(SpecialAccessExpression context, EReference reference) {
+        switch(context.access) {
+            case StaticAccess.ACCESS_KEYWORD: {
+                if (reference == KExpressionsPackage.Literals.SPECIAL_ACCESS_EXPRESSION__CONTAINER) {
+                    return IScope.NULLSCOPE // SCChart access does not allows container
+                } else if (reference == KExpressionsPackage.Literals.SPECIAL_ACCESS_EXPRESSION__TARGET) {
+                    return SCTXScopes.scopeFor(context.eResource.getAllAvailableRootStates)
+                }
+            }
+            case MethodSignaling.ACCESS_KEYWORD: {
+                val scope = context.nextScope
+                if (reference == KExpressionsPackage.Literals.SPECIAL_ACCESS_EXPRESSION__CONTAINER) {
+                    if (scope instanceof State) {
+                        return SCTXScopes.scopeFor(scope.regions.filter[!name.nullOrEmpty])
+                    }
+                } else if (reference == KExpressionsPackage.Literals.SPECIAL_ACCESS_EXPRESSION__TARGET) {
+                    if (context.container !== null) {
+                        val region = context.container
+                        if (region instanceof ControlflowRegion) {
+                            return SCTXScopes.scopeFor(region.states)
+                        }
+                    } else if (scope instanceof State) {
+                        // Validator will check for ambiguity
+                        return SCTXScopes.scopeFor(scope.regions.filter(ControlflowRegion).filter[name.nullOrEmpty].map[states].flatten)
+                    } else if (scope instanceof ControlflowRegion) {
+                        return SCTXScopes.scopeFor(scope.states)
+                    }
+                }
+            }
+            default: return IScope.NULLSCOPE
+        }
+        return IScope.NULLSCOPE
     }
     
     override protected getScopeForValuedObjectReference(EObject context, EReference reference) {
         val contextContainer = context.eContainer
-        if (contextContainer instanceof StaticAccessExpression && (contextContainer as StaticAccessExpression).subReference === context) {
-            val target = (contextContainer as StaticAccessExpression).target
+        if (contextContainer instanceof SpecialAccessExpression && (contextContainer as SpecialAccessExpression).subReference === context) {
+            val target = (contextContainer as SpecialAccessExpression).target
             // The context is a subreference of static access!
             if (target instanceof DeclarationScope) {
                 return Scopes.scopeFor(target.declarations.filter[allowsGlobalAccess].map[valuedObjects].flatten)
@@ -327,7 +360,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
             region = region.eContainer
         }
         
-        val adjustedPredicate = if (region instanceof DataflowRegion) predicate else [VariableDeclaration vd | vd.access == AccessModifier.PUBLIC]
+        val adjustedPredicate = if (region instanceof DataflowRegion) predicate else [VariableDeclaration vd | vd.isPublic]
         
         if (reference instanceof State) {
             val additionalCandidates = newArrayList
@@ -347,7 +380,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
     
     private def boolean allowsGlobalAccess(Declaration decl) {
         if (decl instanceof VariableDeclaration) {
-            if (!decl.input && (decl.access === null || decl.access === AccessModifier.PUBLIC)) {
+            if (!decl.input && decl.isPublic) {
                 if (decl.const || decl instanceof ClassDeclaration) {
                     return true
                 }

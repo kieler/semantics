@@ -13,6 +13,7 @@
    <bundle id="de.cau.cs.kieler.lustre"/>
    <bundle id="de.cau.cs.kieler.lustre.compiler"/>
    <bundle id="de.cau.cs.kieler.lustre.ide"/>
+   <bundle id="de.cau.cs.kieler.pragmatics.integration"/>
    <bundle id="de.cau.cs.kieler.sccharts"/>
    <bundle id="de.cau.cs.kieler.sccharts.ide"/>
    <bundle id="de.cau.cs.kieler.sccharts.ui"/> <!-- REMOVE after full deeclipsefication -->
@@ -22,8 +23,11 @@
    <bundle id="de.cau.cs.kieler.simulation"/>
    <bundle id="de.cau.cs.kieler.verification"/>
    <bundle id="de.cau.cs.kieler.graphs.klighd"/>
+   <bundle id="de.cau.cs.kieler.kgraph.text"/>
    <bundle id="de.cau.cs.kieler.klighd.piccolo.freehep"/>
    <bundle id="de.cau.cs.kieler.klighd.piccolo"/>
+   <bundle id="org.eclipse.elk.graph"/>
+   <bundle id="org.eclipse.elk.graph.text"/>
    <bundle id="org.eclipse.elk.alg.layered"/>
    <bundle id="org.eclipse.elk.alg.mrtree"/>
    <bundle id="org.eclipse.elk.alg.radial"/>

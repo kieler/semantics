@@ -103,6 +103,7 @@ class SCTXHighlighting implements IHighlighting {
         "struct",
         "suspend",
         "then",
+        "this",
         "to",
         "undefined",
         "val",

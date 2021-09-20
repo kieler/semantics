@@ -93,8 +93,11 @@ VariableDeclaration returns kexpressions::VariableDeclaration:
     output?='output'?
     global?='global'?
     static?='static'?
-    ((signal?='signal'? type = ValueType) | 
-        signal?='signal' |
+    (
+        (signal?='signal'? type = ValueType)
+        | 
+        signal?='signal'
+        |
         (type = HostType hostType = STRING)
     ) 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
@@ -119,11 +122,6 @@ ClassDeclaration returns kext::ClassDeclaration:
     {kext::ClassDeclaration}
     annotations+=Annotation*
     access=AccessModifier?
-    const?='const'?
-    input?='input'? 
-    output?='output'?
-    global?='global'?
-    static?='static'?
     host?='host'?
     ((
         type = ClassType
@@ -151,11 +149,6 @@ ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
     {kext::ClassDeclaration}
     annotations+=Annotation*
     access=AccessModifier?
-    const?='const'?
-    input?='input'? 
-    output?='output'?
-    global?='global'?
-    static?='static'?
     host?='host'?
     ((
         type = ClassType
@@ -241,6 +234,7 @@ ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
     access=AccessModifier?
     ((
+        input?='input'?
         'ref'
         (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
         reference = [annotations::NamedObject|PrimeID]
@@ -257,6 +251,7 @@ ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
     access=AccessModifier?
     ((
+        input?='input'?
         'ref'
         (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
         reference = [annotations::NamedObject|PrimeID]

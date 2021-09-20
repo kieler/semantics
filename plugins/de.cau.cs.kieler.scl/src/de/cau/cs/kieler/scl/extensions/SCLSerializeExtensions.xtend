@@ -81,6 +81,9 @@ class SCLSerializeExtensions extends KEffectsSerializeHRExtensions {
             if (declaration.access == AccessModifier.PROTECTED) {
                 components.add("protected")
             }
+            if (declaration.access == AccessModifier.PUBLIC) {
+                components.add("public")
+            }
             if (declaration.isExtern) {
                 components.add("extern")
             }

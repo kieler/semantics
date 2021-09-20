@@ -152,14 +152,15 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
         for (decl : module.signalDeclarations) {
             sclModule.declarations += createVariableDeclaration(ValueType.PURE) => [
                 it.trace(decl)
+                signal = true
                 input = decl.input
                 output = decl.output
                 for (sig : decl.signals) {
                     if (sig.type !== ValueType.PURE) {
                         if (strict) {
-                            environment.errors.add("Can only handle Esterel programs with non-pure signals!")
+                            environment.errors.add("Can only handle Esterel programs with pure signals!")
                         } else {
-                            environment.warnings.add("Can only handle Esterel programs with non-pure signals, valued signal will be treated pure!")
+                            environment.warnings.add("Can only handle Esterel programs with pure signals, valued signal will be treated pure!")
                         }
                     }
                     valuedObjects += createValuedObject(sig.name) => [
@@ -173,6 +174,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
 
         // Special Decl
         suspendDecl = createVariableDeclaration(ValueType.PURE) => [
+            signal = true
             annotations += createTagAnnotation => [
                 name = SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION
             ]
@@ -181,6 +183,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
             ]
         ]
         exitDecl = createVariableDeclaration(ValueType.PURE) => [
+            signal = true
             annotations += createTagAnnotation => [
                 name = SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION
             ]
@@ -371,6 +374,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
         scope.statements += createScopeStatement => [
             it.trace(lsig)
             declarations += createVariableDeclaration(ValueType.PURE).trace(lsig) => [
+                it.signal = true
                 for (localSignal : lsig.valuedObjects.filter(Signal)) {
                     valuedObjects += createValuedObject => [
                         it.trace(localSignal)

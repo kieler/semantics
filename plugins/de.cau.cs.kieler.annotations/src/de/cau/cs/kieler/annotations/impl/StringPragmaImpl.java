@@ -72,6 +72,7 @@ public class StringPragmaImpl extends PragmaImpl implements StringPragma {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getValues() {
         if (values == null) {
             values = new EDataTypeEList<String>(String.class, this, AnnotationsPackage.STRING_PRAGMA__VALUES);
