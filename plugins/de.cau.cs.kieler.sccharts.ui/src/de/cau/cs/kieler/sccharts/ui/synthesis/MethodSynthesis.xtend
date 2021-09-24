@@ -26,6 +26,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ExpandCollapseHook
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import de.cau.cs.kieler.scl.SCLFactory
@@ -70,7 +71,11 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
             node.KID = method.valuedObjects.head.name
         }
         
-        node.initiallyCollapse
+        if (method.annotations.exists[ExpandCollapseHook.EXPAND_ANNOTATION.equalsIgnoreCase(name)]) {
+            node.initiallyExpand
+        } else {
+            node.initiallyCollapse
+        }
 
         val label = method.serializeHighlighted(true)
 
