@@ -28,6 +28,9 @@ import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KPolyline
+import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
@@ -44,6 +47,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
+import org.eclipse.elk.alg.layered.options.FixedAlignment
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
@@ -125,11 +129,13 @@ class SCChartsClassDiagramSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         }
         rootNode.children.addAll(rootStateNodes.values)
         
+        rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction.UP)
+        rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20.0)
+        rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 28.0)
+        rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 28.0)
+        rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment.BALANCED)
+        
         if (SHOW_INHERITANCE.booleanValue) {
-            rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction.UP)
-            rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20.0)
-            rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 28.0)
-            rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 28.0)
             for(state : rootStates) {
                 for (base : state.baseStates) {
                     val edge = createEdge
@@ -144,10 +150,6 @@ class SCChartsClassDiagramSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         }
         
         if (SHOW_AGGREGATION.booleanValue) {
-            rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction.UP)
-            rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20.0)
-            rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 28.0)
-            rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 28.0)
             for(state : rootStates) {
                 val aggregation = newHashSet
                 for (ref : state.declarations.filter(ReferenceDeclaration)) {
@@ -304,7 +306,7 @@ class SCChartsClassDiagramSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             } else if (d.isPublic) {
                 s.append("+ ")
             } else {
-                s.append("- ")
+                s.append("\u2212 ")
             }
         }
         
@@ -338,5 +340,23 @@ class SCChartsClassDiagramSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         }
 
         return s.toString
+    }
+    
+    extension KRenderingFactory = KRenderingFactory::eINSTANCE
+    
+    def KRendering addInheritanceTriangleArrowDecorator(KPolyline pl) {
+        return pl.drawTriangle() => [
+            it.placementData = createKDecoratorPlacementData => [
+                val float scale = pl.lineWidth.lineWidth;
+                val float modifiedScale = Math::sqrt(1.7*scale).floatValue;
+                it.rotateWithLine = true;
+                it.relative = 1f;
+                it.absolute = -5f * modifiedScale;
+                it.width = 10 * modifiedScale;
+                it.height = 10 * modifiedScale;
+                it.setXOffset(-5f * modifiedScale);
+                it.setYOffset(-it.height / 2);
+            ];
+        ];
     }
 }
