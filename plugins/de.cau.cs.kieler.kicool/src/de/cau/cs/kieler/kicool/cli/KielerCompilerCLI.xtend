@@ -38,6 +38,7 @@ import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.registration.ModelInformation
 import de.cau.cs.kieler.kicool.util.KiCoolUtils
+import de.cau.cs.kieler.pragmatics.integration.ElkGraphStandaloneSetup
 import java.io.File
 import java.net.URL
 import java.nio.file.FileSystems
@@ -59,6 +60,8 @@ import picocli.CommandLine
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
 import picocli.CommandLine.Parameters
+
+import static org.eclipse.elk.core.util.BasicProgressMonitor.*
 
 import static extension de.cau.cs.kieler.core.uri.URIUtils.*
 import static extension java.lang.String.format
@@ -137,6 +140,7 @@ class KielerCompilerCLI implements Runnable, Observer {
     }
     
     override run() {
+        ElkGraphStandaloneSetup.doSetup()
         var JsonObject configJson
         if (config !== null) {
             try {

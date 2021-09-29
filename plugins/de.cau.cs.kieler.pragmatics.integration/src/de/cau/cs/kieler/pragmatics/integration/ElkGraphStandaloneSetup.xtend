@@ -47,7 +47,7 @@ class ElkGraphStandaloneSetup extends ElkGraphStandaloneSetupGenerated implement
     }
     
     override getSupportedResourceExtensions() {
-        #["elkt"]
+        #["elkt", "elkg"]
     }
     
     override getResourceExtension(Object model) {
