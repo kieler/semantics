@@ -11,5 +11,6 @@ post process de.cau.cs.kieler.scg.processors.sfr
 post process de.cau.cs.kieler.scg.processors.methods
 post process de.cau.cs.kieler.scg.processors.threadAnalyzer
 post process de.cau.cs.kieler.scg.processors.finalThreads
+de.cau.cs.kieler.scg.processors.referenceCall.java
 system de.cau.cs.kieler.scg.netlist
 de.cau.cs.kieler.scg.processors.codegen.java

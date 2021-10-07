@@ -1,5 +1,0 @@
-simulation system de.cau.cs.kieler.sccharts.^simulation.tts.netlist.references.c
-    label "Netlist-based Simulation (C) References"
-
-de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling
-system de.cau.cs.kieler.sccharts.^simulation.netlist.references.c

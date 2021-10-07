@@ -1,5 +1,0 @@
-simulation system de.cau.cs.kieler.sccharts.^simulation.tts.netlist.references.java
-    label "Netlist-based Simulation (Java) References"
-
-de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling
-system de.cau.cs.kieler.sccharts.^simulation.netlist.references.java

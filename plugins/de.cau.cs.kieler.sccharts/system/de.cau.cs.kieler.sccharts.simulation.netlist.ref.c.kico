@@ -1,5 +1,0 @@
-developer system de.cau.cs.kieler.sccharts.^simulation.netlist.references.c
-    label "Netlist-based Simulation (C, No-TTS) References"
-
-system de.cau.cs.kieler.sccharts.netlist.references
-system de.cau.cs.kieler.^simulation.c

@@ -42,8 +42,9 @@ import java.util.List
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 /**
- * @author glu
+ * Implements the Module Call Semantics SCCharts transformation.
  * 
+ * @author glu
  */
 class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
 
@@ -85,8 +86,8 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
     override process() {
         setModel(model.transform)
     }
-
     // -------------------------------------------------------------------------
+    
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [
             rootStates.immutableCopy.forEach [ transformRootState ]
@@ -95,19 +96,23 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
         ]
     }
     
+    /** 
+     * Transforms a single root state. If models are imported from external source files, they are added to the model as
+     * a new root state and this method is called recursively.
+     */
     protected def void transformRootState(State rootState) {
         rootState.allContainedStates.filter[isReferencing && isModuleCallReference].toList().forEach [ ref |
-            /* Copy into model if imported. */
+            // If the referenced state is not a root state, it is imported; add it as a root state and recurse
             if (!model.rootStates.exists[name == ref.reference.target.name]) {
                 val newRootState = (ref.reference.target as State).copy => [ref.reference.target = it]
                 model.rootStates.add(newRootState)
                 newRootState.transformRootState
             } else {
             }
-            /* Get proxy class and create instance */
+            // Get proxy class and create instance
             val proxyClass = createOrGetProxyClass(ref)
             val instance = proxyClass.createValuedObject(REF_CALL_INSTANCE_PREFIX + ref.name).uniqueName
-            /* Tranform referencing state to proxy superstate containing glue logic. */
+            // Tranform referencing state to proxy superstate containing glue logic
             ref.createProxyState(proxyClass, instance,
                 ref.reference.scope.hasAnnotation(REF_CALL_NON_INSTANTANEOUS_ANNOTATION))
             /* Remove original reference.
@@ -131,7 +136,8 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
             region.createInstantaneousTransitions(ref, proxyClass, instance, nonfinal)
         }
     }
-
+    
+    /** Creates the region, states and transitions of a non-instantaneous proxy state. */
     protected def createDelayedTransitions(ControlflowRegion region, State ref, PolicyClassDeclaration proxyClass,
         ValuedObject instance, boolean nonfinal) {
         val init = region.createInitialState("I")
@@ -229,7 +235,8 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
             ]
         }
     }
-
+    
+    /** Creates the region, states and transitions of an instantaneous proxy state. */
     protected def createInstantaneousTransitions(ControlflowRegion region, State ref, PolicyClassDeclaration proxyClass,
         ValuedObject instance, boolean nonfinal) {
         val init = region.createInitialState("I")
@@ -303,6 +310,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
         }
     }
 
+    /** Retrieves the proxy class for a given reference. If none exists, it is created. */
     protected def PolicyClassDeclaration createOrGetProxyClass(State ref) {
         val maybeDecl = ref.getClassDeclaration
         val decl = maybeDecl !== null
@@ -356,13 +364,14 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
             ]
         return decl
     }
-
+    
     protected def PolicyClassDeclaration getClassDeclaration(State ref) {
         val decls = ref.getRootState.declarations.filter(PolicyClassDeclaration)
         val result = decls.filter[name == ref.reference.scope.name]
         return result.head
     }
-
+    
+    /** Creates a parameter list from the reference bindings, filtered by a predicate. */
     protected def List<Parameter> filteredParamsFromBindings(State ref, ValuedObject instance,
         Function1<Binding, Boolean> predicate) {
         val bindings = ref.createBindings
@@ -373,7 +382,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
             classVarVOs.indexOf(classVarVOs.findFirst[name == b.targetValuedObject.name])
         ]) {
             parameters.add(createParameter => [
-                // TODO guard against complex source expressions => undefined behavior
+                // does not guard against complex source expressions => undefined behavior; same as MES
                 expression = binding.sourceExpression.copy
             ])
         }
@@ -388,11 +397,13 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
     protected def boolean output(Binding binding) {
         return binding.targetValuedObject.output
     }
-
+    
+    /** Creates a parameter list from the bindings of all input variables.  */
     protected def List<Parameter> inputParamsFromBindings(State ref, ValuedObject instance) {
         return ref.filteredParamsFromBindings(instance, [input])
     }
-
+    
+    /** Creates a parameter list from the bindings of all output variables.  */
     protected def List<Parameter> outputParamsFromBindings(State ref, ValuedObject instance) {
         return ref.filteredParamsFromBindings(instance, [output])
     }
@@ -404,7 +415,8 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
         val result = filteredvos.head
         return result
     }
-
+    
+    /** Flattens a list of variable declarations, i.e. int x, y; bool a, b => int x; int y; bool a; bool b */
     protected def Iterable<VariableDeclaration> unroll(Iterable<VariableDeclaration> decls) {
         decls.map [ d |
             d.valuedObjects.map [ v |
@@ -415,7 +427,8 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
             ]
         ].flatten
     }
-
+    
+    /** Removes input and output attributes from the variables and method parameters of a proxy class */
     protected def cleanupDeclarations(PolicyClassDeclaration proxyClass) {
         proxyClass.declarations.filter(VariableDeclaration).forEach [
             input = false
