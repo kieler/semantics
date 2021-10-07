@@ -80,6 +80,7 @@ public class TypedStringAnnotationImpl extends StringAnnotationImpl implements T
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getType() {
         return type;
     }
@@ -89,6 +90,7 @@ public class TypedStringAnnotationImpl extends StringAnnotationImpl implements T
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(String newType) {
         String oldType = type;
         type = newType;

@@ -13,23 +13,24 @@
  */
 package de.cau.cs.kieler.kexpressions.extensions
 
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
-import de.cau.cs.kieler.kexpressions.StringValue
-import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.FunctionCall
-import de.cau.cs.kieler.kexpressions.Parameter
-import de.cau.cs.kieler.kexpressions.ReferenceCall
-import de.cau.cs.kieler.kexpressions.PrintCall
-import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.IgnoreValue
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.NullValue
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.PrintCall
 import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.kexpressions.VectorValue
 
 /**
  * @author ssm
@@ -343,6 +344,10 @@ class KExpressionsCreateExtensions {
     
     def IgnoreValue createIgnoreValue() {
         KExpressionsFactory::eINSTANCE.createIgnoreValue
+    }
+    
+    def NullValue createNullValue() {
+        KExpressionsFactory::eINSTANCE.createNullValue
     }
 
     def TextExpression createTextExpression() {

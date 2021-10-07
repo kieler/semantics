@@ -6,7 +6,7 @@
     redirection="" modelName="TracingTree" modelPluginClass="" editPluginClass="de.cau.cs.kieler.kitt.provider.TracingTreeEditPlugin"
     editorPluginClass="de.cau.cs.kieler.kitt.presentation.TracingTreeEditorPlugin"
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" testSuiteClass="de.cau.cs.kieler.kicool.kitt.tracingtree.tests.TracingTreeAllTests"
-    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" providerRootExtendsClass=""
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="11.0" providerRootExtendsClass=""
     editPluginID="de.cau.cs.kieler.kicool.ui" editorPluginID="de.cau.cs.kieler.kitt.editor"
     usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore" importOrganizing="true"
     pluginKey="TracingTree">

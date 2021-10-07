@@ -285,8 +285,12 @@ class KExpressionsDeclarationExtensions {
         ]
     } 
     
+    def isMethod(Declaration decl) {
+        return decl instanceof MethodDeclaration
+    }
+    
     def Iterable<Declaration> excludeMethods(Iterable<Declaration> iter) {
-        return iter.filter[!(it instanceof MethodDeclaration)]
+        return iter.filter[!isMethod]
     }
     
 //    def ReferenceDeclaration getReferenceDeclaration(ValuedObject valuedObject) {

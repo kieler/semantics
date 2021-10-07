@@ -22,13 +22,13 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected SCTXGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__a;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__p;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a__q;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__a;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__p;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__p;
+	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_5_0_a__a;
+	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_5_0_a__p;
+	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__a__q;
+	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_5_0__a;
+	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_5_0__p;
+	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__a;
+	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__p;
 	protected AbstractElementAlias match_BaseStateReference_LeftParenthesisRightParenthesisKeyword_2_1_q;
 	protected AbstractElementAlias match_DataflowRegion_ColonKeyword_9_1_0_or___LeftCurlyBracketKeyword_9_0_0_RightCurlyBracketKeyword_9_0_3__;
 	protected AbstractElementAlias match_KeywordMethodDeclarationWOSemicolon___LeftCurlyBracketKeyword_8_0_RightCurlyBracketKeyword_8_4__q;
@@ -47,13 +47,13 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (SCTXGrammarAccess) access;
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__p = new GroupAlias(true, false, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0())));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__a = new AlternativeAlias(true, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__p = new AlternativeAlias(true, false, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a = new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__p = new GroupAlias(true, false, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()));
+		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_5_0_a__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_5_0()));
+		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_5_0_a__p = new GroupAlias(true, false, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_5_0()));
+		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__a__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_5_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0())));
+		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_5_0__a = new AlternativeAlias(true, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_5_0()));
+		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_5_0__p = new AlternativeAlias(true, false, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_5_0()));
+		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__a = new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_5_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()));
+		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__p = new GroupAlias(true, false, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_5_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()));
 		match_BaseStateReference_LeftParenthesisRightParenthesisKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getBaseStateReferenceAccess().getLeftParenthesisRightParenthesisKeyword_2_1());
 		match_DataflowRegion_ColonKeyword_9_1_0_or___LeftCurlyBracketKeyword_9_0_0_RightCurlyBracketKeyword_9_0_3__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getDataflowRegionAccess().getLeftCurlyBracketKeyword_9_0_0()), new TokenAlias(false, false, grammarAccess.getDataflowRegionAccess().getRightCurlyBracketKeyword_9_0_3())), new TokenAlias(false, false, grammarAccess.getDataflowRegionAccess().getColonKeyword_9_1_0()));
 		match_KeywordMethodDeclarationWOSemicolon___LeftCurlyBracketKeyword_8_0_RightCurlyBracketKeyword_8_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getLeftCurlyBracketKeyword_8_0()), new TokenAlias(false, false, grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getRightCurlyBracketKeyword_8_4()));
@@ -82,20 +82,20 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__a.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__p.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a__q.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__a.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__p.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__p.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
+			if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_5_0_a__a.equals(syntax))
+				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_5_0_a__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_5_0_a__p.equals(syntax))
+				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_5_0_a__p(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__a__q.equals(syntax))
+				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__a__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_5_0__a.equals(syntax))
+				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_5_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_5_0__p.equals(syntax))
+				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_5_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__a.equals(syntax))
+				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__p.equals(syntax))
+				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_BaseStateReference_LeftParenthesisRightParenthesisKeyword_2_1_q.equals(syntax))
 				emit_BaseStateReference_LeftParenthesisRightParenthesisKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_DataflowRegion_ColonKeyword_9_1_0_or___LeftCurlyBracketKeyword_9_0_0_RightCurlyBracketKeyword_9_0_3__.equals(syntax))
@@ -136,7 +136,8 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) 'extern' functionName=ID
 	 *     (rule start) (ambiguity) 'random' (rule start)
 	 *     (rule start) (ambiguity) 'randomize' (rule start)
-	 *     (rule start) (ambiguity) 'scchart' '(' target=[NamedObject|PrimeID]
+	 *     (rule start) (ambiguity) access='scchart'
+	 *     (rule start) (ambiguity) access='state'
 	 *     (rule start) (ambiguity) annotations+=Annotation
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
@@ -144,7 +145,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) value=BOOLEAN
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_5_0_a__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -153,6 +154,8 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     ('(' '('*)+
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) 'null' ')' (rule start)
+	 *     (rule start) (ambiguity) '{' values+=IntValue
 	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
@@ -161,7 +164,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) value=STRING
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_5_0_a__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -173,7 +176,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__a__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -183,12 +186,16 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) 'extern' functionName=ID
+	 *     (rule start) (ambiguity) 'null' 'schedule' schedule+=ScheduleObjectReference
+	 *     (rule start) (ambiguity) 'null' (rule start)
 	 *     (rule start) (ambiguity) 'random' 'schedule' schedule+=ScheduleObjectReference
 	 *     (rule start) (ambiguity) 'random' (rule start)
 	 *     (rule start) (ambiguity) 'randomize' 'schedule' schedule+=ScheduleObjectReference
 	 *     (rule start) (ambiguity) 'randomize' (rule start)
-	 *     (rule start) (ambiguity) 'scchart' '(' target=[NamedObject|PrimeID]
+	 *     (rule start) (ambiguity) '{' values+=IntValue
 	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
+	 *     (rule start) (ambiguity) access='scchart'
+	 *     (rule start) (ambiguity) access='state'
 	 *     (rule start) (ambiguity) annotations+=Annotation
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
@@ -202,7 +209,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_5_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -215,7 +222,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_5_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -231,7 +238,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -244,7 +251,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

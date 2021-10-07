@@ -27,6 +27,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
+import de.cau.cs.kieler.kexpressions.NullValue
 
 /**
  * Root C Code Generator Module
@@ -186,6 +187,10 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         val includes = modifications.get(CCodeSerializeHRExtensions.HEADER_INCLUDES)
         for (include : includes)  {
             sb.append("#include " + include + "\n")
+        }
+        
+        if (scg.eAllContents.exists[it instanceof NullValue]) {
+            sb.append("#ifndef NULL\n#define NULL 0\n#endif\n")
         }
         
         val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE) + SCGraphs.getStringPragmas(HOSTCODE_HEADER)

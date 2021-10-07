@@ -102,7 +102,7 @@ class ReferenceCallPreprocessor extends SCChartsProcessor implements Traceable {
                 val newRootState = (ref.reference.target as State).copy => [ref.reference.target = it]
                 model.rootStates.add(newRootState)
                 newRootState.transformRootState
-            } else {          
+            } else {
             }
             /* Get proxy class and create instance */
             val proxyClass = createOrGetProxyClass(ref)

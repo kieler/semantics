@@ -62,6 +62,7 @@ public class SurfaceImpl extends NodeImpl implements Surface {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Depth getDepth() {
         if (depth != null && depth.eIsProxy()) {
             InternalEObject oldDepth = (InternalEObject)depth;
@@ -103,6 +104,7 @@ public class SurfaceImpl extends NodeImpl implements Surface {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDepth(Depth newDepth) {
         if (newDepth != depth) {
             NotificationChain msgs = null;

@@ -68,6 +68,7 @@ class SCLHighlighting implements IHighlighting {
         "string",
         "struct",
         "then",
+        "this",
         "to",
         "val",
         "void",

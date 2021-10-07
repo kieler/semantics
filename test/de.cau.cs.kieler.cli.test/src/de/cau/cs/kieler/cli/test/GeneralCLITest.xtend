@@ -240,4 +240,19 @@ class GeneralCLITest extends AbstractCLITest {
         assertExists(dest)
         assertTrue("Expected result %s does not exist. Configuration was not correctly applied.".format(dest2.path), dest2.isDirectory)
     }
+    
+    @Test
+    def void testSourceTreeStructure() {
+        val dir = setupTest("source-tree-structure-test")
+        val src = new File(dir, "sctx")
+        val dest = new File(dir, "out")
+        
+        // compiler
+        val command = #[compiler.path, "-v", "-f", "*/ab*/*", src.path, "-o", dest.path]
+        assertEquals("Exit value not zero", 0, command.invoke)
+        
+        // check results
+        assertExists(new File(dest, "abo/abo.sctx"))
+        assertExists(new File(dest, "abro/abro.sctx"))
+    }
 }

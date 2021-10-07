@@ -74,7 +74,7 @@ public class LocalSignalDeclarationImpl extends StatementImpl implements LocalSi
      * @generated
      * @ordered
      */
-    protected static final AccessModifier ACCESS_EDEFAULT = AccessModifier.PUBLIC;
+    protected static final AccessModifier ACCESS_EDEFAULT = AccessModifier.UNDEF;
 
     /**
      * The cached value of the '{@link #getAccess() <em>Access</em>}' attribute.

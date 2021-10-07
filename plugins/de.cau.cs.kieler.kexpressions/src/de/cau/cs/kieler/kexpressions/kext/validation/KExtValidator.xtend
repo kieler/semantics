@@ -7,13 +7,14 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.IntValue
-import de.cau.cs.kieler.kexpressions.StaticAccessExpression
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
@@ -35,6 +36,7 @@ class KExtValidator extends AbstractKExtValidator {
     
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsAccessVisibilityExtensions
 
     public static val CHECK_ANNOTATION_NAME = "check"
     public static val CHECKALIAS_ANNOTATION_NAME = "aliasCheck"
@@ -45,6 +47,9 @@ class KExtValidator extends AbstractKExtValidator {
     static val WRONG_CARDINALITY_TYPE = "Array cardinalities must be an int literal or a reference to a constant int object."
     static val String NO_CONST_LITERAL = "Const objects must be bound to literals";
     static val WRONG_ARRAY_INITIALISATION = "Initial value of an array can not be a single value."
+    
+    static val STRUCT_NON_PUBLIC_MEMBER = "All members of a struct must be publicly accessible."
+    static val STRUCT_COMPLEX_MEMBER = "A struct may only contain primitive members or other structs."
        
     @Check
     public def void checkCheckAnnotation(TestEntity testEntity) {
@@ -101,7 +106,7 @@ class KExtValidator extends AbstractKExtValidator {
                         if (refVO.initialValue !== null && refVO.initialValue instanceof IntValue) ok = true
                     }
                 }
-                if (card instanceof StaticAccessExpression) {
+                if (card instanceof SpecialAccessExpression) {
                     val refVO = card.subReference?.lowermostReference?.valuedObject
                     if (refVO !== null) {
                         val refDecl = refVO.variableDeclaration
@@ -151,6 +156,26 @@ class KExtValidator extends AbstractKExtValidator {
         if (declaration.type == ValueType.PURE && (!declaration.signal)) {
             if (!(declaration.eContainer instanceof ClassDeclaration) || !(declaration.eContainer as ClassDeclaration).isEnum) {
                 error("Pure types are only allowed if used in combination with signals.", declaration, null, -1)
+            }
+        }
+    }
+
+    @Check
+    def void checkStruct(ClassDeclaration declaration) {
+        if (declaration.isStruct) {
+            for (member : declaration.declarations) {
+                if (!member.isPublic) {
+                    error(STRUCT_NON_PUBLIC_MEMBER, member, null, -1)
+                }
+                if (member instanceof VariableDeclaration) {
+                    if (member instanceof ClassDeclaration) {
+                        if (!member.isStruct) {
+                            error(STRUCT_COMPLEX_MEMBER, member, null, -1)
+                        }
+                    }
+                } else {
+                    error(STRUCT_COMPLEX_MEMBER, member, null, -1)
+                }
             }
         }
     }

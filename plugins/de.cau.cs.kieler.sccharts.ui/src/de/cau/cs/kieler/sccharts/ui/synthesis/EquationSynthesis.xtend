@@ -21,7 +21,7 @@ import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.StaticAccessExpression
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -599,7 +599,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
      * @param nodes All created nodes are added to this list
      * @param output Will be ignored in this case
      */
-    private def dispatch KNode performTransformation(StaticAccessExpression e, List<KNode> nodes, boolean output) {
+    private def dispatch KNode performTransformation(SpecialAccessExpression e, List<KNode> nodes, boolean output) {
         val node = e.createKGTNode("INPUT", "")
         val text = e.serializeHR.toString
         node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
