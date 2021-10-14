@@ -12,20 +12,19 @@
  */
 package de.cau.cs.kieler.simulation.ide.language.server.data
 
-import de.cau.cs.kieler.simulation.trace.ktrace.Trace
 import org.eclipse.xtend.lib.annotations.Data
 
 /**
- * Message to send the trace loaded from file to the client.
+ * Message to send the content of the trace file to be saved by the client.
  * 
  * @author nre
  */
-@Data class LoadedTraceMessage {
+@Data class SavedTraceMessage {
     
     /** The trace object loaded into the system. */
-    Trace trace
-    /** If loading the trace was successful. */
+    String fileContent
+    /** If saving the trace was successful. */
     boolean successful
-    /** Human-readable reason why loading failed (if it failed). */
+    /** Human-readable reason why saving failed (if it failed). */
     String reason
 }
