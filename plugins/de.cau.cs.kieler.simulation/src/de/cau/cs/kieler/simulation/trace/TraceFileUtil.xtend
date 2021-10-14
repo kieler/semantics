@@ -92,7 +92,7 @@ class TraceFileUtil {
         
         saveContextToTraceFile(traceFile, context, eso)
         
-        val ISerializer serializer = (traceFile.eResource as XtextResource).serializer
+        val ISerializer serializer = KTraceStandaloneSetup.doSetup.getInstance(ISerializer)
         return serializer.serialize(traceFile)
     }
     
