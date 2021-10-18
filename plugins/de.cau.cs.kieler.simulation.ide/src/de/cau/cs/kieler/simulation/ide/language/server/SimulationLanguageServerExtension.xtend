@@ -30,6 +30,8 @@ import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.ISimulationListener
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
+import de.cau.cs.kieler.simulation.events.TraceFinishedEvent
+import de.cau.cs.kieler.simulation.events.TraceMismatchEvent
 import de.cau.cs.kieler.simulation.ide.CentralSimulation
 import de.cau.cs.kieler.simulation.ide.language.server.data.ClientInputs
 import de.cau.cs.kieler.simulation.ide.language.server.data.LoadedTraceMessage
@@ -57,6 +59,7 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 
 import static de.cau.cs.kieler.simulation.ide.CentralSimulation.*
+import static de.cau.cs.kieler.simulation.ide.language.server.data.ClientInputs.*
 
 /**
  * LS extension to simulate models. Supports starting, stepping, and stopping or simulations.
@@ -348,6 +351,10 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
                     }
                 }
             }
+        } else if (e instanceof TraceFinishedEvent) { 
+            client.sendMessage("Trace finished: The current Trace reached its last tick.", "info")
+        } else if (e instanceof TraceMismatchEvent /*&& menuCheckTrace.checked*/) {
+            client.sendMessage("Trace Mismatch: Program output differs from trace", "error") // TODO: add Trace diff to message
         } else { // Handle unknown events, log the classes for which this is executed.
             println(e.class + ", " + o.class)
         }
