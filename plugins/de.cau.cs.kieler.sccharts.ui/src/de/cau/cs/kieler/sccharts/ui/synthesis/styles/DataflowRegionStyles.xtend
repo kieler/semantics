@@ -14,23 +14,12 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis.styles
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KRectangle
-import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.util.KlighdProperties
-import java.util.List
-
-import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
-
-import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.sccharts.extensions.TextFormat
-import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.sccharts.DataflowRegion
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 

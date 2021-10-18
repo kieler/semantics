@@ -2,7 +2,7 @@
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.kexpressions/src" modelPluginID="de.cau.cs.kieler.kexpressions"
     modelName="KExpressions" importerID="org.eclipse.emf.importer.ecore" bundleManifest="false"
-    complianceLevel="7.0" copyrightFields="false" runtimeVersion="2.13" usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations">
+    complianceLevel="11.0" copyrightFields="false" runtimeVersion="2.13" usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations">
   <foreignModel>kexpressions.ecore</foreignModel>
   <genPackages prefix="KExpressions" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
       fileExtensions="kexpr" ecorePackage="kexpressions.ecore#/">
@@ -82,9 +82,10 @@
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ParameterAccessType/PURE_OUTPUT"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="kexpressions.ecore#//AccessModifier">
-      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//AccessModifier/PUBLIC"/>
-      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//AccessModifier/PROTECTED"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//AccessModifier/UNDEF"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//AccessModifier/PRIVATE"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//AccessModifier/PROTECTED"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//AccessModifier/PUBLIC"/>
     </genEnums>
     <genClasses ecoreClass="kexpressions.ecore#//Expression"/>
     <genClasses ecoreClass="kexpressions.ecore#//ValuedObject">
@@ -115,6 +116,7 @@
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//VectorValue">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//VectorValue/values"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//VectorValue/range"/>
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//IgnoreValue"/>
     <genClasses ecoreClass="kexpressions.ecore#//JsonPragma">
@@ -159,7 +161,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//VariableDeclaration/hostType"/>
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//ReferenceDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ReferenceDeclaration/input"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ReferenceDeclaration/reference"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ReferenceDeclaration/referenceContainer"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ReferenceDeclaration/parameters"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ReferenceDeclaration/extern"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ReferenceDeclaration/genericParameters"/>
@@ -212,9 +216,12 @@
     <genClasses ecoreClass="kexpressions.ecore#//ExternString">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ExternString/code"/>
     </genClasses>
-    <genClasses ecoreClass="kexpressions.ecore#//StaticAccessExpression">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//StaticAccessExpression/subReference"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//StaticAccessExpression/target"/>
+    <genClasses ecoreClass="kexpressions.ecore#//SpecialAccessExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//SpecialAccessExpression/access"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//SpecialAccessExpression/subReference"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//SpecialAccessExpression/container"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//SpecialAccessExpression/target"/>
     </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//ThisExpression"/>
   </genPackages>
 </genmodel:GenModel>

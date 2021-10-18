@@ -12,12 +12,11 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis
 
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
+import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateData
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
-import de.cau.cs.kieler.kicool.ProcessorReference
-import de.cau.cs.kieler.klighd.krendering.KText
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
 
 /**
  * Additional properties

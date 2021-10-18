@@ -97,6 +97,22 @@ def main(args):
     else:
         setProductUpdateSites(p2inf, targetplatform, args)
 
+    print '\n- Updating runtime version file -'
+    file = join(args.path, 'plugins/de.cau.cs.kieler.core/kieler.version')
+    if not isfile(file):
+        print 'Kieler version file does not exist: ' + file
+        pause(args)
+    else:
+        content = []
+        with open(file, 'r') as f:
+            content = f.readlines()
+        if args.release:
+            content = [args.release]
+        else:
+            content = [(content[0] if content else '0.0.0'), 'nightly build']
+        with open(file, 'w') as f:
+            f.write('\n'.join(content))
+
     print '\n= Finished Configuring ='
 
 

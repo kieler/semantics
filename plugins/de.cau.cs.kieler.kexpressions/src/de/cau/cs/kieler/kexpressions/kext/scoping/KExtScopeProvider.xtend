@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kexpressions.Referenceable
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
@@ -45,6 +46,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 
     @Inject extension KExpressionsGenericParameterExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsAccessVisibilityExtensions
     
 	override getScope(EObject context, EReference reference) {
 		// This scope should trigger on every instance of a valued object reference!
@@ -104,7 +106,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 	}
 	
 	protected def IScope getScopeForStruct(ClassDeclaration struct) {
-	    return Scopes.scopeFor(struct.declarations.map[valuedObjects].flatten)
+	    return Scopes.scopeFor(struct.declarations.filter[it.isPublic].map[valuedObjects].flatten)
 	}
 	
 	protected def IScope getScopeForReferencedType(EObject reference, ValuedObjectReference context,
@@ -146,7 +148,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 	protected def IScope getScopeHierarchical(EObject context, EReference reference) {
 		val candidates = <ValuedObject> newArrayList
 		var declarationScope = context.nextDeclarationScope
-		while (declarationScope != null) {
+		while (declarationScope !== null) {
 			for(declaration : declarationScope.declarations) {
 				for(VO : declaration.valuedObjects) {
 					candidates += VO
@@ -161,7 +163,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 	
 	protected def DeclarationScope getNextDeclarationScope(EObject eObject) {
 		var eO = eObject
-		while(eO != null) {
+		while(eO !== null) {
 			eO = eO.eContainer
 			if (eO instanceof DeclarationScope) return eO 
 		}

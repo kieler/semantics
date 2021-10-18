@@ -161,6 +161,7 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -170,6 +171,7 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -182,6 +184,7 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getOutgoingLinks() {
         if (outgoingLinks == null) {
             outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, ScgPackage.NODE__OUTGOING_LINKS);
@@ -194,6 +197,7 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getIncomingLinks() {
         if (incomingLinks == null) {
             incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, ScgPackage.NODE__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
@@ -206,6 +210,7 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isIsInitial() {
         return isInitial;
     }
@@ -215,6 +220,7 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setIsInitial(boolean newIsInitial) {
         boolean oldIsInitial = isInitial;
         isInitial = newIsInitial;
@@ -227,6 +233,7 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isSchizophrenic() {
         return schizophrenic;
     }
@@ -236,6 +243,7 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSchizophrenic(boolean newSchizophrenic) {
         boolean oldSchizophrenic = schizophrenic;
         schizophrenic = newSchizophrenic;

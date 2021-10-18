@@ -34,6 +34,8 @@ import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.LocalAction;
+import de.cau.cs.kieler.sccharts.ModuleScopeCall;
+import de.cau.cs.kieler.sccharts.OdeAction;
 import de.cau.cs.kieler.sccharts.PeriodAction;
 import de.cau.cs.kieler.sccharts.PolicyClassDeclaration;
 import de.cau.cs.kieler.sccharts.PolicyRegion;
@@ -211,6 +213,20 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     private EClass baseStateReferenceEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass odeActionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass moduleScopeCallEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -1004,6 +1020,26 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
+    public EClass getOdeAction() {
+        return odeActionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getModuleScopeCall() {
+        return moduleScopeCallEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EEnum getPreemptionType() {
         return preemptionTypeEEnum;
     }
@@ -1156,6 +1192,10 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEReference(baseStateReferenceEClass, BASE_STATE_REFERENCE__GENERIC_PARAMETERS);
         createEReference(baseStateReferenceEClass, BASE_STATE_REFERENCE__PARAMETERS);
 
+        odeActionEClass = createEClass(ODE_ACTION);
+
+        moduleScopeCallEClass = createEClass(MODULE_SCOPE_CALL);
+
         // Create enums
         preemptionTypeEEnum = createEEnum(PREEMPTION_TYPE);
         historyTypeEEnum = createEEnum(HISTORY_TYPE);
@@ -1224,6 +1264,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         codeEffectEClass.getESuperTypes().add(theKEffectsPackage.getEffect());
         codeEffectEClass.getESuperTypes().add(theSCLPackage.getScope());
         dataflowAssignmentEClass.getESuperTypes().add(theKEffectsPackage.getAssignment());
+        odeActionEClass.getESuperTypes().add(this.getLocalAction());
+        moduleScopeCallEClass.getESuperTypes().add(this.getScopeCall());
 
         // Initialize classes and features; add operations and parameters
         initEClass(scChartsEClass, SCCharts.class, "SCCharts", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1314,6 +1356,10 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEReference(getBaseStateReference_Target(), this.getState(), null, "target", null, 0, 1, BaseStateReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getBaseStateReference_GenericParameters(), theKExpressionsPackage.getParameter(), null, "genericParameters", null, 0, -1, BaseStateReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getBaseStateReference_Parameters(), theKExpressionsPackage.getParameter(), null, "parameters", null, 0, -1, BaseStateReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(odeActionEClass, OdeAction.class, "OdeAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(moduleScopeCallEClass, ModuleScopeCall.class, "ModuleScopeCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
         initEEnum(preemptionTypeEEnum, PreemptionType.class, "PreemptionType");

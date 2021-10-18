@@ -1,13 +1,13 @@
 system de.cau.cs.kieler.sccharts.extended 
 	label "Extended SCCharts"
 
-pre process silent de.cau.cs.kieler.sccharts.processors.staticAccess
 de.cau.cs.kieler.sccharts.processors.reference
 post process silent de.cau.cs.kieler.kicool.deploy.variable.store.init
 de.cau.cs.kieler.sccharts.processors.regionactions
 de.cau.cs.kieler.sccharts.processors.codeEffects
 de.cau.cs.kieler.sccharts.processors.for
 de.cau.cs.kieler.sccharts.processors.prTransitions
+pre process de.cau.cs.kieler.sccharts.processors.^enum
 de.cau.cs.kieler.sccharts.processors.^const
 pre process de.cau.cs.kieler.sccharts.processors.period
 de.cau.cs.kieler.sccharts.processors.timedautomata
@@ -29,6 +29,7 @@ de.cau.cs.kieler.sccharts.processors.history
 ]
 	
 [ label "Statecharts"
+	pre process de.cau.cs.kieler.sccharts.processors.ode
 	de.cau.cs.kieler.sccharts.processors.duringAction
 	pre process de.cau.cs.kieler.sccharts.processors.finalRegion
 	de.cau.cs.kieler.sccharts.processors.complexFinalState

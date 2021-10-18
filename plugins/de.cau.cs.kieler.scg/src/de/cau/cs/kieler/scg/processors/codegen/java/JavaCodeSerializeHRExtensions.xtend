@@ -12,23 +12,23 @@
  */
 package de.cau.cs.kieler.scg.processors.codegen.java
 
+import com.google.inject.Inject
 import com.google.inject.Singleton
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.NullValue
+import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.PrintCall
 import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeSerializeHRExtensions
 import java.util.ArrayList
-import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
-import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.ParameterAccessType
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
 
 /**
  * @author ssm
@@ -47,7 +47,9 @@ class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
     
     new() {
         CODE_ANNOTATION = "Java"
+        globalEnumNamespace = false // Java has proper enums
         assumeOnlyGlobalFunctions = false // Java has proper OO
+        complyWithGCCWall = false // Java does not use GCC
     }
     
     override dispatch CharSequence serialize(ValueType valueType) {
@@ -104,4 +106,8 @@ class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
         }
         combineOperatorsHR(expression.subExpressions.iterator, " == ")
     }
+    
+    override dispatch CharSequence serialize(NullValue expression) {
+        "null"
+    } 
 }

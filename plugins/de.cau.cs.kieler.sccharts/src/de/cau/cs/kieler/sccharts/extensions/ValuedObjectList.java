@@ -17,8 +17,6 @@ import java.util.ArrayList;
 
 import org.eclipse.emf.ecore.EObject;
 
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsExtensionOLD;
-import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Scope;
 

@@ -55,6 +55,8 @@ class JsonBenchmarkRunner extends Processor<TestSuite, CodeContainer> implements
         ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
     
+    public static val IProperty<Boolean> CONSUME_TESTS = 
+        new Property<Boolean>("de.cau.cs.kieler.simulation.testing.benchmark.runner.json.consume", true)
     public static val IProperty<Boolean> PRINT_VERBOSE = 
         new Property<Boolean>("de.cau.cs.kieler.simulation.testing.benchmark.runner.json.verbose", false)
     public static val IProperty<Boolean> PRINT_VERBOSE_DEBUG = // stuff that is usually too slow
@@ -65,9 +67,11 @@ class JsonBenchmarkRunner extends Processor<TestSuite, CodeContainer> implements
     override process() {
         val cc = new CodeContainer
         val results = new JsonObject
+        val testIter = model.cellSet.iterator
         
         if (PRINT_VERBOSE.getProperty) println("== Starting benchmarks ==")
-        for (test : model.cellSet) {
+        while (testIter.hasNext) {
+            val test = testIter.next
             val testModel = test.rowKey
             val key = testModel.repositoryPath.fileName + ":" + testModel.modelPath.toString
             if (!results.has(key)) {
@@ -83,6 +87,9 @@ class JsonBenchmarkRunner extends Processor<TestSuite, CodeContainer> implements
             val result = test.value.run(test.columnKey, test.rowKey)
             if (result !== null) {
                 modelResults.add(test.columnKey, result)
+            }
+            if (CONSUME_TESTS.getProperty) {
+                testIter.remove()
             }
         }
         if (PRINT_VERBOSE.getProperty) println("== Finished benchmarks ==")

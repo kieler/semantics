@@ -14,9 +14,9 @@ package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.sccharts.BaseStateReference
 import de.cau.cs.kieler.sccharts.LocalAction
@@ -24,14 +24,13 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.Collection
+import java.util.LinkedHashMap
 import java.util.List
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
-import de.cau.cs.kieler.scl.MethodImplementationDeclaration
-import java.util.LinkedHashMap
 
 import static extension java.lang.String.format
 
@@ -42,6 +41,7 @@ import static extension java.lang.String.format
 class SCChartsInheritanceExtensions {
     
     @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsAccessVisibilityExtensions
     
     /**
      * Returns all base states.
@@ -112,7 +112,7 @@ class SCChartsInheritanceExtensions {
      * Conflicting duplicates will be included.
      */
     def Iterable<Declaration> getAllVisibleInheritedDeclarations(State state) {
-        return state.getAllInheritedStates.map[it.declarations].flatten.filter[access !== AccessModifier.PRIVATE]
+        return state.getAllInheritedStates.map[it.declarations].flatten.filter[!it.isPrivate]
     }
     
     /**
@@ -242,7 +242,7 @@ class SCChartsInheritanceExtensions {
                 info.inheritanceLevel = base.value
                 infos += info
                 
-                if (method.access !== AccessModifier.PRIVATE) {
+                if (!method.isPrivate) {
                     if (effective.containsKey(info.name)) {
                         val repl = effective.get(info.name)
                         

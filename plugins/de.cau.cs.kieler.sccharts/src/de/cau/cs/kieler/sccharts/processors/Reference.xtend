@@ -17,6 +17,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.GenericTypeReference
@@ -25,7 +26,8 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.StaticAccessExpression
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
+import de.cau.cs.kieler.kexpressions.ThisExpression
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValueTypeReference
@@ -68,6 +70,7 @@ import de.cau.cs.kieler.scl.Return
 import java.util.Set
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension java.lang.String.format
 
 /**
@@ -107,6 +110,9 @@ class Reference extends SCChartsProcessor implements Traceable {
     
     protected var Dataflow dataflowProcessor = null
     protected var Inheritance inheritanceProcessor = null
+    protected var StaticAccess staticAccessProcessor = null
+    protected var Enum enumProcessor = null
+    protected var MethodSignaling methodSignalingProcessor = null
     
     protected val replacedWithLiterals = <ValuedObject> newHashSet
     
@@ -124,6 +130,12 @@ class Reference extends SCChartsProcessor implements Traceable {
         dataflowProcessor?.setEnvironment(sourceEnvironment, environment)
         inheritanceProcessor = KiCoolRegistration.getProcessorInstance(Inheritance.ID) as Inheritance
         inheritanceProcessor?.setEnvironment(sourceEnvironment, environment)
+        staticAccessProcessor = KiCoolRegistration.getProcessorInstance(StaticAccess.ID) as StaticAccess
+        staticAccessProcessor?.setEnvironment(sourceEnvironment, environment)
+        enumProcessor = KiCoolRegistration.getProcessorInstance(Enum.ID) as Enum
+        enumProcessor?.setEnvironment(sourceEnvironment, environment)
+        methodSignalingProcessor = KiCoolRegistration.getProcessorInstance(MethodSignaling.ID) as MethodSignaling
+        methodSignalingProcessor?.setEnvironment(sourceEnvironment, environment)
         
         val model = getModel
         
@@ -136,6 +148,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         
         for(rootState : rootStateList) {
             rootState.expandRoot(null, true)
+            enumProcessor?.consolidateEnumDeclarations(rootState)
         }
         
         if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
@@ -153,6 +166,9 @@ class Reference extends SCChartsProcessor implements Traceable {
             inheritanceProcessor?.inheritBaseStates(state, replacements)
         }
         inheritanceProcessor?.inheritBaseStates(rootState, replacements)
+        
+        // Handle method signaling here because it is easier than a standalone transformation
+        methodSignalingProcessor?.transform(rootState)
 
         // Bind generic parameters
         if (!rootState.genericParameterDeclarations.nullOrEmpty) {
@@ -171,7 +187,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         
         // Handle references
         if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
-            val statesWithReferences = rootState.allContainedStates.filter[isReferencing].toList
+            val statesWithReferences = rootState.allContainedStates.filter[isReferencing && isModuleExpansionReference].toList
             val regionsWithReferences = rootState.allContainedRegions.filter[isReferencing].toList
             
             for (state : statesWithReferences) {
@@ -189,7 +205,7 @@ class Reference extends SCChartsProcessor implements Traceable {
             rootState.handleSCChartsDatatype(replacements)
             
             if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
-                val statesWithReferences2 = rootState.getAllContainedStates.filter[isReferencing].toList
+                val statesWithReferences2 = rootState.getAllContainedStates.filter[isReferencing && isModuleExpansionReference].toList
                 val regionsWithReferences2 = rootState.allContainedRegions.filter[isReferencing].toList
                 for (state : statesWithReferences2) {
                     state.expandReferencedScope(new Replacements(replacements))
@@ -199,6 +215,8 @@ class Reference extends SCChartsProcessor implements Traceable {
                 }
             }
         }
+        
+        staticAccessProcessor?.handleStaticAccesses(rootState)
         
         if (validate && !rootState.validate) {
             throw new IllegalStateException("References objects are not contained in the resource!")
@@ -223,7 +241,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                 (it as State).final = scopeWithReference.final
             }
             for (annotation : scopeWithReference.annotations) {
-                 annotations += annotation.copy
+                 it.annotations += annotation.copy
             }
         ]
         
@@ -300,7 +318,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         
         
         // Remove the input/output declarations from the new state. They should be bound by now.
-        newScope.declarations.removeIf[ if (it instanceof VariableDeclaration) { input || output } else false ]
+        newScope.declarations.removeIf[ input || output ]
         // Add the new variables names to the name set.
         
         snapshot
@@ -310,7 +328,7 @@ class Reference extends SCChartsProcessor implements Traceable {
             val processState = if (newScope instanceof Region) newScope.eContainer as State else newScope as State
             // Optimize this.
             dataflowProcessor.processState(processState)
-            val statesWithReferences = processState.getAllContainedStates.filter[isReferencing].toList
+            val statesWithReferences = processState.getAllContainedStates.filter[isReferencing && isModuleExpansionReference].toList
             for (state : statesWithReferences) {
                 state.expandReferencedScope(new Replacements)
             }
@@ -560,6 +578,30 @@ class Reference extends SCChartsProcessor implements Traceable {
                 if (valuedObjectReference.subReference !== null) {
                     valuedObjectReference.subReference.replaceReferences(replacements)
                 }
+            } else if (newRef instanceof ThisExpression) {
+                if (valuedObjectReference.subReference !== null) {
+                    // Replace by sub ref (implicit this)
+                    val sub = valuedObjectReference.subReference
+                    val rootStateOfThis = newRef.nextScope.rootState
+                    val rootStateVO = rootStateOfThis.valuedObjects.findFirst[it.name.equals(sub.valuedObject.name)]
+                    
+                    valuedObjectReference.valuedObject = rootStateVO !== null ? rootStateVO : sub.valuedObject
+
+                    valuedObjectReference.indices.clear
+                    valuedObjectReference.indices += sub.indices
+                    for (index : valuedObjectReference.indices) {
+                        index.replaceReferences(replacements)
+                    }
+                    
+                    valuedObjectReference.schedule += sub.schedule
+                    
+                    valuedObjectReference.subReference = sub.subReference
+                    if (valuedObjectReference.subReference !== null) {
+                        valuedObjectReference.subReference.replaceReferences(replacements)
+                    }
+                } else {// Remove VOR entirely
+                    valuedObjectReference.remove
+                }
             } else if (newRef instanceof Value) {
                 // If the replacement is a literal, delegate.
                 valuedObjectReference.replaceReferenceWithLiteral(newRef)
@@ -622,7 +664,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     }
     
     /** StaticAccessExpression will not be replaced. */
-    protected dispatch def void replaceReferences(StaticAccessExpression ex, Replacements replacements) {
+    protected dispatch def void replaceReferences(SpecialAccessExpression ex, Replacements replacements) {
         // do nothing, do not bind, resolved later
     }
     
@@ -716,7 +758,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         if (!environment.getProperty(RENAME_SHADOWED_VARIABLES))
             return;
             
-        val VOs = scope.eAllContents.filter(VariableDeclaration).filter[ !input && !output ].map[ valuedObjects ].toIterable.flatten.toList
+        val VOs = scope.eAllContents.filter(Declaration).filter[ !input && !output ].map[ valuedObjects ].toIterable.flatten.toList
 //        val replacementVONames = replacements.values.filter(Stack).map[ it.head ].
 //            filter(ValuedObjectReference).map[ valuedObject ].map[ name ].toSet
         
@@ -777,21 +819,26 @@ class Reference extends SCChartsProcessor implements Traceable {
         val initialSnapshotsFlag = environment.getProperty(Environment.SNAPSHOTS_ENABLED)
         environment.setProperty(Environment.SNAPSHOTS_ENABLED, false)
         
-        val scopesWithReferencesDecl = state.allScopes.filter[ !declarations.filter(ReferenceDeclaration).filter[reference !== null].empty ].toList
+        val scopesWithReferencesDecl = state.allScopes.filter[ !declarations.filter(ReferenceDeclaration).filter[reference !== null && !input].empty ].toList
         for (scope : scopesWithReferencesDecl) {
             val refs = scope.declarations.filter(ReferenceDeclaration).filter[reference !== null].toList
             refs.separateGenericTypeDependentReferenceDeclarations
             for (ref : refs) {
                 var refTarget = ref.reference
                 if (refTarget instanceof State) {
-                    val newState = refTarget.copy as State
+                    val tracedCopy = refTarget.tracedCopyAndReturnCopier
+                    val newState = tracedCopy.key
+                    val copier = tracedCopy.value
                     
                     // Generics binding
                     // Using head VO is ok because of previous separating
                     val replacements = new Replacements(parentReplacements)
                     val bindings = ref.valuedObjects.head.createBindings(replacements)
                     for (binding : bindings) {
-                        if (binding.errors > 0) {
+                        // FIXME: Subtyping cannot be checked during compilation because some relations are already gone
+                        // Assumes that the validator invalidated these model before
+                        val ignoreSubtypeErrors = binding.targetValuedObject?.declaration instanceof ReferenceDeclaration
+                        if (binding.errors > 0 && !ignoreSubtypeErrors) {
                             environment.errors.add("There are binding errors in a state with reference declaration of "
                                 + ref.valuedObjects.map[name].join("/") + "!\n"
                                 + binding.errorMessages.join("\n"), 
@@ -801,6 +848,16 @@ class Reference extends SCChartsProcessor implements Traceable {
                         } else {
                             // TODO: target indices not supported yet
                             replacements.push(binding.targetValuedObject, binding.sourceExpression)
+                        }
+                    }
+                    
+                    // Handle enums
+                    for (entry : copier.entrySet) {
+                        val orig = entry.key
+                        if (orig instanceof Declaration) {
+                            if (orig.isEnum) {
+                                Enum.markCopyForConsolidation(entry.value as Declaration, orig)
+                            }
                         }
                     }
                     
@@ -820,11 +877,17 @@ class Reference extends SCChartsProcessor implements Traceable {
                     classDecl.addStringAnnotation(REF_CLASS_ORIGIN, Iterables.concat(#[refTarget.name], refTarget.baseStates.map[name]))
                     
                     // Remove the input/output declarations from the new class. They should be bound beforehand.
-                    classDecl.declarations.removeIf[ if (it instanceof VariableDeclaration) { input || output } else false ]
-                    classDecl.valuedObjects.forEach[ parameters.clear ]
+                    classDecl.declarations.removeIf[ input || output ]
+                    // All declarations will be public to enable access by regions that are moved outside the class
+                    classDecl.declarations.forEach[ access = AccessModifier.PUBLIC ]
+                    // Clear parameters
+                    classDecl.valuedObjects.forEach[ parameters.clear; genericParameters.clear ]
                     
                     val classVOs = classDecl.innerValuedObjects.toSet
                     ref.replace(classDecl)
+                    if (classDecl.declarations.empty) {
+                        classDecl.remove
+                    }
                     
                     // Fix Methods
                     // WHY ???
@@ -865,6 +928,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                             }
                         }
                         for (x : 0..allCardinalities-1) {
+                            // Clone regions
                             for (region : newState.regions) {
                                 val newRegion = region.copy
                                 newRegion.name = vo.name + (region.name?:"default")
@@ -878,6 +942,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                                 }
                                 targetContainerState.regions += newRegion
                             }
+                            // Clone actions
                             for (action : newState.actions) {
                                 val newAction = action.copy
                                 for (vor : newAction.eAllContents.filter(ValuedObjectReference).toList) {

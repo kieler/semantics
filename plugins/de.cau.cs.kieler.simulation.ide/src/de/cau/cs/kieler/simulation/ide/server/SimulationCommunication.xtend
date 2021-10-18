@@ -38,7 +38,6 @@ class SimulationCommunication {
     @Accessors
     static val clients = <SimulationSocket>newArrayList
     static val serializer = new Gson
-    static val parser = new JsonParser
     
     static def broadcastControlEvent(SimulationControlEvent event, SimulationContext context) {
         val op = event.operation
@@ -68,7 +67,7 @@ class SimulationCommunication {
         try {
             val sim = CentralSimulation.currentSimulation
             if (sim !== null) {
-                val msgElem = parser.parse(msg)
+                val msgElem = JsonParser.parseString(msg)
                 if (msgElem !== null && msgElem.isJsonObject) {
                     val msgObj = msgElem.asJsonObject
                     if (msgObj.has(ACTION_KEY)) {

@@ -72,6 +72,7 @@ public class StringAnnotationImpl extends AnnotationImpl implements StringAnnota
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getValues() {
         if (values == null) {
             values = new EDataTypeEList<String>(String.class, this, AnnotationsPackage.STRING_ANNOTATION__VALUES);

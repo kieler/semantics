@@ -19,17 +19,13 @@ import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.System
 import java.util.Map
 import java.util.Set
-import org.osgi.framework.FrameworkUtil
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import org.eclipse.core.runtime.Platform
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import org.eclipse.core.runtime.FileLocator
-import org.eclipse.core.runtime.Path
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.io.InputStream
-import java.io.FileInputStream
 import org.osgi.framework.Bundle
 import java.net.URL
 

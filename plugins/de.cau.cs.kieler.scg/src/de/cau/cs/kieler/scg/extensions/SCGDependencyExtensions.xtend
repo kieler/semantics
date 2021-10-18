@@ -13,35 +13,35 @@
  */
 package de.cau.cs.kieler.scg.extensions
 
-import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.ExpressionDependency
-import de.cau.cs.kieler.scg.GuardDependency
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.ScheduleDependency
-import de.cau.cs.kieler.scg.Node
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
-import java.util.List
-import de.cau.cs.kieler.scg.Entry
-import java.util.Map
-import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.OperatorType
-import java.util.EnumSet
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
-import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsDependencyExtensions
-import de.cau.cs.kieler.kexpressions.keffects.Linkable
-import de.cau.cs.kieler.kexpressions.keffects.Link
 import de.cau.cs.kieler.kexpressions.keffects.Dependency
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
+import de.cau.cs.kieler.kexpressions.keffects.Link
+import de.cau.cs.kieler.kexpressions.keffects.Linkable
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsDependencyExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.ExpressionDependency
+import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.GuardDependency
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.TickBoundaryDependency
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+import java.util.EnumSet
+import java.util.List
+import java.util.Map
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.

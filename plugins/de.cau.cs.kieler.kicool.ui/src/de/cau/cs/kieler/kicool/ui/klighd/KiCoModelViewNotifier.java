@@ -18,7 +18,6 @@ import java.util.List;
 
 import org.eclipse.ui.IEditorPart;
 
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController;
 
 /**
  * Static Notifier for the KiCoModelUpdateController.

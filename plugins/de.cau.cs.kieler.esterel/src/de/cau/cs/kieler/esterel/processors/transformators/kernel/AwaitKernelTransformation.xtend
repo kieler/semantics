@@ -97,7 +97,7 @@ class AwaitKernelTransformation extends InplaceProcessor<EsterelProgram> impleme
             if (await.delay.delay !== null) {
                 (if (strict) environment.errors else environment.warnings).add("Cannot handle count delay", await, true)
             }
-            if (p != null) {
+            if (p !== null) {
                 statements += p
                 
                 throw new UnsupportedOperationException("Await case not supported")

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: UI for Legacy SCCharts
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.legacy.ui;singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.3.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sccharts.legacy.text.ui.internal.SctActivator
 Bundle-Vendor: Kiel University
 Eclipse-UI: True
@@ -45,3 +45,4 @@ Export-Package: de.cau.cs.kieler.sccharts.legacy.annotations.ui.contentassist,
  de.cau.cs.kieler.sccharts.legacy.text.actions.ui.contentassist.antlr,
  de.cau.cs.kieler.sccharts.legacy.text.actions.ui.contentassist.antlr.internal
 Import-Package: org.apache.log4j
+Automatic-Module-Name: de.cau.cs.kieler.sccharts.legacy.ui

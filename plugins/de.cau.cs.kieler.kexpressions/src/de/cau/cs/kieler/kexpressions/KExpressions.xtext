@@ -311,7 +311,7 @@ AtomicExpression returns Expression:
     | RandomCall
     | RandomizeCall
     | ValuedObjectTestExpression // Last to allow detection of calls
-    | StaticAccessExpression
+    | SpecialAccessExpression
     | TextExpression;
 
 // Atomic Valued Expression Rule
@@ -323,6 +323,7 @@ AtomicValuedExpression returns Expression:
     | FloatValue 
     | StringValue
     | VectorValue
+    | NullValue
     | '(' ValuedExpression ')'
     | AtomicExpression;
     
@@ -342,9 +343,11 @@ ValuedObjectTestExpression returns Expression:
 
 // Accesses a arbitrary target in a static way (needs to be adjusted in the scoper of the deriving language)
 // Example: static(Constants).MAX
-StaticAccessExpression returns StaticAccessExpression:
-    'static' '(' target=[annotations::NamedObject|PrimeID] ')'
-    '.' subReference=ValuedObjectReference; 
+SpecialAccessExpression returns SpecialAccessExpression:
+    access='static' '('
+    (container=[annotations::NamedObject|PrimeID] '.')?
+    target=[annotations::NamedObject|PrimeID]
+    ')' '.' subReference=ValuedObjectReference;
 
 // ID with primes
 PrimeID returns ecore::EString:
@@ -438,7 +441,11 @@ StringValue returns StringValue:
     value=STRING;
     
 VectorValue returns VectorValue:
-    '{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
+    '{' (
+        values+=VectorValueMember (',' values+=VectorValueMember)*
+        |
+        values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference)
+    ) '}';
     
 VectorValueMember returns Expression:
     BoolExpression | ValuedExpression | IgnoreValue;
@@ -544,6 +551,9 @@ enum StructType returns ValueType:
     
 enum ClassType returns ValueType:
     CLASS="class";
+    
+enum EnumType returns ValueType:
+    ENUM="enum";
 
 enum CombineOperator returns CombineOperator:
 	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
@@ -609,7 +619,13 @@ ValuedAnnotation returns annotations::Annotation:
 
 @Override
 QuotedStringAnnotation returns annotations::Annotation:
-    super | JsonAnnotation;    
+    super | JsonAnnotation;
+    
+// OO
+
+ThisExpression returns ThisExpression:
+    {ThisExpression}
+    'this';
     
 
 // ------------------------ //

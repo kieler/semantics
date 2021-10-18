@@ -13,16 +13,14 @@
  */
 package de.cau.cs.kieler.core.model
 
+import com.google.inject.Injector
 import java.io.IOException
-import java.util.Collections
 import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import com.google.inject.Injector
 
 /** 
  * This is a utility class for File inputs, opening and URL conversion of bundle and workspace

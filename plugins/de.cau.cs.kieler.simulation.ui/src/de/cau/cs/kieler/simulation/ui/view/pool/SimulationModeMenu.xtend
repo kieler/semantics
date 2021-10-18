@@ -33,7 +33,6 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Spinner
 import org.eclipse.swt.widgets.Text
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 /**
  * @author als

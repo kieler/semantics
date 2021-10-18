@@ -103,6 +103,7 @@ public class ForkImpl extends NodeImpl implements Fork {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Join getJoin() {
         if (join != null && join.eIsProxy()) {
             InternalEObject oldJoin = (InternalEObject)join;
@@ -144,6 +145,7 @@ public class ForkImpl extends NodeImpl implements Fork {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setJoin(Join newJoin) {
         if (newJoin != join) {
             NotificationChain msgs = null;
@@ -163,6 +165,7 @@ public class ForkImpl extends NodeImpl implements Fork {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ControlFlow> getNext() {
         if (next == null) {
             next = new EObjectContainmentEList<ControlFlow>(ControlFlow.class, this, ScgPackage.FORK__NEXT);
@@ -175,6 +178,7 @@ public class ForkImpl extends NodeImpl implements Fork {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ForkType getType() {
         return type;
     }
@@ -184,6 +188,7 @@ public class ForkImpl extends NodeImpl implements Fork {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(ForkType newType) {
         ForkType oldType = type;
         type = newType == null ? TYPE_EDEFAULT : newType;

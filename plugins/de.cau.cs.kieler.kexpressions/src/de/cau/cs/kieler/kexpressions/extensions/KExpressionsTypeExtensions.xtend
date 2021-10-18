@@ -52,10 +52,8 @@ class KExpressionsTypeExtensions {
     
     def boolean isArithmetic(Expression expression) {
         // TODO: Check for non variable valued objects?
-        if (!expression.hasBool && !expression.hasString &&
-            (expression.hasInt || expression.hasFloat)
-        ) return true
-        return false
+        return !expression.hasBool && !expression.hasString &&
+               (expression.hasInt || expression.hasFloat)
     }
     
     
@@ -69,7 +67,7 @@ class KExpressionsTypeExtensions {
         switch(expression) {
             Value: return expression instanceof FloatValue
             ValuedObject: return compareTypes(expression, ValueType.FLOAT)
-            ValuedObjectReference: return compareTypes(expression.valuedObject, ValueType.FLOAT)
+            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, ValueType.FLOAT)
             OperatorExpression: {
                 var skipFirst = expression.operator == OperatorType.CONDITIONAL
                 for (subExpression : expression.subExpressions) {
@@ -91,7 +89,7 @@ class KExpressionsTypeExtensions {
         switch(expression) {
             Value: return expression instanceof FloatValue
             ValuedObject: return compareTypes(expression, ValueType.FLOAT)
-            ValuedObjectReference: return compareTypes(expression.valuedObject, ValueType.FLOAT)
+            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, ValueType.FLOAT)
             OperatorExpression: {
                 var skipFirst = expression.operator == OperatorType.CONDITIONAL
                 for (subExpression : expression.subExpressions) {
@@ -115,7 +113,7 @@ class KExpressionsTypeExtensions {
         switch(expression) {
             Value: return expression instanceof IntValue
             ValuedObject: return compareTypes(expression, ValueType.INT)
-            ValuedObjectReference: return compareTypes(expression.valuedObject, ValueType.INT)
+            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, ValueType.INT)
             OperatorExpression: {
                 var skipFirst = expression.operator == OperatorType.CONDITIONAL
                 for (subExpression : expression.subExpressions) {
@@ -137,7 +135,7 @@ class KExpressionsTypeExtensions {
         switch(expression) {
             Value: return expression instanceof IntValue
             ValuedObject: return compareTypes(expression, ValueType.INT)
-            ValuedObjectReference: return compareTypes(expression.valuedObject, ValueType.INT)
+            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, ValueType.INT)
             OperatorExpression: {
                 var skipFirst = expression.operator == OperatorType.CONDITIONAL
                 for (subExpression : expression.subExpressions) {
@@ -161,7 +159,7 @@ class KExpressionsTypeExtensions {
         switch(expression) {
             Value: return expression instanceof BoolValue
             ValuedObject: return compareTypes(expression, ValueType.BOOL)
-            ValuedObjectReference: return compareTypes(expression.valuedObject, ValueType.BOOL)
+            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, ValueType.BOOL)
             OperatorExpression: {
                 var skipFirst = expression.operator == OperatorType.CONDITIONAL
                 for (subExpression : expression.subExpressions) {
@@ -183,7 +181,7 @@ class KExpressionsTypeExtensions {
         switch(expression) {
             Value: return expression instanceof BoolValue
             ValuedObject: return compareTypes(expression, ValueType.BOOL)
-            ValuedObjectReference: return compareTypes(expression.valuedObject, ValueType.BOOL)
+            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, ValueType.BOOL)
             OperatorExpression: {
                 var skipFirst = expression.operator == OperatorType.CONDITIONAL
                 for (subExpression : expression.subExpressions) {
@@ -207,7 +205,7 @@ class KExpressionsTypeExtensions {
         switch(expression) {
             Value: return expression instanceof StringValue
             ValuedObject: return compareTypes(expression, ValueType.STRING)
-            ValuedObjectReference: return compareTypes(expression.valuedObject, ValueType.STRING)
+            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, ValueType.STRING)
             OperatorExpression: {
                 var skipFirst = expression.operator == OperatorType.CONDITIONAL
                 for (subExpression : expression.subExpressions) {
@@ -229,7 +227,7 @@ class KExpressionsTypeExtensions {
         switch(expression) {
             Value: return expression instanceof StringValue
             ValuedObject: return compareTypes(expression, ValueType.STRING)
-            ValuedObjectReference: return compareTypes(expression.valuedObject, ValueType.STRING)
+            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, ValueType.STRING)
             OperatorExpression: {
                 var skipFirst = expression.operator == OperatorType.CONDITIONAL
                 for (subExpression : expression.subExpressions) {

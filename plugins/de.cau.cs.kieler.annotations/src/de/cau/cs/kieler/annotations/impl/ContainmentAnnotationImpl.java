@@ -73,6 +73,7 @@ public class ContainmentAnnotationImpl extends AnnotationImpl implements Contain
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EObject getObject() {
         return object;
     }
@@ -97,6 +98,7 @@ public class ContainmentAnnotationImpl extends AnnotationImpl implements Contain
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setObject(EObject newObject) {
         if (newObject != object) {
             NotificationChain msgs = null;

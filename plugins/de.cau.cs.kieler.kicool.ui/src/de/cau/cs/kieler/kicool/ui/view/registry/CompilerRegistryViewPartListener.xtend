@@ -17,7 +17,6 @@ import org.eclipse.swt.events.DisposeListener
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.IPartListener2
 import org.eclipse.ui.IWorkbenchPartReference
-import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
 
 /**
  * Own PartListener for the compilation registry view

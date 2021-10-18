@@ -48,9 +48,10 @@ import de.cau.cs.kieler.kexpressions.Referenceable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
-import de.cau.cs.kieler.kexpressions.StaticAccessExpression;
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ThisExpression;
 import de.cau.cs.kieler.kexpressions.Value;
 import de.cau.cs.kieler.kexpressions.ValueType;
 import de.cau.cs.kieler.kexpressions.ValueTypeReference;
@@ -330,7 +331,14 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass staticAccessExpressionEClass = null;
+    private EClass specialAccessExpressionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass thisExpressionEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -674,6 +682,16 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
+    public EAttribute getVectorValue_Range() {
+        return (EAttribute)vectorValueEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getIgnoreValue() {
         return ignoreValueEClass;
     }
@@ -1004,8 +1022,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EReference getReferenceDeclaration_Reference() {
-        return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(0);
+    public EAttribute getReferenceDeclaration_Input() {
+        return (EAttribute)referenceDeclarationEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -1014,7 +1032,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EReference getReferenceDeclaration_Parameters() {
+    public EReference getReferenceDeclaration_Reference() {
         return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(1);
     }
 
@@ -1024,7 +1042,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EReference getReferenceDeclaration_Extern() {
+    public EReference getReferenceDeclaration_ReferenceContainer() {
         return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(2);
     }
 
@@ -1034,8 +1052,28 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EReference getReferenceDeclaration_GenericParameters() {
+    public EReference getReferenceDeclaration_Parameters() {
         return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getReferenceDeclaration_Extern() {
+        return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getReferenceDeclaration_GenericParameters() {
+        return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(5);
     }
 
     /**
@@ -1414,8 +1452,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EClass getStaticAccessExpression() {
-        return staticAccessExpressionEClass;
+    public EClass getSpecialAccessExpression() {
+        return specialAccessExpressionEClass;
     }
 
     /**
@@ -1424,8 +1462,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EReference getStaticAccessExpression_SubReference() {
-        return (EReference)staticAccessExpressionEClass.getEStructuralFeatures().get(0);
+    public EAttribute getSpecialAccessExpression_Access() {
+        return (EAttribute)specialAccessExpressionEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -1434,8 +1472,38 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EReference getStaticAccessExpression_Target() {
-        return (EReference)staticAccessExpressionEClass.getEStructuralFeatures().get(1);
+    public EReference getSpecialAccessExpression_SubReference() {
+        return (EReference)specialAccessExpressionEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getSpecialAccessExpression_Container() {
+        return (EReference)specialAccessExpressionEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getSpecialAccessExpression_Target() {
+        return (EReference)specialAccessExpressionEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getThisExpression() {
+        return thisExpressionEClass;
     }
 
     /**
@@ -1558,6 +1626,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         vectorValueEClass = createEClass(VECTOR_VALUE);
         createEReference(vectorValueEClass, VECTOR_VALUE__VALUES);
+        createEAttribute(vectorValueEClass, VECTOR_VALUE__RANGE);
 
         ignoreValueEClass = createEClass(IGNORE_VALUE);
 
@@ -1603,7 +1672,9 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__HOST_TYPE);
 
         referenceDeclarationEClass = createEClass(REFERENCE_DECLARATION);
+        createEAttribute(referenceDeclarationEClass, REFERENCE_DECLARATION__INPUT);
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__REFERENCE);
+        createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__REFERENCE_CONTAINER);
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__PARAMETERS);
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__EXTERN);
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__GENERIC_PARAMETERS);
@@ -1661,9 +1732,13 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         externStringEClass = createEClass(EXTERN_STRING);
         createEAttribute(externStringEClass, EXTERN_STRING__CODE);
 
-        staticAccessExpressionEClass = createEClass(STATIC_ACCESS_EXPRESSION);
-        createEReference(staticAccessExpressionEClass, STATIC_ACCESS_EXPRESSION__SUB_REFERENCE);
-        createEReference(staticAccessExpressionEClass, STATIC_ACCESS_EXPRESSION__TARGET);
+        specialAccessExpressionEClass = createEClass(SPECIAL_ACCESS_EXPRESSION);
+        createEAttribute(specialAccessExpressionEClass, SPECIAL_ACCESS_EXPRESSION__ACCESS);
+        createEReference(specialAccessExpressionEClass, SPECIAL_ACCESS_EXPRESSION__SUB_REFERENCE);
+        createEReference(specialAccessExpressionEClass, SPECIAL_ACCESS_EXPRESSION__CONTAINER);
+        createEReference(specialAccessExpressionEClass, SPECIAL_ACCESS_EXPRESSION__TARGET);
+
+        thisExpressionEClass = createEClass(THIS_EXPRESSION);
 
         // Create enums
         combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
@@ -1744,7 +1819,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         randomCallEClass.getESuperTypes().add(this.getCall());
         randomizeCallEClass.getESuperTypes().add(this.getCall());
         externStringEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
-        staticAccessExpressionEClass.getESuperTypes().add(this.getExpression());
+        specialAccessExpressionEClass.getESuperTypes().add(this.getExpression());
+        thisExpressionEClass.getESuperTypes().add(this.getExpression());
 
         // Initialize classes and features; add operations and parameters
         initEClass(expressionEClass, Expression.class, "Expression", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1778,6 +1854,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEClass(vectorValueEClass, VectorValue.class, "VectorValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getVectorValue_Values(), this.getExpression(), null, "values", null, 1, -1, VectorValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getVectorValue_Range(), ecorePackage.getEBoolean(), "range", "false", 0, 1, VectorValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(ignoreValueEClass, IgnoreValue.class, "IgnoreValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1831,7 +1908,9 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEAttribute(getVariableDeclaration_HostType(), ecorePackage.getEString(), "hostType", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(referenceDeclarationEClass, ReferenceDeclaration.class, "ReferenceDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getReferenceDeclaration_Input(), ecorePackage.getEBoolean(), "input", "false", 1, 1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReferenceDeclaration_Reference(), ecorePackage.getEObject(), null, "reference", null, 0, 1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getReferenceDeclaration_ReferenceContainer(), ecorePackage.getEObject(), null, "referenceContainer", null, 0, 1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReferenceDeclaration_Parameters(), this.getParameter(), null, "parameters", null, 0, -1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReferenceDeclaration_Extern(), this.getExternString(), null, "extern", null, 0, -1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReferenceDeclaration_GenericParameters(), this.getParameter(), null, "genericParameters", null, 0, -1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1889,9 +1968,13 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEClass(externStringEClass, ExternString.class, "ExternString", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getExternString_Code(), ecorePackage.getEString(), "code", null, 0, 1, ExternString.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(staticAccessExpressionEClass, StaticAccessExpression.class, "StaticAccessExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getStaticAccessExpression_SubReference(), this.getValuedObjectReference(), null, "subReference", null, 0, 1, StaticAccessExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getStaticAccessExpression_Target(), theAnnotationsPackage.getNamedObject(), null, "target", null, 0, 1, StaticAccessExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(specialAccessExpressionEClass, SpecialAccessExpression.class, "SpecialAccessExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getSpecialAccessExpression_Access(), ecorePackage.getEString(), "access", null, 1, 1, SpecialAccessExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getSpecialAccessExpression_SubReference(), this.getValuedObjectReference(), null, "subReference", null, 0, 1, SpecialAccessExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getSpecialAccessExpression_Container(), theAnnotationsPackage.getNamedObject(), null, "container", null, 0, 1, SpecialAccessExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getSpecialAccessExpression_Target(), theAnnotationsPackage.getNamedObject(), null, "target", null, 0, 1, SpecialAccessExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(thisExpressionEClass, ThisExpression.class, "ThisExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
         initEEnum(combineOperatorEEnum, CombineOperator.class, "CombineOperator");
@@ -1970,9 +2053,10 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         addEEnumLiteral(parameterAccessTypeEEnum, ParameterAccessType.PURE_OUTPUT);
 
         initEEnum(accessModifierEEnum, AccessModifier.class, "AccessModifier");
-        addEEnumLiteral(accessModifierEEnum, AccessModifier.PUBLIC);
-        addEEnumLiteral(accessModifierEEnum, AccessModifier.PROTECTED);
+        addEEnumLiteral(accessModifierEEnum, AccessModifier.UNDEF);
         addEEnumLiteral(accessModifierEEnum, AccessModifier.PRIVATE);
+        addEEnumLiteral(accessModifierEEnum, AccessModifier.PROTECTED);
+        addEEnumLiteral(accessModifierEEnum, AccessModifier.PUBLIC);
 
         // Create resource
         createResource(eNS_URI);

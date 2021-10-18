@@ -232,6 +232,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getNameable() {
         return nameableEClass;
     }
@@ -241,6 +242,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getNamedObject() {
         return namedObjectEClass;
     }
@@ -250,6 +252,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getNamedObject_Name() {
         return (EAttribute)namedObjectEClass.getEStructuralFeatures().get(0);
     }
@@ -259,6 +262,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getAnnotatable() {
         return annotatableEClass;
     }
@@ -268,6 +272,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getAnnotatable_Annotations() {
         return (EReference)annotatableEClass.getEStructuralFeatures().get(0);
     }
@@ -277,6 +282,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPragmatable() {
         return pragmatableEClass;
     }
@@ -286,6 +292,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getPragmatable_Pragmas() {
         return (EReference)pragmatableEClass.getEStructuralFeatures().get(0);
     }
@@ -295,6 +302,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getAnnotation() {
         return annotationEClass;
     }
@@ -304,6 +312,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getStringAnnotation() {
         return stringAnnotationEClass;
     }
@@ -313,6 +322,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getStringAnnotation_Values() {
         return (EAttribute)stringAnnotationEClass.getEStructuralFeatures().get(0);
     }
@@ -322,6 +332,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getReferenceAnnotation() {
         return referenceAnnotationEClass;
     }
@@ -331,6 +342,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getReferenceAnnotation_Object() {
         return (EReference)referenceAnnotationEClass.getEStructuralFeatures().get(0);
     }
@@ -340,6 +352,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getBooleanAnnotation() {
         return booleanAnnotationEClass;
     }
@@ -349,6 +362,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getBooleanAnnotation_Value() {
         return (EAttribute)booleanAnnotationEClass.getEStructuralFeatures().get(0);
     }
@@ -358,6 +372,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntAnnotation() {
         return intAnnotationEClass;
     }
@@ -367,6 +382,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntAnnotation_Value() {
         return (EAttribute)intAnnotationEClass.getEStructuralFeatures().get(0);
     }
@@ -376,6 +392,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getFloatAnnotation() {
         return floatAnnotationEClass;
     }
@@ -385,6 +402,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getFloatAnnotation_Value() {
         return (EAttribute)floatAnnotationEClass.getEStructuralFeatures().get(0);
     }
@@ -394,6 +412,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getContainmentAnnotation() {
         return containmentAnnotationEClass;
     }
@@ -403,6 +422,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getContainmentAnnotation_Object() {
         return (EReference)containmentAnnotationEClass.getEStructuralFeatures().get(0);
     }
@@ -412,6 +432,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getImportAnnotation() {
         return importAnnotationEClass;
     }
@@ -421,6 +442,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getImportAnnotation_ImportURI() {
         return (EAttribute)importAnnotationEClass.getEStructuralFeatures().get(0);
     }
@@ -430,6 +452,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTypedStringAnnotation() {
         return typedStringAnnotationEClass;
     }
@@ -439,6 +462,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTypedStringAnnotation_Type() {
         return (EAttribute)typedStringAnnotationEClass.getEStructuralFeatures().get(0);
     }
@@ -448,6 +472,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getCommentAnnotation() {
         return commentAnnotationEClass;
     }
@@ -457,6 +482,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPragma() {
         return pragmaEClass;
     }
@@ -466,6 +492,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getStringPragma() {
         return stringPragmaEClass;
     }
@@ -475,6 +502,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getStringPragma_Values() {
         return (EAttribute)stringPragmaEClass.getEStructuralFeatures().get(0);
     }
@@ -484,6 +512,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTagAnnotation() {
         return tagAnnotationEClass;
     }
@@ -493,6 +522,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public AnnotationsFactory getAnnotationsFactory() {
         return (AnnotationsFactory)getEFactoryInstance();
     }

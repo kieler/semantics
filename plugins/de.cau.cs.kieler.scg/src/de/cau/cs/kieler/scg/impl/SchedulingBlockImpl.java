@@ -117,6 +117,7 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Node> getNodes() {
         if (nodes == null) {
             nodes = new EObjectResolvingEList<Node>(Node.class, this, ScgPackage.SCHEDULING_BLOCK__NODES);
@@ -129,6 +130,7 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Dependency> getDependencies() {
         if (dependencies == null) {
             dependencies = new EObjectResolvingEList<Dependency>(Dependency.class, this, ScgPackage.SCHEDULING_BLOCK__DEPENDENCIES);
@@ -141,7 +143,8 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Guard> getGuards() {
+	@Override
+    public EList<Guard> getGuards() {
         if (guards == null) {
             guards = new EObjectResolvingEList<Guard>(Guard.class, this, ScgPackage.SCHEDULING_BLOCK__GUARDS);
         }
@@ -153,6 +156,7 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getLabel() {
         return label;
     }
@@ -162,6 +166,7 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setLabel(String newLabel) {
         String oldLabel = label;
         label = newLabel;

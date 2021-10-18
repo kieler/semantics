@@ -14,16 +14,15 @@ package de.cau.cs.kieler.esterel.compiler
 
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.external.AbstractExternalCompiler
 import java.io.File
+import java.io.PrintStream
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
-import org.eclipse.core.runtime.Platform
-import de.cau.cs.kieler.kicool.external.AbstractExternalCompiler
 import org.eclipse.emf.common.util.URI
-import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
-import java.io.PrintStream
 
 /**
  * @author als

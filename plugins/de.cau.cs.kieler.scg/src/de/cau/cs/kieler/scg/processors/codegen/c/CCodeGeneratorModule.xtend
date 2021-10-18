@@ -12,18 +12,21 @@
  */
 package de.cau.cs.kieler.scg.processors.codegen.c
 
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import com.google.inject.Injector
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.registry.PragmaRegistry
+import com.google.inject.Injector
+import de.cau.cs.kieler.annotations.Nameable
 import de.cau.cs.kieler.annotations.StringPragma
-import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.annotations.registry.PragmaRegistry
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
+import org.eclipse.xtend.lib.annotations.Accessors
+
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
-import de.cau.cs.kieler.annotations.Nameable
+import de.cau.cs.kieler.kexpressions.NullValue
 
 /**
  * Root C Code Generator Module
@@ -38,6 +41,7 @@ import de.cau.cs.kieler.annotations.Nameable
 class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     
     @Inject extension PragmaExtensions
+    @Inject extension AnnotationsExtensions
     @Inject extension CCodeSerializeHRExtensions
     
     @Inject Injector injector
@@ -106,7 +110,7 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
 
         hFile.pragmaOnceStart(hDefine)
         hFile.addHeader
-        hFile.hostcodeAdditions
+        hFile.hostcodeHeaderAdditions
         cFile.addHeader
         cFile.hostcodeAdditions
         cFile.append("#include \"" + hFilename + "\"\n\n")
@@ -163,7 +167,11 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         for (pragma : hostcodePragmas) {
             sb.append(pragma.values.head + "\n")
         }
-        if (hostcodePragmas.size > 0 || includes.size > 0) {
+        val hostcodeAnnotations = scg.getStringAnnotations(HOSTCODE) + scg.getStringAnnotations(HOSTCODE_C)
+        for (anno : hostcodeAnnotations) {
+            sb.append(anno.values.head + "\n")
+        }
+        if (hostcodePragmas.size > 0 || hostcodeAnnotations.size > 0 || includes.size > 0) {
             sb.append("\n")
         }
     }
@@ -178,11 +186,19 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
             sb.append("#include " + include + "\n")
         }
         
-        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE_HEADER)
+        if (scg.eAllContents.exists[it instanceof NullValue]) {
+            sb.append("#ifndef NULL\n#define NULL 0\n#endif\n")
+        }
+        
+        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE) + SCGraphs.getStringPragmas(HOSTCODE_HEADER)
         for (pragma : hostcodePragmas) {
             sb.append(pragma.values.head + "\n")
         }
-        if (hostcodePragmas.size > 0 || includes.size > 0) {
+        val hostcodeAnnotations = scg.getStringAnnotations(HOSTCODE) + scg.getStringAnnotations(HOSTCODE_HEADER)
+        for (anno : hostcodeAnnotations) {
+            sb.append(anno.values.head + "\n")
+        }
+        if (hostcodePragmas.size > 0 || hostcodeAnnotations.size > 0 || includes.size > 0) {
             sb.append("\n")
         }
     } 

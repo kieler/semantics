@@ -285,8 +285,12 @@ class KExpressionsDeclarationExtensions {
         ]
     } 
     
+    def isMethod(Declaration decl) {
+        return decl instanceof MethodDeclaration
+    }
+    
     def Iterable<Declaration> excludeMethods(Iterable<Declaration> iter) {
-        return iter.filter[!(it instanceof MethodDeclaration)]
+        return iter.filter[!isMethod]
     }
     
 //    def ReferenceDeclaration getReferenceDeclaration(ValuedObject valuedObject) {
@@ -306,6 +310,35 @@ class KExpressionsDeclarationExtensions {
 
     def getAllNestedValuedObjects(ClassDeclaration decl) {
         return decl.innerValuedObjects + decl.declarations.filter(ClassDeclaration).map[innerValuedObjects].flatten
+    }
+
+    def getEnclosingClass(Declaration decl) {
+        val parent = decl.eContainer
+        if (parent instanceof ClassDeclaration) {
+            return parent
+        }
+        return null
+    }
+
+    def isStruct(Declaration decl) {
+        if (decl instanceof ClassDeclaration) {
+            return decl.type === ValueType.STRUCT
+        }
+        return false
+    }
+    
+    def isClass(Declaration decl) {
+        if (decl instanceof ClassDeclaration) {
+            return decl.type === ValueType.STRUCT || decl.type === ValueType.CLASS
+        }
+        return false
+    }
+    
+    def isEnum(Declaration decl) {
+        if (decl instanceof ClassDeclaration) {
+            return decl.type === ValueType.ENUM
+        }
+        return false
     }
     
 }

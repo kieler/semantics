@@ -34,9 +34,10 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
-import de.cau.cs.kieler.kexpressions.StaticAccessExpression;
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ThisExpression;
 import de.cau.cs.kieler.kexpressions.ValueTypeReference;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
@@ -64,6 +65,8 @@ import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
+import de.cau.cs.kieler.sccharts.ModuleScopeCall;
+import de.cau.cs.kieler.sccharts.OdeAction;
 import de.cau.cs.kieler.sccharts.PeriodAction;
 import de.cau.cs.kieler.sccharts.PolicyClassDeclaration;
 import de.cau.cs.kieler.sccharts.PolicyRegion;
@@ -546,8 +549,73 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				sequence_JsonPragma(context, (JsonPragma) semanticObject); 
 				return; 
 			case KExpressionsPackage.NULL_VALUE:
-				sequence_NullValue(context, (NullValue) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
+					sequence_BoolScheduleExpression_NullValue(context, (NullValue) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftExpressionsRule()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSumExpressionRule()
+						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getProductExpressionRule()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
+						|| rule == grammarAccess.getInitExpressionRule()
+						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getFbyExpressionRule()
+						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSfbyExpressionRule()
+						|| action == grammarAccess.getSfbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
+						|| rule == grammarAccess.getJsonValueRule()
+						|| rule == grammarAccess.getNullValueRule()) {
+					sequence_NullValue(context, (NullValue) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
@@ -905,12 +973,17 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE:
 				sequence_ScheduleObjectReference(context, (ScheduleObjectReference) semanticObject); 
 				return; 
-			case KExpressionsPackage.STATIC_ACCESS_EXPRESSION:
+			case KExpressionsPackage.SPECIAL_ACCESS_EXPRESSION:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
-					sequence_BoolScheduleExpression_StaticAccessExpression(context, (StaticAccessExpression) semanticObject); 
+					sequence_BoolScheduleExpression_SCChartAccessExpression_StateAccessExpression(context, (SpecialAccessExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getRootRule()
+				else if (rule == grammarAccess.getSCChartAccessExpressionRule()) {
+					sequence_SCChartAccessExpression(context, (SpecialAccessExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getSpecialAccessExpressionRule()
+						|| rule == grammarAccess.getRootRule()
 						|| rule == grammarAccess.getExpressionRule()
 						|| rule == grammarAccess.getBoolExpressionRule()
 						|| rule == grammarAccess.getLogicalOrExpressionRule()
@@ -966,9 +1039,12 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 						|| action == grammarAccess.getSfbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getStaticAccessExpressionRule()
 						|| rule == grammarAccess.getVectorValueMemberRule()) {
-					sequence_StaticAccessExpression(context, (StaticAccessExpression) semanticObject); 
+					sequence_SCChartAccessExpression_StateAccessExpression(context, (SpecialAccessExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getStateAccessExpressionRule()) {
+					sequence_StateAccessExpression(context, (SpecialAccessExpression) semanticObject); 
 					return; 
 				}
 				else break;
@@ -1108,6 +1184,9 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.THIS_EXPRESSION:
+				sequence_ThisExpression(context, (ThisExpression) semanticObject); 
+				return; 
 			case KExpressionsPackage.VALUE_TYPE_REFERENCE:
 				sequence_ValueTypeReference(context, (ValueTypeReference) semanticObject); 
 				return; 
@@ -1207,7 +1286,11 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case KExpressionsPackage.VARIABLE_DECLARATION:
-				if (rule == grammarAccess.getLoopDeclarationRule()) {
+				if (rule == grammarAccess.getEnumMemberDeclarationRule()) {
+					sequence_EnumMemberDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getLoopDeclarationRule()) {
 					sequence_LoopDeclaration(context, (VariableDeclaration) semanticObject); 
 					return; 
 				}
@@ -1310,8 +1393,27 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case KExtPackage.CLASS_DECLARATION:
-				sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getKExtDeclarationRule()
+						|| rule == grammarAccess.getClassDeclarationRule()) {
+					sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_ClassDeclaration_EnumDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
+						|| rule == grammarAccess.getEnumDeclarationWOSemicolonRule()) {
+					sequence_EnumDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEnumDeclarationRule()) {
+					sequence_EnumDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExtPackage.KEXT_SCOPE:
 				if (rule == grammarAccess.getRootScopeRule()) {
 					sequence_RootScope(context, (KExtScope) semanticObject); 
@@ -1362,6 +1464,12 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				return; 
 			case SCChartsPackage.EXIT_ACTION:
 				sequence_ExitAction(context, (ExitAction) semanticObject); 
+				return; 
+			case SCChartsPackage.MODULE_SCOPE_CALL:
+				sequence_ModuleScopeCall(context, (ModuleScopeCall) semanticObject); 
+				return; 
+			case SCChartsPackage.ODE_ACTION:
+				sequence_OdeAction(context, (OdeAction) semanticObject); 
 				return; 
 			case SCChartsPackage.PERIOD_ACTION:
 				sequence_PeriodAction(context, (PeriodAction) semanticObject); 
@@ -1535,6 +1643,24 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     BoolScheduleExpression returns SpecialAccessExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             (access='scchart' target=[NamedObject|PrimeID] subReference=ValuedObjectReference) | 
+	 *             (access='state' (container=[ControlflowRegion|ID] | container=[DataflowRegion|ID])? target=[State|ID] schedule+=ScheduleObjectReference?)
+	 *         ) 
+	 *         schedule+=ScheduleObjectReference?
+	 *     )
+	 */
+	protected void sequence_BoolScheduleExpression_SCChartAccessExpression_StateAccessExpression(ISerializationContext context, SpecialAccessExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Declaration returns PolicyClassDeclaration
 	 *     ClassDeclarationWOSemicolon returns PolicyClassDeclaration
 	 *     DeclarationOrMethodWithKeywordWOSemicolon returns PolicyClassDeclaration
@@ -1546,11 +1672,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         access=AccessModifier? 
-	 *         const?='const'? 
-	 *         input?='input'? 
-	 *         output?='output'? 
-	 *         global?='global'? 
-	 *         static?='static'? 
 	 *         host?='host'? 
 	 *         (
 	 *             (type=ClassType name=EString? policy=PolicyRegion? declarations+=DeclarationOrMethodWOSemicolon*) | 
@@ -1775,6 +1896,31 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     ModuleScopeCall returns ModuleScopeCall
+	 *
+	 * Constraint:
+	 *     (target=[NamedObject|ID] (parameters+=ScopeParameter parameters+=ScopeParameter*)?)
+	 */
+	protected void sequence_ModuleScopeCall(ISerializationContext context, ModuleScopeCall semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LocalAction returns OdeAction
+	 *     OdeAction returns OdeAction
+	 *
+	 * Constraint:
+	 *     (annotations+=RestrictedTypeAnnotation* effects+=Effect label=STRING?)
+	 */
+	protected void sequence_OdeAction(ISerializationContext context, OdeAction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     LocalAction returns PeriodAction
 	 *     PeriodAction returns PeriodAction
 	 *
@@ -1838,22 +1984,32 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *             annotations+=Annotation* 
 	 *             access=AccessModifier? 
 	 *             (
-	 *                 (reference=[NamedObject|NamespaceID] (genericParameters+=GenericParameter genericParameters+=GenericParameter*)?) | 
-	 *                 (extern+=ExternString extern+=ExternString*)
+	 *                 (
+	 *                     input?='input'? 
+	 *                     referenceContainer=[NamedObject|PrimeID]? 
+	 *                     reference=[NamedObject|PrimeID] 
+	 *                     (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
+	 *                     valuedObjects+=ReferenceValuedObject 
+	 *                     valuedObjects+=ReferenceValuedObject*
+	 *                 ) | 
+	 *                 (extern+=ExternString extern+=ExternString* valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
 	 *             ) 
-	 *             valuedObjects+=ReferenceValuedObject 
-	 *             valuedObjects+=ReferenceValuedObject* 
 	 *             annotations+=CommentAnnotatonSL?
 	 *         ) | 
 	 *         (
 	 *             annotations+=Annotation* 
 	 *             access=AccessModifier? 
 	 *             (
-	 *                 (reference=[NamedObject|NamespaceID] (genericParameters+=GenericParameter genericParameters+=GenericParameter*)?) | 
-	 *                 (extern+=ExternString extern+=ExternString*)
+	 *                 (
+	 *                     input?='input'? 
+	 *                     referenceContainer=[NamedObject|PrimeID]? 
+	 *                     reference=[NamedObject|PrimeID] 
+	 *                     (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
+	 *                     valuedObjects+=ReferenceValuedObject 
+	 *                     valuedObjects+=ReferenceValuedObject*
+	 *                 ) | 
+	 *                 (extern+=ExternString extern+=ExternString* valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
 	 *             ) 
-	 *             valuedObjects+=ReferenceValuedObject 
-	 *             valuedObjects+=ReferenceValuedObject* 
 	 *             annotations+=CommentAnnotatonSL?
 	 *         )
 	 *     )
@@ -1874,6 +2030,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         cardinalities+=Expression* 
 	 *         (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
 	 *         (parameters+=ScopeParameter parameters+=ScopeParameter*)? 
+	 *         initialValue=Expression? 
 	 *         label=STRING?
 	 *     )
 	 */
@@ -1899,6 +2056,102 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     )
 	 */
 	protected void sequence_RootState(ISerializationContext context, State semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SCChartAccessExpression returns SpecialAccessExpression
+	 *
+	 * Constraint:
+	 *     (access='scchart' target=[NamedObject|PrimeID] subReference=ValuedObjectReference)
+	 */
+	protected void sequence_SCChartAccessExpression(ISerializationContext context, SpecialAccessExpression semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.SPECIAL_ACCESS_EXPRESSION__ACCESS) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.SPECIAL_ACCESS_EXPRESSION__ACCESS));
+			if (transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.SPECIAL_ACCESS_EXPRESSION__TARGET) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.SPECIAL_ACCESS_EXPRESSION__TARGET));
+			if (transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.SPECIAL_ACCESS_EXPRESSION__SUB_REFERENCE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.SPECIAL_ACCESS_EXPRESSION__SUB_REFERENCE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getSCChartAccessExpressionAccess().getAccessScchartKeyword_0_0(), semanticObject.getAccess());
+		feeder.accept(grammarAccess.getSCChartAccessExpressionAccess().getTargetNamedObjectPrimeIDParserRuleCall_2_0_1(), semanticObject.eGet(KExpressionsPackage.Literals.SPECIAL_ACCESS_EXPRESSION__TARGET, false));
+		feeder.accept(grammarAccess.getSCChartAccessExpressionAccess().getSubReferenceValuedObjectReferenceParserRuleCall_5_0(), semanticObject.getSubReference());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SpecialAccessExpression returns SpecialAccessExpression
+	 *     Root returns SpecialAccessExpression
+	 *     Expression returns SpecialAccessExpression
+	 *     BoolExpression returns SpecialAccessExpression
+	 *     LogicalOrExpression returns SpecialAccessExpression
+	 *     LogicalOrExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     LogicalAndExpression returns SpecialAccessExpression
+	 *     LogicalAndExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     BitwiseOrExpression returns SpecialAccessExpression
+	 *     BitwiseOrExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     BitwiseXOrExpression returns SpecialAccessExpression
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     BitwiseAndExpression returns SpecialAccessExpression
+	 *     BitwiseAndExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     CompareOperation returns SpecialAccessExpression
+	 *     CompareOperation.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     NotOrValuedExpression returns SpecialAccessExpression
+	 *     BitwiseNotExpression returns SpecialAccessExpression
+	 *     NotExpression returns SpecialAccessExpression
+	 *     ValuedExpression returns SpecialAccessExpression
+	 *     ShiftExpressions returns SpecialAccessExpression
+	 *     ShiftExpressions.OperatorExpression_1_0_0 returns SpecialAccessExpression
+	 *     ShiftExpressions.OperatorExpression_1_1_0 returns SpecialAccessExpression
+	 *     ShiftExpressions.OperatorExpression_1_2_0 returns SpecialAccessExpression
+	 *     ShiftLeftExpression returns SpecialAccessExpression
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     ShiftRightExpression returns SpecialAccessExpression
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     ShiftRightUnsignedExpression returns SpecialAccessExpression
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     SumExpression returns SpecialAccessExpression
+	 *     SumExpression.OperatorExpression_1_0_0 returns SpecialAccessExpression
+	 *     SumExpression.OperatorExpression_1_1_0 returns SpecialAccessExpression
+	 *     AddExpression returns SpecialAccessExpression
+	 *     AddExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     SubExpression returns SpecialAccessExpression
+	 *     SubExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     ProductExpression returns SpecialAccessExpression
+	 *     ProductExpression.OperatorExpression_1_0_0 returns SpecialAccessExpression
+	 *     ProductExpression.OperatorExpression_1_1_0 returns SpecialAccessExpression
+	 *     ProductExpression.OperatorExpression_1_2_0 returns SpecialAccessExpression
+	 *     MultExpression returns SpecialAccessExpression
+	 *     MultExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     DivExpression returns SpecialAccessExpression
+	 *     DivExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     ModExpression returns SpecialAccessExpression
+	 *     ModExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     NegExpression returns SpecialAccessExpression
+	 *     TernaryOperation returns SpecialAccessExpression
+	 *     InitExpression returns SpecialAccessExpression
+	 *     InitExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     FbyExpression returns SpecialAccessExpression
+	 *     FbyExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     SfbyExpression returns SpecialAccessExpression
+	 *     SfbyExpression.OperatorExpression_1_0 returns SpecialAccessExpression
+	 *     AtomicExpression returns SpecialAccessExpression
+	 *     AtomicValuedExpression returns SpecialAccessExpression
+	 *     VectorValueMember returns SpecialAccessExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (access='scchart' target=[NamedObject|PrimeID] subReference=ValuedObjectReference) | 
+	 *         (access='state' (container=[ControlflowRegion|ID] | container=[DataflowRegion|ID])? target=[State|ID] schedule+=ScheduleObjectReference?)
+	 *     )
+	 */
+	protected void sequence_SCChartAccessExpression_StateAccessExpression(ISerializationContext context, SpecialAccessExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1972,11 +2225,23 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
-	 *         ((accessType=ParameterAccessType expression=ValuedObjectReference) | expression=Expression) 
+	 *         ((accessType=ParameterAccessType expression=ValuedObjectReference) | expression=ThisExpression | expression=Expression) 
 	 *         (explicitBinding=[ValuedObject|ID] explicitBindingIndices+=Expression*)?
 	 *     )
 	 */
 	protected void sequence_ScopeParameter(ISerializationContext context, de.cau.cs.kieler.kexpressions.Parameter semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     StateAccessExpression returns SpecialAccessExpression
+	 *
+	 * Constraint:
+	 *     (access='state' (container=[ControlflowRegion|ID] | container=[DataflowRegion|ID])? target=[State|ID] schedule+=ScheduleObjectReference?)
+	 */
+	protected void sequence_StateAccessExpression(ISerializationContext context, SpecialAccessExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1996,6 +2261,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         label=STRING? 
 	 *         (
 	 *             (reference=ScopeCall schedule+=ScheduleObjectReference*) | 
+	 *             (reference=ModuleScopeCall schedule+=ScheduleObjectReference*) | 
 	 *             (
 	 *                 (baseStateReferences+=BaseStateReference baseStateReferences+=BaseStateReference*)? 
 	 *                 schedule+=ScheduleObjectReference* 

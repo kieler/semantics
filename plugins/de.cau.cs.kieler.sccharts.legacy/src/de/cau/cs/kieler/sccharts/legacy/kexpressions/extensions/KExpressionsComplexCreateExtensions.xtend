@@ -30,7 +30,7 @@ class KExpressionsComplexCreateExtensions {
     // Create an AND Expression add expressionFirst and expressionSecond as a sub expression. 
     // If expressionFirst is null, just return expressionSecond.
     def Expression and(Expression first, Expression second) {
-        if (first == null) {
+        if (first === null) {
             return second
         }
         createLogicalAndExpression(first, second)
@@ -39,7 +39,7 @@ class KExpressionsComplexCreateExtensions {
     // Create an OR Expression add expressionFirst or expressionSecond as a sub expression.
     // If expressionFirst is null, just return expressionSecond.    
     def Expression or(Expression first, Expression second) {
-        if (first == null) {
+        if (first === null) {
             return second
         }
         createLogicalOrExpression(first, second)
@@ -52,7 +52,7 @@ class KExpressionsComplexCreateExtensions {
 
     // Create an ADD Expression and add expression as a sub expression.
     def Expression add(Expression first, Expression second) {
-        if (first == null) {
+        if (first === null) {
             return second
         }
         createAddExpression(first, second) 
@@ -60,7 +60,7 @@ class KExpressionsComplexCreateExtensions {
     
     // Create an SUB Expression and add expression as a sub expression.
     def Expression sub(Expression first, Expression second) {
-        if (first == null) {
+        if (first === null) {
             return second
         }
         createSubExpression(first, second)
@@ -68,7 +68,7 @@ class KExpressionsComplexCreateExtensions {
 
     // Create an MULT Expression and add expression as a sub expression.
     def Expression mult(Expression expressionFirst, Expression expressionSecond) {
-        if (expressionFirst == null) {
+        if (expressionFirst === null) {
             return expressionSecond
         }
         val addExpression = createMultExpression()
@@ -80,7 +80,7 @@ class KExpressionsComplexCreateExtensions {
 
     // Create an MAX Expression and add expression as a sub expression.
     def Expression max(Expression expressionFirst, Expression expressionSecond) {
-        if (expressionFirst == null) {
+        if (expressionFirst === null) {
             return expressionSecond
         }
         val addExpression = createMaxExpression()
@@ -91,7 +91,7 @@ class KExpressionsComplexCreateExtensions {
 
     // Create an MIN Expression and add expression as a sub expression.
     def Expression min(Expression expressionFirst, Expression expressionSecond) {
-        if (expressionFirst == null) {
+        if (expressionFirst === null) {
             return expressionSecond
         }
         val addExpression = createMinExpression()

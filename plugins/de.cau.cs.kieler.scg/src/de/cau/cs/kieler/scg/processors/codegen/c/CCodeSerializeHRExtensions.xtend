@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ParameterAccessType
 import de.cau.cs.kieler.kexpressions.PrintCall
@@ -48,12 +49,14 @@ import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtEnumExtensions
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.codegen.CodeGeneratorSerializeHRExtensions
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kexpressions.NullValue
 
 /**
  * @author ssm
@@ -67,6 +70,8 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     protected var CODE_ANNOTATION = "C"
     protected var CONDITIONAL_PLACEHOLDER = " : __CONDSELF__"
     public var assumeOnlyGlobalFunctions = true
+    public var globalEnumNamespace = true
+    public var complyWithGCCWall = true
     
     static val HOSTCODE_EVAL = AnnotationsRegistry.register("eval", AnnotationsType.USER, StringAnnotation,  TextExpression, 
         "Annotation that tells the hostcode text expression which parts should be evaluation to valued objects")
@@ -76,6 +81,7 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExtDeclarationExtensions
+    @Inject extension KExtEnumExtensions
     @Inject extension KExpressionsTypeExtensions
     @Inject extension KExpressionsCallExtensions
     @Inject extension SCGMethodExtensions
@@ -108,6 +114,9 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     }    
     
     override dispatch CharSequence serialize(ValuedObjectReference valuedObjectReference) {
+        if (globalEnumNamespace && valuedObjectReference.lowermostReference.isEnumValue) {
+            return valuedObjectReference.lowermostReference.valuedObject.name
+        }
         var vo = valuedObjectReference.valuedObject.name
         if (!(valuedObjectReference.valuedObject.isLocalVariable || valuedObjectReference.valuedObject.isSelfVO)) {
             vo = valuedObjectPrefix + vo
@@ -126,6 +135,9 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     }    
     
     override dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
+        if (globalEnumNamespace && valuedObjectReference.lowermostReference.isEnumValue) {
+            return valuedObjectReference.lowermostReference.valuedObject.name
+        }
         var vo = valuedObjectReference.valuedObject.name
         if (!(valuedObjectReference.valuedObject.isLocalVariable || valuedObjectReference.valuedObject.isSelfVO)) {
             vo = valuedObjectPrefix + vo
@@ -460,5 +472,23 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
         }
         sb.append(")") 
         return sb.toString      
-    }        
+    }
+    
+    override boolean requiresParenthesis(OperatorExpression expression, OperatorExpression parent) {
+        if (complyWithGCCWall) { // comply with -Wparentheses
+            val LOGICAL = #[OperatorType.LOGICAL_OR, OperatorType.LOGICAL_AND]
+            val myOperator = expression.operator
+            val parentOperator = parent.operator
+            if (myOperator !== parentOperator) {
+                if (LOGICAL.contains(myOperator) && LOGICAL.contains(parentOperator)) {
+                    return true
+                }
+            }
+        }
+        return super.requiresParenthesis(expression, parent)
+    }
+    
+    override dispatch CharSequence serialize(NullValue expression) {
+        "NULL"
+    }    
 }

@@ -13,29 +13,27 @@
 package de.cau.cs.kieler.sccharts.processors.dataflow
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.State
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccessors
-import de.cau.cs.kieler.kexpressions.keffects.dependencies.ForkStack
-import java.util.Set
-import de.cau.cs.kieler.kexpressions.keffects.DataDependency
-import de.cau.cs.kieler.kexpressions.keffects.Linkable
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsDependencyExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectIdentifier
-import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccess
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.Linkable
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.ForkStack
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccess
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccessors
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectIdentifier
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsDependencyExtensions
 import de.cau.cs.kieler.kicool.classes.ImmutableCloneable
 import de.cau.cs.kieler.kicool.processors.dependencies.AbstractDependencyAnalysis
 import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.SCChartsFactory
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import java.util.Set
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm

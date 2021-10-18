@@ -102,7 +102,7 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
                     synthesis = kdm.getDiagramSynthesisById(requestedSynthesisId)
                     if (synthesis === null) {
                         println("No registered diagram synthesis with ID %s.".format(requestedSynthesisId))
-                    } else if (synthesis.supports(model, null)) {
+                    } else if (!synthesis.supports(model, null)) {
                         println("Diagram synthesis (%s) does not support the given model (%s).".format(requestedSynthesisId, model.class.simpleName))
                         synthesis = null // fallback
                     }
@@ -114,20 +114,22 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
                         return !onlyDiagram
                     } else {
                         synthesis = syntheses.head
-                        if (verbose) {
-//                            println("Available diagram synthesis for model type %s:".format(model.class.simpleName))
-//                            for (s : syntheses) {
-//                            	println("  %s".format(kdm.getSynthesisID(s)))
-//                            }
-                            println("Using diagram synthesis: %s".format(kdm.getSynthesisID(synthesis)))
-                        }
                     }
+                }
+                if (verbose) {
+                    println("Using diagram synthesis: %s".format(kdm.getSynthesisID(synthesis)))
                 }
                 
                 // Determine target
                 var File target
-                val name = (source.name.contains(".")) ? source.name.substring(0, source.name.indexOf(".")) : source.name
+                val name = (source.name.contains(".")) ? source.name.substring(0, source.name.lastIndexOf(".")) : source.name
                 if (!dest.exists) {
+                    if (dest.parentFile !== null && !dest.parentFile.exists) {
+                        if (!dest.parentFile.mkdirs) {
+                            println("Could not create output directory: %s".format(dest.parentFile))
+                            return !onlyDiagram
+                        }
+                    }
                     dest.createNewFile
                 }
                 if (dest.isFile) {
@@ -163,10 +165,10 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
                     val optionConfig = newHashMap
                     for (entry : synthesisOptions.entrySet) {
                         val key = entry.key
-                        var option = options.findFirst[!id.nullOrEmpty && id.equals(key)]
+                        var option = options.findFirst[!it.id.nullOrEmpty && it.id.equals(key)]
                         if (option === null) {
-                            if (verbose) println("Could not find synthesis option with id %s.".format(key))
-                            option = options.findFirst[!name.nullOrEmpty && name.startsWith(key)]
+                            if (verbose) println("Could not find synthesis option with id \"%s\".".format(key))
+                            option = options.findFirst[!it.name.nullOrEmpty && (it.name.startsWith(key) || it.name.equalsIgnoreCase(key))]
                             if (verbose) {
                                 if (option === null) {
                                     println("Could not find synthesis option with name \"%s\" either.".format(key))
@@ -176,7 +178,7 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
                             }
                         }
                         if (option !== null) {
-                            val v = option.parseOptionValue(entry.key)
+                            val v = option.parseOptionValue(entry.value)
                             if (v !== null) {
                                 optionConfig.put(option, v)
                             }
@@ -200,6 +202,8 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
                     println("Rendering finished in %.2fms".format((System.nanoTime - startTimestamp) as double / 1000_000))
                 }
             } catch (Exception e) {
+                println("Rendering diagram failed.")
+                if(verbose) e.printStackTrace
                 if(onlyDiagram) return false
             }
             return true
@@ -250,12 +254,13 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
                 } else if (option.isRangeOption()) {
                     return Float.parseFloat(value);
                 } else if (option.isChoiceOption()) {
-                    val hash = Integer.parseInt(value);
-                    for (Object match : option.getValues()) {
-                        if (match !== null && match.toString().hashCode() == hash) {
-                            return match;
+                    for (Object choice : option.getValues()) {
+                        if (choice !== null && choice.toString().equalsIgnoreCase(value)) {
+                            return choice;
                         }
                     }
+                    // If not explicit match, try index
+                    return option.getValues().get(Integer.parseInt(value))
                 } else if (option.isTextOption()) {
                     return value;
                 }

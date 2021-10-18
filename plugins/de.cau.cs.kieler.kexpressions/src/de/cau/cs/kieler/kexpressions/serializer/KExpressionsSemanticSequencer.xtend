@@ -19,7 +19,6 @@ import org.eclipse.xtext.Action
 import org.eclipse.xtext.RuleCall
 import org.eclipse.xtext.serializer.ISerializationContext
 import org.eclipse.xtext.serializer.acceptor.SequenceFeeder
-import static de.cau.cs.kieler.kexpressions.OperatorType.*
 /**
  * @author als
  * @kieler.design proposed

@@ -255,6 +255,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="VectorValue" eSuperTypes="#//Value">
     <eStructuralFeatures xsi:type="ecore:EReference" name="values" lowerBound="1"
         upperBound="-1" eType="#//Expression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="range" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IgnoreValue" eSuperTypes="#//Value"/>
   <eClassifiers xsi:type="ecore:EClass" name="JsonPragma" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Pragma">
@@ -323,7 +325,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hostType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ReferenceDeclaration" eSuperTypes="#//Declaration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="input" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="reference" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referenceContainer" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
         eType="#//Parameter" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="extern" upperBound="-1"
@@ -401,13 +406,18 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="AccessModifier">
-    <eLiterals name="PUBLIC"/>
-    <eLiterals name="PROTECTED" value="1"/>
-    <eLiterals name="PRIVATE" value="2"/>
+    <eLiterals name="UNDEF" literal="UNDEF"/>
+    <eLiterals name="PRIVATE" value="1"/>
+    <eLiterals name="PROTECTED" value="2"/>
+    <eLiterals name="PUBLIC" value="3"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StaticAccessExpression" eSuperTypes="#//Expression">
+  <eClassifiers xsi:type="ecore:EClass" name="SpecialAccessExpression" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="access" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subReference" eType="#//ValuedObjectReference"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="container" eType="ecore:EClass ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ThisExpression" eSuperTypes="#//Expression"/>
 </ecore:EPackage>
