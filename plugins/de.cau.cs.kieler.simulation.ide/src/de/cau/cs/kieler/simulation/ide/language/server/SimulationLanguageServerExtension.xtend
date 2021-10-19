@@ -353,8 +353,9 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
             }
         } else if (e instanceof TraceFinishedEvent) { 
             client.sendMessage("Trace finished: The current Trace reached its last tick.", "info")
-        } else if (e instanceof TraceMismatchEvent /*&& menuCheckTrace.checked*/) {
-            client.sendMessage("Trace Mismatch: Program output differs from trace", "error") // TODO: add Trace diff to message
+        } else if (e instanceof TraceMismatchEvent /*&& menuCheckTrace.checked*/) { // TODO: implement check trace option
+            client.sendMessage("Trace Mismatch: Program output differs from trace\n" + // TODO: find another way of being able to display multiline notifications
+                (e as TraceMismatchEvent).toString, "error")
         } else { // Handle unknown events, log the classes for which this is executed.
             println(e.class + ", " + o.class)
         }
