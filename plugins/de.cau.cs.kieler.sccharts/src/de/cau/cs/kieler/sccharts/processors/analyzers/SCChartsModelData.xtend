@@ -162,7 +162,7 @@ class SCChartsModelData extends AbstractModelDataCollector<SCCharts> {
         try {
             depProcessor.process
         } catch (Exception e) {
-            environment.warnings.add("SCChartsModelData for %s: Exception in region dependency analysis".format(processorID), e)
+            environment.warnings.add("SCChartsModelData for %s: Exception in region dependency analysis.".format(processorID), e)
             e.printStackTrace
             return
         }
@@ -179,7 +179,7 @@ class SCChartsModelData extends AbstractModelDataCollector<SCCharts> {
             orderProcessor.process
             data.put(SEQ_REGION_ODER, !env.errors.values.flatten.exists[RegionDependencySort.ERROR_MSG.equals(it.message)])
         } catch (Exception e) {
-            environment.warnings.add("SCChartsModelData for %s: Exception in sequential region sorter".format(processorID), e)
+            environment.warnings.add("SCChartsModelData for %s: Exception in sequential region sorter.".format(processorID), e)
             e.printStackTrace
             return
         }
