@@ -24,12 +24,12 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 class MessageObjectLink {
     
-    @Accessors String message
-    @Accessors Object object
-    @Accessors boolean annotate
-    @Accessors IColorSystem colorSystem
-    @Accessors Exception exception
-    @Accessors Object payload
+    @Accessors var String message
+    @Accessors var Object object
+    @Accessors var boolean annotate
+    @Accessors var IColorSystem colorSystem
+    @Accessors var Exception exception
+    @Accessors var Object payload
     
     new(String message, Object object, boolean annotate, IColorSystem colorSystem, Exception exception, Object payload) {
         this.message = message
