@@ -28,7 +28,7 @@ class EcoreModelData extends AbstractModelDataCollector<EObject> {
         "Ecore Model Data"
     }
     
-    override collect(EObject model, Map<String, Object> data) {
+    override collect(EObject model, Map<String, Object> data, String processorID) {
         data.put("ecore.eobjects", model.eAllContents.size)
     }
     

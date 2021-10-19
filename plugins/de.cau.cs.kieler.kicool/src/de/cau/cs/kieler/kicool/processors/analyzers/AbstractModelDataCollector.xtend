@@ -47,7 +47,7 @@ abstract class AbstractModelDataCollector<T> extends IntermediateProcessor<Objec
             val originData = newLinkedHashMap()
             originData.put(TRANS_KEY, ORIG_KEY)
             data.add(originData)
-            (origin as T).collect(originData)
+            (origin as T).collect(originData, ORIG_KEY)
         }
     }
     
@@ -77,7 +77,7 @@ abstract class AbstractModelDataCollector<T> extends IntermediateProcessor<Objec
                     tDataRef.put(t, tData)
                 }
                 
-                (model as T).collect(tData)
+                (model as T).collect(tData, t.processorReference.id)
             }
         }
     }
@@ -96,7 +96,7 @@ abstract class AbstractModelDataCollector<T> extends IntermediateProcessor<Objec
         (this.class.genericSuperclass as ParameterizedType).actualTypeArguments.get(0) as Class<T>
     }
     
-    abstract def void collect(T model, Map<String, Object> data);
+    abstract def void collect(T model, Map<String, Object> data, String processorID);
     
     // ------------------
     // Utilities for data
