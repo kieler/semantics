@@ -66,4 +66,6 @@ interface SimulationCommandExtension {
     @JsonRequest('saveTrace')
     def CompletableFuture<SavedTraceMessage> saveTrace();
     
+    @JsonNotification('startVisualizationServer')
+    def void startVisualizationServer();
 }

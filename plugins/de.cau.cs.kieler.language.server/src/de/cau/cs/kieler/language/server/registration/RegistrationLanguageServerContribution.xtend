@@ -23,6 +23,7 @@ class RegistrationLanguageServerContribution implements ILanguageServerContribut
     
     override getLanguageServerExtension(Injector injector) {
         val registration = injector.getInstance(RegistrationLanguageServerExtension)
+        // Register all languages provided by the language server when the RegistrationLanguageServerExtension is loaded
         registration.languages
         return registration
     }
