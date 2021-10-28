@@ -50,4 +50,8 @@ interface SimulationCommandExtension {
     
     @JsonNotification('addCoSimulation')
     def void addCoSimulation(String clientId, String file);
+    
+    
+    @JsonNotification('startVisualizationServer')
+    def void startVisualizationServer();
 }

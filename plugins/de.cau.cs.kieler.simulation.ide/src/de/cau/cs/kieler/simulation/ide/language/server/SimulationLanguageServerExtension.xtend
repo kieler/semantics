@@ -373,5 +373,9 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
     override update(SimulationContext ctx, SimulationEvent e) {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
+    
+    override startVisualizationServer() {
+        SimulationServer.start
+    }
 
 }
