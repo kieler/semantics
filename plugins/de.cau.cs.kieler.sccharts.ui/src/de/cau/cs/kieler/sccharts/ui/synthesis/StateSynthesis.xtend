@@ -45,6 +45,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
@@ -249,6 +250,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     eAllContents.filter(KRendering).toList.forEach[
                         associateWith(state)
                         if (it instanceof KText) configureTextLOD(state)
+                        if (it instanceof KText) it.setProperty(KlighdProperties.IS_NODE_TITLE, true)
                     ]
                 ]
             } else {
