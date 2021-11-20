@@ -25,7 +25,9 @@ Export-Package: de.cau.cs.kieler.scl.ui,
  de.cau.cs.kieler.scl.ui.labeling,
  de.cau.cs.kieler.scl.ui.outline,
  de.cau.cs.kieler.scl.ui.quickfix,
- de.cau.cs.kieler.scl.ui.synthesis
-Bundle-Activator: de.cau.cs.kieler.scl.ui.internal.SCLActivator
+ de.cau.cs.kieler.scl.ui.synthesis,
+ de.cau.cs.kieler.ui.scol.contentassist,
+ de.cau.cs.kieler.ui.scol.quickfix
+Bundle-Activator: de.cau.cs.kieler.scl.ui.DelegateActivator
 Import-Package: org.apache.log4j
 Automatic-Module-Name: de.cau.cs.kieler.scl.ui

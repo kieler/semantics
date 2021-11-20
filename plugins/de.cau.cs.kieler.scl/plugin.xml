@@ -11,5 +11,11 @@
             class="de.cau.cs.kieler.scl.SCLPackage"
             genModel="model/scl.genmodel"/>
    </extension>
-
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated scol -->
+      <package
+            uri = "http://www.cau.de/cs/kieler/scol/0.1.0"
+            class = "de.cau.cs.kieler.scol.ScolPackage"
+            genModel = "model/generated/SCOL.genmodel" />
+   </extension>
 </plugin>
