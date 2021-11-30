@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2019 by
+ * Copyright 2019,2021 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -13,6 +13,8 @@
 package de.cau.cs.kieler.simulation.ide.language.server
 
 import com.google.gson.JsonObject
+import de.cau.cs.kieler.simulation.ide.language.server.data.LoadedTraceMessage
+import de.cau.cs.kieler.simulation.ide.language.server.data.SavedTraceMessage
 import de.cau.cs.kieler.simulation.ide.language.server.data.SimulationStoppedMessage
 import java.util.concurrent.CompletableFuture
 import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
@@ -51,6 +53,18 @@ interface SimulationCommandExtension {
     @JsonNotification('addCoSimulation')
     def void addCoSimulation(String clientId, String file);
     
+    /**
+     * Loads the trace from the file given in this message.
+     */
+    @JsonRequest('loadTrace')
+    def CompletableFuture<LoadedTraceMessage> loadTrace(String fileContent);
+    
+    /**
+     * Allows the client to save the trace generated from the current simulation context by returning the content of
+     * such a trace file.
+     */
+    @JsonRequest('saveTrace')
+    def CompletableFuture<SavedTraceMessage> saveTrace();
     
     @JsonNotification('startVisualizationServer')
     def void startVisualizationServer();

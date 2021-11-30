@@ -21,9 +21,13 @@ import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.trace.ktrace.KTraceFactory
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
+import java.io.ByteArrayInputStream
 import java.io.File
+import java.io.InputStream
 import org.eclipse.emf.common.util.URI
+import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.xtext.serializer.ISerializer
 
 /**
  * @author als
@@ -47,6 +51,16 @@ class TraceFileUtil {
         return resource.getContents().head as TraceFile
     }
     
+    static def loadTraceFile(String fileContent) {
+        val resourceSet = KTraceStandaloneSetup.doSetup.getInstance(XtextResourceSet)
+        val uri = URI.createURI("dummy:/trace.ktrace")
+        val resource = resourceSet.createResource(uri)
+        val InputStream in = new ByteArrayInputStream(fileContent.getBytes());
+        resource.load(in, resourceSet.getLoadOptions());
+        return resource.getContents().head as TraceFile
+        
+    }
+    
     // TODO only save changes
     static def saveTraceToFile(File file, SimulationContext context, boolean append) {
         val eso = file.name.endsWith(".eso") || file.name.endsWith(".esi")
@@ -55,6 +69,37 @@ class TraceFileUtil {
         } else {
             createTraceFile
         }
+        
+        saveContextToTraceFile(traceFile, context, eso)
+        
+        // save
+        if (append) {
+            traceFile.eResource.save(emptyMap)
+        } else {
+            val uri = URI.createFileURI(file.absolutePath)
+            ModelUtil.saveModel(traceFile, uri)
+        }
+    }
+    
+    
+    /**
+     * The content of a trace file for the given simulation context as a String.
+     */
+    static def String saveTraceToString(SimulationContext context) {
+        // TODO: what about eso?
+        val eso = false
+        val traceFile = createTraceFile
+        
+        saveContextToTraceFile(traceFile, context, eso)
+        
+        val ISerializer serializer = KTraceStandaloneSetup.doSetup.getInstance(ISerializer)
+        return serializer.serialize(traceFile)
+    }
+    
+    /**
+     * Save the trace from the simulation context to the already created TraceFile.
+     */
+    private static def saveContextToTraceFile(TraceFile traceFile, SimulationContext context, boolean eso) {
         val trace = createTrace
         traceFile.traces += trace
         
@@ -141,14 +186,6 @@ class TraceFileUtil {
             if (KEYWORDS.contains(variable.name)) {
                 variable.name = "^" + variable.name // escape
             }
-        }
-        
-        // save
-        if (append) {
-            traceFile.eResource.save(emptyMap)
-        } else {
-            val uri = URI.createFileURI(file.absolutePath)
-            ModelUtil.saveModel(traceFile, uri)
         }
     }
     
