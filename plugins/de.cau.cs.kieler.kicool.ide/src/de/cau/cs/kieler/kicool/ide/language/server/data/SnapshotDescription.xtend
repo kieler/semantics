@@ -51,7 +51,8 @@ class SnapshotDescription {
             if (list !== null) {
                 for ( MessageObjectLink mol : list) {
                     if (mol !== null) {
-                        this.errors.add(mol.message)
+                        this.errors.add(mol.message
+                            + mol.exception.stackTrace.fold("", [s, trace | s + "\n\t\t" + trace]))
                     }
                 }
             }
