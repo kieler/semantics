@@ -237,16 +237,15 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
     }
     
     /**
-     * Loads the trace from the file given in this message.
+     * Loads the trace from the file uri given in this message.
      */
-    override loadTrace(String fileContent) {
+    override loadTrace(String fileUri) {
         return this.requestManager.runRead [ cancelIndicator |
-            println("loading the trace:\n\n" + fileContent)
             if (currentSimulation === null) {
                 return new LoadedTraceMessage(null, false,
                     "There is no simulation currently running to load the trace into.")
             }
-            val TraceFile traceFile = TraceFileUtil.loadTraceFile(fileContent)
+            val TraceFile traceFile = TraceFileUtil.loadTraceFile(fileUri)
             
             // TODO: multiple traces in a single file?
             val trace = traceFile.traces.get(0)
@@ -261,17 +260,16 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
     }
     
     /**
-     * Allows the client to save the trace generated from the current simulation context by returning the content of
-     * such a trace file.
+     * Saves the trace in the current simulation and notifies the client if that trace is saved successfully.
      */
-     override saveTrace() {
+     override saveTrace(String fileUri) {
          return this.requestManager.runRead [ cancelIndicator |
              if (currentSimulation === null) {
-                 return new SavedTraceMessage(null, false,
+                 return new SavedTraceMessage(false,
                  "There is no simulation currently running to save a trace from.")
              }
-             val fileContent = TraceFileUtil.saveTraceToString(currentSimulation)
-             return new SavedTraceMessage(fileContent, true, "Saving successful.")
+             TraceFileUtil.saveTraceToFile(fileUri, currentSimulation)
+             return new SavedTraceMessage(true, "Saving successful.")
          ]
      }
 
