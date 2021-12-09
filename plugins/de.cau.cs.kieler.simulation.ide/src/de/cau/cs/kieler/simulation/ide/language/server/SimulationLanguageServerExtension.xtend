@@ -245,7 +245,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
                 return new LoadedTraceMessage(null, false,
                     "There is no simulation currently running to load the trace into.")
             }
-            val TraceFile traceFile = TraceFileUtil.loadTraceFile(fileUri)
+            val TraceFile traceFile = TraceFileUtil.loadTraceFile(URLDecoder.decode(fileUri, "UTF-8"))
             
             // TODO: multiple traces in a single file?
             val trace = traceFile.traces.get(0)
@@ -268,7 +268,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
                  return new SavedTraceMessage(false,
                  "There is no simulation currently running to save a trace from.")
              }
-             TraceFileUtil.saveTraceToFile(fileUri, currentSimulation)
+             TraceFileUtil.saveTraceToFile(URLDecoder.decode(fileUri, "UTF-8"), currentSimulation)
              return new SavedTraceMessage(true, "Saving successful.")
          ]
      }
