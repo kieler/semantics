@@ -54,17 +54,17 @@ interface SimulationCommandExtension {
     def void addCoSimulation(String clientId, String file);
     
     /**
-     * Loads the trace from the file given in this message.
+     * Loads the trace from the file uri given in this message.
      */
     @JsonRequest('loadTrace')
-    def CompletableFuture<LoadedTraceMessage> loadTrace(String fileContent);
+    def CompletableFuture<LoadedTraceMessage> loadTrace(String fileUri);
     
     /**
-     * Allows the client to save the trace generated from the current simulation context by returning the content of
-     * such a trace file.
+     * Saves the trace in the current simulation and notifies the client if the trace generated from the current
+     * simulation context is saved successfully.
      */
     @JsonRequest('saveTrace')
-    def CompletableFuture<SavedTraceMessage> saveTrace();
+    def CompletableFuture<SavedTraceMessage> saveTrace(String fileUri);
     
     @JsonNotification('startVisualizationServer')
     def void startVisualizationServer();
