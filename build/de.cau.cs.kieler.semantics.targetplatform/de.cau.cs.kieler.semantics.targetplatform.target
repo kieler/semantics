@@ -38,7 +38,7 @@
       <unit id="de.cau.cs.kieler.klighd.view.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.ui.contrib3x" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.kgraph.text.ui" version="0.0.0"/>
-      <repository location="http://kieler.github.io/KLighD/v2.1.0/"/>
+      <repository location="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/klighd/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="de.cau.cs.kieler.graphs.klighd" version="0.0.0"/>
