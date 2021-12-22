@@ -31,6 +31,7 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 
 import static extension de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure.*
+import static extension java.lang.String.format
 
 /**
  * @author lgr
@@ -208,7 +209,7 @@ class LustreV6CodeGenerator extends AbstractSystemCompilerProcessor<LustreProgra
 
         // report
         var log = logger.saveLog(environment, "lustre-compiler.log")
-        if (log.code.contains("is declared as a node, but it uses no memory (i.e., it is a function)")) {
+        if (log.code.contains("%s::%s is declared as a node, but it uses no memory".format(modelName, modelName))) {
             environment.setProperty(HAS_STATE, false)
         }
         
