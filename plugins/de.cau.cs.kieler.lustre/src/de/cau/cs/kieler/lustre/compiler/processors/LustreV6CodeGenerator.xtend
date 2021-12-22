@@ -42,6 +42,9 @@ class LustreV6CodeGenerator extends AbstractSystemCompilerProcessor<LustreProgra
         
     public static val IProperty<Boolean> HAS_STATE = 
         new Property<Boolean>("de.cau.cs.kieler.lustre.compiler.v6.hasState", true)
+        
+    public static val IProperty<String> LUSTRE_ADDITIONAL_OPTIONS = 
+        new Property<String>("de.cau.cs.kieler.lustre.compiler.options", "")
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -151,8 +154,8 @@ class LustreV6CodeGenerator extends AbstractSystemCompilerProcessor<LustreProgra
             
             logger.println("Running compilation")             
             val options = <String>newArrayList
-            if (!environment.getProperty(ADDITIONAL_OPTIONS).nullOrEmpty) {
-                val args = environment.getProperty(ADDITIONAL_OPTIONS)
+            if (!environment.getProperty(LUSTRE_ADDITIONAL_OPTIONS).nullOrEmpty) {
+                val args = environment.getProperty(LUSTRE_ADDITIONAL_OPTIONS)
                 if (args.contains(" ")) {
                     options += args.split(" ")
                 } else {
