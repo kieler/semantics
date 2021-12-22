@@ -229,7 +229,7 @@ class Pre extends SCChartsProcessor implements Traceable {
             case BOOL : { return createBoolValue(false) }
             case INT, case UNSIGNED : { return createIntValue(0) }
             case FLOAT, case DOUBLE : { return createFloatValue(0) }
-            case STRING : { return createStringValue("") }
+            case STRING : { return createNullValue() }
             default: {
                 return null
             }

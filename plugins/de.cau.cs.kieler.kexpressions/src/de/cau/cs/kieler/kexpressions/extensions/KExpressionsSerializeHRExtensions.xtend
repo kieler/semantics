@@ -453,11 +453,15 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     }  
     
     def dispatch CharSequence serializeHR(VectorValue expression) {
-        var s = "{" 
-        for (value : expression.values) {
-            s = s + value.serializeHR + ", "
+        if (expression.range) {
+            return "{" + expression.values.head?.serializeHR + " to " + expression.values.last?.serializeHR + "}"
+        } else {
+            var s = "{"
+            for (value : expression.values) {
+                s = s + value.serializeHR + ", "
+            }
+            return s.substring(0, s.length - 2) + "}"
         }
-        return s.substring(0, s.length - 2) + "}"
     }    
     
     def dispatch CharSequence serializeHR(IgnoreValue expression) {

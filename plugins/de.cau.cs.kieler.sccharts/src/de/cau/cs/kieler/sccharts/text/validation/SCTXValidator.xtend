@@ -13,7 +13,7 @@ import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
-import de.cau.cs.kieler.kexpressions.AccessModifier
+import de.cau.cs.kieler.kexpressions.Call
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
@@ -22,11 +22,13 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
@@ -41,6 +43,7 @@ import de.cau.cs.kieler.sccharts.BaseStateReference
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.PolicyRegion
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -58,6 +61,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.For
 import de.cau.cs.kieler.sccharts.text.SCTXResource
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.Map
 import java.util.Set
 import org.eclipse.elk.core.data.LayoutMetaDataService
@@ -67,6 +71,7 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
 
 import static extension java.lang.String.*
+import de.cau.cs.kieler.sccharts.processors.MethodSignaling
 
 /**
  * This class contains custom validation rules. 
@@ -86,6 +91,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Inject extension SCChartsScopeExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsAccessVisibilityExtensions
     @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions
     
@@ -150,6 +156,10 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String REGION_OVERRIDE_ANONYMOUS = "Cannot override anonymous region." 
     static val String REGION_OVERRIDE_SUPERFLOUSE = "The is no region to override."  
     static val String REGION_OVERRIDE_MISSING = "There is an inherited region with the same name, you may use the override keyword."
+    
+    static val String NO_METHOD_REFERENCE = "Methods must be used with call syntax using parenthesis."
+    static val String NO_STATE_ACCESS_OUTSIDE_METHOD = "State access expressions are only permissible in methods bodies."
+    static val String AMBIGOUS_STATE_ACCESS = "This state access is ambiguous as there are multiple anonymous regions with states with this ID. Use region IDs access the state via RegionID.StateID."
 
 
     @Check
@@ -183,7 +193,7 @@ class SCTXValidator extends AbstractSCTXValidator {
         if (!state.baseStateReferences.nullOrEmpty) {
             val voNames = HashMultimap.<String, BaseStateReference>create
             for (base : state.allInheritedStateReferencesHierachically) {
-                base.target.declarations.excludeMethods.filter[access !== AccessModifier.PRIVATE].map[valuedObjects].flatten.forEach[voNames.put(name, base)]
+                base.target.declarations.excludeMethods.filter[!isPrivate].map[valuedObjects].flatten.forEach[voNames.put(name, base)]
             }
             val voClashes = voNames.keySet.filter[voNames.get(it).size > 1].toSet
             if (!voClashes.empty) {
@@ -307,6 +317,64 @@ class SCTXValidator extends AbstractSCTXValidator {
             } else {
                 error(info.errors.join("\n"), info.decl, null)
             }
+        }
+    }
+    
+    @Check
+    def void checkMethodCall(ValuedObjectReference vor) {
+        val decl = vor.valuedObject?.declaration
+        if (decl instanceof MethodDeclaration) {
+            var parentExp = vor
+            while(parentExp.isSubReference) {
+                parentExp = parentExp.eContainer as ValuedObjectReference
+            }
+            if (!vor.isSubReference) {
+                // If method is used directly an not with an specific object
+                // And is used as trigger in an transition, no parenthesis are fine,
+                // because it is a method observer or policy regions in general.
+                var EObject container = parentExp
+                while(container !== null) {
+                    val nextContainer = container.eContainer
+                    if (nextContainer instanceof Transition) {
+                        if (nextContainer.trigger == container) {
+                            return
+                        }
+                    } else if (nextContainer instanceof PolicyRegion) {
+                        return
+                    }
+                    container = nextContainer
+                }
+            }
+            if (!(parentExp instanceof Call)) {
+                error(NO_METHOD_REFERENCE, vor, null)
+            }
+        }
+    }
+    
+    @Check
+    def void checkStateAccess(SpecialAccessExpression acc) {
+        if (MethodSignaling.ACCESS_KEYWORD.equals(acc.access)) {
+            var EObject container = acc
+            while(container !== null) {
+                if (container instanceof MethodImplementationDeclaration) {
+                    // Check ambiguity
+                    val scope = acc.nextScope
+                    if (scope instanceof de.cau.cs.kieler.sccharts.State) {
+                        // Only if no explicit region is specified
+                        if (acc.container === null && acc.target !== null) {
+                            if (scope.regions.filter(ControlflowRegion).filter[name.nullOrEmpty].map[states].flatten.filter[
+                                !it.name.nullOrEmpty && it.name.equals(acc.target.name)
+                            ].size > 1) {
+                                // If there are multiple states with the target's name
+                                error(AMBIGOUS_STATE_ACCESS, acc, KExpressionsPackage.eINSTANCE.specialAccessExpression_Target)
+                            }
+                        }
+                    }
+                    return
+                }
+                container = container.eContainer
+            }
+            error(NO_STATE_ACCESS_OUTSIDE_METHOD, acc, null)
         }
     }
     
@@ -870,6 +938,12 @@ class SCTXValidator extends AbstractSCTXValidator {
     def void checkScopeCall(ScopeCall scopeCall) {
         if (scopeCall.eContainer instanceof Scope) {
             if (scopeCall.^super) {
+                if (!scopeCall.parameters.empty) {
+                    error("A reference to a super scope must not have parameters!", scopeCall, KExpressionsPackage.eINSTANCE.call_Parameters);
+                }
+                if (!scopeCall.genericParameters.empty) {
+                    error("A reference to a super scope must not have generic parameters!", scopeCall, SCChartsPackage.eINSTANCE.scopeCall_GenericParameters);
+                }
                 return // No binding -> no checks
             }
             val bindings = scopeCall.eContainer.asScope.createBindings
@@ -926,6 +1000,24 @@ class SCTXValidator extends AbstractSCTXValidator {
         
         if (decl.hasAnnotation("noBindingCheck")) {
             return
+        }
+        
+        if (decl.input) {
+            if (!decl.parameters.empty) {
+                error("An input reference must not have parameters!", decl, KExpressionsPackage.eINSTANCE.referenceDeclaration_Parameters);
+            }
+            if (!decl.genericParameters.empty) {
+                error("An input reference must not have generic parameters!", decl, KExpressionsPackage.eINSTANCE.referenceDeclaration_GenericParameters);
+            }
+            for (vo : decl.valuedObjects) {
+                if (!vo.parameters.empty) {
+                    error("An input reference must not have parameters!", vo, KExpressionsPackage.eINSTANCE.valuedObject_Parameters);
+                }
+                if (!vo.genericParameters.empty) {
+                    error("An input reference must not have generic parameters!", vo, KExpressionsPackage.eINSTANCE.valuedObject_GenericParameters);
+                }
+            }
+            return // No binding -> no checks
         }
         
         val parent = decl.nextScope

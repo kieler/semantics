@@ -79,6 +79,7 @@ public abstract class PragmatableImpl extends EObjectImpl implements Pragmatable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Pragma> getPragmas() {
         if (pragmas == null) {
             pragmas = new EObjectContainmentEList<Pragma>(Pragma.class, this, AnnotationsPackage.PRAGMATABLE__PRAGMAS);

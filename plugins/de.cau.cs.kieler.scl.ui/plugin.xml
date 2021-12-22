@@ -363,11 +363,10 @@
        </editor>
     </extension>
     <extension
-          point="de.cau.cs.kieler.klighd.diagramSyntheses">
-       <diagramSynthesis
-             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scl.ui.synthesis.SCLSynthesis"
-             id="de.cau.cs.kieler.SCLGraphSynthesis">
-       </diagramSynthesis>
+          point="de.cau.cs.kieler.klighd.extensions">
+       <startupHook
+             class="de.cau.cs.kieler.scl.ui.synthesis.SCLKlighdSetup">
+       </startupHook>
     </extension>
     <extension
           point="de.cau.cs.kieler.kicool.ui.system">

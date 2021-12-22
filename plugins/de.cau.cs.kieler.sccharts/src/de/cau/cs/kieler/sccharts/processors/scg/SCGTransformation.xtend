@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.sccharts.processors.scg
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
@@ -26,6 +25,7 @@ import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.NullValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.PrintCall
@@ -851,6 +851,10 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     
     def dispatch Expression convertToSCGExpression(IgnoreValue expression) {
         createIgnoreValue.trace(expression)
+    }
+    
+    def dispatch Expression convertToSCGExpression(NullValue expression) {
+        createNullValue.trace(expression)
     }
 
     // Apply conversion to textual host code 

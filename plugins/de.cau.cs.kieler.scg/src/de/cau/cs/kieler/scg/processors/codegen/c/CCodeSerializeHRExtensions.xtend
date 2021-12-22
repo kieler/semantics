@@ -56,6 +56,7 @@ import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kexpressions.NullValue
 
 /**
  * @author ssm
@@ -489,5 +490,9 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
             }
         }
         return super.requiresParenthesis(expression, parent)
+    }
+    
+    override dispatch CharSequence serialize(NullValue expression) {
+        "NULL"
     }    
 }

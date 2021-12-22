@@ -781,8 +781,11 @@ public class KTraceGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    output?='output'?
 	//    global?='global'?
 	//    static?='static'?
-	//    ((signal?='signal'? type = ValueType) |
-	//        signal?='signal' |
+	//    (
+	//        (signal?='signal'? type = ValueType)
+	//        |
+	//        signal?='signal'
+	//        |
 	//        (type = HostType hostType = STRING)
 	//    )
 	//    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
@@ -821,11 +824,6 @@ public class KTraceGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    {kext::ClassDeclaration}
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
-	//    const?='const'?
-	//    input?='input'?
-	//    output?='output'?
-	//    global?='global'?
-	//    static?='static'?
 	//    host?='host'?
 	//    ((
 	//        type = ClassType
@@ -867,11 +865,6 @@ public class KTraceGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    {kext::ClassDeclaration}
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
-	//    const?='const'?
-	//    input?='input'?
-	//    output?='output'?
-	//    global?='global'?
-	//    static?='static'?
 	//    host?='host'?
 	//    ((
 	//        type = ClassType
@@ -932,7 +925,7 @@ public class KTraceGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//EnumMemberDeclaration returns kexpressions::VariableDeclaration:
-	//    annotations+=Annotation*
+	//    annotations+=QuotedStringAnnotation*
 	//    valuedObjects+=SimpleValuedObject (',' valuedObjects+=SimpleValuedObject)*
 	//    annotations+=CommentAnnotatonSL?
 	//;
@@ -1006,6 +999,7 @@ public class KTraceGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
 	//    ((
+	//        input?='input'?
 	//        'ref'
 	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 	//        reference = [annotations::NamedObject|PrimeID]
@@ -1029,6 +1023,7 @@ public class KTraceGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
 	//    ((
+	//        input?='input'?
 	//        'ref'
 	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 	//        reference = [annotations::NamedObject|PrimeID]
@@ -1984,7 +1979,7 @@ public class KTraceGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    | RandomCall
 	//    | RandomizeCall
 	//    | ValuedObjectTestExpression // Last to allow detection of calls
-	//    | StaticAccessExpression
+	//    | SpecialAccessExpression
 	//    | TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();
@@ -2003,6 +1998,7 @@ public class KTraceGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    | FloatValue
 	//    | StringValue
 	//    | VectorValue
+	//    | NullValue
 	//    | '(' ValuedExpression ')'
 	//    | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
@@ -2043,15 +2039,17 @@ public class KTraceGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	
 	//// Accesses a arbitrary target in a static way (needs to be adjusted in the scoper of the deriving language)
 	//// Example: static(Constants).MAX
-	//StaticAccessExpression returns StaticAccessExpression:
-	//    'static' '(' target=[annotations::NamedObject|PrimeID] ')'
-	//    '.' subReference=ValuedObjectReference;
-	public KExpressionsGrammarAccess.StaticAccessExpressionElements getStaticAccessExpressionAccess() {
-		return gaKExpressions.getStaticAccessExpressionAccess();
+	//SpecialAccessExpression returns SpecialAccessExpression:
+	//    access='static' '('
+	//    (container=[annotations::NamedObject|PrimeID] '.')?
+	//    target=[annotations::NamedObject|PrimeID]
+	//    ')' '.' subReference=ValuedObjectReference;
+	public KExpressionsGrammarAccess.SpecialAccessExpressionElements getSpecialAccessExpressionAccess() {
+		return gaKExpressions.getSpecialAccessExpressionAccess();
 	}
 	
-	public ParserRule getStaticAccessExpressionRule() {
-		return getStaticAccessExpressionAccess().getRule();
+	public ParserRule getSpecialAccessExpressionRule() {
+		return getSpecialAccessExpressionAccess().getRule();
 	}
 	
 	//// ID with primes
@@ -2243,7 +2241,11 @@ public class KTraceGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//VectorValue returns VectorValue:
-	//    '{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
+	//    '{' (
+	//        values+=VectorValueMember (',' values+=VectorValueMember)*
+	//        |
+	//        values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference)
+	//    ) '}';
 	public KExpressionsGrammarAccess.VectorValueElements getVectorValueAccess() {
 		return gaKExpressions.getVectorValueAccess();
 	}
@@ -2757,6 +2759,18 @@ public class KTraceGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	
 	public ParserRule getQuotedStringAnnotationRule() {
 		return getQuotedStringAnnotationAccess().getRule();
+	}
+	
+	//// OO
+	//ThisExpression returns ThisExpression:
+	//    {ThisExpression}
+	//    'this';
+	public KExpressionsGrammarAccess.ThisExpressionElements getThisExpressionAccess() {
+		return gaKExpressions.getThisExpressionAccess();
+	}
+	
+	public ParserRule getThisExpressionRule() {
+		return getThisExpressionAccess().getRule();
 	}
 	
 	//// ------------------------ //

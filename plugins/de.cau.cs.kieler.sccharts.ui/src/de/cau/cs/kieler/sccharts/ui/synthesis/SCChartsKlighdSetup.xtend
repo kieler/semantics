@@ -37,6 +37,7 @@ class SCChartsKlighdSetup implements IKlighdStartupHook {
             .registerDiagramSynthesisClass(SCChartsSynthesis.ID, SCChartsSynthesis)
             .registerDiagramSynthesisClass(SRTGSynthesis.ID, SRTGSynthesis)
             .registerDiagramSynthesisClass(ScopeSynthesis.ID, ScopeSynthesis)
+            .registerDiagramSynthesisClass(SCChartsClassDiagramSynthesis.ID, SCChartsClassDiagramSynthesis)
             .registerAction(ReferenceExpandAction.ID, new ReferenceExpandAction)
             .registerAction(LabelShorteningHook.ID, new LabelShorteningHook)
             .registerAction(LayoutHook.ID, new LayoutHook)

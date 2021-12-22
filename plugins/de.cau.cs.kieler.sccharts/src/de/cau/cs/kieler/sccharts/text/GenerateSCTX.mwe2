@@ -79,6 +79,7 @@ Workflow {
                     backtrack = backtrack
                     classSplitting = true
                 }
+                //debugGrammar = true
             }
             fragment = validation.ValidatorFragment2 {}
             fragment = scoping.ImportNamespacesScopingFragment2 {}

@@ -296,8 +296,12 @@ class KExpressionsDeclarationExtensions {
         ]
     } 
     
+    def isMethod(Declaration decl) {
+        return decl instanceof MethodDeclaration
+    }
+    
     def Iterable<Declaration> excludeMethods(Iterable<Declaration> iter) {
-        return iter.filter[!(it instanceof MethodDeclaration)]
+        return iter.filter[!isMethod]
     }
     
 //    def ReferenceDeclaration getReferenceDeclaration(ValuedObject valuedObject) {
@@ -344,6 +348,22 @@ class KExpressionsDeclarationExtensions {
     def isEnum(Declaration decl) {
         if (decl instanceof ClassDeclaration) {
             return decl.type === ValueType.ENUM
+        }
+        return false
+    }
+    
+    def isInput(Declaration decl) {
+        if (decl instanceof VariableDeclaration) {
+            return decl.input
+        } else if (decl instanceof ReferenceDeclaration) {
+            return decl.input
+        }
+        return false
+    }
+    
+    def isOutput(Declaration decl) {
+        if (decl instanceof VariableDeclaration) {
+            return decl.output
         }
         return false
     }

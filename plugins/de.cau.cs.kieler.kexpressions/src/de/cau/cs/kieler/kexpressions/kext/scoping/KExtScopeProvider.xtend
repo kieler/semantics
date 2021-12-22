@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kexpressions.Referenceable
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
@@ -45,6 +46,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 
     @Inject extension KExpressionsGenericParameterExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsAccessVisibilityExtensions
     
 	override getScope(EObject context, EReference reference) {
 		// This scope should trigger on every instance of a valued object reference!
@@ -104,7 +106,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 	}
 	
 	protected def IScope getScopeForStruct(ClassDeclaration struct) {
-	    return Scopes.scopeFor(struct.declarations.map[valuedObjects].flatten)
+	    return Scopes.scopeFor(struct.declarations.filter[it.isPublic].map[valuedObjects].flatten)
 	}
 	
 	protected def IScope getScopeForReferencedType(EObject reference, ValuedObjectReference context,

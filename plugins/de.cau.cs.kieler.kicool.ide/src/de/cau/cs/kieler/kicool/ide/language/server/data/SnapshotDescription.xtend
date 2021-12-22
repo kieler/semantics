@@ -31,17 +31,19 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class SnapshotDescription {
 
     @Accessors String name
+    @Accessors int index
     @Accessors int snapshotIndex
     @Accessors List<String> errors
     @Accessors List<String> warnings
     @Accessors List<String> infos
     
-    new (String name, int snapshotIndex, Errors errors, Warnings warnings, Infos infos) {
+    new (String name, int index, int snapshotIndex, Errors errors, Warnings warnings, Infos infos) {
         this.errors = new LinkedList
         this.warnings = new LinkedList
         this.infos = new LinkedList
         
         this.name = name
+        this.index = index
         this.snapshotIndex = snapshotIndex
 
         if (errors !== null) {
@@ -49,7 +51,11 @@ class SnapshotDescription {
             if (list !== null) {
                 for ( MessageObjectLink mol : list) {
                     if (mol !== null) {
-                        this.errors.add(mol.message)
+                        var message = mol.message
+                        if (mol.exception !== null) {
+                            message += mol.exception.stackTrace.fold("", [s, trace | s + "\n\t\t" + trace])
+                        }
+                        this.errors.add(message)
                     }
                 }
             }

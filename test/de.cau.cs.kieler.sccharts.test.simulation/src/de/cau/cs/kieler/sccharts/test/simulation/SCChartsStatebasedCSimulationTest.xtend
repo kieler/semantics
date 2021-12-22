@@ -45,7 +45,8 @@ class SCChartsStatebasedCSimulationTest extends AbstractSimulationTest<SCCharts>
     
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("statebased")
-        && !modelData.modelProperties.contains("not-core")
+            && !modelData.modelProperties.contains("large")
+            && !modelData.modelProperties.contains("not-core")
 //        && !modelData.modelProperties.contains("simulation-fails-netlist-c")
 //        && !modelData.modelProperties.contains("simulation-fails-statebased-c")
     }

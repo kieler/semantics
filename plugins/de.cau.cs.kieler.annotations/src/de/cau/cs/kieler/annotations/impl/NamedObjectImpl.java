@@ -81,6 +81,7 @@ public class NamedObjectImpl extends EObjectImpl implements NamedObject {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -90,6 +91,7 @@ public class NamedObjectImpl extends EObjectImpl implements NamedObject {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;

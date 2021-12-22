@@ -9,6 +9,7 @@ import de.cau.cs.kieler.kexpressions.VectorValue;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -16,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -31,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.VectorValueImpl#getSchedule <em>Schedule</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.VectorValueImpl#getValues <em>Values</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.VectorValueImpl#isRange <em>Range</em>}</li>
  * </ul>
  *
  * @generated
@@ -55,6 +58,26 @@ public class VectorValueImpl extends EObjectImpl implements VectorValue {
      * @ordered
      */
     protected EList<Expression> values;
+
+    /**
+     * The default value of the '{@link #isRange() <em>Range</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isRange()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean RANGE_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isRange() <em>Range</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isRange()
+     * @generated
+     * @ordered
+     */
+    protected boolean range = RANGE_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -107,6 +130,29 @@ public class VectorValueImpl extends EObjectImpl implements VectorValue {
      * @generated
      */
     @Override
+    public boolean isRange() {
+        return range;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setRange(boolean newRange) {
+        boolean oldRange = range;
+        range = newRange;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VECTOR_VALUE__RANGE, oldRange, range));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case KExpressionsPackage.VECTOR_VALUE__SCHEDULE:
@@ -129,6 +175,8 @@ public class VectorValueImpl extends EObjectImpl implements VectorValue {
                 return getSchedule();
             case KExpressionsPackage.VECTOR_VALUE__VALUES:
                 return getValues();
+            case KExpressionsPackage.VECTOR_VALUE__RANGE:
+                return isRange();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -150,6 +198,9 @@ public class VectorValueImpl extends EObjectImpl implements VectorValue {
                 getValues().clear();
                 getValues().addAll((Collection<? extends Expression>)newValue);
                 return;
+            case KExpressionsPackage.VECTOR_VALUE__RANGE:
+                setRange((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -168,6 +219,9 @@ public class VectorValueImpl extends EObjectImpl implements VectorValue {
             case KExpressionsPackage.VECTOR_VALUE__VALUES:
                 getValues().clear();
                 return;
+            case KExpressionsPackage.VECTOR_VALUE__RANGE:
+                setRange(RANGE_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -184,8 +238,26 @@ public class VectorValueImpl extends EObjectImpl implements VectorValue {
                 return schedule != null && !schedule.isEmpty();
             case KExpressionsPackage.VECTOR_VALUE__VALUES:
                 return values != null && !values.isEmpty();
+            case KExpressionsPackage.VECTOR_VALUE__RANGE:
+                return range != RANGE_EDEFAULT;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (range: ");
+        result.append(range);
+        result.append(')');
+        return result.toString();
     }
 
 } //VectorValueImpl
