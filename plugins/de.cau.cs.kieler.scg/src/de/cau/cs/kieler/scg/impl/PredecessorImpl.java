@@ -104,6 +104,7 @@ public class PredecessorImpl extends MinimalEObjectImpl.Container implements Pre
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public BasicBlock getBasicBlock() {
         if (basicBlock != null && basicBlock.eIsProxy()) {
             InternalEObject oldBasicBlock = (InternalEObject)basicBlock;
@@ -130,6 +131,7 @@ public class PredecessorImpl extends MinimalEObjectImpl.Container implements Pre
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setBasicBlock(BasicBlock newBasicBlock) {
         BasicBlock oldBasicBlock = basicBlock;
         basicBlock = newBasicBlock;
@@ -142,6 +144,7 @@ public class PredecessorImpl extends MinimalEObjectImpl.Container implements Pre
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Conditional getConditional() {
         if (conditional != null && conditional.eIsProxy()) {
             InternalEObject oldConditional = (InternalEObject)conditional;
@@ -168,6 +171,7 @@ public class PredecessorImpl extends MinimalEObjectImpl.Container implements Pre
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setConditional(Conditional newConditional) {
         Conditional oldConditional = conditional;
         conditional = newConditional;
@@ -180,7 +184,8 @@ public class PredecessorImpl extends MinimalEObjectImpl.Container implements Pre
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public BranchType getBranchType() {
+	@Override
+    public BranchType getBranchType() {
         return branchType;
     }
 
@@ -189,7 +194,8 @@ public class PredecessorImpl extends MinimalEObjectImpl.Container implements Pre
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public void setBranchType(BranchType newBranchType) {
+	@Override
+    public void setBranchType(BranchType newBranchType) {
         BranchType oldBranchType = branchType;
         branchType = newBranchType == null ? BRANCH_TYPE_EDEFAULT : newBranchType;
         if (eNotificationRequired())

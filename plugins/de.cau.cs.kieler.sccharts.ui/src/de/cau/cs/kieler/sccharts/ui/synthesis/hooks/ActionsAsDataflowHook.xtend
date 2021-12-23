@@ -29,7 +29,6 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.DataflowRegionSynthesis
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
-import de.cau.cs.kieler.sccharts.ui.synthesis.KNodeExtensionsReplacement
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
 import java.util.List
 import org.eclipse.elk.core.math.ElkPadding
@@ -38,6 +37,7 @@ import org.eclipse.elk.core.options.CoreOptions
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.eclipse.elk.core.options.BoxLayouterOptions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 
 /**
  * Shows actions as dataflow regions.
@@ -54,7 +54,7 @@ class ActionsAsDataflowHook extends SynthesisHook {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension StateStyles
     @Inject extension KRenderingExtensions
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension SCChartsDataflowRegionExtensions
     @Inject extension DataflowRegionSynthesis
 
@@ -62,7 +62,7 @@ class ActionsAsDataflowHook extends SynthesisHook {
     public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ActionAsDataflow"
     /** The related synthesis option */
     
-    public static val SynthesisOption SHOW_ACTIONS_AS_DATAFLOW = SynthesisOption.createCheckOption("Actions as Dataflow", false).
+    public static val SynthesisOption SHOW_ACTIONS_AS_DATAFLOW = SynthesisOption.createCheckOption(ActionsAsDataflowHook, "Actions as Dataflow", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
 
     override getDisplayedSynthesisOptions() {

@@ -97,7 +97,7 @@ class KExpressionsFormatter extends AnnotationsFormatter {
         // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 
         vectorValue.regionFor.keywords(vectorValueAccess.leftCurlyBracketKeyword_0).forEach[prepend[ noSpace ].append[ noSpace ]]
-        vectorValue.regionFor.keywords(vectorValueAccess.rightCurlyBracketKeyword_3).forEach[prepend[ noSpace ]]
+        vectorValue.regionFor.keywords(vectorValueAccess.rightCurlyBracketKeyword_2).forEach[prepend[ noSpace ]]
         
         for (member : vectorValue.values) {
             format(member, document);

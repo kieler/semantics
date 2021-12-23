@@ -16,9 +16,12 @@ package de.cau.cs.kieler.sccharts.ui.synthesis.styles
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KForeground
+import de.cau.cs.kieler.klighd.krendering.KGridPlacement
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.krendering.Underline
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
@@ -35,14 +38,9 @@ import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.klighd.krendering.LineStyle
-import de.cau.cs.kieler.klighd.krendering.KColor
-import de.cau.cs.kieler.klighd.krendering.Underline
-import de.cau.cs.kieler.klighd.krendering.Colors
-import de.cau.cs.kieler.klighd.krendering.KForeground
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * Styles for {@link ControlflowRegion}.
@@ -85,6 +83,14 @@ class ControlflowRegionStyles {
         return rect => [
             background = REGION_OVERRIDE_BACKGROUND.color
             foreground = REGION_OVERRIDE_FOREGROUND.color
+            lineWidth = 1.3f;
+        ]
+    }
+       
+    def KRectangle addAbortRegionStyle(KRectangle rect) {
+        return rect => [
+            background = REGION_ABORT_BACKGROUND.color
+            foreground = REGION_ABORT_FOREGROUND.color
             lineWidth = 1.3f;
         ]
     }
@@ -153,13 +159,25 @@ class ControlflowRegionStyles {
                     fontSize = 10;
                     selectionTextUnderline = Underline.NONE // prevents default selection style
                     val size = estimateTextSize;
-                    setPointPlacementData(LEFT, 14, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, size.width, size.height)
+                    setPointPlacementData(LEFT, 14, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, size.width + 5, size.height)
+                    setProperty(KlighdProperties.IS_NODE_TITLE, true)
                 ]
             } else {
                 container.addKeywordLabel(label, 0) => [
                     foreground = REGION_LABEL.color
                     fontSize = 10
                     setPointPlacementData(LEFT, 14, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
+                    setProperty(KlighdProperties.IS_NODE_TITLE, true)
+                    (children.last as KContainerRendering) => [ // Just for spacing at the end
+                        val grid = it?.getChildPlacement()
+                        if (grid instanceof KGridPlacement) {
+                            grid.numColumns = grid.numColumns + 1
+                            addRectangle => [
+                                setGridPlacementData(5,5)
+                                invisible = true
+                            ]
+                        }
+                    ]
                     eAllContents.filter(KText).forEach[
                         suppressSelectability
                         selectionTextUnderline = Underline.NONE // prevents default selection style
@@ -278,7 +296,7 @@ class ControlflowRegionStyles {
      */
     private def KNode getContainerNode(KRendering rendering) {
         var container = rendering.eContainer
-        while (container != null) {
+        while (container !== null) {
             if (container instanceof KNode) {
                 return container
             }

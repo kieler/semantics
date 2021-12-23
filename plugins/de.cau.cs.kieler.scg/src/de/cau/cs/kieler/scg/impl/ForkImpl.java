@@ -4,6 +4,7 @@ package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.Fork;
+import de.cau.cs.kieler.scg.ForkType;
 import de.cau.cs.kieler.scg.Join;
 import de.cau.cs.kieler.scg.ScgPackage;
 
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.ForkImpl#getJoin <em>Join</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.ForkImpl#getNext <em>Next</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.ForkImpl#getType <em>Type</em>}</li>
  * </ul>
  *
  * @generated
@@ -58,6 +60,26 @@ public class ForkImpl extends NodeImpl implements Fork {
     protected EList<ControlFlow> next;
 
     /**
+     * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getType()
+     * @generated
+     * @ordered
+     */
+    protected static final ForkType TYPE_EDEFAULT = ForkType.PARALLEL;
+
+    /**
+     * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getType()
+     * @generated
+     * @ordered
+     */
+    protected ForkType type = TYPE_EDEFAULT;
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -81,6 +103,7 @@ public class ForkImpl extends NodeImpl implements Fork {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Join getJoin() {
         if (join != null && join.eIsProxy()) {
             InternalEObject oldJoin = (InternalEObject)join;
@@ -122,6 +145,7 @@ public class ForkImpl extends NodeImpl implements Fork {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setJoin(Join newJoin) {
         if (newJoin != join) {
             NotificationChain msgs = null;
@@ -141,11 +165,35 @@ public class ForkImpl extends NodeImpl implements Fork {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ControlFlow> getNext() {
         if (next == null) {
             next = new EObjectContainmentEList<ControlFlow>(ControlFlow.class, this, ScgPackage.FORK__NEXT);
         }
         return next;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ForkType getType() {
+        return type;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setType(ForkType newType) {
+        ForkType oldType = type;
+        type = newType == null ? TYPE_EDEFAULT : newType;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.FORK__TYPE, oldType, type));
     }
 
     /**
@@ -193,6 +241,8 @@ public class ForkImpl extends NodeImpl implements Fork {
                 return basicGetJoin();
             case ScgPackage.FORK__NEXT:
                 return getNext();
+            case ScgPackage.FORK__TYPE:
+                return getType();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -213,6 +263,9 @@ public class ForkImpl extends NodeImpl implements Fork {
                 getNext().clear();
                 getNext().addAll((Collection<? extends ControlFlow>)newValue);
                 return;
+            case ScgPackage.FORK__TYPE:
+                setType((ForkType)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -231,6 +284,9 @@ public class ForkImpl extends NodeImpl implements Fork {
             case ScgPackage.FORK__NEXT:
                 getNext().clear();
                 return;
+            case ScgPackage.FORK__TYPE:
+                setType(TYPE_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -247,8 +303,26 @@ public class ForkImpl extends NodeImpl implements Fork {
                 return join != null;
             case ScgPackage.FORK__NEXT:
                 return next != null && !next.isEmpty();
+            case ScgPackage.FORK__TYPE:
+                return type != TYPE_EDEFAULT;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (type: ");
+        result.append(type);
+        result.append(')');
+        return result.toString();
     }
 
 } //ForkImpl

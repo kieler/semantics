@@ -130,8 +130,6 @@ class KiVisView extends ViewPart implements ISimulationListener {
      * Callback for action indicator
      */
     static class ActionIndicatorFunction extends BrowserFunction {
-        
-        val parser = new JsonParser
 
         new(Browser browser) {
             super(browser, KiVisConstants.ACTION_SETTER_CALLBACK);
@@ -141,7 +139,7 @@ class KiVisView extends ViewPart implements ISimulationListener {
             val variable = if(arguments.length >= 1) arguments.get(0)
             val JsonElement value = if(arguments.length >= 2) {
                 try {
-                    parser.parse(arguments.get(1) as String)
+                    JsonParser.parseString(arguments.get(1) as String)
                 } catch (Exception e) {
                     JsonNull.INSTANCE
                 }
@@ -325,7 +323,9 @@ class KiVisView extends ViewPart implements ISimulationListener {
                     if (url.protocol.equals("file")) {
                         // Ecliplse cannot load file urls properly
                         try {
-                            isLoaded = browser.setText(new String(Files.readAllBytes(new File(new URL(vizURL).toURI).toPath), StandardCharsets.UTF_8))
+                            if (!browser.isDisposed) {
+                                isLoaded = browser.setText(new String(Files.readAllBytes(new File(new URL(vizURL).toURI).toPath), StandardCharsets.UTF_8))
+                            }
                         } catch (Exception e) {
                             e.printStackTrace
                         }

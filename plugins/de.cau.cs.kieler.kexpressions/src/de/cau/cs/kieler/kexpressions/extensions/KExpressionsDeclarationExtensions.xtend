@@ -277,7 +277,21 @@ class KExpressionsDeclarationExtensions {
         <ReferenceDeclaration> newArrayList => [ list |
             eObject.eContents.filter(ReferenceDeclaration).forEach[ list += it ]
         ]
-    }   
+    }
+    
+    def List<MethodDeclaration> getMethodDeclarations(EObject eObject) {
+        <MethodDeclaration> newArrayList => [ list |
+            eObject.eContents.filter(MethodDeclaration).forEach[ list += it ]
+        ]
+    } 
+    
+    def isMethod(Declaration decl) {
+        return decl instanceof MethodDeclaration
+    }
+    
+    def Iterable<Declaration> excludeMethods(Iterable<Declaration> iter) {
+        return iter.filter[!isMethod]
+    }
     
 //    def ReferenceDeclaration getReferenceDeclaration(ValuedObject valuedObject) {
 //        valuedObject.eContainer as ReferenceDeclaration
@@ -296,6 +310,51 @@ class KExpressionsDeclarationExtensions {
 
     def getAllNestedValuedObjects(ClassDeclaration decl) {
         return decl.innerValuedObjects + decl.declarations.filter(ClassDeclaration).map[innerValuedObjects].flatten
+    }
+
+    def getEnclosingClass(Declaration decl) {
+        val parent = decl.eContainer
+        if (parent instanceof ClassDeclaration) {
+            return parent
+        }
+        return null
+    }
+
+    def isStruct(Declaration decl) {
+        if (decl instanceof ClassDeclaration) {
+            return decl.type === ValueType.STRUCT
+        }
+        return false
+    }
+    
+    def isClass(Declaration decl) {
+        if (decl instanceof ClassDeclaration) {
+            return decl.type === ValueType.STRUCT || decl.type === ValueType.CLASS
+        }
+        return false
+    }
+    
+    def isEnum(Declaration decl) {
+        if (decl instanceof ClassDeclaration) {
+            return decl.type === ValueType.ENUM
+        }
+        return false
+    }
+    
+    def isInput(Declaration decl) {
+        if (decl instanceof VariableDeclaration) {
+            return decl.input
+        } else if (decl instanceof ReferenceDeclaration) {
+            return decl.input
+        }
+        return false
+    }
+    
+    def isOutput(Declaration decl) {
+        if (decl instanceof VariableDeclaration) {
+            return decl.output
+        }
+        return false
     }
     
 }

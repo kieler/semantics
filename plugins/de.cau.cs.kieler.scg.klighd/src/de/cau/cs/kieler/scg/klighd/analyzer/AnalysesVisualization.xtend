@@ -13,9 +13,6 @@
  */
  package de.cau.cs.kieler.scg.klighd.analyzer
 
-import com.google.inject.Guice
-import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
-
 /**
  * The AnalyzerVisualization class provides an interface for the visualization of a particular analyzer.
  * Add an analyzer visualization class for your analyzer in the de.cau.cs.kieler.scg.klighd.analyzer package 

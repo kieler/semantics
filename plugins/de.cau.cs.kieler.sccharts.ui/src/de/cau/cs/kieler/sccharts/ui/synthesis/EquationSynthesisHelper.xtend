@@ -24,7 +24,6 @@ import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement
-import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
@@ -44,6 +43,8 @@ import java.util.List
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.PortSide
+
+import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
 
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
@@ -138,15 +139,15 @@ class EquationSynthesisHelper {
     }
 
     protected def isInput(KNode node) {
-        node.getProperty(EquationSynthesis.INPUT_FLAG) as boolean
+        node.getProperty(INPUT_FLAG) as boolean
     }
 
     protected def isOutput(KNode node) {
-        node.getProperty(EquationSynthesis.OUTPUT_FLAG) as boolean
+        node.getProperty(OUTPUT_FLAG) as boolean
     }
 
     protected def isReference(KNode node) {
-        return node.getProperty(EquationSynthesis.REFERENCE_NODE) as boolean
+        return node.getProperty(REFERENCE_NODE) as boolean
     }
 
     /**
@@ -189,15 +190,15 @@ class EquationSynthesisHelper {
     }
 
     protected def isSequential(KEdge edge) {
-        edge.getProperty(EquationSynthesis.SEQUENTIAL_EDGE) as boolean
+        edge.getProperty(SEQUENTIAL_EDGE) as boolean
     }
 
     protected def isInstance(KEdge edge) {
-        edge.getProperty(EquationSynthesis.INSTANCE_EDGE) as boolean
+        edge.getProperty(INSTANCE_EDGE) as boolean
     }
 
     protected def isDataAccess(KNode node) {
-        node.getProperty(EquationSynthesis.DATA_ACCESS_FLAG) as boolean
+        node.getProperty(DATA_ACCESS_FLAG) as boolean
     }
 
     protected def getSourceElement(KGraphElement node) {
@@ -312,7 +313,7 @@ class EquationSynthesisHelper {
             ]
             node.ports += port
             return port
-        } else if (maxPort == null) {
+        } else if (maxPort === null) {
             return null
         }
 
@@ -338,8 +339,8 @@ class EquationSynthesisHelper {
         edge.sourcePort = source
         edge.target = target.node
         edge.targetPort = target
-        if (source.node.hasProperty(EquationSynthesis.DATA_ARRAY_FLAG) ||
-            target.node.hasProperty(EquationSynthesis.DATA_ARRAY_FLAG)) {
+        if (source.node.hasProperty(DATA_ARRAY_FLAG) ||
+            target.node.hasProperty(DATA_ARRAY_FLAG)) {
             edge.addWireBusFigure
         } else {
             edge.addWireFigure

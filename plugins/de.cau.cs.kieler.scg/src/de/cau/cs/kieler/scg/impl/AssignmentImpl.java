@@ -146,6 +146,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, ScgPackage.ASSIGNMENT__SCHEDULE);
@@ -158,6 +159,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObjectReference getReference() {
         return reference;
     }
@@ -182,6 +184,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setReference(ValuedObjectReference newReference) {
         if (newReference != reference) {
             NotificationChain msgs = null;
@@ -201,6 +204,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getExpression() {
         return expression;
     }
@@ -225,6 +229,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExpression(Expression newExpression) {
         if (newExpression != expression) {
             NotificationChain msgs = null;
@@ -244,6 +249,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public AssignOperator getOperator() {
         return operator;
     }
@@ -253,6 +259,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperator(AssignOperator newOperator) {
         AssignOperator oldOperator = operator;
         operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
@@ -265,6 +272,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ControlFlow getNext() {
         return next;
     }
@@ -289,6 +297,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNext(ControlFlow newNext) {
         if (newNext != next) {
             NotificationChain msgs = null;

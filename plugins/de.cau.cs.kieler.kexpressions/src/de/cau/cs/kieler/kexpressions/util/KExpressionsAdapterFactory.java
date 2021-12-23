@@ -225,6 +225,14 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createExternStringAdapter();
             }
             @Override
+            public Adapter caseSpecialAccessExpression(SpecialAccessExpression object) {
+                return createSpecialAccessExpressionAdapter();
+            }
+            @Override
+            public Adapter caseThisExpression(ThisExpression object) {
+                return createThisExpressionAdapter();
+            }
+            @Override
             public Adapter caseNameable(Nameable object) {
                 return createNameableAdapter();
             }
@@ -611,6 +619,34 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createExternStringAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.SpecialAccessExpression <em>Special Access Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.SpecialAccessExpression
+     * @generated
+     */
+    public Adapter createSpecialAccessExpressionAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.ThisExpression <em>This Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.ThisExpression
+     * @generated
+     */
+    public Adapter createThisExpressionAdapter() {
         return null;
     }
 

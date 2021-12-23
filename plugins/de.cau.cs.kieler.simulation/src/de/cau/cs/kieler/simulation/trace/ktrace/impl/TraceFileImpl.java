@@ -12,7 +12,6 @@ import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile;
 
 import java.util.Collection;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -20,7 +19,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -84,6 +82,7 @@ public class TraceFileImpl extends PragmatableImpl implements TraceFile {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Trace> getTraces() {
         if (traces == null) {
             traces = new EObjectContainmentEList<Trace>(Trace.class, this, KTracePackage.TRACE_FILE__TRACES);
@@ -96,6 +95,7 @@ public class TraceFileImpl extends PragmatableImpl implements TraceFile {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ValuedObject> getAggregatedValuedObjects() {
         if (aggregatedValuedObjects == null) {
             aggregatedValuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, KTracePackage.TRACE_FILE__AGGREGATED_VALUED_OBJECTS);

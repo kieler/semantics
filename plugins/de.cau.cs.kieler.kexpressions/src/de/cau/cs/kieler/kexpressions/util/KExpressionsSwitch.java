@@ -13,9 +13,6 @@ import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragma;
 import de.cau.cs.kieler.kexpressions.*;
 
-import java.util.List;
-
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
@@ -381,6 +378,22 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 ExternString externString = (ExternString)theEObject;
                 T result = caseExternString(externString);
                 if (result == null) result = caseAnnotatable(externString);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.SPECIAL_ACCESS_EXPRESSION: {
+                SpecialAccessExpression specialAccessExpression = (SpecialAccessExpression)theEObject;
+                T result = caseSpecialAccessExpression(specialAccessExpression);
+                if (result == null) result = caseExpression(specialAccessExpression);
+                if (result == null) result = caseSchedulable(specialAccessExpression);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.THIS_EXPRESSION: {
+                ThisExpression thisExpression = (ThisExpression)theEObject;
+                T result = caseThisExpression(thisExpression);
+                if (result == null) result = caseExpression(thisExpression);
+                if (result == null) result = caseSchedulable(thisExpression);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -760,6 +773,36 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseExternString(ExternString object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Special Access Expression</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Special Access Expression</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSpecialAccessExpression(SpecialAccessExpression object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>This Expression</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>This Expression</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseThisExpression(ThisExpression object) {
         return null;
     }
 

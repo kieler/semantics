@@ -16,7 +16,6 @@ import de.cau.cs.kieler.simulation.trace.ktrace.Tick;
 import de.cau.cs.kieler.simulation.trace.ktrace.Trace;
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile;
 
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -123,6 +122,7 @@ public class KTracePackageImpl extends EPackageImpl implements KTracePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTraceFile() {
         return traceFileEClass;
     }
@@ -132,6 +132,7 @@ public class KTracePackageImpl extends EPackageImpl implements KTracePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTraceFile_Traces() {
         return (EReference)traceFileEClass.getEStructuralFeatures().get(0);
     }
@@ -141,6 +142,7 @@ public class KTracePackageImpl extends EPackageImpl implements KTracePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTraceFile_AggregatedValuedObjects() {
         return (EReference)traceFileEClass.getEStructuralFeatures().get(1);
     }
@@ -150,6 +152,7 @@ public class KTracePackageImpl extends EPackageImpl implements KTracePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTrace() {
         return traceEClass;
     }
@@ -159,6 +162,7 @@ public class KTracePackageImpl extends EPackageImpl implements KTracePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTrace_Ticks() {
         return (EReference)traceEClass.getEStructuralFeatures().get(0);
     }
@@ -168,6 +172,7 @@ public class KTracePackageImpl extends EPackageImpl implements KTracePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTick() {
         return tickEClass;
     }
@@ -177,6 +182,7 @@ public class KTracePackageImpl extends EPackageImpl implements KTracePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTick_Inputs() {
         return (EReference)tickEClass.getEStructuralFeatures().get(0);
     }
@@ -186,6 +192,7 @@ public class KTracePackageImpl extends EPackageImpl implements KTracePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTick_Outputs() {
         return (EReference)tickEClass.getEStructuralFeatures().get(1);
     }
@@ -195,6 +202,7 @@ public class KTracePackageImpl extends EPackageImpl implements KTracePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTick_Goto() {
         return (EReference)tickEClass.getEStructuralFeatures().get(2);
     }
@@ -204,6 +212,7 @@ public class KTracePackageImpl extends EPackageImpl implements KTracePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public KTraceFactory getKTraceFactory() {
         return (KTraceFactory)getEFactoryInstance();
     }

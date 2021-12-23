@@ -35,48 +35,49 @@ final class GeneralSynthesisOptions {
     /** 
      * The appearance category 
      */
-    public static final SynthesisOption APPEARANCE = SynthesisOption.createCategory("Appearance")
+    public static final SynthesisOption APPEARANCE = SynthesisOption.createCategory(GeneralSynthesisOptions, "Appearance")
     /** 
      * The navigation category 
      */
-    public static final SynthesisOption NAVIGATION = SynthesisOption.createCategory("Navigation", false)
+    public static final SynthesisOption NAVIGATION = SynthesisOption.createCategory(GeneralSynthesisOptions, "Navigation", false)
     /** 
      * The debugging category 
      */
-    public static final SynthesisOption DEBUGGING = SynthesisOption.createCategory("Analysis / Debugging", false)
+    public static final SynthesisOption DEBUGGING = SynthesisOption.createCategory(GeneralSynthesisOptions, "Analysis / Debugging", false)
     /** 
      * The layout category 
      */
-    public static final SynthesisOption LAYOUT = SynthesisOption.createCategory("Layout", false)
+    public static final SynthesisOption LAYOUT = SynthesisOption.createCategory(GeneralSynthesisOptions, "Layout", false)
     /** 
      * Dataflow category 
      */
-    public static final SynthesisOption DATAFLOW = SynthesisOption.createCategory("Dataflow", false).setCategory(APPEARANCE)
+    public static final SynthesisOption DATAFLOW = SynthesisOption.createCategory(GeneralSynthesisOptions, "Dataflow", false).setCategory(APPEARANCE)
     /** 
      * References and OO / Inheritance
      */
-    public static final SynthesisOption OO = SynthesisOption.createCategory("Object Orientation / References", false).setCategory(APPEARANCE)
+    public static final SynthesisOption OO = SynthesisOption.createCategory(GeneralSynthesisOptions, "Object Orientation / References", false).setCategory(APPEARANCE)
     
     // -- OPTIONS --
     /** 
      * Option for setting the KLayLayered layout 
      */
-    public static final SynthesisOption USE_KLAY = SynthesisOption.createCheckOption("KLayLayered", true).setCategory(LAYOUT)
-    public static final SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption("All SCCharts", false).setCategory(APPEARANCE)
-    public static final SynthesisOption SHOW_COMMENTS = SynthesisOption.createCheckOption("Comment Nodes", true).setCategory(APPEARANCE)
-    public static final SynthesisOption SHOW_USER_LABELS = SynthesisOption.createCheckOption("User Labels", true).setCategory(APPEARANCE)
+    public static final SynthesisOption USE_KLAY = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "KLayLayered", true).setCategory(LAYOUT)
+    public static final SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "All SCCharts", false).setCategory(APPEARANCE)
+    public static final SynthesisOption SHOW_COMMENTS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Comment Nodes", true).setCategory(APPEARANCE)
+    public static final SynthesisOption SHOW_USER_LABELS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "User Labels", true).setCategory(APPEARANCE)
     /** 
      * Scope call parameters synthesis option 
      */
-    public static final SynthesisOption SHOW_BINDINGS = SynthesisOption.createCheckOption("Binding Parameters", true).setCategory(OO)
+    public static final SynthesisOption SHOW_BINDINGS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Binding Parameters", true).setCategory(OO)
     /** 
      * inherited declarations and regions synthesis option 
      */
-    public static final SynthesisOption SHOW_INHERITANCE = SynthesisOption.createCheckOption("Inheritance Preview", true).setCategory(OO)
-    public static final SynthesisOption SHOW_INHERITANCE_EDGES = SynthesisOption.createCheckOption("Inheritance Hierarchy", false).setCategory(OO)
-    public static final SynthesisOption SHOW_METHOD_BODY = SynthesisOption.createCheckOption("Method Implementation", true).setCategory(OO)
+    public static final SynthesisOption SHOW_INHERITANCE = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Inheritance Preview", true).setCategory(OO)
+    public static final SynthesisOption SHOW_INHERITANCE_EDGES = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Inheritance Hierarchy", false).setCategory(OO)
+    public static final SynthesisOption SHOW_AGGREGATION_EDGES = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Aggregation", false).setCategory(OO)
+    public static final SynthesisOption SHOW_METHOD_BODY = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Method Implementation", true).setCategory(OO)
     /** 
      * inherited declarations and regions synthesis option 
      */
-    public static final SynthesisOption SHOW_CAUSAL_DATAFLOW = SynthesisOption.createCheckOption("Causal Dataflow",false).setCategory(DEBUGGING)
+    public static final SynthesisOption SHOW_CAUSAL_DATAFLOW = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Causal Dataflow",false).setCategory(DEBUGGING)
 }

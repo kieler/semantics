@@ -37,7 +37,7 @@ class ThreadPriorityActions implements IAction {
     
     private static final String THREAD_ID  = "de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions"
     
-    public static final SynthesisOption SHOW_THREAD_PRIO = SynthesisOption::createCheckOption("Thread Priority IDs", 
+    public static final SynthesisOption SHOW_THREAD_PRIO = SynthesisOption::createCheckOption(ThreadPriorityActions, "Thread Priority IDs", 
         true).setUpdateAction(THREAD_ID).setCategory(PRIO);
     
         
@@ -45,7 +45,7 @@ class ThreadPriorityActions implements IAction {
         val viewContext = context.contextViewer.viewContext
         val rootNode = context.KNode
         for (node : rootNode.eAllContentsOfType(KNode).toIterable) {
-            if (viewContext.getSourceElement(node) == null) {
+            if (viewContext.getSourceElement(node) === null) {
                 for(label : node.labels) {
                     if(label.KRendering.getProperty(SCGraphDiagramSynthesis.THREAD_PRIO_PROPERTY)) {
                         if(SHOW_THREAD_PRIO.booleanValue(viewContext)) {
@@ -65,7 +65,7 @@ class ThreadPriorityActions implements IAction {
     def booleanValue(SynthesisOption option, ViewContext viewContext) {
         val value = viewContext.getOptionValue(option)
         
-        if(value == null) {
+        if(value === null) {
             return false
         } else if (value instanceof Boolean) {
             return value as Boolean;

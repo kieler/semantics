@@ -31,6 +31,7 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 
 import static extension de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure.*
+import static extension java.lang.String.format
 
 /**
  * @author lgr
@@ -41,6 +42,9 @@ class LustreV6CodeGenerator extends AbstractSystemCompilerProcessor<LustreProgra
         
     public static val IProperty<Boolean> HAS_STATE = 
         new Property<Boolean>("de.cau.cs.kieler.lustre.compiler.v6.hasState", true)
+        
+    public static val IProperty<String> LUSTRE_ADDITIONAL_OPTIONS = 
+        new Property<String>("de.cau.cs.kieler.lustre.compiler.options", "")
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -150,8 +154,8 @@ class LustreV6CodeGenerator extends AbstractSystemCompilerProcessor<LustreProgra
             
             logger.println("Running compilation")             
             val options = <String>newArrayList
-            if (!environment.getProperty(ADDITIONAL_OPTIONS).nullOrEmpty) {
-                val args = environment.getProperty(ADDITIONAL_OPTIONS)
+            if (!environment.getProperty(LUSTRE_ADDITIONAL_OPTIONS).nullOrEmpty) {
+                val args = environment.getProperty(LUSTRE_ADDITIONAL_OPTIONS)
                 if (args.contains(" ")) {
                     options += args.split(" ")
                 } else {
@@ -208,7 +212,7 @@ class LustreV6CodeGenerator extends AbstractSystemCompilerProcessor<LustreProgra
 
         // report
         var log = logger.saveLog(environment, "lustre-compiler.log")
-        if (log.code.contains("is declared as a node, but it uses no memory (i.e., it is a function)")) {
+        if (log.code.contains("%s::%s is declared as a node, but it uses no memory".format(modelName, modelName))) {
             environment.setProperty(HAS_STATE, false)
         }
         

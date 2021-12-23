@@ -14,20 +14,19 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis.hooks
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.IntAnnotation
+import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHook
-import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
-import de.cau.cs.kieler.sccharts.ui.synthesis.KNodeExtensionsReplacement
-import org.eclipse.elk.core.options.CoreOptions
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.CommentStyles
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.annotations.StringAnnotation
-import de.cau.cs.kieler.annotations.IntAnnotation
-import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.CommentStyles
+import org.eclipse.elk.core.options.CoreOptions
 
 /**
  * Display/Hides annotations on states.
@@ -41,11 +40,11 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 class ShowAnnotationsHook extends SynthesisHook {
 
     @Inject extension KEdgeExtensions
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension CommentStyles
     
     /** The related synthesis option */
-    public static final SynthesisOption SHOW_ANNOTATIONS_HOOK = SynthesisOption.createCheckOption("Show Annotations",
+    public static final SynthesisOption SHOW_ANNOTATIONS_HOOK = SynthesisOption.createCheckOption(ShowAnnotationsHook, "Show Annotations",
             false).setCategory(GeneralSynthesisOptions::DEBUGGING);
 
     override getDisplayedSynthesisOptions() {

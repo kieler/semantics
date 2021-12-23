@@ -53,6 +53,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 
 /**
  * Styles for {@link State}.
@@ -232,6 +233,7 @@ class StateStyles {
             fontSize = stateLabelTextSize
             suppressSelectability
             selectionTextUnderline = Underline.NONE // prevents default selection style
+            setProperty(KlighdProperties.IS_NODE_TITLE, true)
         ]
     }
 
@@ -242,7 +244,7 @@ class StateStyles {
         node.contentContainer.addKeywordLabel(components, 0) => [
             // Add surrounding space
             setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0)
-                
+            
             eAllContents.filter(KText).forEach[
                 fontSize = stateLabelTextSize
                 suppressSelectability
@@ -250,6 +252,7 @@ class StateStyles {
             ]
 
             children.head => [
+                setProperty(KlighdProperties.IS_NODE_TITLE, true)
                 setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 0, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
             ]
         ]
@@ -380,7 +383,7 @@ class StateStyles {
      */
     def getContentContainer(KNode node) {
         var KContainerRendering figure = node.getKContainerRendering;
-        while (figure != null) {
+        while (figure !== null) {
             if (figure.getProperty(IS_CONTENT_CONTAINER)) {
                 return figure;
             } else {
@@ -397,7 +400,7 @@ class StateStyles {
     private def getActionsContainer(KNode node) {
         val content = node.contentContainer;
         var container = content.getProperty(ACTIONS_CONTAINER);
-        if (container == null) {
+        if (container === null) {
             container = content.addInvisibleContainer;
             content.setProperty(ACTIONS_CONTAINER, container);
         }
@@ -411,7 +414,7 @@ class StateStyles {
     private def getDeclarationsContainer(KNode node) {
         val content = node.contentContainer;
         var container = content.getProperty(DECLARATIONS_CONTAINER);
-        if (container == null) {
+        if (container === null) {
             container = content.addInvisibleContainer;
             content.setProperty(DECLARATIONS_CONTAINER, container);
         }
@@ -478,7 +481,7 @@ class StateStyles {
                 edge.sourcePort = sourceNode.addHelperPort(reference, "output", name, PortSide::EAST)
                 edge.targetPort = targetNode.addHelperPort(reference, "input", name, PortSide::WEST)
                 sourceNode.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
-                sourceNode.addLayoutParam(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE) 
+                sourceNode.addLayoutParam(CoreOptions.PORT_LABELS_PLACEMENT, EnumSet.of(PortLabelPlacement.INSIDE)) 
                 sourceNode.addLayoutParam(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORT_LABELS, SizeConstraint.PORTS))
                 sourceNode.addLayoutParam(CoreOptions::PORT_LABELS_NEXT_TO_PORT_IF_POSSIBLE, true)
                 targetNode.addLayoutParam(CoreOptions::PORT_LABELS_NEXT_TO_PORT_IF_POSSIBLE, true)

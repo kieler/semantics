@@ -301,6 +301,24 @@ public interface KExpressionsFactory extends EFactory {
     ExternString createExternString();
 
     /**
+     * Returns a new object of class '<em>Special Access Expression</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Special Access Expression</em>'.
+     * @generated
+     */
+    SpecialAccessExpression createSpecialAccessExpression();
+
+    /**
+     * Returns a new object of class '<em>This Expression</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>This Expression</em>'.
+     * @generated
+     */
+    ThisExpression createThisExpression();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

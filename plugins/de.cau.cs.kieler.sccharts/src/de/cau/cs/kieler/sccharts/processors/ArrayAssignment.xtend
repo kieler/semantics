@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
@@ -23,6 +24,8 @@ import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -30,6 +33,13 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
+import de.cau.cs.kieler.scl.SCLFactory
+import java.util.Iterator
+import java.util.List
+import java.util.function.Supplier
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.xbase.lib.Functions.Function3
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
@@ -83,50 +93,92 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
      * y[0][0][1] = 1
      * y[0][1][0] = 2
      * y[0][1][1] = 3
+     * also expands { 1 to 5 } and { 1 to X }
      */
     def State transform(State rootState) {
         // Traverse all transitions
         rootState.allContainedActions.forEach[transformArrayAssignments]
+        
+        // Traverse all method bodies
+        rootState.allScopes.map[declarations.iterator].flatten.<Declaration, Iterator<? extends MethodImplementationDeclaration>>map[
+            if (it instanceof MethodImplementationDeclaration) {
+                #[it as MethodImplementationDeclaration].iterator
+            } else if (it instanceof ClassDeclaration) {
+                it.eAllContents.filter(MethodImplementationDeclaration)
+            } else {
+                null
+            }
+        ].filterNull.flatten.forEach[transformArrayAssignments]
+        
         rootState
     }
 
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [rootStates.forEach[transform]]
     }
-
+    
     private def void transformArrayAssignments(Action action) {
+        transformArrayAssignments(action, [
+            KEffectsFactory.eINSTANCE.createAssignment
+        ],[ EObject container, Assignment asm, List<Assignment> newAsms | 
+            val effects = (container as Action).effects
+            effects.addAll(effects.indexOf(asm), newAsms)
+            effects.remove(asm)
+            null
+        ])
+    }
+    
+    private def void transformArrayAssignments(MethodImplementationDeclaration method) {
+        transformArrayAssignments(method, [
+            SCLFactory.eINSTANCE.createAssignment
+        ],[ EObject container, Assignment asm, List<Assignment> newAsms | 
+            val statments = (container as MethodImplementationDeclaration).statements
+            statments.addAll(statments.indexOf(asm), newAsms.map[it as de.cau.cs.kieler.scl.Assignment])
+            statments.remove(asm)
+            newAsms.take((asm as de.cau.cs.kieler.scl.Assignment).semicolon ? newAsms.size : newAsms.size - 1).forEach[
+                (it as de.cau.cs.kieler.scl.Assignment).semicolon = true
+            ]
+            null
+        ])
+    }     
+
+    private def void transformArrayAssignments(EObject container, Supplier<Assignment> assignmentCreator, Function3<EObject, Assignment, List<Assignment>, Object> assignmentReplacer) {
         var again = false
         do {
             again = false
-            val assignments = action.allContainedVectorAssignments // only process assignmnets with vector values
+            val assignments = container.allContainedVectorAssignments // only process assignmnets with vector values
             for (assignment : assignments) {
                 assignment.expression = assignment.expression?.computeVectorValues
                 assignment.validate
-                if (assignment.reference.valuedObject !== null && assignment.reference.valuedObject.array &&
-                    assignment.expression instanceof VectorValue) {
+                if (assignment.reference.valuedObject !== null && assignment.reference.lowermostReference.valuedObject.array && assignment.expression instanceof VectorValue) {
                     var index = 0
                     var values = <Expression>newArrayList
                     values.addAll((assignment.expression as VectorValue).values)
+                    val List<Assignment> newAssignments = newArrayList
                     for (v : values) {
                         again = again || v instanceof VectorValue
-                        val newAss = action.createAssignment(assignment.reference.valuedObject, v)
-                        newAss.operator = assignment.operator
-                        newAss.reference.indices.clear
-                        for (i : assignment.reference.indices) {
-                            newAss.reference.indices.add(i.copy())
+                        val newAsm = assignmentCreator.get()
+                        newAssignments += newAsm
+                        newAsm.reference = assignment.reference.copy
+                        newAsm.expression = v
+                        newAsm.operator = assignment.operator
+                        val ref = newAsm.reference.lowermostReference
+                        ref.indices.clear
+                        for (i : assignment.reference.lowermostReference.indices) {
+                            ref.indices.add(i.copy())
                         }
-                        newAss.reference.indices.add(createIntValue(index++))
+                        ref.indices.add(createIntValue(index++))
                     }
                     
-                    action.effects.remove(assignment)
+                    assignmentReplacer.apply(container, assignment, newAssignments)
                 }
             }
         } while (again)
     }
     
-    private def allContainedVectorAssignments(Action a) {
+    private def allContainedVectorAssignments(EObject container) {
         val assignments = newLinkedHashSet
-        for (vv : a.eAllContents.filter(VectorValue).toIterable) {
+        for (vv : container.eAllContents.filter(VectorValue).toIterable) {
             var parent = vv.eContainer
             while(parent !== null) {
                 if (parent instanceof Assignment) {
@@ -179,8 +231,16 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
     }
 
     private def dispatch Expression computeVectorValues(VectorValue e) {
-        for (v : e.values.immutableCopy) {
-            v.replace(v.computeVectorValues)
+        if (e.range) {
+            val start = (e.values.head as IntValue).value
+            val end = (e.values.last as IntValue).value
+            e.values.clear
+            e.values.addAll((new IntegerRange(start, end)).map[createIntValue(it)])
+            e.range = false
+        } else {
+            for (v : e.values.immutableCopy) {
+                v.replace(v.computeVectorValues)
+            }
         }
         return e
     }
@@ -190,24 +250,25 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
     }
 
     private def validate(Assignment asm) {
-        if (asm.reference.valuedObject.array && !(asm.expression instanceof VectorValue) &&
-            !(asm.expression instanceof ValuedObjectReference)) {
-            if (asm.reference.indices.size != asm.reference.valuedObject.cardinalities.size) {
+        val targetRef = asm.reference.lowermostReference
+        val targetVO = targetRef.valuedObject
+        if (targetVO.array && !(asm.expression instanceof VectorValue) && !(asm.expression instanceof ValuedObjectReference)) {
+            if (targetRef.indices.size != targetVO.cardinalities.size) {
                 getEnvironment().errors.add(
-                    "Cardinalities do not match. " + asm.reference.serializeHR.toString + " is an array of dimension " +
-                        (asm.reference.valuedObject.cardinalities.size - asm.reference.indices.size) +
+                    "Cardinalities do not match. " + targetRef.serializeHR.toString + " is an array of dimension " +
+                        (targetVO.cardinalities.size - targetRef.indices.size) +
                         " but only a single value is given.", asm.eContainer, true)
             }
         }
-        if (asm.reference.valuedObject.array && asm.expression instanceof VectorValue) {
-            if (asm.reference.valuedObject.cardinalities.drop(asm.reference.indices.size).empty) {
+        if (targetVO.array && asm.expression instanceof VectorValue) {
+            if (targetVO.cardinalities.drop(targetRef.indices.size).empty) {
                 getEnvironment().errors.add(
-                    "Cardinalities do not match. " + asm.reference.serializeHR.toString +
+                    "Cardinalities do not match. " + targetRef.serializeHR.toString +
                         " is not an array but a vector of size " + (asm.expression as VectorValue).values.size +
                         " is given.", asm.eContainer, true)
             }
             var depth = 0
-            for (card : asm.reference.valuedObject.cardinalities.drop(asm.reference.indices.size)) {
+            for (card : targetVO.cardinalities.drop(targetRef.indices.size)) {
                 if (card instanceof IntValue) {
                     var expressions = #[asm.expression]
                     for (var d = 0; d < depth; d++) {
@@ -217,7 +278,7 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
                                 deeperExpressions += e.values
                             } else if (!(e instanceof ValuedObjectReference)) {
                                 getEnvironment().errors.add(
-                                    "Cardinalities do not match. " + asm.reference.serializeHR.toString +
+                                    "Cardinalities do not match. " + targetRef.serializeHR.toString +
                                         " at dimension " + d + " is an array of size " + card.value +
                                         " but only a single value is given.", asm.eContainer, true)
                             }
@@ -228,13 +289,13 @@ class ArrayAssignment extends SCChartsProcessor implements Traceable {
                         if (e instanceof VectorValue) {
                             if (e.values.size > card.value) {
                                 getEnvironment().errors.add(
-                                    "Cardinalities do not match. " + asm.reference.serializeHR.toString +
+                                    "Cardinalities do not match. " + targetRef.serializeHR.toString +
                                         " at dimension " + depth + " is an array of size " + card.value +
                                         " but a vector of size " + e.values.size + " is given.", asm.eContainer, true)
                             }
                         } else if (!(e instanceof ValuedObjectReference)) {
                             getEnvironment().errors.add(
-                                "Cardinalities do not match. " + asm.reference.serializeHR.toString +
+                                "Cardinalities do not match. " + targetRef.serializeHR.toString +
                                     " at dimension " + depth + " is an array of size " + card.value +
                                     " but only a single value is given.", asm.eContainer, true)
                         }

@@ -35,8 +35,10 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ThisExpression;
 import de.cau.cs.kieler.kexpressions.ValueTypeReference;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
@@ -521,8 +523,73 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 				}
 				else break;
 			case KExpressionsPackage.NULL_VALUE:
-				sequence_NullValue(context, (NullValue) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
+					sequence_BoolScheduleExpression_NullValue(context, (NullValue) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftExpressionsRule()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSumExpressionRule()
+						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getProductExpressionRule()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
+						|| rule == grammarAccess.getInitExpressionRule()
+						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getFbyExpressionRule()
+						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSfbyExpressionRule()
+						|| action == grammarAccess.getSfbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
+						|| rule == grammarAccess.getJsonValueRule()
+						|| rule == grammarAccess.getNullValueRule()) {
+					sequence_NullValue(context, (NullValue) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
@@ -862,6 +929,73 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 			case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE:
 				sequence_ScheduleObjectReference(context, (ScheduleObjectReference) semanticObject); 
 				return; 
+			case KExpressionsPackage.SPECIAL_ACCESS_EXPRESSION:
+				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
+					sequence_BoolScheduleExpression_SpecialAccessExpression(context, (SpecialAccessExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getShiftExpressionsRule()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSumExpressionRule()
+						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getProductExpressionRule()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
+						|| rule == grammarAccess.getInitExpressionRule()
+						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getFbyExpressionRule()
+						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSfbyExpressionRule()
+						|| action == grammarAccess.getSfbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getSpecialAccessExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
+					sequence_SpecialAccessExpression(context, (SpecialAccessExpression) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.STRING_VALUE:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
 					sequence_BoolScheduleExpression_StringValue(context, (StringValue) semanticObject); 
@@ -998,11 +1132,18 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.THIS_EXPRESSION:
+				sequence_ThisExpression(context, (ThisExpression) semanticObject); 
+				return; 
 			case KExpressionsPackage.VALUE_TYPE_REFERENCE:
 				sequence_ValueTypeReference(context, (ValueTypeReference) semanticObject); 
 				return; 
 			case KExpressionsPackage.VALUED_OBJECT:
-				if (rule == grammarAccess.getSimpleValuedObjectRule()) {
+				if (rule == grammarAccess.getReferenceValuedObjectRule()) {
+					sequence_ReferenceValuedObject(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getSimpleValuedObjectRule()) {
 					sequence_SimpleValuedObject(context, (ValuedObject) semanticObject); 
 					return; 
 				}
@@ -1088,7 +1229,11 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 				}
 				else break;
 			case KExpressionsPackage.VARIABLE_DECLARATION:
-				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+				if (rule == grammarAccess.getEnumMemberDeclarationRule()) {
+					sequence_EnumMemberDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
 					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
@@ -1183,15 +1328,29 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 				else break;
 			case KExtPackage.CLASS_DECLARATION:
 				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getClassDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
+						|| rule == grammarAccess.getClassDeclarationWOSemicolonRule()) {
 					sequence_ClassDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
+					sequence_ClassDeclarationWOSemicolon_EnumDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
 				else if (rule == grammarAccess.getDeclarationRule()
-						|| rule == grammarAccess.getClassDeclarationRule()
-						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
+						|| rule == grammarAccess.getClassDeclarationRule()) {
 					sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_ClassDeclaration_EnumDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEnumDeclarationWOSemicolonRule()) {
+					sequence_EnumDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEnumDeclarationRule()) {
+					sequence_EnumDeclaration(context, (ClassDeclaration) semanticObject); 
 					return; 
 				}
 				else break;
@@ -1244,17 +1403,11 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Contexts:
 	 *     DeclarationWOSemicolon returns ClassDeclaration
 	 *     ClassDeclarationWOSemicolon returns ClassDeclaration
-	 *     DeclarationOrMethodWOSemicolon returns ClassDeclaration
 	 *
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         access=AccessModifier? 
-	 *         const?='const'? 
-	 *         input?='input'? 
-	 *         output?='output'? 
-	 *         global?='global'? 
-	 *         static?='static'? 
 	 *         host?='host'? 
 	 *         (
 	 *             (type=ClassType name=EString? declarations+=DeclarationOrMethodWOSemicolon*) | 
@@ -1271,19 +1424,47 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Contexts:
+	 *     DeclarationOrMethodWOSemicolon returns ClassDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             host?='host'? 
+	 *             (
+	 *                 (type=ClassType name=EString? declarations+=DeclarationOrMethodWOSemicolon*) | 
+	 *                 (type=StructType name=EString? declarations+=DeclarationWOSemicolon*)
+	 *             ) 
+	 *             (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         ) | 
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             host?='host'? 
+	 *             type=EnumType 
+	 *             valuedObjects+=SimpleValuedObject 
+	 *             hostType=STRING? 
+	 *             declarations+=EnumMemberDeclaration 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         )
+	 *     )
+	 */
+	protected void sequence_ClassDeclarationWOSemicolon_EnumDeclarationWOSemicolon(ISerializationContext context, ClassDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Declaration returns ClassDeclaration
 	 *     ClassDeclaration returns ClassDeclaration
-	 *     DeclarationOrMethod returns ClassDeclaration
 	 *
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         access=AccessModifier? 
-	 *         const?='const'? 
-	 *         input?='input'? 
-	 *         output?='output'? 
-	 *         global?='global'? 
-	 *         static?='static'? 
 	 *         host?='host'? 
 	 *         ((type=ClassType name=EString? declarations+=DeclarationOrMethod*) | (type=StructType name=EString? declarations+=Declaration*)) 
 	 *         (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
@@ -1291,6 +1472,91 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     )
 	 */
 	protected void sequence_ClassDeclaration(ISerializationContext context, ClassDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DeclarationOrMethod returns ClassDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             host?='host'? 
+	 *             ((type=ClassType name=EString? declarations+=DeclarationOrMethod*) | (type=StructType name=EString? declarations+=Declaration*)) 
+	 *             (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         ) | 
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             host?='host'? 
+	 *             type=EnumType 
+	 *             valuedObjects+=SimpleValuedObject 
+	 *             hostType=STRING? 
+	 *             declarations+=EnumMemberDeclaration 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         )
+	 *     )
+	 */
+	protected void sequence_ClassDeclaration_EnumDeclaration(ISerializationContext context, ClassDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     EnumDeclarationWOSemicolon returns ClassDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         access=AccessModifier? 
+	 *         host?='host'? 
+	 *         type=EnumType 
+	 *         valuedObjects+=SimpleValuedObject 
+	 *         hostType=STRING? 
+	 *         declarations+=EnumMemberDeclaration 
+	 *         annotations+=CommentAnnotatonSL?
+	 *     )
+	 */
+	protected void sequence_EnumDeclarationWOSemicolon(ISerializationContext context, ClassDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     EnumDeclaration returns ClassDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         access=AccessModifier? 
+	 *         host?='host'? 
+	 *         type=EnumType 
+	 *         valuedObjects+=SimpleValuedObject 
+	 *         hostType=STRING? 
+	 *         declarations+=EnumMemberDeclaration 
+	 *         annotations+=CommentAnnotatonSL?
+	 *     )
+	 */
+	protected void sequence_EnumDeclaration(ISerializationContext context, ClassDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     EnumMemberDeclaration returns VariableDeclaration
+	 *
+	 * Constraint:
+	 *     (annotations+=QuotedStringAnnotation* valuedObjects+=SimpleValuedObject valuedObjects+=SimpleValuedObject* annotations+=CommentAnnotatonSL?)
+	 */
+	protected void sequence_EnumMemberDeclaration(ISerializationContext context, VariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1452,11 +1718,16 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         annotations+=Annotation* 
 	 *         access=AccessModifier? 
 	 *         (
-	 *             (reference=[NamedObject|NamespaceID] (genericParameters+=GenericParameter genericParameters+=GenericParameter*)?) | 
-	 *             (extern+=ExternString extern+=ExternString*)
+	 *             (
+	 *                 input?='input'? 
+	 *                 referenceContainer=[NamedObject|PrimeID]? 
+	 *                 reference=[NamedObject|PrimeID] 
+	 *                 (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
+	 *                 valuedObjects+=ReferenceValuedObject 
+	 *                 valuedObjects+=ReferenceValuedObject*
+	 *             ) | 
+	 *             (extern+=ExternString extern+=ExternString* valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
 	 *         ) 
-	 *         valuedObjects+=ValuedObject 
-	 *         valuedObjects+=ValuedObject* 
 	 *         annotations+=CommentAnnotatonSL?
 	 *     )
 	 */
@@ -1476,15 +1747,40 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         annotations+=Annotation* 
 	 *         access=AccessModifier? 
 	 *         (
-	 *             (reference=[NamedObject|NamespaceID] (genericParameters+=GenericParameter genericParameters+=GenericParameter*)?) | 
-	 *             (extern+=ExternString extern+=ExternString*)
+	 *             (
+	 *                 input?='input'? 
+	 *                 referenceContainer=[NamedObject|PrimeID]? 
+	 *                 reference=[NamedObject|PrimeID] 
+	 *                 (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
+	 *                 valuedObjects+=ReferenceValuedObject 
+	 *                 valuedObjects+=ReferenceValuedObject*
+	 *             ) | 
+	 *             (extern+=ExternString extern+=ExternString* valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
 	 *         ) 
-	 *         valuedObjects+=ValuedObject 
-	 *         valuedObjects+=ValuedObject* 
 	 *         annotations+=CommentAnnotatonSL?
 	 *     )
 	 */
 	protected void sequence_ReferenceDeclaration(ISerializationContext context, ReferenceDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ReferenceValuedObject returns ValuedObject
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=QuotedStringAnnotation* 
+	 *         name=PrimeID 
+	 *         cardinalities+=Expression* 
+	 *         (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
+	 *         (parameters+=Parameter parameters+=Parameter*)? 
+	 *         initialValue=Expression? 
+	 *         label=STRING?
+	 *     )
+	 */
+	protected void sequence_ReferenceValuedObject(ISerializationContext context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1609,7 +1905,6 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     (
 	 *         annotations+=QuotedStringAnnotation* 
 	 *         name=PrimeID 
-	 *         (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
 	 *         cardinalities+=Expression* 
 	 *         initialValue=Expression? 
 	 *         combineOperator=CombineOperator? 

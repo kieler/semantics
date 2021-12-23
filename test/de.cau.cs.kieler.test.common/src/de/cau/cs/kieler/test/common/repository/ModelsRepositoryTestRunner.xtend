@@ -37,7 +37,7 @@ import org.junit.runners.model.InitializationError
 import org.junit.runners.model.Statement
 
 import static org.junit.Assert.*
-import static extension de.cau.cs.kieler.simulation.testing.TestModelDataUtil.*
+
 import static extension java.lang.Integer.*
 
 /**
@@ -224,7 +224,7 @@ class ModelsRepositoryTestRunner extends Suite {
             if (ignoreRemainingTests) {
                 notifier.fireTestIgnored(this.describeChild(method))
             } else {
-                methodStopsExecution = method.getAnnotation(StopOnFailure) != null
+                methodStopsExecution = method.getAnnotation(StopOnFailure) !== null
                 super.runChild(method, notifier)
             }
         }

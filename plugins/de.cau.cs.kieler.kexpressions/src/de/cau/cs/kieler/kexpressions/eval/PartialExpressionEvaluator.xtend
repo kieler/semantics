@@ -330,9 +330,9 @@ class PartialExpressionEvaluator {
                 }
                 case MOD: createIntValue(op0 % op1)
                 case MULT: createIntValue(op0 * op1)
-                case SHIFT_LEFT: createIntValue(op0.shiftLeft(op1))
-                case SHIFT_RIGHT: createIntValue(op0.shiftRight(op1))
-                case SHIFT_RIGHT_UNSIGNED: createIntValue(op0.shiftRightUnsigned(op1))
+                case SHIFT_LEFT: createIntValue(op0 << op1)
+                case SHIFT_RIGHT: createIntValue(op0 >> op1)
+                case SHIFT_RIGHT_UNSIGNED: createIntValue(op0 >>> op1)
                 case SUB: createIntValue(op0 - op1)
                 default: null
             }

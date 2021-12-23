@@ -17,13 +17,17 @@ import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kexpressions.Call
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.PriorityProtocol
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.Schedulable
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCallExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -47,16 +51,15 @@ import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import java.util.List
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 import static de.cau.cs.kieler.kexpressions.keffects.DataDependencyType.*
 import static de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccess.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.MethodDeclaration
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCallExtensions
-import de.cau.cs.kieler.kexpressions.Call
-import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.keffects.Emission
 
 /** 
  * @author ssm
@@ -103,6 +106,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     @Inject extension KEffectsDependencyExtensions
     @Inject extension KExpressionsCallExtensions
     
+    @Accessors(PUBLIC_GETTER)
     protected val dependencies = <Dependency> newLinkedList
     
     /** You should use {@link processSubModel} to perform a dependency analysis on a sub model instance. */
@@ -180,12 +184,17 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         } else {        
             val writeVOI = new ValuedObjectIdentifier(assignment)
             
+            // Register parent VOR as reader is subRerence is present
+            if (assignment.reference.subReference !== null) {
+                assignment.processExpressionReader(assignment.reference, forkStack, valuedObjectAccessors)
+            }
+            
             // If a writer was detected, remove previously registered read accesses,
             // because the access is recognized as write and we don't want another write-read
             // dependency to be created.
             for (readAccess : valuedObjectAccessors.getAccesses(writeVOI).filter[ node == assignment ].toList) {
                 valuedObjectAccessors.removeAccess(writeVOI, readAccess)
-            }        
+            }
             
             for(index : assignment.indicesAndSubIndices) {
                 val indexReaderVOIs = assignment.processExpressionReader(index, forkStack, valuedObjectAccessors)
@@ -230,7 +239,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                     priority = sched.priority    
                 }
                 
-                val writeAccess = new ValuedObjectAccess(assignment, assignment.association, schedule, scheduleObject, priority, forkStack, writeVOI.isSpecificIdentifier)
+                val writeAccess = new ValuedObjectAccess(assignment, assignment.association, schedule, scheduleObject, priority, forkStack, writeVOI.isArraySpecificIdentifier)
                 writeAccess.isWriteAccess = true
                 valuedObjectAccessors.addAccess(writeVOI, writeAccess)
             }
@@ -274,10 +283,14 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     
     /** Protected prototype method to find dependencies in keffects assignments. */
     protected def void processEffect(Effect effect, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
-        val vor = if (effect instanceof ReferenceCallEffect) {
+        val vor = if (effect instanceof ValuedObjectReference) {
             effect
         } else if (effect instanceof PrintCallEffect) {
             effect.parameters.head.expression.asValuedObjectReference
+        } else if (effect instanceof Emission) {
+            effect.reference
+        } else {
+            return
         }
         val writeVOI = new ValuedObjectIdentifier(vor)
 
@@ -328,7 +341,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                     priority = sched.priority    
                 }
                 
-                val readAccess = new ValuedObjectAccess(node, node.association, schedule, scheduleObject, priority, forkStack, readVOI.isSpecificIdentifier)
+                val readAccess = new ValuedObjectAccess(node, node.association, schedule, scheduleObject, priority, forkStack, readVOI.isArraySpecificIdentifier)
                 valuedObjectAccessors.addAccess(readVOI, readAccess)
             } 
         }
@@ -343,14 +356,14 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
 
         // First, process the specific accesses, because they must also be checked against the generic accesses of 
         // the same valued object. The ValuedObjectIdentifier can retrieve the corresponding generic identifier.        
-        for (valuedObjectIdentifier : valuedObjects.filter[ isSpecificIdentifier ]) {
+        for (valuedObjectIdentifier : valuedObjects.filter[ isArraySpecificIdentifier ]) {
             val accesses = valuedObjectAccessors.map.get(valuedObjectIdentifier)
             valuedObjectIdentifier.processDependencies(accesses, true)
              
             additionalAccesses.putAll(valuedObjectIdentifier.genericIdentifier, accesses);
-        }    
+        }
         
-        for (valuedObjectIdentifier : valuedObjects.filter[ !isSpecificIdentifier ]) {
+        for (valuedObjectIdentifier : valuedObjects.filter[ !isArraySpecificIdentifier ]) {
             val accesses = valuedObjectAccessors.map.get(valuedObjectIdentifier)
             val specificAccesses = additionalAccesses.get(valuedObjectIdentifier)
             specificAccesses.addAll(accesses)

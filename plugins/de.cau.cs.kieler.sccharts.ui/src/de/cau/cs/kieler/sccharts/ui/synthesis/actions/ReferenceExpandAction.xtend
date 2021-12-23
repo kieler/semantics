@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis.actions
 
+import com.google.inject.Guice
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -41,6 +42,10 @@ class ReferenceExpandAction extends CollapseExpandAction {
     
     /** The action id */
     public static val String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction"
+    
+    new() {
+        Guice.createInjector().injectMembers(this)
+    }
 
     override execute(ActionContext context) {
         if (context.KNode.children.empty) {

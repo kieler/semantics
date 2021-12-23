@@ -41,15 +41,23 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		
 		///**
 		// * This grammar represents the Lustre equations that can be extracted in SCADE Suite.
-		// */ ScadeProgram hidden(WS, SL_COMMENT, ML_COMMENT):
-		//	(equations+=ScadeEquation
-		//	//        | emissions+=ScadeEmission
-		//	| assertions+=Assertion
-		//	| automatons+=Automaton)*;
+		// */
+		//ScadeProgram hidden (WS, SL_COMMENT, ML_COMMENT):
+		//    (
+		//        equations+=ScadeEquation
+		////        | emissions+=ScadeEmission
+		//        | assertions+=Assertion
+		//        | automatons+=Automaton
+		//    )*
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(equations+=ScadeEquation //        | emissions+=ScadeEmission
-		//| assertions+=Assertion | automatons+=Automaton)*
+		//    (
+		//        equations+=ScadeEquation
+		////        | emissions+=ScadeEmission
+		//        | assertions+=Assertion
+		//        | automatons+=Automaton
+		//    )*
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//equations+=ScadeEquation
@@ -105,25 +113,39 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//ScadeEquation:
-		//	('(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')' |
-		//	references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* |
-		//	references+=ValuedObjectString) operator=AssignOperator
-		//	expression=Expression
-		//	';';
+		//    (
+		//        // Left side: (x, y, ...) or x, y, ... or x
+		//        ('(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')')
+		//        | (references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)*)
+		//        | references+=ValuedObjectString
+		//    )
+		//    operator=AssignOperator
+		//    expression=Expression
+		//    ';'
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//('(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')' |
-		//references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* |
-		//references+=ValuedObjectString) operator=AssignOperator expression=Expression ';'
+		//(
+		//    // Left side: (x, y, ...) or x, y, ... or x
+		//    ('(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')')
+		//    | (references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)*)
+		//    | references+=ValuedObjectString
+		//)
+		//operator=AssignOperator
+		//expression=Expression
+		//';'
 		public Group getGroup() { return cGroup; }
 		
-		//('(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')' |
-		//references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* |
-		//references+=ValuedObjectString)
+		//(
+		//    // Left side: (x, y, ...) or x, y, ... or x
+		//    ('(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')')
+		//    | (references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)*)
+		//    | references+=ValuedObjectString
+		//)
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 		
-		//// Left side: (x, y, ...) or x, y, ... or x 
-		//'(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')'
+		//// Left side: (x, y, ...) or x, y, ... or x
+		//('(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')')
 		public Group getGroup_0_0() { return cGroup_0_0; }
 		
 		//'('
@@ -159,7 +181,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		//')'
 		public Keyword getRightParenthesisKeyword_0_0_5() { return cRightParenthesisKeyword_0_0_5; }
 		
-		//references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)*
+		//(references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)*)
 		public Group getGroup_0_1() { return cGroup_0_1; }
 		
 		//references+=ValuedObjectString
@@ -217,11 +239,14 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNamePrimeIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		
-		//ValuedObjectString kexpressions::Expression:
-		//	{ValuedObjectString} name=PrimeID;
+		//ValuedObjectString returns kexpressions::Expression:
+		//    {ValuedObjectString}
+		//    name=PrimeID
+		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{ValuedObjectString} name=PrimeID
+		//{ValuedObjectString}
+		//name=PrimeID
 		public Group getGroup() { return cGroup; }
 		
 		//{ValuedObjectString}
@@ -252,28 +277,27 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		private final Keyword cRightParenthesisKeyword_0_5 = (Keyword)cGroup_0.eContents().get(5);
 		private final RuleCall cValuedObjectStringParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
+		//// ValuedObjectReferences are not supported, instead just plain strings are used
 		//@Override
-		//ValuedObjectTestExpression kexpressions::Expression:
-		//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression (','
-		//	subExpressions+=ValuedObjectReference)? ')'
-		//	| ValuedObjectString;
+		//ValuedObjectTestExpression returns kexpressions::Expression:
+		//    {OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression (',' subExpressions+=ValuedObjectReference)? ')'
+		//    | ValuedObjectString;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression (','
-		//subExpressions+=ValuedObjectReference)? ')' | ValuedObjectString
+		//{OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression (',' subExpressions+=ValuedObjectReference)? ')'
+		//| ValuedObjectString
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression (','
-		//subExpressions+=ValuedObjectReference)? ')'
+		//{OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression (',' subExpressions+=ValuedObjectReference)? ')'
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//{OperatorExpression}
 		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
 		
-		//operator=(PreOperator | ValOperator)
+		//operator=(PreOperator|ValOperator)
 		public Assignment getOperatorAssignment_0_1() { return cOperatorAssignment_0_1; }
 		
-		//(PreOperator | ValOperator)
+		//(PreOperator|ValOperator)
 		public Alternatives getOperatorAlternatives_0_1_0() { return cOperatorAlternatives_0_1_0; }
 		
 		//PreOperator
@@ -404,11 +428,15 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	///**
 	// * This grammar represents the Lustre equations that can be extracted in SCADE Suite.
-	// */ ScadeProgram hidden(WS, SL_COMMENT, ML_COMMENT):
-	//	(equations+=ScadeEquation
-	//	//        | emissions+=ScadeEmission
-	//	| assertions+=Assertion
-	//	| automatons+=Automaton)*;
+	// */
+	//ScadeProgram hidden (WS, SL_COMMENT, ML_COMMENT):
+	//    (
+	//        equations+=ScadeEquation
+	////        | emissions+=ScadeEmission
+	//        | assertions+=Assertion
+	//        | automatons+=Automaton
+	//    )*
+	//;
 	public ScadeProgramElements getScadeProgramAccess() {
 		return pScadeProgram;
 	}
@@ -418,11 +446,16 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//ScadeEquation:
-	//	('(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')' |
-	//	references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* |
-	//	references+=ValuedObjectString) operator=AssignOperator
-	//	expression=Expression
-	//	';';
+	//    (
+	//        // Left side: (x, y, ...) or x, y, ... or x
+	//        ('(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')')
+	//        | (references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)*)
+	//        | references+=ValuedObjectString
+	//    )
+	//    operator=AssignOperator
+	//    expression=Expression
+	//    ';'
+	//;
 	public ScadeEquationElements getScadeEquationAccess() {
 		return pScadeEquation;
 	}
@@ -431,8 +464,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getScadeEquationAccess().getRule();
 	}
 	
-	//ValuedObjectString kexpressions::Expression:
-	//	{ValuedObjectString} name=PrimeID;
+	//ValuedObjectString returns kexpressions::Expression:
+	//    {ValuedObjectString}
+	//    name=PrimeID
+	//;
 	public ValuedObjectStringElements getValuedObjectStringAccess() {
 		return pValuedObjectString;
 	}
@@ -441,11 +476,11 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getValuedObjectStringAccess().getRule();
 	}
 	
+	//// ValuedObjectReferences are not supported, instead just plain strings are used
 	//@Override
-	//ValuedObjectTestExpression kexpressions::Expression:
-	//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression (','
-	//	subExpressions+=ValuedObjectReference)? ')'
-	//	| ValuedObjectString;
+	//ValuedObjectTestExpression returns kexpressions::Expression:
+	//    {OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression (',' subExpressions+=ValuedObjectReference)? ')'
+	//    | ValuedObjectString;
 	public ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
 		return pValuedObjectTestExpression;
 	}
@@ -454,24 +489,40 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getValuedObjectTestExpressionAccess().getRule();
 	}
 	
+	///*
+	// * -------------------- Lexical tokens
+	// */
 	//@Override
 	//terminal ML_COMMENT:
-	//	'(*'->'*)';
+	//    '(*' -> '*)'
+	//;
 	public TerminalRule getML_COMMENTRule() {
 		return tML_COMMENT;
 	}
 	
 	//@Override
 	//terminal SL_COMMENT:
-	//	'--' !('\n' | '\r')* ('\r'? '\n')?;
+	//    '--' !('\n'|'\r')* ('\r'? '\n')?
+	//;
 	public TerminalRule getSL_COMMENTRule() {
 		return tSL_COMMENT;
 	}
 	
-	//java.lang.RuntimeException: No EObjectDescription could be found in Scope ParserRule.hiddenTokens for Grammar'de.cau.cs.kieler.lustre.scade.ScadeEquations'.rules[5]->TerminalRule'SL_COMMENT'
-	//Semantic Object: Grammar'de.cau.cs.kieler.lustre.Lustre'.rules[0]->ParserRule'LustreProgram'
-	//URI: file:/home/als/eclipses/kieler-semantics-oo/git/semantics/plugins/de.cau.cs.kieler.lustre/bin/de/cau/cs/kieler/lustre/Lustre.xtext
-	//EStructuralFeature: xtext::ParserRule.hiddenTokens
+	///**
+	// * The syntax for this grammar is extracted from the Lustre V6 reference manual.
+	// * http://www-verimag.imag.fr/DIST-TOOLS/SYNCHRONE/lustre-v6/doc/lv6-ref-man.pdf
+	// *
+	// * @author lgr
+	// */
+	//LustreProgram hidden(WS, SL_COMMENT, ML_COMMENT):
+	//    ('include' (includes+=STRING | includes+=STRING))*
+	//    (
+	//        ('const' constants+=VariableDeclarationInit (';' constants+=VariableDeclarationInit)* ';')
+	//        | ('type' types+=TypeDeclaration (';' types+=TypeDeclaration)* ';')
+	//        | externals+=ExternalNodeDeclaration
+	//        | nodes+=NodeDeclaration
+	//    )*
+	//;
 	public LustreGrammarAccess.LustreProgramElements getLustreProgramAccess() {
 		return gaLustre.getLustreProgramAccess();
 	}
@@ -482,9 +533,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//@Override
 	//enum ValueType returns kexpressions::ValueType:
-	//	BOOL="bool"
-	//	| INT="int"
-	//	| FLOAT="real";
+	//    BOOL="bool"
+	//    | INT="int"
+	//    | FLOAT="real"
+	//;
 	public LustreGrammarAccess.ValueTypeElements getValueTypeAccess() {
 		return gaLustre.getValueTypeAccess();
 	}
@@ -494,7 +546,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum EnumType returns kexpressions::ValueType:
-	//	ENUM="enum";
+	//    ENUM="enum"
+	//;
 	public LustreGrammarAccess.EnumTypeElements getEnumTypeAccess() {
 		return gaLustre.getEnumTypeAccess();
 	}
@@ -506,13 +559,24 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// Type Declaration
 	//// TODO: Does not work: this should be a VariableDeclaration too, since it can be a node parameter and thus must be scoped
 	//TypeDeclaration:
-	//	{TypeDeclaration} name=ID ('=' (type=ValueType
-	//	| type=EnumType '{' enums+=PrimeID (',' enums+=PrimeID)* '}' | type=StructType
-	//	'{'
-	//	variables+=(VariableDeclarationInit | VariableDeclarationNoInit) (';' variables+=(VariableDeclarationInit |
-	//	VariableDeclarationNoInit))*
-	//	';'?
-	//	'}'))?;
+	//    {TypeDeclaration}
+	//    name=ID
+	//    ('='
+	//        (
+	//            type=ValueType
+	//            | (type=EnumType '{' enums+=PrimeID (',' enums+=PrimeID)* '}')
+	//            // TODO: StructType may also be left empty
+	//            | (
+	//                type=StructType
+	//                '{'
+	//                variables+=(VariableDeclarationInit|VariableDeclarationNoInit)
+	//                (';' variables+=(VariableDeclarationInit|VariableDeclarationNoInit))*
+	//                (';')?
+	//                '}'
+	//            )
+	//        )
+	//    )?
+	//;
 	public LustreGrammarAccess.TypeDeclarationElements getTypeDeclarationAccess() {
 		return gaLustre.getTypeDeclarationAccess();
 	}
@@ -522,10 +586,15 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//// External Node Declaration
-	//ExternalNodeDeclaration kexpressions::Declaration:
-	//	{ExternalNodeDeclaration} isUnsafe?='unsafe'? 'extern' ('function' | hasState?='node') valuedObjects+=NodeValuedObject
-	//	('(' inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' | '()')
-	//	'returns' ('(' outputs+=VariableDeclarationNoInit (';' outputs+=VariableDeclarationNoInit)* ')' | '()') ';'?;
+	//ExternalNodeDeclaration returns kexpressions::Declaration:
+	//    {ExternalNodeDeclaration}
+	//    (isUnsafe?='unsafe')? 'extern' ('function' | hasState?='node')
+	//    valuedObjects+=NodeValuedObject
+	//    ('(' inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' | '()')
+	//    'returns'
+	//    ('(' outputs+=VariableDeclarationNoInit (';' outputs+=VariableDeclarationNoInit)* ')' | '()')
+	//    (';')?
+	//;
 	public LustreGrammarAccess.ExternalNodeDeclarationElements getExternalNodeDeclarationAccess() {
 		return gaLustre.getExternalNodeDeclarationAccess();
 	}
@@ -534,9 +603,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getExternalNodeDeclarationAccess().getRule();
 	}
 	
-	//VariableDeclarationNoInit kexpressions::VariableDeclaration:
-	//	{LustreVariableDeclaration} valuedObjects+=ValuedObjectNoInit (',' valuedObjects+=ValuedObjectNoInit)* ':'
-	//	type=ValueType ('when' clockExpr=BoolExpression)?;
+	//VariableDeclarationNoInit returns kexpressions::VariableDeclaration:
+	//    {LustreVariableDeclaration}
+	//    valuedObjects+=ValuedObjectNoInit (',' valuedObjects+=ValuedObjectNoInit)* ':' type=ValueType ('when' clockExpr=BoolExpression)?
+	//;
 	public LustreGrammarAccess.VariableDeclarationNoInitElements getVariableDeclarationNoInitAccess() {
 		return gaLustre.getVariableDeclarationNoInitAccess();
 	}
@@ -545,8 +615,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getVariableDeclarationNoInitAccess().getRule();
 	}
 	
-	//VariableDeclarationInit kexpressions::VariableDeclaration:
-	//	{LustreVariableDeclaration} valuedObjects+=ValuedObjectInit ('when' clockExpr=BoolExpression)?;
+	//VariableDeclarationInit returns kexpressions::VariableDeclaration:
+	//    {LustreVariableDeclaration}
+	//    valuedObjects+=ValuedObjectInit ('when' clockExpr=BoolExpression)?
+	//;
 	public LustreGrammarAccess.VariableDeclarationInitElements getVariableDeclarationInitAccess() {
 		return gaLustre.getVariableDeclarationInitAccess();
 	}
@@ -555,8 +627,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getVariableDeclarationInitAccess().getRule();
 	}
 	
-	//ValuedObjectNoInit kexpressions::ValuedObject:
-	//	name=PrimeID ('^' cardinalities+=Expression)*;
+	//ValuedObjectNoInit returns kexpressions::ValuedObject:
+	//    name=PrimeID
+	//    ('^' cardinalities+=Expression)*
+	//;
 	public LustreGrammarAccess.ValuedObjectNoInitElements getValuedObjectNoInitAccess() {
 		return gaLustre.getValuedObjectNoInitAccess();
 	}
@@ -565,9 +639,13 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getValuedObjectNoInitAccess().getRule();
 	}
 	
-	//ValuedObjectInit kexpressions::ValuedObject:
-	//	{LustreValuedObject} name=PrimeID ('^' cardinalities+=Expression)* (':' type=ValueType) ('='
-	//	initialValue=Expression)?;
+	//ValuedObjectInit returns kexpressions::ValuedObject:
+	//    {LustreValuedObject}
+	//    name=PrimeID
+	//    ('^' cardinalities+=Expression)*
+	//    (':' type=ValueType)
+	//    ('=' initialValue=Expression)?
+	//;
 	public LustreGrammarAccess.ValuedObjectInitElements getValuedObjectInitAccess() {
 		return gaLustre.getValuedObjectInitAccess();
 	}
@@ -577,18 +655,28 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//// Node Declaration
-	//NodeDeclaration kexpressions::Declaration:
-	//	{NodeDeclaration} isUnsafe?='unsafe'? ('function' | hasState?='node') valuedObjects+=NodeValuedObject ('('
-	//	inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' | '()')
-	//	'returns' ('(' outputs+=VariableDeclarationNoInit (';' outputs+=VariableDeclarationNoInit)* ')' | '()')
-	//	';'? ('const' constants+=VariableDeclarationInit (';' constants+=VariableDeclarationInit)* ';' | 'var'
-	//	variables+=(VariableDeclarationInit | VariableDeclarationNoInit) (';' variables+=(VariableDeclarationInit |
-	//	VariableDeclarationNoInit))* ';')*
-	//	'let' (equations+=Equation
-	//	| emissions+=Emission
-	//	| assertions+=Assertion
-	//	| automatons+=Automaton)*
-	//	'tel' ('.' | ';'?);
+	//NodeDeclaration returns kexpressions::Declaration:
+	//    {NodeDeclaration}
+	//    (isUnsafe?='unsafe')? ('function' | hasState?='node')
+	//    valuedObjects+=NodeValuedObject
+	//    ('(' inputs+=VariableDeclarationNoInit (';' inputs+=VariableDeclarationNoInit)* ')' | '()')
+	//    'returns'
+	//    ('(' outputs+=VariableDeclarationNoInit (';' outputs+=VariableDeclarationNoInit)* ')' | '()')
+	//    ';'?
+	//    (
+	//        ('const' constants+=VariableDeclarationInit (';' constants+=VariableDeclarationInit)* ';')
+	//        | ('var' variables+=(VariableDeclarationInit|VariableDeclarationNoInit) (';' variables+=(VariableDeclarationInit|VariableDeclarationNoInit))* ';')
+	//    )*
+	//    'let'
+	//    (
+	//        equations+=Equation
+	//        | emissions+=Emission
+	//        | assertions+=Assertion
+	//        | automatons+=Automaton
+	//    )*
+	//    'tel'
+	//    ('.' | (';')?)
+	//;
 	public LustreGrammarAccess.NodeDeclarationElements getNodeDeclarationAccess() {
 		return gaLustre.getNodeDeclarationAccess();
 	}
@@ -597,8 +685,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getNodeDeclarationAccess().getRule();
 	}
 	
-	//NodeValuedObject kexpressions::ValuedObject:
-	//	{NodeValuedObject} name=ID;
+	//NodeValuedObject returns kexpressions::ValuedObject:
+	//    {NodeValuedObject}
+	//    name=ID
+	//;
 	public LustreGrammarAccess.NodeValuedObjectElements getNodeValuedObjectAccess() {
 		return gaLustre.getNodeValuedObjectAccess();
 	}
@@ -607,12 +697,18 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getNodeValuedObjectAccess().getRule();
 	}
 	
-	//Equation keffects::Assignment:
-	//	{Equation} ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-	//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-	//	references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
-	//	expression=Expression
-	//	';';
+	//Equation returns keffects::Assignment:
+	//    {Equation}
+	//    (
+	//        // Left side: (x, y, ...) or x, y, ... or x
+	//        ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (',' references+=ValuedObjectReference)* ')')
+	//        | (references+=ValuedObjectReference ',' references+=ValuedObjectReference (',' references+=ValuedObjectReference)*)
+	//        | reference=ValuedObjectReference
+	//    )
+	//    operator=AssignOperator
+	//    expression=Expression
+	//    ';'
+	//;
 	public LustreGrammarAccess.EquationElements getEquationAccess() {
 		return gaLustre.getEquationAccess();
 	}
@@ -621,8 +717,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getEquationAccess().getRule();
 	}
 	
-	//Emission keffects::Emission:
-	//	'emit' (ValuedEmission | PureEmission) ';';
+	//Emission returns keffects::Emission:
+	//    'emit' (ValuedEmission | PureEmission) ';'
+	//;
 	public LustreGrammarAccess.EmissionElements getEmissionAccess() {
 		return gaLustre.getEmissionAccess();
 	}
@@ -631,9 +728,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getEmissionAccess().getRule();
 	}
 	
-	//Assertion kexpressions::Expression:
-	//	{Assertion}
-	//	'assert' expr=Expression ';';
+	//Assertion returns kexpressions::Expression:
+	//    {Assertion}
+	//    'assert' expr=Expression ';'
+	//;
 	public LustreGrammarAccess.AssertionElements getAssertionAccess() {
 		return gaLustre.getAssertionAccess();
 	}
@@ -643,7 +741,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//Automaton:
-	//	'automaton' name=ID states+=AState states+=AState* 'returns' '..' ';';
+	//    'automaton' name=ID states+=AState (states+=AState)* 'returns' '..' ';'
+	//;
 	public LustreGrammarAccess.AutomatonElements getAutomatonAccess() {
 		return gaLustre.getAutomatonAccess();
 	}
@@ -653,15 +752,25 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//AState:
-	//	initial?='initial'?
-	//	'state'
-	//	valuedObject=StateValuedObject ('const' constants+=VariableDeclarationInit ';' (constants+=VariableDeclarationInit
-	//	';')* | 'var' variables+=VariableDeclarationInit (';' variables+=VariableDeclarationInit)* ';')* ('let'
-	//	(equations+=Equation
-	//	| emissions+=Emission
-	//	| assertions+=Assertion
-	//	| automatons+=Automaton)*
-	//	'tel')? ('.' | ';'?) transitions+=ATransition*;
+	//    (initial?='initial')?
+	//    'state'
+	//    valuedObject=StateValuedObject
+	//    (
+	//        ('const' constants+=VariableDeclarationInit ';' (constants+=VariableDeclarationInit ';')* )
+	//        | ('var' variables+=VariableDeclarationInit (';' variables+=VariableDeclarationInit)* ';')
+	//    )*
+	//    // Body
+	//    ('let'
+	//        (
+	//            equations+=Equation
+	//            | emissions+=Emission
+	//            | assertions+=Assertion
+	//            | automatons+=Automaton
+	//        )*
+	//    'tel')?
+	//    ('.' | (';')?)
+	//    transitions+=ATransition*
+	//;
 	public LustreGrammarAccess.AStateElements getAStateAccess() {
 		return gaLustre.getAStateAccess();
 	}
@@ -670,8 +779,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getAStateAccess().getRule();
 	}
 	
-	//StateValuedObject kexpressions::ValuedObject:
-	//	{StateValuedObject} name=ID;
+	//StateValuedObject returns kexpressions::ValuedObject:
+	//    {StateValuedObject}
+	//    name=ID
+	//;
 	public LustreGrammarAccess.StateValuedObjectElements getStateValuedObjectAccess() {
 		return gaLustre.getStateValuedObjectAccess();
 	}
@@ -681,7 +792,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//ATransition:
-	//	{ATransition} ('until' | strong?='unless') actions+=AnAction*;
+	//    {ATransition}
+	//    ('until'|strong?='unless') actions+=AnAction*
+	//;
 	public LustreGrammarAccess.ATransitionElements getATransitionAccess() {
 		return gaLustre.getATransitionAccess();
 	}
@@ -691,8 +804,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//AnAction:
-	//	('if' condition=BoolExpression)? ('do' (effects+=Equation | effects+=Emission)*)? ('restart' | history?='resume')
-	//	nextState=[StateValuedObject] ';';
+	//    ('if' condition=BoolExpression)? ('do' (effects+=Equation | effects+=Emission)*)? ('restart'|history?='resume') nextState=[StateValuedObject] ';'
+	//;
 	public LustreGrammarAccess.AnActionElements getAnActionAccess() {
 		return gaLustre.getAnActionAccess();
 	}
@@ -701,13 +814,59 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getAnActionAccess().getRule();
 	}
 	
+	///**
+	// * -------------------- Expression Adjustments
+	// *
+	// * The precedence hierarchy is not as follows:
+	// *
+	// * Expression
+	// * + BoolExpression
+	// *   + InitExpression
+	// *     + TernaryOperation *
+	// *       + ImpliesExpression
+	// *         + LogicalXorExpression
+	// *           + LogicalOrExpression
+	// *             + LogicalAndExpression
+	// *               + CompareExpression
+	// *                 + NotOrValuedExpression
+	// *                   + ValuedExpression (see valued expression below)
+	// *                   + NotExpression *
+	// *                     + AtomicExpression *
+	// *                       + BoolValue
+	// *                       + ValuedObjectTestExpression
+	// *                         + ValuedObjectReference
+	// *                       + FunctionCall
+	// *                       + TextExpression
+	// *                       + NoneOfExpression
+	// *                       + NorExpression
+	// * + ValuedExpression
+	// *   + SumExpression
+	// *      + ProductExpression
+	// *                  + IntDivExpression
+	// *                    + NegExpression *
+	// *                      + FbyExpression
+	// *                        + WhenExpression
+	// *                          + CurrentExpression
+	// *                            + PreExpression
+	// *                              + AtomicValuedExpression *
+	// *                                + IntValue
+	// *                                + FloatValue
+	// *                                + StringValue
+	// *                                + AtomicExpression
+	// *
+	// */
+	//// Needs override because of mod operator is 'mod' not '%' and IntDivExpressin comes next
 	//@Override
-	//ProductExpression kexpressions::Expression:
-	//	IntDivExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=MultOperator
-	//	subExpressions+=IntDivExpression ('*' subExpressions+=IntDivExpression)* |
-	//	{kexpressions::OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=IntDivExpression ('/'
-	//	subExpressions+=IntDivExpression)* | {kexpressions::OperatorExpression.subExpressions+=current} operator=ModOperator
-	//	subExpressions+=IntDivExpression ('mod' subExpressions+=IntDivExpression)*)*;
+	//ProductExpression returns kexpressions::Expression:
+	//    IntDivExpression
+	//    (
+	//    ({kexpressions::OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression ('*' subExpressions+=IntDivExpression)*)
+	//    |
+	//    ({kexpressions::OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=IntDivExpression ('/' subExpressions+=IntDivExpression)*)
+	//    |
+	//    ({kexpressions::OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression ('mod' subExpressions+=IntDivExpression)*)
+	//    )*
+	//;
 	public LustreGrammarAccess.ProductExpressionElements getProductExpressionAccess() {
 		return gaLustre.getProductExpressionAccess();
 	}
@@ -716,9 +875,13 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getProductExpressionAccess().getRule();
 	}
 	
-	//IntDivExpression kexpressions::Expression:
-	//	NegExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=IntDivOperator
-	//	subExpressions+=NegExpression) ('div' subExpressions+=AtomicValuedExpression)*)?;
+	//IntDivExpression returns kexpressions::Expression:
+	//    NegExpression
+	//    ({kexpressions::OperatorExpression.subExpressions+=current}
+	//        (operator=IntDivOperator subExpressions+=NegExpression)
+	//        ('div' subExpressions+=AtomicValuedExpression)*
+	//    )?
+	//;
 	public LustreGrammarAccess.IntDivExpressionElements getIntDivExpressionAccess() {
 		return gaLustre.getIntDivExpressionAccess();
 	}
@@ -727,9 +890,13 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getIntDivExpressionAccess().getRule();
 	}
 	
+	//// Skip TernaryOperation after NegExpression
 	//@Override
-	//NegExpression kexpressions::Expression:
-	//	{kexpressions::OperatorExpression} operator=SubOperator subExpressions+=NegExpression | FbyExpression;
+	//NegExpression returns kexpressions::Expression:
+	//    {kexpressions::OperatorExpression}
+	//    operator=SubOperator subExpressions+=(NegExpression)
+	//    | FbyExpression
+	//;
 	public LustreGrammarAccess.NegExpressionElements getNegExpressionAccess() {
 		return gaLustre.getNegExpressionAccess();
 	}
@@ -738,10 +905,14 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getNegExpressionAccess().getRule();
 	}
 	
+	//// Force WhenExpression, CurrentExpression and PreExpression inbetween FbyExpression and AtomicValuedExpression
 	//@Override
-	//FbyExpression kexpressions::Expression:
-	//	WhenExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=FbyOperator
-	//	subExpressions+=WhenExpression) ('fby' subExpressions+=WhenExpression)*)?;
+	//FbyExpression returns kexpressions::Expression:
+	//    WhenExpression
+	//    ({kexpressions::OperatorExpression.subExpressions+=current}
+	//        (operator=FbyOperator subExpressions+=WhenExpression)
+	//        ('fby' subExpressions+=WhenExpression)*
+	//    )?;
 	public LustreGrammarAccess.FbyExpressionElements getFbyExpressionAccess() {
 		return gaLustre.getFbyExpressionAccess();
 	}
@@ -750,10 +921,11 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getFbyExpressionAccess().getRule();
 	}
 	
-	//WhenExpression kexpressions::Expression:
-	//	{kexpressions::OperatorExpression} subExpressions+=AtomicValuedExpression operator=WhenOperator
-	//	subExpressions+=AtomicValuedExpression
-	//	| CurrentExpression;
+	//WhenExpression returns kexpressions::Expression:
+	//    {kexpressions::OperatorExpression}
+	//    subExpressions += AtomicValuedExpression operator=WhenOperator subExpressions += AtomicValuedExpression
+	//    | CurrentExpression
+	//;
 	public LustreGrammarAccess.WhenExpressionElements getWhenExpressionAccess() {
 		return gaLustre.getWhenExpressionAccess();
 	}
@@ -762,9 +934,11 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getWhenExpressionAccess().getRule();
 	}
 	
-	//CurrentExpression kexpressions::Expression:
-	//	{kexpressions::OperatorExpression} operator=CurrentOperator subExpressions+=AtomicValuedExpression
-	//	| PreExpression;
+	//CurrentExpression returns kexpressions::Expression:
+	//    {kexpressions::OperatorExpression}
+	//    operator=CurrentOperator subExpressions += AtomicValuedExpression
+	//    | PreExpression
+	//;
 	public LustreGrammarAccess.CurrentExpressionElements getCurrentExpressionAccess() {
 		return gaLustre.getCurrentExpressionAccess();
 	}
@@ -773,9 +947,11 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getCurrentExpressionAccess().getRule();
 	}
 	
-	//PreExpression kexpressions::Expression:
-	//	{kexpressions::OperatorExpression} operator=PreOperator subExpressions+=LastExpression
-	//	| LastExpression;
+	//PreExpression returns kexpressions::Expression:
+	//    {kexpressions::OperatorExpression}
+	//    operator=PreOperator subExpressions+=LastExpression
+	//    | LastExpression
+	//;
 	public LustreGrammarAccess.PreExpressionElements getPreExpressionAccess() {
 		return gaLustre.getPreExpressionAccess();
 	}
@@ -784,9 +960,11 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getPreExpressionAccess().getRule();
 	}
 	
-	//LastExpression kexpressions::Expression:
-	//	{kexpressions::OperatorExpression} operator=LastOperator subExpressions+=AtomicValuedExpression
-	//	| AtomicValuedExpression;
+	//LastExpression returns kexpressions::Expression:
+	//    {kexpressions::OperatorExpression}
+	//    operator=LastOperator subExpressions+=AtomicValuedExpression
+	//    | AtomicValuedExpression
+	//;
 	public LustreGrammarAccess.LastExpressionElements getLastExpressionAccess() {
 		return gaLustre.getLastExpressionAccess();
 	}
@@ -795,9 +973,11 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getLastExpressionAccess().getRule();
 	}
 	
+	//// Force TernaryOperation, InitExpression, ImpliesExpression and LogicalXorExpression inbetween BoolExpression and LogicalOrExpression
 	//@Override
-	//BoolExpression kexpressions::Expression:
-	//	InitExpression;
+	//BoolExpression returns kexpressions::Expression:
+	//    InitExpression
+	//;
 	public LustreGrammarAccess.BoolExpressionElements getBoolExpressionAccess() {
 		return gaLustre.getBoolExpressionAccess();
 	}
@@ -807,9 +987,12 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//@Override
-	//InitExpression kexpressions::Expression:
-	//	TernaryOperation ({kexpressions::OperatorExpression.subExpressions+=current} (operator=InitOperator
-	//	subExpressions+=TernaryOperation) ('->' subExpressions+=TernaryOperation)*)?;
+	//InitExpression returns kexpressions::Expression:
+	//    TernaryOperation
+	//    ({kexpressions::OperatorExpression.subExpressions+=current}
+	//        (operator=InitOperator subExpressions+=TernaryOperation)
+	//        ('->' subExpressions+=TernaryOperation)*
+	//    )?;
 	public LustreGrammarAccess.InitExpressionElements getInitExpressionAccess() {
 		return gaLustre.getInitExpressionAccess();
 	}
@@ -818,11 +1001,13 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getInitExpressionAccess().getRule();
 	}
 	
+	//// Overwide Ternary operator to support if ... then ... else
 	//@Override
-	//TernaryOperation kexpressions::Expression:
-	//	{kexpressions::OperatorExpression} operator=ConditionalOperator subExpressions+=TernaryOperation 'then'
-	//	subExpressions+=TernaryOperation 'else' subExpressions+=TernaryOperation
-	//	| ImpliesExpression;
+	//TernaryOperation returns kexpressions::Expression:
+	//    {kexpressions::OperatorExpression}
+	//    operator=ConditionalOperator subExpressions += TernaryOperation 'then' subExpressions += TernaryOperation 'else' subExpressions += TernaryOperation
+	//    | ImpliesExpression
+	//;
 	public LustreGrammarAccess.TernaryOperationElements getTernaryOperationAccess() {
 		return gaLustre.getTernaryOperationAccess();
 	}
@@ -831,9 +1016,14 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getTernaryOperationAccess().getRule();
 	}
 	
-	//ImpliesExpression kexpressions::Expression:
-	//	LogicalXorExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=ImpliesOperator
-	//	subExpressions+=LogicalXorExpression) ('=>' subExpressions+=LogicalXorExpression)*)?;
+	//ImpliesExpression returns kexpressions::Expression:
+	//    LogicalXorExpression
+	//    (
+	//        {kexpressions::OperatorExpression.subExpressions+=current}
+	//        (operator=ImpliesOperator subExpressions+=LogicalXorExpression)
+	//        ('=>' subExpressions+=LogicalXorExpression)*
+	//    )?
+	//;
 	public LustreGrammarAccess.ImpliesExpressionElements getImpliesExpressionAccess() {
 		return gaLustre.getImpliesExpressionAccess();
 	}
@@ -842,9 +1032,14 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getImpliesExpressionAccess().getRule();
 	}
 	
-	//LogicalXorExpression kexpressions::Expression:
-	//	LogicalOrExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=LogicalXorOperator
-	//	subExpressions+=LogicalOrExpression) ('xor' subExpressions+=LogicalOrExpression)*)?;
+	//LogicalXorExpression returns kexpressions::Expression:
+	//    LogicalOrExpression
+	//    (
+	//        {kexpressions::OperatorExpression.subExpressions+=current}
+	//        (operator=LogicalXorOperator subExpressions+=LogicalOrExpression)
+	//        ('xor' subExpressions+=LogicalOrExpression)*
+	//    )?
+	//;
 	public LustreGrammarAccess.LogicalXorExpressionElements getLogicalXorExpressionAccess() {
 		return gaLustre.getLogicalXorExpressionAccess();
 	}
@@ -853,10 +1048,16 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getLogicalXorExpressionAccess().getRule();
 	}
 	
+	//// Override LogicalAndExpresssion and LogicalOrExpression to allow asssociativity
 	//@Override
-	//LogicalOrExpression kexpressions::Expression:
-	//	LogicalAndExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
-	//	subExpressions+=LogicalAndExpression) ('or' subExpressions+=LogicalAndExpression)*)?;
+	//LogicalOrExpression returns kexpressions::Expression:
+	//    LogicalAndExpression
+	//    (
+	//        {kexpressions::OperatorExpression.subExpressions+=current}
+	//        (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)
+	//        ('or' subExpressions+=LogicalAndExpression)*
+	//    )?
+	//;
 	public LustreGrammarAccess.LogicalOrExpressionElements getLogicalOrExpressionAccess() {
 		return gaLustre.getLogicalOrExpressionAccess();
 	}
@@ -865,10 +1066,16 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getLogicalOrExpressionAccess().getRule();
 	}
 	
+	//// Directly redirect to CompareOperation to exclude the bitwise operations
 	//@Override
-	//LogicalAndExpression kexpressions::Expression:
-	//	CompareOperation ({kexpressions::OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator
-	//	subExpressions+=CompareOperation) ('and' subExpressions+=CompareOperation)*)?;
+	//LogicalAndExpression returns kexpressions::Expression:
+	//    CompareOperation
+	//    (
+	//        {kexpressions::OperatorExpression.subExpressions+=current}
+	//        (operator=LogicalAndOperator subExpressions+=CompareOperation)
+	//        ('and' subExpressions+=CompareOperation)*
+	//    )?
+	//;
 	public LustreGrammarAccess.LogicalAndExpressionElements getLogicalAndExpressionAccess() {
 		return gaLustre.getLogicalAndExpressionAccess();
 	}
@@ -877,9 +1084,11 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getLogicalAndExpressionAccess().getRule();
 	}
 	
+	//// Directly redirect to SumExpression to exclude shift operations
 	//@Override
-	//ValuedExpression kexpressions::Expression:
-	//	SumExpression;
+	//ValuedExpression returns kexpressions::Expression:
+	//    SumExpression
+	//;
 	public LustreGrammarAccess.ValuedExpressionElements getValuedExpressionAccess() {
 		return gaLustre.getValuedExpressionAccess();
 	}
@@ -888,13 +1097,15 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getValuedExpressionAccess().getRule();
 	}
 	
+	//// Exclude FunctionCall, RandomCall, RandomizeCall and TextExpression
 	//@Override
-	//AtomicExpression kexpressions::Expression:
-	//	BoolValue
-	//	| '(' BoolExpression ')'
-	//	| ReferenceCall
-	//	| super::ValuedObjectTestExpression // Last to allow detection of calls
-	//	| NorAtMostOneExpression;
+	//AtomicExpression returns kexpressions::Expression:
+	//    BoolValue
+	//    | '(' BoolExpression ')'
+	//    | ReferenceCall
+	//    | ValuedObjectTestExpression // Last to allow detection of calls
+	//    | NorAtMostOneExpression
+	//;
 	public LustreGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaLustre.getAtomicExpressionAccess();
 	}
@@ -903,9 +1114,11 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getAtomicExpressionAccess().getRule();
 	}
 	
-	//NorAtMostOneExpression kexpressions::Expression:
-	//	{kexpressions::OperatorExpression} (operator=AtMostOneOperator | operator=NorOperator)
-	//	'(' subExpressions+=Expression (',' subExpressions+=Expression)* ')';
+	//NorAtMostOneExpression returns kexpressions::Expression:
+	//    {kexpressions::OperatorExpression}
+	//    (operator=AtMostOneOperator | operator=NorOperator)
+	//    '('subExpressions+=Expression (',' subExpressions+=Expression)* ')'
+	//;
 	public LustreGrammarAccess.NorAtMostOneExpressionElements getNorAtMostOneExpressionAccess() {
 		return gaLustre.getNorAtMostOneExpressionAccess();
 	}
@@ -914,9 +1127,13 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getNorAtMostOneExpressionAccess().getRule();
 	}
 	
+	//// Exclude BitwiseNotExpression
 	//@Override
-	//NotExpression kexpressions::Expression:
-	//	{kexpressions::OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
+	//NotExpression returns kexpressions::Expression:
+	//    {kexpressions::OperatorExpression}
+	//    operator=NotOperator subExpressions+=(NotExpression)
+	//    | AtomicExpression
+	//;
 	public LustreGrammarAccess.NotExpressionElements getNotExpressionAccess() {
 		return gaLustre.getNotExpressionAccess();
 	}
@@ -925,9 +1142,15 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getNotExpressionAccess().getRule();
 	}
 	
+	///**
+	// * -------------------- Operator Adjustments
+	// */
+	//// Override operators that are different in Lustre
 	//@Override
-	//enum AssignOperator returns keffects::AssignOperator: // Reduce possible assignments to only work with '='
-	//	ASSIGN="=";
+	//enum AssignOperator returns keffects::AssignOperator:
+	//    // Reduce possible assignments to only work with '='
+	//    ASSIGN="="
+	//;
 	public LustreGrammarAccess.AssignOperatorElements getAssignOperatorAccess() {
 		return gaLustre.getAssignOperatorAccess();
 	}
@@ -938,7 +1161,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//@Override
 	//enum CompareOperator returns kexpressions::OperatorType:
-	//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+	//    EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>"
+	//;
 	public LustreGrammarAccess.CompareOperatorElements getCompareOperatorAccess() {
 		return gaLustre.getCompareOperatorAccess();
 	}
@@ -949,7 +1173,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//@Override
 	//enum LogicalOrOperator returns kexpressions::OperatorType:
-	//	LOGICAL_OR="or";
+	//    LOGICAL_OR="or"
+	//;
 	public LustreGrammarAccess.LogicalOrOperatorElements getLogicalOrOperatorAccess() {
 		return gaLustre.getLogicalOrOperatorAccess();
 	}
@@ -960,7 +1185,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//@Override
 	//enum LogicalAndOperator returns kexpressions::OperatorType:
-	//	LOGICAL_AND="and";
+	//    LOGICAL_AND="and"
+	//;
 	public LustreGrammarAccess.LogicalAndOperatorElements getLogicalAndOperatorAccess() {
 		return gaLustre.getLogicalAndOperatorAccess();
 	}
@@ -971,7 +1197,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//@Override
 	//enum NotOperator returns kexpressions::OperatorType:
-	//	NOT="not";
+	//    NOT="not"
+	//;
 	public LustreGrammarAccess.NotOperatorElements getNotOperatorAccess() {
 		return gaLustre.getNotOperatorAccess();
 	}
@@ -982,7 +1209,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//@Override
 	//enum FbyOperator returns kexpressions::OperatorType:
-	//	FBY="fby";
+	//    FBY="fby"
+	//;
 	public LustreGrammarAccess.FbyOperatorElements getFbyOperatorAccess() {
 		return gaLustre.getFbyOperatorAccess();
 	}
@@ -993,7 +1221,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//@Override
 	//enum ModOperator returns kexpressions::OperatorType:
-	//	MOD="mod";
+	//    MOD="mod"
+	//;
 	public LustreGrammarAccess.ModOperatorElements getModOperatorAccess() {
 		return gaLustre.getModOperatorAccess();
 	}
@@ -1002,8 +1231,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getModOperatorAccess().getRule();
 	}
 	
+	//// Define operators that are Lustre specific
 	//enum CurrentOperator returns kexpressions::OperatorType:
-	//	CURRENT="current";
+	//    CURRENT="current"
+	//;
 	public LustreGrammarAccess.CurrentOperatorElements getCurrentOperatorAccess() {
 		return gaLustre.getCurrentOperatorAccess();
 	}
@@ -1013,7 +1244,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum WhenOperator returns kexpressions::OperatorType:
-	//	WHEN="when";
+	//    WHEN="when"
+	//;
 	public LustreGrammarAccess.WhenOperatorElements getWhenOperatorAccess() {
 		return gaLustre.getWhenOperatorAccess();
 	}
@@ -1024,7 +1256,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//@Override
 	//enum InitOperator returns kexpressions::OperatorType:
-	//	INIT="->";
+	//    INIT="->"
+	//;
 	public LustreGrammarAccess.InitOperatorElements getInitOperatorAccess() {
 		return gaLustre.getInitOperatorAccess();
 	}
@@ -1034,7 +1267,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum LogicalXorOperator returns kexpressions::OperatorType:
-	//	BITWISE_XOR="xor";
+	//    BITWISE_XOR="xor"
+	//;
 	public LustreGrammarAccess.LogicalXorOperatorElements getLogicalXorOperatorAccess() {
 		return gaLustre.getLogicalXorOperatorAccess();
 	}
@@ -1044,7 +1278,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum ImpliesOperator returns kexpressions::OperatorType:
-	//	IMPLIES="=>";
+	//    IMPLIES="=>"
+	//;
 	public LustreGrammarAccess.ImpliesOperatorElements getImpliesOperatorAccess() {
 		return gaLustre.getImpliesOperatorAccess();
 	}
@@ -1054,7 +1289,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum IntDivOperator returns kexpressions::OperatorType:
-	//	DIV="div";
+	//    DIV = "div"
+	//;
 	public LustreGrammarAccess.IntDivOperatorElements getIntDivOperatorAccess() {
 		return gaLustre.getIntDivOperatorAccess();
 	}
@@ -1065,7 +1301,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//@Override
 	//enum ConditionalOperator returns kexpressions::OperatorType:
-	//	CONDITIONAL="if";
+	//    CONDITIONAL = "if"
+	//;
 	public LustreGrammarAccess.ConditionalOperatorElements getConditionalOperatorAccess() {
 		return gaLustre.getConditionalOperatorAccess();
 	}
@@ -1075,7 +1312,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum AtMostOneOperator returns kexpressions::OperatorType:
-	//	ATMOSTONEOF="#";
+	//    ATMOSTONEOF="#"
+	//;
 	public LustreGrammarAccess.AtMostOneOperatorElements getAtMostOneOperatorAccess() {
 		return gaLustre.getAtMostOneOperatorAccess();
 	}
@@ -1085,7 +1323,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum NorOperator returns kexpressions::OperatorType:
-	//	NOR="nor";
+	//    NOR="nor"
+	//;
 	public LustreGrammarAccess.NorOperatorElements getNorOperatorAccess() {
 		return gaLustre.getNorOperatorAccess();
 	}
@@ -1095,7 +1334,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum LastOperator returns kexpressions::OperatorType:
-	//	LAST="last";
+	//    LAST="last"
+	//;
 	public LustreGrammarAccess.LastOperatorElements getLastOperatorAccess() {
 		return gaLustre.getLastOperatorAccess();
 	}
@@ -1106,20 +1346,22 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	///**
 	// * @author ssm
-	// * @kieler.design 2015-08-23 proposed 
+	// * @kieler.design 2015-08-23 proposed
 	// * @kieler.rating 2015-08-23 proposed yellow
-	// */ /*
+	// */
+	///*
 	// * KEXT (KText) provides a general stub for subsequent grammars that will use kexpressions, keffects
-	// * and need some kind of declaration mechanism. It is also used to generate the textual KEXT language 
-	// * that is used for testing kexpressions and keffects.  
-	// */ // ------------ //
-	////  KEXT Rules  // 
+	// * and need some kind of declaration mechanism. It is also used to generate the textual KEXT language
+	// * that is used for testing kexpressions and keffects.
+	// */
+	//// ------------ //
+	////  KEXT Rules  //
 	//// ------------ //
 	//// KEXT Rule
-	//// The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of 
+	//// The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of
 	//// test entities may follow.
-	//Kext kext::Kext:
-	//	scopes+=RootScope;
+	//Kext returns kext::Kext:
+	//    scopes+=RootScope;
 	public KExtGrammarAccess.KextElements getKextAccess() {
 		return gaKExt.getKextAccess();
 	}
@@ -1128,9 +1370,11 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getKextAccess().getRule();
 	}
 	
-	//RootScope kext::KExtScope:
-	//	{kext::KExtScope} declarations+=Declaration*
-	//	entities+=TestEntity* ('scope' scopes+=Scope)*;
+	//RootScope returns kext::KExtScope:
+	//    {kext::KExtScope}
+	//    declarations+=Declaration*
+	//    entities+=TestEntity*
+	//    ('scope' scopes+=Scope)*;
 	public KExtGrammarAccess.RootScopeElements getRootScopeAccess() {
 		return gaKExt.getRootScopeAccess();
 	}
@@ -1139,10 +1383,12 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getRootScopeAccess().getRule();
 	}
 	
-	//Scope kext::KExtScope:
-	//	{kext::KExtScope} name=ID? '{'
-	//	declarations+=Declaration*
-	//	entities+=TestEntity* ('scope' scopes+=Scope)* '}';
+	//Scope returns kext::KExtScope:
+	//    {kext::KExtScope}
+	//    (name=ID)? '{'
+	//    declarations+=Declaration*
+	//    entities+=TestEntity*
+	//    ('scope' scopes+=Scope)* '}';
 	public KExtGrammarAccess.ScopeElements getScopeAccess() {
 		return gaKExt.getScopeAccess();
 	}
@@ -1153,8 +1399,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//// Test Entity Rule
 	//// A test entity is either an annotation expression or an effect.
-	//TestEntity kext::TestEntity:
-	//	expression=(AnnotatedExpression | AnnotatedJsonExpression) | effect=Effect;
+	//TestEntity returns kext::TestEntity:
+	//    expression=(AnnotatedExpression | AnnotatedJsonExpression) | effect=Effect;
 	public KExtGrammarAccess.TestEntityElements getTestEntityAccess() {
 		return gaKExt.getTestEntityAccess();
 	}
@@ -1166,10 +1412,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// Annotated Expression Rule
 	//// An annotated expression is declared with the keyword "expression". It may be preceded by a list
 	//// of annotations. The expression itself follows the keyword.
-	//AnnotatedExpression kext::AnnotatedExpression:
-	//	annotations+=Annotation*
-	//	'expression'
-	//	expression=Expression;
+	//AnnotatedExpression returns kext::AnnotatedExpression:
+	//    annotations+=Annotation*
+	//    'expression'
+	//    expression=Expression;
 	public KExtGrammarAccess.AnnotatedExpressionElements getAnnotatedExpressionAccess() {
 		return gaKExt.getAnnotatedExpressionAccess();
 	}
@@ -1178,10 +1424,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getAnnotatedExpressionAccess().getRule();
 	}
 	
-	//AnnotatedJsonExpression kext::AnnotatedExpression:
-	//	annotations+=Annotation*
-	//	'json'
-	//	expression=JsonObjectValue;
+	//AnnotatedJsonExpression returns kext::AnnotatedExpression:
+	//    annotations+=Annotation*
+	//    'json'
+	//    expression=JsonObjectValue;
 	public KExtGrammarAccess.AnnotatedJsonExpressionElements getAnnotatedJsonExpressionAccess() {
 		return gaKExt.getAnnotatedJsonExpressionAccess();
 	}
@@ -1195,9 +1441,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// this centralized declaration rule should replace any other declaration in drived grammars.
 	//// It may start with arbitrary many declarations followed by keywords affecting the type of the
 	//// valued objects that follow.
-	//// Examples: const float pi = 3.14, input signal I, output bool z  
-	//Declaration kexpressions::Declaration:
-	//	VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration | ClassDeclaration;
+	//// Examples: const float pi = 3.14, input signal I, output bool z
+	//Declaration returns kexpressions::Declaration:
+	//    VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration | ClassDeclaration;
 	public KExtGrammarAccess.DeclarationElements getDeclarationAccess() {
 		return gaKExt.getDeclarationAccess();
 	}
@@ -1206,9 +1452,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getDeclarationAccess().getRule();
 	}
 	
-	//DeclarationWOSemicolon kexpressions::Declaration:
-	//	VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon |
-	//	ClassDeclarationWOSemicolon;
+	//DeclarationWOSemicolon returns kexpressions::Declaration:
+	//    VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon | ClassDeclarationWOSemicolon;
 	public KExtGrammarAccess.DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
 		return gaKExt.getDeclarationWOSemicolonAccess();
 	}
@@ -1217,16 +1462,23 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getDeclarationWOSemicolonAccess().getRule();
 	}
 	
-	//VariableDeclaration kexpressions::VariableDeclaration:
-	//	annotations+=Annotation*
-	//	access=AccessModifier?
-	//	const?='const'?
-	//	input?='input'?
-	//	output?='output'?
-	//	global?='global'?
-	//	static?='static'? (signal?='signal'? type=super::ValueType | signal?='signal' | type=HostType hostType=STRING)
-	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
-	//	annotations+=CommentAnnotatonSL?;
+	//VariableDeclaration returns kexpressions::VariableDeclaration:
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    const?='const'?
+	//    input?='input'?
+	//    output?='output'?
+	//    global?='global'?
+	//    static?='static'?
+	//    (
+	//        (signal?='signal'? type = ValueType)
+	//        |
+	//        signal?='signal'
+	//        |
+	//        (type = HostType hostType = STRING)
+	//    )
+	//    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	//    annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.VariableDeclarationElements getVariableDeclarationAccess() {
 		return gaKExt.getVariableDeclarationAccess();
 	}
@@ -1235,16 +1487,20 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getVariableDeclarationAccess().getRule();
 	}
 	
-	//VariableDeclarationWOSemicolon kexpressions::VariableDeclaration:
-	//	annotations+=Annotation*
-	//	access=AccessModifier?
-	//	const?='const'?
-	//	input?='input'?
-	//	output?='output'?
-	//	global?='global'?
-	//	static?='static'? (signal?='signal'? type=super::ValueType | signal?='signal' | type=HostType hostType=STRING)
-	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
-	//	annotations+=CommentAnnotatonSL?;
+	//VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    const?='const'?
+	//    input?='input'?
+	//    output?='output'?
+	//    global?='global'?
+	//    static?='static'?
+	//    ((signal?='signal'? type = ValueType) |
+	//        signal?='signal' |
+	//        (type = HostType hostType = STRING)
+	//    )
+	//    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//    annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.VariableDeclarationWOSemicolonElements getVariableDeclarationWOSemicolonAccess() {
 		return gaKExt.getVariableDeclarationWOSemicolonAccess();
 	}
@@ -1253,26 +1509,28 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getVariableDeclarationWOSemicolonAccess().getRule();
 	}
 	
-	//ClassDeclaration kext::ClassDeclaration:
-	//	{kext::ClassDeclaration} annotations+=Annotation*
-	//	access=AccessModifier?
-	//	const?='const'?
-	//	input?='input'?
-	//	output?='output'?
-	//	global?='global'?
-	//	static?='static'?
-	//	host?='host'? (type=ClassType
-	//	name=EString?
-	//	'{'
-	//	declarations+=DeclarationOrMethod*
-	//	'}'
-	//	| type=StructType
-	//	name=EString?
-	//	'{'
-	//	declarations+=Declaration*
-	//	'}') (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
-	//	';'
-	//	annotations+=CommentAnnotatonSL?;
+	//ClassDeclaration returns kext::ClassDeclaration:
+	//    {kext::ClassDeclaration}
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    host?='host'?
+	//    ((
+	//        type = ClassType
+	//        (name = EString)?
+	//        '{'
+	//            declarations+=DeclarationOrMethod*
+	//        '}'
+	//    )|(
+	//        type = StructType
+	//        (name = EString)?
+	//        '{'
+	//            declarations+=Declaration*
+	//        '}'
+	//    ))
+	//    (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+	//    ';'
+	//    annotations+=CommentAnnotatonSL?
+	//;
 	public KExtGrammarAccess.ClassDeclarationElements getClassDeclarationAccess() {
 		return gaKExt.getClassDeclarationAccess();
 	}
@@ -1281,8 +1539,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getClassDeclarationAccess().getRule();
 	}
 	
-	//DeclarationOrMethod kexpressions::Declaration:
-	//	Declaration | MethodDeclaration;
+	//DeclarationOrMethod returns kexpressions::Declaration:
+	//    Declaration | EnumDeclaration | MethodDeclaration
+	//;
 	public KExtGrammarAccess.DeclarationOrMethodElements getDeclarationOrMethodAccess() {
 		return gaKExt.getDeclarationOrMethodAccess();
 	}
@@ -1291,25 +1550,27 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getDeclarationOrMethodAccess().getRule();
 	}
 	
-	//ClassDeclarationWOSemicolon kext::ClassDeclaration:
-	//	{kext::ClassDeclaration} annotations+=Annotation*
-	//	access=AccessModifier?
-	//	const?='const'?
-	//	input?='input'?
-	//	output?='output'?
-	//	global?='global'?
-	//	static?='static'?
-	//	host?='host'? (type=ClassType
-	//	name=EString?
-	//	'{'
-	//	declarations+=DeclarationOrMethodWOSemicolon*
-	//	'}'
-	//	| type=StructType
-	//	name=EString?
-	//	'{'
-	//	declarations+=DeclarationWOSemicolon*
-	//	'}') (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
-	//	annotations+=CommentAnnotatonSL?;
+	//ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
+	//    {kext::ClassDeclaration}
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    host?='host'?
+	//    ((
+	//        type = ClassType
+	//        (name = EString)?
+	//        '{'
+	//            declarations+=DeclarationOrMethodWOSemicolon*
+	//        '}'
+	//    )|(
+	//        type = StructType
+	//        (name = EString)?
+	//        '{'
+	//            declarations+=DeclarationWOSemicolon*
+	//        '}'
+	//    ))
+	//    (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+	//    annotations+=CommentAnnotatonSL?
+	//;
 	public KExtGrammarAccess.ClassDeclarationWOSemicolonElements getClassDeclarationWOSemicolonAccess() {
 		return gaKExt.getClassDeclarationWOSemicolonAccess();
 	}
@@ -1318,8 +1579,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getClassDeclarationWOSemicolonAccess().getRule();
 	}
 	
-	//DeclarationOrMethodWOSemicolon kexpressions::Declaration:
-	//	DeclarationWOSemicolon | MethodDeclarationWOSemicolon;
+	//DeclarationOrMethodWOSemicolon returns kexpressions::Declaration:
+	//    DeclarationWOSemicolon | EnumDeclarationWOSemicolon | MethodDeclarationWOSemicolon
+	//;
 	public KExtGrammarAccess.DeclarationOrMethodWOSemicolonElements getDeclarationOrMethodWOSemicolonAccess() {
 		return gaKExt.getDeclarationOrMethodWOSemicolonAccess();
 	}
@@ -1328,14 +1590,74 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getDeclarationOrMethodWOSemicolonAccess().getRule();
 	}
 	
-	//MethodDeclaration kexpressions::MethodDeclaration:
-	//	{kexpressions::MethodDeclaration} annotations+=Annotation*
-	//	access=AccessModifier?
-	//	returnType=MethodReturnType?
-	//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
-	//	';'
-	//	annotations+=CommentAnnotatonSL?;
+	//EnumDeclaration returns kext::ClassDeclaration:
+	//    {kext::ClassDeclaration}
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    host?='host'?
+	//    type = EnumType
+	//    valuedObjects+=SimpleValuedObject
+	//    (hostType=STRING)?
+	//    '{'
+	//        declarations+=EnumMemberDeclaration
+	//        ';'
+	//    '}'
+	//    ';'
+	//    annotations+=CommentAnnotatonSL?
+	//;
+	public KExtGrammarAccess.EnumDeclarationElements getEnumDeclarationAccess() {
+		return gaKExt.getEnumDeclarationAccess();
+	}
+	
+	public ParserRule getEnumDeclarationRule() {
+		return getEnumDeclarationAccess().getRule();
+	}
+	
+	//EnumMemberDeclaration returns kexpressions::VariableDeclaration:
+	//    annotations+=QuotedStringAnnotation*
+	//    valuedObjects+=SimpleValuedObject (',' valuedObjects+=SimpleValuedObject)*
+	//    annotations+=CommentAnnotatonSL?
+	//;
+	public KExtGrammarAccess.EnumMemberDeclarationElements getEnumMemberDeclarationAccess() {
+		return gaKExt.getEnumMemberDeclarationAccess();
+	}
+	
+	public ParserRule getEnumMemberDeclarationRule() {
+		return getEnumMemberDeclarationAccess().getRule();
+	}
+	
+	//EnumDeclarationWOSemicolon returns kext::ClassDeclaration:
+	//    {kext::ClassDeclaration}
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    host?='host'?
+	//    type = EnumType
+	//    valuedObjects+=SimpleValuedObject
+	//    (hostType = STRING)?
+	//    '{'
+	//        declarations+=EnumMemberDeclaration
+	//    '}'
+	//    annotations+=CommentAnnotatonSL?
+	//;
+	public KExtGrammarAccess.EnumDeclarationWOSemicolonElements getEnumDeclarationWOSemicolonAccess() {
+		return gaKExt.getEnumDeclarationWOSemicolonAccess();
+	}
+	
+	public ParserRule getEnumDeclarationWOSemicolonRule() {
+		return getEnumDeclarationWOSemicolonAccess().getRule();
+	}
+	
+	//MethodDeclaration returns kexpressions::MethodDeclaration:
+	//    {kexpressions::MethodDeclaration}
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    returnType=MethodReturnType?
+	//    valuedObjects+=SimpleValuedObject
+	//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
+	//    ('schedule' schedule+=ScheduleObjectReference+)?
+	//    ';'
+	//    annotations+=CommentAnnotatonSL?
+	//;
 	public KExtGrammarAccess.MethodDeclarationElements getMethodDeclarationAccess() {
 		return gaKExt.getMethodDeclarationAccess();
 	}
@@ -1344,13 +1666,16 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getMethodDeclarationAccess().getRule();
 	}
 	
-	//MethodDeclarationWOSemicolon kexpressions::MethodDeclaration:
-	//	{kexpressions::MethodDeclaration} annotations+=Annotation*
-	//	access=AccessModifier?
-	//	returnType=MethodReturnType?
-	//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
-	//	annotations+=CommentAnnotatonSL?;
+	//MethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
+	//    {kexpressions::MethodDeclaration}
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    returnType=MethodReturnType?
+	//    valuedObjects+=SimpleValuedObject
+	//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
+	//    ('schedule' schedule+=ScheduleObjectReference+)?
+	//    annotations+=CommentAnnotatonSL?
+	//;
 	public KExtGrammarAccess.MethodDeclarationWOSemicolonElements getMethodDeclarationWOSemicolonAccess() {
 		return gaKExt.getMethodDeclarationWOSemicolonAccess();
 	}
@@ -1359,14 +1684,22 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getMethodDeclarationWOSemicolonAccess().getRule();
 	}
 	
-	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation*
-	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] ('<'
-	//	genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')?
-	//	|
-	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
-	//	valuedObjects+=ValuedObject)* ';'
-	//	annotations+=CommentAnnotatonSL?;
+	//ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    ((
+	//        input?='input'?
+	//        'ref'
+	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
+	//        reference = [annotations::NamedObject|PrimeID]
+	//        ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+	//        valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)*
+	//    ) | (
+	//        'extern' extern += ExternString (',' extern += ExternString)*
+	//        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//    ))
+	//    ';'
+	//    annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ReferenceDeclarationElements getReferenceDeclarationAccess() {
 		return gaKExt.getReferenceDeclarationAccess();
 	}
@@ -1375,14 +1708,21 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getReferenceDeclarationAccess().getRule();
 	}
 	
-	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation*
-	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] ('<'
-	//	genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')?
-	//	|
-	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
-	//	valuedObjects+=ValuedObject)*
-	//	annotations+=CommentAnnotatonSL?;
+	//ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    ((
+	//        input?='input'?
+	//        'ref'
+	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
+	//        reference = [annotations::NamedObject|PrimeID]
+	//        ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+	//        valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)*
+	//    ) | (
+	//        'extern' extern += ExternString (',' extern += ExternString)*
+	//        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//    ))
+	//    annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
 		return gaKExt.getReferenceDeclarationWOSemicolonAccess();
 	}
@@ -1391,9 +1731,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getReferenceDeclarationWOSemicolonAccess().getRule();
 	}
 	
-	//ExternString kexpressions::ExternString:
-	//	annotations+=TagAnnotation*
-	//	code=STRING;
+	//ExternString returns kexpressions::ExternString:
+	//    annotations+=TagAnnotation*
+	//    code = STRING
+	//;
 	public KExtGrammarAccess.ExternStringElements getExternStringAccess() {
 		return gaKExt.getExternStringAccess();
 	}
@@ -1405,10 +1746,15 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// ---
 	////  Generics
 	//// ---
-	//GenericParameterDeclaration kexpressions::GenericParameterDeclaration:
-	//	annotations+=QuotedStringAnnotation*
-	//	valuedObjects+=SimpleValuedObject ('is' valueType=super::ValueType | 'is' reference?='ref'?
-	//	type=[annotations::NamedObject|PrimeID])?;
+	//GenericParameterDeclaration returns kexpressions::GenericParameterDeclaration:
+	//    annotations+=QuotedStringAnnotation*
+	//    valuedObjects+=SimpleValuedObject
+	//    (
+	//        ('is' valueType = ValueType)
+	//        |
+	//        ('is' (reference?='ref')? type = [annotations::NamedObject|PrimeID])
+	//    )?
+	//;
 	public KExtGrammarAccess.GenericParameterDeclarationElements getGenericParameterDeclarationAccess() {
 		return gaKExt.getGenericParameterDeclarationAccess();
 	}
@@ -1417,14 +1763,21 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getGenericParameterDeclarationAccess().getRule();
 	}
 	
-	//GenericParameter kexpressions::Parameter:
-	//	expression=(ValueTypeReference
-	//	| AnyValue
-	//	| GenericParameter_GenericTypeReference_Parameterized
-	//	| GenericParameter_ValuedObjectReference_Array
-	//	| GenericParameter_ValuedObjectReference_Sub
-	//	| GenericTypeReference
-	//	| ValuedObjectReference);
+	//GenericParameter returns kexpressions::Parameter:
+	//    // Both VOReference and GenericTypeReference will always match for simple names (PrimeID).
+	//    // Here GenericTypeReference has precedence and has to cover certain
+	//    // references to VOs. This needs to be specifically handled in the scoper and in the resource
+	//    // by using the KExtGenericParamterConverter.
+	//    // Furthermore, optional parts may cause VORs accepted by GTRs even if there is an array
+	//    // index or sub reference specified, this is why there are special non-optional rules.
+	//    expression = (ValueTypeReference
+	//                 | AnyValue
+	//                 | GenericParameter_GenericTypeReference_Parameterized
+	//                 | GenericParameter_ValuedObjectReference_Array
+	//                 | GenericParameter_ValuedObjectReference_Sub
+	//                 | GenericTypeReference
+	//                 | ValuedObjectReference)
+	//;
 	public KExtGrammarAccess.GenericParameterElements getGenericParameterAccess() {
 		return gaKExt.getGenericParameterAccess();
 	}
@@ -1433,8 +1786,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getGenericParameterAccess().getRule();
 	}
 	
-	//ValueTypeReference kexpressions::ValueTypeReference:
-	//	valueType=super::ValueType;
+	//ValueTypeReference returns kexpressions::ValueTypeReference:
+	//    valueType = ValueType
+	//;
 	public KExtGrammarAccess.ValueTypeReferenceElements getValueTypeReferenceAccess() {
 		return gaKExt.getValueTypeReferenceAccess();
 	}
@@ -1443,9 +1797,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getValueTypeReferenceAccess().getRule();
 	}
 	
-	//GenericTypeReference kexpressions::GenericTypeReference:
-	//	type=[annotations::NamedObject|PrimeID] ('<' genericParameters+=GenericParameter (','
-	//	genericParameters+=GenericParameter)* '>')?;
+	//GenericTypeReference returns kexpressions::GenericTypeReference:
+	//    type = [annotations::NamedObject|PrimeID]
+	//    ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+	//;
 	public KExtGrammarAccess.GenericTypeReferenceElements getGenericTypeReferenceAccess() {
 		return gaKExt.getGenericTypeReferenceAccess();
 	}
@@ -1455,9 +1810,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//// Special rules for GenericParameter parsing
-	//GenericParameter_GenericTypeReference_Parameterized kexpressions::GenericTypeReference:
-	//	type=[annotations::NamedObject|PrimeID]
-	//	'<' genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>' // mandatory
+	//GenericParameter_GenericTypeReference_Parameterized returns kexpressions::GenericTypeReference:
+	//    type = [annotations::NamedObject|PrimeID]
+	//    '<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>' // mandatory
 	//;
 	public KExtGrammarAccess.GenericParameter_GenericTypeReference_ParameterizedElements getGenericParameter_GenericTypeReference_ParameterizedAccess() {
 		return gaKExt.getGenericParameter_GenericTypeReference_ParameterizedAccess();
@@ -1467,9 +1822,11 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getGenericParameter_GenericTypeReference_ParameterizedAccess().getRule();
 	}
 	
-	//GenericParameter_ValuedObjectReference_Array kexpressions::ValuedObjectReference:
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')+ ('.'
-	//	subReference=ValuedObjectReference)?;
+	//GenericParameter_ValuedObjectReference_Array returns kexpressions::ValuedObjectReference:
+	//    valuedObject=[kexpressions::ValuedObject|PrimeID]
+	//    ('[' indices+=Expression ']')+ // mandatory
+	//    ('.' subReference=ValuedObjectReference)?
+	//;
 	public KExtGrammarAccess.GenericParameter_ValuedObjectReference_ArrayElements getGenericParameter_ValuedObjectReference_ArrayAccess() {
 		return gaKExt.getGenericParameter_ValuedObjectReference_ArrayAccess();
 	}
@@ -1478,9 +1835,11 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getGenericParameter_ValuedObjectReference_ArrayAccess().getRule();
 	}
 	
-	//GenericParameter_ValuedObjectReference_Sub kexpressions::ValuedObjectReference:
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
-	//	subReference=ValuedObjectReference);
+	//GenericParameter_ValuedObjectReference_Sub returns kexpressions::ValuedObjectReference:
+	//    valuedObject=[kexpressions::ValuedObject|PrimeID]
+	//    ('[' indices+=Expression ']')*
+	//    ('.' subReference=ValuedObjectReference) // mandatory
+	//;
 	public KExtGrammarAccess.GenericParameter_ValuedObjectReference_SubElements getGenericParameter_ValuedObjectReference_SubAccess() {
 		return gaKExt.getGenericParameter_ValuedObjectReference_SubAccess();
 	}
@@ -1490,15 +1849,16 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//// ---
-	////  Scheduling Directives 
+	////  Scheduling Directives
 	//// ---
-	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
-	//	annotations+=Annotation*
-	//	access=AccessModifier?
-	//	'schedule' name=STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
-	//	priorities+=PriorityProtocol)* '}')?
-	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
-	//	annotations+=CommentAnnotatonSL?;
+	//ScheduleDeclaration returns kexpressions::ScheduleDeclaration:
+	//    annotations += Annotation*
+	//    access=AccessModifier?
+	//    'schedule' name=STRING?
+	//    ('global' global = PriorityProtocol)?
+	//    ('{' priorities += PriorityProtocol (',' priorities += PriorityProtocol)* '}')?
+	//    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	//    annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ScheduleDeclarationElements getScheduleDeclarationAccess() {
 		return gaKExt.getScheduleDeclarationAccess();
 	}
@@ -1507,13 +1867,14 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getScheduleDeclarationAccess().getRule();
 	}
 	
-	//ScheduleDeclarationWOSemicolon kexpressions::ScheduleDeclaration:
-	//	annotations+=Annotation*
-	//	access=AccessModifier?
-	//	'schedule' name=STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
-	//	priorities+=PriorityProtocol)* '}')?
-	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
-	//	annotations+=CommentAnnotatonSL?;
+	//ScheduleDeclarationWOSemicolon returns kexpressions::ScheduleDeclaration:
+	//    annotations += Annotation*
+	//    access=AccessModifier?
+	//    'schedule' name=STRING?
+	//    ('global' global = PriorityProtocol)?
+	//    ('{' priorities += PriorityProtocol (',' priorities += PriorityProtocol)* '}')?
+	//    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//    annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ScheduleDeclarationWOSemicolonElements getScheduleDeclarationWOSemicolonAccess() {
 		return gaKExt.getScheduleDeclarationWOSemicolonAccess();
 	}
@@ -1523,7 +1884,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum PriorityProtocol returns kexpressions::PriorityProtocol:
-	//	CONFLICT="conflicting" | CONFLUENT="commuting";
+	//    CONFLICT="conflicting" | CONFLUENT="commuting";
 	public KExtGrammarAccess.PriorityProtocolElements getPriorityProtocolAccess() {
 		return gaKExt.getPriorityProtocolAccess();
 	}
@@ -1533,14 +1894,18 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//// Valued Object Rule
-	//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
-	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
+	//// A valued object is identified by its name. Then, a part for its cardinalities and an initial
+	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part.
 	//// Examples: array[10], initial = false, z = 0 combine max
-	//ValuedObject kexpressions::ValuedObject:
-	//	annotations+=QuotedStringAnnotation*
-	//	name=PrimeID ('<' genericParameters+=GenericParameter (',' genericParameters+=GenericParameter)* '>')? ('['
-	//	cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
-	//	combineOperator=CombineOperator)? ('label' label=STRING)?;
+	//ValuedObject returns kexpressions::ValuedObject:
+	//    annotations+=QuotedStringAnnotation*
+	//    name=PrimeID
+	//    ('[' cardinalities+=Expression ']')*
+	//    ('=' initialValue=Expression)?
+	//    ( 'combine'
+	//      (combineOperator = CombineOperator)
+	//    )?
+	//    ('label' label=STRING)?;
 	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKExt.getValuedObjectAccess();
 	}
@@ -1549,9 +1914,26 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getValuedObjectAccess().getRule();
 	}
 	
-	//SimpleValuedObject kexpressions::ValuedObject:
-	//	annotations+=QuotedStringAnnotation*
-	//	name=PrimeID;
+	//ReferenceValuedObject returns kexpressions::ValuedObject:
+	//    {kexpressions::ValuedObject}
+	//    annotations+=QuotedStringAnnotation*
+	//    name=PrimeID
+	//    ('[' cardinalities+=Expression ']')*
+	//    ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+	//    (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
+	//    ('=' initialValue=Expression)?
+	//    ('label' label=STRING)?;
+	public KExtGrammarAccess.ReferenceValuedObjectElements getReferenceValuedObjectAccess() {
+		return gaKExt.getReferenceValuedObjectAccess();
+	}
+	
+	public ParserRule getReferenceValuedObjectRule() {
+		return getReferenceValuedObjectAccess().getRule();
+	}
+	
+	//SimpleValuedObject returns kexpressions::ValuedObject:
+	//    annotations+=QuotedStringAnnotation*
+	//    name=PrimeID;
 	public KExtGrammarAccess.SimpleValuedObjectElements getSimpleValuedObjectAccess() {
 		return gaKExt.getSimpleValuedObjectAccess();
 	}
@@ -1560,8 +1942,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getSimpleValuedObjectAccess().getRule();
 	}
 	
-	//NamespaceID:
-	//	ExtendedID (':' PrimeID)*;
+	//NamespaceID returns ecore::EString:
+	//  ExtendedID (':' PrimeID)*;
 	public KExtGrammarAccess.NamespaceIDElements getNamespaceIDAccess() {
 		return gaKExt.getNamespaceIDAccess();
 	}
@@ -1572,24 +1954,33 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	///**
 	// * @author ssm
-	// * @kieler.design 2015-08-23 proposed 
+	// * @kieler.design 2015-08-23 proposed
 	// * @kieler.rating 2015-08-23 proposed yellow
-	// */ /*
+	// */
+	///*
 	// * KEffects allow deriving grammars to use a range of different effects, namely assignments,
 	// * postfix effects, esterel like emissions, host code and function call effects.
 	// * Of course other grammars may extend this list.
-	// */ // ---------------- //
-	////  KEffects Rules  // 
+	// */
+	//// ---------------- //
+	////  KEffects Rules  //
 	//// ---------------- //
 	//// Effect Rule
-	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
+	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a
 	//// function call effect.
 	//// NOTE: Emission has precedence before ReferenceCallEffect and consumes simple refecerence call grammar using this rule
 	//// should to use the KEffectsEmissionReferenceCallConverter to convert these Emissions back to ReferenceCallEffects.
 	//// If precedence is changed the converter has to be adapted too.
-	//Effect keffects::Effect:
-	//	Assignment | PostfixEffect | ValuedEmission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect |
-	//	PrintCallEffect | RandomizeCallEffect | PureEmission;
+	//Effect returns keffects::Effect:
+	//    Assignment |
+	//    PostfixEffect |
+	//    ValuedEmission | // Will consume some ReferenceCallEffects
+	//    HostcodeEffect |
+	//    ReferenceCallEffect |
+	//    FunctionCallEffect |
+	//    PrintCallEffect |
+	//    RandomizeCallEffect |
+	//    PureEmission;
 	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
 		return gaKEffects.getEffectAccess();
 	}
@@ -1601,13 +1992,14 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// Emission Rule
 	//// An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
 	//// an emission for a specific signal to emit it. Additionally, emission may include a parameter part for
-	//// a new value in the case of valued signals. 
+	//// a new value in the case of valued signals.
 	//// Example: A, B(2)
-	//// Important: To help the parser and to avoid ambiguities, emissions may only allow restricted 
-	//// annotations defined in the annotations grammar.		
-	//PureEmission keffects::Emission:
-	//	annotations+=QuotedStringAnnotation*
-	//	reference=ValuedObjectReference ('schedule' schedule+=ScheduleObjectReference+)?;
+	//// Important: To help the parser and to avoid ambiguities, emissions may only allow restricted
+	//// annotations defined in the annotations grammar.
+	//PureEmission returns keffects::Emission:
+	//    (annotations+=QuotedStringAnnotation)*
+	//    reference=ValuedObjectReference
+	//    ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PureEmissionElements getPureEmissionAccess() {
 		return gaKEffects.getPureEmissionAccess();
 	}
@@ -1618,10 +2010,11 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//// Valued emission must be separated from normal emission to allow correct parsing in combination with referece calls
 	//// Problematic case f(), here the emission rule must not even partially (optional value part) match to allow parsing as referece call
-	//ValuedEmission keffects::Emission:
-	//	annotations+=QuotedStringAnnotation*
-	//	reference=ValuedObjectReference
-	//	"(" newValue=Expression ")" ('schedule' schedule+=ScheduleObjectReference+)?;
+	//ValuedEmission returns keffects::Emission:
+	//    (annotations+=QuotedStringAnnotation)*
+	//    reference=ValuedObjectReference
+	//    "(" newValue = Expression ")"
+	//    ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.ValuedEmissionElements getValuedEmissionAccess() {
 		return gaKEffects.getValuedEmissionAccess();
 	}
@@ -1630,8 +2023,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getValuedEmissionAccess().getRule();
 	}
 	
-	//PureOrValuedEmission keffects::Emission:
-	//	ValuedEmission | PureEmission;
+	//PureOrValuedEmission returns keffects::Emission:
+	//    ValuedEmission | PureEmission;
 	public KEffectsGrammarAccess.PureOrValuedEmissionElements getPureOrValuedEmissionAccess() {
 		return gaKEffects.getPureOrValuedEmissionAccess();
 	}
@@ -1642,13 +2035,14 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//// Assignment Rule
 	//// An assignment may start with a list of arbitrary annotatations.
-	//// Then, an arbitrary expression is assigned to a valued object. The object may be suffixed by an 
+	//// Then, an arbitrary expression is assigned to a valued object. The object may be suffixed by an
 	//// indices part. The type of assignment is determined by the type of the operator.
-	//// Example: A = true, I[0] = I[1], I += 1     
-	//Assignment keffects::Assignment:
-	//	annotations+=Annotation*
-	//	reference=ValuedObjectReference
-	//	operator=super::AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?;
+	//// Example: A = true, I[0] = I[1], I += 1
+	//Assignment returns keffects::Assignment:
+	//    (annotations+=Annotation)*
+	//    reference=ValuedObjectReference
+	//    operator=AssignOperator expression = Expression
+	//    ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.AssignmentElements getAssignmentAccess() {
 		return gaKEffects.getAssignmentAccess();
 	}
@@ -1658,18 +2052,19 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	////SubReferenceAssignment returns keffects::Assignment:
-	////    (annotations+=Annotation)*    
+	////    (annotations+=Annotation)*
 	////    valuedObject=ValuedObjectReference
 	////     operator=AssignOperator expression = Expression
-	////     ('schedule' schedule+=ScheduleObjectReference+)?;	 
+	////     ('schedule' schedule+=ScheduleObjectReference+)?;
 	//// Postfix Effect
 	//// A postfix effect is an assignment missing the part beyond the operator. In this case the operator type
 	//// must be a postfix operator.
-	//// Example: I++, I-- 
-	//PostfixEffect keffects::Assignment:
-	//	annotations+=Annotation*
-	//	reference=ValuedObjectReference
-	//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?;
+	//// Example: I++, I--
+	//PostfixEffect returns keffects::Assignment:
+	//    (annotations+=Annotation)*
+	//    reference=ValuedObjectReference
+	//    operator=PostfixOperator
+	//    ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PostfixEffectElements getPostfixEffectAccess() {
 		return gaKEffects.getPostfixEffectAccess();
 	}
@@ -1680,9 +2075,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//// Hostcode Effect Rule
 	//// A hostcode effect is an effect that include hostcode. It may be preceded by a list of annotations.
-	//HostcodeEffect keffects::HostcodeEffect:
-	//	annotations+=Annotation*
-	//	text=HOSTCODE;
+	//HostcodeEffect returns keffects::HostcodeEffect:
+	//    (annotations+=Annotation)*
+	//     text=HOSTCODE;
 	public KEffectsGrammarAccess.HostcodeEffectElements getHostcodeEffectAccess() {
 		return gaKEffects.getHostcodeEffectAccess();
 	}
@@ -1694,11 +2089,13 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// Reference Call Effect Rule
 	//// A reference call effect works similar to the reference call expression. Additionally, it may be
 	//// preceded by a list of annotations.
-	//ReferenceCallEffect keffects::ReferenceCallEffect:
-	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
-	//	subReference=ValuedObjectReference)? ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()') ('schedule'
-	//	schedule+=ScheduleObjectReference+)?;
+	//ReferenceCallEffect returns keffects::ReferenceCallEffect:
+	//    (annotations+=Annotation)*
+	//    valuedObject=[kexpressions::ValuedObject|PrimeID]
+	//    ('[' indices+=Expression ']')*
+	//    ('.' subReference=ValuedObjectReference)?
+	//    (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')
+	//    ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -1710,9 +2107,13 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// Function Call Effect Rule
 	//// A function call effect works similar to the function call expression. Additionally, it may be
 	//// preceded by a list of annotations.
-	//FunctionCallEffect keffects::FunctionCallEffect:
-	//	annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()'));
+	//FunctionCallEffect returns keffects::FunctionCallEffect:
+	//    (annotations+=Annotation)*
+	//    ('extern' functionName = ID
+	//        (('(' parameters += Parameter
+	//            (',' parameters += Parameter)* ')'
+	//        ) | '()')
+	//    );
 	public KEffectsGrammarAccess.FunctionCallEffectElements getFunctionCallEffectAccess() {
 		return gaKEffects.getFunctionCallEffectAccess();
 	}
@@ -1722,10 +2123,12 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//// Print Call Effect Rule
-	//// A print functions that enables target-independent prints in the model.    
-	//PrintCallEffect keffects::PrintCallEffect:
-	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//// A print functions that enables target-independent prints in the model.
+	//PrintCallEffect returns keffects::PrintCallEffect:
+	//    (annotations+=Annotation)*
+	//    'print'
+	//    ('(' parameters += Parameter (',' parameters += Parameter)* ')')
+	//    ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -1734,10 +2137,13 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getPrintCallEffectAccess().getRule();
 	}
 	
-	//RandomizeCallEffect keffects::RandomizeCallEffect:
-	//	{keffects::RandomizeCallEffect} annotations+=Annotation*
-	//	'randomize' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()');
+	//RandomizeCallEffect returns keffects::RandomizeCallEffect:
+	//    {keffects::RandomizeCallEffect}
+	//    (annotations+=Annotation)*
+	//    'randomize'
+	//        (('(' parameters += Parameter
+	//            (',' parameters += Parameter)* ')'
+	//        ) | '()');
 	public KEffectsGrammarAccess.RandomizeCallEffectElements getRandomizeCallEffectAccess() {
 		return gaKEffects.getRandomizeCallEffectAccess();
 	}
@@ -1746,8 +2152,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getRandomizeCallEffectAccess().getRule();
 	}
 	
+	//// Postfix Operator Enum
 	//enum PostfixOperator returns keffects::AssignOperator:
-	//	POSTFIXADD="++" | POSTFIXSUB="--";
+	//    POSTFIXADD="++" | POSTFIXSUB="--";
 	public KEffectsGrammarAccess.PostfixOperatorElements getPostfixOperatorAccess() {
 		return gaKEffects.getPostfixOperatorAccess();
 	}
@@ -1758,12 +2165,13 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	///**
 	// * @author ssm
-	// * @kieler.design 2015-08-21 proposed 
+	// * @kieler.design 2015-08-21 proposed
 	// * @kieler.rating 2015-08-21 proposed yellow
-	// */ // -------------------- //
-	////  KExpressions Rules  // 
+	// */
 	//// -------------------- //
-	///* Expression rules are organized in a chain. They pass the actual instance to the next rule but may 
+	////  KExpressions Rules  //
+	//// -------------------- //
+	///* Expression rules are organized in a chain. They pass the actual instance to the next rule but may
 	// * consume tokens to create a specific expression element. Following this pattern, complex constructs
 	// * can be created. This also implies an order of precedence.
 	// *
@@ -1795,10 +2203,11 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	// *                 + FloatValue
 	// *                 + StringValue
 	// *                 + AtomicExpression
-	// */ // Root Rule
+	// */
+	//// Root Rule
 	//// Always return an expression.
-	//Root ecore::EObject:
-	//	Expression;
+	//Root returns ecore::EObject:
+	//    Expression;
 	public KExpressionsGrammarAccess.RootElements getRootAccess() {
 		return gaKExpressions.getRootAccess();
 	}
@@ -1809,8 +2218,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//// Expression Rule
 	//// An expression is either a boolean expression or a valued expression.
-	//Expression:
-	//	super::BoolExpression | super::ValuedExpression;
+	//Expression returns Expression:
+	//     (BoolExpression | ValuedExpression);
 	public KExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
 		return gaKExpressions.getExpressionAccess();
 	}
@@ -1822,9 +2231,12 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// Bitwiese Or Expression Rule
 	//// Directs to the 'bitwise and' rule and may create an operator expression for 'bitwise or' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
-	//BitwiseOrExpression Expression:
-	//	BitwiseXOrExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
-	//	subExpressions+=BitwiseXOrExpression) ('|' subExpressions+=BitwiseXOrExpression)*)?;
+	//BitwiseOrExpression returns Expression:
+	//    BitwiseXOrExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=BitwiseOrOperator subExpressions+=BitwiseXOrExpression)
+	//        ('|' subExpressions+=BitwiseXOrExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.BitwiseOrExpressionElements getBitwiseOrExpressionAccess() {
 		return gaKExpressions.getBitwiseOrExpressionAccess();
 	}
@@ -1833,9 +2245,12 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getBitwiseOrExpressionAccess().getRule();
 	}
 	
-	//BitwiseXOrExpression Expression:
-	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseXOrOperator
-	//	subExpressions+=BitwiseAndExpression) ('^' subExpressions+=BitwiseAndExpression)*)?;
+	//BitwiseXOrExpression returns Expression:
+	//    BitwiseAndExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=BitwiseXOrOperator subExpressions+=BitwiseAndExpression)
+	//        ('^' subExpressions+=BitwiseAndExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.BitwiseXOrExpressionElements getBitwiseXOrExpressionAccess() {
 		return gaKExpressions.getBitwiseXOrExpressionAccess();
 	}
@@ -1847,9 +2262,12 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// Bitwise And Expression Rule
 	//// Directs to the compare rule and may create an operator expression for 'bitwise and' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
-	//BitwiseAndExpression Expression:
-	//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-	//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?;
+	//BitwiseAndExpression returns Expression:
+	//    CompareOperation
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=BitwiseAndOperator subExpressions+=CompareOperation)
+	//        ('&' subExpressions+=CompareOperation)*
+	//    )?;
 	public KExpressionsGrammarAccess.BitwiseAndExpressionElements getBitwiseAndExpressionAccess() {
 		return gaKExpressions.getBitwiseAndExpressionAccess();
 	}
@@ -1859,11 +2277,13 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//// Compare Operation Rule
-	//// Directs to the 'not or valued expression' rule and may create an operator expression for compares. 
+	//// Directs to the 'not or valued expression' rule and may create an operator expression for compares.
 	//// Example: 42 <= val(A)
-	//CompareOperation Expression:
-	//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=super::CompareOperator
-	//	subExpressions+=NotOrValuedExpression)?;
+	//CompareOperation returns Expression:
+	//    NotOrValuedExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        operator=CompareOperator subExpressions+=NotOrValuedExpression
+	//    )?;
 	public KExpressionsGrammarAccess.CompareOperationElements getCompareOperationAccess() {
 		return gaKExpressions.getCompareOperationAccess();
 	}
@@ -1874,9 +2294,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//// 'Not or Valued Expression' Rule
 	//// ORDER IS IMPORTANT!
-	//NotOrValuedExpression Expression:
-	//	super::ValuedExpression
-	//	| super::NotExpression;
+	//NotOrValuedExpression returns Expression:
+	//    ValuedExpression
+	//    | NotExpression;
 	public KExpressionsGrammarAccess.NotOrValuedExpressionElements getNotOrValuedExpressionAccess() {
 		return gaKExpressions.getNotOrValuedExpressionAccess();
 	}
@@ -1885,8 +2305,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getNotOrValuedExpressionAccess().getRule();
 	}
 	
-	//BitwiseNotExpression Expression:
-	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | super::AtomicExpression;
+	//BitwiseNotExpression returns Expression:
+	//    {OperatorExpression} operator=BitwiseNotOperator subExpressions+=(BitwiseNotExpression)
+	//    | AtomicExpression;
 	public KExpressionsGrammarAccess.BitwiseNotExpressionElements getBitwiseNotExpressionAccess() {
 		return gaKExpressions.getBitwiseNotExpressionAccess();
 	}
@@ -1895,11 +2316,16 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getBitwiseNotExpressionAccess().getRule();
 	}
 	
-	//ShiftExpressions Expression:
-	//	SumExpression ({OperatorExpression.subExpressions+=current} operator=ShiftLeftOperator subExpressions+=SumExpression
-	//	('<<' subExpressions+=SumExpression)* | {OperatorExpression.subExpressions+=current} operator=ShiftRightOperator
-	//	subExpressions+=SumExpression ('>>' subExpressions+=SumExpression)* | {OperatorExpression.subExpressions+=current}
-	//	operator=ShiftRightUnsignedOperator subExpressions+=SumExpression ('>>>' subExpressions+=SumExpression)*)*;
+	//ShiftExpressions returns Expression:
+	//    SumExpression
+	//    (
+	//    ({OperatorExpression.subExpressions+=current} operator=ShiftLeftOperator subExpressions+=SumExpression ('<<' subExpressions+=SumExpression)*)
+	//    |
+	//    ({OperatorExpression.subExpressions+=current} operator=ShiftRightOperator subExpressions+=SumExpression ('>>' subExpressions+=SumExpression)*)
+	//    |
+	//    ({OperatorExpression.subExpressions+=current} operator=ShiftRightUnsignedOperator subExpressions+=SumExpression ('>>>' subExpressions+=SumExpression)*)
+	//    )*
+	//;
 	public KExpressionsGrammarAccess.ShiftExpressionsElements getShiftExpressionsAccess() {
 		return gaKExpressions.getShiftExpressionsAccess();
 	}
@@ -1908,9 +2334,12 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getShiftExpressionsAccess().getRule();
 	}
 	
-	//ShiftLeftExpression Expression:
-	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
-	//	subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?;
+	//ShiftLeftExpression returns Expression:
+	//    SumExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=ShiftLeftOperator subExpressions+=ShiftRightExpression)
+	//        ('<<' subExpressions+=ShiftRightExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.ShiftLeftExpressionElements getShiftLeftExpressionAccess() {
 		return gaKExpressions.getShiftLeftExpressionAccess();
 	}
@@ -1919,9 +2348,12 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getShiftLeftExpressionAccess().getRule();
 	}
 	
-	//ShiftRightExpression Expression:
-	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
-	//	subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?;
+	//ShiftRightExpression returns Expression:
+	//    SumExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=ShiftRightOperator subExpressions+=ShiftRightUnsignedExpression)
+	//        ('>>' subExpressions+=ShiftRightUnsignedExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.ShiftRightExpressionElements getShiftRightExpressionAccess() {
 		return gaKExpressions.getShiftRightExpressionAccess();
 	}
@@ -1930,9 +2362,12 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getShiftRightExpressionAccess().getRule();
 	}
 	
-	//ShiftRightUnsignedExpression Expression:
-	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-	//	subExpressions+=SumExpression) ('>>>' subExpressions+=SumExpression)*)?;
+	//ShiftRightUnsignedExpression returns Expression:
+	//    SumExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=ShiftRightUnsignedOperator subExpressions+=SumExpression)
+	//        ('>>>' subExpressions+=SumExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.ShiftRightUnsignedExpressionElements getShiftRightUnsignedExpressionAccess() {
 		return gaKExpressions.getShiftRightUnsignedExpressionAccess();
 	}
@@ -1941,11 +2376,14 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getShiftRightUnsignedExpressionAccess().getRule();
 	}
 	
-	//SumExpression Expression:
-	//	super::ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
-	//	subExpressions+=super::ProductExpression ('+' subExpressions+=super::ProductExpression)* |
-	//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=super::ProductExpression ('-'
-	//	subExpressions+=super::ProductExpression)*)*;
+	//SumExpression returns Expression:
+	//    ProductExpression
+	//    (
+	//    ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)*)
+	//    |
+	//    ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)
+	//    )*
+	//;
 	public KExpressionsGrammarAccess.SumExpressionElements getSumExpressionAccess() {
 		return gaKExpressions.getSumExpressionAccess();
 	}
@@ -1958,9 +2396,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// The rule directs the 'sub expression' rule and creates an operator expression for additions
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 1 + 2
-	//AddExpression Expression:
-	//	super::ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
-	//	subExpressions+=super::ProductExpression)*;
+	//AddExpression returns Expression:
+	//    ProductExpression
+	//    ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression)*
+	//;
 	public KExpressionsGrammarAccess.AddExpressionElements getAddExpressionAccess() {
 		return gaKExpressions.getAddExpressionAccess();
 	}
@@ -1973,9 +2412,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// The rule directs the 'mult expression' rule and creates an operator expression for subtractions
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: var(A) - i
-	//SubExpression Expression:
-	//	super::ProductExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator
-	//	subExpressions+=super::ProductExpression)*;
+	//SubExpression returns Expression:
+	//    ProductExpression
+	//    ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression)*
+	//;
 	public KExpressionsGrammarAccess.SubExpressionElements getSubExpressionAccess() {
 		return gaKExpressions.getSubExpressionAccess();
 	}
@@ -1988,9 +2428,12 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// The rule directs the 'div expression' rule and creates an operator expression for multiplications
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
-	//MultExpression Expression:
-	//	super::NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator
-	//	subExpressions+=super::NegExpression) ('*' subExpressions+=super::NegExpression)*)?;
+	//MultExpression returns Expression:
+	//    NegExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=MultOperator subExpressions+=NegExpression)
+	//        ('*' subExpressions+=NegExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -2003,9 +2446,12 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// The rule directs the 'mod expression' rule and creates an operator expression for divisions
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 / 4
-	//DivExpression Expression:
-	//	super::NegExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator
-	//	subExpressions+=super::NegExpression) ('/' subExpressions+=super::NegExpression)*)?;
+	//DivExpression returns Expression:
+	//    NegExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=DivOperator subExpressions+=NegExpression)
+	//        ('/' subExpressions+=NegExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
 		return gaKExpressions.getDivExpressionAccess();
 	}
@@ -2018,9 +2464,12 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// The rule directs the 'neg expression' rule and creates an operator expression for modulo operations
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: i % j
-	//ModExpression Expression:
-	//	super::NegExpression ({OperatorExpression.subExpressions+=current} (operator=super::ModOperator
-	//	subExpressions+=super::NegExpression) ('%' subExpressions+=super::NegExpression)*)?;
+	//ModExpression returns Expression:
+	//    NegExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=ModOperator subExpressions+=NegExpression)
+	//        ('%' subExpressions+=NegExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.ModExpressionElements getModExpressionAccess() {
 		return gaKExpressions.getModExpressionAccess();
 	}
@@ -2029,9 +2478,12 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getModExpressionAccess().getRule();
 	}
 	
-	//SfbyExpression Expression:
-	//	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} (operator=SfbyOperator
-	//	subExpressions+=AtomicValuedExpression) ('sfby' subExpressions+=AtomicValuedExpression)*)?;
+	//SfbyExpression returns Expression:
+	//    AtomicValuedExpression
+	//    ({OperatorExpression.subExpressions+=current}
+	//        (operator=SfbyOperator subExpressions+=AtomicValuedExpression)
+	//        ('sfby' subExpressions+=AtomicValuedExpression)*
+	//    )?;
 	public KExpressionsGrammarAccess.SfbyExpressionElements getSfbyExpressionAccess() {
 		return gaKExpressions.getSfbyExpressionAccess();
 	}
@@ -2043,14 +2495,15 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// Atomic Valued Expression Rule
 	//// An atomic valued expression is either a simple int float or string literal, another valued expression
 	//// encapsulated in braces, or a atomic expression.
-	//// Basically, the rule chain may start over again at this point.     
-	//AtomicValuedExpression Expression:
-	//	IntValue
-	//	| FloatValue
-	//	| StringValue
-	//	| VectorValue
-	//	| '(' super::ValuedExpression ')'
-	//	| super::AtomicExpression;
+	//// Basically, the rule chain may start over again at this point.
+	//AtomicValuedExpression returns Expression:
+	//    IntValue
+	//    | FloatValue
+	//    | StringValue
+	//    | VectorValue
+	//    | NullValue
+	//    | '(' ValuedExpression ')'
+	//    | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return gaKExpressions.getAtomicValuedExpressionAccess();
 	}
@@ -2060,9 +2513,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//// Boolean expression with scheduling directives.
-	//// Is meant to be used in derived grammars. Do not delete this rule.     
-	//BoolScheduleExpression Expression:
-	//	super::LogicalOrExpression ('schedule' schedule+=ScheduleObjectReference)?;
+	//// Is meant to be used in derived grammars. Do not delete this rule.
+	//BoolScheduleExpression returns Expression:
+	//    LogicalOrExpression
+	//    ('schedule' schedule += ScheduleObjectReference)?;
 	public KExpressionsGrammarAccess.BoolScheduleExpressionElements getBoolScheduleExpressionAccess() {
 		return gaKExpressions.getBoolScheduleExpressionAccess();
 	}
@@ -2071,9 +2525,24 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getBoolScheduleExpressionAccess().getRule();
 	}
 	
+	//// Accesses a arbitrary target in a static way (needs to be adjusted in the scoper of the deriving language)
+	//// Example: static(Constants).MAX
+	//SpecialAccessExpression returns SpecialAccessExpression:
+	//    access='static' '('
+	//    (container=[annotations::NamedObject|PrimeID] '.')?
+	//    target=[annotations::NamedObject|PrimeID]
+	//    ')' '.' subReference=ValuedObjectReference;
+	public KExpressionsGrammarAccess.SpecialAccessExpressionElements getSpecialAccessExpressionAccess() {
+		return gaKExpressions.getSpecialAccessExpressionAccess();
+	}
+	
+	public ParserRule getSpecialAccessExpressionRule() {
+		return getSpecialAccessExpressionAccess().getRule();
+	}
+	
 	//// ID with primes
-	//PrimeID:
-	//	ID "'"*;
+	//PrimeID returns ecore::EString:
+	//  ID ("'")*;
 	public KExpressionsGrammarAccess.PrimeIDElements getPrimeIDAccess() {
 		return gaKExpressions.getPrimeIDAccess();
 	}
@@ -2085,8 +2554,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// Valued Object Reference Rule
 	//// References a valued object with arbitrary (including none) indices part.
 	//// Example: A, B
-	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)?;
+	//ValuedObjectReference returns ValuedObjectReference:
+	//    valuedObject=[ValuedObject|PrimeID]
+	//    ('[' indices+=Expression ']')*
+	//    ('.' subReference=ValuedObjectReference)?;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return gaKExpressions.getValuedObjectReferenceAccess();
 	}
@@ -2095,8 +2566,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getValuedObjectReferenceAccess().getRule();
 	}
 	
-	//ScheduleObjectReference:
-	//	valuedObject=[ValuedObject|PrimeID] priority=INT;
+	//ScheduleObjectReference returns ScheduleObjectReference:
+	//    valuedObject=[ValuedObject|PrimeID]
+	//    priority=INT;
 	public KExpressionsGrammarAccess.ScheduleObjectReferenceElements getScheduleObjectReferenceAccess() {
 		return gaKExpressions.getScheduleObjectReferenceAccess();
 	}
@@ -2106,11 +2578,16 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//// Reference Call Rule
-	//// Calls to references. They may include a parameter list. 
-	//ReferenceCall:
-	//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)? ('('
-	//	parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()');
+	//// Calls to references. They may include a parameter list.
+	//ReferenceCall returns ReferenceCall:
+	//    valuedObject=[ValuedObject|PrimeID]
+	//    ('[' indices+=Expression ']')*
+	//    ('.' subReference=ValuedObjectReference)?
+	//    (
+	//        ('(' parameters += Parameter
+	//            (',' parameters += Parameter)* ')'
+	//        ) | '()'
+	//    );
 	public KExpressionsGrammarAccess.ReferenceCallElements getReferenceCallAccess() {
 		return gaKExpressions.getReferenceCallAccess();
 	}
@@ -2120,10 +2597,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//// Random Call Rule
-	//// Calls the random function. 
-	//RandomCall:
-	//	{RandomCall}
-	//	'random' '()'?;
+	//// Calls the random function.
+	//RandomCall returns RandomCall:
+	//    {RandomCall}
+	//    'random' ('()')?;
 	public KExpressionsGrammarAccess.RandomCallElements getRandomCallAccess() {
 		return gaKExpressions.getRandomCallAccess();
 	}
@@ -2133,10 +2610,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//// Random Call Rule
-	//// Calls the random function. 
-	//RandomizeCall:
-	//	{RandomizeCall}
-	//	'randomize' '()'?;
+	//// Calls the random function.
+	//RandomizeCall returns RandomizeCall:
+	//    {RandomizeCall}
+	//    'randomize' ('()')?;
 	public KExpressionsGrammarAccess.RandomizeCallElements getRandomizeCallAccess() {
 		return gaKExpressions.getRandomizeCallAccess();
 	}
@@ -2146,10 +2623,13 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//// Function Call Rule
-	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
-	//FunctionCall:
-	//	'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()');
+	//// Calls to functions are indicated by angle brackets. They may include a parameter list.
+	//FunctionCall returns FunctionCall:
+	//    ('extern' functionName = ID
+	//        (('(' parameters += Parameter
+	//            (',' parameters += Parameter)* ')'
+	//        ) | '()')
+	//    );
 	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
 		return gaKExpressions.getFunctionCallAccess();
 	}
@@ -2161,10 +2641,14 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// Print Call Rule
 	//// Calls the print function. They may include a parameter list.
 	//// Do not use in expressions directly, use PrintCallEffect instead
-	//PrintCall:
-	//	{PrintCall}
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
-	//	'()');
+	//PrintCall returns PrintCall:
+	//    {PrintCall}
+	//    'print'
+	//    (
+	//        ('(' parameters += Parameter (',' parameters += Parameter)* ')' )
+	//    |
+	//        '()'
+	//    );
 	public KExpressionsGrammarAccess.PrintCallElements getPrintCallAccess() {
 		return gaKExpressions.getPrintCallAccess();
 	}
@@ -2177,9 +2661,11 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// The parameter rule is used by the function call rule. Every expression may be a paramter.
 	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
 	//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
-	//Parameter:
-	//	accessType=ParameterAccessType
-	//	expression=ValuedObjectReference | expression=Expression;
+	//Parameter returns Parameter:
+	//    (accessType = ParameterAccessType
+	//    expression = ValuedObjectReference)
+	//    |
+	//    expression = Expression;
 	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
 		return gaKExpressions.getParameterAccess();
 	}
@@ -2191,9 +2677,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// Text Expression Rule
 	//// The text expression rule returns a text expression. Most times text expressions are used for host code.
 	//// Example: 'printf(...)'
-	//TextExpression:
-	//	annotations+=Annotation*
-	//	text=HOSTCODE;
+	//TextExpression returns TextExpression:
+	//    (annotations += Annotation)*
+	//    text=HOSTCODE;
 	public KExpressionsGrammarAccess.TextExpressionElements getTextExpressionAccess() {
 		return gaKExpressions.getTextExpressionAccess();
 	}
@@ -2202,8 +2688,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getTextExpressionAccess().getRule();
 	}
 	
-	//IntValue:
-	//	value=INT;
+	//IntValue returns IntValue:
+	//    value=INT;
 	public KExpressionsGrammarAccess.IntValueElements getIntValueAccess() {
 		return gaKExpressions.getIntValueAccess();
 	}
@@ -2212,8 +2698,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getIntValueAccess().getRule();
 	}
 	
-	//FloatValue:
-	//	value=FLOAT;
+	//FloatValue returns FloatValue:
+	//    value=FLOAT;
 	public KExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
 		return gaKExpressions.getFloatValueAccess();
 	}
@@ -2222,8 +2708,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getFloatValueAccess().getRule();
 	}
 	
-	//BoolValue:
-	//	value=BOOLEAN;
+	//BoolValue returns BoolValue:
+	//    value=BOOLEAN;
 	public KExpressionsGrammarAccess.BoolValueElements getBoolValueAccess() {
 		return gaKExpressions.getBoolValueAccess();
 	}
@@ -2232,8 +2718,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getBoolValueAccess().getRule();
 	}
 	
-	//StringValue:
-	//	value=STRING;
+	//StringValue returns StringValue:
+	//    value=STRING;
 	public KExpressionsGrammarAccess.StringValueElements getStringValueAccess() {
 		return gaKExpressions.getStringValueAccess();
 	}
@@ -2242,8 +2728,12 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getStringValueAccess().getRule();
 	}
 	
-	//VectorValue:
-	//	'{' values+=VectorValueMember (',' values+=VectorValueMember)* '}';
+	//VectorValue returns VectorValue:
+	//    '{' (
+	//        values+=VectorValueMember (',' values+=VectorValueMember)*
+	//        |
+	//        values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference)
+	//    ) '}';
 	public KExpressionsGrammarAccess.VectorValueElements getVectorValueAccess() {
 		return gaKExpressions.getVectorValueAccess();
 	}
@@ -2252,8 +2742,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getVectorValueAccess().getRule();
 	}
 	
-	//VectorValueMember Expression:
-	//	super::BoolExpression | super::ValuedExpression | IgnoreValue;
+	//VectorValueMember returns Expression:
+	//    BoolExpression | ValuedExpression | IgnoreValue;
 	public KExpressionsGrammarAccess.VectorValueMemberElements getVectorValueMemberAccess() {
 		return gaKExpressions.getVectorValueMemberAccess();
 	}
@@ -2262,8 +2752,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getVectorValueMemberAccess().getRule();
 	}
 	
-	//IgnoreValue:
-	//	{IgnoreValue} '_';
+	//IgnoreValue returns IgnoreValue:
+	//    {IgnoreValue} '_';
 	public KExpressionsGrammarAccess.IgnoreValueElements getIgnoreValueAccess() {
 		return gaKExpressions.getIgnoreValueAccess();
 	}
@@ -2274,9 +2764,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//// Any Type Rule
 	//// Data type rule allowing any kind of value to be accepted,
-	//// e.g. as initialValues of valued objects used in Kits.xtext. 
-	//AnyType:
-	//	BOOLEAN | INT | FLOAT | ID | STRING;
+	//// e.g. as initialValues of valued objects used in Kits.xtext.
+	//AnyType returns ecore::EString:
+	//    BOOLEAN | INT | FLOAT | ID | STRING;
 	public KExpressionsGrammarAccess.AnyTypeElements getAnyTypeAccess() {
 		return gaKExpressions.getAnyTypeAccess();
 	}
@@ -2285,8 +2775,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getAnyTypeAccess().getRule();
 	}
 	
-	//AnyValue Value:
-	//	IntValue | FloatValue | BoolValue | StringValue;
+	//AnyValue returns Value:
+	//    IntValue | FloatValue | BoolValue | StringValue;
 	public KExpressionsGrammarAccess.AnyValueElements getAnyValueAccess() {
 		return gaKExpressions.getAnyValueAccess();
 	}
@@ -2296,7 +2786,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum PreOperator returns OperatorType:
-	//	PRE="pre";
+	//    PRE="pre";
 	public KExpressionsGrammarAccess.PreOperatorElements getPreOperatorAccess() {
 		return gaKExpressions.getPreOperatorAccess();
 	}
@@ -2306,7 +2796,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum BitwiseNotOperator returns OperatorType:
-	//	BITWISE_NOT="~";
+	//    BITWISE_NOT="~";
 	public KExpressionsGrammarAccess.BitwiseNotOperatorElements getBitwiseNotOperatorAccess() {
 		return gaKExpressions.getBitwiseNotOperatorAccess();
 	}
@@ -2316,7 +2806,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum BitwiseXOrOperator returns OperatorType:
-	//	BITWISE_XOR="^";
+	//    BITWISE_XOR="^";
 	public KExpressionsGrammarAccess.BitwiseXOrOperatorElements getBitwiseXOrOperatorAccess() {
 		return gaKExpressions.getBitwiseXOrOperatorAccess();
 	}
@@ -2326,7 +2816,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum BitwiseOrOperator returns OperatorType:
-	//	BITWISE_OR="|";
+	//    BITWISE_OR="|";
 	public KExpressionsGrammarAccess.BitwiseOrOperatorElements getBitwiseOrOperatorAccess() {
 		return gaKExpressions.getBitwiseOrOperatorAccess();
 	}
@@ -2336,7 +2826,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum BitwiseAndOperator returns OperatorType:
-	//	BITWISE_AND="&";
+	//    BITWISE_AND="&";
 	public KExpressionsGrammarAccess.BitwiseAndOperatorElements getBitwiseAndOperatorAccess() {
 		return gaKExpressions.getBitwiseAndOperatorAccess();
 	}
@@ -2346,7 +2836,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum AddOperator returns OperatorType:
-	//	ADD="+";
+	//    ADD="+";
 	public KExpressionsGrammarAccess.AddOperatorElements getAddOperatorAccess() {
 		return gaKExpressions.getAddOperatorAccess();
 	}
@@ -2356,7 +2846,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum SubOperator returns OperatorType:
-	//	SUB="-";
+	//    SUB="-";
 	public KExpressionsGrammarAccess.SubOperatorElements getSubOperatorAccess() {
 		return gaKExpressions.getSubOperatorAccess();
 	}
@@ -2366,7 +2856,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum MultOperator returns OperatorType:
-	//	MULT="*";
+	//    MULT="*";
 	public KExpressionsGrammarAccess.MultOperatorElements getMultOperatorAccess() {
 		return gaKExpressions.getMultOperatorAccess();
 	}
@@ -2376,7 +2866,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum DivOperator returns OperatorType:
-	//	DIV="/";
+	//    DIV="/";
 	public KExpressionsGrammarAccess.DivOperatorElements getDivOperatorAccess() {
 		return gaKExpressions.getDivOperatorAccess();
 	}
@@ -2386,7 +2876,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum ValOperator returns OperatorType:
-	//	VAL="val";
+	//    VAL="val";
 	public KExpressionsGrammarAccess.ValOperatorElements getValOperatorAccess() {
 		return gaKExpressions.getValOperatorAccess();
 	}
@@ -2396,7 +2886,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum ShiftLeftOperator returns OperatorType:
-	//	SHIFT_LEFT="<<";
+	//    SHIFT_LEFT="<<";
 	public KExpressionsGrammarAccess.ShiftLeftOperatorElements getShiftLeftOperatorAccess() {
 		return gaKExpressions.getShiftLeftOperatorAccess();
 	}
@@ -2406,7 +2896,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum ShiftRightOperator returns OperatorType:
-	//	SHIFT_RIGHT=">>";
+	//    SHIFT_RIGHT=">>";
 	public KExpressionsGrammarAccess.ShiftRightOperatorElements getShiftRightOperatorAccess() {
 		return gaKExpressions.getShiftRightOperatorAccess();
 	}
@@ -2416,7 +2906,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum ShiftRightUnsignedOperator returns OperatorType:
-	//	SHIFT_RIGHT_UNSIGNED=">>>";
+	//    SHIFT_RIGHT_UNSIGNED=">>>";
 	public KExpressionsGrammarAccess.ShiftRightUnsignedOperatorElements getShiftRightUnsignedOperatorAccess() {
 		return gaKExpressions.getShiftRightUnsignedOperatorAccess();
 	}
@@ -2426,7 +2916,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum PostfixAdd returns OperatorType:
-	//	POSTFIX_ADD="++";
+	//    POSTFIX_ADD="++";
 	public KExpressionsGrammarAccess.PostfixAddElements getPostfixAddAccess() {
 		return gaKExpressions.getPostfixAddAccess();
 	}
@@ -2436,7 +2926,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum PostfixSub returns OperatorType:
-	//	POSTFIX_SUB="--";
+	//    POSTFIX_SUB="--";
 	public KExpressionsGrammarAccess.PostfixSubElements getPostfixSubAccess() {
 		return gaKExpressions.getPostfixSubAccess();
 	}
@@ -2446,7 +2936,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum SfbyOperator returns OperatorType:
-	//	SFBY="sfby";
+	//    SFBY = "sfby";
 	public KExpressionsGrammarAccess.SfbyOperatorElements getSfbyOperatorAccess() {
 		return gaKExpressions.getSfbyOperatorAccess();
 	}
@@ -2456,7 +2946,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum HostType returns ValueType:
-	//	HOST="host";
+	//    HOST="host";
 	public KExpressionsGrammarAccess.HostTypeElements getHostTypeAccess() {
 		return gaKExpressions.getHostTypeAccess();
 	}
@@ -2466,7 +2956,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum StructType returns ValueType:
-	//	STRUCT="struct";
+	//    STRUCT="struct";
 	public KExpressionsGrammarAccess.StructTypeElements getStructTypeAccess() {
 		return gaKExpressions.getStructTypeAccess();
 	}
@@ -2476,7 +2966,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum ClassType returns ValueType:
-	//	CLASS="class";
+	//    CLASS="class";
 	public KExpressionsGrammarAccess.ClassTypeElements getClassTypeAccess() {
 		return gaKExpressions.getClassTypeAccess();
 	}
@@ -2485,9 +2975,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getClassTypeAccess().getRule();
 	}
 	
-	//enum CombineOperator:
-	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
-	//	MIN="min" | OR="|" | AND="&" | HOST="host";
+	//enum CombineOperator returns CombineOperator:
+	//    NONE="none" | ADD="+" | MULT="*" | MAX="max" |
+	//    MIN="min" | OR="|" | AND="&" | HOST="host";
 	public KExpressionsGrammarAccess.CombineOperatorElements getCombineOperatorAccess() {
 		return gaKExpressions.getCombineOperatorAccess();
 	}
@@ -2496,8 +2986,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getCombineOperatorAccess().getRule();
 	}
 	
-	//enum AccessModifier:
-	//	PUBLIC='public' | PROTECTED='protected' | PRIVATE='private';
+	//enum AccessModifier returns AccessModifier:
+	//    PUBLIC = 'public' | PROTECTED = 'protected' | PRIVATE = 'private';
 	public KExpressionsGrammarAccess.AccessModifierElements getAccessModifierAccess() {
 		return gaKExpressions.getAccessModifierAccess();
 	}
@@ -2507,9 +2997,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//enum MethodReturnType returns ValueType:
-	//	VOID="void" |
-	//	BOOL="bool" | INT="int" | FLOAT="float" |
-	//	STRING="string";
+	//    VOID="void" |
+	//    BOOL="bool" | INT="int" | FLOAT="float" |
+	//    STRING="string";
 	public KExpressionsGrammarAccess.MethodReturnTypeElements getMethodReturnTypeAccess() {
 		return gaKExpressions.getMethodReturnTypeAccess();
 	}
@@ -2518,8 +3008,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getMethodReturnTypeAccess().getRule();
 	}
 	
-	//enum ParameterAccessType:
-	//	CALL_BY_REFERENCE="&" | PURE_OUTPUT="!&";
+	//enum ParameterAccessType returns ParameterAccessType:
+	//    CALL_BY_REFERENCE = "&" | PURE_OUTPUT = "!&"
+	//;
 	public KExpressionsGrammarAccess.ParameterAccessTypeElements getParameterAccessTypeAccess() {
 		return gaKExpressions.getParameterAccessTypeAccess();
 	}
@@ -2529,12 +3020,13 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//// -------------------- //
-	////  JSON                // 
+	////  JSON                //
 	//// -------------------- //
-	//JsonObjectValue:
-	//	{JsonObjectValue}
-	//	'{' (members+=JsonObjectMember (',' members+=JsonObjectMember)*)?
-	//	'}';
+	//JsonObjectValue returns JsonObjectValue:
+	//    {JsonObjectValue}
+	//    '{'
+	//    ( (members+=JsonObjectMember) (',' members+=JsonObjectMember)* )?
+	//    '}';
 	public KExpressionsGrammarAccess.JsonObjectValueElements getJsonObjectValueAccess() {
 		return gaKExpressions.getJsonObjectValueAccess();
 	}
@@ -2543,8 +3035,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getJsonObjectValueAccess().getRule();
 	}
 	
-	//JsonObjectMember:
-	//	key=STRING ':' value=JsonValue;
+	//JsonObjectMember returns JsonObjectMember:
+	//    key=STRING ':' value=JsonValue;
 	public KExpressionsGrammarAccess.JsonObjectMemberElements getJsonObjectMemberAccess() {
 		return gaKExpressions.getJsonObjectMemberAccess();
 	}
@@ -2553,10 +3045,11 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getJsonObjectMemberAccess().getRule();
 	}
 	
-	//JsonArrayValue:
-	//	{JsonArrayValue}
-	//	'[' (elements+=JsonValue (',' elements+=JsonValue)*)?
-	//	']';
+	//JsonArrayValue returns JsonArrayValue:
+	//    {JsonArrayValue}
+	//    '['
+	//    ( (elements+=JsonValue) (',' elements+=JsonValue)* )?
+	//    ']';
 	public KExpressionsGrammarAccess.JsonArrayValueElements getJsonArrayValueAccess() {
 		return gaKExpressions.getJsonArrayValueAccess();
 	}
@@ -2565,8 +3058,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getJsonArrayValueAccess().getRule();
 	}
 	
-	//JsonValue Value:
-	//	JsonObjectValue | JsonArrayValue | NullValue | AnyValue;
+	//JsonValue returns Value:
+	//    JsonObjectValue | JsonArrayValue | NullValue | AnyValue;
 	public KExpressionsGrammarAccess.JsonValueElements getJsonValueAccess() {
 		return gaKExpressions.getJsonValueAccess();
 	}
@@ -2575,9 +3068,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getJsonValueAccess().getRule();
 	}
 	
-	//NullValue:
-	//	{NullValue}
-	//	'null';
+	//NullValue returns NullValue:
+	//    {NullValue}
+	//    'null';
 	public KExpressionsGrammarAccess.NullValueElements getNullValueAccess() {
 		return gaKExpressions.getNullValueAccess();
 	}
@@ -2587,8 +3080,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//// New Json Annotations
-	//JsonPragma:
-	//	'#' name=ExtendedID value=JsonObjectValue;
+	//JsonPragma returns JsonPragma:
+	//    '#' name=ExtendedID value=JsonObjectValue;
 	public KExpressionsGrammarAccess.JsonPragmaElements getJsonPragmaAccess() {
 		return gaKExpressions.getJsonPragmaAccess();
 	}
@@ -2597,8 +3090,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getJsonPragmaAccess().getRule();
 	}
 	
-	//JsonAnnotation:
-	//	'@' name=ExtendedID value=JsonObjectValue;
+	//JsonAnnotation returns JsonAnnotation:
+	//    '@' name=ExtendedID value=JsonObjectValue;
 	public KExpressionsGrammarAccess.JsonAnnotationElements getJsonAnnotationAccess() {
 		return gaKExpressions.getJsonAnnotationAccess();
 	}
@@ -2608,8 +3101,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//@Override
-	//Pragma annotations::Pragma:
-	//	super | JsonPragma;
+	//Pragma returns annotations::Pragma:
+	//    super | JsonPragma;
 	public KExpressionsGrammarAccess.PragmaElements getPragmaAccess() {
 		return gaKExpressions.getPragmaAccess();
 	}
@@ -2619,8 +3112,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//@Override
-	//Annotation annotations::Annotation:
-	//	super | JsonAnnotation;
+	//Annotation returns annotations::Annotation:
+	//    super | JsonAnnotation;
 	public KExpressionsGrammarAccess.AnnotationElements getAnnotationAccess() {
 		return gaKExpressions.getAnnotationAccess();
 	}
@@ -2630,8 +3123,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//@Override
-	//ValuedAnnotation annotations::Annotation:
-	//	super | JsonAnnotation;
+	//ValuedAnnotation returns annotations::Annotation:
+	//    super | JsonAnnotation;
 	public KExpressionsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
 		return gaKExpressions.getValuedAnnotationAccess();
 	}
@@ -2641,8 +3134,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//@Override
-	//QuotedStringAnnotation annotations::Annotation:
-	//	super | JsonAnnotation;
+	//QuotedStringAnnotation returns annotations::Annotation:
+	//    super | JsonAnnotation;
 	public KExpressionsGrammarAccess.QuotedStringAnnotationElements getQuotedStringAnnotationAccess() {
 		return gaKExpressions.getQuotedStringAnnotationAccess();
 	}
@@ -2651,23 +3144,44 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getQuotedStringAnnotationAccess().getRule();
 	}
 	
-	//terminal HOSTCODE:
-	//	"`" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "`"))* "`";
+	//// OO
+	//ThisExpression returns ThisExpression:
+	//    {ThisExpression}
+	//    'this';
+	public KExpressionsGrammarAccess.ThisExpressionElements getThisExpressionAccess() {
+		return gaKExpressions.getThisExpressionAccess();
+	}
+	
+	public ParserRule getThisExpressionRule() {
+		return getThisExpressionAccess().getRule();
+	}
+	
+	//// ------------------------ //
+	////  KExpressions Terminals  //
+	//// ------------------------ //
+	//// Hostcode Terminals
+	//// Custom terminal rule allowing to save transition label string as they are
+	//terminal HOSTCODE returns ecore::EString:
+	//    "`" ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|"`") )* "`";
 	public TerminalRule getHOSTCODERule() {
 		return gaKExpressions.getHOSTCODERule();
 	}
 	
 	///**
 	// * @author ssm
-	// * @kieler.design 2015-08-21 proposed 
+	// * @kieler.design 2015-08-21 proposed
 	// * @kieler.rating 2015-08-21 proposed yellow
-	// */ // ------------------ //
-	////  Annotation Rules  // 
+	// */
+	//// ------------------ //
+	////  Annotation Rules  //
 	//// ------------------ //
 	//// General rule for annotations
-	//// The different annotation sub rules are tested in order. Hence, order matters! 
-	//Annotation:
-	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | TagAnnotation;
+	//// The different annotation sub rules are tested in order. Hence, order matters!
+	//Annotation returns Annotation:
+	//    CommentAnnotation |
+	//    KeyStringValueAnnotation |
+	//    TypedKeyStringValueAnnotation |
+	//    TagAnnotation;
 	public AnnotationsGrammarAccess.AnnotationElements getAnnotationsAnnotationAccess() {
 		return gaAnnotations.getAnnotationAccess();
 	}
@@ -2677,9 +3191,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//// General rule for pragmas
-	//// We only have string and tag pragmas.    
-	//Pragma:
-	//	StringPragma | PragmaTag;
+	//// We only have string and tag pragmas.
+	//Pragma returns Pragma:
+	//    StringPragma |
+	//    PragmaTag;
 	public AnnotationsGrammarAccess.PragmaElements getAnnotationsPragmaAccess() {
 		return gaAnnotations.getPragmaAccess();
 	}
@@ -2692,8 +3207,10 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// Valued annotations must have a value. For instance, tag annotations are not allowed.
 	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
 	//// due to ambiguities.
-	//ValuedAnnotation Annotation:
-	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation;
+	//ValuedAnnotation returns Annotation:
+	//    CommentAnnotation |
+	//    KeyStringValueAnnotation |
+	//    TypedKeyStringValueAnnotation;
 	public AnnotationsGrammarAccess.ValuedAnnotationElements getAnnotationsValuedAnnotationAccess() {
 		return gaAnnotations.getValuedAnnotationAccess();
 	}
@@ -2703,10 +3220,13 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//// Restricted Type Annotation Rule
-	//// The restricted type annotation rule does not allow typed string annotations. 
-	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
-	//RestrictedTypeAnnotation Annotation:
-	//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation;
+	//// The restricted type annotation rule does not allow typed string annotations.
+	//// You can use this rule in derived grammars if you don't want to permit typed strings.
+	//RestrictedTypeAnnotation returns Annotation:
+	//    CommentAnnotation |
+	//    RestrictedKeyStringValueAnnotation |
+	//    RestrictedTypedKeyStringValueAnnotation |
+	//    TagAnnotation;
 	public AnnotationsGrammarAccess.RestrictedTypeAnnotationElements getRestrictedTypeAnnotationAccess() {
 		return gaAnnotations.getRestrictedTypeAnnotationAccess();
 	}
@@ -2716,12 +3236,15 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	}
 	
 	//// Quoted String Annotation Rule
-	//// The quoted string annotation rules uses quoted key string annotations. You can use this rule in 
-	//// derived grammars if you don't want to permit unquoted strings. 
+	//// The quoted string annotation rules uses quoted key string annotations. You can use this rule in
+	//// derived grammars if you don't want to permit unquoted strings.
 	//// (If you are looking for an example, the keffects grammar uses this rule for their emission
-	//// rule and to avoid grammar ambiguities.)  
-	//QuotedStringAnnotation Annotation:
-	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation;
+	//// rule and to avoid grammar ambiguities.)
+	//QuotedStringAnnotation returns Annotation:
+	//    CommentAnnotation |
+	//    QuotedKeyStringValueAnnotation |
+	//    QuotedTypedKeyStringValueAnnotation |
+	//    TagAnnotation;
 	public AnnotationsGrammarAccess.QuotedStringAnnotationElements getAnnotationsQuotedStringAnnotationAccess() {
 		return gaAnnotations.getQuotedStringAnnotationAccess();
 	}
@@ -2732,8 +3255,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//// CommentAnnotation
 	//// e.g.: /** semantic comment */
-	//CommentAnnotation:
-	//	values+=COMMENT_ANNOTATION;
+	//CommentAnnotation returns CommentAnnotation:
+	//    values += COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotationElements getCommentAnnotationAccess() {
 		return gaAnnotations.getCommentAnnotationAccess();
 	}
@@ -2742,8 +3265,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getCommentAnnotationAccess().getRule();
 	}
 	
-	//CommentAnnotatonSL CommentAnnotation:
-	//	values+=SL_COMMENT_ANNOTATION;
+	//CommentAnnotatonSL returns CommentAnnotation:
+	//    values += SL_COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotatonSLElements getCommentAnnotatonSLAccess() {
 		return gaAnnotations.getCommentAnnotatonSLAccess();
 	}
@@ -2754,8 +3277,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//// TagAnnotation
 	//// e.g.: @HVlayout
-	//TagAnnotation:
-	//	'@' name=ExtendedID;
+	//TagAnnotation returns TagAnnotation:
+	//    '@' name=ExtendedID;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
 		return gaAnnotations.getTagAnnotationAccess();
 	}
@@ -2764,8 +3287,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getTagAnnotationAccess().getRule();
 	}
 	
-	//PragmaTag Pragma:
-	//	'#' name=ExtendedID;
+	//PragmaTag returns Pragma:
+	//    '#' name=ExtendedID;
 	public AnnotationsGrammarAccess.PragmaTagElements getPragmaTagAccess() {
 		return gaAnnotations.getPragmaTagAccess();
 	}
@@ -2776,9 +3299,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//// KeyStringValueAnnotation
 	//// e.g.: @layouter dot
-	//// You may separate different values via comma.   
-	//KeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+	//// You may separate different values via comma.
+	//KeyStringValueAnnotation returns StringAnnotation:
+	//    '@' name=ExtendedID values += EStringAllTypes (',' values += EStringAllTypes)*;
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getKeyStringValueAnnotationAccess();
 	}
@@ -2787,8 +3310,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getKeyStringValueAnnotationAccess().getRule();
 	}
 	
-	//RestrictedKeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*;
+	//RestrictedKeyStringValueAnnotation returns StringAnnotation:
+	//    '@' name=ExtendedID values += EStringBoolean (',' values += EStringBoolean)*;
 	public AnnotationsGrammarAccess.RestrictedKeyStringValueAnnotationElements getRestrictedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getRestrictedKeyStringValueAnnotationAccess();
 	}
@@ -2797,8 +3320,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getRestrictedKeyStringValueAnnotationAccess().getRule();
 	}
 	
-	//StringPragma:
-	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+	//StringPragma returns StringPragma:
+	//    '#' name=ExtendedID values += EStringAllTypes (',' values += EStringAllTypes)*;
 	public AnnotationsGrammarAccess.StringPragmaElements getStringPragmaAccess() {
 		return gaAnnotations.getStringPragmaAccess();
 	}
@@ -2809,8 +3332,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//// TypedKeyStringValueAnnotation
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
-	//TypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
+	//    '@' name=ExtendedID '[' type=ExtendedID ']' values += EStringAllTypes (',' values += EStringAllTypes)*;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getTypedKeyStringValueAnnotationAccess();
 	}
@@ -2819,8 +3342,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getTypedKeyStringValueAnnotationAccess().getRule();
 	}
 	
-	//RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*;
+	//RestrictedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
+	//    '@' name=ExtendedID '[' type=ExtendedID ']' values += EStringBoolean (',' values += EStringBoolean)*;
 	public AnnotationsGrammarAccess.RestrictedTypedKeyStringValueAnnotationElements getRestrictedTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getRestrictedTypedKeyStringValueAnnotationAccess();
 	}
@@ -2831,9 +3354,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//// QuotedKeyStringValueAnnotation
 	//// The quoted key string value annotation is a replacement derived grammars may use
-	//// if they want to disallow quote-less strings in a key string annotation. 
-	//QuotedKeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=STRING (',' values+=STRING)*;
+	//// if they want to disallow quote-less strings in a key string annotation.
+	//QuotedKeyStringValueAnnotation returns StringAnnotation:
+	//    '@' name=ExtendedID values += STRING (',' values += STRING)*;
 	public AnnotationsGrammarAccess.QuotedKeyStringValueAnnotationElements getQuotedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getQuotedKeyStringValueAnnotationAccess();
 	}
@@ -2844,9 +3367,9 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//// QuotedTypedKeyStringValueAnnotation
 	//// The quoted typed key string value annotation is a replacement derived grammars may use
-	//// if they want to disallow quote-less strings in a key string annotation. 
-	//QuotedTypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=STRING (',' values+=STRING)*;
+	//// if they want to disallow quote-less strings in a key string annotation.
+	//QuotedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
+	//    '@' name=ExtendedID '[' type=ExtendedID ']' values += STRING (',' values += STRING)*;
 	public AnnotationsGrammarAccess.QuotedTypedKeyStringValueAnnotationElements getQuotedTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getQuotedTypedKeyStringValueAnnotationAccess();
 	}
@@ -2858,8 +3381,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// EString
 	//// Allow strings without quotes if they don't contain spaces.
 	//// For quoteless strings the ExtendedID rule is used.
-	//EString:
-	//	STRING | ExtendedID;
+	//EString returns ecore::EString:
+	//    STRING | ExtendedID;
 	public AnnotationsGrammarAccess.EStringElements getEStringAccess() {
 		return gaAnnotations.getEStringAccess();
 	}
@@ -2868,8 +3391,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getEStringAccess().getRule();
 	}
 	
-	//EStringBoolean:
-	//	STRING | ExtendedID | BOOLEAN;
+	//EStringBoolean returns ecore::EString:
+	//    STRING | ExtendedID | BOOLEAN;
 	public AnnotationsGrammarAccess.EStringBooleanElements getEStringBooleanAccess() {
 		return gaAnnotations.getEStringBooleanAccess();
 	}
@@ -2878,8 +3401,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getEStringBooleanAccess().getRule();
 	}
 	
-	//EStringAllTypes:
-	//	STRING | ExtendedID | BOOLEAN | Integer | Floateger;
+	//EStringAllTypes returns ecore::EString:
+	//    STRING | ExtendedID | BOOLEAN | Integer | Floateger;
 	public AnnotationsGrammarAccess.EStringAllTypesElements getEStringAllTypesAccess() {
 		return gaAnnotations.getEStringAllTypesAccess();
 	}
@@ -2891,8 +3414,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//// ExtendedID
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
-	//ExtendedID:
-	//	ID (('.' | '-') ID)* ('#' INT)?;
+	//ExtendedID returns ecore::EString:
+	//  ID (('.'|'-') ID)* (('#') INT)?;
 	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
 		return gaAnnotations.getExtendedIDAccess();
 	}
@@ -2901,8 +3424,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getExtendedIDAccess().getRule();
 	}
 	
-	//QualifiedID:
-	//	ID ("." ID)*;
+	//QualifiedID returns ecore::EString:
+	//  ID ("." ID)*;
 	public AnnotationsGrammarAccess.QualifiedIDElements getQualifiedIDAccess() {
 		return gaAnnotations.getQualifiedIDAccess();
 	}
@@ -2913,8 +3436,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//// Integer
 	//// The integer rule extends the EInt terminal by an optional sign for negative numbers.
-	//Integer ecore::EInt:
-	//	'-'? INT;
+	//Integer returns ecore::EInt:
+	//    '-'? INT;
 	public AnnotationsGrammarAccess.IntegerElements getIntegerAccess() {
 		return gaAnnotations.getIntegerAccess();
 	}
@@ -2925,8 +3448,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//// Floateger
 	//// The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
-	//Floateger ecore::EDouble:
-	//	'-'? FLOAT;
+	//Floateger returns ecore::EDouble:
+	//    '-'? FLOAT;
 	public AnnotationsGrammarAccess.FloategerElements getFloategerAccess() {
 		return gaAnnotations.getFloategerAccess();
 	}
@@ -2935,65 +3458,78 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 		return getFloategerAccess().getRule();
 	}
 	
-	//terminal COMMENT_ANNOTATION:
-	//	'/**'->'*/';
+	//// ---------------------- //
+	////  Annotation Terminals  //
+	//// ---------------------- //
+	//// Comment Annotation Terminal
+	//// Custom terminal rule introducing semantic comments.
+	//terminal COMMENT_ANNOTATION returns ecore::EString:
+	//    '/**' -> '*/';
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
 		return gaAnnotations.getCOMMENT_ANNOTATIONRule();
 	}
 	
-	//terminal SL_COMMENT_ANNOTATION:
-	//	'//*' !('\n' | '\r')* ('\r'? '\n')?;
+	//terminal SL_COMMENT_ANNOTATION returns ecore::EString:
+	//    '//*' !('\n'|'\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENT_ANNOTATIONRule() {
 		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
 	}
 	
-	//terminal fragment NUMBER:
-	//	'0'..'9';
+	//// Number Terminal
+	//terminal fragment NUMBER :
+	//    '0'..'9';
 	public TerminalRule getNUMBERRule() {
 		return gaAnnotations.getNUMBERRule();
 	}
 	
+	//// Integer Terminal
+	//// An INT is a list of numbers.
 	//@Override
 	//terminal INT returns ecore::EInt:
-	//	NUMBER+;
+	//    NUMBER+;
 	public TerminalRule getINTRule() {
 		return gaAnnotations.getINTRule();
 	}
 	
+	//// Float Terminal (internal precision: double!)
+	//// Make sure the Float rule does not shadow the INT rule
 	//terminal FLOAT returns ecore::EDouble:
-	//	NUMBER+ ('.' NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? 'f'? | NUMBER+ 'f';
+	//    NUMBER+ ('.' NUMBER*) (("e"|"E") ("+"|"-")? NUMBER+)? 'f'? |
+	//    NUMBER+ 'f';
 	public TerminalRule getFLOATRule() {
 		return gaAnnotations.getFLOATRule();
 	}
 	
-	//terminal BOOLEAN returns ecore::EBooleanObject:
-	//	'true' | 'false';
+	//// Boolean Terminal
+	//// Introduce boolean values.
+	//terminal BOOLEAN returns ecore::EBooleanObject :
+	//    'true' | 'false';
 	public TerminalRule getBOOLEANRule() {
 		return gaAnnotations.getBOOLEANRule();
 	}
 	
+	//// String Terminal
+	//// Custom terminal rule for strings, only use double quotes.
 	//@Override
-	//terminal STRING:
-	//	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | '"'))* '"';
+	//terminal STRING returns ecore::EString:
+	//    '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|'"') )* '"';
 	public TerminalRule getSTRINGRule() {
 		return gaAnnotations.getSTRINGRule();
 	}
 	
 	//@Override
 	//terminal ID:
-	//	'^'? (('_'? 'a'..'z' | '_'? 'A'..'Z') | '_' '0'..'9' | '__') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
+	//    '^'?(('_'?'a'..'z'|'_'?'A'..'Z')|'_''0'..'9'|'__') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 	public TerminalRule getIDRule() {
 		return gaAnnotations.getIDRule();
 	}
 	
-	//terminal WS:
-	//	' ' | '\t' | '\r' | '\n'+;
+	//terminal WS         : (' '|'\t'|'\r'|'\n')+;
 	public TerminalRule getWSRule() {
 		return gaTerminals.getWSRule();
 	}
 	
-	//terminal ANY_OTHER:
-	//	.;
+	//terminal ANY_OTHER: .;
 	public TerminalRule getANY_OTHERRule() {
 		return gaTerminals.getANY_OTHERRule();
 	}

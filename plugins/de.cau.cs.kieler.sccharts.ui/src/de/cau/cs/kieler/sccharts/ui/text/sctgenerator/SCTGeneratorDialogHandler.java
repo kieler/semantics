@@ -25,7 +25,6 @@ import com.google.inject.Injector;
 
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup;
 import de.cau.cs.kieler.sccharts.text.sctgenerator.SCTGenerator;
-import de.cau.cs.kieler.sccharts.ui.text.sctgenerator.SCTGeneratorDialog;
 
 /**
  * Handler class for the SCT Generator menu command.
@@ -40,8 +39,7 @@ public class SCTGeneratorDialogHandler extends AbstractHandler {
             "de.cau.cs.kieler.sccharts.ui.text.SCTGenerator.openDialog";
 
     /** The SCT injector */
-    private static Injector injector =
-            new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration();
+    private static Injector injector = SCTXStandaloneSetup.doSetup();
 
     /**
      * {@inheritDoc}

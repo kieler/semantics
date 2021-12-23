@@ -56,7 +56,9 @@ class LayoutHook extends SynthesisActionHook {
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LayoutHook";
     /** The related synthesis option */
-    public static final SynthesisOption LAYOUT_DIRECTION = SynthesisOption.createChoiceOption("Direction", #["HV", "VH", "Down", "Right"], "HV").
+    public static final SynthesisOption LAYOUT_DIRECTION = SynthesisOption.createChoiceOption(
+        LayoutHook,
+        "Direction", #["HV", "VH", "Down", "Right"], "HV").
         setCategory(GeneralSynthesisOptions::LAYOUT).setUpdateAction(LayoutHook.ID); // Register this action as updater
        
     /** This property is set if any element should override HV or VH layout annotation effects */
@@ -126,7 +128,7 @@ class LayoutHook extends SynthesisActionHook {
                     node.setProperty(HV_DEPTH, baseDepth)
                     // Default layout direction for controlflow region
                     if (source instanceof ControlflowRegion) {
-                        if (golbalDirection != null) {
+                        if (golbalDirection !== null) {
                             node.setLayoutOption(CoreOptions.DIRECTION, golbalDirection)
                         }
                     }
@@ -187,7 +189,7 @@ class LayoutHook extends SynthesisActionHook {
             val value = data?.parseValue(annotation.values?.head ?: "".toLowerCase)
 
             // Set layout option
-            if (data != null && value != null) {
+            if (data !== null && value !== null) {
                 element.setLayoutOption(data.id, value)
                 if (data.id == CoreOptions.DIRECTION.id && element instanceof KNode) {
                     element.setLayoutOption(BLOCK_ALTERNATIN_LAYOUT, true);

@@ -13,6 +13,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#isOverride <em>Override</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getReturnType <em>Return Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getParameterDeclarations <em>Parameter Declarations</em>}</li>
  * </ul>
@@ -22,6 +23,28 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface MethodDeclaration extends Declaration, Schedulable {
+    /**
+     * Returns the value of the '<em><b>Override</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Override</em>' attribute.
+     * @see #setOverride(boolean)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getMethodDeclaration_Override()
+     * @model
+     * @generated
+     */
+    boolean isOverride();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#isOverride <em>Override</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Override</em>' attribute.
+     * @see #isOverride()
+     * @generated
+     */
+    void setOverride(boolean value);
+
     /**
      * Returns the value of the '<em><b>Return Type</b></em>' attribute.
      * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.ValueType}.

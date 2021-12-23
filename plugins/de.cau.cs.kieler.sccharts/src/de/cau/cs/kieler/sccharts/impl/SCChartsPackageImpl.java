@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 
 import de.cau.cs.kieler.sccharts.Action;
+import de.cau.cs.kieler.sccharts.BaseStateReference;
 import de.cau.cs.kieler.sccharts.CodeEffect;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.DataflowAssignment;
@@ -33,6 +34,8 @@ import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.LocalAction;
+import de.cau.cs.kieler.sccharts.ModuleScopeCall;
+import de.cau.cs.kieler.sccharts.OdeAction;
 import de.cau.cs.kieler.sccharts.PeriodAction;
 import de.cau.cs.kieler.sccharts.PolicyClassDeclaration;
 import de.cau.cs.kieler.sccharts.PolicyRegion;
@@ -203,6 +206,27 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     private EClass dataflowAssignmentEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass baseStateReferenceEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass odeActionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass moduleScopeCallEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -606,7 +630,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
-    public EReference getState_BaseStates() {
+    public EReference getState_BaseStateReferences() {
         return (EReference)stateEClass.getEStructuralFeatures().get(8);
     }
 
@@ -698,6 +722,16 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
     @Override
     public EAttribute getControlflowRegion_Final() {
         return (EAttribute)controlflowRegionEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getControlflowRegion_Abort() {
+        return (EAttribute)controlflowRegionEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -946,6 +980,66 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
+    public EClass getBaseStateReference() {
+        return baseStateReferenceEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getBaseStateReference_Target() {
+        return (EReference)baseStateReferenceEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getBaseStateReference_GenericParameters() {
+        return (EReference)baseStateReferenceEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getBaseStateReference_Parameters() {
+        return (EReference)baseStateReferenceEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getOdeAction() {
+        return odeActionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getModuleScopeCall() {
+        return moduleScopeCallEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EEnum getPreemptionType() {
         return preemptionTypeEEnum;
     }
@@ -1044,7 +1138,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEAttribute(stateEClass, STATE__CONNECTOR);
         createEReference(stateEClass, STATE__OUTGOING_TRANSITIONS);
         createEReference(stateEClass, STATE__INCOMING_TRANSITIONS);
-        createEReference(stateEClass, STATE__BASE_STATES);
+        createEReference(stateEClass, STATE__BASE_STATE_REFERENCES);
 
         regionEClass = createEClass(REGION);
         createEReference(regionEClass, REGION__PARENT_STATE);
@@ -1056,6 +1150,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         controlflowRegionEClass = createEClass(CONTROLFLOW_REGION);
         createEReference(controlflowRegionEClass, CONTROLFLOW_REGION__STATES);
         createEAttribute(controlflowRegionEClass, CONTROLFLOW_REGION__FINAL);
+        createEAttribute(controlflowRegionEClass, CONTROLFLOW_REGION__ABORT);
 
         dataflowRegionEClass = createEClass(DATAFLOW_REGION);
         createEReference(dataflowRegionEClass, DATAFLOW_REGION__EQUATIONS);
@@ -1091,6 +1186,15 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         dataflowAssignmentEClass = createEClass(DATAFLOW_ASSIGNMENT);
         createEAttribute(dataflowAssignmentEClass, DATAFLOW_ASSIGNMENT__SEQUENTIAL);
+
+        baseStateReferenceEClass = createEClass(BASE_STATE_REFERENCE);
+        createEReference(baseStateReferenceEClass, BASE_STATE_REFERENCE__TARGET);
+        createEReference(baseStateReferenceEClass, BASE_STATE_REFERENCE__GENERIC_PARAMETERS);
+        createEReference(baseStateReferenceEClass, BASE_STATE_REFERENCE__PARAMETERS);
+
+        odeActionEClass = createEClass(ODE_ACTION);
+
+        moduleScopeCallEClass = createEClass(MODULE_SCOPE_CALL);
 
         // Create enums
         preemptionTypeEEnum = createEEnum(PREEMPTION_TYPE);
@@ -1160,6 +1264,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         codeEffectEClass.getESuperTypes().add(theKEffectsPackage.getEffect());
         codeEffectEClass.getESuperTypes().add(theSCLPackage.getScope());
         dataflowAssignmentEClass.getESuperTypes().add(theKEffectsPackage.getAssignment());
+        odeActionEClass.getESuperTypes().add(this.getLocalAction());
+        moduleScopeCallEClass.getESuperTypes().add(this.getScopeCall());
 
         // Initialize classes and features; add operations and parameters
         initEClass(scChartsEClass, SCCharts.class, "SCCharts", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1197,7 +1303,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEAttribute(getState_Connector(), ecorePackage.getEBoolean(), "connector", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getState_OutgoingTransitions(), this.getTransition(), this.getTransition_SourceState(), "outgoingTransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getState_IncomingTransitions(), this.getTransition(), this.getTransition_TargetState(), "incomingTransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getState_BaseStates(), this.getState(), null, "baseStates", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getState_BaseStateReferences(), this.getBaseStateReference(), null, "baseStateReferences", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(regionEClass, Region.class, "Region", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getRegion_ParentState(), this.getState(), this.getState_Regions(), "parentState", null, 0, 1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1209,6 +1315,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEClass(controlflowRegionEClass, ControlflowRegion.class, "ControlflowRegion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getControlflowRegion_States(), this.getState(), this.getState_ParentRegion(), "states", null, 0, -1, ControlflowRegion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getControlflowRegion_Final(), ecorePackage.getEBoolean(), "final", null, 0, 1, ControlflowRegion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getControlflowRegion_Abort(), ecorePackage.getEBoolean(), "abort", null, 0, 1, ControlflowRegion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(dataflowRegionEClass, DataflowRegion.class, "DataflowRegion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getDataflowRegion_Equations(), theKEffectsPackage.getAssignment(), null, "equations", null, 0, -1, DataflowRegion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1244,6 +1351,15 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         initEClass(dataflowAssignmentEClass, DataflowAssignment.class, "DataflowAssignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getDataflowAssignment_Sequential(), ecorePackage.getEBoolean(), "sequential", "false", 0, 1, DataflowAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(baseStateReferenceEClass, BaseStateReference.class, "BaseStateReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getBaseStateReference_Target(), this.getState(), null, "target", null, 0, 1, BaseStateReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getBaseStateReference_GenericParameters(), theKExpressionsPackage.getParameter(), null, "genericParameters", null, 0, -1, BaseStateReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getBaseStateReference_Parameters(), theKExpressionsPackage.getParameter(), null, "parameters", null, 0, -1, BaseStateReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(odeActionEClass, OdeAction.class, "OdeAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(moduleScopeCallEClass, ModuleScopeCall.class, "ModuleScopeCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
         initEEnum(preemptionTypeEEnum, PreemptionType.class, "PreemptionType");

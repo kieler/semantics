@@ -14,15 +14,14 @@ package de.cau.cs.kieler.simulation
 
 import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
 import java.io.File
-import org.eclipse.core.resources.IFile
 
 /**
  * @author als
  */
 class CoSimulationExeWrapper extends SimulationModelWrapper {
     
-    new(IFile file) {
-        super(new ExecutableContainer(new File(file.locationURI)), null)
+    new(File file) {
+        super(new ExecutableContainer(file), null)
     }
     
     override protected readOutput(DataPool pool) {

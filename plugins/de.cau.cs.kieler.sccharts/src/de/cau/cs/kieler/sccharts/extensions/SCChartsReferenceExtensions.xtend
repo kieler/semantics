@@ -12,32 +12,31 @@
  */
 package de.cau.cs.kieler.sccharts.extensions
 
-import com.google.common.collect.Iterables
-import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.AccessModifier
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
-import de.cau.cs.kieler.kexpressions.GenericTypeReference
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.Value
-import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kexpressions.kext.extensions.Binding
 import de.cau.cs.kieler.kexpressions.kext.extensions.BindingType
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtReferenceExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
+import de.cau.cs.kieler.sccharts.BaseStateReference
+import de.cau.cs.kieler.sccharts.ModuleScopeCall
 import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.ScopeCall
 import de.cau.cs.kieler.sccharts.State
 import java.util.List
-import java.util.Set
-import org.eclipse.emf.ecore.EObject
+import java.util.Map
 
 import static extension java.lang.String.format
 
@@ -49,13 +48,16 @@ import static extension java.lang.String.format
  */
 class SCChartsReferenceExtensions extends KExtReferenceExtensions {
     
+    @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsGenericParameterExtensions
     @Inject extension KExpressionsTypeExtensions
+    @Inject extension KExpressionsAccessVisibilityExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension SCChartsInheritanceExtensions
+    @Inject extension SCChartsTypeExtensions
     
     /** Creates all bindings for a referenced scope. */
     def List<Binding> createBindings(Scope scope) {
@@ -67,7 +69,6 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
      */
     def List<Binding> createBindings(Scope scope, Replacements replacements) {
         val bindings = <Binding> newArrayList
-        val bound = <ValuedObject> newHashSet
         
         // Return an empty binding list if there is no reference.
         if (!scope.isReferencing) return bindings
@@ -75,6 +76,18 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
         val targetState = scope.reference.resolveReferencedScope
         val parameters = scope.reference.parameters
         
+        bindings += targetState.createBindings(parameters, replacements, scope.valuedObjectNameMap)
+        
+        // Create binding for generic parameters
+        bindings += scope.createGenericParameterBindings
+        
+        bindings
+    }
+    
+    def List<Binding> createBindings(Scope targetState, List<Parameter> parameters, Replacements replacements, Map<String, ValuedObject> parentVONameMap) { 
+        val bindings = <Binding> newArrayList
+        val bound = <ValuedObject> newHashSet
+          
         // Return an empty binding list if there is no target in the reference.
         // At the moment, only states are supported.
         if (targetState === null) return bindings
@@ -82,13 +95,19 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
         val targetVOs = <ValuedObject> newArrayList
         if (targetState instanceof State) {
             
-            for (declaration : targetState.variableDeclarations.filter[ input || output]) {
-                targetVOs += declaration.valuedObjects
-            }
+            targetVOs += targetState.getInputAndOutputValuedObjects
             
             // Inherited Decls
-            for (declaration : targetState.allVisibleInheritedDeclarations.filter(VariableDeclaration).filter[ input || output ]) {
-                targetVOs += declaration.valuedObjects
+            val boundInheritedVOs = <ValuedObject>newHashSet// bining in base state reference
+            for (bsr : targetState.getAllInheritedStateReferencesHierachically.filter[!it.parameters.nullOrEmpty]) {
+                for (binding : bsr.target.createBindings(bsr.parameters, new Replacements, newHashMap)) {
+                    if (binding.errorMessages.nullOrEmpty) {
+                        boundInheritedVOs += binding.targetValuedObject
+                    }
+                }
+            }
+            for (declaration : targetState.allVisibleInheritedDeclarations.filter[input || output]) {
+                targetVOs += declaration.valuedObjects.filter[!boundInheritedVOs.contains(it)]
             }
         } else {
             targetVOs += targetState.eAllContents.filter(ValuedObjectReference).map[valuedObject].toSet
@@ -138,18 +157,16 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
         // Calculate implicit bindings.
         if (bound.size < targetVOs.size) {
             
-            val voNameMap = scope.valuedObjectNameMap
-            
             // Consider the replacement stack for the name matching.
             // However, this is kind of dangerous because all previous bindings are on the stack. Hence, it is possible to 
             // bind a variable that is not included in the calling scope. 
             // However, this usually should result in a validation error in the model because the binding cannot be found
             // in the calling scope.
-            for (voName : voNameMap.keySet.immutableCopy) {
+            for (voName : parentVONameMap.keySet.immutableCopy) {
                 if (replacements.containsKey(voName)) {
                     val newRef = replacements.peek(voName)
                     if (newRef instanceof ValuedObjectReference) {
-                        voNameMap.put(voName, newRef.valuedObject)
+                        parentVONameMap.put(voName, newRef.valuedObject)
                     } else {
                         throw new IllegalStateException("There is a matching valued object on the replacement stack for an implicitly bound variable ( " + 
                             voName + ")." + 
@@ -166,12 +183,12 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
                         type = BindingType.IMPLICIT
                     ]
                     
-                    if (voNameMap.containsKey(vo.name)) {
-                        binding.sourceExpression = voNameMap.get(vo.name).reference
-                    } else if (vo.declaration.access !== AccessModifier.PUBLIC) {
+                    if (parentVONameMap.containsKey(vo.name)) {
+                        binding.sourceExpression = parentVONameMap.get(vo.name).reference
+                    } else if (!vo.declaration.isPublic) {
                         val privateName = "_" + (vo.declaration.eContainer as Scope).name + "_" + vo.name // FIXME this should be solved via an annotation on the renamed variable
-                        if (voNameMap.containsKey(privateName)) {
-                            binding.sourceExpression = voNameMap.get(privateName).reference
+                        if (parentVONameMap.containsKey(privateName)) {
+                            binding.sourceExpression = parentVONameMap.get(privateName).reference
                         } else {
                             binding.addErrorMessage("Valued object in the referenced scope was not bound properly: " + vo.name)
                         }
@@ -185,8 +202,66 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
             }        
         }
         
-        // Create binding for generic parameters
-        bindings += scope.createGenericParameterBindings
+        return bindings
+    }
+    
+    def List<Binding> createBindings(ValuedObject vo, Replacements replacements) {
+        val bindings = <Binding> newArrayList
+        
+        if (vo.declaration instanceof ReferenceDeclaration) {
+            val decl = vo.referenceDeclaration
+            if (decl.reference !== null) {
+                val target = decl.resolveReferencedScope
+                if (target instanceof State) {
+                    val parentScope = decl.eContainer
+                    var Map<String, ValuedObject> parentVONameMap = newHashMap
+                    if (parentScope instanceof Scope) {
+                        parentVONameMap = parentScope.valuedObjectNameMap
+                        // Since this funtion is only used for ref decls the inherited interface from thereplacement stack
+                        // must be added to parentVONameMap because the parent object might alredy have been to these and
+                        // does not contain these variables for implicit biniding. (This is ugly)
+                        for (ioVO : target.allInheritedDeclarations.filter[input || output].map[valuedObjects].flatten) {
+                            if (replacements.containsKey(ioVO)) {
+                                parentVONameMap.put(ioVO.name, ioVO)
+                            }
+                        }
+                    }
+                    bindings += target.createBindings(vo.parameters, replacements, parentVONameMap)
+                    
+                    // Create binding for generic parameters
+                    bindings += vo.createGenericParameterBindings
+                }
+            }
+        }
+        
+        bindings
+    }
+    
+    def List<Binding> createBindings(BaseStateReference ref, Replacements replacements) {
+        val bindings = <Binding> newArrayList
+        
+        if (ref.target !== null) {
+            val target = ref.target//.resolveReferencedScope
+            if (target instanceof State) {
+                val implicitlyBoundInSuperState = newHashSet
+                var container = ref.eContainer?.eContainer
+                while (container !== null) {
+                    if (container instanceof State) {
+                        if (!container.baseStateReferences.nullOrEmpty) {
+                            implicitlyBoundInSuperState.addAll(container.allInheritedStates.map[declarations].flatten.filter[input || output])
+                        }
+                    }
+                    container = container.eContainer
+                }
+                val Map<String, ValuedObject> parentVONameMap = newHashMap
+                implicitlyBoundInSuperState.map[valuedObjects].flatten.forEach[parentVONameMap.put(it.name, it)]
+                
+                bindings += ref.target.createBindings(ref.parameters, replacements, parentVONameMap)
+                
+                // Create binding for generic parameters
+                bindings += ref.createGenericParameterBindings
+            }
+        }
         
         bindings
     }
@@ -199,6 +274,16 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
                 decls = target.genericParameterDeclarations?:emptyList
             }
             return decls.createGenericParameterBindings(scope.reference.genericParameters?:emptyList)
+        }
+        return emptyList
+    }
+    def List<Binding> createGenericParameterBindings(BaseStateReference ref) {
+        if (ref.target !== null) {
+            var decls = emptyList
+            if (ref.target instanceof State) {
+                decls = ref.target.genericParameterDeclarations?:emptyList
+            }
+            return decls.createGenericParameterBindings(ref.genericParameters?:emptyList)
         }
         return emptyList
     }
@@ -225,7 +310,7 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
             val param = i < params.size ? params.get(i) : null
             
             val binding = new Binding => [
-                type = decl === null || decl.isTypeDeclaration ? BindingType.GENERIC_TYPE : BindingType.GENERIC
+                type = decl === null || decl.isTypeDeclaration ? BindingType.GENERIC_TYPE : BindingType.GENERIC_PARAM
                 targetValuedObject = decl?.valuedObjects?.head
                 sourceExpression = param?.expression
             ]
@@ -236,111 +321,53 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
             } else if (decl === null) {
                 binding.errorMessages += "There is no declaration for the given generic parameter (position: %d).".format(i)
             } else {
-                val paramExpr = param.expression
-                if (decl.isTypeDeclaration) {
-                    val type = decl.type
-                    if (type instanceof State) {
-                        var EObject paramType = null
-                        if (paramExpr instanceof GenericTypeReference) {
-                            paramType = paramExpr.type
-                        } else if (paramExpr instanceof ValuedObjectReference) {
-                            if (paramExpr.isGenericParamter) {
-                                paramType = paramExpr.valuedObject.getReferencedScope
-                            } else {
-                                binding.errorMessages += "Type mismatch! Generic parameter %s cannot take a reference that is not a type.".format(binding.targetValuedObject?.name)
-                            }
-                        } else {
-                            binding.errorMessages += "Type mismatch! Generic parameter %s can only take a state type as parameter.".format(binding.targetValuedObject?.name)
-                        }
-                        
-                        if (paramType instanceof State) {
-                            if (type === param || paramType.allInheritedStates.contains(type)) {
-                                val interfaceMismatches = paramType.interfaceMismatches(type)
-                                if (!interfaceMismatches.empty) {
-                                    binding.errorMessages += "State %s in generic parameter for %s in not a valid subtype of %s. There are interface incompatibilities due to the following variables: ".format(paramType.name, binding.targetValuedObject?.name, type.name, interfaceMismatches.map[name].join(", "))
-                                }
-                            } else {
-                                binding.errorMessages += "State %s in generic parameter for %s in not a subtype of %s.".format(paramType.name, binding.targetValuedObject?.name, type.name)
-                            }
-                        } else {
-                            binding.errorMessages += "Cannot infer state type from given parameter for %s.".format(binding.targetValuedObject?.name)
-                        }
-                    }
-                } else if (decl.isReferenceDeclaration) {
-                    val type = decl.type
-                    if (type instanceof State) {
-                        var EObject paramType = null
-                        if (paramExpr instanceof ValuedObjectReference) {
-                            if (paramExpr.isGenericParamter) {
-                                paramType = paramExpr.valuedObject.getReferencedScope
-                            } else if (paramExpr.valuedObject.getReferenceDeclaration !== null) {
-                                paramType = paramExpr.valuedObject.getReferenceDeclaration.resolveReferencedScope
-                            } else {
-                                binding.errorMessages += "Type mismatch! Generic parameter %s can only take a variable of a reference declaration as parameter.".format(binding.targetValuedObject?.name)
-                            }
-                        } else {
-                            binding.errorMessages += "Type mismatch! Generic parameter %s can only take a variable of a reference declaration as parameter.".format(binding.targetValuedObject?.name)
-                        }
-                        
-                        if (paramType instanceof State) {
-                            if (type === param || paramType.allInheritedStates.contains(type)) {
-                                val interfaceMismatches = paramType.interfaceMismatches(type)
-                                if (!interfaceMismatches.empty) {
-                                    binding.errorMessages += "State %s in the given reference declaration in generic parameter for %s in not a valid subtype of %s. There are interface incompatibilities due to the following variables: ".format(paramType.name, binding.targetValuedObject?.name, type.name, interfaceMismatches.map[name].join(", "))
-                                }
-                            } else {
-                                binding.errorMessages += "State %s in the given reference declaration in generic parameter for %s in not a subtype of %s.".format(paramType.name, binding.targetValuedObject?.name, type?.name)
-                            }
-                        } else {
-                            binding.errorMessages += "Cannot infer state type from given parameter for %s.".format(binding.targetValuedObject?.name)
-                        }
-                    } else {
-                        binding.errorMessages += "Invalid generic type declaration of %s! Base type %s is not a state.".format(binding.targetValuedObject?.name, type?.name)
-                    }
-                } else {
-                    val type = decl.valueType
-                    if (type === ValueType.UNKNOWN) {
-                        binding.errorMessages += "Value type of generic parameter %s is not properly declared (%s).".format(binding.targetValuedObject?.name, type?.literal)
-                    } else if (paramExpr instanceof Value) {
-                        val paramType = paramExpr.valueType
-                        if (paramType !== type) {
-                            binding.errorMessages += "Type mismatch! Generic parameter %s of type %s cannot take literal of type %s.".format(binding.targetValuedObject?.name, type?.literal, paramType?.literal)
-                        }
-                    } else if (paramExpr instanceof ValuedObjectReference) {
-                        val paramType = if (paramExpr.isVariableReference) {
-                            paramExpr.valuedObject.variableDeclaration.type
-                        } else if (paramExpr.valuedObject.isGenericParamter) {
-                            paramExpr.valuedObject.genericParameterDeclaration.valueType
-                        }
-                        if (paramType !== type) {
-                            binding.errorMessages += "Type mismatch! Generic parameter %s of type %s cannot take valued object declared with type %s.".format(binding.targetValuedObject?.name, type?.literal, paramType?.literal)
-                        }
-                    } else {
-                        binding.errorMessages += "Expressions as generic parameters are currently not allowed (%s).".format(paramExpr.class.simpleName)
-                    }
+                val problem = decl.checkForSubtypeProblem(param.expression)
+                if (problem !== null) {
+                    binding.errorMessages += problem
                 }
             }
         }
         
         return bindings
     }
+    
+    // Adjusted Checks
+    
+    override checkTypeCompability(Binding binding) {
+        super.checkTypeCompability(binding)
         
+        val targetDecl = binding.targetValuedObject?.declaration
+        if (targetDecl instanceof ReferenceDeclaration) {
+            val problem = targetDecl.checkForSubtypeProblem(binding.sourceExpression)
+            if (problem !== null) {
+                binding.addErrorMessage(problem)
+            }
+        }
+    }
+    
+    
+    // Helper
+    
+    def getInputAndOutputValuedObjects(DeclarationScope scope) {
+        return scope.declarations.filter[input || output].map[valuedObjects].flatten
+    }
+    
+    def getInputValuedObjects(DeclarationScope scope) {
+        return scope.declarations.filter[input].map[valuedObjects].flatten
+    }
+    
+    def getOutputValuedObjects(DeclarationScope scope) {
+        return scope.declarations.filter[output].map[valuedObjects].flatten
+    }
+    
     // finds a list of valued objects witch are inputs of the referenced SCChart
     def getInputs(ReferenceDeclaration ref){
-        val List<ValuedObject> inputs = newArrayList;
-        (ref.reference as State).declarations.filter(VariableDeclaration).filter[isInput].forEach [
-            valuedObjects.forEach[inputs.add(it)]
-        ]
-        return inputs
+        return (ref.reference as State).getInputValuedObjects.toList
     }
     
     // finds a list of valued objects witch are outputs of the referenced SCChart
     def getOutputs(ReferenceDeclaration ref){
-        val List<ValuedObject> outputs = newArrayList;
-        (ref.reference as State).declarations.filter(VariableDeclaration).filter[isOutput].forEach [
-            valuedObjects.forEach[outputs.add(it)]
-        ]
-        return outputs
+        return (ref.reference as State).getOutputValuedObjects.toList
     }
     
     def separateGenericTypeDependentReferenceDeclarations(List<ReferenceDeclaration> decls) {
@@ -359,10 +386,36 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
         decls += separated
     }
     
-    def Set<ValuedObject> interfaceMismatches(State subtype, State base) {
-        return Sets.difference(
-            Iterables.concat(subtype.declarations, subtype.allInheritedDeclarations).filter(VariableDeclaration).filter[input || output].map[valuedObjects].flatten.toSet,
-            Iterables.concat(base.declarations, base.allInheritedDeclarations).filter(VariableDeclaration).filter[input || output].map[valuedObjects].flatten.toSet
-        )
+    def boolean fixMemberReferenceIfParentChanged(ValuedObjectReference ref, boolean recursive) {
+        val parent = ref.eContainer
+        if (parent instanceof ValuedObjectReference) {
+            if (parent.subReference === ref) {
+                val decl = parent.valuedObject?.declaration
+                if (decl instanceof ClassDeclaration) {
+                    val match = decl.innerValuedObjects.findFirst[name?.equals(ref.valuedObject?.name)]
+                    if (match !== null && match !== ref.valuedObject) {
+                        ref.valuedObject = match
+                        if (ref.subReference !== null && recursive) {
+                            ref.subReference.fixMemberReferenceIfParentChanged(recursive)
+                        }
+                    }
+                }
+            }
+        }
+        return false
+    }
+    
+    def isModuleCall(ScopeCall sc) {
+        return sc instanceof ModuleScopeCall
+    }
+    def isModuleCallReference(Scope scope) {
+        return scope.isReferencing && scope.reference.isModuleCall
+    }
+    
+    def isModuleExpansion(ScopeCall sc) {
+        return !sc.isModuleCall
+    }
+    def isModuleExpansionReference(Scope scope) {
+        return scope.isReferencing && scope.reference.isModuleExpansion
     }
 }

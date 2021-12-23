@@ -17,7 +17,7 @@ import de.cau.cs.kieler.kicool.registration.IProcessorProvider
 /**
  * Provider to make processors available to KiCool.
  * 
- * @author Wechselberg
+ * @author Wechselberg, als
  */
 class SCChartsProcessorProvider implements IProcessorProvider {
     
@@ -45,10 +45,12 @@ class SCChartsProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.sccharts.processors.For,
             de.cau.cs.kieler.sccharts.processors.Exit,
             de.cau.cs.kieler.sccharts.processors.Entry,
-            de.cau.cs.kieler.sccharts.processors.During,
+            de.cau.cs.kieler.sccharts.processors.During,            
+            de.cau.cs.kieler.sccharts.processors.Ode,
             de.cau.cs.kieler.sccharts.processors.Deferred,
             de.cau.cs.kieler.sccharts.processors.CountDelay,
             de.cau.cs.kieler.sccharts.processors.Const,
+            de.cau.cs.kieler.sccharts.processors.Enum,
             de.cau.cs.kieler.sccharts.processors.Reference,
             de.cau.cs.kieler.sccharts.processors.For,
             de.cau.cs.kieler.sccharts.processors.TakenTransitionSignaling,
@@ -83,7 +85,12 @@ class SCChartsProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.sccharts.processors.ArduinoTemplateGenerator,
             de.cau.cs.kieler.sccharts.processors.NXJTemplateGenerator,
             de.cau.cs.kieler.sccharts.processors.ValuedObjectRise,
-            de.cau.cs.kieler.sccharts.processors.SclCodeEffect
+            de.cau.cs.kieler.sccharts.processors.SclCodeEffect,
+            de.cau.cs.kieler.sccharts.processors.StaticAccess,
+            de.cau.cs.kieler.sccharts.processors.AbortRegion,
+            de.cau.cs.kieler.sccharts.processors.scg.SCGAbortRegionProcessor,
+            de.cau.cs.kieler.sccharts.processors.MethodSignaling,
+            de.cau.cs.kieler.sccharts.processors.analyzers.SCChartsModelData
         ]
     }
     

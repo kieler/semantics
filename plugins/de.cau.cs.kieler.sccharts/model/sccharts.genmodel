@@ -3,7 +3,7 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="KIELER - Kiel Integrated Environment for Layout Eclipse RichClient&#xD;&#xA;&#xD;&#xA;http://www.informatik.uni-kiel.de/rtsys/kieler/&#xD;&#xA;&#xD;&#xA;Copyright 2013 by&#xD;&#xA;+ Kiel University&#xD;&#xA;  + Department of Computer Science&#xD;&#xA;    + Real-Time and Embedded Systems Group&#xD;&#xA;&#xD;&#xA;This code is provided under the terms of the Eclipse Public License (EPL).&#xD;&#xA;See the file epl-v10.html for the license text."
     modelDirectory="/de.cau.cs.kieler.sccharts/src" modelPluginID="de.cau.cs.kieler.sccharts"
     modelName="SCCharts" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    importerID="org.eclipse.emf.importer.ecore" bundleManifest="false" complianceLevel="8.0"
+    importerID="org.eclipse.emf.importer.ecore" bundleManifest="false" complianceLevel="11.0"
     usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.kexpressions/model/keffects.genmodel#//keffects ../../de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions ../../de.cau.cs.kieler.kexpressions/model/kext.genmodel#//kext ../../de.cau.cs.kieler.scl/model/scl.genmodel#//scl"
     importOrganizing="true" pluginKey="sccharts">
   <foreignModel>sccharts.ecore</foreignModel>
@@ -65,7 +65,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//State/connector"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/outgoingTransitions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/incomingTransitions"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/baseStates"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/baseStateReferences"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//Region">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference sccharts.ecore#//Region/parentState"/>
@@ -77,6 +77,7 @@
     <genClasses ecoreClass="sccharts.ecore#//ControlflowRegion">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//ControlflowRegion/states"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//ControlflowRegion/final"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//ControlflowRegion/abort"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//DataflowRegion">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//DataflowRegion/equations"/>
@@ -110,5 +111,12 @@
     <genClasses ecoreClass="sccharts.ecore#//DataflowAssignment">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//DataflowAssignment/sequential"/>
     </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//BaseStateReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//BaseStateReference/target"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//BaseStateReference/genericParameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//BaseStateReference/parameters"/>
+    </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//OdeAction"/>
+    <genClasses ecoreClass="sccharts.ecore#//ModuleScopeCall"/>
   </genPackages>
 </genmodel:GenModel>

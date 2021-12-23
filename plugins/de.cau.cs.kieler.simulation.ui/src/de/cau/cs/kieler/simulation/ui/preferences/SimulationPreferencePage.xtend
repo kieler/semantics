@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Spinner
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchPreferencePage
+import de.cau.cs.kieler.simulation.ide.preferences.SimulationPreferences
 
 /**
  * @author aas
@@ -87,6 +88,7 @@ class SimulationPreferencePage extends PreferencePage implements IWorkbenchPrefe
         SWTFactory.createLabel(group, "Maxium length", 1)
         historyLengthControl = new Spinner(group, SWT.BORDER)
         historyLengthControl.minimum = 1
+        historyLengthControl.maximum = Integer.MAX_VALUE
         historyLengthControl.increment = 1
         historyLengthControl.pageIncrement = 1
         historyLengthControl.selection = getIntValue(SimulationContext.MAX_HISTORY_LENGTH.id)

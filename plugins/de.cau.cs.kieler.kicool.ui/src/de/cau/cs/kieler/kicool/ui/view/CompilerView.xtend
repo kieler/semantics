@@ -28,7 +28,6 @@ import de.cau.cs.kieler.kicool.ui.view.actions.ShowPrivateSystemsToggle
 import de.cau.cs.kieler.kicool.ui.view.actions.VisualLayoutFeedbackToggle
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 import de.cau.cs.kieler.klighd.ZoomStyle
-import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
@@ -50,9 +49,6 @@ import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.kicool.ui.InstallSystemsHandler.*
-
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.*
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * The Kieler Compiler View, formerly knownas IMB Compiler View
@@ -91,7 +87,6 @@ class CompilerView extends DiagramViewPart {
     new() {
         InstallSystemsHandler.view = this
     }
-
     /**
      * {@inheritDoc}
      */
@@ -215,7 +210,6 @@ class CompilerView extends DiagramViewPart {
             KiCoolSynthesis.FLATTEN_SYSTEM -> ((flattenSystemViewToggle.checked) as Object),
             KiCoolSynthesis.ON_OFF_BUTTONS -> ((onOffButtonsToggle.checked) as Object)
         })
-
         updateDiagram(editPartSystemManager.activeSystem, properties)
     }
 

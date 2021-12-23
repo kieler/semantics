@@ -12,7 +12,7 @@ knode operator {
 
   kport in1 {
     size: width = 0 height = 0
-    properties: de.cau.cs.kieler.portSide = WEST
+    properties: org.eclipse.elk.port.side = WEST
         
     klabel "+" { 
         ktext {
@@ -23,7 +23,7 @@ knode operator {
   
   kport in0 {
     size: width = 0 height = 0
-    properties: de.cau.cs.kieler.portSide = WEST
+    properties: org.eclipse.elk.port.side = WEST
     
     klabel "+" { 
         ktext {

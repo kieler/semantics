@@ -16,9 +16,10 @@ package de.cau.cs.kieler.kicool.ui.klighd.syntheses
 import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingSynthesisOptions
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
-import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
+import de.cau.cs.kieler.kicool.ide.klighd.models.ModelChain
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.ide.model.MessageModel
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KColor
@@ -32,7 +33,6 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
-import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import javax.inject.Inject
@@ -189,14 +189,14 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
             // fallthrou
         }
         // If normal synthesis failed create message
-        if ((subDiagramNode == null || subDiagramNode.children.isEmpty) && model instanceof EObject) { // component synthesis
+        if ((subDiagramNode === null || subDiagramNode.children.isEmpty) && model instanceof EObject) { // component synthesis
             val properties = new KlighdSynthesisProperties();
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
             subDiagramNode = LightDiagramServices::translateModel(new MessageModel("Cannot create sub-diagram"),
                 usedContext, properties);
         }
         // Add subdiagram
-        if (subDiagramNode != null && !subDiagramNode.children.isEmpty) {
+        if (subDiagramNode !== null && !subDiagramNode.children.isEmpty) {
 
             // prevent adding of rectangle by adding an invisible own one.
             subDiagramNode.addRectangle.invisible = true;

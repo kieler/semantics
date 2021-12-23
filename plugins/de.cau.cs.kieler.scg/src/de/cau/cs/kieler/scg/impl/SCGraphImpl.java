@@ -162,6 +162,7 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -171,6 +172,7 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -183,7 +185,8 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Node> getNodes() {
+	@Override
+    public EList<Node> getNodes() {
         if (nodes == null) {
             nodes = new EObjectContainmentEList<Node>(Node.class, this, ScgPackage.SC_GRAPH__NODES);
         }
@@ -195,7 +198,8 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Declaration> getDeclarations() {
+	@Override
+    public EList<Declaration> getDeclarations() {
         if (declarations == null) {
             declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, ScgPackage.SC_GRAPH__DECLARATIONS);
         }
@@ -207,7 +211,8 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EList<BasicBlock> getBasicBlocks() {
+	@Override
+    public EList<BasicBlock> getBasicBlocks() {
         if (basicBlocks == null) {
             basicBlocks = new EObjectContainmentEList<BasicBlock>(BasicBlock.class, this, ScgPackage.SC_GRAPH__BASIC_BLOCKS);
         }
@@ -219,7 +224,8 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Guard> getGuards() {
+	@Override
+    public EList<Guard> getGuards() {
         if (guards == null) {
             guards = new EObjectContainmentEList<Guard>(Guard.class, this, ScgPackage.SC_GRAPH__GUARDS);
         }
@@ -231,7 +237,8 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public String getLabel() {
+	@Override
+    public String getLabel() {
         return label;
     }
 
@@ -240,7 +247,8 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public void setLabel(String newLabel) {
+	@Override
+    public void setLabel(String newLabel) {
         String oldLabel = label;
         label = newLabel;
         if (eNotificationRequired())

@@ -69,6 +69,7 @@ public class KTraceFactoryImpl extends EFactoryImpl implements KTraceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TraceFile createTraceFile() {
         TraceFileImpl traceFile = new TraceFileImpl();
         return traceFile;
@@ -79,6 +80,7 @@ public class KTraceFactoryImpl extends EFactoryImpl implements KTraceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Trace createTrace() {
         TraceImpl trace = new TraceImpl();
         return trace;
@@ -89,6 +91,7 @@ public class KTraceFactoryImpl extends EFactoryImpl implements KTraceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Tick createTick() {
         TickImpl tick = new TickImpl();
         return tick;
@@ -99,6 +102,7 @@ public class KTraceFactoryImpl extends EFactoryImpl implements KTraceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public KTracePackage getKTracePackage() {
         return (KTracePackage)getEPackage();
     }

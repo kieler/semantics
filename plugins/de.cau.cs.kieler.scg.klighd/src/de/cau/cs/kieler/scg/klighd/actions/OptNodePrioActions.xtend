@@ -37,14 +37,14 @@ class OptNodePrioActions implements IAction {
     
     private static final String OPT_ID = "de.cau.cs.kieler.scg.klighd.actions.optPrioActions"
 
-    public static final SynthesisOption SHOW_OPT_PRIO_ID = (SynthesisOption::createCheckOption("Optimized Priority IDs",
+    public static final SynthesisOption SHOW_OPT_PRIO_ID = (SynthesisOption::createCheckOption(OptNodePrioActions, "Optimized Priority IDs",
         true).setUpdateAction(OPT_ID).setCategory(PRIO));
 
     override execute(ActionContext context) {
         val viewContext = context.contextViewer.viewContext
         val rootNode = context.KNode
         for (node : rootNode.eAllContentsOfType(KNode).toIterable) {
-            if (viewContext.getSourceElement(node) != null) {
+            if (viewContext.getSourceElement(node) !== null) {
                 val container = node.KContainerRendering
                 for (text : container.children) {
                     if (text.getProperty(SCGraphSynthesisHelper.OPT_PRIO_PROPERTY)) {
@@ -65,7 +65,7 @@ class OptNodePrioActions implements IAction {
     def booleanValue(SynthesisOption option, ViewContext viewContext) {
         val value = viewContext.getOptionValue(option)
         
-        if(value == null) {
+        if(value === null) {
             return false
         } else if (value instanceof Boolean) {
             return value as Boolean;

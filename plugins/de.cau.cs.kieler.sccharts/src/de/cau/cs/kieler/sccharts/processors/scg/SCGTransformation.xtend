@@ -13,14 +13,10 @@
  */
 package de.cau.cs.kieler.sccharts.processors.scg
 
-import com.google.inject.Guice
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
@@ -29,6 +25,7 @@ import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.NullValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.PrintCall
@@ -80,8 +77,6 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousForkRemover
-import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousThreadRemover
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import de.cau.cs.kieler.scl.processors.transformators.SCLToSCGTransformation
 import java.util.HashMap
@@ -99,10 +94,6 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceable {
-    
-    // Property to disable SuperflousForkRemover because KiCo has no proper support for processors
-    public static val IProperty<Boolean> ENABLE_SFR = new Property<Boolean>("de.cau.cs.kieler.sccharts.scg.sfr", true);
-    public static val IProperty<Boolean> ENABLE_STR = new Property<Boolean>("de.cau.cs.kieler.sccharts.scg.str", true);
 
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
@@ -250,25 +241,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     def ValuedObject getSCGValuedObject(ValuedObject valuedObjectSCChart) {
         valuedObjectSSChart2SCG.get(valuedObjectSCChart)
     }
-
-
-
-    def SCGraph transform(EObject eObject) {
-        return switch (eObject) {
-            SCGraph: return eObject.processSCG
-            State: eObject.transformSCG
-            SCCharts: eObject.rootStates.head.transformSCG
-        }
-    }
-
-    def SCGraph processSCG(SCGraph scg) {
-        val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().getInstance(
-            typeof(SuperfluousForkRemover))
-        val newSCG = superfluousForkRemover.optimize(scg)
-        newSCG
-    }
     
-    def SCGraph transformSCG(State rootState) {
+    def SCGraph transform(State rootState) {
         val voStore = VariableStore.get(environment)
         val scopeList = rootState.eAllContents.filter(Scope).toList
         val stateList = scopeList.filter(State).toList
@@ -281,6 +255,9 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         val sCGraph = SCC2SCGMap.get(rootState)
 
         sCGraph.trace(rootState)
+        
+        // Copy annotations
+        sCGraph.annotations += rootState.annotations.map[copy]
         
         // Handle declarations
         val declMapping = newLinkedHashMap
@@ -306,11 +283,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             // Fix VO association in VariableStore
             val info = voStore.getInfo(key)
             if (info !== null) info.valuedObject = value
-        ]        
-
-        val hostcodeAnnotations = rootState.getAnnotations(ANNOTATION_HOSTCODE)
-        hostcodeAnnotations.forEach [
-            sCGraph.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
 
         // Include top most level of hierarchy 
@@ -346,19 +318,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
         // Fix superfluous exit nodes
         sCGraph.trimExitNodes.trimConditioanlNodes
-
-        // Remove superfluous fork constructs 
-        var scg = sCGraph
-        if (environment.getProperty(ENABLE_STR)) {
-            val superfluousThreadRemover = Guice.createInjector().getInstance(SuperfluousThreadRemover)
-            scg = superfluousThreadRemover.optimize(scg)
-        }
-        if (environment.getProperty(ENABLE_SFR)) {
-            val superfluousForkRemover = Guice.createInjector().getInstance(SuperfluousForkRemover)
-            scg = superfluousForkRemover.optimize(scg)
-        }
         
-        scg
+        return sCGraph
     }
 
     // -------------------------------------------------------------------------   
@@ -528,7 +489,10 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     def void transformSCGGenerateNodes(ControlflowRegion region, SCGraph sCGraph) {
         val entry = sCGraph.addEntry.trace(region, region.parentState)
         if (region.hasAnnotation(ANNOTATION_IGNORETHREAD)) {
-              entry.createStringAnnotation(ANNOTATION_IGNORETHREAD, "")
+            entry.createStringAnnotation(ANNOTATION_IGNORETHREAD, "")
+        }
+        if (region.abort) { // Mark for later processing
+            entry.addTagAnnotation(SCGAbortRegionProcessor.ANNOTATION_ABORT)
         }
 //        val exit = sCGraph.addExit.trace(region, region.parentState)
         val exit = sCGraph.addExit
@@ -850,17 +814,17 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
     // Apply conversion to integer values
     def dispatch Expression convertToSCGExpression(IntValue expression) {
-        createIntValue(new Integer(expression.value)).trace(expression)
+        createIntValue(Integer.valueOf(expression.value)).trace(expression)
     }
 
     // Apply conversion to float values
     def dispatch Expression convertToSCGExpression(FloatValue expression) {
-        createFloatValue(new Float(expression.value)).trace(expression)
+        createFloatValue(Float.valueOf(expression.value.floatValue())).trace(expression)
     }
 
     // Apply conversion to boolean values
     def dispatch Expression convertToSCGExpression(BoolValue expression) {
-        createBoolValue(new Boolean(expression.value)).trace(expression)
+        createBoolValue(Boolean.valueOf(expression.value)).trace(expression)
     }
 
     def dispatch Expression convertToSCGExpression(StringValue expression) {
@@ -877,6 +841,10 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     
     def dispatch Expression convertToSCGExpression(IgnoreValue expression) {
         createIgnoreValue.trace(expression)
+    }
+    
+    def dispatch Expression convertToSCGExpression(NullValue expression) {
+        createNullValue.trace(expression)
     }
 
     // Apply conversion to textual host code 

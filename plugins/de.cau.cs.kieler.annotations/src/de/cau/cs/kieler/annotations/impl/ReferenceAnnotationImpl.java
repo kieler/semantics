@@ -72,6 +72,7 @@ public class ReferenceAnnotationImpl extends AnnotationImpl implements Reference
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EObject getObject() {
         if (object != null && object.eIsProxy()) {
             InternalEObject oldObject = (InternalEObject)object;
@@ -98,6 +99,7 @@ public class ReferenceAnnotationImpl extends AnnotationImpl implements Reference
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setObject(EObject newObject) {
         EObject oldObject = object;
         object = newObject;

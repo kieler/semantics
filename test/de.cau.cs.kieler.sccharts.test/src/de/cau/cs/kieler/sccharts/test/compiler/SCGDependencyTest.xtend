@@ -32,6 +32,7 @@ import org.junit.runner.RunWith
 import static de.cau.cs.kieler.kexpressions.keffects.DataDependencyType.*
 import static org.junit.Assert.*
 import static org.junit.Assume.*
+import de.cau.cs.kieler.sccharts.processors.Initialization
 
 /**
  * Tests if the new dependency analysis is as good as the old one.
@@ -70,6 +71,7 @@ class SCGDependencyTest extends AbstractXTextModelRepositoryTest<SCCharts> {
      */
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("sccharts")
+        && !modelData.modelProperties.contains("large")
         && !modelData.modelProperties.contains("known-to-fail") 
         && !modelData.modelProperties.contains("must-fail")
     }
@@ -98,9 +100,9 @@ class SCGDependencyTest extends AbstractXTextModelRepositoryTest<SCCharts> {
             
             val annotation = annotationMap.get(t.toString) 
             try {
-                val dCount = new Integer(annotation.values.get(1))
-                val dConcurrent = new Integer(annotation.values.get(2))
-                val dConfluent = new Integer(annotation.values.get(3))
+                val dCount = Integer.valueOf(annotation.values.get(1))
+                val dConcurrent = Integer.valueOf(annotation.values.get(2))
+                val dConfluent = Integer.valueOf(annotation.values.get(3))
                 
                 assertEquals("The overall count of class " + t.toString + " dependencies is wrong.", 
                     dCount, ds.size)
@@ -117,12 +119,16 @@ class SCGDependencyTest extends AbstractXTextModelRepositoryTest<SCCharts> {
     private def compile(SCCharts scc) {
         val context = Compile.createCompilationContext(compilationSystemID, scc, newArrayList(scgTransformation))
         context.startEnvironment.setProperty(Environment.INPLACE, false)
+        // FIXME: Dependencies in the models are not yet adjusted to new explicit initialization of variables
+        context.startEnvironment.setProperty(Initialization.EXPLICIT_IMPLICIT_INIT, false)
         context.compile
         
         val v2Context = Compile.createCompilationContext(
             CompilationSystem.createCompilationSystem("dep2", newArrayList(dependencyAnalysisV2)),
             context.result.model
         )
+        // FIXME: Dependencies in the models are not yet adjusted to new explicit initialization of variables
+        v2Context.startEnvironment.setProperty(Initialization.EXPLICIT_IMPLICIT_INIT, false)
         v2Context.compile
         
         return v2Context

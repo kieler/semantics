@@ -128,7 +128,7 @@ class SCChartsStateExtensions {
         for(region : rootState.regions) {
             if(region instanceof ControlflowRegion) {
                 val initState = region.states.findFirst[it.isInitial]
-                if(initState != null) {
+                if(initState !== null) {
                     states.add(initState)
                 }
             }
@@ -147,7 +147,7 @@ class SCChartsStateExtensions {
         for(region : rootState.regions) {
             if(region instanceof ControlflowRegion) {
                 val initState = region.states.findFirst[it.isFinal]
-                if(initState != null) {
+                if(initState !== null) {
                     states.add(initState)
                 }
             }
@@ -180,7 +180,7 @@ class SCChartsStateExtensions {
     }
     
     def boolean hasBaseStates(State state) {
-        !state.baseStates.nullOrEmpty
+        !state.baseStateReferences.nullOrEmpty
     }
     
     def State copyState(State state) {

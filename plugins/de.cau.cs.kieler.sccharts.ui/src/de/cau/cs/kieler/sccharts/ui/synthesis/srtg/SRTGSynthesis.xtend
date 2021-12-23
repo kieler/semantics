@@ -57,7 +57,7 @@ class SRTGSynthesis extends AbstractDiagramSynthesis<Scope> {
         
     // -------------------------------------------------------------------------
     // Fields
-    public val ID = "de.cau.cs.kieler.sccharts.ui.srtg.synthesis.SRTGSynthesis"
+    public static val ID = "de.cau.cs.kieler.sccharts.ui.srtg.synthesis.SRTGSynthesis"
        
     // -------------------------------------------------------------------------
     // Sidebar Options

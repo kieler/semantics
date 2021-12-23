@@ -117,6 +117,7 @@ public class TickImpl extends AnnotatableImpl implements Tick {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -126,6 +127,7 @@ public class TickImpl extends AnnotatableImpl implements Tick {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -138,6 +140,7 @@ public class TickImpl extends AnnotatableImpl implements Tick {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Effect> getInputs() {
         if (inputs == null) {
             inputs = new EObjectContainmentEList<Effect>(Effect.class, this, KTracePackage.TICK__INPUTS);
@@ -150,6 +153,7 @@ public class TickImpl extends AnnotatableImpl implements Tick {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Effect> getOutputs() {
         if (outputs == null) {
             outputs = new EObjectContainmentEList<Effect>(Effect.class, this, KTracePackage.TICK__OUTPUTS);
@@ -162,6 +166,7 @@ public class TickImpl extends AnnotatableImpl implements Tick {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Tick getGoto() {
         if (goto_ != null && goto_.eIsProxy()) {
             InternalEObject oldGoto = (InternalEObject)goto_;
@@ -188,6 +193,7 @@ public class TickImpl extends AnnotatableImpl implements Tick {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setGoto(Tick newGoto) {
         Tick oldGoto = goto_;
         goto_ = newGoto;

@@ -1,8 +1,10 @@
 package de.cau.cs.kieler.simulation.ui.view
 
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
 import de.cau.cs.kieler.simulation.ui.SimulationUI
 import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 import java.util.Set
@@ -21,8 +23,6 @@ import org.eclipse.ui.progress.UIJob
 import org.eclipse.ui.statushandlers.StatusManager
 
 import static de.cau.cs.kieler.simulation.ui.SimulationUI.*
-import de.cau.cs.kieler.simulation.ide.CentralSimulation
-import de.cau.cs.kieler.simulation.events.ISimulationListener
 
 class SimulationControlButtons extends WorkbenchWindowControlContribution implements ISimulationListener {
     

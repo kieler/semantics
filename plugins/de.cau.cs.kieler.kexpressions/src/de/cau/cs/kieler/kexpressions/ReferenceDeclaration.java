@@ -15,7 +15,9 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#isInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getReference <em>Reference</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getReferenceContainer <em>Reference Container</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getParameters <em>Parameters</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getExtern <em>Extern</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getGenericParameters <em>Generic Parameters</em>}</li>
@@ -26,6 +28,29 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface ReferenceDeclaration extends Declaration {
+    /**
+     * Returns the value of the '<em><b>Input</b></em>' attribute.
+     * The default value is <code>"false"</code>.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Input</em>' attribute.
+     * @see #setInput(boolean)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getReferenceDeclaration_Input()
+     * @model default="false" required="true"
+     * @generated
+     */
+    boolean isInput();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#isInput <em>Input</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Input</em>' attribute.
+     * @see #isInput()
+     * @generated
+     */
+    void setInput(boolean value);
+
     /**
      * Returns the value of the '<em><b>Reference</b></em>' reference.
      * <!-- begin-user-doc -->
@@ -51,6 +76,28 @@ public interface ReferenceDeclaration extends Declaration {
      * @generated
      */
     void setReference(EObject value);
+
+    /**
+     * Returns the value of the '<em><b>Reference Container</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Reference Container</em>' reference.
+     * @see #setReferenceContainer(EObject)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getReferenceDeclaration_ReferenceContainer()
+     * @model
+     * @generated
+     */
+    EObject getReferenceContainer();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getReferenceContainer <em>Reference Container</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Reference Container</em>' reference.
+     * @see #getReferenceContainer()
+     * @generated
+     */
+    void setReferenceContainer(EObject value);
 
     /**
      * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.

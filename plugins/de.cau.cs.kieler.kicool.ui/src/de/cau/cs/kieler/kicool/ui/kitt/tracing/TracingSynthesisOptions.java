@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.kicool.ui.kitt.tracing;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -96,6 +94,7 @@ public final class TracingSynthesisOptions {
 
     /** Global tracing synthesis option */
     public static final SynthesisOption TRACING_OPTION = SynthesisOption.createChoiceOption(
+            TracingSynthesisOptions.class,
             "Tracing",
             Lists.newArrayList(TracingMode.NO_TRACING.toString(),
                     TracingMode.ELEMENT_TRACING.toString(), TracingMode.MODEL_TRACING.toString()),
@@ -103,7 +102,7 @@ public final class TracingSynthesisOptions {
     
 	/** Global tracing visualization synthesis option */
 	public static final SynthesisOption EDGE_TRACING_OPTION = SynthesisOption
-			.createCheckOption("Show tracing of model edges", false);
+			.createCheckOption(TracingSynthesisOptions.class, "Show tracing of model edges", false);
 
     /**
      * Returns the static SynthesisOption used in syntheses.

@@ -90,6 +90,7 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public NamedObject createNamedObject() {
         NamedObjectImpl namedObject = new NamedObjectImpl();
         return namedObject;
@@ -100,6 +101,7 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public StringAnnotation createStringAnnotation() {
         StringAnnotationImpl stringAnnotation = new StringAnnotationImpl();
         return stringAnnotation;
@@ -110,6 +112,7 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ReferenceAnnotation createReferenceAnnotation() {
         ReferenceAnnotationImpl referenceAnnotation = new ReferenceAnnotationImpl();
         return referenceAnnotation;
@@ -120,6 +123,7 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public BooleanAnnotation createBooleanAnnotation() {
         BooleanAnnotationImpl booleanAnnotation = new BooleanAnnotationImpl();
         return booleanAnnotation;
@@ -130,6 +134,7 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntAnnotation createIntAnnotation() {
         IntAnnotationImpl intAnnotation = new IntAnnotationImpl();
         return intAnnotation;
@@ -140,6 +145,7 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public FloatAnnotation createFloatAnnotation() {
         FloatAnnotationImpl floatAnnotation = new FloatAnnotationImpl();
         return floatAnnotation;
@@ -150,6 +156,7 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ContainmentAnnotation createContainmentAnnotation() {
         ContainmentAnnotationImpl containmentAnnotation = new ContainmentAnnotationImpl();
         return containmentAnnotation;
@@ -160,6 +167,7 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ImportAnnotation createImportAnnotation() {
         ImportAnnotationImpl importAnnotation = new ImportAnnotationImpl();
         return importAnnotation;
@@ -170,6 +178,7 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TypedStringAnnotation createTypedStringAnnotation() {
         TypedStringAnnotationImpl typedStringAnnotation = new TypedStringAnnotationImpl();
         return typedStringAnnotation;
@@ -180,6 +189,7 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CommentAnnotation createCommentAnnotation() {
         CommentAnnotationImpl commentAnnotation = new CommentAnnotationImpl();
         return commentAnnotation;
@@ -190,6 +200,7 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Pragma createPragma() {
         PragmaImpl pragma = new PragmaImpl();
         return pragma;
@@ -200,6 +211,7 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public StringPragma createStringPragma() {
         StringPragmaImpl stringPragma = new StringPragmaImpl();
         return stringPragma;
@@ -210,6 +222,7 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TagAnnotation createTagAnnotation() {
         TagAnnotationImpl tagAnnotation = new TagAnnotationImpl();
         return tagAnnotation;
@@ -220,6 +233,7 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public AnnotationsPackage getAnnotationsPackage() {
         return (AnnotationsPackage)getEPackage();
     }

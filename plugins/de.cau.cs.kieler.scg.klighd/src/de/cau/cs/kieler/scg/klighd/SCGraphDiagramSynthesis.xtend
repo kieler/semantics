@@ -86,9 +86,9 @@ import static de.cau.cs.kieler.scg.klighd.ColorStore.Color.*
 import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
 import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 
+import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -307,6 +307,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 25.0);
         node.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         node.setLayoutOption(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
+        //TODO Reactivate when related bug is fixed: https://github.com/eclipse/elk/issues/696
+        //node.setLayoutOption(LayeredOptions::CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES);
         node.setLayoutOption(LayeredOptions::THOROUGHNESS, 100)
         node.setLayoutOption(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);
         if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {

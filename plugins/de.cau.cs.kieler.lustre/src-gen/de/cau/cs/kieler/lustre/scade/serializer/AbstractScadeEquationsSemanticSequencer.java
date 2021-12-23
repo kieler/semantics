@@ -35,8 +35,10 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ThisExpression;
 import de.cau.cs.kieler.kexpressions.ValueTypeReference;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
@@ -507,8 +509,83 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 				}
 				else break;
 			case KExpressionsPackage.NULL_VALUE:
-				sequence_NullValue(context, (NullValue) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
+					sequence_BoolScheduleExpression_NullValue(context, (NullValue) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getProductExpressionRule()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
+						|| rule == grammarAccess.getIntDivExpressionRule()
+						|| action == grammarAccess.getIntDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getFbyExpressionRule()
+						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getWhenExpressionRule()
+						|| rule == grammarAccess.getCurrentExpressionRule()
+						|| rule == grammarAccess.getPreExpressionRule()
+						|| rule == grammarAccess.getLastExpressionRule()
+						|| rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getInitExpressionRule()
+						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getTernaryOperationRule()
+						|| rule == grammarAccess.getImpliesExpressionRule()
+						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalXorExpressionRule()
+						|| action == grammarAccess.getLogicalXorExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
+						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getBitwiseNotExpressionRule()
+						|| rule == grammarAccess.getShiftExpressionsRule()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
+						|| rule == grammarAccess.getShiftLeftExpressionRule()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightExpressionRule()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSumExpressionRule()
+						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSfbyExpressionRule()
+						|| action == grammarAccess.getSfbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()
+						|| rule == grammarAccess.getJsonValueRule()
+						|| rule == grammarAccess.getNullValueRule()) {
+					sequence_NullValue(context, (NullValue) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
@@ -758,6 +835,9 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 			case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE:
 				sequence_ScheduleObjectReference(context, (ScheduleObjectReference) semanticObject); 
 				return; 
+			case KExpressionsPackage.SPECIAL_ACCESS_EXPRESSION:
+				sequence_SpecialAccessExpression(context, (SpecialAccessExpression) semanticObject); 
+				return; 
 			case KExpressionsPackage.STRING_VALUE:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
 					sequence_BoolScheduleExpression_StringValue(context, (StringValue) semanticObject); 
@@ -840,11 +920,18 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 			case KExpressionsPackage.TEXT_EXPRESSION:
 				sequence_TextExpression(context, (TextExpression) semanticObject); 
 				return; 
+			case KExpressionsPackage.THIS_EXPRESSION:
+				sequence_ThisExpression(context, (ThisExpression) semanticObject); 
+				return; 
 			case KExpressionsPackage.VALUE_TYPE_REFERENCE:
 				sequence_ValueTypeReference(context, (ValueTypeReference) semanticObject); 
 				return; 
 			case KExpressionsPackage.VALUED_OBJECT:
-				if (rule == grammarAccess.getSimpleValuedObjectRule()) {
+				if (rule == grammarAccess.getReferenceValuedObjectRule()) {
+					sequence_ReferenceValuedObject(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getSimpleValuedObjectRule()) {
 					sequence_SimpleValuedObject(context, (ValuedObject) semanticObject); 
 					return; 
 				}
@@ -872,7 +959,11 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 				}
 				else break;
 			case KExpressionsPackage.VARIABLE_DECLARATION:
-				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+				if (rule == grammarAccess.getEnumMemberDeclarationRule()) {
+					sequence_EnumMemberDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
 					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
@@ -977,15 +1068,29 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 				else break;
 			case KExtPackage.CLASS_DECLARATION:
 				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getClassDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
+						|| rule == grammarAccess.getClassDeclarationWOSemicolonRule()) {
 					sequence_ClassDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
+					sequence_ClassDeclarationWOSemicolon_EnumDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
 				else if (rule == grammarAccess.getDeclarationRule()
-						|| rule == grammarAccess.getClassDeclarationRule()
-						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
+						|| rule == grammarAccess.getClassDeclarationRule()) {
 					sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_ClassDeclaration_EnumDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEnumDeclarationWOSemicolonRule()) {
+					sequence_EnumDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEnumDeclarationRule()) {
+					sequence_EnumDeclaration(context, (ClassDeclaration) semanticObject); 
 					return; 
 				}
 				else break;

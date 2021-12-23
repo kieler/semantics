@@ -93,8 +93,11 @@ VariableDeclaration returns kexpressions::VariableDeclaration:
     output?='output'?
     global?='global'?
     static?='static'?
-    ((signal?='signal'? type = ValueType) | 
-        signal?='signal' |
+    (
+        (signal?='signal'? type = ValueType)
+        | 
+        signal?='signal'
+        |
         (type = HostType hostType = STRING)
     ) 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
@@ -119,11 +122,6 @@ ClassDeclaration returns kext::ClassDeclaration:
     {kext::ClassDeclaration}
     annotations+=Annotation*
     access=AccessModifier?
-    const?='const'?
-    input?='input'? 
-    output?='output'?
-    global?='global'?
-    static?='static'?
     host?='host'?
     ((
         type = ClassType
@@ -144,18 +142,13 @@ ClassDeclaration returns kext::ClassDeclaration:
 ;
 
 DeclarationOrMethod returns kexpressions::Declaration:
-    Declaration | MethodDeclaration
+    Declaration | EnumDeclaration | MethodDeclaration
 ;
 
 ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
     {kext::ClassDeclaration}
     annotations+=Annotation*
     access=AccessModifier?
-    const?='const'?
-    input?='input'? 
-    output?='output'?
-    global?='global'?
-    static?='static'?
     host?='host'?
     ((
         type = ClassType
@@ -175,7 +168,43 @@ ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
 ;
 
 DeclarationOrMethodWOSemicolon returns kexpressions::Declaration:
-    DeclarationWOSemicolon | MethodDeclarationWOSemicolon
+    DeclarationWOSemicolon | EnumDeclarationWOSemicolon | MethodDeclarationWOSemicolon
+;
+
+EnumDeclaration returns kext::ClassDeclaration:
+    {kext::ClassDeclaration}
+    annotations+=Annotation*
+    access=AccessModifier?
+    host?='host'?
+    type = EnumType
+    valuedObjects+=SimpleValuedObject
+    (hostType=STRING)?
+    '{'
+        declarations+=EnumMemberDeclaration
+        ';'
+    '}'
+    ';'
+    annotations+=CommentAnnotatonSL?
+;
+
+EnumMemberDeclaration returns kexpressions::VariableDeclaration:
+    annotations+=QuotedStringAnnotation*
+    valuedObjects+=SimpleValuedObject (',' valuedObjects+=SimpleValuedObject)*
+    annotations+=CommentAnnotatonSL?
+;
+
+EnumDeclarationWOSemicolon returns kext::ClassDeclaration:
+    {kext::ClassDeclaration}
+    annotations+=Annotation*
+    access=AccessModifier?
+    host?='host'?
+    type = EnumType
+    valuedObjects+=SimpleValuedObject
+    (hostType = STRING)?
+    '{'
+        declarations+=EnumMemberDeclaration
+    '}'
+    annotations+=CommentAnnotatonSL?
 ;
 
 MethodDeclaration returns kexpressions::MethodDeclaration:
@@ -205,24 +234,33 @@ ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
     access=AccessModifier?
     ((
-        'ref' reference = [annotations::NamedObject|NamespaceID]
+        input?='input'?
+        'ref'
+        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
+        reference = [annotations::NamedObject|PrimeID]
         ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+        valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)*
     ) | (
         'extern' extern += ExternString (',' extern += ExternString)*
+        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
     ))
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+    ';'
     annotations+=CommentAnnotatonSL?;
     
 ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
     access=AccessModifier?
     ((
-        'ref' reference = [annotations::NamedObject|NamespaceID]
+        input?='input'?
+        'ref'
+        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
+        reference = [annotations::NamedObject|PrimeID]
         ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+        valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)*
     ) | (
         'extern' extern += ExternString (',' extern += ExternString)*
+        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
     ))
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
     annotations+=CommentAnnotatonSL?;
     
 ExternString returns kexpressions::ExternString:
@@ -318,12 +356,21 @@ enum PriorityProtocol returns kexpressions::PriorityProtocol:
 ValuedObject returns kexpressions::ValuedObject:
 	annotations+=QuotedStringAnnotation*
     name=PrimeID
-    ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
     ('[' cardinalities+=Expression ']')* 
     ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
     )?
+    ('label' label=STRING)?;
+    
+ReferenceValuedObject returns kexpressions::ValuedObject:
+    {kexpressions::ValuedObject}
+    annotations+=QuotedStringAnnotation*
+    name=PrimeID
+    ('[' cardinalities+=Expression ']')*
+    ('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
+    (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
+    ('=' initialValue=Expression)?
     ('label' label=STRING)?;
     
 SimpleValuedObject returns kexpressions::ValuedObject:

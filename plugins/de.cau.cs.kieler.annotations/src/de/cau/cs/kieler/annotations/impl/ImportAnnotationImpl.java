@@ -80,6 +80,7 @@ public class ImportAnnotationImpl extends AnnotationImpl implements ImportAnnota
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getImportURI() {
         return importURI;
     }
@@ -89,6 +90,7 @@ public class ImportAnnotationImpl extends AnnotationImpl implements ImportAnnota
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImportURI(String newImportURI) {
         String oldImportURI = importURI;
         importURI = newImportURI;

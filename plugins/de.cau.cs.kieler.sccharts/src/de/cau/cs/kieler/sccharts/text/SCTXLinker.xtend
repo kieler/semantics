@@ -13,10 +13,13 @@
  */
 package de.cau.cs.kieler.sccharts.text
 
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.sccharts.BaseStateReference
 import de.cau.cs.kieler.sccharts.SCChartsPackage
+import de.cau.cs.kieler.sccharts.ScopeCall
 import de.cau.cs.kieler.sccharts.State
 import java.util.HashSet
-import java.util.List
 import java.util.Set
 import java.util.function.Predicate
 import org.eclipse.emf.common.util.EList
@@ -25,10 +28,11 @@ import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.CrossReference
 import org.eclipse.xtext.GrammarUtil
+import org.eclipse.xtext.diagnostics.IDiagnosticConsumer
 import org.eclipse.xtext.diagnostics.IDiagnosticProducer
 import org.eclipse.xtext.linking.impl.Linker
 import org.eclipse.xtext.nodemodel.INode
-import de.cau.cs.kieler.sccharts.ScopeCall
+import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
 
 /** 
  * A customized Xtext linker linking textual SCCharts models.
@@ -37,7 +41,17 @@ import de.cau.cs.kieler.sccharts.ScopeCall
  */
 class SCTXLinker extends Linker {
     
-    var Set<State> acyclicBaseStateLinking = null
+    var HashSet<State> acyclicPreLinking = null
+    
+    override protected doLinkModel(EObject model, IDiagnosticConsumer consumer) {
+        acyclicPreLinking = newHashSet
+        try {
+            super.doLinkModel(model, consumer)
+        } finally {
+            acyclicPreLinking = null
+        }
+        
+    }
 
     override boolean isClearAllReferencesRequired(Resource resource) {
         if (resource instanceof SCTXResource) {
@@ -49,12 +63,26 @@ class SCTXLinker extends Linker {
 
     override void beforeEnsureIsLinked(EObject obj, EReference ref, IDiagnosticProducer producer) {
         checkUncontainedOpposites(obj, ref)
-        
+    }
+    
+    override ensureLinked(EObject obj, IDiagnosticProducer producer) {
+        // Handle special linking of base states (inheritance).
         if (obj instanceof State) {
-            if (ref === SCChartsPackage.Literals::STATE__BASE_STATES) {
-                throw new IllegalStateException("Base states must not be handled by the default linker!")
+            // Pre-linking of base states
+            if (!obj.baseStateReferences.nullOrEmpty) {
+                if (!acyclicPreLinking.contains(obj)) {
+                    acyclicPreLinking.add(obj)
+                    for (base : obj.baseStateReferences) {
+                        ensureLinked(base, producer)
+                    }
+                }
+            } else {
+                acyclicPreLinking.add(obj)
             }
         }
+            
+        // Continue default linking
+        super.ensureLinked(obj, producer)
     }
     
     override protected ensureIsLinked(EObject obj, INode node, CrossReference ref, Set<EReference> handledReferences, IDiagnosticProducer producer) {
@@ -65,49 +93,32 @@ class SCTXLinker extends Linker {
             producer.addDiagnostic(message)
             return
         }
-        /*
-         * Handle special linking of base states (inheritance)
-         */
-        if (obj instanceof State && eRef === SCChartsPackage.Literals::STATE__BASE_STATES) {
-            handledReferences.add(eRef)
-            producer.setTarget(obj, eRef)
-            val links = getLinkedObject(obj, eRef, node)
-            if (links === null || links.isEmpty()) {
-                if (!isNullValidResult(obj, eRef, node)) {
-                    val context = createDiagnosticContext(obj, eRef, node)
-                    val message = diagnosticMessageProvider.getUnresolvedProxyMessage(context)
-                    producer.addDiagnostic(message)
-                }
-                return
-            } else {
-                val state = obj as State
-                (state.eGet(eRef) as List<EObject>).addAll(links)
-                
-                // ensure transitive linking in same resource
-                val newTransitiveLinking = acyclicBaseStateLinking === null
-                if (newTransitiveLinking) {
-                    acyclicBaseStateLinking = newHashSet(state)
-                }
-                for (baseState : state.baseStates) {
-                    if (baseState.eResource == state.eResource && !acyclicBaseStateLinking.contains(baseState)) {
-                        acyclicBaseStateLinking.add(baseState)
-                        ensureLinked(baseState, producer)
-                    }
-                }
-                producer.setNode(node) // set again this node
-                if (newTransitiveLinking) {
-                    acyclicBaseStateLinking = null
-                }
+        
+        // Default linking
+        super.ensureIsLinked(obj, node, ref, handledReferences, producer)
+        
+        // Pre link Scope calls for correct binding of inherited variables
+        if (obj instanceof ScopeCall) {
+            if (eRef === SCChartsPackage.Literals::SCOPE_CALL__TARGET && obj.target !== null && !acyclicPreLinking.contains(obj.target)) {
+                ensureLinked(obj.target, producer)
             }
-        } else {
-            // Default linking
-            super.ensureIsLinked(obj, node, ref, handledReferences, producer)
-            
-            // Pre link Scope calls for correct binding of inherited variables
-            if (obj instanceof ScopeCall) {
-                if (obj.target !== null) {
-                    ensureLinked(obj.target, producer)
-                }
+        }
+        // Pre link base state references for correct binding of inherited variables
+        if (obj instanceof BaseStateReference) {
+            if (eRef === SCChartsPackage.Literals::BASE_STATE_REFERENCE__TARGET && obj.target !== null && !acyclicPreLinking.contains(obj.target)) {
+                ensureLinked(obj.target, producer)
+            }
+        }
+        // Pre link base type references for correct binding of inherited variables
+        if (obj instanceof GenericParameterDeclaration) {
+            if (eRef === KExpressionsPackage.Literals::GENERIC_PARAMETER_DECLARATION__REFERENCE && obj.type !== null && !acyclicPreLinking.contains(obj.type)) {
+                ensureLinked(obj.type, producer)
+            }
+        }
+        // Pre link targets of reference declarations for correct binding of inherited variables
+        if (obj instanceof ReferenceDeclaration) {
+            if (eRef === KExpressionsPackage.Literals::REFERENCE_DECLARATION__REFERENCE && obj.reference !== null && !acyclicPreLinking.contains(obj.reference)) {
+                ensureLinked(obj.reference, producer)
             }
         }
     }

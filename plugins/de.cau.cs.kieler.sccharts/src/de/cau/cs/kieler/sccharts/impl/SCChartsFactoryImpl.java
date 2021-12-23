@@ -90,6 +90,9 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.POLICY_REGION: return createPolicyRegion();
             case SCChartsPackage.CODE_EFFECT: return createCodeEffect();
             case SCChartsPackage.DATAFLOW_ASSIGNMENT: return createDataflowAssignment();
+            case SCChartsPackage.BASE_STATE_REFERENCE: return createBaseStateReference();
+            case SCChartsPackage.ODE_ACTION: return createOdeAction();
+            case SCChartsPackage.MODULE_SCOPE_CALL: return createModuleScopeCall();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -300,6 +303,39 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public DataflowAssignment createDataflowAssignment() {
         DataflowAssignmentImpl dataflowAssignment = new DataflowAssignmentImpl();
         return dataflowAssignment;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public BaseStateReference createBaseStateReference() {
+        BaseStateReferenceImpl baseStateReference = new BaseStateReferenceImpl();
+        return baseStateReference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public OdeAction createOdeAction() {
+        OdeActionImpl odeAction = new OdeActionImpl();
+        return odeAction;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ModuleScopeCall createModuleScopeCall() {
+        ModuleScopeCallImpl moduleScopeCall = new ModuleScopeCallImpl();
+        return moduleScopeCall;
     }
 
     /**
