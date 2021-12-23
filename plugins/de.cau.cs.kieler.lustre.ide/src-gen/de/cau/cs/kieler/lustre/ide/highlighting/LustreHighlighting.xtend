@@ -72,6 +72,7 @@ class LustreHighlighting implements IHighlighting {
         "returns",
         "schedule",
         "scope",
+        "seq",
         "sfby",
         "signal",
         "state",

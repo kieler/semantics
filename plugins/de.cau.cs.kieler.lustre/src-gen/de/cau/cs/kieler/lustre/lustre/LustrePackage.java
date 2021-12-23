@@ -1046,13 +1046,22 @@ public interface LustrePackage extends EPackage
   int EQUATION__REFERENCES = KEffectsPackage.ASSIGNMENT_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Sequential</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EQUATION__SEQUENTIAL = KEffectsPackage.ASSIGNMENT_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Equation</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EQUATION_FEATURE_COUNT = KEffectsPackage.ASSIGNMENT_FEATURE_COUNT + 1;
+  int EQUATION_FEATURE_COUNT = KEffectsPackage.ASSIGNMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.AssertionImpl <em>Assertion</em>}' class.
@@ -1777,6 +1786,17 @@ public interface LustrePackage extends EPackage
   EReference getEquation_References();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.Equation#isSequential <em>Sequential</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Sequential</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.Equation#isSequential()
+   * @see #getEquation()
+   * @generated
+   */
+  EAttribute getEquation_Sequential();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.Assertion <em>Assertion</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2293,6 +2313,14 @@ public interface LustrePackage extends EPackage
      * @generated
      */
     EReference EQUATION__REFERENCES = eINSTANCE.getEquation_References();
+
+    /**
+     * The meta object literal for the '<em><b>Sequential</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute EQUATION__SEQUENTIAL = eINSTANCE.getEquation_Sequential();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.AssertionImpl <em>Assertion</em>}' class.

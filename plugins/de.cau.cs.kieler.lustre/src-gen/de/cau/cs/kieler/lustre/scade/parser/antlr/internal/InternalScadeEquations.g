@@ -2175,6 +2175,33 @@ ruleEquation returns [EObject current=null]
 		{
 			newLeafNode(otherlv_16, grammarAccess.getEquationAccess().getSemicolonKeyword_4());
 		}
+		(
+			(
+				(
+					lv_sequential_17_1=';'
+					{
+						newLeafNode(lv_sequential_17_1, grammarAccess.getEquationAccess().getSequentialSemicolonKeyword_5_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getEquationRule());
+						}
+						setWithLastConsumed($current, "sequential", lv_sequential_17_1 != null, null);
+					}
+					    |
+					lv_sequential_17_2='seq'
+					{
+						newLeafNode(lv_sequential_17_2, grammarAccess.getEquationAccess().getSequentialSeqKeyword_5_0_1());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getEquationRule());
+						}
+						setWithLastConsumed($current, "sequential", lv_sequential_17_2 != null, null);
+					}
+				)
+			)
+		)?
 	)
 ;
 

@@ -52,4 +52,9 @@ class SCChartsDataflowRegionExtensions {
     def isSequential(Assignment a){
         (a instanceof DataflowAssignment) && (a as DataflowAssignment).sequential
     }
+    
+    def DataflowAssignment createDataflowAssignment() {
+        SCChartsFactory::eINSTANCE.createDataflowAssignment
+    }
+    
 }

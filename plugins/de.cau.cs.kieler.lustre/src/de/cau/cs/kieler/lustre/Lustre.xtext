@@ -143,7 +143,7 @@ Equation returns keffects::Assignment:
     )
     operator=AssignOperator 
     expression=Expression   
-    ';' 
+    ';' sequential?=(';'|'seq')?
 ;
 
 Emission returns keffects::Emission:

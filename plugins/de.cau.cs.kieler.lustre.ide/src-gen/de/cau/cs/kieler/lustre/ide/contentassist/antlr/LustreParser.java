@@ -48,6 +48,7 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getNodeDeclarationAccess().getAlternatives_10(), "rule__NodeDeclaration__Alternatives_10");
 			builder.put(grammarAccess.getNodeDeclarationAccess().getAlternatives_12(), "rule__NodeDeclaration__Alternatives_12");
 			builder.put(grammarAccess.getEquationAccess().getAlternatives_1(), "rule__Equation__Alternatives_1");
+			builder.put(grammarAccess.getEquationAccess().getSequentialAlternatives_5_0(), "rule__Equation__SequentialAlternatives_5_0");
 			builder.put(grammarAccess.getEmissionAccess().getAlternatives_1(), "rule__Emission__Alternatives_1");
 			builder.put(grammarAccess.getAStateAccess().getAlternatives_3(), "rule__AState__Alternatives_3");
 			builder.put(grammarAccess.getAStateAccess().getAlternatives_4_1(), "rule__AState__Alternatives_4_1");
@@ -534,6 +535,7 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getEquationAccess().getReferenceAssignment_1_2(), "rule__Equation__ReferenceAssignment_1_2");
 			builder.put(grammarAccess.getEquationAccess().getOperatorAssignment_2(), "rule__Equation__OperatorAssignment_2");
 			builder.put(grammarAccess.getEquationAccess().getExpressionAssignment_3(), "rule__Equation__ExpressionAssignment_3");
+			builder.put(grammarAccess.getEquationAccess().getSequentialAssignment_5(), "rule__Equation__SequentialAssignment_5");
 			builder.put(grammarAccess.getAssertionAccess().getExprAssignment_2(), "rule__Assertion__ExprAssignment_2");
 			builder.put(grammarAccess.getAutomatonAccess().getNameAssignment_1(), "rule__Automaton__NameAssignment_1");
 			builder.put(grammarAccess.getAutomatonAccess().getStatesAssignment_2(), "rule__Automaton__StatesAssignment_2");

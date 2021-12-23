@@ -4515,6 +4515,27 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+rule__Equation__SequentialAlternatives_5_0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getEquationAccess().getSequentialSemicolonKeyword_5_0_0()); }
+		';'
+		{ after(grammarAccess.getEquationAccess().getSequentialSemicolonKeyword_5_0_0()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getEquationAccess().getSequentialSeqKeyword_5_0_1()); }
+		'seq'
+		{ after(grammarAccess.getEquationAccess().getSequentialSeqKeyword_5_0_1()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__Emission__Alternatives_1
 	@init {
 		int stackSize = keepStackSize();
@@ -10122,6 +10143,7 @@ rule__Equation__Group__4
 	}
 :
 	rule__Equation__Group__4__Impl
+	rule__Equation__Group__5
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -10136,6 +10158,32 @@ rule__Equation__Group__4__Impl
 	{ before(grammarAccess.getEquationAccess().getSemicolonKeyword_4()); }
 	';'
 	{ after(grammarAccess.getEquationAccess().getSemicolonKeyword_4()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Equation__Group__5
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__Equation__Group__5__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Equation__Group__5__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getEquationAccess().getSequentialAssignment_5()); }
+	(rule__Equation__SequentialAssignment_5)?
+	{ after(grammarAccess.getEquationAccess().getSequentialAssignment_5()); }
 )
 ;
 finally {
@@ -32782,6 +32830,21 @@ rule__Equation__ExpressionAssignment_3
 		{ before(grammarAccess.getEquationAccess().getExpressionExpressionParserRuleCall_3_0()); }
 		ruleExpression
 		{ after(grammarAccess.getEquationAccess().getExpressionExpressionParserRuleCall_3_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Equation__SequentialAssignment_5
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getEquationAccess().getSequentialAlternatives_5_0()); }
+		(rule__Equation__SequentialAlternatives_5_0)
+		{ after(grammarAccess.getEquationAccess().getSequentialAlternatives_5_0()); }
 	)
 ;
 finally {

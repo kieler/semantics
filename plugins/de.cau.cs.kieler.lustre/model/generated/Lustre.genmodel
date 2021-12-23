@@ -71,6 +71,7 @@
     <genClasses ecoreClass="Lustre.ecore#//NodeValuedObject"/>
     <genClasses ecoreClass="Lustre.ecore#//Equation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Equation/references"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//Equation/sequential"/>
     </genClasses>
     <genClasses ecoreClass="Lustre.ecore#//Assertion">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Assertion/expr"/>

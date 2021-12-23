@@ -1194,6 +1194,10 @@ public class LustreGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Assignment cExpressionAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cExpressionExpressionParserRuleCall_3_0 = (RuleCall)cExpressionAssignment_3.eContents().get(0);
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cSequentialAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final Alternatives cSequentialAlternatives_5_0 = (Alternatives)cSequentialAssignment_5.eContents().get(0);
+		private final Keyword cSequentialSemicolonKeyword_5_0_0 = (Keyword)cSequentialAlternatives_5_0.eContents().get(0);
+		private final Keyword cSequentialSeqKeyword_5_0_1 = (Keyword)cSequentialAlternatives_5_0.eContents().get(1);
 		
 		//Equation returns keffects::Assignment:
 		//    {Equation}
@@ -1205,7 +1209,7 @@ public class LustreGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//    )
 		//    operator=AssignOperator
 		//    expression=Expression
-		//    ';'
+		//    ';' sequential?=(';'|'seq')?
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
@@ -1218,7 +1222,7 @@ public class LustreGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//)
 		//operator=AssignOperator
 		//expression=Expression
-		//';'
+		//';' sequential?=(';'|'seq')?
 		public Group getGroup() { return cGroup; }
 		
 		//{Equation}
@@ -1319,6 +1323,18 @@ public class LustreGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		
 		//';'
 		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+		
+		//sequential?=(';'|'seq')?
+		public Assignment getSequentialAssignment_5() { return cSequentialAssignment_5; }
+		
+		//(';'|'seq')
+		public Alternatives getSequentialAlternatives_5_0() { return cSequentialAlternatives_5_0; }
+		
+		//';'
+		public Keyword getSequentialSemicolonKeyword_5_0_0() { return cSequentialSemicolonKeyword_5_0_0; }
+		
+		//'seq'
+		public Keyword getSequentialSeqKeyword_5_0_1() { return cSequentialSeqKeyword_5_0_1; }
 	}
 	public class EmissionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.Emission");
@@ -3819,7 +3835,7 @@ public class LustreGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    )
 	//    operator=AssignOperator
 	//    expression=Expression
-	//    ';'
+	//    ';' sequential?=(';'|'seq')?
 	//;
 	public EquationElements getEquationAccess() {
 		return pEquation;

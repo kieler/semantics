@@ -818,6 +818,17 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * @generated
    */
   @Override
+  public EAttribute getEquation_Sequential()
+  {
+    return (EAttribute)equationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getAssertion()
   {
     return assertionEClass;
@@ -942,6 +953,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
 
     equationEClass = createEClass(EQUATION);
     createEReference(equationEClass, EQUATION__REFERENCES);
+    createEAttribute(equationEClass, EQUATION__SEQUENTIAL);
 
     assertionEClass = createEClass(ASSERTION);
     createEReference(assertionEClass, ASSERTION__EXPR);
@@ -1058,6 +1070,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
 
     initEClass(equationEClass, Equation.class, "Equation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEquation_References(), theKExpressionsPackage.getValuedObjectReference(), null, "references", null, 0, -1, Equation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEquation_Sequential(), ecorePackage.getEBoolean(), "sequential", null, 0, 1, Equation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(assertionEClass, Assertion.class, "Assertion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAssertion_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, Assertion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

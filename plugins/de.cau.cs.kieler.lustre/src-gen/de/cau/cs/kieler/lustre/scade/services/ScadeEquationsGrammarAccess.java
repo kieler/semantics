@@ -707,7 +707,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//    )
 	//    operator=AssignOperator
 	//    expression=Expression
-	//    ';'
+	//    ';' sequential?=(';'|'seq')?
 	//;
 	public LustreGrammarAccess.EquationElements getEquationAccess() {
 		return gaLustre.getEquationAccess();

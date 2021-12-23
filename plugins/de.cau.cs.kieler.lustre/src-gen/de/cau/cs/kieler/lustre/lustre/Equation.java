@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.Equation#getReferences <em>References</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.Equation#isSequential <em>Sequential</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getEquation()
@@ -38,5 +39,27 @@ public interface Equation extends Assignment
    * @generated
    */
   EList<ValuedObjectReference> getReferences();
+
+  /**
+   * Returns the value of the '<em><b>Sequential</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Sequential</em>' attribute.
+   * @see #setSequential(boolean)
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getEquation_Sequential()
+   * @model
+   * @generated
+   */
+  boolean isSequential();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Equation#isSequential <em>Sequential</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Sequential</em>' attribute.
+   * @see #isSequential()
+   * @generated
+   */
+  void setSequential(boolean value);
 
 } // Equation

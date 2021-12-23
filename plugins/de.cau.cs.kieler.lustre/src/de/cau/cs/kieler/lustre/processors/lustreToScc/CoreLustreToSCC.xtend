@@ -535,13 +535,15 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     
     protected def getAssignmentForEquation(Equation equation, State state) {
         if (isEquationReferenceKnown(equation)) {
-            var dataflowAssignment = createAssignment
+            var dataflowAssignment = createDataflowAssignment
             
             // Complex references like (x, y, ... ) = ... are not linked because this is handled in the reference transformation
             if (equation.reference !== null) {
                 var kExpressionValuedObject = lustreToScchartsValuedObjectMap.get(equation.reference.valuedObject)
                 dataflowAssignment.reference = kExpressionValuedObject.reference
             }
+            
+            dataflowAssignment.sequential = equation.sequential
             
             dataflowAssignment.expression = equation.expression.transformExpression(state)
             if (dataflowAssignment.expression !== null) {

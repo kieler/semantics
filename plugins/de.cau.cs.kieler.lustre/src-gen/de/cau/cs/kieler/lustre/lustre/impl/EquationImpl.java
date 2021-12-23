@@ -12,12 +12,15 @@ import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -31,6 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.EquationImpl#getReferences <em>References</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.EquationImpl#isSequential <em>Sequential</em>}</li>
  * </ul>
  *
  * @generated
@@ -46,6 +50,26 @@ public class EquationImpl extends AssignmentImpl implements Equation
    * @ordered
    */
   protected EList<ValuedObjectReference> references;
+
+  /**
+   * The default value of the '{@link #isSequential() <em>Sequential</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isSequential()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean SEQUENTIAL_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isSequential() <em>Sequential</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isSequential()
+   * @generated
+   * @ordered
+   */
+  protected boolean sequential = SEQUENTIAL_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -89,6 +113,31 @@ public class EquationImpl extends AssignmentImpl implements Equation
    * @generated
    */
   @Override
+  public boolean isSequential()
+  {
+    return sequential;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setSequential(boolean newSequential)
+  {
+    boolean oldSequential = sequential;
+    sequential = newSequential;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, LustrePackage.EQUATION__SEQUENTIAL, oldSequential, sequential));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
@@ -111,6 +160,8 @@ public class EquationImpl extends AssignmentImpl implements Equation
     {
       case LustrePackage.EQUATION__REFERENCES:
         return getReferences();
+      case LustrePackage.EQUATION__SEQUENTIAL:
+        return isSequential();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -130,6 +181,9 @@ public class EquationImpl extends AssignmentImpl implements Equation
         getReferences().clear();
         getReferences().addAll((Collection<? extends ValuedObjectReference>)newValue);
         return;
+      case LustrePackage.EQUATION__SEQUENTIAL:
+        setSequential((Boolean)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -147,6 +201,9 @@ public class EquationImpl extends AssignmentImpl implements Equation
       case LustrePackage.EQUATION__REFERENCES:
         getReferences().clear();
         return;
+      case LustrePackage.EQUATION__SEQUENTIAL:
+        setSequential(SEQUENTIAL_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -163,8 +220,27 @@ public class EquationImpl extends AssignmentImpl implements Equation
     {
       case LustrePackage.EQUATION__REFERENCES:
         return references != null && !references.isEmpty();
+      case LustrePackage.EQUATION__SEQUENTIAL:
+        return sequential != SEQUENTIAL_EDEFAULT;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (sequential: ");
+    result.append(sequential);
+    result.append(')');
+    return result.toString();
   }
 
 } //EquationImpl

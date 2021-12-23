@@ -2825,7 +2825,8 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             reference=ValuedObjectReference
 	 *         ) 
 	 *         operator=AssignOperator 
-	 *         expression=Expression
+	 *         expression=Expression 
+	 *         (sequential?=';' | sequential?='seq')?
 	 *     )
 	 */
 	protected void sequence_Equation(ISerializationContext context, Equation semanticObject) {
