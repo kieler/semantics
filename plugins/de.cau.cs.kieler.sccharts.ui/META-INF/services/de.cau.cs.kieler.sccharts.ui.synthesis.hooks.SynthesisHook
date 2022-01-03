@@ -1,5 +1,4 @@
 de.cau.cs.kieler.sccharts.ui.synthesis.hooks.DeclarationsHook
-de.cau.cs.kieler.sccharts.ui.synthesis.hooks.EdgeMergeHook
 de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LocalDeclarationsHook
 de.cau.cs.kieler.sccharts.ui.synthesis.hooks.StateActionsHook
 de.cau.cs.kieler.sccharts.ui.synthesis.hooks.BlackWhiteModeHook
