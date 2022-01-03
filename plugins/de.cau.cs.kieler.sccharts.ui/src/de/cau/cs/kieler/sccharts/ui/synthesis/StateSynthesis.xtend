@@ -300,37 +300,18 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 node.setLayoutOption(CoreOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
             }
         }
-
+        
         // Transform all outgoing transitions
         // Also set KIdentifier for use with incremental update
         val groupedTransitions = state.outgoingTransitions.groupBy[it.targetState]
-        for (group : groupedTransitions.values()) {
-            var KEdge groupEdge;  
-            var Transition groupTransition;  
-            
-            for (transition : group) {
-                
-                val target = transition.targetState;         
-                var edge = transition.transform.head
-                
-                if (groupEdge === null 
-                    || transition.preemption !== groupTransition.preemption
-                    || transition.deferred !== groupTransition.deferred
-                    || transition.history !== groupTransition.history
-                    || transition.nondeterministic !== groupTransition.nondeterministic
-                ) {
-                    groupEdge = edge;
-                    groupTransition = transition;
-                    groupEdge.setProperty(KlighdProperties.IS_EDGE_GROUP_REPRESENTATIVE, true)
-                }
-                
-                edge.setProperty(KlighdProperties.IS_EDGE_GROUP_ELEMENT, true)
-                
+        for (transition : state.outgoingTransitions) {
+            transition.transform => [ edge |
+                val target = transition.targetState;
                 if (!target?.name.nullOrEmpty) {
-                    val counter = group.indexOf(transition)
-                    edge.KID = target.name + counter
+                    val counter = groupedTransitions.get(target).indexOf(transition)
+                    edge.head.KID = target.name + counter
                 }
-            }
+            ];
         }
 
         // Transform methods
