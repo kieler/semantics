@@ -88,6 +88,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.EdgeMergeHook
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -304,14 +305,35 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         // Transform all outgoing transitions
         // Also set KIdentifier for use with incremental update
         val groupedTransitions = state.outgoingTransitions.groupBy[it.targetState]
-        for (transition : state.outgoingTransitions) {
-            transition.transform => [ edge |
-                val target = transition.targetState;
-                if (!target?.name.nullOrEmpty) {
-                    val counter = groupedTransitions.get(target).indexOf(transition)
-                    edge.head.KID = target.name + counter
+        for (group : groupedTransitions.values()) {
+            var KEdge groupEdge;  
+            var Transition groupTransition;  
+            
+            for (transition : group) {
+                val target = transition.targetState; 
+                if (groupEdge === null 
+                    || transition.preemption !== groupTransition.preemption
+                    || transition.deferred !== groupTransition.deferred
+                    || transition.history !== groupTransition.history
+                    || transition.nondeterministic !== groupTransition.nondeterministic
+                ) {
+                    groupEdge = transition.transform().head;
+                    groupTransition = transition;
+                    groupEdge.setProperty(EdgeMergeHook.EDGE_GROUP_REPRESENTATIVE, true)
+                    groupEdge.KID = target.name + "group"
+                    groupEdge.getLabels().clear()
                 }
-            ];
+                
+                val groupEdgeFin = groupEdge
+                
+                transition.transform => [ edge |
+                    groupEdgeFin.getLabels().addAll(edge.head.getLabels());
+                    if (!target?.name.nullOrEmpty) {
+                        val counter = group.indexOf(transition)
+                        edge.head.KID = target.name + counter
+                    }
+                ];    
+            }
         }
 
         // Transform methods
