@@ -13,12 +13,8 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis.hooks
 
-import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHook
-import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.klighd.kgraph.KEdge
@@ -28,13 +24,23 @@ import org.eclipse.xtend.lib.annotations.Data
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.DeferredType
-import de.cau.cs.kieler.klighd.util.KlighdProperties
-import java.util.HashSet
+import java.util.HashMap
+import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
+import de.cau.cs.kieler.klighd.SynthesisOption
 
 @ViewSynthesisShared
 class EdgeMergeHook extends SynthesisHook {
     
-    HashSet<EdgeGroupKey> map = new HashSet<EdgeGroupKey>();
+    
+    /** The related synthesis option */
+    public static final SynthesisOption MERGE_SIMILAR_EDGES = SynthesisOption.createCheckOption(EdgeMergeHook, "Merge Similar Edges",
+            false).setCategory(GeneralSynthesisOptions::APPEARANCE);
+        
+    override getDisplayedSynthesisOptions() {
+        return newLinkedList(de.cau.cs.kieler.sccharts.ui.synthesis.hooks.EdgeMergeHook.MERGE_SIMILAR_EDGES)
+    }
+    
+    HashMap<EdgeGroupKey, KEdge> map = new HashMap<EdgeGroupKey,KEdge>();
     
     @Data
     static class EdgeGroupKey {
@@ -62,22 +68,28 @@ class EdgeMergeHook extends SynthesisHook {
      */
     override void processTransition(Transition transition, KEdge edge) {
         
-        var key = new EdgeGroupKey(
-            transition.sourceState, 
-            transition.targetState, 
-            transition.preemption, 
-            transition.history, 
-            transition.deferred, 
-            transition.isNondeterministic
-        );
-        
-        edge.setProperty(KlighdProperties.IS_EDGE_GROUP_ELEMENT, true)
-        
-        if (map.add(key)) {
-            // first edge of a group is chosen as the representative
-            edge.setProperty(KlighdProperties.IS_EDGE_GROUP_REPRESENTATIVE,true)
+        if (MERGE_SIMILAR_EDGES.booleanValue) {
+            
+            var key = new EdgeGroupKey(
+                transition.sourceState, 
+                transition.targetState, 
+                transition.preemption, 
+                transition.history, 
+                transition.deferred, 
+                transition.isNondeterministic
+            );
+            
+            
+            val rep = map.computeIfAbsent(key, [EdgeGroupKey _key | edge]); 
+            
+            if (edge != rep) {
+                
+                rep.labels.addAll(edge.labels)
+                edge.source.outgoingEdges.remove(edge)
+                edge.target.outgoingEdges.remove(edge)
+            }
+            
         }
-        
     }
 
 }
