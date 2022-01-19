@@ -83,8 +83,10 @@ class EdgeMergeHook extends SynthesisHook {
             val rep = map.computeIfAbsent(key, [EdgeGroupKey _key | edge]); 
             
             if (edge != rep) {
-                
                 rep.labels.addAll(edge.labels)
+                for (label : edge.labels) {
+                    label.parent = rep
+                }
                 edge.source.outgoingEdges.remove(edge)
                 edge.target.outgoingEdges.remove(edge)
             }
