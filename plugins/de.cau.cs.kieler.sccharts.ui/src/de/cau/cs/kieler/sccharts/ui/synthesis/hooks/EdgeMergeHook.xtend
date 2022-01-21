@@ -27,6 +27,7 @@ import de.cau.cs.kieler.sccharts.DeferredType
 import java.util.HashMap
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.sccharts.DelayType
 
 @ViewSynthesisShared
 class EdgeMergeHook extends SynthesisHook {
@@ -49,6 +50,7 @@ class EdgeMergeHook extends SynthesisHook {
         PreemptionType preemption;
         HistoryType history;
         DeferredType deferred;
+        DelayType delay;
         boolean deterministic;
     }
     
@@ -76,6 +78,7 @@ class EdgeMergeHook extends SynthesisHook {
                 transition.preemption, 
                 transition.history, 
                 transition.deferred, 
+                transition.delay,
                 transition.isNondeterministic
             );
             
