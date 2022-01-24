@@ -81,7 +81,7 @@ class KeithCompilationUpdater implements Observer {
                 val warnings = environment.warnings
                 val infos = environment.infos
                 // Add snapshot
-                currentSnapshotList.add(new SnapshotDescription(processor.name, currentSnapshotList.length, errors, warnings, infos))
+                currentSnapshotList.add(new SnapshotDescription(processor.name, currentIndex, currentSnapshotList.length, errors, warnings, infos))
                 // Add snapshot to map
                 kicoolExt.objectMap.get(uri).add(notification.snapshot)
                 maxIndex = context.processorInstances.length;
@@ -98,7 +98,7 @@ class KeithCompilationUpdater implements Observer {
                 val errors = environment.errors
                 val warnings = environment.warnings
                 val infos = environment.infos
-                currentSnapshotList.add(new SnapshotDescription(processor.name, currentSnapshotList.length, errors, warnings, infos))
+                currentSnapshotList.add(new SnapshotDescription(processor.name, currentIndex, currentSnapshotList.length, errors, warnings, infos))
                 kicoolExt.objectMap.get(uri).add(impl)
                 currentIndex++
                 maxIndex = context.processorInstances.length

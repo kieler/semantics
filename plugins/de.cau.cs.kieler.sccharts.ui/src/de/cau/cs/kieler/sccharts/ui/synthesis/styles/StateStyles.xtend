@@ -244,15 +244,15 @@ class StateStyles {
         node.contentContainer.addKeywordLabel(components, 0) => [
             // Add surrounding space
             setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0)
-                
+            
             eAllContents.filter(KText).forEach[
                 fontSize = stateLabelTextSize
                 suppressSelectability
                 selectionTextUnderline = Underline.NONE // prevents default selection style
-                setProperty(KlighdProperties.IS_NODE_TITLE, true)
             ]
 
             children.head => [
+                setProperty(KlighdProperties.IS_NODE_TITLE, true)
                 setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 0, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
             ]
         ]

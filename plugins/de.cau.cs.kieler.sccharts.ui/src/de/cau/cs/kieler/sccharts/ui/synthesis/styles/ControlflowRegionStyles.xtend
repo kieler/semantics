@@ -167,6 +167,7 @@ class ControlflowRegionStyles {
                     foreground = REGION_LABEL.color
                     fontSize = 10
                     setPointPlacementData(LEFT, 14, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
+                    setProperty(KlighdProperties.IS_NODE_TITLE, true)
                     (children.last as KContainerRendering) => [ // Just for spacing at the end
                         val grid = it?.getChildPlacement()
                         if (grid instanceof KGridPlacement) {
@@ -183,7 +184,6 @@ class ControlflowRegionStyles {
                         if (!styles.exists[it instanceof KForeground]) {
                             foreground = REGION_LABEL.color
                         }
-                        setProperty(KlighdProperties.IS_NODE_TITLE, true)
                     ]
                 ]
             }

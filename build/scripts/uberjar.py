@@ -289,6 +289,7 @@ def bundle(args, target_dir, merged, klighd):
 def create_standalone_scripts(args, jar, target_dir, klighd):
     # This is some magic found in the depth of the internet by chsch
     print('-- Creating standalone scripts --')
+    default_options = '-Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -Xmx512m'
     java9_options = ' --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/jdk.internal.loader=ALL-UNNAMED'
 
     if klighd and not args.noswt:
@@ -302,41 +303,41 @@ def create_standalone_scripts(args, jar, target_dir, klighd):
     if jar_linux:
         with open(jar_linux, 'rb') as jar_file:
             code = jar_file.read()
-            linux_cmd = '#!/usr/bin/env bash\nexec java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -Xmx512m %s -jar $0 "$@"\n'
+            linux_cmd = '#!/usr/bin/env bash\nexec java %s -jar $0 "$@"\n'
             
             with open(join(target_dir, args.name + '-linux'), 'wb') as file:
-                write_script(file, linux_cmd % java9_options, code)
+                write_script(file, linux_cmd % (default_options + java9_options), code)
             if args.java8:
                 with open(join(target_dir, args.name + '-linuxJava8'), 'wb') as file:
-                    write_script(file, linux_cmd % '', code)
+                    write_script(file, linux_cmd % default_options, code)
 
     # windows
     if jar_win:
         with open(jar_win, 'rb') as jar_file:
             code = jar_file.read()
-            win_cmd = 'java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -Xmx512m %s -jar %%0 %%* \r\n exit /b %%errorlevel%%\r\n' # escaped percent sign because of format string!
+            win_cmd = 'java %s -jar %%0 %%* \r\n exit /b %%errorlevel%%\r\n' # escaped percent sign because of format string!
             
             with open(join(target_dir, args.name + '-win.bat'), 'wb') as file:
-                write_script(file, win_cmd % java9_options, code)
+                write_script(file, win_cmd % (default_options + java9_options), code)
             if args.java8:
                 with open(join(target_dir, args.name + '-winJava8.bat'), 'wb') as file:
-                    write_script(file, win_cmd % '', code)
+                    write_script(file, win_cmd % default_options, code)
         
     # osx
     if jar_osx:
         with open(jar_osx, 'rb') as jar_file:
             code = jar_file.read()
-            osx_cmd = '#!/usr/bin/env bash\nexec java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -XstartOnFirstThread -Xmx512m %s -jar $0 "$@" \n'
+            osx_cmd = '#!/usr/bin/env bash\nexec java -XstartOnFirstThread %s -jar $0 "$@" \n'
             
             with open(join(target_dir, args.name + '-osx'), 'wb') as file:
-                write_script(file, osx_cmd % java9_options, code)
+                write_script(file, osx_cmd % (default_options + java9_options), code)
             if args.java8:
                 with open(join(target_dir, args.name + '-osxJava8'), 'wb') as file:
-                    write_script(file, osx_cmd % '', code)
+                    write_script(file, osx_cmd % default_options, code)
 
 def write_script(file, command, code):
     print('Creating script', basename(file.name))
-    file.write(command)
+    file.write(command.encode('ascii'))
     file.write(code)
     flags = os.fstat(file.fileno()).st_mode
     flags |= stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH
