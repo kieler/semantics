@@ -53,7 +53,8 @@ class TextmateGenerator {
         
         val RegistrationLanguageServerExtension languageRegistration = new RegistrationLanguageServerExtension();
 
-        val List<String> patternKeywords = #["keywords", "strings", "annotations", "constants-and-special-vars"]
+        val List<String> patternKeywords = #["keywords", "strings", "annotations", "constants-and-special-vars",
+            "comment"]
 
         try {     
             val JsonObject packageJson = JsonParser.parseReader(new FileReader(pathToOutput + "package.json")).
@@ -94,6 +95,7 @@ class TextmateGenerator {
                 repository.add(patternKeywords.get(1), generateStrings(language.id))
                 repository.add(patternKeywords.get(2), generateAnnotations(language.id))
                 repository.add(patternKeywords.get(3), generateConstants(language.id))
+                repository.add(patternKeywords.get(4), generateCommentBlock(language.id))
                 textmateJson.add("repository", repository)
                                 
                 // Write textmate grammar
@@ -223,5 +225,53 @@ class TextmateGenerator {
         
         constants.add("patterns", patterns)
         return constants
+    }
+    
+    def static JsonObject generateCommentBlock(String id) {
+        val JsonObject comment = new JsonObject
+        val JsonArray patterns = new JsonArray
+        val JsonObject commentBlock = new JsonObject;
+        {
+            commentBlock.add("name", new JsonPrimitive("comment.block." + id))  
+            commentBlock.add("begin", new JsonPrimitive("(/\\*)(?:\\s*((@)internal)(?=\\s|(\\*/)))?"))
+            val JsonObject beginCaptures = new JsonObject
+            val JsonObject one = new JsonObject
+            val JsonObject two = new JsonObject
+            val JsonObject three = new JsonObject
+            one.add("name", new JsonPrimitive("punctuation.whitespace.comment.leading." + id))
+            two.add("name", new JsonPrimitive("storage.type.internaldeclaration." + id))
+            two.add("name", new JsonPrimitive("punctuation.decorator.internaldeclaration." + id))
+            beginCaptures.add("1", one)
+            beginCaptures.add("2", two)
+            beginCaptures.add("3", three)
+            commentBlock.add("beginCaptures", beginCaptures)
+            commentBlock.add("end", new JsonPrimitive("\\*/"))
+            val JsonObject endCaptures = new JsonObject
+            val JsonObject zero = new JsonObject
+            zero.add("name", new JsonPrimitive("punctuation.definition.comment." + id))
+            endCaptures.add("0", one)
+            commentBlock.add("endCaptures", endCaptures)
+        }
+        
+        val JsonObject commentLine = new JsonObject;
+        {
+            commentLine.add("begin", new JsonPrimitive("(^[ \\t]+)?((//)(?:\\s*((@)internal)(?=\\s|$))?)"))
+            val JsonObject beginCaptures = new JsonObject
+            val JsonObject one = new JsonObject
+            val JsonObject two = new JsonObject
+            one.add("name", new JsonPrimitive("punctuation.whitespace.comment.leading." + id))
+            two.add("name", new JsonPrimitive("comment.line.double-slash." + id))
+            beginCaptures.add("1", one)
+            beginCaptures.add("2", two)
+            commentLine.add("beginCaptures", beginCaptures)
+            commentLine.add("end", new JsonPrimitive("(?=^)"))
+            commentLine.add("contentName", new JsonPrimitive("comment.line.double-slash." + id))
+        }
+        
+        patterns.add(commentBlock)
+        patterns.add(commentLine)
+        comment.add("patterns", patterns)
+        return comment
+        
     }
 }
