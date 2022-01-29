@@ -16,6 +16,7 @@ import de.cau.cs.kieler.verification.VerificationPropertyCounterexample
 import de.cau.cs.kieler.verification.codegen.SmvCodeGeneratorExtensions
 import de.cau.cs.kieler.verification.processors.LineBasedParser
 import java.util.List
+import java.util.TreeMap
 import java.util.regex.Pattern
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -36,8 +37,12 @@ class NuxmvOutputInterpreter extends LineBasedParser {
     private static val LOOP_START_PATTERN = Pattern.compile('''.*-- Loop starts here''')
     private static val ISSUE_IN_FILE_PATTERN = Pattern.compile('''(.*)file(.*): line (\d+):(.*)''')
     private static val TERMINATED_BY_SIGNAL_PATTERN = Pattern.compile('''.*nuXmv terminated by a signal''')
+    //This can help find the end of a spurious trace.
+    private static val SPOURIOUS_COUNTEREXAMPLE_PATTERN = Pattern.compile('''.*-- Counterexample is SPURIOUS at bound.*''')
     
     private var boolean parseCounterexamples = true
+    
+    
     
     private enum ParseTarget {
         SPEC_RESULT,
@@ -51,6 +56,7 @@ class NuxmvOutputInterpreter extends LineBasedParser {
         this.parseCounterexamples = parseCounterexamples
         parse(processOutput)
     }
+    
     
     override parseLine(String line) {
         val trimmedLine = line.trim
@@ -80,6 +86,15 @@ class NuxmvOutputInterpreter extends LineBasedParser {
                 throw new Exception('''Inconsistent specification result state (expected true or false, but got line: «line»)''')
             }
         } else if (parseCounterexamples && parseTarget == ParseTarget.COUNTEREXAMPLE) {
+            // Find if Counterexample is Spurious
+            val spuriousMatcher = SPOURIOUS_COUNTEREXAMPLE_PATTERN.matcher(trimmedLine)
+            if(spuriousMatcher.matches && !counterexamples.empty) {
+                // Counterexample is spurious (not a valid counterexample) -> reset the parseTarget
+                //    and delete the current Counterexample (first from the list, then the obj itself)
+                parseTarget = ParseTarget.SPEC_RESULT
+                counterexamples.remove(counterexamples.length - 1)
+                currentCounterexample = null
+            }
             // Find the start of the next state
             val stateMatcher = STATE_PATTERN.matcher(trimmedLine)
             if(stateMatcher.matches) {
