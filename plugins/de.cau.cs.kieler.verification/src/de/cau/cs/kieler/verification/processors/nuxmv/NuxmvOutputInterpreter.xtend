@@ -16,7 +16,6 @@ import de.cau.cs.kieler.verification.VerificationPropertyCounterexample
 import de.cau.cs.kieler.verification.codegen.SmvCodeGeneratorExtensions
 import de.cau.cs.kieler.verification.processors.LineBasedParser
 import java.util.List
-import java.util.TreeMap
 import java.util.regex.Pattern
 import org.eclipse.xtend.lib.annotations.Accessors
 
