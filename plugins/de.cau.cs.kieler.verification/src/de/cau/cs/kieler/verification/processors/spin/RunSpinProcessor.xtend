@@ -143,6 +143,11 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
                 val trailInterpreter = new SpinTrailInterpreter(trailOutput)
                 val counterexample = trailInterpreter.counterexample
                 if(counterexample !== null) {
+                    // TODO: Retrieve the variableStore from "environment", not from 
+                    //       "compilationContext.startEnvironment". See the SMV processor, it is changed
+                    //       there. Not changed here yet, as I don't have the setup to test if there are
+                    //       any differences between the SPIN and NuSMV/NuXmv processors that would
+                    //       cause it not to work here.
                     val store = VariableStore.get(compilationContext.startEnvironment)
                     property.updateTaskDescriptionAndNotify("Saving KTrace...")
                     val createCounterexampleWithOutputs = verificationContext.createCounterexamplesWithOutputs
