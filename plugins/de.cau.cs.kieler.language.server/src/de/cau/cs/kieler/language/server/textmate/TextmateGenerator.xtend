@@ -59,7 +59,6 @@ class TextmateGenerator {
         try {     
             val JsonObject packageJson = JsonParser.parseReader(new FileReader(pathToOutput + "package.json")).
                 asJsonObject;
-            
             var JsonObject contributes = new JsonObject
             if (packageJson.has("contributes")) {
                 contributes = packageJson.get("contributes").asJsonObject
@@ -137,7 +136,7 @@ class TextmateGenerator {
             
             // Write language registration stubs to package.json
             val FileWriter packageJsonWriter = new FileWriter(pathToOutput + "package.json")
-            val Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            val Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create()
             gson.toJson(packageJson, packageJsonWriter);
             packageJsonWriter.flush()
             packageJsonWriter.close()
