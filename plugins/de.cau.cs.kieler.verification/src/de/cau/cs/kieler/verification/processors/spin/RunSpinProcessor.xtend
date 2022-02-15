@@ -142,8 +142,8 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
                 property.updateTaskDescriptionAndNotify("Parsing model checker counterexample...")
                 val trailInterpreter = new SpinTrailInterpreter(trailOutput)
                 val counterexample = trailInterpreter.counterexample
-                if(counterexample !== null) {
-                    val store = VariableStore.get(compilationContext.startEnvironment)
+                if(counterexample !== null && environment !== null) {
+                    val store = VariableStore.get(environment)
                     property.updateTaskDescriptionAndNotify("Saving KTrace...")
                     val createCounterexampleWithOutputs = verificationContext.createCounterexamplesWithOutputs
                     val ktrace = counterexample.getKtrace(store, createCounterexampleWithOutputs)
