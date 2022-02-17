@@ -41,8 +41,14 @@ class EdgeMergeHook extends SynthesisHook {
         return newLinkedList(de.cau.cs.kieler.sccharts.ui.synthesis.hooks.EdgeMergeHook.MERGE_SIMILAR_EDGES)
     }
     
+    /**
+     * a mapping of an edge group key to the representative edge for that group
+     */
     HashMap<EdgeGroupKey, KEdge> map = new HashMap<EdgeGroupKey,KEdge>();
     
+    /**
+     * A Key used to determine if two transitions are semantically similar to be represented by one edge
+     */
     @Data
     static class EdgeGroupKey {
         State source;
@@ -60,6 +66,7 @@ class EdgeMergeHook extends SynthesisHook {
      * @param nodethe empty diagram root node
      */
     override void start(Scope scope, KNode node) {
+        // reset the map of representative edges as we start a new synthesis
         map.clear()
     }
 
@@ -72,6 +79,8 @@ class EdgeMergeHook extends SynthesisHook {
         
         if (MERGE_SIMILAR_EDGES.booleanValue) {
             
+            // build the transitions key to find the representing edge
+            // or insert the current edge if no edge was already chosen
             var key = new EdgeGroupKey(
                 transition.sourceState, 
                 transition.targetState, 
@@ -82,14 +91,17 @@ class EdgeMergeHook extends SynthesisHook {
                 transition.isNondeterministic
             );
             
-            
+            // if we do not already have a representative use the current edge as the representative
             val rep = map.computeIfAbsent(key, [EdgeGroupKey _key | edge]); 
             
             if (edge != rep) {
+                // if this was not just chosen as the representative transfer all edge labels to the representative
                 rep.labels.addAll(edge.labels)
                 for (label : edge.labels) {
+                    // adjust the transfered labels parent
                     label.parent = rep
                 }
+                // remove the current edge from the graph, as it will be represented by the representative edge
                 edge.source.outgoingEdges.remove(edge)
                 edge.target.outgoingEdges.remove(edge)
             }
