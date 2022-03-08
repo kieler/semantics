@@ -78,6 +78,7 @@ import org.eclipse.elk.alg.layered.options.LayerConstraint
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.options.OrderingStrategy
 import org.eclipse.elk.alg.rectpacking.options.RectPackingOptions
+import org.eclipse.elk.alg.topdownpacking.options.TopdownpackingOptions
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
@@ -399,7 +400,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     
     /** Configures the default layout of children (regions in the state) */
     def static void configureLayout(KNode node) {
-        node.setLayoutOption(CoreOptions::ALGORITHM, RectPackingOptions.ALGORITHM_ID)
+        // node.setLayoutOption(CoreOptions::ALGORITHM, RectPackingOptions.ALGORITHM_ID)
+        node.setLayoutOption(CoreOptions::ALGORITHM, TopdownpackingOptions.ALGORITHM_ID)
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true)
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0))
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
@@ -409,7 +411,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(5))
 //        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
         node.setLayoutOption(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
-        node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES)
+        node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER_STRATEGY, OrderingStrategy.PREFER_EDGES
+        )
         node.setLayoutOption(CoreOptions::DIRECTION, Direction.RIGHT)
         node.setLayoutOption(LayeredOptions::FEEDBACK_EDGES, true)
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10.0)
