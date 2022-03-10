@@ -159,9 +159,8 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
             throwIfCanceled
             outputBuffer.append(process.readInputStream)
         }
-        // Wait until the process is done with all commands
-        process.waitForTermination([ return isCanceled() ])
-        outputBuffer.append(process.readInputStream)
+        // Wait until the process is done with all commands -> read from process and also continuously check if user wants it canceled.
+        outputBuffer.append(process.readUntilFinishedOrCanceled([ return isCanceled() ]))
         // Get combined process output
         val processOutput = outputBuffer.toString
         throwIfCanceled
