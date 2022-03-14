@@ -156,6 +156,13 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             configureLayoutRegionDependencies(node)
         } else {
             configureLayout(node)
+            // non statically change layout algorithm for regions
+            if (USE_TOPDOWN_LAYOUT.booleanValue) {
+                node.setLayoutOption(CoreOptions::ALGORITHM, TopdownpackingOptions.ALGORITHM_ID)
+                //node.setLayoutOption(CoreOptions::TOPDOWN_LAYOUT, true) 
+                // causes weird behaviour regions are resized
+                // but even when disabled strange, need toggle topdown layout on/off once to fix
+            }
         }
         
         node.configureNodeLOD(state)
@@ -400,8 +407,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     
     /** Configures the default layout of children (regions in the state) */
     def static void configureLayout(KNode node) {
-        // node.setLayoutOption(CoreOptions::ALGORITHM, RectPackingOptions.ALGORITHM_ID)
-        node.setLayoutOption(CoreOptions::ALGORITHM, TopdownpackingOptions.ALGORITHM_ID)
+        node.setLayoutOption(CoreOptions::ALGORITHM, RectPackingOptions.ALGORITHM_ID)
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true)
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0))
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)

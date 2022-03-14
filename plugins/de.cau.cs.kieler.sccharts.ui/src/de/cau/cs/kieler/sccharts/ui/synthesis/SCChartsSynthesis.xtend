@@ -125,7 +125,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             SHOW_METHOD_BODY,
             SHOW_COMMENTS,
             SHOW_USER_LABELS,
-            SHOW_CAUSAL_DATAFLOW
+            SHOW_CAUSAL_DATAFLOW,
+            USE_TOPDOWN_LAYOUT
         )
 
         // Adaptive Zoom
@@ -187,6 +188,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         if (scc.hasPragma(PRAGMA_SKINPATH)) {
             setSkinPath(scc.getStringPragmas(PRAGMA_SKINPATH).head.values.head, usedContext)
         }
+        
+        rootNode.setProperty(CoreOptions::TOPDOWN_LAYOUT, USE_TOPDOWN_LAYOUT.booleanValue)
 
         if (SHOW_ALL_SCCHARTS.booleanValue) {
             val rootStateNodes = <State, KNode> newHashMap

@@ -65,6 +65,10 @@ final class GeneralSynthesisOptions {
     public static final SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "All SCCharts", false).setCategory(APPEARANCE)
     public static final SynthesisOption SHOW_COMMENTS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Comment Nodes", true).setCategory(APPEARANCE)
     public static final SynthesisOption SHOW_USER_LABELS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "User Labels", true).setCategory(APPEARANCE)
+    /**
+     * Options for Topdown layout
+     */
+    public static final SynthesisOption USE_TOPDOWN_LAYOUT = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Topdown Layout", true).setCategory(LAYOUT)
     /** 
      * Scope call parameters synthesis option 
      */
