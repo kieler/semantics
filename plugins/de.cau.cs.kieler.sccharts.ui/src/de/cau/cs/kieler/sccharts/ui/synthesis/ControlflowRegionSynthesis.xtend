@@ -77,6 +77,10 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
     override performTranformation(ControlflowRegion region) {
         val node = region.createNode().associateWith(region);
         
+        if (USE_TOPDOWN_LAYOUT.booleanValue) {
+            node.setLayoutOption(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
+        }
+        
         node.configureNodeLOD(region)
 
         // Set KIdentifier for use with incremental update
