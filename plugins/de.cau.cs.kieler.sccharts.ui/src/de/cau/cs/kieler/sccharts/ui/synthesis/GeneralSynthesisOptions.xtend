@@ -69,6 +69,8 @@ final class GeneralSynthesisOptions {
      * Options for Topdown layout
      */
     public static final SynthesisOption USE_TOPDOWN_LAYOUT = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Topdown Layout", true).setCategory(LAYOUT)
+    public static final SynthesisOption TOPDOWN_REGION_WIDTH = SynthesisOption.createRangeOption("Topdown Region Width", 50.0, 500.0, 10.0, 100.0).setCategory(LAYOUT)
+    public static final SynthesisOption TOPDOWN_REGION_ASPECT_RATIO = SynthesisOption.createRangeOption("Topdown Region Aspect Ratio", 0.5, 2.0, 0.05, 1.414).setCategory(LAYOUT)
     /** 
      * Scope call parameters synthesis option 
      */
