@@ -50,6 +50,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import org.eclipse.elk.core.options.TopdownNodeTypes
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -79,6 +80,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         
         if (USE_TOPDOWN_LAYOUT.booleanValue) {
             node.setLayoutOption(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
+            node.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.HIERARCHICAL_NODE)
         }
         
         node.configureNodeLOD(region)

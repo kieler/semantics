@@ -45,7 +45,6 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
@@ -83,6 +82,7 @@ import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.SizeConstraint
+import org.eclipse.elk.core.options.TopdownNodeTypes
 import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
@@ -159,9 +159,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             // non statically change layout algorithm for regions
             if (USE_TOPDOWN_LAYOUT.booleanValue) {
                 node.setLayoutOption(CoreOptions::ALGORITHM, TopdownpackingOptions.ALGORITHM_ID)
-                //node.setLayoutOption(CoreOptions::TOPDOWN_LAYOUT, true) 
-                // causes weird behaviour regions are resized
-                // but even when disabled strange, need toggle topdown layout on/off once to fix
+                node.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.PARALLEL_NODE)
             }
         }
         
