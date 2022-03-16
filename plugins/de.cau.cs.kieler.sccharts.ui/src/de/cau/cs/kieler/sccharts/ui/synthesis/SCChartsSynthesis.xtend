@@ -49,6 +49,7 @@ import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.rectpacking.InteractiveRectPackingGraphVisitor
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.TopdownNodeTypes
 import org.eclipse.elk.core.service.util.CompoundGraphElementVisitor
 import org.eclipse.elk.core.util.IGraphElementVisitor
 import org.eclipse.elk.graph.properties.IProperty
@@ -190,14 +191,13 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         if (scc.hasPragma(PRAGMA_SKINPATH)) {
             setSkinPath(scc.getStringPragmas(PRAGMA_SKINPATH).head.values.head, usedContext)
         }
-        
         rootNode.setProperty(CoreOptions::TOPDOWN_LAYOUT, USE_TOPDOWN_LAYOUT.booleanValue)
         if (USE_TOPDOWN_LAYOUT.booleanValue) {
             rootNode.setProperty(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
             rootNode.setProperty(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
-            // TODO: set root node property on root state, need to make sure it is the correct node
+            rootNode.setProperty(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.ROOT_NODE)
+            rootNode.setProperty(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
         }
-        
 
         if (SHOW_ALL_SCCHARTS.booleanValue) {
             val rootStateNodes = <State, KNode> newHashMap
@@ -213,6 +213,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
                     }
                 }
             }
+            
             for(rootState : rootStates) {
                 hooks.invokeStart(rootState, rootNode)
                 val synthesizedState = if (SHOW_INHERITANCE.booleanValue && rootStates.size > 1) {

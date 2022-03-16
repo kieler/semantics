@@ -96,7 +96,9 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             node.setLayoutOption(CoreOptions::CONTENT_ALIGNMENT, ContentAlignment.topCenter())
             node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment::BALANCED)
             node.setLayoutOption(LayeredOptions::EDGE_LABELS_CENTER_LABEL_PLACEMENT_STRATEGY, CenterEdgeLabelPlacementStrategy::TAIL_LAYER)
-            node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
+            if (!USE_TOPDOWN_LAYOUT.booleanValue) {
+                node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
+            }
             node.setLayoutOption(CoreOptions::SPACING_NODE_SELF_LOOP, 18.0)
         } else {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot")
