@@ -127,8 +127,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             SHOW_USER_LABELS,
             SHOW_CAUSAL_DATAFLOW,
             USE_TOPDOWN_LAYOUT,
-            TOPDOWN_REGION_WIDTH,
-            TOPDOWN_REGION_ASPECT_RATIO
+            TOPDOWN_HIERARCHICAL_NODE_WIDTH,
+            TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO
         )
 
         // Adaptive Zoom
@@ -192,8 +192,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         }
         
         rootNode.setProperty(CoreOptions::TOPDOWN_LAYOUT, USE_TOPDOWN_LAYOUT.booleanValue)
-        rootNode.setProperty(CoreOptions::TOPDOWN_REGION_WIDTH, TOPDOWN_REGION_WIDTH.floatValue as double)
-        rootNode.setProperty(CoreOptions::TOPDOWN_REGION_ASPECT_RATIO, TOPDOWN_REGION_ASPECT_RATIO.floatValue as double)
+        rootNode.setProperty(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
+        rootNode.setProperty(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
 
         if (SHOW_ALL_SCCHARTS.booleanValue) {
             val rootStateNodes = <State, KNode> newHashMap
