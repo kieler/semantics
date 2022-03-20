@@ -29,6 +29,9 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.sccharts.DelayType
 
+/**
+ * Merge transitions that are considered semantically similar to be visualized using one edge.
+ */
 @ViewSynthesisShared
 class EdgeMergeHook extends SynthesisHook {
     
