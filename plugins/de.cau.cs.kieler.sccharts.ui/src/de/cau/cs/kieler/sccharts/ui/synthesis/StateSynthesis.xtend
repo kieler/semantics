@@ -306,9 +306,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 || !state.declarations.filter(MethodImplementationDeclaration).empty
             ) {
                 node.addRegionsArea
-                if (!USE_TOPDOWN_LAYOUT.booleanValue) {
-                    node.setLayoutOption(CoreOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
-                }
+                node.setLayoutOption(CoreOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.NODE_LABELS, SizeConstraint.MINIMUM_SIZE))
             }
         }
 
