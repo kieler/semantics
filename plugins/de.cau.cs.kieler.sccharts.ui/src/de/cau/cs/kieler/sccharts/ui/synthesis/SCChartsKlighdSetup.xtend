@@ -47,6 +47,7 @@ class SCChartsKlighdSetup implements IKlighdStartupHook {
             .registerAction(ToggleDependencyAction.ID, new ToggleDependencyAction)
             .registerAction(SetBreakpointAction.ID, new SetBreakpointAction)
             .registerAction(SetCheckBreakpointAction.ID, new SetCheckBreakpointAction)
+            .registerBlacklistedProperty(SCChartsDiagramProperties.MODEL_TRACKER)
     }
     
 }
