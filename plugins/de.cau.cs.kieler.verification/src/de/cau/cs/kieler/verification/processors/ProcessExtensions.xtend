@@ -62,7 +62,7 @@ class ProcessExtensions {
     
     
     /**
-     * Read from the inputStream (i.e. the output) of proc, until proc is finished OR until it is canceled. 
+     * Read from the inputStream (i.e. output) of proc, until proc is finished OR until it is canceled. 
      * When finished or canceled, returns with the output that was read so far. 
      */
     public static def String readUntilFinishedOrCanceled(Process proc, Function<Void, Boolean> processCanceled){
@@ -70,19 +70,17 @@ class ProcessExtensions {
         var boolean canceled = processCanceled.apply(null)
         val stringBuffer = new StringBuffer
         val inputStream = proc.inputStream
-        
         while(!canceled && !finished && proc.isAlive) {
+            //Check if reading shall stop or not
+            canceled = processCanceled.apply(null)
+            finished = proc.waitFor(5, TimeUnit.MILLISECONDS)
+            //Read available data (the stream can still contain valid data if the process is finished) 
         	while(inputStream.available > 0) {
-        		//We could also check here if the process was canceled - but that'd be terrible for performance
-        		// It would, however, protect against locking up in the case 
-        		// where proc never stops writing stuff to inputStream
 	            val int b = inputStream.read
 	            if(b != -1){
 	            	stringBuffer.append( b as char )
 	            }
 	        }
-            canceled = processCanceled.apply(null)
-            finished = proc.waitFor(5, TimeUnit.MILLISECONDS)
         }
         if(canceled) {
             proc.kill
