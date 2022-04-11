@@ -151,7 +151,8 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
             process.outputStream.flush
             // Update the property so the user sees, which command is executed now
             updateTaskDescriptionAndNotify(property, '''Running Model Checker... «command»...''')
-            // Add the sent command to the outputBuffer, so one can understand what happened when viewing the log
+            // Add the sent command to the outputBuffer, 
+            // so one can understand what happened when viewing the log
             // TODO: The position in the ouput is sometimes not correct (race condition) 
             outputBuffer.append(commandWithNewline)
             // Wait for new output from the process
@@ -159,11 +160,10 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
             throwIfCanceled
             outputBuffer.append(process.readInputStream)
         }
-        // Wait until the process is done with all commands
-        process.waitForTermination([ return isCanceled() ])
-        outputBuffer.append(process.readInputStream)
-        // Get combined process output
+        // Read until process is finished or a cancel request has been made.
+        outputBuffer.append(process.readUntilFinishedOrCanceled([ return isCanceled() ]))
         val processOutput = outputBuffer.toString
+        
         throwIfCanceled
         return processBuilder.command.toString.replace("\n", "\\n") + "\n" + processOutput
     }
