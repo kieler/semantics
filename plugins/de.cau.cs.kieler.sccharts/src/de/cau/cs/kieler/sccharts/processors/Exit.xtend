@@ -138,9 +138,9 @@ class Exit extends SCChartsProcessor implements Traceable {
             lastState = region.createFinalState(GENERATED_PREFIX + "Done")
         } else if (state.regions.filter(ControlflowRegion).size == 1 && !state.regions.filter(ControlflowRegion).head.allFinalStates.nullOrEmpty) {
             val region = state.regions.filter(ControlflowRegion).head
-            lastState = region.createFinalState(GENERATED_PREFIX + "Done")
-
             firstState = region.getOrCreateSimpleFinalState(GENERATED_PREFIX + "PriorFinal") //every region MUST have an initial state
+            
+            lastState = region.createFinalState(GENERATED_PREFIX + "Done")
             //firstState = region.finalStates.get(0) //every region MUST have a final state
             firstState.setNotFinal
             for (otherFinalState : region.allFinalStates) {
