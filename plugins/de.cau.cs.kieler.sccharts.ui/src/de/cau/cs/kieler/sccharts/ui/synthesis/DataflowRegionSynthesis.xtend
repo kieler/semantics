@@ -41,6 +41,7 @@ import org.eclipse.elk.core.options.EdgeRouting
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import org.eclipse.elk.core.options.TopdownNodeTypes
 
 /**
  * @author ssm
@@ -80,6 +81,12 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     
     override performTranformation(DataflowRegion region) {
         val node = region.createNode().associateWith(region)
+        
+        node.setProperty(CoreOptions::TOPDOWN_LAYOUT, USE_TOPDOWN_LAYOUT.booleanValue)
+        if (USE_TOPDOWN_LAYOUT.booleanValue) {
+            node.setLayoutOption(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
+            node.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.HIERARCHICAL_NODE)
+        }
 
         node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
         //node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES)
