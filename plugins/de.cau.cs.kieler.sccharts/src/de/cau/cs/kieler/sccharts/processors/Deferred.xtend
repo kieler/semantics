@@ -97,6 +97,7 @@ class Deferred extends SCChartsProcessor implements Traceable {
             } else {
                 state.transformComplex // copy the target state of the deferred transition
             }
+            if (environment.inDeveloperMode) snapshot
         } else {
             // Remove deferred if no transformation is necessary
             for (t : state.incomingTransitions) {
@@ -146,7 +147,7 @@ class Deferred extends SCChartsProcessor implements Traceable {
         s.makeVariablesPublic(s.parentRegion)
         // shallow deferred
         if (s.hasShallowDeferred) {
-            val shallow = s.copy // copy the hole state
+            val shallow = s.copy // copy the whole state
             // the incoming and outgoing transitions are copied wrong so they need to be corrected
             shallow.incomingTransitions.clear
             shallow.outgoingTransitions.clear
@@ -173,6 +174,11 @@ class Deferred extends SCChartsProcessor implements Traceable {
             // each immediate during action in _S will be set to delayed
             for (during : shallow.duringActions) {
                 during.delay = DelayType.DELAYED
+            }
+            
+            // Clean up
+            if (!s.initial && s.incomingTransitions.empty) {
+                s.remove
             }
         }
         // deep deferred
@@ -210,7 +216,7 @@ class Deferred extends SCChartsProcessor implements Traceable {
                 if (subRegion.states.size > 0) {
                     for (state : subRegion.states.filter[it.initial].toList) {
                         if (state.hasInstantaneousBehavior(true)) {
-                            val newState = state.parentRegion.createState(GENERATED_PREFIX + state.ID)
+                            val newState = state.parentRegion.createState(GENERATED_PREFIX + state.name)
                             newState.initial = true
                             state.initial = false
                             val trans = newState.createTransitionTo(state)
@@ -219,6 +225,11 @@ class Deferred extends SCChartsProcessor implements Traceable {
                         }
                     }
                 }
+            }
+            
+            // Clean up
+            if (!s.initial && s.incomingTransitions.empty) {
+                s.remove
             }
         }
     }
@@ -264,6 +275,38 @@ class Deferred extends SCChartsProcessor implements Traceable {
         }
         return false
     }
+    
+    // makes all variables defined inside of a state and its sub regions and sub states visible in the parent region
+    private def void makeVariablesPublic(State s, ControlflowRegion parent) {
+        while (s.declarations.size > 0) {
+            var d = s.declarations.get(0);
+            parent.declarations.add(d)
+            for (o : d.valuedObjects) {
+                o.uniqueName;
+            }
+        }
+        for (subState : s.allContainedStates.toList) {
+            subState.makeVariablesPublic(parent)
+        }
+        for (region : s.allContainedDataflowRegions.toList) {
+            while (region.declarations.size > 0) {
+                var d = region.declarations.get(0);
+                parent.declarations.add(d)
+                for (o : d.valuedObjects) {
+                    o.uniqueName;
+                }
+            }
+        }
+        for (region : s.allContainedControlflowRegions.toList) {
+            while (region.declarations.size > 0) {
+                var d = region.declarations.get(0);
+                parent.declarations.add(d)
+                for (o : d.valuedObjects) {
+                    o.uniqueName;
+                }
+            }
+        }
+    }
 
     // checks if a transition is part of an immediate loop
     private def findImmediateLoop(Transition t, boolean canBeDelayed) {
@@ -299,18 +342,10 @@ class Deferred extends SCChartsProcessor implements Traceable {
             }
         }
         if (hasDeepDeferred) {
-            if (!s.entryActions.filter[!hasAnnotation(DO_NOT_DEFER)].empty) {
-                return false
-            }
-            for (a : s.duringActions) {
-                if (a.delay == DelayType.IMMEDIATE) {
-                    return false
-                }
-            }
             for (subRegion : s.allContainedControlflowRegions.toList) {
                 if (subRegion.states.size > 0) {
                     for (state : subRegion.states.filter[it.initial].toList) {
-                        if (state.hasInstantaneousBehavior(true)) {
+                        if (state.outgoingTransitions.filter[it.immediate].exists[it.findImmediateLoop(false)]) {
                             return false
                         }
                     }
@@ -322,102 +357,132 @@ class Deferred extends SCChartsProcessor implements Traceable {
 
     // add a guard variable to all outgoing transition which ensures that they can not be taken in the first tick when entered over a deferred transition
     // this function can only be used if there are no deep deferred transitions with s as target state
-    private def transformSimpleGuard(State s) {
-        val incomingDeferredTransitions = s.incomingTransitions.filter[deferred != DeferredType::NONE].toList;
-        val incomingNonDeferredTransitions = s.incomingTransitions.filter[deferred == DeferredType::NONE].toList;
+    private def transformSimpleGuard(State state) {
+        val incomingShallowDeferredTransitions = state.incomingTransitions.filter[deferred == DeferredType::SHALLOW].toList;
+        val incomingDeepDeferredTransitions = state.incomingTransitions.filter[deferred == DeferredType::DEEP].toList;
+        val incomingNonDeferredTransitions = state.incomingTransitions.filter[deferred == DeferredType::NONE].toList;
 
         if (isTracingActive) {
             val List<EObject> sources = newLinkedList()
-            sources.addAll(s.incomingTransitions.filter[deferred != DeferredType::NONE])
-            sources.add(s)
+            sources.addAll(incomingShallowDeferredTransitions)
+            sources.addAll(incomingDeepDeferredTransitions)
+            sources.add(state)
             sources.setDefaultTrace
         }
+        
+        var shallowDeferVariable = createValuedObject(GENERATED_PREFIX + "shallow")
+        var deepDeferVariable = createValuedObject(GENERATED_PREFIX+"deep")
+        var used = newHashSet()
+        
+        // Collect states to transform
+        val handleBehavior = newArrayList(state)
+        if (!incomingDeepDeferredTransitions.empty) { // deep
+            var i = 0
+            while (i < handleBehavior.size) {
+                val s = handleBehavior.get(i)
+                handleBehavior.addAll(s.initialStates)
+                i++
+            }
+        }
+        
+        for (s : handleBehavior) {
+            val deferVariable = if (s == state) {
+                shallowDeferVariable
+            } else {
+                deepDeferVariable
+            }
+            
+            // Only do this for outgoing immediate transitions!
+            for (transition : s.outgoingTransitions) {
+                if (transition.immediate) {
+                    if (transition.trigger === null) {
+                        val deferTest = not(deferVariable.reference)
+                        transition.setTrigger(deferTest)
+                    } else {
+                        val deferTest = not(deferVariable.reference)
+                        transition.setTrigger(deferTest.and(transition.trigger.copy))
+                    }
+                    used += deferVariable
+                }
+            }
+            // add guard to all entry actions of the state
+            for (a : s.entryActions.filter[!hasAnnotation(DO_NOT_DEFER)]){
+                if (a.trigger === null) {
+                    val deferTest = not(deferVariable.reference)
+                    a.setTrigger(deferTest)
+                } else {
+                    val deferTest = not(deferVariable.reference)
+                    a.setTrigger(deferTest.and(a.trigger.copy))
+                }
+                used += deferVariable
+            }
+            // add guard to immediate during action of the state
+            for (a : s.duringActions.filter[it.delay == DelayType.IMMEDIATE]){
+                if (a.trigger === null) {
+                    val deferTest = not(deferVariable.reference)
+                    a.setTrigger(deferTest)
+                } else {
+                    val deferTest = not(deferVariable.reference)
+                    a.setTrigger(deferTest.and(a.trigger.copy))
+                }
+                used += deferVariable
+            }
+        }
+        
         // Add a new deferVariable to the outer state, set it initially to FALSE and
         // add a during action in the state to reset it to FALSE
-        val deferVariable = s.parentRegion.parentState.createValuedObject(GENERATED_PREFIX,
-            createBoolDeclaration).uniqueName
-        voStore.update(deferVariable, SCCHARTS_GENERATED)
-        deferVariable.setInitialValue(FALSE)
-        val resetDeferSignalAction = s.createDuringAction
-        resetDeferSignalAction.addEffect(deferVariable.createAssignment(FALSE))
-
+        val decl = createBoolDeclaration()
+        if (used.contains(shallowDeferVariable)) {
+            shallowDeferVariable.uniqueName
+            decl.valuedObjects += shallowDeferVariable
+            state.parentRegion.parentState.declarations.add(decl)
+            voStore.update(shallowDeferVariable, SCCHARTS_GENERATED)
+            shallowDeferVariable.setInitialValue(FALSE)
+            var resetDeferSignalAction = state.createDuringAction
+            resetDeferSignalAction.addEffect(shallowDeferVariable.createAssignment(FALSE))
+        } else {
+            shallowDeferVariable = null
+        }
+        if (used.contains(deepDeferVariable)) {
+            deepDeferVariable.uniqueName
+            decl.valuedObjects += deepDeferVariable
+            state.parentRegion.parentState.declarations.add(decl)
+            voStore.update(deepDeferVariable, SCCHARTS_GENERATED)
+            deepDeferVariable.setInitialValue(FALSE)
+            var resetDeferSignalAction = state.createDuringAction
+            resetDeferSignalAction.addEffect(deepDeferVariable.createAssignment(FALSE))
+        } else {
+            deepDeferVariable = null
+        }       
+        
         // For all incoming deferred transitions, reset the defer flag and add an assignment
         // setting the deferVariable to true when entering the state 
-        for (transition : incomingDeferredTransitions) {
+        for (transition : incomingShallowDeferredTransitions) {
             transition.setDeferred(DeferredType::NONE)
-            transition.addEffect(deferVariable.createAssignment(TRUE)).trace(s, transition)
+            if (shallowDeferVariable !== null) {
+                transition.addEffect(shallowDeferVariable.createAssignment(TRUE)).trace(state, transition)
+            }
+        }
+        for (transition : incomingDeepDeferredTransitions) {
+            transition.setDeferred(DeferredType::NONE)
+            if (shallowDeferVariable !== null) {
+                transition.addEffect(shallowDeferVariable.createAssignment(TRUE)).trace(state, transition)
+            }
+            if (deepDeferVariable !== null) {
+                transition.addEffect(deepDeferVariable.createAssignment(TRUE)).trace(state, transition)
+            }
         }
         // Set all others to false explicitly (just to make sure in case the superstate was strongly immediate aborted)
         for (transition : incomingNonDeferredTransitions) {
-            transition.addEffect(deferVariable.createAssignment(FALSE)).trace(s, transition)
-        }
-
-        // Only do this for outgoing immediate transitions!
-        for (transition : s.outgoingTransitions) {
-            if (transition.immediate) {
-                if (transition.trigger === null) {
-                    val deferTest = not(deferVariable.reference)
-                    transition.setTrigger(deferTest)
-                } else {
-                    val deferTest = not(deferVariable.reference)
-                    transition.setTrigger(deferTest.and(transition.trigger.copy))
-                }
+            if (shallowDeferVariable !== null) {
+                transition.addEffect(shallowDeferVariable.createAssignment(FALSE))
             }
-        }
-        // add guard to all entry actions of the state
-        for (a : s.entryActions.filter[!hasAnnotation(DO_NOT_DEFER)]){
-            if (a.trigger === null) {
-                val deferTest = not(deferVariable.reference)
-                a.setTrigger(deferTest)
-            } else {
-                val deferTest = not(deferVariable.reference)
-                a.setTrigger(deferTest.and(a.trigger.copy))
-            }
-        }
-        // add guard to immediate during action of the state
-        for (a : s.duringActions.filter[it.delay == DelayType.IMMEDIATE]){
-            if (a.trigger === null) {
-                val deferTest = not(deferVariable.reference)
-                a.setTrigger(deferTest)
-            } else {
-                val deferTest = not(deferVariable.reference)
-                a.setTrigger(deferTest.and(a.trigger.copy))
+            if (deepDeferVariable !== null) {
+                transition.addEffect(deepDeferVariable.createAssignment(FALSE))
             }
         }
     }
-
-    // makes all variables defined inside of a state and its sub regions and sub states visible in the parent region
-    def void makeVariablesPublic(State s, ControlflowRegion parent) {
-        while (s.declarations.size > 0) {
-            var d = s.declarations.get(0);
-            parent.declarations.add(d)
-            for (o : d.valuedObjects) {
-                o.uniqueName;
-            }
-        }
-        for (subState : s.allContainedStates.toList) {
-            subState.makeVariablesPublic(parent)
-        }
-        for (region : s.allContainedDataflowRegions.toList) {
-            while (region.declarations.size > 0) {
-                var d = region.declarations.get(0);
-                parent.declarations.add(d)
-                for (o : d.valuedObjects) {
-                    o.uniqueName;
-                }
-            }
-        }
-        for (region : s.allContainedControlflowRegions.toList) {
-            while (region.declarations.size > 0) {
-                var d = region.declarations.get(0);
-                parent.declarations.add(d)
-                for (o : d.valuedObjects) {
-                    o.uniqueName;
-                }
-            }
-        }
-    }
-    
+        
     // The simple delay transformation can only handle states with ONLY deferred incoming transitions
     private def isSimpleDelayTransformable(State state) {
         val onlyDeepDeferred = state.incomingTransitions.forall[it.deferred == DeferredType::DEEP]
