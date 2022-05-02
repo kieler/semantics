@@ -97,6 +97,13 @@ class Deferred extends SCChartsProcessor implements Traceable {
             } else {
                 state.transformComplex // copy the target state of the deferred transition
             }
+        } else {
+            // Remove deferred if no transformation is necessary
+            for (t : state.incomingTransitions) {
+                if (t.deferred != DeferredType::NONE) {
+                    t.deferred = DeferredType::NONE
+                }
+            }
         }
         // when transforming a deferred transition in some cases new deferred transitions where generated 
         // (before the initial states of the child regions of a target state of a deferred transition) 
