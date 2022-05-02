@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
@@ -25,6 +26,7 @@ import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DeferredType
 import de.cau.cs.kieler.sccharts.DelayType
+import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -88,9 +90,10 @@ class Deferred extends SCChartsProcessor implements Traceable {
         }
         // check if the state has incoming deferred transitions that needs to be transformed
         if (state.needTransform) {
-            // check if a simple transformation is possible
-            if (state.isSimpleTransformable) {
-                state.transformSimple // add a deferred guard variable
+            if (state.isSimpleDelayTransformable) { // check if a simple delay transformation is possible
+                state.transformSimpleDelay // add a delayed entry
+            } else if (state.isSimpleGuardTransformable) { // check if a simple guard transformation is possible
+                state.transformSimpleGuard // add a deferred guard variable
             } else {
                 state.transformComplex // copy the target state of the deferred transition
             }
@@ -275,9 +278,9 @@ class Deferred extends SCChartsProcessor implements Traceable {
         return false
     }
 
-    // the simple transformation can only handle shallow deferred transition which are not part of an immediate loop
+    // the simple guard transformation can only handle shallow deferred transition which are not part of an immediate loop
     // checks if all incoming deferred transitions of a state are simple transformable 
-    private def isSimpleTransformable(State s) {
+    private def isSimpleGuardTransformable(State s) {
         var hasDeepDeferred = false
         for (t : s.incomingTransitions) {
             if (t.deferred == DeferredType::DEEP) {
@@ -311,7 +314,7 @@ class Deferred extends SCChartsProcessor implements Traceable {
 
     // add a guard variable to all outgoing transition which ensures that they can not be taken in the first tick when entered over a deferred transition
     // this function can only be used if there are no deep deferred transitions with s as target state
-    private def transformSimple(State s) {
+    private def transformSimpleGuard(State s) {
         val incomingDeferredTransitions = s.incomingTransitions.filter[deferred != DeferredType::NONE].toList;
         val incomingNonDeferredTransitions = s.incomingTransitions.filter[deferred == DeferredType::NONE].toList;
 
@@ -403,6 +406,109 @@ class Deferred extends SCChartsProcessor implements Traceable {
                 for (o : d.valuedObjects) {
                     o.uniqueName;
                 }
+            }
+        }
+    }
+    
+    // The simple delay transformation can only handle states with ONLY deferred incoming transitions
+    private def isSimpleDelayTransformable(State s) {
+        val onlyDeepDeferred = s.incomingTransitions.forall[it.deferred == DeferredType::DEEP]
+        val onlyShallowDeferred = s.incomingTransitions.forall[it.deferred == DeferredType::SHALLOW]
+        return onlyDeepDeferred || onlyShallowDeferred
+    }
+    
+    // This transformation will enter the deferred state with a REAL delay (new intermediate state)
+    // This state tends to break instantaneous cycles and eases scheduling
+    // All non-immediate behavior will become instantaneous as the state is considered active before.
+    // All previously immediate behavior will be removed or suppressed by a guard if this is an initial state.
+    private def transformSimpleDelay(State state) {
+        if (isTracingActive) {
+            state.incomingTransitions.setDefaultTrace
+        }
+        
+        // Collect states to transform
+        val handleBehavior = newArrayList(state)
+        // Mixing deep and shallow is not supported yet
+        if (state.incomingTransitions.forall[it.deferred == DeferredType::DEEP]) {
+            var i = 0
+            while (i < handleBehavior.size) {
+                val s = handleBehavior.get(i)
+                handleBehavior.addAll(s.initialStates)
+                i++
+            }
+        }
+        
+        // Create new delayed entry state
+        val delayedEntryState = state.parentRegion.createState(GENERATED_PREFIX + "entry").uniqueName
+        for (t : state.incomingTransitions.immutableCopy) {
+            t.setTargetState(delayedEntryState)
+            t.deferred = DeferredType::NONE
+        }
+        val entryTransition = delayedEntryState.createTransitionTo(state)
+        
+        // Transform behavior
+        var ValuedObject initialVariable
+        if (state.initial) {
+            // If initial we have to keep the entry actions and distinguish initial and deferred entry
+            // This is done in the same was as in the simple guard transformation
+            
+            // Add a new deferVariable to the outer state, set it initially to FALSE and
+            // add a during action in the state to reset it to FALSE
+            val parent = state.parentRegion.parentState
+            initialVariable = parent.createValuedObject(GENERATED_PREFIX+"initial", createBoolDeclaration).uniqueName
+            voStore.update(initialVariable, SCCHARTS_GENERATED)
+            initialVariable.setInitialValue(TRUE)
+            val resetDeferSignalAction = parent.createDuringAction
+            //resetDeferSignalAction.addTagAnnotation(DO_NOT_DEFER)
+            resetDeferSignalAction.addEffect(initialVariable.createAssignment(FALSE))
+            
+            entryTransition.addEffect(initialVariable.createAssignment(FALSE))
+        }
+        for (s : handleBehavior) {
+            // Make all outgoing transitions immediate
+            for (t : s.outgoingTransitions) {
+                if (!t.immediate) {
+                    t.immediate = true
+                    if (state.initial) { // Suppress reaction in initial case
+                        if (t.trigger === null) {
+                            val deferTest = not(initialVariable.reference)
+                            t.setTrigger(deferTest)
+                        } else {
+                            val deferTest = not(initialVariable.reference)
+                            t.setTrigger(deferTest.and(t.trigger.copy))
+                        }
+                    }
+                }
+            }
+            
+            // Make all during actions immediate
+            for (a : s.duringActions.filter[!it.immediate]){
+                a.immediate = true
+                if (state.initial) { // Suppress reaction in initial case
+                    if (a.trigger === null) {
+                        val deferTest = not(initialVariable.reference)
+                        a.setTrigger(deferTest)
+                    } else {
+                        val deferTest = not(initialVariable.reference)
+                        a.setTrigger(deferTest.and(a.trigger.copy))
+                    }
+                }
+            }
+            
+            if (state.initial) {
+                // guard all entry actions to execute only in initial execution
+                for (a : s.entryActions.filter[!hasAnnotation(DO_NOT_DEFER)]){
+                    if (a.trigger === null) {
+                        val deferTest = initialVariable.reference
+                        a.setTrigger(deferTest)
+                    } else {
+                        val deferTest = initialVariable.reference
+                        a.setTrigger(deferTest.and(a.trigger.copy))
+                    }
+                }
+            } else {
+                // Remove all entry actions as they will never be executed
+                s.actions.removeIf[it instanceof EntryAction && !it.hasAnnotation(DO_NOT_DEFER)]
             }
         }
     }
