@@ -266,7 +266,7 @@ class Deferred extends SCChartsProcessor implements Traceable {
     }
 
     // checks if a transition is part of an immediate loop
-    private def findImmediateLoop(Transition t) {
+    private def findImmediateLoop(Transition t, boolean canBeDelayed) {
         val visited = new LinkedList<Transition>
         val next = new LinkedList<Transition>
         next.add(t)
@@ -274,6 +274,7 @@ class Deferred extends SCChartsProcessor implements Traceable {
             val n = next.pop
             visited.add(n)
             for (transition : n.targetState.outgoingTransitions) {
+                if (canBeDelayed && transition == t) return true // In this case an immediate loop is detected even it t is not immediate
                 if (transition.delay == DelayType.IMMEDIATE) {
                     if (transition == t) return true
                     if (!visited.contains(transition) && !next.contains(transition)) {
@@ -293,7 +294,7 @@ class Deferred extends SCChartsProcessor implements Traceable {
             if (t.deferred == DeferredType::DEEP) {
                 hasDeepDeferred = true;
             }
-            if (t.deferred != DeferredType::NONE && t.findImmediateLoop) {
+            if (t.deferred != DeferredType::NONE && t.findImmediateLoop(false)) {
                 return false
             }
         }
@@ -418,9 +419,29 @@ class Deferred extends SCChartsProcessor implements Traceable {
     }
     
     // The simple delay transformation can only handle states with ONLY deferred incoming transitions
-    private def isSimpleDelayTransformable(State s) {
-        val onlyDeepDeferred = s.incomingTransitions.forall[it.deferred == DeferredType::DEEP]
-        val onlyShallowDeferred = s.incomingTransitions.forall[it.deferred == DeferredType::SHALLOW]
+    private def isSimpleDelayTransformable(State state) {
+        val onlyDeepDeferred = state.incomingTransitions.forall[it.deferred == DeferredType::DEEP]
+        val onlyShallowDeferred = state.incomingTransitions.forall[it.deferred == DeferredType::SHALLOW]
+                
+        // Collect states to transform
+        val handleBehavior = newArrayList(state)
+        if (onlyDeepDeferred) {
+            var i = 0
+            while (i < handleBehavior.size) {
+                val s = handleBehavior.get(i)
+                handleBehavior.addAll(s.initialStates)
+                i++
+            }
+        }
+        // Check if handling of transitions would introduce instantaneous cycle
+        for (s : handleBehavior) {
+            for (t : s.outgoingTransitions) {
+                if (t.targetState == s || t.findImmediateLoop(true)) {
+                    return false
+                }
+            }
+        }
+        
         return onlyDeepDeferred || onlyShallowDeferred
     }
     
