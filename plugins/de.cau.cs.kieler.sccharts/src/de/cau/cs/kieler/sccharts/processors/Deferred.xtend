@@ -43,6 +43,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
 
 /**
  * @author kolja
+ * @author als
  * 
  */
 class Deferred extends SCChartsProcessor implements Traceable {
