@@ -63,7 +63,7 @@
 
     <!-- The Semantics product. -->
     <profile>
-      <id>semantics.product</id>
+      <id>semantics.nightly.product</id>
     
       <repositories>
         <repository>
@@ -77,6 +77,22 @@
         <module>de.cau.cs.kieler.semantics.targetplatform</module>    
         <module>../plugins/de.cau.cs.kieler.core.product</module>
         <module>../features/de.cau.cs.kieler.product.feature</module>
+        <module>de.cau.cs.kieler.semantics.product.repository</module>
+        <module>de.cau.cs.kieler.sccharts.cli</module>
+        <module>de.cau.cs.kieler.kicool.cli</module>
+        <module>de.cau.cs.kieler.kicool.klighd.cli</module>
+        <module>de.cau.cs.kieler.language.server.cli</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>semantics.product</id>
+      
+      <modules>
+        <module>../plugins</module>
+        <module>de.cau.cs.kieler.semantics.targetplatform</module> 
+        <module>../features</module>
+        <module>de.cau.cs.kieler.semantics.repository</module>
         <module>de.cau.cs.kieler.semantics.product.repository</module>
         <module>de.cau.cs.kieler.sccharts.cli</module>
         <module>de.cau.cs.kieler.kicool.cli</module>
