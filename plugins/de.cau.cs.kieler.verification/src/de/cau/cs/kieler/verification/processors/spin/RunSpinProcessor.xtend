@@ -45,7 +45,7 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
     }
     
     override process() {
-        if(!compilationContext.isVerificationContext) {
+        if(!compilationContext.hasVerificationContext || !compilationContext.verificationContext.verify) {
             return
         }
         

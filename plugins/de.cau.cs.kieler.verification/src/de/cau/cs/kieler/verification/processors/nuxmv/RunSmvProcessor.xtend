@@ -50,7 +50,7 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
     }
     
     override process() {
-        if(!compilationContext.isVerificationContext) {
+        if(!compilationContext.hasVerificationContext || !compilationContext.verificationContext.verify) {
             return
         }
         
