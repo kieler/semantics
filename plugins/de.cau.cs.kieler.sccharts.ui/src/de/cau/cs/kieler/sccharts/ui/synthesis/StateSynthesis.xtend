@@ -140,10 +140,12 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
     override List<KNode> performTranformation(State state) {
         val node = state.createNode().associateWith(state)
+        val proxyRendering = State.createNode();
 
         // Set KIdentifier for use with incremental update
         if (!state.name.nullOrEmpty) {
             node.KID = state.name
+            proxyRendering.KID = state.name + "-proxy"
         }
         
         // configure region dependency layout config if an appropriate result is present.
@@ -353,9 +355,21 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         
         if (SHOW_COMMENTS.booleanValue) {
             state.getCommentAnnotations.forEach[
-                returnNodes += it.transform                
-            ] 
-        }                       
+                val comments = it.transform
+                returnNodes += comments
+                comments.forEach[
+                    setProperty(KlighdProperties.RENDER_NODE_AS_PROXY, false)
+                ]
+            ]
+        }
+
+        println("Node")
+        node.setProperty(KlighdProperties.RENDER_NODE_AS_PROXY, true)
+        node.setProperty(KlighdProperties.PROXY_RENDERING, proxyRendering.data)
+        println("proxyRendering.data")
+        println(proxyRendering.data)
+        println("node.data")
+        println(node.data)
 
         return returnNodes
     }

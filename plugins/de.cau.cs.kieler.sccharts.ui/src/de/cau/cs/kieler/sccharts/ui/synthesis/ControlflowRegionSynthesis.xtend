@@ -206,9 +206,17 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         
         if (SHOW_COMMENTS.booleanValue) {
             region.getCommentAnnotations.forEach[
-                node.children += it.transform                
+                val comments = it.transform
+                node.children += comments
+                comments.forEach[
+                    setProperty(KlighdProperties.RENDER_NODE_AS_PROXY, false)
+                ]
             ]
-        }   
+        }
+        
+        println("Controlflow")
+        node.setProperty(KlighdProperties.RENDER_NODE_AS_PROXY, true)
+        node.setProperty(KlighdProperties.PROXY_RENDERING, node.data)
         
         return returnNodes
     }

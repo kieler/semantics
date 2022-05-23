@@ -177,7 +177,11 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         
         if (SHOW_COMMENTS.booleanValue) {
             region.getCommentAnnotations.forEach[
-                node.children += it.transform                
+                val comments = it.transform
+                node.children += comments
+                comments.forEach[
+                    setProperty(KlighdProperties.RENDER_NODE_AS_PROXY, false)
+                ]
             ]
         }           
 
@@ -187,6 +191,10 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         if (!CIRCUIT.booleanValue) {
             node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(18d, 7d, 7d, 7d));
         }
+        
+        println("Dataflow")
+        node.setProperty(KlighdProperties.RENDER_NODE_AS_PROXY, true)
+        node.setProperty(KlighdProperties.PROXY_RENDERING, node.data)
 
         return <KNode> newArrayList(node)
     }
