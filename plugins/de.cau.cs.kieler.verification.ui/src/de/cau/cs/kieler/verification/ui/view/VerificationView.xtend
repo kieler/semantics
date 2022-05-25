@@ -71,6 +71,7 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
+import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 
 /** 
  * @author aas
@@ -100,8 +101,8 @@ class VerificationView extends ViewPart {
     private static val CREATE_COUNTEREXAMPLES_PREF_STORE_ID = "createCounterexamples"
     private static val CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID = "createCounterexamplesWithOutputs"
     
-    private var VerificationContext propertyAnalyzerContext
-    private var VerificationContext verificationContext
+    private var CompilationContext propertyAnalyzerContext
+    private var CompilationContext verificationCompileContext
     private var String selectedSystemId
     
     // == UI ELEMENTS ==
@@ -458,7 +459,7 @@ Example commands:
             try {
                 val processorId = MODEL_CLASS_TO_PROPERTY_ANALYZER.get(typeof(SCCharts))
                 propertyAnalyzerContext = runPropertyAnalyzer(processorId, currentModel)
-                val properties = propertyAnalyzerContext.getVerificationProperties
+                val properties = propertyAnalyzerContext.verificationContext.getVerificationProperties
                 setVerificationPropertiesInUi(properties)
             } catch (Exception e) {
                 e.showInDialog
@@ -466,10 +467,11 @@ Example commands:
         }
     }
     
-    private def VerificationContext runPropertyAnalyzer(String processorId, EObject model) {
+    private def CompilationContext runPropertyAnalyzer(String processorId, EObject model) {
         val compilationSystem = CompilationSystem.createCompilationSystem(processorId, #[processorId])
-        val context = Compile.createCompilationContext(compilationSystem, model, VerificationContext)
-        context.compile
+        val context = Compile.createCompilationContext(compilationSystem, model)
+        context.createVerificationContext(false)
+        context.compile()
         if(context.hasErrors) {
             val exception = context.allErrors.get(0).exception
             throw exception
@@ -554,7 +556,7 @@ Example commands:
     }
     
     private def void stopVerification() {
-        if(verificationContext !== null) {
+        if(verificationCompileContext !== null) {
             if(viewer.input !== null) {
                 val properties = viewer.input as List<VerificationProperty>
                 for(property : properties) {
@@ -565,8 +567,8 @@ Example commands:
                 }
             }
             
-            verificationContext.startEnvironment.setProperty(Environment.CANCEL_COMPILATION, true)
-            verificationContext = null
+            verificationCompileContext.startEnvironment.setProperty(Environment.CANCEL_COMPILATION, true)
+            verificationCompileContext = null
         }
     }
     
@@ -578,7 +580,7 @@ Example commands:
         if(model === null) {
             return
         }
-        val verificationAssumptions = propertyAnalyzerContext.getVerificationAssumptions
+        val verificationAssumptions = propertyAnalyzerContext.verificationContext.getVerificationAssumptions
         val modelWithVerificationProperties = propertyAnalyzerContext.getModel
         val modelFile = getFile(modelWithVerificationProperties)
 
@@ -592,7 +594,8 @@ Example commands:
         stopVerification()
        
         // Create new context for verification and compile
-        verificationContext = Compile.createCompilationContext(selectedSystemId, model, VerificationContext)
+        verificationCompileContext = Compile.createCompilationContext(selectedSystemId, model)
+        val verificationContext = verificationCompileContext.createVerificationContext(true)
         verificationContext.verificationProperties = verificationProperties
         verificationContext.verificationAssumptions = verificationAssumptions
         verificationContext.verificationModelFile = modelFile
@@ -617,12 +620,12 @@ Example commands:
         verificationContext.customSpinCommands = customSpinCommands
         
         // Add observer for changed properties
-        verificationContext.addObserver[ Observable o, Object arg |
+        verificationCompileContext.addObserver[ Observable o, Object arg |
             if(arg instanceof VerificationPropertyChanged) {
                 val property = arg.changedProperty
                 Display.getDefault().asyncExec([ viewer.update(property, null) ])    
             } else if(arg instanceof CompilationFinished) {
-                verificationContext = null
+                verificationCompileContext = null
             }
         ]
         
@@ -633,7 +636,7 @@ Example commands:
             viewer.update(property, null)
         }
         
-        verificationContext.compileAsynchronously
+        verificationCompileContext.compileAsynchronously
     }
     
     private def IFile getFile(EObject model) {
