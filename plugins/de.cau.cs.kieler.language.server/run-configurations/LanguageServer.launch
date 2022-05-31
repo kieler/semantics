@@ -86,5 +86,5 @@
     <listAttribute key="org.eclipse.jdt.launching.MODULEPATH"/>
     <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="de.cau.cs.kieler.language.server"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="de.cau.cs.kieler.language.server"/>
-    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dport=5007"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dport=5007 -Djava.awt.headless=true"/>
 </launchConfiguration>
