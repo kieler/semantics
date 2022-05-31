@@ -191,6 +191,46 @@ class ControlflowRegionStyles {
         return button
     }
     
+    def KRendering addProxyRegion(KContainerRendering container, List<Pair<? extends CharSequence, TextFormat>> label) {
+        if (!label.nullOrEmpty) {
+            if (label.size == 1 && label.head.value == TextFormat.TEXT) {
+                container.addText(label.head.key.toString) => [
+                    suppressSelectability
+                    foreground = REGION_LABEL.color;
+                    fontSize = 10;
+                    selectionTextUnderline = Underline.NONE // prevents default selection style
+                    val size = estimateTextSize;
+                    setPointPlacementData(LEFT, 1, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, size.width + 5, size.height)
+                    setProperty(KlighdProperties.IS_NODE_TITLE, true)
+                ]
+            } else {
+                container.addKeywordLabel(label, 0) => [
+                    foreground = REGION_LABEL.color
+                    fontSize = 10
+                    setPointPlacementData(LEFT, 1, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
+                    setProperty(KlighdProperties.IS_NODE_TITLE, true)
+                    (children.last as KContainerRendering) => [ // Just for spacing at the end
+                        val grid = it?.getChildPlacement()
+                        if (grid instanceof KGridPlacement) {
+                            grid.numColumns = grid.numColumns + 1
+                            addRectangle => [
+                                setGridPlacementData(5,5)
+                                invisible = true
+                            ]
+                        }
+                    ]
+                    eAllContents.filter(KText).forEach[
+                        suppressSelectability
+                        selectionTextUnderline = Underline.NONE // prevents default selection style
+                        if (!styles.exists[it instanceof KForeground]) {
+                            foreground = REGION_LABEL.color
+                        }
+                    ]
+                ]
+            }
+        }
+    }
+    
     /**
      * Adds an expand region button with label.
      */

@@ -88,6 +88,10 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.klighd.kgraph.KGraphData
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
+import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -139,13 +143,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     }     
 
     override List<KNode> performTranformation(State state) {
+        // TODO: associateWith() 
         val node = state.createNode().associateWith(state)
-        val proxyRendering = State.createNode();
+        val proxy = createNode().associateWith(state)
 
         // Set KIdentifier for use with incremental update
         if (!state.name.nullOrEmpty) {
             node.KID = state.name
-            proxyRendering.KID = state.name + "-proxy"
+            proxy.KID = '''«state.name»-proxy'''
         }
         
         // configure region dependency layout config if an appropriate result is present.
@@ -166,38 +171,51 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
         // Basic state style
         switch state {
-            case isConnector:
+            case isConnector: {
                 node.addConnectorFigure
-            case state.isMacroState:
+                proxy.addConnectorFigure
+            }
+            case state.isMacroState: {
                 node.addMacroFigure
-            default:
+                proxy.addMacroFigure
+            }
+            default: {
                 node.addDefaultFigure
+                // Proxy should be more square-like
+                proxy.addMacroFigure
+            }
         }
 
         // Styles from modifiers
         if (state.isReferencing) {
             node.setReferencedStyle
+            proxy.setReferencedStyle
         }
         if (state.isInitial) {
             node.setInitialStyle
+            proxy.setInitialStyle
             if (USE_KLAY.booleanValue && state.parentRegion.states.head == state) {
                 node.setLayoutOption(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST);
             }
         }
         if (state.isFinal) {
             node.setFinalStyle
+            proxy.setFinalStyle
         }
         if (state.isViolation) {
             val isHaltState = state.outgoingTransitions.size == 0 
                 || !state.outgoingTransitions.exists[ targetState != state ]
             node.setViolationStyle(isHaltState)
+            proxy.setViolationStyle(isHaltState)
         }
         
         node.setSelectionStyle
+        proxy.setSelectionStyle
 
         // Shadow
         if (!isConnector) {
             node.setShadowStyle
+            proxy.setShadowStyle
         }
 
         // Add content
@@ -243,10 +261,11 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                         }
                     }
                     node.addMacroStateLabel(label)
+                    proxy.addMacroStateLabel(label)
                 } else {
                     node.addSimpleStateLabel(state.serializeHR.toString)
+                    proxy.addSimpleStateLabel(state.serializeHR.toString)
                 }) => [
-                    setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                     associateWith(state)
                     if (it instanceof KText) configureTextLOD(state)
                     eAllContents.filter(KRendering).toList.forEach[
@@ -256,6 +275,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 ]
             } else {
                 node.addEmptyStateLabel
+                proxy.addEmptyStateLabel
             }
             
             // Add declarations
@@ -328,8 +348,12 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (SHOW_INHERITANCE.booleanValue) regions.addAll(0, state.allVisibleInheritedRegions.toList)
         for (region : regions) {
             switch region {
-                ControlflowRegion: node.children += region.transform
-                DataflowRegion: node.children += region.transform
+                ControlflowRegion: {
+                    node.children += region.transform
+                }
+                DataflowRegion: {
+                    node.children += region.transform
+                }
             }
         }
         
@@ -357,19 +381,22 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             state.getCommentAnnotations.forEach[
                 val comments = it.transform
                 returnNodes += comments
+                // Comments shouldn't be rendered as proxies
                 comments.forEach[
                     setProperty(KlighdProperties.RENDER_NODE_AS_PROXY, false)
                 ]
             ]
         }
-
-        println("Node")
+        
+        if (!isConnector) {
+            // Set size to be square and at least 34 (same as minimal node size)
+            val proxyBounds = PlacementUtil.estimateSize(proxy)
+            val size = Math.max(34, Math.max(proxyBounds.width, proxyBounds.height))
+            proxy.width = size
+            proxy.height = size
+        }
         node.setProperty(KlighdProperties.RENDER_NODE_AS_PROXY, true)
-        node.setProperty(KlighdProperties.PROXY_RENDERING, proxyRendering.data)
-        println("proxyRendering.data")
-        println(proxyRendering.data)
-        println("node.data")
-        println(node.data)
+        node.setProperty(KlighdProperties.PROXY_RENDERING, proxy.data)
 
         return returnNodes
     }

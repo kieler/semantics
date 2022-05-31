@@ -41,6 +41,7 @@ import org.eclipse.elk.core.options.EdgeRouting
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
 
 /**
  * @author ssm
@@ -80,6 +81,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     
     override performTranformation(DataflowRegion region) {
         val node = region.createNode().associateWith(region)
+        val proxy = createNode().associateWith(region)
 
         node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
         //node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES)
@@ -173,12 +175,19 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 ]
         ]
         
+        proxy.addRegionFigure => [
+            if (sLabel.length > 0) it.setUserScheduleStyle
+            if (region.override) addOverrideRegionStyle
+        ]
+        
         node.setSelectionStyle
+        proxy.setSelectionStyle
         
         if (SHOW_COMMENTS.booleanValue) {
             region.getCommentAnnotations.forEach[
                 val comments = it.transform
                 node.children += comments
+                // Comments shouldn't be rendered as proxies
                 comments.forEach[
                     setProperty(KlighdProperties.RENDER_NODE_AS_PROXY, false)
                 ]
@@ -192,7 +201,11 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(18d, 7d, 7d, 7d));
         }
         
-        println("Dataflow")
+        // Set size to be square and at least 34
+        val proxyBounds = PlacementUtil.estimateSize(proxy)
+        val size = Math.max(34, Math.max(proxyBounds.width, proxyBounds.height))
+        proxy.width = size
+        proxy.height = size
         node.setProperty(KlighdProperties.RENDER_NODE_AS_PROXY, true)
         node.setProperty(KlighdProperties.PROXY_RENDERING, node.data)
 

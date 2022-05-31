@@ -50,6 +50,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -76,12 +77,14 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
     override performTranformation(ControlflowRegion region) {
         val node = region.createNode().associateWith(region);
+        val proxy = createNode().associateWith(region)
         
         node.configureNodeLOD(region)
 
         // Set KIdentifier for use with incremental update
         if (!region.name.nullOrEmpty) {
             node.KID = region.name
+            proxy.KID = '''«region.name»-proxy'''
         }
         
         if (USE_KLAY.booleanValue) {
@@ -201,6 +204,15 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 if (region.final) addFinalRegionStyle
             ]
         }
+        
+        // TODO: make this an actual good rendering
+        proxy.addRegionFigure => [
+            if (region.override) addOverrideRegionStyle
+            if (region.abort) addAbortRegionStyle
+            if (region.final) addFinalRegionStyle
+            val label = region.serializeHighlighted(true)
+            addProxyRegion(label)
+        ]
 
         val returnNodes = <KNode> newArrayList(node)
         
@@ -208,15 +220,20 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             region.getCommentAnnotations.forEach[
                 val comments = it.transform
                 node.children += comments
+                // Comments shouldn't be rendered as proxies
                 comments.forEach[
                     setProperty(KlighdProperties.RENDER_NODE_AS_PROXY, false)
                 ]
             ]
         }
         
-        println("Controlflow")
+        // Set size to be square and at least 34
+        val proxyBounds = PlacementUtil.estimateSize(proxy)
+        val size = Math.max(34, Math.max(proxyBounds.width, proxyBounds.height))
+        proxy.width = size
+        proxy.height = size
         node.setProperty(KlighdProperties.RENDER_NODE_AS_PROXY, true)
-        node.setProperty(KlighdProperties.PROXY_RENDERING, node.data)
+        node.setProperty(KlighdProperties.PROXY_RENDERING, proxy.data)
         
         return returnNodes
     }
