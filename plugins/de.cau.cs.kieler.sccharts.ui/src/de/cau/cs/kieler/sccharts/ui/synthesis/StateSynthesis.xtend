@@ -388,13 +388,15 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             ]
         }
         
-        // TODO: trim label to max size, put label in vertical middle
+        // TODO: trim label to max size/length, put label in vertical middle
         if (!isConnector) {
             // Set size to be square and at least 34 (same as minimal node size)
             val proxyBounds = PlacementUtil.estimateSize(proxy)
-            val size = Math.max(34, Math.max(proxyBounds.width, proxyBounds.height))
-            proxy.width = size
-            proxy.height = size
+            val minSize = 34
+            // Use this size to make proxies square
+            // val size = Math.max(minSize, Math.max(proxyBounds.width, proxyBounds.height))
+            proxy.width = Math.max(minSize, proxyBounds.width)
+            proxy.height = Math.max(minSize, proxyBounds.height)
         }
         node.setProperty(KlighdProperties.RENDER_NODE_AS_PROXY, true)
         node.setProperty(KlighdProperties.PROXY_RENDERING, proxy.data)

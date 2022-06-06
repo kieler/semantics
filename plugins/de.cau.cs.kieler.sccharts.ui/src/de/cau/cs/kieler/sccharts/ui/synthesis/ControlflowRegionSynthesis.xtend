@@ -229,9 +229,11 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         
         // Set size to be square and at least 34
         val proxyBounds = PlacementUtil.estimateSize(proxy)
-        val size = Math.max(34, Math.max(proxyBounds.width, proxyBounds.height))
-        proxy.width = size
-        proxy.height = size
+        val minSize = 34
+        // Use this size to make proxies square
+        // val size = Math.max(minSize, Math.max(proxyBounds.width, proxyBounds.height))
+        proxy.width = Math.max(minSize, proxyBounds.width)
+        proxy.height = Math.max(minSize, proxyBounds.height)
         node.setProperty(KlighdProperties.RENDER_NODE_AS_PROXY, true)
         node.setProperty(KlighdProperties.PROXY_RENDERING, proxy.data)
         
