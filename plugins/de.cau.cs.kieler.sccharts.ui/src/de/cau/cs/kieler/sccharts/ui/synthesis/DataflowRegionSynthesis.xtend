@@ -202,13 +202,17 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(18d, 7d, 7d, 7d));
         }
         
-        // Set size to be square and at least 34
+        // Set size to be square and at least 34 (same as minimal node size)
         val proxyBounds = PlacementUtil.estimateSize(proxy)
         val minSize = 34
+        val nonZero = proxyBounds.width > 0 && proxyBounds.height > 0
+        proxy.width = nonZero ? proxyBounds.width : minSize
+        proxy.height = nonZero ? proxyBounds.height : minSize
         // Use this size to make proxies square
         // val size = Math.max(minSize, Math.max(proxyBounds.width, proxyBounds.height))
-        proxy.width = Math.max(minSize, proxyBounds.width)
-        proxy.height = Math.max(minSize, proxyBounds.height)
+        // Use this to make proxies always be at least minSize x minSize
+        // proxy.width = Math.max(minSize, proxyBounds.width)
+        
         node.setProperty(KlighdProperties.RENDER_NODE_AS_PROXY, true)
         node.setProperty(KlighdProperties.PROXY_RENDERING, node.data)
 
