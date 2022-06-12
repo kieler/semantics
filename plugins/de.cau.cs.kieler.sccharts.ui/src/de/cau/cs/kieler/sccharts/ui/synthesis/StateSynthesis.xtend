@@ -399,7 +399,6 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             ]
         }
         
-        // TODO: trim label to max size/length
         if (!isConnector) {
             // Set size to be square and at least 34 (same as minimal node size)
             val proxyBounds = PlacementUtil.estimateSize(proxy)

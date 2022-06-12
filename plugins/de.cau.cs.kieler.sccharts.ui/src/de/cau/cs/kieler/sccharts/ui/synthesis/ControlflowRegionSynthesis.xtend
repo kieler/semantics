@@ -206,7 +206,6 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             ]
         }
         
-        // TODO: make this an actual good rendering
         proxy.addRegionFigure => [
             if (region.override) addOverrideRegionStyle
             if (region.abort) addAbortRegionStyle
