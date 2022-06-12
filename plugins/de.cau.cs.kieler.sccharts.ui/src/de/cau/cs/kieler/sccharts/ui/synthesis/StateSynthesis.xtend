@@ -143,9 +143,9 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     }     
 
     override List<KNode> performTranformation(State state) {
-        // TODO: associateWith() 
         val node = state.createNode().associateWith(state)
         val proxy = createNode().associateWith(state)
+        val maxProxyLabelLength = 5
 
         // Set KIdentifier for use with incremental update
         if (!state.name.nullOrEmpty) {
@@ -261,10 +261,21 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                         }
                     }
                     node.addMacroStateLabel(label)
+                    if (label.length > 0) {
+                        val name = label.get(0)
+                        if (name.key.length > maxProxyLabelLength) {
+                            label.set(0, new Pair(name.key.subSequence(0, maxProxyLabelLength) + "...", name.value))
+                        }
+                    }
                     proxy.addMacroStateLabel(label)
                 } else {
-                    node.addSimpleStateLabel(state.serializeHR.toString)
-                    proxy.addSimpleStateLabel(state.serializeHR.toString)
+                    val label = state.serializeHR.toString
+                    node.addSimpleStateLabel(label)
+                    if (label.length > maxProxyLabelLength) {
+                        proxy.addSimpleStateLabel(label.substring(0, maxProxyLabelLength) + "...")
+                    } else {
+                        proxy.addSimpleStateLabel(label)
+                    }
                 }) => [
                     associateWith(state)
                     if (it instanceof KText) configureTextLOD(state)

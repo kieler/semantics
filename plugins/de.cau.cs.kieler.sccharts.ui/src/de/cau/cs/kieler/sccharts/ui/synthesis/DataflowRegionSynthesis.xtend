@@ -82,6 +82,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     override performTranformation(DataflowRegion region) {
         val node = region.createNode().associateWith(region)
         val proxy = createNode().associateWith(region)
+        val maxProxyLabelLength = 5
 
         node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
         //node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES)
@@ -178,7 +179,15 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         proxy.addRegionFigure => [
             if (sLabel.length > 0) it.setUserScheduleStyle
             if (region.override) addOverrideRegionStyle
-            if (!CIRCUIT.booleanValue) addProxyRegion(label)
+            if (!CIRCUIT.booleanValue) {
+                if (label.length > 0) {
+                    val name = label.get(0)
+                    if (name.key.length > maxProxyLabelLength) {
+                        label.set(0, new Pair(name.key.subSequence(0, maxProxyLabelLength) + "...", name.value))
+                    }
+                }
+                addProxyRegion(label)
+            }
         ]
         
         node.setSelectionStyle

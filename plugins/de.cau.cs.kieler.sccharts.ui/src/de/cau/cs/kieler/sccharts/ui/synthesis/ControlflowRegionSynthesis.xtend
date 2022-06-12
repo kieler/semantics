@@ -78,6 +78,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
     override performTranformation(ControlflowRegion region) {
         val node = region.createNode().associateWith(region);
         val proxy = createNode().associateWith(region)
+        val maxProxyLabelLength = 5
         
         node.configureNodeLOD(region)
 
@@ -211,6 +212,12 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             if (region.abort) addAbortRegionStyle
             if (region.final) addFinalRegionStyle
             val label = region.serializeHighlighted(true)
+            if (label.length > 0) {
+                val name = label.get(0)
+                if (name.key.length > maxProxyLabelLength) {
+                    label.set(0, new Pair(name.key.subSequence(0, maxProxyLabelLength) + "...", name.value))
+                }
+            }
             addProxyRegion(label)
         ]
 
