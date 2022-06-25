@@ -260,6 +260,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                             }
                         }
                     }
+                    node.setProperty(KlighdProperties.NODE_TYPE, "hierarchicalState")
                     node.addMacroStateLabel(label)
                     if (label.length > 0) {
                         val name = label.get(0)
@@ -270,6 +271,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     proxy.addMacroStateLabel(label)
                 } else {
                     val label = state.serializeHR.toString
+                    node.setProperty(KlighdProperties.NODE_TYPE, "simpleState")
                     node.addSimpleStateLabel(label)
                     if (label.length > maxProxyLabelLength) {
                         proxy.addSimpleStateLabel(label.substring(0, maxProxyLabelLength) + "...")
@@ -332,6 +334,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 node.addRegionsArea
                 node.setLayoutOption(CoreOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
             }
+        } else {
+            node.setProperty(KlighdProperties.NODE_TYPE, "connectorState") 
         }
 
         // Transform all outgoing transitions
@@ -394,7 +398,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 returnNodes += comments
                 // Comments shouldn't be rendered as proxies
                 comments.forEach[
-                    setProperty(KlighdProperties.RENDER_NODE_AS_PROXY, false)
+                    setProperty(KlighdProperties.PROXY_VIEW_RENDER_NODE_AS_PROXY, false)
                 ]
             ]
         }
@@ -412,8 +416,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             // proxy.width = Math.max(minSize, proxyBounds.width)
         }
         
-        node.setProperty(KlighdProperties.RENDER_NODE_AS_PROXY, true)
-        node.setProperty(KlighdProperties.PROXY_RENDERING, proxy.data)
+        node.setProperty(KlighdProperties.PROXY_VIEW_RENDER_NODE_AS_PROXY, true)
+        node.setProperty(KlighdProperties.PROXY_VIEW_PROXY_RENDERING, proxy.data)
 
         return returnNodes
     }
