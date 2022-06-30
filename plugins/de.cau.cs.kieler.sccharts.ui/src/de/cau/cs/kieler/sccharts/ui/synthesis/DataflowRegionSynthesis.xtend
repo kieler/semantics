@@ -42,6 +42,8 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
+import de.cau.cs.kieler.klighd.KlighdOptions
+import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterTags
 
 /**
  * @author ssm
@@ -81,6 +83,11 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     
     override performTranformation(DataflowRegion region) {
         val node = region.createNode().associateWith(region)
+        val semanticTags = newArrayList(
+            SCChartsSemanticFilterTags.REGION,
+            SCChartsSemanticFilterTags.DATAFLOW_REGION
+        )
+        node.setLayoutOption(KlighdOptions.SEMANTIC_FILTER_TAGS, semanticTags)
         val proxy = createNode().associateWith(region)
         val maxProxyLabelLength = 5
 
@@ -214,9 +221,9 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         // Set size to be square and at least 34 (same as minimal node size)
         val proxyBounds = PlacementUtil.estimateSize(proxy)
         val minSize = 34
-        val nonZero = proxyBounds.width > 0 && proxyBounds.height > 0
-        proxy.width = nonZero ? proxyBounds.width : minSize
-        proxy.height = nonZero ? proxyBounds.height : minSize
+        val bigEnough = proxyBounds.width > 10 && proxyBounds.height > 10
+        proxy.width = bigEnough ? proxyBounds.width : minSize
+        proxy.height = bigEnough ? proxyBounds.height : minSize
         // Use this size to make proxies square
         // val size = Math.max(minSize, Math.max(proxyBounds.width, proxyBounds.height))
         // Use this to make proxies always be at least minSize x minSize

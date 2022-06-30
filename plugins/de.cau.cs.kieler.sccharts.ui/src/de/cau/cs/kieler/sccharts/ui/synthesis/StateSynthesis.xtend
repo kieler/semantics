@@ -92,6 +92,8 @@ import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.klighd.kgraph.KGraphData
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement
 import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
+import de.cau.cs.kieler.klighd.KlighdOptions
+import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterTags
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -144,6 +146,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
     override List<KNode> performTranformation(State state) {
         val node = state.createNode().associateWith(state)
+        val semanticTags = newArrayList(SCChartsSemanticFilterTags.STATE)
+        node.setLayoutOption(KlighdOptions.SEMANTIC_FILTER_TAGS, semanticTags)
         val proxy = createNode().associateWith(state)
         val maxProxyLabelLength = 5
 
@@ -173,14 +177,17 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         switch state {
             case isConnector: {
                 node.addConnectorFigure
+                semanticTags.add(SCChartsSemanticFilterTags.CONNECTOR_STATE)
                 proxy.addConnectorFigure
             }
             case state.isMacroState: {
                 node.addMacroFigure
+                semanticTags.add(SCChartsSemanticFilterTags.HIERARCHICAL_STATE)
                 proxy.addMacroFigure
             }
             default: {
                 node.addDefaultFigure
+                semanticTags.add(SCChartsSemanticFilterTags.SIMPLE_STATE)
                 // Proxy should be more square-like
                 proxy.addMacroFigure
             }
@@ -193,6 +200,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
         if (state.isInitial) {
             node.setInitialStyle
+            semanticTags.add(SCChartsSemanticFilterTags.INITIAL_STATE)
             proxy.setInitialStyle
             if (USE_KLAY.booleanValue && state.parentRegion.states.head == state) {
                 node.setLayoutOption(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST);
@@ -200,6 +208,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
         if (state.isFinal) {
             node.setFinalStyle
+            semanticTags.add(SCChartsSemanticFilterTags.FINAL_STATE)
             proxy.setFinalStyle
         }
         if (state.isViolation) {
@@ -403,13 +412,17 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             // Set size to be square and at least 34 (same as minimal node size)
             val proxyBounds = PlacementUtil.estimateSize(proxy)
             val minSize = 34
-            val nonZero = proxyBounds.width > 0 && proxyBounds.height > 0
-            proxy.width = nonZero ? proxyBounds.width : minSize
-            proxy.height = nonZero ? proxyBounds.height : minSize
+            val bigEnough = proxyBounds.width > 10 && proxyBounds.height > 10
+            proxy.width = bigEnough ? proxyBounds.width : minSize
+            proxy.height = bigEnough ? proxyBounds.height : minSize
             // Use this size to make proxies square
             // val size = Math.max(minSize, Math.max(proxyBounds.width, proxyBounds.height))
             // Use this to make proxies always be at least minSize x minSize
             // proxy.width = Math.max(minSize, proxyBounds.width)
+        } else {
+            val connectorSize = 7
+            proxy.width = connectorSize
+            proxy.height = connectorSize
         }
         
         node.setProperty(KlighdProperties.PROXY_VIEW_RENDER_NODE_AS_PROXY, true)
