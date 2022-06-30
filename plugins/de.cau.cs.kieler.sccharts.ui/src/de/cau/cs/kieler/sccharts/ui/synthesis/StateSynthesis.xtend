@@ -260,7 +260,6 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                             }
                         }
                     }
-                    node.setProperty(KlighdProperties.NODE_TYPE, "hierarchicalState")
                     node.addMacroStateLabel(label)
                     if (label.length > 0) {
                         val name = label.get(0)
@@ -271,7 +270,6 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     proxy.addMacroStateLabel(label)
                 } else {
                     val label = state.serializeHR.toString
-                    node.setProperty(KlighdProperties.NODE_TYPE, "simpleState")
                     node.addSimpleStateLabel(label)
                     if (label.length > maxProxyLabelLength) {
                         proxy.addSimpleStateLabel(label.substring(0, maxProxyLabelLength) + "...")
@@ -334,8 +332,6 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 node.addRegionsArea
                 node.setLayoutOption(CoreOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
             }
-        } else {
-            node.setProperty(KlighdProperties.NODE_TYPE, "connectorState") 
         }
 
         // Transform all outgoing transitions

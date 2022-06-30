@@ -244,7 +244,6 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         // Use this to make proxies always be at least minSize x minSize
         // proxy.width = Math.max(minSize, proxyBounds.width)
         
-        node.setProperty(KlighdProperties.NODE_TYPE, "controlflowRegion")
         node.setProperty(KlighdProperties.PROXY_VIEW_RENDER_NODE_AS_PROXY, true)
         node.setProperty(KlighdProperties.PROXY_VIEW_PROXY_RENDERING, proxy.data)
         
