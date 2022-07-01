@@ -17,7 +17,7 @@ import de.cau.cs.kieler.klighd.filtering.SemanticFilterTag;
 /**
  * Contains semantic filter tags for SCCharts.
  * 
- * @author stu215592
+ * @author tik
  */
 public class SCChartsSemanticFilterTags {
     /** Tag giving semantic meaning that the element is a state. */
@@ -38,8 +38,13 @@ public class SCChartsSemanticFilterTags {
     /** Tag giving semantic meaning that the element is a dataflow region. */
     public static final SemanticFilterTag DATAFLOW_REGION = new SemanticFilterTag("dataflowRegion");
 
-    /** Tag giving semantic meaning that the element is an initial state. */
-    public static final SemanticFilterTag INITIAL_STATE = new SemanticFilterTag("initialState");
-    /** Tag giving semantic meaning that the element is a final state. */
-    public static final SemanticFilterTag FINAL_STATE = new SemanticFilterTag("finalState");
+    /** Tag giving semantic meaning that the element is initial. */
+    public static final SemanticFilterTag INITIAL = new SemanticFilterTag("initial");
+    /** Tag giving semantic meaning that the element is final. */
+    public static final SemanticFilterTag FINAL = new SemanticFilterTag("final");
+
+    /** Returns a tag giving semantic meaning how many declarations an element has. */
+    public static SemanticFilterTag DECLARATIONS(Double num) {
+        return new SemanticFilterTag("declarations", num);
+    }
 }

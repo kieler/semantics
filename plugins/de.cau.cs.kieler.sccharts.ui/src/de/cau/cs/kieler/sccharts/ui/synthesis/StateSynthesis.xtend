@@ -200,7 +200,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
         if (state.isInitial) {
             node.setInitialStyle
-            semanticTags.add(SCChartsSemanticFilterTags.INITIAL_STATE)
+            semanticTags.add(SCChartsSemanticFilterTags.INITIAL)
             proxy.setInitialStyle
             if (USE_KLAY.booleanValue && state.parentRegion.states.head == state) {
                 node.setLayoutOption(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST);
@@ -208,7 +208,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
         if (state.isFinal) {
             node.setFinalStyle
-            semanticTags.add(SCChartsSemanticFilterTags.FINAL_STATE)
+            semanticTags.add(SCChartsSemanticFilterTags.FINAL)
             proxy.setFinalStyle
         }
         if (state.isViolation) {
@@ -301,7 +301,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             // Add declarations
             val declarations = new ArrayList<Declaration>(state.declarations)
             if (SHOW_INHERITANCE.booleanValue) declarations.addAll(0, state.allVisibleInheritedDeclarations.toList)
-            for (declaration : declarations.filter[!(it instanceof MethodImplementationDeclaration) || !SHOW_METHOD_BODY.booleanValue]) {
+            val filteredDeclarations = declarations.filter[!(it instanceof MethodImplementationDeclaration) || !SHOW_METHOD_BODY.booleanValue]
+            for (declaration : filteredDeclarations) {
                 if (declaration instanceof ClassDeclaration) {
                     node.addStructDeclarations(declaration, 0)
                 } else {
@@ -314,7 +315,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                         ]
                     ]
                 }
-            }           
+            }    
+            semanticTags.add(SCChartsSemanticFilterTags.DECLARATIONS(filteredDeclarations.size as double))       
 
             // Add actions
             val actions = new ArrayList<Action>(state.actions)
