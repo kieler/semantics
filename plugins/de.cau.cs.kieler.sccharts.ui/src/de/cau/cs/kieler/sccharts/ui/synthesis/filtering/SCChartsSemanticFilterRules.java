@@ -55,14 +55,5 @@ public class SCChartsSemanticFilterRules {
             new OrConnective(
                     new AndConnective(SCChartsSemanticFilterTags.INITIAL_STATE, NO_FINAL_STATE),
                     new AndConnective(NO_INITIAL_STATE, SCChartsSemanticFilterTags.FINAL_STATE)),
-            "Don't Show Initial XOR Final States"); // TODO
-    // new NegationConnective(
-    // new OrConnective(
-    // new AndConnective(SCChartsSemanticFilterTags.INITIAL_STATE,
-    // new NegationConnective(SCChartsSemanticFilterTags.FINAL_STATE)),
-    // new AndConnective(
-    // new NegationConnective(
-    // SCChartsSemanticFilterTags.INITIAL_STATE),
-    // SCChartsSemanticFilterTags.FINAL_STATE)),
-    // "Don't Show Initial XOR Final States");
+            "Don't Show Initial XOR Final States");
 }
