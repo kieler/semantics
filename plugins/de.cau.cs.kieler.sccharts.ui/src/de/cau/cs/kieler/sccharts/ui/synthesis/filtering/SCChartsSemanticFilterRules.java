@@ -66,8 +66,10 @@ public class SCChartsSemanticFilterRules {
                     "Filter Everything but Initial States and Regions");
 
     /** Rule to exclude elements that have less than 3 declarations. */
-    public static final SemanticFilterRule AT_LEAST_3_DECLARATIONS = new OrConnective( // TODO:
-            new GreaterThanConnective(SCChartsSemanticFilterTags.DECLARATIONS(3.0)),
+    public static final SemanticFilterRule AT_LEAST_3_DECLARATIONS = new OrConnective(
+            // 3 < num
+            new LessThanConnective(SCChartsSemanticFilterTags.DECLARATIONS(3.0)),
+            // 3 == num
             new NumericEqualConnective(SCChartsSemanticFilterTags.DECLARATIONS(3.0)),
             "Filter Elements With Less Than 3 Declarations");
 }

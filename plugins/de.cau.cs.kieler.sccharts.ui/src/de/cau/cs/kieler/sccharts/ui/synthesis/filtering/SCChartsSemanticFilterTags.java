@@ -45,6 +45,6 @@ public class SCChartsSemanticFilterTags {
 
     /** Returns a tag giving semantic meaning how many declarations an element has. */
     public static SemanticFilterTag DECLARATIONS(Double num) {
-        return new SemanticFilterTag("declarations", num);
+        return new SemanticFilterTag("numDeclarations", num);
     }
 }
