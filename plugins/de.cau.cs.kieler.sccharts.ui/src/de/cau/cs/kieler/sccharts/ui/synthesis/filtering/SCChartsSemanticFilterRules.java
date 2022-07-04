@@ -20,6 +20,10 @@ import de.cau.cs.kieler.klighd.filtering.*;
  * @author tik
  */
 public class SCChartsSemanticFilterRules {
+    // Naming conventions:
+    // The names should start with NO_ or ONLY_, indicating
+    // which elements are kept out or left in
+
     /** Rule to exclude elements that are states. */
     public static final SemanticFilterRule NO_STATES =
             new NegationConnective(SCChartsSemanticFilterTags.STATE, "Filter States");
@@ -59,17 +63,31 @@ public class SCChartsSemanticFilterRules {
                             SCChartsSemanticFilterTags.FINAL),
                     "Filter Initial XOR Final States");
 
-    /** Rule to exclude elements that are neither initial states nor regions. */
-    public static final SemanticFilterRule ONLY_INITIAL_STATES_AND_REGIONS =
+    /** Rule to only include elements that are either initial states or regions. */
+    public static final SemanticFilterRule ONLY_INITIAL_STATES_OR_REGIONS =
             new IfThenElseConnective(SCChartsSemanticFilterTags.STATE,
                     SCChartsSemanticFilterTags.INITIAL, SCChartsSemanticFilterTags.REGION,
-                    "Filter Everything but Initial States and Regions");
+                    "Filter Everything but Initial States or Regions");
 
-    /** Rule to exclude elements that have less than 3 declarations. */
-    public static final SemanticFilterRule AT_LEAST_3_DECLARATIONS = new OrConnective(
+    /** Rule to only include elements that have at least 3 declarations. */
+    public static final SemanticFilterRule ONLY_AT_LEAST_3_DECLARATIONS = new OrConnective(
             // 3 < num
             new LessThanConnective(SCChartsSemanticFilterTags.DECLARATIONS(3.0)),
             // 3 == num
             new NumericEqualConnective(SCChartsSemanticFilterTags.DECLARATIONS(3.0)),
             "Filter Elements With Less Than 3 Declarations");
+
+    /** Rule to only include elements that are initial, final or a region. */
+    public static final SemanticFilterRule ONLY_INITIAL_OR_FINAL_OR_REGION =
+            ConnectiveUtil.getBigOrConnective("Filter Everything but Initial, Final or Regions",
+                    SCChartsSemanticFilterTags.INITIAL, SCChartsSemanticFilterTags.FINAL,
+                    SCChartsSemanticFilterTags.REGION);
+
+    /** Rule to exclude every element. */
+    public static final SemanticFilterRule NO_EVERYTHING =
+            ConnectiveUtil.addRuleName("Filter Everything", ConnectiveUtil.FALSE);
+
+    /** Rule to only include every element. */
+    public static final SemanticFilterRule ONLY_EVERYTHING =
+            ConnectiveUtil.addRuleName("Filter Nothing", ConnectiveUtil.TRUE);
 }
