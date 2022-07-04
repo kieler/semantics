@@ -79,15 +79,15 @@ public class SCChartsSemanticFilterRules {
 
     /** Rule to only include elements that are initial, final or a region. */
     public static final SemanticFilterRule ONLY_INITIAL_OR_FINAL_OR_REGION =
-            ConnectiveUtil.getBigOrConnective("Filter Everything but Initial, Final or Regions",
+            SemanticFilterRuleUtil.getBigOrConnective("Filter Everything but Initial, Final or Regions",
                     SCChartsSemanticFilterTags.INITIAL, SCChartsSemanticFilterTags.FINAL,
                     SCChartsSemanticFilterTags.REGION);
 
     /** Rule to exclude every element. */
     public static final SemanticFilterRule NO_EVERYTHING =
-            ConnectiveUtil.addRuleName("Filter Everything", ConnectiveUtil.FALSE);
+            SemanticFilterRuleUtil.addRuleName("Filter Everything", SemanticFilterRuleUtil.FALSE);
 
     /** Rule to only include every element. */
     public static final SemanticFilterRule ONLY_EVERYTHING =
-            ConnectiveUtil.addRuleName("Filter Nothing", ConnectiveUtil.TRUE);
+            SemanticFilterRuleUtil.addRuleName("Filter Nothing", SemanticFilterRuleUtil.TRUE);
 }
