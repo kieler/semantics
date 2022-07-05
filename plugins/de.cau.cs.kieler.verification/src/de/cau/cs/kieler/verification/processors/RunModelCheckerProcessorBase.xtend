@@ -78,7 +78,7 @@ abstract class RunModelCheckerProcessorBase extends Processor<CodeContainer, Obj
     }
     
     protected def VerificationContext getVerificationContext() {
-        return compilationContext.asVerificationContext
+        return compilationContext.verificationContext
     }
     
     protected def IPath getOutputFolder() {

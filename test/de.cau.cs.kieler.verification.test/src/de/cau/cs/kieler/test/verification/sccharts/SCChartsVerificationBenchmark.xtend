@@ -44,6 +44,9 @@ import org.junit.rules.TestName
 import org.junit.rules.TestRule
 import org.junit.rules.Timeout
 import org.junit.runner.RunWith
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
+
+import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 
 /**
  * @author aas
@@ -466,8 +469,10 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
         return file
     }
     
-    override configureContext(VerificationContext verificationContext) {
-        super.configureContext(verificationContext)
+    override configureContext(CompilationContext context) {
+        super.configureContext(context)
+        
+        val verificationContext = context.verificationContext
         
         // Add options
         verificationContext.createCounterexamplesWithOutputs = createCounterexamplesWithOutputs
@@ -646,7 +651,7 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
     
     private def void fetchStatisticsOfCodeGeneration() {
         var overallTimeNanons = 0l
-        for(processor : currentVerificationContext.processorInstances) {
+        for(processor : currentContext.processorInstances) {
             if(!(processor instanceof RunModelCheckerProcessorBase)) {
                 val env = processor.environment
                 overallTimeNanons += env.getProperty(Environment.TRANSFORMATION_TIME)                
