@@ -22,13 +22,16 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.extensions.TextFormat
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
+import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterTags
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.DataflowRegionStyles
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
 import org.eclipse.elk.alg.layered.options.GreedySwitchType
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
@@ -41,9 +44,6 @@ import org.eclipse.elk.core.options.EdgeRouting
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
-import de.cau.cs.kieler.klighd.KlighdOptions
-import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterTags
 
 /**
  * @author ssm
@@ -83,11 +83,10 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     
     override performTranformation(DataflowRegion region) {
         val node = region.createNode().associateWith(region)
-        val semanticTags = newArrayList(
+        node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).addAll(
             SCChartsSemanticFilterTags.REGION,
             SCChartsSemanticFilterTags.DATAFLOW_REGION
         )
-        node.setProperty(KlighdProperties.SEMANTIC_FILTER_TAGS, semanticTags)
         val proxy = createNode().associateWith(region)
         val maxProxyLabelLength = 5
 
@@ -218,16 +217,12 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(18d, 7d, 7d, 7d));
         }
         
-        // Set size to be square and at least 34 (same as minimal node size)
+        // Set size to be at least minimal node size
         val proxyBounds = PlacementUtil.estimateSize(proxy)
-        val minSize = 34
+        val minSize = StateStyles.DEFAULT_FIGURE_MIN_NODE_SIZE
         val bigEnough = proxyBounds.width > 10 && proxyBounds.height > 10
         proxy.width = bigEnough ? proxyBounds.width : minSize
         proxy.height = bigEnough ? proxyBounds.height : minSize
-        // Use this size to make proxies square
-        // val size = Math.max(minSize, Math.max(proxyBounds.width, proxyBounds.height))
-        // Use this to make proxies always be at least minSize x minSize
-        // proxy.width = Math.max(minSize, proxyBounds.width)
         
         node.setProperty(KlighdProperties.PROXY_VIEW_RENDER_NODE_AS_PROXY, true)
         node.setProperty(KlighdProperties.PROXY_VIEW_PROXY_RENDERING, node.data)

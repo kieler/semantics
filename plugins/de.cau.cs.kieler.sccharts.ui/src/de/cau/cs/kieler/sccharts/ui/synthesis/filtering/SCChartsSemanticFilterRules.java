@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2022 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,7 +12,15 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis.filtering;
 
-import de.cau.cs.kieler.klighd.filtering.*;
+import de.cau.cs.kieler.klighd.filtering.AndConnective;
+import de.cau.cs.kieler.klighd.filtering.IfThenElseConnective;
+import de.cau.cs.kieler.klighd.filtering.LessThanConnective;
+import de.cau.cs.kieler.klighd.filtering.LogicEqualConnective;
+import de.cau.cs.kieler.klighd.filtering.NegationConnective;
+import de.cau.cs.kieler.klighd.filtering.NumericEqualConnective;
+import de.cau.cs.kieler.klighd.filtering.OrConnective;
+import de.cau.cs.kieler.klighd.filtering.SemanticFilterRule;
+import de.cau.cs.kieler.klighd.filtering.SemanticFilterRuleUtil;
 
 /**
  * Contains semantic filter rules for SCCharts.
@@ -56,14 +64,20 @@ public abstract class SCChartsSemanticFilterRules {
             SCChartsSemanticFilterTags.STATE,
             new NegationConnective(SCChartsSemanticFilterTags.FINAL), "Filter Final States");
 
-    /** Rule to exclude elements that are either initial XOR final states. */
+    /**
+     * Rule to exclude elements that are either initial XOR final states.
+     * @example
+     */
     public static final SemanticFilterRule NO_INITIAL_XOR_FINAL_STATE =
             new AndConnective(SCChartsSemanticFilterTags.STATE,
                     new LogicEqualConnective(SCChartsSemanticFilterTags.INITIAL,
                             SCChartsSemanticFilterTags.FINAL),
                     "Filter Initial XOR Final States");
 
-    /** Rule to only include elements that are either initial states or regions. */
+    /**
+     * Rule to only include elements that are either initial states or regions.
+     * @example
+     */
     public static final SemanticFilterRule ONLY_INITIAL_STATES_OR_REGIONS =
             new IfThenElseConnective(SCChartsSemanticFilterTags.STATE,
                     SCChartsSemanticFilterTags.INITIAL, SCChartsSemanticFilterTags.REGION,
@@ -77,17 +91,26 @@ public abstract class SCChartsSemanticFilterRules {
             new NumericEqualConnective(SCChartsSemanticFilterTags.DECLARATIONS(3.0)),
             "Filter Elements With Less Than 3 Declarations");
 
-    /** Rule to only include elements that are initial, final or a region. */
+    /**
+     * Rule to only include elements that are initial, final or a region.
+     * @example
+     */
     public static final SemanticFilterRule ONLY_INITIAL_OR_FINAL_OR_REGION =
             SemanticFilterRuleUtil.getBigOrConnective("Filter Everything but Initial, Final or Regions",
                     SCChartsSemanticFilterTags.INITIAL, SCChartsSemanticFilterTags.FINAL,
                     SCChartsSemanticFilterTags.REGION);
 
-    /** Rule to exclude every element. */
+    /**
+     * Rule to exclude every element.
+     * @example
+     */
     public static final SemanticFilterRule NO_EVERYTHING =
             SemanticFilterRuleUtil.addRuleName("Filter Everything", SemanticFilterRuleUtil.FALSE);
 
-    /** Rule to only include every element. */
+    /**
+     * Rule to only include every element.
+     * @example
+     */
     public static final SemanticFilterRule ONLY_EVERYTHING =
             SemanticFilterRuleUtil.addRuleName("Filter Nothing", SemanticFilterRuleUtil.TRUE);
 }

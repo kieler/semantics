@@ -25,6 +25,7 @@ import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
@@ -32,9 +33,11 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
+import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterTags
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
 import java.util.EnumSet
 import org.eclipse.elk.alg.layered.options.CenterEdgeLabelPlacementStrategy
 import org.eclipse.elk.alg.layered.options.FixedAlignment
@@ -50,9 +53,6 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
-import de.cau.cs.kieler.klighd.KlighdOptions
-import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterTags
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -79,11 +79,10 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
     override performTranformation(ControlflowRegion region) {
         val node = region.createNode().associateWith(region);
-        val semanticTags = newArrayList(
+        node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).addAll(
             SCChartsSemanticFilterTags.REGION,
             SCChartsSemanticFilterTags.CONTROLFLOW_REGION
         )
-        node.setProperty(KlighdProperties.SEMANTIC_FILTER_TAGS, semanticTags)
         val proxy = createNode().associateWith(region)
         val maxProxyLabelLength = 5
         
@@ -116,6 +115,14 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         
         // This node does not support comment boxes on the same layer, because regions are layouted by the box layouter.
         node.setProperty(MessageObjectReferencesManager.SUPPORTS_COMMENT_BOXES, false)
+        
+        val addCorrespondingRegionFigure = [ KNode x |
+            x.addRegionFigure => [
+                if (region.override) addOverrideRegionStyle
+                if (region.abort) addAbortRegionStyle
+                if (region.final) addFinalRegionStyle
+            ]
+        ]
 
         if (!region.states.empty) {
             val label = region.serializeHighlighted(true)
@@ -207,16 +214,12 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             ]
         } else {
             node.addRegionFigure => [
-                if (region.override) addOverrideRegionStyle
-                if (region.abort) addAbortRegionStyle
-                if (region.final) addFinalRegionStyle
+                addCorrespondingRegionFigure(region)
             ]
         }
         
         proxy.addRegionFigure => [
-            if (region.override) addOverrideRegionStyle
-            if (region.abort) addAbortRegionStyle
-            if (region.final) addFinalRegionStyle
+            addCorrespondingRegionFigure(region)
             val label = region.serializeHighlighted(true)
             if (label.length > 0) {
                 val name = label.get(0)
@@ -240,16 +243,12 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             ]
         }
         
-        // Set size to be square and at least 34 (same as minimal node size)
+        // Set size to be at least minimal node size
         val proxyBounds = PlacementUtil.estimateSize(proxy)
-        val minSize = 34
+        val minSize = StateStyles.DEFAULT_FIGURE_MIN_NODE_SIZE
         val bigEnough = proxyBounds.width > 10 && proxyBounds.height > 10
         proxy.width = bigEnough ? proxyBounds.width : minSize
         proxy.height = bigEnough ? proxyBounds.height : minSize
-        // Use this size to make proxies square
-        // val size = Math.max(minSize, Math.max(proxyBounds.width, proxyBounds.height))
-        // Use this to make proxies always be at least minSize x minSize
-        // proxy.width = Math.max(minSize, proxyBounds.width)
         
         node.setProperty(KlighdProperties.PROXY_VIEW_RENDER_NODE_AS_PROXY, true)
         node.setProperty(KlighdProperties.PROXY_VIEW_PROXY_RENDERING, proxy.data)

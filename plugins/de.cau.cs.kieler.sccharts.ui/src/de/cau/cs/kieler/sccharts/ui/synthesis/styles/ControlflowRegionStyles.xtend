@@ -191,6 +191,11 @@ class ControlflowRegionStyles {
         return button
     }
     
+    /**
+     * Adds a region figure similar to {@link addExpandButton()} and {@link addCollapseButton()} but without
+     * the button symbol and therefore without the text offset - since proxies for regions shouldn't be expandable
+     * or collapsable.
+     */
     def KRendering addProxyRegion(KContainerRendering container, List<Pair<? extends CharSequence, TextFormat>> label) {
         if (!label.nullOrEmpty) {
             if (label.size == 1 && label.head.value == TextFormat.TEXT) {
@@ -229,6 +234,16 @@ class ControlflowRegionStyles {
                 ]
             }
         }
+    }
+    
+    /**
+     * Adds the corresponding region figure to the node,
+     * taking its supposed style into account.
+     */
+    def void addCorrespondingRegionFigure(KRectangle rect, ControlflowRegion region) {
+        if (region.override) rect.addOverrideRegionStyle
+        if (region.abort) rect.addAbortRegionStyle
+        if (region.final) rect.addFinalRegionStyle
     }
     
     /**
