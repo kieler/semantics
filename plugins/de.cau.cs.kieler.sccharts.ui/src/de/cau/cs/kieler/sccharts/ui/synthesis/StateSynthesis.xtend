@@ -147,7 +147,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     override List<KNode> performTranformation(State state) {
         val node = state.createNode().associateWith(state)
         val semanticTags = newArrayList(SCChartsSemanticFilterTags.STATE)
-        node.setLayoutOption(KlighdOptions.SEMANTIC_FILTER_TAGS, semanticTags)
+        node.setProperty(KlighdProperties.SEMANTIC_FILTER_TAGS, semanticTags)
         val proxy = createNode().associateWith(state)
         val maxProxyLabelLength = 5
 

@@ -19,7 +19,7 @@ import de.cau.cs.kieler.klighd.filtering.*;
  * 
  * @author tik
  */
-public class SCChartsSemanticFilterRules {
+public abstract class SCChartsSemanticFilterRules {
     // Naming conventions:
     // The names should start with NO_ or ONLY_, indicating
     // which elements are kept out or left in

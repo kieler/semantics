@@ -87,7 +87,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             SCChartsSemanticFilterTags.REGION,
             SCChartsSemanticFilterTags.DATAFLOW_REGION
         )
-        node.setLayoutOption(KlighdOptions.SEMANTIC_FILTER_TAGS, semanticTags)
+        node.setProperty(KlighdProperties.SEMANTIC_FILTER_TAGS, semanticTags)
         val proxy = createNode().associateWith(region)
         val maxProxyLabelLength = 5
 

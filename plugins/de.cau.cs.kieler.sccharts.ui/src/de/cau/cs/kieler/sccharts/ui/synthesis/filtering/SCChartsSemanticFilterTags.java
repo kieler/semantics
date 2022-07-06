@@ -19,7 +19,7 @@ import de.cau.cs.kieler.klighd.filtering.SemanticFilterTag;
  * 
  * @author tik
  */
-public class SCChartsSemanticFilterTags {
+public abstract class SCChartsSemanticFilterTags {
     /** Tag giving semantic meaning that the element is a state. */
     public static final SemanticFilterTag STATE = new SemanticFilterTag("state");
     /** Tag giving semantic meaning that the element is a region. */
