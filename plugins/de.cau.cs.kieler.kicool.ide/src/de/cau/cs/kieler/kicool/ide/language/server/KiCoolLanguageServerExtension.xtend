@@ -33,7 +33,6 @@ import de.cau.cs.kieler.language.server.ILanguageClientProvider
 import de.cau.cs.kieler.language.server.KeithLanguageClient
 import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
 import java.io.File
-import java.net.URLDecoder
 import java.nio.file.Files
 import java.util.HashMap
 import java.util.List
@@ -47,6 +46,7 @@ import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
+import org.eclipse.xtext.ide.server.UriExtensions
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
@@ -71,6 +71,8 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
     extension KGraphLanguageServerExtension
     
     @Inject KGraphDiagramState diagramState
+    
+    @Inject extension UriExtensions
 
     extension IdeCompilerView compilerView = new IdeCompilerView
     protected extension ILanguageServerAccess languageServerAccess
@@ -160,7 +162,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
      * @param snapshot Whether the model to compile is a snapshot model.
      */
     override compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel, boolean snapshot) {
-        val decodedUri = URLDecoder.decode(uri, "UTF-8")
+        val decodedUri = uri.toUri.toString
         try {
             var Object model
             // Get input model for compilation.
@@ -256,7 +258,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
      * @return completable future with index and id of showed model
      */
     override show(String uri, String clientId, int index) {
-        val decodedUri = URLDecoder.decode(uri, "UTF-8")
+        val decodedUri = uri.toUri.toString
         var Object model
         if (index == -1) {
             // Get model specified by uri
@@ -281,7 +283,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
      * @return completable future of all compilation system descriptions {@code List<SystemDescription>}
      */
     override getSystems(String uri) {
-        val decodedUri = URLDecoder.decode(uri, "UTF-8")
+        val decodedUri = uri.toUri.toString
         try {
             val systemDescriptions = getCompilationSystems(decodedUri, -1, false, false)
             val snapshotSystemDescriptions = getCompilationSystems(decodedUri, -1, false, true)

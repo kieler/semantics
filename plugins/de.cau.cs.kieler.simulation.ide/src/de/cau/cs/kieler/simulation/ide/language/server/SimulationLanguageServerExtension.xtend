@@ -46,7 +46,6 @@ import de.cau.cs.kieler.simulation.mode.PeriodicMode
 import de.cau.cs.kieler.simulation.trace.TraceFileUtil
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
 import java.io.File
-import java.net.URLDecoder
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
@@ -56,6 +55,7 @@ import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
+import org.eclipse.xtext.ide.server.UriExtensions
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 
 import static de.cau.cs.kieler.simulation.ide.CentralSimulation.*
@@ -93,6 +93,8 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
      * The state of the diagram
      */
     @Inject KGraphDiagramState diagramState
+    
+    @Inject extension UriExtensions
 
     /**
      * Data pool that will be send to the client in start of step function.
@@ -136,7 +138,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
      * @param simulationType should be one of Manual, Periodic, and Dynamic
      */
     override start(String uri, String simulationType) {
-        val decodedUri = URLDecoder.decode(uri, "UTF-8")
+        val decodedUri = uri.toUri.toString
         while (listeners.contains(this)) {
             removeListener(this)
         }
@@ -245,7 +247,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
                 return new LoadedTraceMessage(null, false,
                     "There is no simulation currently running to load the trace into.")
             }
-            val TraceFile traceFile = TraceFileUtil.loadTraceFile(URLDecoder.decode(fileUri, "UTF-8"))
+            val TraceFile traceFile = TraceFileUtil.loadTraceFile(fileUri.toUri.toString)
             
             // TODO: multiple traces in a single file?
             val trace = traceFile.traces.get(0)
@@ -268,7 +270,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
                  return new SavedTraceMessage(false,
                  "There is no simulation currently running to save a trace from.")
              }
-             TraceFileUtil.saveTraceToFile(URLDecoder.decode(fileUri, "UTF-8"), currentSimulation)
+             TraceFileUtil.saveTraceToFile(fileUri.toUri.toString, currentSimulation)
              return new SavedTraceMessage(true, "Saving successful.")
          ]
      }
@@ -404,7 +406,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
             if (simCtx instanceof SimulationContext) {
                 if (fileUri !== null && fileUri !== "") {
                     try {
-                        val File file = new File(URLDecoder.decode(fileUri, "UTF-8"))
+                        val File file = new File(fileUri.toUri.toString)
                         val sim = new CoSimulationExeWrapper(file)
                         simCtx.addModel(sim)
                     } catch (Exception e) {
