@@ -18,6 +18,7 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.VectorValue
@@ -169,6 +170,9 @@ class Dataflow extends SCChartsProcessor {
             }
             for (declaration : decls.filter(VariableDeclaration).filter[ input || output ]) {
                 val localDeclaration = createVariableDeclaration(declaration.type).trace(declaration)
+                if (declaration.type == ValueType.HOST) {
+                    localDeclaration.hostType = declaration.hostType
+                }
                 
                 for (valuedObject : declaration.valuedObjects) {
                     val localValuedObject = createValuedObject => [
