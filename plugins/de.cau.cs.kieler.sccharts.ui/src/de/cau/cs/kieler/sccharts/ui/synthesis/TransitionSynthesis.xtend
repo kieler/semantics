@@ -51,7 +51,7 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             
     /**
-     * Immediate transition will be more likely drwn from left to right as long as there are no more than this threshold
+     * Immediate transition will be more likely drawn from left to right as long as there are no more than this threshold
      *  number of other edges to flip to break a cycle.
      */ 
     public static val IMMEDIATE_TRANSITION_DIRECTION_THRESHOLD = 6
