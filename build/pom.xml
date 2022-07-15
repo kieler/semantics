@@ -9,7 +9,7 @@
 
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
-    <tycho-version>2.3.0</tycho-version>
+    <tycho-version>2.7.3</tycho-version>
     <xtend-version>2.27.0</xtend-version>
   
     <!-- Non-breakable space, as normal spaces are trimmed. -->
