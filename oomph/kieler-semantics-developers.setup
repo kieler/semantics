@@ -444,7 +444,7 @@
             name="com.google.gson"
             versionRange="2.7.0"/>
         <requirement
-            name="org.eclipse.xtext.runtime.feature.group"
+            name="org.eclipse.xtext.sdk.feature.group"
             versionRange="[2.27.0,2.28.0)"/>
         <requirement
             name="org.eclipse.emf.mwe2.launcher.feature.group"/>
