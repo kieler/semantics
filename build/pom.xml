@@ -10,7 +10,7 @@
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
     <tycho-version>2.3.0</tycho-version>
-    <xtend-version>2.25.0</xtend-version>
+    <xtend-version>2.27.0</xtend-version>
   
     <!-- Non-breakable space, as normal spaces are trimmed. -->
     <sourceFeatureLabelSuffix>&#xA0;(Sources)</sourceFeatureLabelSuffix>
