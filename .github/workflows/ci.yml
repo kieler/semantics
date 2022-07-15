@@ -35,8 +35,8 @@ jobs:
       # Maven build update site
       #- name: Build update site
       #  run: MAVEN_OPTS="-Xmx2048M" mvn --update-snapshots clean verify -P semantics --file build/pom.xml
-      
-      # Maven build products
+
+      # Maven build products (including update site)
       - name: Build products
         run: MAVEN_OPTS="-Xmx2048M" mvn --update-snapshots clean package -P semantics.product --file build/pom.xml
 

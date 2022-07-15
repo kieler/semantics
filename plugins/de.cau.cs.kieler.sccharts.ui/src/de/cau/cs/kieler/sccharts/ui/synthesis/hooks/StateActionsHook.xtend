@@ -76,7 +76,7 @@ class StateActionsHook extends SynthesisHook {
                             invisible = true
                             horizontalAlignment = H_LEFT
                         ]
-                        // DOuble wrap to enforce stacked left alignment
+                        // Double wrap to enforce stacked left alignment
                         val firstRow = firstRowWrapper.addRectangle() => [
                             invisible = true
                             setPointPlacementData(createKPosition(LEFT, 0, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
