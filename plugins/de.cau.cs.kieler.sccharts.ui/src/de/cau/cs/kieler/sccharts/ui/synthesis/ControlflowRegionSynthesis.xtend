@@ -79,7 +79,10 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         val node = region.createNode().associateWith(region);
         
         node.setProperty(CoreOptions::TOPDOWN_LAYOUT, USE_TOPDOWN_LAYOUT.booleanValue)
-        if (USE_TOPDOWN_LAYOUT.booleanValue) {
+        if (USE_TOPDOWN_LAYOUT.booleanValue && TOPDOWN_LAYOUT_CHOICE.objectValue.equals("Variant 1")) {
+            node.setLayoutOption(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
+            node.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.HIERARCHICAL_NODE)
+        } else if (USE_TOPDOWN_LAYOUT.booleanValue && TOPDOWN_LAYOUT_CHOICE.objectValue.equals("Variant 2")) {
             node.setLayoutOption(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
             node.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.HIERARCHICAL_NODE)
         }

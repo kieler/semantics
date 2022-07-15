@@ -128,6 +128,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             SHOW_USER_LABELS,
             SHOW_CAUSAL_DATAFLOW,
             USE_TOPDOWN_LAYOUT,
+            TOPDOWN_LAYOUT_CHOICE,
             TOPDOWN_HIERARCHICAL_NODE_WIDTH,
             TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO
         )
@@ -192,11 +193,14 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             setSkinPath(scc.getStringPragmas(PRAGMA_SKINPATH).head.values.head, usedContext)
         }
         rootNode.setProperty(CoreOptions::TOPDOWN_LAYOUT, USE_TOPDOWN_LAYOUT.booleanValue)
-        if (USE_TOPDOWN_LAYOUT.booleanValue) {
+        if (USE_TOPDOWN_LAYOUT.booleanValue && TOPDOWN_LAYOUT_CHOICE.objectValue.equals("Variant 1")) {
             rootNode.setProperty(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
             rootNode.setProperty(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
             rootNode.setProperty(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.ROOT_NODE)
             rootNode.setProperty(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
+        } else if (USE_TOPDOWN_LAYOUT.booleanValue && TOPDOWN_LAYOUT_CHOICE.objectValue.equals("Variant 2")) {
+            rootNode.setLayoutOption(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
+            rootNode.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.ROOT_NODE)
         }
 
         if (SHOW_ALL_SCCHARTS.booleanValue) {
