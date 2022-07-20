@@ -45,6 +45,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -67,6 +68,7 @@ import de.cau.cs.kieler.sccharts.processors.dataflow.ControlDependencies
 import de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencies
 import de.cau.cs.kieler.sccharts.processors.dataflow.RegionLCAFMap
 import de.cau.cs.kieler.sccharts.processors.dataflow.StateDependencies
+import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterTags
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ToggleDependencyAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
@@ -140,10 +142,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
     override List<KNode> performTranformation(State state) {
         val node = state.createNode().associateWith(state)
+        node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(SCChartsSemanticFilterTags.STATE)
+        val proxy = createNode().associateWith(state)
+        val maxProxyLabelLength = 5
 
         // Set KIdentifier for use with incremental update
         if (!state.name.nullOrEmpty) {
             node.KID = state.name
+            proxy.KID = '''«state.name»-proxy'''
         }
         
         // configure region dependency layout config if an appropriate result is present.
@@ -164,38 +170,56 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
         // Basic state style
         switch state {
-            case isConnector:
+            case isConnector: {
                 node.addConnectorFigure
-            case state.isMacroState:
+                node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(SCChartsSemanticFilterTags.CONNECTOR_STATE)
+                proxy.addConnectorFigure
+            }
+            case state.isMacroState: {
                 node.addMacroFigure
-            default:
+                node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(SCChartsSemanticFilterTags.HIERARCHICAL_STATE)
+                proxy.addMacroFigure
+            }
+            default: {
                 node.addDefaultFigure
+                node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(SCChartsSemanticFilterTags.SIMPLE_STATE)
+                // Proxy should be more square-like
+                proxy.addMacroFigure
+            }
         }
 
         // Styles from modifiers
         if (state.isReferencing) {
             node.setReferencedStyle
+            proxy.setReferencedStyle
         }
         if (state.isInitial) {
             node.setInitialStyle
+            node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(SCChartsSemanticFilterTags.INITIAL)
+            proxy.setInitialStyle
             if (USE_KLAY.booleanValue && state.parentRegion.states.head == state) {
                 node.setLayoutOption(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST);
             }
         }
         if (state.isFinal) {
             node.setFinalStyle
+            node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(SCChartsSemanticFilterTags.FINAL)
+            proxy.setFinalStyle
         }
         if (state.isViolation) {
             val isHaltState = state.outgoingTransitions.size == 0 
                 || !state.outgoingTransitions.exists[ targetState != state ]
             node.setViolationStyle(isHaltState)
+            proxy.setViolationStyle(isHaltState)
         }
         
         node.setSelectionStyle
+        proxy.setSelectionStyle
 
         // Shadow
         if (!isConnector) {
             node.setShadowStyle
+            proxy.setShadowStyle
         }
 
         // Add content
@@ -241,10 +265,22 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                         }
                     }
                     node.addMacroStateLabel(label)
+                    if (label.length > 0) {
+                        val name = label.get(0)
+                        if (name.key.length > maxProxyLabelLength) {
+                            label.set(0, new Pair(name.key.subSequence(0, maxProxyLabelLength) + "...", name.value))
+                        }
+                    }
+                    proxy.addMacroStateLabel(label)
                 } else {
-                    node.addSimpleStateLabel(state.serializeHR.toString)
+                    val label = state.serializeHR.toString
+                    node.addSimpleStateLabel(label)
+                    if (label.length > maxProxyLabelLength) {
+                        proxy.addSimpleStateLabel(label.substring(0, maxProxyLabelLength) + "...")
+                    } else {
+                        proxy.addSimpleStateLabel(label)
+                    }
                 }) => [
-                    setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                     associateWith(state)
                     if (it instanceof KText) configureTextLOD(state)
                     eAllContents.filter(KRendering).toList.forEach[
@@ -254,12 +290,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 ]
             } else {
                 node.addEmptyStateLabel
+                proxy.addEmptyStateLabel
             }
             
             // Add declarations
             val declarations = new ArrayList<Declaration>(state.declarations)
             if (SHOW_INHERITANCE.booleanValue) declarations.addAll(0, state.allVisibleInheritedDeclarations.toList)
-            for (declaration : declarations.filter[!(it instanceof MethodImplementationDeclaration) || !SHOW_METHOD_BODY.booleanValue]) {
+            val filteredDeclarations = declarations.filter[!(it instanceof MethodImplementationDeclaration) || !SHOW_METHOD_BODY.booleanValue]
+            for (declaration : filteredDeclarations) {
                 if (declaration instanceof ClassDeclaration) {
                     node.addStructDeclarations(declaration, 0)
                 } else {
@@ -272,7 +310,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                         ]
                     ]
                 }
-            }           
+            }    
+            node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(SCChartsSemanticFilterTags.DECLARATIONS(filteredDeclarations.size as double))       
 
             // Add actions
             val actions = new ArrayList<Action>(state.actions)
@@ -326,8 +365,12 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (SHOW_INHERITANCE.booleanValue) regions.addAll(0, state.allVisibleInheritedRegions.toList)
         for (region : regions) {
             switch region {
-                ControlflowRegion: node.children += region.transform
-                DataflowRegion: node.children += region.transform
+                ControlflowRegion: {
+                    node.children += region.transform
+                }
+                DataflowRegion: {
+                    node.children += region.transform
+                }
             }
         }
         
@@ -353,9 +396,33 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         
         if (SHOW_COMMENTS.booleanValue) {
             state.getCommentAnnotations.forEach[
-                returnNodes += it.transform                
-            ] 
-        }                       
+                val comments = it.transform
+                returnNodes += comments
+                // Comments shouldn't be rendered as proxies
+                comments.forEach[
+                    setProperty(KlighdProperties.PROXY_VIEW_RENDER_NODE_AS_PROXY, false)
+                ]
+            ]
+        }
+        
+        if (!isConnector) {
+            // Set size to be at least minimal node size
+            val proxyBounds = PlacementUtil.estimateSize(proxy)
+            val minProxySize = StateStyles.DEFAULT_FIGURE_MIN_NODE_SIZE
+            // Don't need to resize proxy if the node is already big enough by itself
+            val minSize = 10
+            val bigEnough = proxyBounds.width > minSize && proxyBounds.height > minSize
+            
+            proxy.width = bigEnough ? proxyBounds.width : minProxySize
+            proxy.height = bigEnough ? proxyBounds.height : minProxySize
+        } else {
+            val connectorSize = StateStyles.CONNECTOR_FIGURE_SIZE
+            proxy.width = connectorSize
+            proxy.height = connectorSize
+        }
+        
+        node.setProperty(KlighdProperties.PROXY_VIEW_RENDER_NODE_AS_PROXY, true)
+        node.setProperty(KlighdProperties.PROXY_VIEW_PROXY_RENDERING, proxy.data)
 
         return returnNodes
     }

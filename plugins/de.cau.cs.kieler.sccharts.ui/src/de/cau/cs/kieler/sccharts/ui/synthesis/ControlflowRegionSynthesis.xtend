@@ -25,6 +25,7 @@ import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
@@ -32,9 +33,11 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
+import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterTags
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
 import java.util.EnumSet
 import org.eclipse.elk.alg.layered.options.CenterEdgeLabelPlacementStrategy
 import org.eclipse.elk.alg.layered.options.FixedAlignment
@@ -76,12 +79,19 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
     override performTranformation(ControlflowRegion region) {
         val node = region.createNode().associateWith(region);
+        node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).addAll(
+            SCChartsSemanticFilterTags.REGION,
+            SCChartsSemanticFilterTags.CONTROLFLOW_REGION
+        )
+        val proxy = createNode().associateWith(region)
+        val maxProxyLabelLength = 5
         
         node.configureNodeLOD(region)
 
         // Set KIdentifier for use with incremental update
         if (!region.name.nullOrEmpty) {
             node.KID = region.name
+            proxy.KID = '''«region.name»-proxy'''
         }
         
         if (USE_KLAY.booleanValue) {
@@ -105,6 +115,14 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         
         // This node does not support comment boxes on the same layer, because regions are layouted by the box layouter.
         node.setProperty(MessageObjectReferencesManager.SUPPORTS_COMMENT_BOXES, false)
+        
+        val addCorrespondingRegionFigure = [ KNode x |
+            x.addRegionFigure => [
+                if (region.override) addOverrideRegionStyle
+                if (region.abort) addAbortRegionStyle
+                if (region.final) addFinalRegionStyle
+            ]
+        ]
 
         if (!region.states.empty) {
             val label = region.serializeHighlighted(true)
@@ -196,19 +214,47 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             ]
         } else {
             node.addRegionFigure => [
-                if (region.override) addOverrideRegionStyle
-                if (region.abort) addAbortRegionStyle
-                if (region.final) addFinalRegionStyle
+                addCorrespondingRegionFigure(region)
             ]
         }
+        
+        proxy.addRegionFigure => [
+            addCorrespondingRegionFigure(region)
+            val label = region.serializeHighlighted(true)
+            if (label.length > 0) {
+                val name = label.get(0)
+                if (name.key.length > maxProxyLabelLength) {
+                    label.set(0, new Pair(name.key.subSequence(0, maxProxyLabelLength) + "...", name.value))
+                }
+            }
+            addProxyRegion(label)
+        ]
 
         val returnNodes = <KNode> newArrayList(node)
         
         if (SHOW_COMMENTS.booleanValue) {
             region.getCommentAnnotations.forEach[
-                node.children += it.transform                
+                val comments = it.transform
+                node.children += comments
+                // Comments shouldn't be rendered as proxies
+                comments.forEach[
+                    setProperty(KlighdProperties.PROXY_VIEW_RENDER_NODE_AS_PROXY, false)
+                ]
             ]
-        }   
+        }
+        
+        // Set size to be at least minimal node size
+        val proxyBounds = PlacementUtil.estimateSize(proxy)
+        val minProxySize = StateStyles.DEFAULT_FIGURE_MIN_NODE_SIZE
+        // Don't need to resize proxy if the node is already big enough by itself
+        val minSize = 10
+        val bigEnough = proxyBounds.width > minSize && proxyBounds.height > minSize
+        
+        proxy.width = bigEnough ? proxyBounds.width : minProxySize
+        proxy.height = bigEnough ? proxyBounds.height : minProxySize
+        
+        node.setProperty(KlighdProperties.PROXY_VIEW_RENDER_NODE_AS_PROXY, true)
+        node.setProperty(KlighdProperties.PROXY_VIEW_PROXY_RENDERING, proxy.data)
         
         return returnNodes
     }
