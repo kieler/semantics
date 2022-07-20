@@ -12,6 +12,10 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis.filtering;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
 import de.cau.cs.kieler.klighd.filtering.AndConnective;
 import de.cau.cs.kieler.klighd.filtering.IfThenElseConnective;
 import de.cau.cs.kieler.klighd.filtering.LessThanConnective;
@@ -28,9 +32,28 @@ import de.cau.cs.kieler.klighd.filtering.SemanticFilterRuleUtil;
  * @author tik
  */
 public abstract class SCChartsSemanticFilterRules {
+
+    /** Returns all semantic filter rules defined in this class. */
+    public static List<SemanticFilterRule> getAllFilters() {
+        Field[] fields = SCChartsSemanticFilterRules.class.getFields();
+        List<SemanticFilterRule> filters = new ArrayList<>(fields.length);
+        // Map the fields to the actual rules
+        for (Field f : fields) {
+            try {
+                filters.add((SemanticFilterRule) f.get(null));
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+                // Neither of these should ever occur as
+                // 1. the fields are static, i.e. no instance is needed
+                // 2. the fields are accessible by this class
+            }
+        }
+        return filters;
+    }
+
     // Naming conventions:
-    // The names should start with NO_ or ONLY_, indicating
-    // which elements are kept out or left in
+    // The class variables' names should start with NO_ or ONLY_,
+    // indicating which elements are kept out or left in
+    // The descriptions should utilize the checkbox as the verb
 
     /** Rule to exclude elements that are states. */
     public static final SemanticFilterRule NO_STATES =
@@ -66,6 +89,7 @@ public abstract class SCChartsSemanticFilterRules {
 
     /**
      * Rule to exclude elements that are either initial XOR final states.
+     * 
      * @example
      */
     public static final SemanticFilterRule NO_INITIAL_XOR_FINAL_STATE =
@@ -76,6 +100,7 @@ public abstract class SCChartsSemanticFilterRules {
 
     /**
      * Rule to only include elements that are either initial states or regions.
+     * 
      * @example
      */
     public static final SemanticFilterRule ONLY_INITIAL_STATES_OR_REGIONS =
@@ -93,15 +118,25 @@ public abstract class SCChartsSemanticFilterRules {
 
     /**
      * Rule to only include elements that are initial, final or a region.
+     * 
      * @example
      */
-    public static final SemanticFilterRule ONLY_INITIAL_OR_FINAL_OR_REGION =
-            SemanticFilterRuleUtil.getBigOrConnective("Filter Everything but Initial, Final or Regions",
+    public static final SemanticFilterRule ONLY_INITIAL_OR_FINAL_OR_REGION = SemanticFilterRuleUtil
+            .getBigOrConnective("Filter Everything but Initial, Final or Regions",
                     SCChartsSemanticFilterTags.INITIAL, SCChartsSemanticFilterTags.FINAL,
                     SCChartsSemanticFilterTags.REGION);
 
     /**
+     * Rule to only include elements whose names start with "test", case-insensitive. TODO:
+     * 
+     * @example
+     */
+    public static final SemanticFilterRule ONLY_STARTING_WITH_TEST =
+            SemanticFilterRuleUtil.getBigOrConnective("TODO");
+
+    /**
      * Rule to exclude every element.
+     * 
      * @example
      */
     public static final SemanticFilterRule NO_EVERYTHING =
@@ -109,6 +144,7 @@ public abstract class SCChartsSemanticFilterRules {
 
     /**
      * Rule to only include every element.
+     * 
      * @example
      */
     public static final SemanticFilterRule ONLY_EVERYTHING =

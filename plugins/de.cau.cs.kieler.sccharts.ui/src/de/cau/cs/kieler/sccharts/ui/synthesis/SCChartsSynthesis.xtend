@@ -173,10 +173,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         val rootNode = createNode
         
         // Set semantic filter rules
-        val rules = SCChartsSemanticFilterRules.fields.map[
-            get(null) as SemanticFilterRule
-        ]
-        rootNode.setProperty(KlighdProperties.SEMANTIC_FILTER_RULES, rules)
+        rootNode.setProperty(KlighdProperties.SEMANTIC_FILTER_RULES, SCChartsSemanticFilterRules.allFilters)
                 
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue)

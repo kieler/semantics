@@ -408,10 +408,13 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (!isConnector) {
             // Set size to be at least minimal node size
             val proxyBounds = PlacementUtil.estimateSize(proxy)
-            val minSize = StateStyles.DEFAULT_FIGURE_MIN_NODE_SIZE
-            val bigEnough = proxyBounds.width > 10 && proxyBounds.height > 10
-            proxy.width = bigEnough ? proxyBounds.width : minSize
-            proxy.height = bigEnough ? proxyBounds.height : minSize
+            val minProxySize = StateStyles.DEFAULT_FIGURE_MIN_NODE_SIZE
+            // Don't need to resize proxy if the node is already big enough by itself
+            val minSize = 10
+            val bigEnough = proxyBounds.width > minSize && proxyBounds.height > minSize
+            
+            proxy.width = bigEnough ? proxyBounds.width : minProxySize
+            proxy.height = bigEnough ? proxyBounds.height : minProxySize
         } else {
             val connectorSize = StateStyles.CONNECTOR_FIGURE_SIZE
             proxy.width = connectorSize

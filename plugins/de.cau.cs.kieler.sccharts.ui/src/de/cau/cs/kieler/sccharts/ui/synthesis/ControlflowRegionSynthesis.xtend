@@ -245,10 +245,13 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         
         // Set size to be at least minimal node size
         val proxyBounds = PlacementUtil.estimateSize(proxy)
-        val minSize = StateStyles.DEFAULT_FIGURE_MIN_NODE_SIZE
-        val bigEnough = proxyBounds.width > 10 && proxyBounds.height > 10
-        proxy.width = bigEnough ? proxyBounds.width : minSize
-        proxy.height = bigEnough ? proxyBounds.height : minSize
+        val minProxySize = StateStyles.DEFAULT_FIGURE_MIN_NODE_SIZE
+        // Don't need to resize proxy if the node is already big enough by itself
+        val minSize = 10
+        val bigEnough = proxyBounds.width > minSize && proxyBounds.height > minSize
+        
+        proxy.width = bigEnough ? proxyBounds.width : minProxySize
+        proxy.height = bigEnough ? proxyBounds.height : minProxySize
         
         node.setProperty(KlighdProperties.PROXY_VIEW_RENDER_NODE_AS_PROXY, true)
         node.setProperty(KlighdProperties.PROXY_VIEW_PROXY_RENDERING, proxy.data)
