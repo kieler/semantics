@@ -170,6 +170,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.COUNT_CHILDREN);
                 node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
                 node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
+                node.setLayoutOption(RectPackingOptions::EXPAND_TO_ASPECT_RATIO, true)
             }
         }
         
@@ -417,7 +418,6 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     def static void configureLayout(KNode node) {
         node.setLayoutOption(CoreOptions::ALGORITHM, RectPackingOptions.ALGORITHM_ID)
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true)
-        node.setLayoutOption(RectPackingOptions::EXPAND_TO_ASPECT_RATIO, true)
 //        node.setLayoutOption(CoreOptions::OMIT_NODE_MICRO_LAYOUT, true)
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0))
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
