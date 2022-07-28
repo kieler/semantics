@@ -83,13 +83,13 @@ import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.core.options.TopdownNodeTypes
+import org.eclipse.elk.core.options.TopdownSizeApproximator
 import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import org.eclipse.elk.core.options.TopdownSizeApproximator
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -417,6 +417,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     def static void configureLayout(KNode node) {
         node.setLayoutOption(CoreOptions::ALGORITHM, RectPackingOptions.ALGORITHM_ID)
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true)
+        node.setLayoutOption(RectPackingOptions::EXPAND_TO_ASPECT_RATIO, true)
+//        node.setLayoutOption(CoreOptions::OMIT_NODE_MICRO_LAYOUT, true)
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0))
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
     }
