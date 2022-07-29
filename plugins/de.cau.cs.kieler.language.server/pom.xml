@@ -6,10 +6,32 @@
     <artifactId>plugins</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>de.cau.cs.kieler</groupId>
   <artifactId>de.cau.cs.kieler.language.server</artifactId>
   <version>1.3.0-SNAPSHOT</version>
-  <packaging>eclipse-plugin</packaging>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.xtext</groupId>
+      <artifactId>org.eclipse.xtext.xbase.lib</artifactId>
+      <version>${xtext-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.cau.cs.kieler.klighd</groupId>
+      <artifactId>de.cau.cs.kieler.klighd.lsp</artifactId>
+      <version>${klighd-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.cau.cs.kieler</groupId>
+      <artifactId>de.cau.cs.kieler.core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.cau.cs.kieler</groupId>
+      <artifactId>de.cau.cs.kieler.pragmatics.language.server</artifactId>
+      <version>${pragmatics-version}</version>
+    </dependency>
+  </dependencies>
+  
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>

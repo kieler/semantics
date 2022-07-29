@@ -19,7 +19,7 @@
     <update.site.jars>${project.build.directory}/repository/plugins</update.site.jars>
     <python.script>${basedir}/../scripts/uberjar.py</python.script>
     <executableName>kicodia</executableName>
-    <mainClass>de.cau.cs.kieler.kicool.ide.cli.KielerCompilerDiagramCLI</mainClass>
+    <mainClass>de.cau.cs.kieler.kicool.standalone.cli.KielerCompilerDiagramCLI</mainClass>
     <python.script.output>${project.build.directory}/exe</python.script.output>
   </properties>
 

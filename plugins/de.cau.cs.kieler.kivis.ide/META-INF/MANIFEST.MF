@@ -18,7 +18,6 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.simulation.ide,
  de.cau.cs.kieler.simulation,
  de.cau.cs.kieler.kicool,
- de.cau.cs.kieler.language.server,
  org.eclipse.jetty.servlet;bundle-version="10.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.cau.cs.kieler.kivis.ide,
