@@ -18,11 +18,16 @@ import java.util.List;
 
 import de.cau.cs.kieler.klighd.filtering.AndConnective;
 import de.cau.cs.kieler.klighd.filtering.FalseConnective;
+import de.cau.cs.kieler.klighd.filtering.GreaterEqualsConnective;
+import de.cau.cs.kieler.klighd.filtering.GreaterThanConnective;
 import de.cau.cs.kieler.klighd.filtering.IfThenElseConnective;
 import de.cau.cs.kieler.klighd.filtering.LessThanConnective;
 import de.cau.cs.kieler.klighd.filtering.LogicEqualConnective;
 import de.cau.cs.kieler.klighd.filtering.NegationConnective;
+import de.cau.cs.kieler.klighd.filtering.NumericAdditionConnective;
+import de.cau.cs.kieler.klighd.filtering.NumericConstantConnective;
 import de.cau.cs.kieler.klighd.filtering.NumericEqualConnective;
+import de.cau.cs.kieler.klighd.filtering.NumericSubtractionConnective;
 import de.cau.cs.kieler.klighd.filtering.OrConnective;
 import de.cau.cs.kieler.klighd.filtering.SemanticFilterRule;
 import de.cau.cs.kieler.klighd.filtering.SemanticFilterRuleUtil;
@@ -111,12 +116,10 @@ public abstract class SCChartsSemanticFilterRules {
                     "Filter Everything but Initial States or Regions");
 
     /** Rule to only include elements that have at least 3 declarations. */
-    public static final SemanticFilterRule ONLY_AT_LEAST_3_DECLARATIONS = new OrConnective(
-            // 3 < num
-            new LessThanConnective(SCChartsSemanticFilterTags.DECLARATIONS(3.0)),
-            // 3 == num
-            new NumericEqualConnective(SCChartsSemanticFilterTags.DECLARATIONS(3.0)),
-            "Filter Elements With Less Than 3 Declarations");
+    public static final SemanticFilterRule ONLY_AT_LEAST_3_DECLARATIONS =
+            new GreaterEqualsConnective(SCChartsSemanticFilterTags.DECLARATIONS(null),
+                    new NumericConstantConnective(3.0),
+                    "Filter Elements with less than 3 Declarations");
 
     /**
      * Rule to only include elements that are initial, final or a region.
@@ -133,8 +136,8 @@ public abstract class SCChartsSemanticFilterRules {
      * 
      * @example
      */
-    public static final SemanticFilterRule ONLY_STARTING_WITH_TEST =
-            SemanticFilterRuleUtil.getBigOrConnective("TODO");
+    // public static final SemanticFilterRule ONLY_STARTING_WITH_TEST =
+    // SemanticFilterRuleUtil.getBigOrConnective("TODO");
 
     /**
      * Rule to exclude every element.
@@ -149,4 +152,15 @@ public abstract class SCChartsSemanticFilterRules {
      * @example
      */
     public static final SemanticFilterRule ONLY_EVERYTHING = new TrueConnective("Filter Nothing");
+
+    /**
+     * Rule to only include elements with more input/output declarations than the total number of declarations.
+     * 
+     * @example
+     */
+    public static final SemanticFilterRule ONLY_MORE_IO_THAN_DECLARATIONS = new GreaterThanConnective(
+            new NumericAdditionConnective(SCChartsSemanticFilterTags.INPUT_DECLARATIONS(null),
+                    SCChartsSemanticFilterTags.OUTPUT_DECLARATIONS(null)),
+            SCChartsSemanticFilterTags.DECLARATIONS(null),
+            "Only Show Elements with more Input/Output Declarations than the total Number of Declarations");
 }
