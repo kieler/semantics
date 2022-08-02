@@ -9,8 +9,8 @@
 
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
-    <tycho-version>2.7.3</tycho-version>
-    <xtend-version>2.27.0</xtend-version>
+    <tycho-version>2.3.0</tycho-version>
+    <xtend-version>2.25.0</xtend-version>
   
     <!-- Non-breakable space, as normal spaces are trimmed. -->
     <sourceFeatureLabelSuffix>&#xA0;(Sources)</sourceFeatureLabelSuffix>
@@ -63,7 +63,7 @@
 
     <!-- The Semantics product. -->
     <profile>
-      <id>semantics.nightly.product</id>
+      <id>semantics.product</id>
     
       <repositories>
         <repository>
@@ -77,22 +77,6 @@
         <module>de.cau.cs.kieler.semantics.targetplatform</module>    
         <module>../plugins/de.cau.cs.kieler.core.product</module>
         <module>../features/de.cau.cs.kieler.product.feature</module>
-        <module>de.cau.cs.kieler.semantics.product.repository</module>
-        <module>de.cau.cs.kieler.sccharts.cli</module>
-        <module>de.cau.cs.kieler.kicool.cli</module>
-        <module>de.cau.cs.kieler.kicool.klighd.cli</module>
-        <module>de.cau.cs.kieler.language.server.cli</module>
-      </modules>
-    </profile>
-
-    <profile>
-      <id>semantics.product</id>
-      
-      <modules>
-        <module>../plugins</module>
-        <module>de.cau.cs.kieler.semantics.targetplatform</module> 
-        <module>../features</module>
-        <module>de.cau.cs.kieler.semantics.repository</module>
         <module>de.cau.cs.kieler.semantics.product.repository</module>
         <module>de.cau.cs.kieler.sccharts.cli</module>
         <module>de.cau.cs.kieler.kicool.cli</module>

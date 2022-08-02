@@ -134,7 +134,7 @@ class ControlflowRegionStyles {
      * Adds a button with text.
      */
     private def KRendering addRegionButton(KContainerRendering container, String text, List<Pair<? extends CharSequence, TextFormat>> label) {
-        val button = container.addPolygon => [
+        val button =container.addPolygon => [
             lineWidth = 0
             background = container.foreground.color.copy
             selectionBackground = SELECTION.color
@@ -142,7 +142,7 @@ class ControlflowRegionStyles {
             addKPosition(LEFT, 0.5f, 0, TOP, 19, 0)
             addKPosition(LEFT, 18, 0, TOP, 0.5f, 0)
         ]
-        button.addText(text) => [
+        container.addText(text) => [
             suppressSelectability
             foreground = REGION_BUTTON_FOREGROUND.color
             selectionForeground = REGION_BUTTON_FOREGROUND.color
