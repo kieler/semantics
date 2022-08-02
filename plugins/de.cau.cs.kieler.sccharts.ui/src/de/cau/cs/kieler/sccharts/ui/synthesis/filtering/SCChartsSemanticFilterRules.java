@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.cau.cs.kieler.klighd.filtering.AndConnective;
+import de.cau.cs.kieler.klighd.filtering.FalseConnective;
 import de.cau.cs.kieler.klighd.filtering.IfThenElseConnective;
 import de.cau.cs.kieler.klighd.filtering.LessThanConnective;
 import de.cau.cs.kieler.klighd.filtering.LogicEqualConnective;
@@ -25,6 +26,7 @@ import de.cau.cs.kieler.klighd.filtering.NumericEqualConnective;
 import de.cau.cs.kieler.klighd.filtering.OrConnective;
 import de.cau.cs.kieler.klighd.filtering.SemanticFilterRule;
 import de.cau.cs.kieler.klighd.filtering.SemanticFilterRuleUtil;
+import de.cau.cs.kieler.klighd.filtering.TrueConnective;
 
 /**
  * Contains semantic filter rules for SCCharts.
@@ -139,14 +141,12 @@ public abstract class SCChartsSemanticFilterRules {
      * 
      * @example
      */
-    public static final SemanticFilterRule NO_EVERYTHING =
-            SemanticFilterRuleUtil.addRuleName("Filter Everything", SemanticFilterRuleUtil.FALSE);
+    public static final SemanticFilterRule NO_EVERYTHING = new FalseConnective("Filter Everything");
 
     /**
      * Rule to only include every element.
      * 
      * @example
      */
-    public static final SemanticFilterRule ONLY_EVERYTHING =
-            SemanticFilterRuleUtil.addRuleName("Filter Nothing", SemanticFilterRuleUtil.TRUE);
+    public static final SemanticFilterRule ONLY_EVERYTHING = new TrueConnective("Filter Nothing");
 }
