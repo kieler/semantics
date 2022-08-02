@@ -457,6 +457,7 @@ class SCChartsTransformationExtension {
     def VariableDeclaration copyAttributes(VariableDeclaration target, VariableDeclaration declaration) {
         target => [
             type = declaration.type
+            hostType = declaration.hostType
             input = declaration.input
             output = declaration.output
             signal = declaration.signal

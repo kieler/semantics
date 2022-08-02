@@ -66,22 +66,56 @@ class StateActionsHook extends SynthesisHook {
             if (LINEBREAKS_IN_EFFECTS.booleanValue) {
                 for (actionContainer : actions.children.filter(KRectangle).map[children.filter(KRectangle).head].filterNull) {
                     val collumns = (actionContainer.childPlacement as KGridPlacement).numColumns
-                    var kText = actionContainer.children.filter(KText).last
-                    // Split effect lines
-                    val lines = kText.text.split(";")
-                    if (lines.length > 1) {
-                        kText.text = lines.head.trim + ";"
-                        for (var i = 1; i < lines.length; i++) {
-                            // Create invisible placeholders to align lines
-                            for (var j = 0 ; j < (collumns - 1) ; j++) {
-                                actionContainer.addRectangle => [
-                                    invisible = true
-                                ]
-                            }
-                            // Add separate line
-                            actionContainer.addText(lines.get(i).trim + if (i < (lines.length - 1)) ";" else "") => [
+                    val kText = actionContainer.children.filter(KText).last
+                    val action = state.actions.findFirst[actionContainer.isAssociatedWith(it)]
+                    if (GeneralSynthesisOptions.SHOW_USER_LABELS.booleanValue && action !== null && !action.label.nullOrEmpty) {
+                        // Split labels at newlines
+                        val lines = kText.text.split("\n")
+                        
+                        val firstRowWrapper = actionContainer.addRectangle() => [
+                            invisible = true
+                            horizontalAlignment = H_LEFT
+                        ]
+                        // Double wrap to enforce stacked left alignment
+                        val firstRow = firstRowWrapper.addRectangle() => [
+                            invisible = true
+                            setPointPlacementData(createKPosition(LEFT, 0, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
+                        ]
+                        // Put first row elements into new container
+                        firstRow.children += actionContainer.children.filter[ c | c !== firstRowWrapper].toList()
+                        firstRow.gridPlacement = collumns;
+                        (actionContainer.childPlacement as KGridPlacement).numColumns = 1;
+                        
+                        if (lines.length > 1) {
+                            // Adjust first line
+                            kText => [
+                                text = lines.head 
                                 horizontalAlignment = H_LEFT
                             ]
+                            for (var i = 1; i < lines.length; i++) {
+                                // Add separate line
+                                actionContainer.addText(lines.get(i)) => [
+                                    horizontalAlignment = H_LEFT
+                                ]
+                            }
+                        }
+                    } else {
+                        // Split effect lines
+                        val lines = kText.text.split(";")
+                        if (lines.length > 1) {
+                            kText.text = lines.head.trim + ";"
+                            for (var i = 1; i < lines.length; i++) {
+                                // Create invisible placeholders to align lines
+                                for (var j = 0 ; j < (collumns - 1) ; j++) {
+                                    actionContainer.addRectangle => [
+                                        invisible = true
+                                    ]
+                                }
+                                // Add separate line
+                                actionContainer.addText(lines.get(i).trim + if (i < (lines.length - 1)) ";" else "") => [
+                                    horizontalAlignment = H_LEFT
+                                ]
+                            }
                         }
                     }
                 }
