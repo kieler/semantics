@@ -47,4 +47,36 @@ public abstract class SCChartsSemanticFilterTags {
     public static SemanticFilterTag DECLARATIONS(Double num) {
         return new SemanticFilterTag("numDeclarations", num);
     }
+    /** Returns a tag giving semantic meaning how many input declarations an element has. */
+    public static SemanticFilterTag INPUT_DECLARATIONS(Double num) {
+        return new SemanticFilterTag("numInputDeclarations", num);
+    }
+    /** Returns a tag giving semantic meaning how many output declarations an element has. */
+    public static SemanticFilterTag OUTPUT_DECLARATIONS(Double num) {
+        return new SemanticFilterTag("numOutputDeclarations", num);
+    }
+    /** Returns a tag giving semantic meaning how many static declarations an element has. */
+    public static SemanticFilterTag STATIC_DECLARATIONS(Double num) {
+        return new SemanticFilterTag("numStaticDeclarations", num);
+    }
+    /** Returns a tag giving semantic meaning how many signal declarations an element has. */
+    public static SemanticFilterTag SIGNAL_DECLARATIONS(Double num) {
+        return new SemanticFilterTag("numSignalDeclarations", num);
+    }
+    /** Returns a tag giving semantic meaning how many const declarations an element has. */
+    public static SemanticFilterTag CONST_DECLARATIONS(Double num) {
+        return new SemanticFilterTag("numConstDeclarations", num);
+    }
+    /** Returns a tag giving semantic meaning how many extern declarations an element has. */
+    public static SemanticFilterTag EXTERN_DECLARATIONS(Double num) {
+        return new SemanticFilterTag("numExternDeclarations", num);
+    }
+    /** Returns a tag giving semantic meaning how many volatile declarations an element has. */
+    public static SemanticFilterTag VOLATILE_DECLARATIONS(Double num) {
+        return new SemanticFilterTag("numVolatileDeclarations", num);
+    }
+    /** Returns a tag giving semantic meaning how many global declarations an element has. */
+    public static SemanticFilterTag GLOBAL_DECLARATIONS(Double num) {
+        return new SemanticFilterTag("numGlobalDeclarations", num);
+    }
 }

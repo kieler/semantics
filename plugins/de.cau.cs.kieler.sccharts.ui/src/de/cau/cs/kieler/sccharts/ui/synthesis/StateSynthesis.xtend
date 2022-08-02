@@ -90,6 +90,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -310,8 +311,46 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                         ]
                     ]
                 }
-            }    
-            node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(SCChartsSemanticFilterTags.DECLARATIONS(filteredDeclarations.size as double))       
+            }
+            node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(
+                SCChartsSemanticFilterTags.DECLARATIONS(
+                    filteredDeclarations
+                    .size as double
+                )
+            )
+            
+            // Set declaration tags
+            var numInput = 0
+            var numOutput = 0
+            var numStatic = 0
+            var numSignal = 0
+            var numConst = 0
+            var numExtern = 0
+            var numVolatile = 0
+            var numGlobal = 0
+            for (declaration : filteredDeclarations) {
+                if (declaration instanceof VariableDeclaration) {
+                    // Note that a declaration may have an arbitrary combination of these
+                    if (declaration.input) numInput++
+                    if (declaration.output) numOutput++
+                    if (declaration.static) numStatic++
+                    if (declaration.signal) numSignal++
+                    if (declaration.const) numConst++
+                    if (declaration.extern) numExtern++
+                    if (declaration.volatile) numVolatile++
+                    if (declaration.global) numGlobal++
+                }
+            }
+            node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).addAll(
+                SCChartsSemanticFilterTags.INPUT_DECLARATIONS(numInput as double),
+                SCChartsSemanticFilterTags.OUTPUT_DECLARATIONS(numOutput as double),
+                SCChartsSemanticFilterTags.STATIC_DECLARATIONS(numStatic as double),
+                SCChartsSemanticFilterTags.SIGNAL_DECLARATIONS(numSignal as double),
+                SCChartsSemanticFilterTags.CONST_DECLARATIONS(numConst as double),
+                SCChartsSemanticFilterTags.EXTERN_DECLARATIONS(numExtern as double),
+                SCChartsSemanticFilterTags.VOLATILE_DECLARATIONS(numVolatile as double),
+                SCChartsSemanticFilterTags.GLOBAL_DECLARATIONS(numGlobal as double)
+            )
 
             // Add actions
             val actions = new ArrayList<Action>(state.actions)
