@@ -17,6 +17,8 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonNull
 import com.google.gson.JsonObject
+import com.google.gson.JsonPrimitive
+import de.cau.cs.kieler.core.Platform
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
@@ -27,11 +29,18 @@ import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorError
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.environments.MessageObjectLink
 import de.cau.cs.kieler.simulation.testing.SimulationResult
 import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.simulation.testing.TestSuite
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.FileWriter
+import java.nio.CharBuffer
+import java.nio.charset.Charset
 import java.util.List
 import java.util.Observable
 import java.util.Observer
@@ -61,40 +70,100 @@ class JsonBenchmarkRunner extends Processor<TestSuite, CodeContainer> implements
         new Property<Boolean>("de.cau.cs.kieler.simulation.testing.benchmark.runner.json.verbose", false)
     public static val IProperty<Boolean> PRINT_VERBOSE_DEBUG = // stuff that is usually too slow
         new Property<Boolean>("de.cau.cs.kieler.simulation.testing.benchmark.runner.json.verbose.debug", false)
+    public static val IProperty<Boolean> STORE_FILES =
+        new Property<Boolean>("de.cau.cs.kieler.simulation.testing.benchmark.runner.json.store.results", false)
+    public static val IProperty<Boolean> MERGE_STORED_FILES =
+        new Property<Boolean>("de.cau.cs.kieler.simulation.testing.benchmark.runner.json.store.results.merge", true)
         
-    static val gson = new GsonBuilder().setPrettyPrinting().create()
+    static val INTERMEDIATE_FILE_PATTERN = "benchmark-results-model-%d.json"
+    static val RESULT_FILE = "benchmark-results.json"
+    static val GSON = new GsonBuilder().setPrettyPrinting().create()
     
     override process() {
         val cc = new CodeContainer
         val results = new JsonObject
-        val testIter = model.cellSet.iterator
+        val tests = model.testsByModel
         
         if (PRINT_VERBOSE.getProperty) println("== Starting benchmarks ==")
-        while (testIter.hasNext) {
-            val test = testIter.next
-            val testModel = test.rowKey
-            val key = testModel.repositoryPath.fileName + ":" + testModel.modelPath.toString
-            if (!results.has(key)) {
-                results.add(key, new JsonObject)
-            }
+        for (testModelEntry : tests.keySet.indexed) {
+            val model = testModelEntry.value
+            val modelKey = model.repositoryPath.fileName + ":" + model.modelPath.toString
+            val modelResults = new JsonObject
             
-            if (PRINT_VERBOSE.getProperty) {
-                println("-- Running benchmark %s on model %s".format(test.columnKey, key))
-                test.value.addObserver(this)
+            for (test : tests.get(model)) {                
+                if (PRINT_VERBOSE.getProperty) {
+                    println("-- Running benchmark %s on model %s".format(test.id, modelKey))
+                    test.context.addObserver(this)
+                }                
+                
+                val result = test.context.run(test.id, test.data)
+                if (result !== null) {
+                    modelResults.add(test.id, result)
+                }
+                
+                if (CONSUME_TESTS.getProperty) {
+                    test.free()
+                }
             }
-            
-            val modelResults = results.get(key) as JsonObject
-            val result = test.value.run(test.columnKey, test.rowKey)
-            if (result !== null) {
-                modelResults.add(test.columnKey, result)
-            }
-            if (CONSUME_TESTS.getProperty) {
-                testIter.remove()
+                
+            if (STORE_FILES.getProperty) {
+                val iResult = new JsonObject
+                iResult.add(modelKey, modelResults)
+                
+                val pinf = ProjectInfrastructure.getProjectInfrastructure(environment)
+                val file = new File(pinf.generatedCodeFolder, INTERMEDIATE_FILE_PATTERN.format(testModelEntry.key))
+                val writer = new FileWriter(file)
+                GSON.toJson(iResult, writer)
+                writer.close()
+                
+                results.add(modelKey, new JsonPrimitive(file.toString))
+            } else {
+                results.add(modelKey, modelResults)
             }
         }
         if (PRINT_VERBOSE.getProperty) println("== Finished benchmarks ==")
         
-        cc.add("benchmark-results.json", gson.toJson(results))
+        if (STORE_FILES.getProperty) {
+            if (MERGE_STORED_FILES.getProperty) {
+                val pinf = ProjectInfrastructure.getProjectInfrastructure(environment)
+                val file = new File(pinf.generatedCodeFolder, RESULT_FILE)
+                
+                val modelCount = tests.keySet.size
+                val prefix = "{\n".getBytes("UTF-8").size
+                val postfix = "\n}".getBytes("UTF-8").size
+                val sep = Charset.forName("UTF-8").newEncoder().encode(CharBuffer.wrap(",\n"))
+                
+                val writer = new FileOutputStream(file)
+                val outChan = writer.channel
+                for (var i = 0; i < modelCount; i++) {
+                    val reader = new FileInputStream(new File(pinf.generatedCodeFolder, INTERMEDIATE_FILE_PATTERN.format(i)))
+                    val inChan = reader.channel
+                    
+                    val start = i == 0 ? 0 : prefix
+                    val end = inChan.size() - (start + ((i < modelCount - 1) ? postfix : 0))
+                    
+                    inChan.transferTo(start, end, outChan) // merge
+                    inChan.close()
+                    reader.close()
+                    
+                    if (i < modelCount - 1) { // Fix json syntax
+                        outChan.write(sep)
+                        sep.rewind()
+                    }
+                }
+                outChan.close()
+                writer.close()
+                
+                cc.addProxy(file)
+            } else {
+                cc.add(RESULT_FILE, GSON.toJson(results))
+            }
+            if (Platform.isEclipsePlatformRunning()) {
+                ProjectInfrastructure.getProjectInfrastructure(environment).refresh()
+            }
+        } else {
+            cc.add(RESULT_FILE, GSON.toJson(results))
+        }
         model = cc
     }
     
@@ -140,7 +209,7 @@ class JsonBenchmarkRunner extends Processor<TestSuite, CodeContainer> implements
             return data
         } else {
             try {
-                return gson.toJsonTree(data)
+                return GSON.toJsonTree(data)
             } catch (Exception e) {
                 environment.warnings.add("Failed to convert benchmark result %s into json".format(key), e)
                 e.printStackTrace
