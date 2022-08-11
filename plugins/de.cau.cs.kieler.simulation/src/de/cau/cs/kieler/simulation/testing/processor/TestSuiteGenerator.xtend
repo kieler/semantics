@@ -110,7 +110,7 @@ class TestSuiteGenerator extends Processor<TestModelCollection, TestSuite> {
             if (tests.empty) {
                 environment.errors.add("Incomplete configuration! No tests specified.")
             } else {
-                val suite = new TestSuite(model, conf.size)
+                val suite = new TestSuite(model, tests.size)
                 val gEnv = generalConf?.get(ENV_KEY)
                 for (testId : tests) {
                     val testConf = conf.get(testId)
@@ -197,7 +197,7 @@ class TestSuiteGenerator extends Processor<TestModelCollection, TestSuite> {
                                 }
                             }
                             
-                            suite.put(testModel, testId, ctx)
+                            suite.add(testModel, testId, ctx)
                         }
                     }
                 }
