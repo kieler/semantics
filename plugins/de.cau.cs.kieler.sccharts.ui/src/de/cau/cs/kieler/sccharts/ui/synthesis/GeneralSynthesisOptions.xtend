@@ -68,7 +68,7 @@ final class GeneralSynthesisOptions {
     /**
      * Options for Topdown layout
      */
-    public static final SynthesisOption USE_TOPDOWN_LAYOUT = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Topdown Layout", true).setCategory(LAYOUT)
+    public static final SynthesisOption USE_TOPDOWN_LAYOUT = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Topdown Layout", false).setCategory(LAYOUT)
     public static final SynthesisOption TOPDOWN_LAYOUT_CHOICE = SynthesisOption.createChoiceOption("Topdown Layout Variant", #["Variant 1" ,"Variant 2"], "Variant 1").setCategory(LAYOUT)
     public static final SynthesisOption TOPDOWN_HIERARCHICAL_NODE_WIDTH = SynthesisOption.createRangeOption("Topdown Hierarchical Node Width", 50.0f, 300.0f, 1.0f, 150.0f).setCategory(LAYOUT)
     public static final SynthesisOption TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO = SynthesisOption.createRangeOption("Topdown Hierarchical Node Aspect Ratio", 0.5f, 2.0f, 0.01f, 1.41f).setCategory(LAYOUT)
