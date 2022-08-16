@@ -28,6 +28,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 import static extension de.cau.cs.kieler.verification.codegen.CodeGeneratorExtensions.*
 import de.cau.cs.kieler.verification.DefaultRangeAssumption
+import de.cau.cs.kieler.verification.VerificationPropertyIDGenerator
 
 /** 
  * @author aas
@@ -45,6 +46,8 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
     
     @Accessors(PUBLIC_GETTER) private val verificationProperties = <VerificationProperty>newArrayList
     @Accessors(PUBLIC_GETTER) private val verificationAssumptions = <VerificationAssumption>newArrayList
+    
+    private VerificationPropertyIDGenerator idGen = new VerificationPropertyIDGenerator()
     
     override getId() {
         return PROCESSOR_ID
@@ -149,7 +152,7 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
         if(propertyName.isNullOrEmpty) {
             propertyName = propertyFormula.toIdentifier
         }
-        return Optional.of(new VerificationProperty(propertyName, propertyFormula, propertyType))
+        return Optional.of(new VerificationProperty(propertyName, propertyFormula, propertyType, idGen))
     }
     
     private def <T> getIfExists(List<T> list, int index) {

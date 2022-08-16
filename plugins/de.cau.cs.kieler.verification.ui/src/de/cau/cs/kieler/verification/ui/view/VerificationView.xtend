@@ -72,6 +72,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
 import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
+import java.util.ArrayList
 
 /** 
  * @author aas
@@ -317,7 +318,8 @@ Example commands:
         
         val refresh = new Action("Reload Properties", IAction.AS_PUSH_BUTTON) {
             override run() {
-                reloadPropertiesFromModel()
+                val properties = reloadPropertiesFromModel()
+                setVerificationPropertiesInUi(properties)
             }
         }
         refresh.imageDescriptor = REFRESH_ICON
@@ -450,19 +452,20 @@ Example commands:
         }
     }
     
-    private def void reloadPropertiesFromModel() {
+    private def List<VerificationProperty> reloadPropertiesFromModel() {
         val currentModel = getCurrentDiagramModel
         if(currentModel === null) {
-            return
+            return new ArrayList()
         }
         if(currentModel instanceof SCCharts) {
             try {
                 val processorId = MODEL_CLASS_TO_PROPERTY_ANALYZER.get(typeof(SCCharts))
                 propertyAnalyzerContext = runPropertyAnalyzer(processorId, currentModel)
                 val properties = propertyAnalyzerContext.verificationContext.getVerificationProperties
-                setVerificationPropertiesInUi(properties)
+                return properties
             } catch (Exception e) {
                 e.showInDialog
+                return new ArrayList()
             }
         }
     }

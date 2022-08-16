@@ -68,4 +68,8 @@ interface KeithLanguageClient extends KGraphLanguageClient, LanguageClient {
      */
     @JsonNotification("simulation/started")
     def void startedSimulation(Object message)
+    
+    
+    @JsonNotification("verification/properties")
+    def void sendVerificationProperties(Object props, String dummy)
 }

@@ -22,6 +22,7 @@ class VerificationProperty {
     @Accessors private String name = ""
     @Accessors private String formula = ""
     @Accessors private VerificationPropertyType type = VerificationPropertyType.INVARIANT
+    @Accessors private String id = ""
     @Accessors VerificationPropertyStatus status = VerificationPropertyStatus.PENDING
     
     /**
@@ -53,10 +54,11 @@ class VerificationProperty {
      */
     @Accessors(PUBLIC_GETTER) Exception cause = null
     
-    new(String name, String formula, VerificationPropertyType type) {
+    new(String name, String formula, VerificationPropertyType type, VerificationPropertyIDGenerator idGen) {
         this.name = name
         this.formula = formula
         this.type = type
+        this.id = idGen.getId(this)
     }
     
     override toString() {
