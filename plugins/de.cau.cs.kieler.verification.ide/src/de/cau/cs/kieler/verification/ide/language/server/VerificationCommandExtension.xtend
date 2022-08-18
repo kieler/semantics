@@ -27,8 +27,9 @@ interface VerificationCommandExtension {
     /**
      * Signals that model checker table is created.
      */
-    @JsonNotification('ready')
-    def void ready(String uri)
+    @JsonNotification('loadProperties')
+    def void loadProperties(String uri)
     
-
+    @JsonNotification('runChecker')
+    def void runChecker(String uri)
 }

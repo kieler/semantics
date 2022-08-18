@@ -14,7 +14,6 @@ package de.cau.cs.kieler.verification.ui.view
 
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import de.cau.cs.kieler.kicool.compilation.CompilationSystem
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import de.cau.cs.kieler.kicool.environments.Environment
@@ -29,7 +28,7 @@ import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.ide.CentralSimulation
 import de.cau.cs.kieler.simulation.trace.TraceFileUtil
 import de.cau.cs.kieler.verification.VerificationAssumption
-import de.cau.cs.kieler.verification.VerificationContext
+import de.cau.cs.kieler.verification.VerificationLogic
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
@@ -72,12 +71,13 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
 import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
-import java.util.ArrayList
 
 /** 
  * @author aas
  */
 class VerificationView extends ViewPart {
+    
+    VerificationLogic verLogic = new VerificationLogic()
     
     /**
      * The single instance
@@ -318,7 +318,8 @@ Example commands:
         
         val refresh = new Action("Reload Properties", IAction.AS_PUSH_BUTTON) {
             override run() {
-                val properties = reloadPropertiesFromModel()
+                val currentModel = getCurrentDiagramModel
+                val properties = verLogic.reloadPropertiesFromModel(currentModel)
                 setVerificationPropertiesInUi(properties)
             }
         }
@@ -450,36 +451,6 @@ Example commands:
             val viewer = viewPart.getViewer()
             return viewer.getViewContext();
         }
-    }
-    
-    private def List<VerificationProperty> reloadPropertiesFromModel() {
-        val currentModel = getCurrentDiagramModel
-        if(currentModel === null) {
-            return new ArrayList()
-        }
-        if(currentModel instanceof SCCharts) {
-            try {
-                val processorId = MODEL_CLASS_TO_PROPERTY_ANALYZER.get(typeof(SCCharts))
-                propertyAnalyzerContext = runPropertyAnalyzer(processorId, currentModel)
-                val properties = propertyAnalyzerContext.verificationContext.getVerificationProperties
-                return properties
-            } catch (Exception e) {
-                e.showInDialog
-                return new ArrayList()
-            }
-        }
-    }
-    
-    private def CompilationContext runPropertyAnalyzer(String processorId, EObject model) {
-        val compilationSystem = CompilationSystem.createCompilationSystem(processorId, #[processorId])
-        val context = Compile.createCompilationContext(compilationSystem, model)
-        context.createVerificationContext(false)
-        context.compile()
-        if(context.hasErrors) {
-            val exception = context.allErrors.get(0).exception
-            throw exception
-        }
-        return context
     }
     
     private def void setVerificationPropertiesInUi(List<VerificationProperty> properties) {
