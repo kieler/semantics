@@ -39,6 +39,10 @@ class SCChartsDiagramAnalysis extends AbstractModelDataCollector<SCCharts> {
     }
     
     override collect(SCCharts model, Map<String, Object> data, String processorID) {
+        System.gc();
+        val rt = Runtime.getRuntime();
+        val usedMB = (rt.totalMemory() - rt.freeMemory()) / 1024 / 1024;
+        System.out.println("memory usage (MB) " + usedMB);
         val diagram = getProperty(SCChartsSynthesisIntermediateProcessor.DIAGRAM)
         val root = diagram.children.head
         if (diagram !== null && root !== null) {
@@ -63,8 +67,11 @@ class SCChartsDiagramAnalysis extends AbstractModelDataCollector<SCCharts> {
                 scaleLimit = zoomOutScale;
                          
             }
+            // reduce sample resolution for performance w = 1 original step size
+            val step_weight = 1.0
             // set up z samplers
-            val sampleStepSize = Math.min( 1.0 / scaleLimit, scaleLimit);
+            val sampleStepSize = Math.min( 1.0 / (scaleLimit * step_weight), 1 - step_weight + scaleLimit * step_weight);
+            
             var zSamplers = new ArrayList()
             val IZLevelAggregator avgAgg = new AverageAggregator();
             val IZLevelAggregator maxAgg = new MaxAggregator<Double>();
