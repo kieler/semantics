@@ -24,6 +24,7 @@ import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 import de.cau.cs.kieler.klighd.kgraph.KLabel;
 import de.cau.cs.kieler.klighd.krendering.KRendering;
 import de.cau.cs.kieler.klighd.krendering.KRenderingRef;
+import de.cau.cs.kieler.klighd.labels.decoration.LabelDecorationConfigurator;
 import de.cau.cs.kieler.klighd.labels.management.AbstractKlighdLabelManager;
 import de.cau.cs.kieler.sccharts.Transition;
 
@@ -67,7 +68,9 @@ public class TransitionPriorityLabelManager extends AbstractKlighdLabelManager {
                         // The new label is the priority followed by a period
                         return Result.modified(matcher.group(1) + ".");
                     } else {
-                        // If no priority available 
+                        // If no priority available
+                        kLabel.setText("");
+                        LabelDecorationConfigurator.create().applyTo(kLabel);
                         return Result.modified("");
                     }
                 }
