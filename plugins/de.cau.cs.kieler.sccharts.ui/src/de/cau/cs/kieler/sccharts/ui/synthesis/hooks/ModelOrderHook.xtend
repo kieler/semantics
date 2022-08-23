@@ -41,11 +41,12 @@ class ModelOrderHook extends SynthesisHook {
     private static String PREFER_NODES = "Prefer Node Order"
     private static String ENFORCE_NODES = "Enforce Node Order"
     private static String FULL_CONTROL = "Full Control"
+    private static String FULL_CONTROL_EDGES = "Full Control Edges"
     
     /** The related synthesis option */
     public static final SynthesisOption MODEL_ORDER = SynthesisOption.createChoiceOption(
         ModelOrderHook,
-        "Model Order", #[NONE, TRUE_TIE_BREAKER, TIE_BREAKER, PREFER_EDGES, PREFER_NODES, ENFORCE_NODES, FULL_CONTROL], PREFER_EDGES).
+        "Model Order", #[NONE, TRUE_TIE_BREAKER, TIE_BREAKER, PREFER_EDGES, PREFER_NODES, ENFORCE_NODES, FULL_CONTROL, FULL_CONTROL_EDGES], PREFER_EDGES).
         setCategory(GeneralSynthesisOptions::LAYOUT);
 
     override getDisplayedSynthesisOptions() {
@@ -55,6 +56,15 @@ class ModelOrderHook extends SynthesisHook {
     override processRegion(Region region, KNode node) {
         switch (MODEL_ORDER.objectValue) {
             
+            case FULL_CONTROL_EDGES: {
+                // Enforce model order during cycle breaking.
+                node.setLayoutOption(LayeredOptions.CYCLE_BREAKING_STRATEGY, CycleBreakingStrategy.MODEL_ORDER)
+                // Presort nodes and edges before crossing minimization.
+                node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER_STRATEGY, OrderingStrategy.PREFER_EDGES)
+                // Do not do crossing minimization.
+                node.setLayoutOption(LayeredOptions.CROSSING_MINIMIZATION_STRATEGY, CrossingMinimizationStrategy.NONE)
+                node.setLayoutOption(LayeredOptions.CROSSING_MINIMIZATION_GREEDY_SWITCH_TYPE, GreedySwitchType.OFF)
+            }
             case FULL_CONTROL: {
                 // Enforce model order during cycle breaking.
                 node.setLayoutOption(LayeredOptions.CYCLE_BREAKING_STRATEGY, CycleBreakingStrategy.MODEL_ORDER)
