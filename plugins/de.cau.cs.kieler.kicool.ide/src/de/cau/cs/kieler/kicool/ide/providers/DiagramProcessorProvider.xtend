@@ -10,8 +10,11 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.ui.providers
+package de.cau.cs.kieler.kicool.ide.providers
 
+import de.cau.cs.kieler.kicool.ide.processors.KlighdDiagramSynthesis
+import de.cau.cs.kieler.kicool.ide.processors.KlighdDiagramSynthesisByproduct
+import de.cau.cs.kieler.kicool.ide.processors.analysers.BasicKGraphAnalysis
 import de.cau.cs.kieler.kicool.registration.IProcessorProvider
 
 /**
@@ -19,13 +22,13 @@ import de.cau.cs.kieler.kicool.registration.IProcessorProvider
  * 
  * @author als
  */
-class SCChartsUIProcessorProvider implements IProcessorProvider {
+class DiagramProcessorProvider implements IProcessorProvider {
     
     override getProcessors() {
         #[
-            de.cau.cs.kieler.sccharts.ui.synthesis.processors.SCChartsSynthesisProcessor,
-            de.cau.cs.kieler.sccharts.ui.synthesis.analyses.SCChartsSynthesisIntermediateProcessor,
-            de.cau.cs.kieler.sccharts.ui.synthesis.analyses.SCChartsDiagramAnalysis
+            KlighdDiagramSynthesis,
+            KlighdDiagramSynthesisByproduct,
+            BasicKGraphAnalysis
         ]
     }
     

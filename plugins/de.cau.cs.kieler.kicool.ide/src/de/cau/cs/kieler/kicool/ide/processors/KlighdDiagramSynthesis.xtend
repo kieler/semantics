@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- * 
+ *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2022 by
@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.ui.synthesis.processors
+package de.cau.cs.kieler.kicool.ide.processors
 
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
@@ -18,41 +18,40 @@ import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.KlighdDataManager
+import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.internal.ISynthesis
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis
 import java.util.Map
 
 import static extension java.lang.String.*
-import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 
 /**
- * Perform the SCCharts synthesis.
+ * Perform a Klighd diagram synthesis.
  * 
  * @author als
  */
-class SCChartsSynthesisProcessor extends Processor<SCCharts, KNode> {
+class KlighdDiagramSynthesis extends Processor<Object, KNode> {
     
-    public static val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.processors.synthesis"
+    public static val ID = "de.cau.cs.kieler.kicool.ide.processors.diagram.synthesis"
 
     public static val IProperty<Map<String, Object>> PROPERTIES = 
-        new Property<Map<String, Object>>("de.cau.cs.kieler.sccharts.ui.synthesis.processors.synthesis.properties", null)
+        new Property<Map<String, Object>>("de.cau.cs.kieler.kicool.ide.processors.diagram.synthesis.properties", null)
     public static val IProperty<Map<String, Object>> OPTIONS = 
-        new Property<Map<String, Object>>("de.cau.cs.kieler.sccharts.ui.synthesis.processors.synthesis.options", null)
+        new Property<Map<String, Object>>("de.cau.cs.kieler.kicool.ide.processors.diagram.synthesis.options", null)
     public static val IProperty<Boolean> VERBOSE = 
-        new Property<Boolean>("de.cau.cs.kieler.sccharts.ui.synthesis.processors.synthesis.verbose", false)
+        new Property<Boolean>("de.cau.cs.kieler.kicool.ide.processors.diagram.synthesis.verbose", false)
     public static val IProperty<Boolean> LAYOUT = 
-        new Property<Boolean>("de.cau.cs.kieler.sccharts.ui.synthesis.processors.synthesis.layout", false)
+        new Property<Boolean>("de.cau.cs.kieler.kicool.ide.processors.diagram.synthesis.layout", true)
 
     override getId() {
         ID
     }
 
     override getName() {
-        "SCCharts Synthesis"
+        "Klighd Diagram Synthesis"
     }
 
     override getType() {
@@ -63,10 +62,9 @@ class SCChartsSynthesisProcessor extends Processor<SCCharts, KNode> {
         model = sythesize(model)
     }
 
-    def KNode sythesize(SCCharts model) {
+    def KNode sythesize(Object model) {
         // Properties and options
         val properties = new KlighdSynthesisProperties()
-        properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, SCChartsSynthesis.ID)
         properties.setProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT, compilationContext)
         
         val synthesisProperties = environment.getProperty(PROPERTIES)
@@ -82,7 +80,19 @@ class SCChartsSynthesisProcessor extends Processor<SCCharts, KNode> {
         
         val synthesisOptions = environment.getProperty(OPTIONS)
         if (synthesisOptions !== null && !synthesisOptions.empty) {
-            val synthesis = KlighdDataManager.instance.getDiagramSynthesisById(SCChartsSynthesis.ID)
+            var ISynthesis synthesis;
+            if (properties.hasProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS)) {
+                synthesis = KlighdDataManager.instance.getDiagramSynthesisById(properties.getProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS))
+            }
+            if (synthesis === null) {
+                val syntheses = KlighdDataManager.instance.getAvailableSyntheses(model.class)
+                if (!syntheses.empty) {
+                    synthesis = syntheses.head
+                }
+            }
+            if (synthesis === null) {
+                environment.errors.add("Cannot find synthesis for mode of type " + model.class.toString)
+            }
             val options = synthesis.displayedSynthesisOptions
             val optionConfig = newHashMap
             for (entry : synthesisOptions.entrySet) {
