@@ -403,13 +403,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true)
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0))
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
+        node.setLayoutOption(RectPackingOptions.OMIT_NODE_MICRO_LAYOUT, true)
     }
     
     def static void configureLayoutRegionDependencies(KNode node) {
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(5))
 //        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
         node.setLayoutOption(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
-        node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES)
+        node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER_STRATEGY, OrderingStrategy.PREFER_EDGES)
         node.setLayoutOption(CoreOptions::DIRECTION, Direction.RIGHT)
         node.setLayoutOption(LayeredOptions::FEEDBACK_EDGES, true)
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10.0)
