@@ -28,6 +28,7 @@ import org.eclipse.elk.core.labels.LabelManagementOptions
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import java.util.Iterator
 
 /**
  * Shows or hides or shortens transition labels.
@@ -78,15 +79,25 @@ class LabelShorteningHook extends SynthesisActionHook {
     }
 
     override processTransition(Transition transition, KEdge edge) {
-        if (HIDE_LABELS.booleanValue) {
-            edge.eContents.filter(KLabel).forEach[initiallyHide]
+        if (SHORTEN_LABEL_STRATEGY.objectValue.equals(LabelShorteningStrategies.PRIORITIES)
+            && edge.source.outgoingEdges.length == 1) {
+            edge.labels.forEach[initiallyHide]
+        } else if (HIDE_LABELS.booleanValue) {
+            edge.labels.forEach[initiallyHide]
         }
     }
 
     override executeAction(KNode rootNode) {
         val viewer = usedContext.viewer
-
-        if (HIDE_LABELS.booleanValue) {
+        if (SHORTEN_LABEL_STRATEGY.objectValue.equals(LabelShorteningStrategies.PRIORITIES)) {
+            rootNode.eAllContentsOfType(KEdge).forEach[edge |
+                if (edge.source.outgoingEdges.length == 1) {
+                    edge.labels.forEach[label | viewer.hide(label)]
+                } else {
+                    edge.labels.forEach[label | viewer.show(label)]
+                }
+            ]
+        } else if (HIDE_LABELS.booleanValue) {
             rootNode.eAllContentsOfType(KNode, KEdge, KLabel).filter(KLabel).forEach[viewer.hide(it)]
         } else {
             rootNode.eAllContentsOfType(KNode, KEdge, KLabel).filter(KLabel).forEach[viewer.show(it)]
@@ -102,6 +113,7 @@ class LabelShorteningHook extends SynthesisActionHook {
         if (labelManager !== null) {
             labelManager.fixedTargetWidth = SHORTEN_LABEL_WIDTH.intValue
         }
+        
         rootNode.setLayoutOption(LabelManagementOptions.LABEL_MANAGER, labelManager)
     }
 }

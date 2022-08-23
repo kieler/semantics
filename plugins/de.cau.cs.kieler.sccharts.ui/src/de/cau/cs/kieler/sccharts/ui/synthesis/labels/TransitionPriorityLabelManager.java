@@ -72,7 +72,7 @@ public class TransitionPriorityLabelManager extends AbstractKlighdLabelManager {
 //                        String text = kLabel.getText();
 //                        kLabel.setText("");
 //                        LabelDecorationConfigurator.create().applyTo(kLabel);
-                        label.setProperty(KRenderingOptions.K_RENDERING, null);
+//                        label.setProperty(KRenderingOptions.K_RENDERING, null);
                         return Result.modified("");
                     }
                 }
