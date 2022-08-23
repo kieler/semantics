@@ -131,15 +131,18 @@ class KlighdDiagramSynthesis extends Processor<Object, KNode> {
     }
     
     protected def Object parsePropertyValue(String value) {
-        try {
-            return Boolean.parseBoolean(value)
-        } catch (Exception e) {}
-        try {
-            return Integer.parseInt(value)
-        } catch (Exception e) {}
-        try {
-            return Float.parseFloat(value)
-        } catch (Exception e) {}
+        if ("true".equalsIgnoreCase(value)) {
+            return true
+        } else if ("false".equalsIgnoreCase(value)) {
+            return false
+        } else {
+            try {
+                return Integer.parseInt(value)
+            } catch (Exception e) {}
+            try {
+                return Float.parseFloat(value)
+            } catch (Exception e) {}
+        }
         return value;
     }
     
