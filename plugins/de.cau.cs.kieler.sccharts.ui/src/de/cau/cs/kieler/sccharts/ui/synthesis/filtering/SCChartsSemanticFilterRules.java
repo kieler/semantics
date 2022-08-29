@@ -132,14 +132,6 @@ public abstract class SCChartsSemanticFilterRules {
                     SCChartsSemanticFilterTags.REGION);
 
     /**
-     * Rule to only include elements whose names start with "test", case-insensitive. TODO:
-     * 
-     * @example
-     */
-    // public static final SemanticFilterRule ONLY_STARTING_WITH_TEST =
-    // SemanticFilterRuleUtil.getBigOrConnective("TODO");
-
-    /**
      * Rule to exclude every element.
      * 
      * @example
@@ -162,5 +154,5 @@ public abstract class SCChartsSemanticFilterRules {
             new NumericAdditionConnective(SCChartsSemanticFilterTags.INPUT_DECLARATIONS(null),
                     SCChartsSemanticFilterTags.OUTPUT_DECLARATIONS(null)),
             SCChartsSemanticFilterTags.DECLARATIONS(null),
-            "Only Show Elements with more Input/Output Declarations than the total Number of Declarations");
+            "Filter Elements with #IO Declarations <= #Declarations");
 }
