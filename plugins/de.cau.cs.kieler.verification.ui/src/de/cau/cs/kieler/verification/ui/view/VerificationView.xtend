@@ -146,7 +146,7 @@ class VerificationView extends ViewPart {
                 val file = selectedProperty?.counterexampleFile
                 if(file !== null && file.exists) {
                     val page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-                    IDE.openEditor(page, file, true);
+                    IDE.openEditor(page, getFile(file), true);
                 }
             }
         }
@@ -159,7 +159,7 @@ class VerificationView extends ViewPart {
                 }
                 if(file !== null && file.exists) {
                     val page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-                    IDE.openEditor(page, file, true);
+                    IDE.openEditor(page, getFile(file), true);
                 }
             }
         }
@@ -169,7 +169,7 @@ class VerificationView extends ViewPart {
                 val file = selectedProperty?.modelCheckerModelFile
                 if(file !== null && file.exists) {
                     val page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-                    IDE.openEditor(page, file, true);
+                    IDE.openEditor(page, getFile(file), true);
                 }
             }
         }
@@ -516,7 +516,7 @@ Example commands:
                     override update(SimulationContext ctx, SimulationEvent e) {
                         if(e instanceof SimulationControlEvent) {
                             if(e.operation == SimulationControlEvent.SimulationOperation.START) {
-                                val counterexampleLocation = property.counterexampleFile.location.toOSString
+                                val counterexampleLocation = property.counterexampleFile.path
                                 val traceFile = TraceFileUtil.loadTraceFile(new File(counterexampleLocation))
                                 CentralSimulation.currentSimulation.setTrace(traceFile.traces.head, true, true)
                                 // The listener did what it should and must be removed now.
@@ -598,7 +598,7 @@ Example commands:
         val verificationContext = verificationCompileContext.createVerificationContext(true)
         verificationContext.verificationProperties = verificationProperties
         verificationContext.verificationAssumptions = verificationAssumptions
-        verificationContext.verificationModelFile = modelFile
+        verificationContext.verificationModelFile = modelFile.fullPath.toFile
         
         // Add general options
         verificationContext.createCounterexamples = getBooleanOption(CREATE_COUNTEREXAMPLES_PREF_STORE_ID, true)
@@ -681,5 +681,11 @@ Example commands:
     
     private def IPreferenceStore getPreferenceStore() {
         return VerificationUiPlugin.instance.preferenceStore
+    }
+    
+    private def IFile getFile(File file) {
+        val location = file.toURI();
+        val files = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI( location );
+       return files.get(0)
     }
 }

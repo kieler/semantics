@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.IPath
 
 import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 import static extension de.cau.cs.kieler.verification.processors.ProcessExtensions.*
+import java.nio.file.Path
 
 /**
  * @author aas
@@ -83,9 +84,9 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         }
     }
     
-    private def String runModelChecker(IFile pmlFile, VerificationProperty property) {
+    private def String runModelChecker(File pmlFile, VerificationProperty property) {
         val processBuilder = new ProcessBuilder()
-        processBuilder.directory(new File(pmlFile.parent.location.toOSString))
+        processBuilder.directory(pmlFile.parentFile)
         // Create spin command for the property.
         // example: spin -run myfile.pml
         val spinCommand = newArrayList("spin", "-run")
@@ -108,10 +109,10 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         return processOutputWithCommand
     }
     
-    private def String runSpinTrailCommand(IFile pmlFile, VerificationProperty property, IFile processOutputFile) {
-        val javaioProcessOutputFile = processOutputFile.location.toFile
+    private def String runSpinTrailCommand(File pmlFile, VerificationProperty property, File processOutputFile) {
+        val javaioProcessOutputFile = processOutputFile
         val processBuilder = new ProcessBuilder()
-        processBuilder.directory(new File(pmlFile.parent.location.toOSString))
+        processBuilder.directory(pmlFile.parentFile)
         val trailCommand = #["spin", "-t", "-p", "-g", pmlFile.name]
         processBuilder.command(trailCommand)
         processBuilder.redirectErrorStream(true)
@@ -127,7 +128,7 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         return processOutputWithCommand
     }
     
-    private def void updateVerificationResult(IFile pmlFile, IFile processOutputFile, String processOutput, VerificationProperty property) {
+    private def void updateVerificationResult(File pmlFile, File processOutputFile, String processOutput, VerificationProperty property) {
         property.processOutputFile = processOutputFile
         property.updateTaskDescriptionAndNotify("Parsing model checker output...")
         val spinOutputInterpreter = new SpinOutputInterpreter(processOutput)
@@ -159,15 +160,15 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         compilationContext.notify(new VerificationPropertyChanged(property))
     }
     
-    private def IPath getPmlFilePath(VerificationProperty property) {
+    private def Path getPmlFilePath(VerificationProperty property) {
         return getOutputFile(property, ".pml")
     }
   
-    private def IPath getProcessOutputFilePath(VerificationProperty property) {
+    private def Path getProcessOutputFilePath(VerificationProperty property) {
         return getOutputFile(property, ".pml.log")
     }
     
-    private def IPath getTrailFilePath(VerificationProperty property) {
+    private def Path getTrailFilePath(VerificationProperty property) {
         return getOutputFile(property, ".pml.trail.log")
     }
     
