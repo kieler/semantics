@@ -18,7 +18,9 @@ Require-Bundle: com.google.guava,
  de.cau.cs.kieler.kexpressions,
  de.cau.cs.kieler.kicool,
  de.cau.cs.kieler.sccharts,
- de.cau.cs.kieler.scg
+ de.cau.cs.kieler.scg,
+ org.eclipse.lsp4j.jsonrpc;bundle-version="0.10.0",
+ org.eclipse.xtext;bundle-version="2.25.0"
 Export-Package: de.cau.cs.kieler.sccharts.processors.verification,
  de.cau.cs.kieler.verification,
  de.cau.cs.kieler.verification.codegen,
