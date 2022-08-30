@@ -43,7 +43,7 @@ abstract class RunModelCheckerProcessorBase extends Processor<CodeContainer, Obj
     }
 
     protected def File getFileInTemporaryProject(Path path) {
-        val projectInfrastructure = ProjectInfrastructure.getProjectInfrastructure(new Environment())
+        val projectInfrastructure = ProjectInfrastructure.getProjectInfrastructure(environment)
         val file = Path.of(projectInfrastructure.generatedCodeFolder.path, path.toString).toFile
         return file
     }
@@ -54,7 +54,7 @@ abstract class RunModelCheckerProcessorBase extends Processor<CodeContainer, Obj
             file.delete()
         }
         file.parentFile.mkdirs
-        if (file.createNewFile()) { // (new StringInputStream(text), true, null)
+        if (file.createNewFile()) {
             val myWriter = new FileWriter(file.path)
             myWriter.write(text)
             myWriter.close()

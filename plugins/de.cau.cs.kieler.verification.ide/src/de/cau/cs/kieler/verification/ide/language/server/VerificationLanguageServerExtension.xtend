@@ -22,6 +22,15 @@ import java.util.ArrayList
 import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
+import java.util.List
+import de.cau.cs.kieler.verification.VerificationProperty
+import java.util.Map
+import java.util.Observable
+import de.cau.cs.kieler.verification.VerificationPropertyChanged
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
+import de.cau.cs.kieler.verification.VerificationPropertyStatus
+import java.util.HashMap
 
 /**
  * @author jep
@@ -31,7 +40,7 @@ class VerificationLanguageServerExtension implements ILanguageServerExtension, V
 
     @Inject
     Injector injector
-    
+
     @Inject
     VerificationLogic verLogic
 
@@ -41,6 +50,7 @@ class VerificationLanguageServerExtension implements ILanguageServerExtension, V
      */
     private KeithLanguageClient client
     protected extension ILanguageServerAccess languageServerAccess
+    private Map<String, List<VerificationProperty>> verificationProperties = new HashMap
 
     override initialize(ILanguageServerAccess access) {
         this.languageServerAccess = access
@@ -55,10 +65,10 @@ class VerificationLanguageServerExtension implements ILanguageServerExtension, V
     }
 
     override loadProperties(String uri) {
-        println("Rdy notification was perceived")
         if (uri !== null) {
             val currentModel = verLogic.getModelFromUri(uri)
             val props = verLogic.reloadPropertiesFromModel(currentModel)
+            verificationProperties.put(uri, props)
             val smallProps = new ArrayList()
             for (prop : props) {
                 val smallProp = new SmallVerificationProperty(prop.name, prop.formula, prop.id)
@@ -68,9 +78,32 @@ class VerificationLanguageServerExtension implements ILanguageServerExtension, V
         }
     }
 
-    
     override runChecker(String uri) {
-        throw new UnsupportedOperationException("TODO: auto-generated method stub")
+        if (uri !== null) {
+            val props = verificationProperties.get(uri)
+            verLogic.prepareVerification(props)
+            verLogic.verificationCompileContext.startEnvironment.setProperty(
+                ProjectInfrastructure.USE_TEMPORARY_PROJECT, false)
+            addUpdater(props)
+            verLogic.startVerification
+        }
+    }
+
+    private def addUpdater(List<VerificationProperty> verificationProperties) {
+        // Add observer for changed properties
+        verLogic.verificationCompileContext.addObserver [ Observable o, Object arg |
+            if (arg instanceof VerificationPropertyChanged) {
+                val property = arg.changedProperty
+                client.sendPropertyStatus(property.id, property.status)
+            } else if (arg instanceof CompilationFinished) {
+                verLogic.verificationCompileContext = null
+            }
+        ]
+        // Update task description of the properties 
+        for (property : verificationProperties) {
+            property.runningTaskDescription = "Compiling..."
+            property.status = VerificationPropertyStatus.RUNNING
+        }
     }
 
 }

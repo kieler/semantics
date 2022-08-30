@@ -30,6 +30,7 @@ import java.io.File
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.resources.IFile
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 
 /**
  * @author jep
@@ -179,7 +180,7 @@ class VerificationLogic {
                 return (res as IFile).fullPath.toFile
             }
         } else {
-            // TODO: implement
+            return new File(eUri.path)
         }
     }
 
