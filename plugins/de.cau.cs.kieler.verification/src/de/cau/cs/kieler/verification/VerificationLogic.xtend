@@ -137,6 +137,7 @@ class VerificationLogic {
         verificationContext.verificationAssumptions = verificationAssumptions
         verificationContext.verificationModelFile = modelFile
         
+        //TODO: save/get the options without IPreferenceStore
         // Add general options
 //        verificationContext.createCounterexamples = getBooleanOption(CREATE_COUNTEREXAMPLES_PREF_STORE_ID, true)
 //        verificationContext.createCounterexamplesWithOutputs = getBooleanOption(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID, true)

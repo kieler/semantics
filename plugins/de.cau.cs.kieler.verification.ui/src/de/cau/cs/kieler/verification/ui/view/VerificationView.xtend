@@ -312,7 +312,18 @@ Example commands:
 
         val stop = new Action("Stop Verification", IAction.AS_PUSH_BUTTON) {
             override run() {
-                verLogic.stopVerification
+                if (verLogic.verificationCompileContext !== null) {
+                    if(viewer.input !== null) {
+                        val properties = viewer.input as List<VerificationProperty>
+                        for(property : properties) {
+                            if(property.status == VerificationPropertyStatus.RUNNING) {
+                                property.status = VerificationPropertyStatus.PENDING
+                                viewer.update(property, null)    
+                            }
+                        }
+                    }
+                    verLogic.stopVerification
+                }
             }
         }
         stop.imageDescriptor = STOP_ICON
