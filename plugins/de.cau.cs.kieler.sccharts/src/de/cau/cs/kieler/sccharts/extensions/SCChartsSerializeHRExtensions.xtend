@@ -17,6 +17,7 @@ import com.google.common.base.Function
 import com.google.common.base.Joiner
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
@@ -52,6 +53,7 @@ import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.processors.For
 import de.cau.cs.kieler.sccharts.processors.StaticAccess
+import de.cau.cs.kieler.sccharts.processors.TimedAutomata
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import de.cau.cs.kieler.scl.extensions.SCLSerializeExtensions
 import java.util.List
@@ -65,6 +67,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     
     @Inject
     var SCLSerializeExtensions sclSerializer
+    @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsGenericParameterExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExtEnumExtensions
@@ -211,6 +214,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             } else if (type == ValueType.HOST) {
                 components.addKeyword(declaration.hostType)
             } else if (type == ValueType.CLOCK) {
+                if (declaration.hasAnnotation(TimedAutomata.PASSIVE_NAME)) {
+                    components.addKeyword("passive")
+                }
                 components.addKeyword("clock")
             }  else if (type == ValueType.STRUCT) {
                 if ((declaration as ClassDeclaration).host) components.addKeyword("host")

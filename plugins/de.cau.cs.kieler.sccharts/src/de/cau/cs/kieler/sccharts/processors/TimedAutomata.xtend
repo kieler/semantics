@@ -105,6 +105,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     public static val INT_CLOCK_NAME = "IntegralClockType"
     public static val INT_CLOCK_NAME_2 = "IntegerClockType"
     public static val USE_SD_NAME = "ClocksUseSD"
+    public static val PASSIVE_NAME = "Passive"
     
     var isIntClockType = false
 
@@ -269,93 +270,95 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                         voStore.update(clock, SCCHARTS_GENERATED)
                         if (clock.initialValue === null) clock.initialValue = createClockValue(0)
                         
-                        if (useSD) {
-                            // Increment clock globally -> SD for UIUR protocoll
-                            if (!sdDecls.containsKey(clock.declaration)) {
-                                val sdDecl = createScheduleDeclaration => [
-                                    name = "ClockIUR"
-                                    priorities += newArrayList(
-                                        PriorityProtocol.CONFLICT,  // Clock increment
-                                        PriorityProtocol.CONFLICT,  // Init (clock reset)
-                                        PriorityProtocol.CONFLUENT  // Update
-    //                                    PriorityProtocol.CONFLUENT  // Read
-                                    )
-                                ]
-                                state.declarations.add(state.declarations.indexOf(clock.declaration) + 1, sdDecl)
-                                sdDecls.put(clock.declaration, sdDecl)
-                            }
-                            val sd = createValuedObject(sdDecls.get(clock.declaration), clock.name + "SD")
-                            
-                            for (scope : state.allScopes.toIterable) {
-                                for (access : scope.allContainedActions.map[eAllContents.filter(ValuedObjectReference).filter[valuedObject == clock]].flatten.toIterable) {
-                                    if (access.eContainer instanceof Assignment) {
-                                        val asm = access.eContainer as Assignment
-                                        if (asm.reference == access) {// write
-                                            if ((access.eContainer as Assignment).operator == AssignOperator.ASSIGN) { // absolute
-                                                asm.schedule += createScheduleReference(sd, 1)
-                                            } else { // relative
-                                                asm.schedule += createScheduleReference(sd, 2)
+                        if (!clock.declaration.hasAnnotation(PASSIVE_NAME)) {
+                            if (useSD) {
+                                // Increment clock globally -> SD for UIUR protocoll
+                                if (!sdDecls.containsKey(clock.declaration)) {
+                                    val sdDecl = createScheduleDeclaration => [
+                                        name = "ClockIUR"
+                                        priorities += newArrayList(
+                                            PriorityProtocol.CONFLICT,  // Clock increment
+                                            PriorityProtocol.CONFLICT,  // Init (clock reset)
+                                            PriorityProtocol.CONFLUENT  // Update
+        //                                    PriorityProtocol.CONFLUENT  // Read
+                                        )
+                                    ]
+                                    state.declarations.add(state.declarations.indexOf(clock.declaration) + 1, sdDecl)
+                                    sdDecls.put(clock.declaration, sdDecl)
+                                }
+                                val sd = createValuedObject(sdDecls.get(clock.declaration), clock.name + "SD")
+                                
+                                for (scope : state.allScopes.toIterable) {
+                                    for (access : scope.allContainedActions.map[eAllContents.filter(ValuedObjectReference).filter[valuedObject == clock]].flatten.toIterable) {
+                                        if (access.eContainer instanceof Assignment) {
+                                            val asm = access.eContainer as Assignment
+                                            if (asm.reference == access) {// write
+                                                if ((access.eContainer as Assignment).operator == AssignOperator.ASSIGN) { // absolute
+                                                    asm.schedule += createScheduleReference(sd, 1)
+                                                } else { // relative
+                                                    asm.schedule += createScheduleReference(sd, 2)
+                                                }
                                             }
                                         }
                                     }
-                                }
-                                if (scope instanceof State) {
-                                    // sleep time
-                                    if (!noSleep) {
-                                        scope.handleSleep(clock, sleepT)
-                                    }
-                                }
-                            }
-                            
-                            // increment                      
-                            state.createDuringAction => [
-                                it.createAssignment(clock, deltaT.reference) => [
-                                    operator = AssignOperator.ASSIGNADD
-                                    schedule += createScheduleReference(sd, 0)
-                                ]
-                            ]
-                        } else {
-                            // Increment clocks in each state -> no support of hierachy or concurrency
-                            var region = state.controlflowRegions.head
-                            if (state.controlflowRegions.size > 1) {
-                                val regionsUsingClock = newLinkedList
-                                for (r : state.controlflowRegions) {
-                                    var testRegion = r
-                                    while (testRegion.states.size == 1 && testRegion.states.head.outgoingTransitions.empty && testRegion.states.head.controlflowRegions.size == 1) {
-                                        testRegion = testRegion.states.head.controlflowRegions.head
-                                    }
-                                    if (testRegion.states.exists[
-                                        outgoingTransitions.filter[trigger !== null].exists[
-                                            eAllContents.filter(ValuedObjectReference).exists[valuedObject == clock]
-                                        ]
-                                    ]) {regionsUsingClock += testRegion}
-                                }
-                                region = regionsUsingClock.head
-                                if (regionsUsingClock.size > 1) {
-                                    environment.errors.add("Cannot handle concurrent timed automata using the same clock. Add @" + USE_SD_NAME + " annotation for experimental support based on schduling directives.", state)
-                                }
-                            }
-                            
-                            if (region === null) {
-                                environment.errors.add("Cannot handle concurrent or hierarchical timed automata using the same clock. Add @" + USE_SD_NAME + " annotation for experimental support based on schduling directives.", state)
-                            } else {
-                                for (subState : region.states.toList) {
-                                    // error case
-                                    if (subState.containsInnerActions || !subState.regions.nullOrEmpty) {
-                                        if (subState.actions.exists[trigger?.eAllContents?.filter(ValuedObjectReference)?.exists[valuedObject == clock]] ||
-                                            subState.controlflowRegions.exists[eAllContents?.filter(ValuedObjectReference)?.exists[valuedObject == clock]]) {
-                                                environment.errors.add("Cannot handle hierarchical timed automata. Add @" + USE_SD_NAME + " annotation for experimental support based on SDs.", subState)
+                                    if (scope instanceof State) {
+                                        // sleep time
+                                        if (!noSleep) {
+                                            scope.handleSleep(clock, sleepT)
                                         }
                                     }
-                                    
-                                    // time progress
-                                    subState.createDuringAction => [
-                                        it.createAssignment(clock, deltaT.reference) => [operator = AssignOperator.ASSIGNADD]
+                                }
+                                
+                                // increment                      
+                                state.createDuringAction => [
+                                    it.createAssignment(clock, deltaT.reference) => [
+                                        operator = AssignOperator.ASSIGNADD
+                                        schedule += createScheduleReference(sd, 0)
                                     ]
-                                    
-                                    // sleep time
-                                    if (!noSleep) {
-                                        subState.handleSleep(clock, sleepT)
+                                ]
+                            } else {
+                                // Increment clocks in each state -> no support of hierachy or concurrency
+                                var region = state.controlflowRegions.head
+                                if (state.controlflowRegions.size > 1) {
+                                    val regionsUsingClock = newLinkedList
+                                    for (r : state.controlflowRegions) {
+                                        var testRegion = r
+                                        while (testRegion.states.size == 1 && testRegion.states.head.outgoingTransitions.empty && testRegion.states.head.controlflowRegions.size == 1) {
+                                            testRegion = testRegion.states.head.controlflowRegions.head
+                                        }
+                                        if (testRegion.states.exists[
+                                            outgoingTransitions.filter[trigger !== null].exists[
+                                                eAllContents.filter(ValuedObjectReference).exists[valuedObject == clock]
+                                            ]
+                                        ]) {regionsUsingClock += testRegion}
+                                    }
+                                    region = regionsUsingClock.head
+                                    if (regionsUsingClock.size > 1) {
+                                        environment.errors.add("Cannot handle concurrent timed automata using the same clock. Add @" + USE_SD_NAME + " annotation for experimental support based on schduling directives.", state)
+                                    }
+                                }
+                                
+                                if (region === null) {
+                                    environment.errors.add("Cannot handle concurrent or hierarchical timed automata using the same clock. Add @" + USE_SD_NAME + " annotation for experimental support based on schduling directives.", state)
+                                } else {
+                                    for (subState : region.states.toList) {
+                                        // error case
+                                        if (subState.containsInnerActions || !subState.regions.nullOrEmpty) {
+                                            if (subState.actions.exists[trigger?.eAllContents?.filter(ValuedObjectReference)?.exists[valuedObject == clock]] ||
+                                                subState.controlflowRegions.exists[eAllContents?.filter(ValuedObjectReference)?.exists[valuedObject == clock]]) {
+                                                    environment.errors.add("Cannot handle hierarchical timed automata. Add @" + USE_SD_NAME + " annotation for experimental support based on SDs.", subState)
+                                            }
+                                        }
+                                        
+                                        // time progress
+                                        subState.createDuringAction => [
+                                            it.createAssignment(clock, deltaT.reference) => [operator = AssignOperator.ASSIGNADD]
+                                        ]
+                                        
+                                        // sleep time
+                                        if (!noSleep) {
+                                            subState.handleSleep(clock, sleepT)
+                                        }
                                     }
                                 }
                             }
