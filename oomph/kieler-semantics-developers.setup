@@ -532,7 +532,7 @@
           <repository
               url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/sprotty/0.9.0/"/>
           <repository
-              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/"/>
+              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/10.0.9/"/>
         </repositoryList>
       </targlet>
     </setupTask>
