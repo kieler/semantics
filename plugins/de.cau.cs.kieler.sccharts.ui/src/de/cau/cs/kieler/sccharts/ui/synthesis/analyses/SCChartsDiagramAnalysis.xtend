@@ -54,11 +54,11 @@ class SCChartsDiagramAnalysis extends AbstractModelDataCollector<SCCharts> {
             data.put(WIDTH, root.width)
             
             // Zoom metrics
-            var scaleLimit = 1.0;
+            var scaleLimit = 0.99999;
         
             if (root.getProperty(CoreOptions.TOPDOWN_LAYOUT)) {
                 // determine min_scale, inverse of minScale is scaleLimit for topdown graphs
-                scaleLimit = 1.0 / getMinScale(diagram, 1.0);
+                scaleLimit = 1.0 / getMinScale(diagram, 0.99999);
             } else {
                 // use dimensions of graph to determine scaleLimit
                 val assumedViewportWidth = 700;
@@ -67,10 +67,8 @@ class SCChartsDiagramAnalysis extends AbstractModelDataCollector<SCCharts> {
                 scaleLimit = zoomOutScale;
                          
             }
-            // reduce sample resolution for performance w = 1 original step size
-            val step_weight = 1.0
             // set up z samplers
-            val sampleStepSize = Math.min( 1.0 / (scaleLimit * step_weight), 1 - step_weight + scaleLimit * step_weight);
+            val sampleStepSize = Math.min( 1.0 / scaleLimit, scaleLimit);
             
             var zSamplers = new ArrayList()
             val IZLevelAggregator avgAgg = new AverageAggregator();
