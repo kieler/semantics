@@ -289,6 +289,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
      */
     private def KNode synthesize(SCGraph scg) {
         val node = scg.createNode().associateWith(scg)
+        
         // Set root node and layout options.
         rootNode = node
         isSCPDG = scg.hasAnnotation(ANNOTATION_SCPDGTRANSFORMATION)
@@ -475,6 +476,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         scg.synthesizeScheduleGroups
 
         scg.applyDependencyHierarchy
+        
         return node
     }
 

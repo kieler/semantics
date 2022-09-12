@@ -18,6 +18,7 @@ import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.scg.SCGraphs
 import javax.inject.Inject
 
@@ -57,6 +58,9 @@ class SCGraphsDiagramSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
 	           addRectangle => [invisible = true]
 	       ]
 	    }
+        
+        // All nodes should be shown as proxies
+        node.setProperty(KlighdProperties.PROXY_VIEW_HIERARCHICAL_OFF_SCREEN_DEPTH, -1)
 	    
         // Report duration
         usedContext?.setProperty(KiCoDiagramViewProperties.SYNTHESIS_TIME, System.currentTimeMillis - timestamp)
