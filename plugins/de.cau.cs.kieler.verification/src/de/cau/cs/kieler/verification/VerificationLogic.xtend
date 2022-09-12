@@ -31,6 +31,12 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.resources.IFile
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
+import de.cau.cs.kieler.simulation.events.ISimulationListener
+import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.events.SimulationEvent
+import de.cau.cs.kieler.simulation.events.SimulationControlEvent
+import de.cau.cs.kieler.simulation.trace.TraceFileUtil
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
 
 /**
  * @author jep
@@ -46,7 +52,7 @@ class VerificationLogic {
     public var CompilationContext verificationCompileContext
     private static var CompilationContext propertyAnalyzerContext
     private var String selectedSystemId = "de.cau.cs.kieler.sccharts.verification.nuxmv"
-    
+
     def setSystemId(String id) {
         selectedSystemId = id
     }
@@ -137,9 +143,9 @@ class VerificationLogic {
         verificationContext.verificationProperties = verificationProperties
         verificationContext.verificationAssumptions = verificationAssumptions
         verificationContext.verificationModelFile = modelFile
-        
-        //TODO: save/get the options without IPreferenceStore
-        // Add general options
+
+    // TODO: save/get the options without IPreferenceStore
+    // Add general options
 //        verificationContext.createCounterexamples = getBooleanOption(CREATE_COUNTEREXAMPLES_PREF_STORE_ID, true)
 //        verificationContext.createCounterexamplesWithOutputs = getBooleanOption(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID, true)
 //        
@@ -158,7 +164,6 @@ class VerificationLogic {
 //        val customSpinCommands = getCustomCommands(CUSTOM_SPIN_COMMANDS_PREF_STORE_ID).split("\n").toList
 //        verificationContext.customSpinCommands = customSpinCommands
     }
-
 
     def startVerification() {
         verificationCompileContext.compileAsynchronously
@@ -186,6 +191,41 @@ class VerificationLogic {
 
     private def EObject getModel(CompilationContext context) {
         return context?.originalModel as EObject
+    }
+
+    def void runCounterexample(VerificationProperty property, Object diagramModel) {
+        if (property !== null && property.status == VerificationPropertyStatus.FAILED &&
+            property.counterexampleFile !== null) {
+            try {
+                // Start a simulation, and when the simulation is started, load the trace from the counterexample
+                val simulationSystemId = "de.cau.cs.kieler.sccharts.simulation.tts.netlist.c"
+                val addCounterexampleSimulationListener = new ISimulationListener() {
+
+                    override update(SimulationContext ctx, SimulationEvent e) {
+                        if (e instanceof SimulationControlEvent) {
+                            if (e.operation == SimulationControlEvent.SimulationOperation.START) {
+                                val counterexampleLocation = property.counterexampleFile.path
+                                val traceFile = TraceFileUtil.loadTraceFile(new File(counterexampleLocation))
+                                CentralSimulation.currentSimulation.setTrace(traceFile.traces.head, true, true)
+                                // The listener did what it should and must be removed now.
+                                // Otherwise it will add the counterexample to following simulations as well.
+                                CentralSimulation.addListener(this)
+                            }
+                        }
+                    }
+
+                    override getName() {
+                        return "Model Checking View"
+                    }
+
+                }
+                CentralSimulation.compileAndStartSimulation(simulationSystemId, diagramModel)
+                CentralSimulation.addListener(addCounterexampleSimulationListener)
+
+            } catch (Exception e) {
+//                e.showInDialog
+            }
+        }
     }
 
 }

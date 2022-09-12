@@ -13,20 +13,10 @@
 package de.cau.cs.kieler.verification.ui.view
 
 import de.cau.cs.kieler.kicool.System
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
-import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
-import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.events.ISimulationListener
-import de.cau.cs.kieler.simulation.events.SimulationControlEvent
-import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.ide.CentralSimulation
-import de.cau.cs.kieler.simulation.trace.TraceFileUtil
-import de.cau.cs.kieler.verification.VerificationAssumption
 import de.cau.cs.kieler.verification.VerificationLogic
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
@@ -69,7 +59,6 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
-import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 
 /** 
  * @author aas
@@ -339,7 +328,7 @@ Example commands:
 
         val runCounterexample = new Action("Start Counterexample", IAction.AS_PUSH_BUTTON) {
             override run() {
-                runCounterexample()
+                verLogic.runCounterexample(selectedProperty, currentDiagramModel)
             }
         }
         runCounterexample.imageDescriptor = RUN_COUNTEREXAMPLE_ICON
@@ -489,41 +478,7 @@ Example commands:
         }
     }
 
-    private def void runCounterexample() {
-        val property = selectedProperty
-        if (property !== null && property.status == VerificationPropertyStatus.FAILED &&
-            property.counterexampleFile !== null) {
-            try {
-                // Start a simulation, and when the simulation is started, load the trace from the counterexample
-                val simulationSystemId = "de.cau.cs.kieler.sccharts.simulation.tts.netlist.c"
-                val addCounterexampleSimulationListener = new ISimulationListener() {
 
-                    override update(SimulationContext ctx, SimulationEvent e) {
-                        if (e instanceof SimulationControlEvent) {
-                            if (e.operation == SimulationControlEvent.SimulationOperation.START) {
-                                val counterexampleLocation = property.counterexampleFile.path
-                                val traceFile = TraceFileUtil.loadTraceFile(new File(counterexampleLocation))
-                                CentralSimulation.currentSimulation.setTrace(traceFile.traces.head, true, true)
-                                // The listener did what it should and must be removed now.
-                                // Otherwise it will add the counterexample to following simulations as well.
-                                CentralSimulation.addListener(this)
-                            }
-                        }
-                    }
-
-                    override getName() {
-                        return "Model Checking View"
-                    }
-
-                }
-                CentralSimulation.compileAndStartSimulation(simulationSystemId, currentDiagramModel)
-                CentralSimulation.addListener(addCounterexampleSimulationListener)
-
-            } catch (Exception e) {
-                e.showInDialog
-            }
-        }
-    }
 
     private def void startVerificationOfModelInDiagram() {
         val diagramModel = currentDiagramModel

@@ -48,9 +48,9 @@ class VerificationLanguageServerExtension implements ILanguageServerExtension, V
      * The language client allows to send notifications or requests from the server to the client.
      * Notifications are preferred, since they allow more asynchronity.
      */
-    private KeithLanguageClient client
+    protected KeithLanguageClient client
     protected extension ILanguageServerAccess languageServerAccess
-    private Map<String, List<VerificationProperty>> verificationProperties = new HashMap
+    protected Map<String, List<VerificationProperty>> verificationProperties = new HashMap
 
     override initialize(ILanguageServerAccess access) {
         this.languageServerAccess = access
@@ -103,6 +103,14 @@ class VerificationLanguageServerExtension implements ILanguageServerExtension, V
         for (property : verificationProperties) {
             property.runningTaskDescription = "Compiling..."
             property.status = VerificationPropertyStatus.RUNNING
+        }
+    }
+
+    override runCounterExample(String uri, String propertyId) {
+        if (uri !== null) {
+            val currentModel = verLogic.getModelFromUri(uri)
+            val property = verificationProperties.get(uri).findFirst[prop | prop.id == propertyId]
+            verLogic.runCounterexample(property, currentModel)
         }
     }
 

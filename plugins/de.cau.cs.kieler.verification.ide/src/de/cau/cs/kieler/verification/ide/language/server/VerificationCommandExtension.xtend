@@ -29,5 +29,8 @@ interface VerificationCommandExtension {
     
     @JsonNotification('runChecker')
     def void runChecker(String uri)
+    
+    @JsonNotification('runCounterExample')
+    def void runCounterExample(String uri, String propertyId)
 
 }
