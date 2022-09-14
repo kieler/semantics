@@ -166,7 +166,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     vo.initialValue = createClockValue(0)
                 }
                 if (!vo.input || vo.type !== clockType) {
-                    environment.errors.add("A variable with name " + DELTA_T_NAME + " already exists and is is not and input variable of type " + clockType.literal)
+                    environment.errors.add("A variable with name " + DELTA_T_NAME + " already exists and is not an input variable of type " + clockType.literal)
                 } else {
                     environment.warnings.add("A variable with name " + DELTA_T_NAME + " already exists and is used.", rootState, true)
                 }
@@ -196,8 +196,8 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     if (vo.initialValue === null) {
                         vo.initialValue = createClockValue(0)
                     }
-                    if (!vo.input || vo.type !== clockType) {
-                        environment.errors.add("A variable with name " + SLEEP_T_NAME + " already exists and is is not and input variable of type " + clockType.literal)
+                    if (!vo.output || vo.type !== clockType) {
+                        environment.errors.add("A variable with name " + SLEEP_T_NAME + " already exists and is not an output variable of type " + clockType.literal)
                     } else {
                         environment.warnings.add("A variable with name " + SLEEP_T_NAME + " already exists and is used.", rootState, true)
                     }
