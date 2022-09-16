@@ -26,9 +26,9 @@ import de.cau.cs.kieler.verification.VerificationAssumption
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
+import java.io.File
 import java.util.List
 import java.util.Observable
-import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.Path
 import org.eclipse.emf.ecore.EObject
 import org.junit.After
@@ -168,10 +168,10 @@ abstract class AbstractVerificationTest<T extends EObject> extends AbstractXText
         ]
     }
     
-    protected def IFile getVerificationModelFileHandle() {
-        val path = new Path(verificationModelData.modelPath.toString)
-        val tmpProject = ProjectInfrastructure.getTemporaryProject()
-        val file = tmpProject.getFile(path)
+    protected def File getVerificationModelFileHandle() {
+        val projectInfrastructure = ProjectInfrastructure.getProjectInfrastructure(new Environment())
+        val path = new Path(projectInfrastructure.generatedCodeFolder.path+verificationModelData.modelPath.toString)
+        val file = path.toFile
         return file
     }
     

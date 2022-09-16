@@ -12,13 +12,11 @@
  */
 package de.cau.cs.kieler.verification
 
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import java.util.List
-import org.eclipse.core.resources.IFile
-import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.verification.RangeAssumption
 import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
+import java.io.File
+import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /** 
  * @author aas
@@ -35,7 +33,7 @@ class VerificationContext implements IKiCoolCloneable {
     /**
      * File handle used to define where generated files for verification will be saved.
      */
-    @Accessors private IFile verificationModelFile = null
+    @Accessors private File verificationModelFile = null
     
     /**
      * The OS process (or one of its parents) that is running the model checker

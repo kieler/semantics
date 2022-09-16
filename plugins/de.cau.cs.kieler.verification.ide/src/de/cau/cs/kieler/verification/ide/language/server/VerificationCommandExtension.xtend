@@ -24,12 +24,13 @@ import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
 @JsonSegment('keith/verification')
 interface VerificationCommandExtension {
     
-    /**
-     * Signals that model checker table is created.
-     */
     @JsonNotification('loadProperties')
     def void loadProperties(String uri)
     
     @JsonNotification('runChecker')
     def void runChecker(String uri)
+    
+    @JsonNotification('runCounterExample')
+    def void runCounterExample(String uri, String propertyId)
+
 }

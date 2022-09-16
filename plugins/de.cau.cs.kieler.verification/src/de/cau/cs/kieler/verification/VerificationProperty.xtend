@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.verification
 
-import org.eclipse.core.resources.IFile
+import java.io.File
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /** 
@@ -35,19 +35,19 @@ class VerificationProperty {
      * Pointer to a ktrace file with the counterexample.
      * This is only relevant if the property has the status FAILED.
      */
-    @Accessors(PUBLIC_GETTER) IFile counterexampleFile = null
+    @Accessors(PUBLIC_GETTER) File counterexampleFile = null
     /**
      * Pointer to a file with the output of the process that was executed for verification.
      */
-    @Accessors IFile processOutputFile = null
+    @Accessors File processOutputFile = null
     /**
      * Pointer to a file with the output of the SPIN trail command. This is only set when using SPIN.
      */
-    @Accessors IFile spinTrailFile = null
+    @Accessors File spinTrailFile = null
     /**
      * Pointer to a file with the model in the model checker input language (e.g. SMV or Promela).
      */
-    @Accessors IFile modelCheckerModelFile = null
+    @Accessors File modelCheckerModelFile = null
     /**
      * Exception that caused the corresponding status.
      * This is only relevant if the property has the status EXPECTION.
@@ -65,7 +65,7 @@ class VerificationProperty {
         return '''VerificationProperty@«hashCode»(name:«name», formula:«formula», status:«status»)'''
     }
     
-    public def void fail(IFile counterexampleFile) {
+    public def void fail(File counterexampleFile) {
         this.status = VerificationPropertyStatus.FAILED
         this.counterexampleFile = counterexampleFile
     }
