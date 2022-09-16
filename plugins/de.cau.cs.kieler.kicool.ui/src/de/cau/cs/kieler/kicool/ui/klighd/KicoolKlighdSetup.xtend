@@ -39,6 +39,7 @@ import de.cau.cs.kieler.kicool.ui.view.registry.FocusNodeAction
 import de.cau.cs.kieler.kicool.ui.view.registry.KiCoolRegistrySynthesis
 import de.cau.cs.kieler.kicool.ui.view.registry.KiCoolSystemsSynthesis
 import de.cau.cs.kieler.klighd.IKlighdStartupHook
+import de.cau.cs.kieler.klighd.Klighd
 import de.cau.cs.kieler.klighd.KlighdDataManager
 
 /**
@@ -53,7 +54,6 @@ class KicoolKlighdSetup implements IKlighdStartupHook {
             .registerAction(SelectIntermediateAction.ID, new SelectIntermediateAction)
             .registerAction(SelectAdditionalIntermediateAction.ID, new SelectAdditionalIntermediateAction)
             .registerAction(ToggleProcessorOnOffAction.ID, new ToggleProcessorOnOffAction)
-            .registerAction(OpenCodeInEditorAction.ID, new OpenCodeInEditorAction)
             .registerAction(RemoveChainElementAction.ID, new RemoveChainElementAction)
             .registerAction(SelectNothing.ID, new SelectNothing)
             .registerAction(SelectParent.ID, new SelectParent)
@@ -76,6 +76,12 @@ class KicoolKlighdSetup implements IKlighdStartupHook {
             .registerDiagramSynthesisClass("de.cau.cs.kieler.kicool.ui.synthesis.KASTSynthesis", KASTSynthesis)
             .registerDiagramSynthesisClass("de.cau.cs.kieler.kicool.ui.view.registry.KiCoolSystemsSynthesis", KiCoolSystemsSynthesis)
             .registerDiagramSynthesisClass("de.cau.cs.kieler.kicool.ui.JavaASTSynthesis", JavaASTSynthesis)
+        
+        // Only register UI stuff in Eclipse case.
+        if (Klighd.IS_PLATFORM_RUNNING) {
+            KlighdDataManager.instance
+                .registerAction(OpenCodeInEditorAction.ID, new OpenCodeInEditorAction)
+        }
     }
     
 }
