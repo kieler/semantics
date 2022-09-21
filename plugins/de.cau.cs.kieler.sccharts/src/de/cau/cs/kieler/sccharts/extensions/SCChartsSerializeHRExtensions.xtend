@@ -360,7 +360,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             components.addKeyword("void")
         }
         
-        components.addText(method.valuedObjects.head.name)
+        components.addText(method.valuedObjects.head.name.applySymbolTable)
         
         components.addText("(")
         for (para : method.parameterDeclarations.indexed) {
@@ -530,7 +530,11 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         nameSymbolSuffixProcessor.clear
     }
     
-    def String applySymbolTable(String name) {
+    def String applySymbolTable(String origName) {
+        var name = origName
+        if (name.startsWith("^")) { // Remove Xtext keyword escape
+            name = name.substring(1)
+        }
         for(s : nameSymbolTable.keySet) {
             if (name.startsWith(s))  {
                 return nameSymbolTable.get(s) + name.substring(s.length)
@@ -558,31 +562,22 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         vo
     }
 
-    override dispatch CharSequence serialize(ValuedObjectReference valuedObjectReference) {
-        var vo = valuedObjectReference.valuedObject?.name?:"<BROKEN_REFERENCE>".applySymbolTable
-        for (index : valuedObjectReference.indices) {
-            vo = vo + "[" + index.serialize + "]"
+    override CharSequence serializeVOR(ValuedObjectReference valuedObjectReference) {
+        if (valuedObjectReference.valuedObject === null) {
+            System.err.println("Valued object reference is null! Cannot serialize: " + valuedObjectReference)
+            return "<BROKEN_REFERENCE>"
         }
-        if( valuedObjectReference.valuedObject !== null && valuedObjectReference.valuedObject.label !== null )
-            vo = valuedObjectReference.valuedObject.label
-        if (valuedObjectReference.subReference !== null && valuedObjectReference.subReference.valuedObject !== null) {
-            vo = vo + "." + valuedObjectReference.subReference.serializeHR
-        }        
-        vo
-    }    
-    
-    override dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
-        var vo = valuedObjectReference.valuedObject?.name?:"<BROKEN_REFERENCE>".applySymbolTable
+        var vo = valuedObjectReference.valuedObject.name.applySymbolTable
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serializeHR + "]"
         }
-        if( valuedObjectReference.valuedObject !== null && valuedObjectReference.valuedObject.label !== null )
+        if( valuedObjectReference.valuedObject.label !== null )
             vo = valuedObjectReference.valuedObject.label
         if (valuedObjectReference.subReference !== null && valuedObjectReference.subReference.valuedObject !== null) {
-            vo = vo + "." + valuedObjectReference.subReference.serializeHR
-        }        
+            vo = vo + "." + valuedObjectReference.subReference.serializeVOR
+        }
         vo
-    }   
+    }
     
     override def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
         var res = assignment.reference.serializeVOR.toString.applySymbolTable
@@ -598,7 +593,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         val objectContainer = emission.reference.valuedObject.eContainer
         if (objectContainer instanceof VariableDeclaration) {
             if (objectContainer.type != ValueType::PURE) {
-                return (emission.reference.valuedObject.name + "(" + emission.newValue.serialize + ")")             
+                return (emission.reference.valuedObject.name.applySymbolTable + "(" + emission.newValue.serialize + ")")             
             } else {
                 return emission.reference.valuedObject.name.applySymbolTable
             }
