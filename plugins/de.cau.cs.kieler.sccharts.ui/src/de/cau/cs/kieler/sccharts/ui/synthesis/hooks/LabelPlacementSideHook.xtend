@@ -104,11 +104,10 @@ class LabelPlacementSideHook extends SynthesisHook {
         
         if (strategy == STRATEGY_ON_EDGE_DIRECTIONAL) {
             inlineLabelConfigurator.addDecoratorRenderingProvider(
-                DirectionalArrowsDecorator.create()
+                DirectionalArrowsDecoratorHotFixed.create()
                     .withColor(foreground))
         }
         
-        // CONFIGURE THEM LABELS!!!!!!!!!!
         inlineLabelConfigurator.applyToAll(node, true);
     }
     

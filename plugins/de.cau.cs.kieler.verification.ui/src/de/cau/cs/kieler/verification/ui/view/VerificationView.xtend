@@ -13,21 +13,10 @@
 package de.cau.cs.kieler.verification.ui.view
 
 import de.cau.cs.kieler.kicool.System
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
-import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.events.ISimulationListener
-import de.cau.cs.kieler.simulation.events.SimulationControlEvent
-import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.ide.CentralSimulation
-import de.cau.cs.kieler.simulation.trace.TraceFileUtil
-import de.cau.cs.kieler.verification.VerificationAssumption
 import de.cau.cs.kieler.verification.VerificationLogic
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
@@ -70,29 +59,30 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
-import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 
 /** 
  * @author aas
  */
 class VerificationView extends ViewPart {
-    
+
     VerificationLogic verLogic = new VerificationLogic()
-    
+
     /**
      * The single instance
      */
     public static var VerificationView instance
-    
-    private static val MODEL_CLASS_TO_PROPERTY_ANALYZER = #{typeof(SCCharts) -> "de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer"}
+
     private static val MODEL_CHECKER_SYSTEM_IDS = #["de.cau.cs.kieler.sccharts.verification.nuxmv",
-                                                    "de.cau.cs.kieler.sccharts.verification.nusmv",
-                                                    "de.cau.cs.kieler.sccharts.verification.spin"]
-    private static val PLAY_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID, "icons/runIcon.png")
-    private static val STOP_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID, "icons/stopIcon.png")
-    private static val REFRESH_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID, "icons/refresh.png")
-    private static val RUN_COUNTEREXAMPLE_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID, "icons/rerunFailed.png")
-    
+        "de.cau.cs.kieler.sccharts.verification.nusmv", "de.cau.cs.kieler.sccharts.verification.spin"]
+    private static val PLAY_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID,
+        "icons/runIcon.png")
+    private static val STOP_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID,
+        "icons/stopIcon.png")
+    private static val REFRESH_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID,
+        "icons/refresh.png")
+    private static val RUN_COUNTEREXAMPLE_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(
+        VerificationUiPlugin.PLUGIN_ID, "icons/rerunFailed.png")
+
     private static val CUSTOM_SMV_COMMANDS_CTL_PREF_STORE_ID = "customSmvCommandsLTL"
     private static val CUSTOM_SMV_COMMANDS_LTL_PREF_STORE_ID = "customSmvCommandsCTL"
     private static val CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID = "customSmvCommandsInvar"
@@ -101,23 +91,19 @@ class VerificationView extends ViewPart {
     private static val SMV_IGNORE_RANGE_ASSUMPTIONS = "smvIgnoreRangeAssumptions"
     private static val CREATE_COUNTEREXAMPLES_PREF_STORE_ID = "createCounterexamples"
     private static val CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID = "createCounterexamplesWithOutputs"
-    
-    private var CompilationContext propertyAnalyzerContext
-    private var CompilationContext verificationCompileContext
-    private var String selectedSystemId
-    
+
     // == UI ELEMENTS ==
     /**
      * The table that shows the data pool view of the simulation.
      */
     @Accessors(PUBLIC_GETTER)
     private var TableViewer viewer
-    
+
     private var TableViewerColumn nameColumn
     private var TableViewerColumn formulaColumn
     private var TableViewerColumn resultColumn
-    
-     /**
+
+    /**
      * @see IWorkbenchPart#createPartControl(Composite)
      */
     override createPartControl(Composite parent) {
@@ -129,7 +115,7 @@ class VerificationView extends ViewPart {
         createToolbar()
         addKeyListeners()
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -137,7 +123,7 @@ class VerificationView extends ViewPart {
         viewer.refresh
         viewer.control.setFocus
     }
-    
+
     /**
      * Creates the menu.
      */
@@ -145,42 +131,42 @@ class VerificationView extends ViewPart {
         val openCounterexampleAction = new Action("Open Counterexample") {
             override run() {
                 val file = selectedProperty?.counterexampleFile
-                if(file !== null && file.exists) {
+                if (file !== null && file.exists) {
                     val page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-                    IDE.openEditor(page, file, true);
+                    IDE.openEditor(page, getFile(file), true);
                 }
             }
         }
-        
+
         val openLogAction = new Action("Open Process Output") {
             override run() {
                 var file = selectedProperty?.spinTrailFile
-                if(file === null) {
+                if (file === null) {
                     file = selectedProperty?.processOutputFile
                 }
-                if(file !== null && file.exists) {
+                if (file !== null && file.exists) {
                     val page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-                    IDE.openEditor(page, file, true);
+                    IDE.openEditor(page, getFile(file), true);
                 }
             }
         }
-        
+
         val openModelCheckerFileAction = new Action("Open Model Checker Model") {
             override run() {
                 val file = selectedProperty?.modelCheckerModelFile
-                if(file !== null && file.exists) {
+                if (file !== null && file.exists) {
                     val page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-                    IDE.openEditor(page, file, true);
+                    IDE.openEditor(page, getFile(file), true);
                 }
             }
         }
-        
+
         val startVerificationOfModelInDiagramAction = new Action("Verify Model in Diagram") {
             override run() {
                 startVerificationOfModelInDiagram()
             }
         }
-        
+
         val openHelpAction = new Action("Show Controls") {
             override run() {
                 val title = "Controls for the Verification View"
@@ -189,7 +175,7 @@ class VerificationView extends ViewPart {
                 dialog.open
             }
         }
-        
+
         // Options
         val createCounterexampleAction = new Action("Create Counterexamples", IAction.AS_CHECK_BOX) {
             override run() {
@@ -197,14 +183,16 @@ class VerificationView extends ViewPart {
             }
         }
         createCounterexampleAction.checked = getBooleanOption(CREATE_COUNTEREXAMPLES_PREF_STORE_ID, true)
-        
-        val writeOutputsToCounterexampleAction = new Action("Create Counterexamples With Outputs", IAction.AS_CHECK_BOX) {
+
+        val writeOutputsToCounterexampleAction = new Action("Create Counterexamples With Outputs",
+            IAction.AS_CHECK_BOX) {
             override run() {
                 setBooleanOption(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID, isChecked)
             }
         }
-        writeOutputsToCounterexampleAction.checked = getBooleanOption(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID, true)
-        
+        writeOutputsToCounterexampleAction.checked = getBooleanOption(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID,
+            true)
+
         val useIVARinSmvModels = new Action("Use IVAR in SMV", IAction.AS_CHECK_BOX) {
             override run() {
                 setBooleanOption(SMV_USE_IVAR_PREF_STORE_ID, isChecked)
@@ -212,7 +200,7 @@ class VerificationView extends ViewPart {
         }
         useIVARinSmvModels.checked = getBooleanOption(SMV_USE_IVAR_PREF_STORE_ID, false)
         useIVARinSmvModels.toolTipText = "IVAR variables cannot be used everywhere, e.g., not in CTL"
-        
+
         val smvIgnoreRangeAssumptions = new Action("Ignore Range Assumptions for SMV", IAction.AS_CHECK_BOX) {
             override run() {
                 setBooleanOption(SMV_IGNORE_RANGE_ASSUMPTIONS, isChecked)
@@ -220,7 +208,7 @@ class VerificationView extends ViewPart {
         }
         smvIgnoreRangeAssumptions.checked = getBooleanOption(SMV_IGNORE_RANGE_ASSUMPTIONS, false)
         smvIgnoreRangeAssumptions.toolTipText = "This can be useful in combination with infinite domain algorithms (e.g. IC3)"
-        
+
         val openEditSmvCommandsDialogAction = new Action("Edit SMV Commands...") {
             override run() {
                 val dialog = new EditSmvCommandsDialog(viewer.control.shell)
@@ -235,12 +223,11 @@ class VerificationView extends ViewPart {
                 }
             }
         }
-        
+
         val openEditSpinCommandsDialogAction = new Action("Edit Spin Commands...") {
             override run() {
                 val title = "Commands for Spin"
-                val message =
-'''Enter commands for the verifier that is generated by Spin.
+                val message = '''Enter commands for the verifier that is generated by Spin.
 The commands will be added after the -run option, and before the file name.
 Example commands:
 -bfs : use breadth-first-search
@@ -253,7 +240,7 @@ Example commands:
                 }
             }
         }
-        
+
         // Pupulate options submenu
         val optionsSubmenu = new MenuManager("Options")
         optionsSubmenu => [
@@ -264,7 +251,7 @@ Example commands:
             add(openEditSmvCommandsDialogAction)
             add(openEditSpinCommandsDialogAction)
         ]
-        
+
         // Populate main menu
         getViewSite().getActionBars().getMenuManager() => [
             add(openLogAction)
@@ -276,7 +263,7 @@ Example commands:
             add(openHelpAction)
         ]
     }
-    
+
     /**
      * Creates the toolbar.
      */
@@ -290,9 +277,9 @@ Example commands:
                         return system.label
                     }
                 }
-                comboViewer.addSelectionChangedListener [SelectionChangedEvent e | 
+                comboViewer.addSelectionChangedListener [ SelectionChangedEvent e |
                     val selectedSystem = e.structuredSelection.firstElement as System
-                    selectedSystemId = selectedSystem.id
+                    verLogic.systemId = selectedSystem.id
                 ]
                 val modelCheckingSystems = MODEL_CHECKER_SYSTEM_IDS.map[KiCoolRegistration.getSystemById(it)]
                 comboViewer.setContentProvider(ArrayContentProvider.instance);
@@ -301,21 +288,35 @@ Example commands:
                 return comboViewer.combo
             }
         }
-        
+
         val run = new Action("Start Verification", IAction.AS_PUSH_BUTTON) {
             override run() {
-                startVerification
+                val verificationProps = selectedProperties
+                verLogic.prepareVerification(verificationProps)
+                addUpdater(verificationProps)
+                verLogic.startVerification
             }
         }
         run.imageDescriptor = PLAY_ICON
-        
+
         val stop = new Action("Stop Verification", IAction.AS_PUSH_BUTTON) {
             override run() {
-                stopVerification
+                if (verLogic.verificationCompileContext !== null) {
+                    if(viewer.input !== null) {
+                        val properties = viewer.input as List<VerificationProperty>
+                        for(property : properties) {
+                            if(property.status == VerificationPropertyStatus.RUNNING) {
+                                property.status = VerificationPropertyStatus.PENDING
+                                viewer.update(property, null)    
+                            }
+                        }
+                    }
+                    verLogic.stopVerification
+                }
             }
         }
         stop.imageDescriptor = STOP_ICON
-        
+
         val refresh = new Action("Reload Properties", IAction.AS_PUSH_BUTTON) {
             override run() {
                 val currentModel = getCurrentDiagramModel
@@ -324,14 +325,14 @@ Example commands:
             }
         }
         refresh.imageDescriptor = REFRESH_ICON
-        
+
         val runCounterexample = new Action("Start Counterexample", IAction.AS_PUSH_BUTTON) {
             override run() {
-                runCounterexample()
+                verLogic.runCounterexample(selectedProperty, currentDiagramModel)
             }
         }
         runCounterexample.imageDescriptor = RUN_COUNTEREXAMPLE_ICON
-        
+
         getViewSite().getActionBars().getToolBarManager() => [
             add(comboContrib)
             add(new Separator())
@@ -341,7 +342,7 @@ Example commands:
             add(stop)
         ]
     }
-    
+
     /**
      * Creates the table to show verification properties.
      */
@@ -352,7 +353,7 @@ Example commands:
 
         // Create viewer
         val viewer = new TableViewer(table)
-        
+
         // Create columns
         nameColumn = viewer.createTableColumn("Name", 256, true)
         nameColumn.labelProvider = new AbstractVerificationViewColumnLabelProvider() {
@@ -360,49 +361,53 @@ Example commands:
                 return element.asVerificationProperty.name
             }
         };
-        
+
         formulaColumn = viewer.createTableColumn("Formula", 256, true)
         formulaColumn.labelProvider = new AbstractVerificationViewColumnLabelProvider() {
             override String getText(Object element) {
                 return element.asVerificationProperty.formula
             }
         };
-        
+
         resultColumn = viewer.createTableColumn("Result", 256, true)
         resultColumn.labelProvider = new AbstractVerificationViewColumnLabelProvider() {
             override String getText(Object element) {
                 val property = element.asVerificationProperty
-                switch(property.status) {
+                switch (property.status) {
                     case null,
-                    case PENDING : return ""
-                    case RUNNING : {
-                        if(property.runningTaskDescription.isNullOrEmpty) {
-                            return "Running..."    
+                    case PENDING:
+                        return ""
+                    case RUNNING: {
+                        if (property.runningTaskDescription.isNullOrEmpty) {
+                            return "Running..."
                         } else {
                             return property.runningTaskDescription
                         }
                     }
-                    case FAILED : return "FAILED"
-                    case PASSED : return "PASSED"
-                    case EXCEPTION : {
-                        if(property.cause !== null) {
+                    case FAILED:
+                        return "FAILED"
+                    case PASSED:
+                        return "PASSED"
+                    case EXCEPTION: {
+                        if (property.cause !== null) {
                             return property.cause.class.simpleName + ": " + property.cause.message
                         } else {
                             return "EXCEPTION (of unkown cause)"
-                        }    
+                        }
                     }
-                    default : return property.status.toString
+                    default:
+                        return property.status.toString
                 }
             }
         };
-        
+
         // Create content
         viewer.setContentProvider(ArrayContentProvider.instance);
         viewer.input = null
 
         return viewer
     }
-    
+
     /**
      * Adds key listeners to the table for easy control of the simulation.
      */
@@ -417,15 +422,15 @@ Example commands:
             }
         })
     }
-    
+
     private def VerificationProperty getSelectedProperty() {
         return viewer.structuredSelection?.firstElement as VerificationProperty
     }
-    
+
     private def List<VerificationProperty> getSelectedProperties() {
         return viewer.structuredSelection?.toList as List<VerificationProperty>
     }
-    
+
     /**
      * Returns the current model in the diagram.
      * 
@@ -433,12 +438,12 @@ Example commands:
      */
     private def Object getCurrentDiagramModel() {
         val diagramViewContext = getDiagramViewContext
-        if(diagramViewContext === null) {
+        if (diagramViewContext === null) {
             return null
         }
         return diagramViewContext.inputModel
     }
-    
+
     /**
      * Returns the diagram view context.
      * 
@@ -452,208 +457,97 @@ Example commands:
             return viewer.getViewContext();
         }
     }
-    
+
     private def void setVerificationPropertiesInUi(List<VerificationProperty> properties) {
         // Put the properties in the UI table
         viewer.input = properties
-        if(!properties.isNullOrEmpty) {
+        if (!properties.isNullOrEmpty) {
             // Restore selection
             val lastSelection = selectedProperties
             var newSelection = <VerificationProperty>newArrayList
-            if(lastSelection !== null) {
+            if (lastSelection !== null) {
                 val namesOfLastSelection = lastSelection.map[it.name]
                 val propertiesOfLastSelection = properties.filter[namesOfLastSelection.contains(it.name)]
                 newSelection.addAll(propertiesOfLastSelection)
             }
             // Select first element if no last selection that can be transfered
-            if(newSelection.isEmpty) {
+            if (newSelection.isEmpty) {
                 newSelection.add(properties.head)
             }
             viewer.selection = new StructuredSelection(newSelection)
         }
     }
-    
-    private def EObject getModel(CompilationContext context) {
-        return context?.originalModel as EObject
-    }
-    
-    private def void runCounterexample() {
-        val property = selectedProperty
-        if(property !== null
-            && property.status == VerificationPropertyStatus.FAILED
-            && property.counterexampleFile !== null) {
-            try {
-                // Start a simulation, and when the simulation is started, load the trace from the counterexample
-                val simulationSystemId = "de.cau.cs.kieler.sccharts.simulation.tts.netlist.c"
-                val addCounterexampleSimulationListener = new ISimulationListener() {
-                    
-                    override update(SimulationContext ctx, SimulationEvent e) {
-                        if(e instanceof SimulationControlEvent) {
-                            if(e.operation == SimulationControlEvent.SimulationOperation.START) {
-                                val counterexampleLocation = property.counterexampleFile.location.toOSString
-                                val traceFile = TraceFileUtil.loadTraceFile(new File(counterexampleLocation))
-                                CentralSimulation.currentSimulation.setTrace(traceFile.traces.head, true, true)
-                                // The listener did what it should and must be removed now.
-                                // Otherwise it will add the counterexample to following simulations as well.
-                                CentralSimulation.addListener(this)
-                            }    
-                        }
-                    }
-                    
-                    override getName() {
-                        return "Model Checking View"
-                    }
-                    
-                }
-                CentralSimulation.compileAndStartSimulation(simulationSystemId, currentDiagramModel)
-                CentralSimulation.addListener(addCounterexampleSimulationListener)
 
-            } catch (Exception e) {
-                e.showInDialog
-            }
-        }
-    }
-    
-    private def void startVerification() {
-        if(propertyAnalyzerContext === null) {
-            return
-        }
-        startVerification(propertyAnalyzerContext.originalModel)
-    }
-     
+
+
     private def void startVerificationOfModelInDiagram() {
         val diagramModel = currentDiagramModel
-        if(diagramModel === null || !(diagramModel instanceof EObject)) {
+        if (diagramModel === null || !(diagramModel instanceof EObject)) {
             return
         }
-        startVerification(diagramModel as EObject)
+        val verificationProps = selectedProperties
+        verLogic.prepareVerification(diagramModel as EObject, verificationProps)
+        addUpdater(verificationProps)
+        verLogic.startVerification
     }
-    
-    private def void stopVerification() {
-        if(verificationCompileContext !== null) {
-            if(viewer.input !== null) {
-                val properties = viewer.input as List<VerificationProperty>
-                for(property : properties) {
-                    if(property.status == VerificationPropertyStatus.RUNNING) {
-                        property.status = VerificationPropertyStatus.PENDING
-                        viewer.update(property, null)    
-                    }
-                }
-            }
-            
-            verificationCompileContext.startEnvironment.setProperty(Environment.CANCEL_COMPILATION, true)
-            verificationCompileContext = null
-        }
-    }
-    
-    private def void startVerification(Object model) {
-        val verificationProperties = selectedProperties
-        if(verificationProperties === null) {
-            return
-        }
-        if(model === null) {
-            return
-        }
-        val verificationAssumptions = propertyAnalyzerContext.verificationContext.getVerificationAssumptions
-        val modelWithVerificationProperties = propertyAnalyzerContext.getModel
-        val modelFile = getFile(modelWithVerificationProperties)
 
-        // Start new verification
-        startVerification(model, modelFile, verificationProperties, verificationAssumptions)
+    private def void toggleVerificationStartStop() {
+        val verificationProps = selectedProperties
+        verLogic.prepareVerification(verificationProps)
+        addUpdater(verificationProps)
+        verLogic.startVerification
     }
-    
-    private def void startVerification(Object model, IFile modelFile,
-            List<VerificationProperty> verificationProperties, List<VerificationAssumption> verificationAssumptions) {
-        // Stop last verification if not done yet
-        stopVerification()
-       
-        // Create new context for verification and compile
-        verificationCompileContext = Compile.createCompilationContext(selectedSystemId, model)
-        val verificationContext = verificationCompileContext.createVerificationContext(true)
-        verificationContext.verificationProperties = verificationProperties
-        verificationContext.verificationAssumptions = verificationAssumptions
-        verificationContext.verificationModelFile = modelFile
-        
-        // Add general options
-        verificationContext.createCounterexamples = getBooleanOption(CREATE_COUNTEREXAMPLES_PREF_STORE_ID, true)
-        verificationContext.createCounterexamplesWithOutputs = getBooleanOption(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID, true)
-        
-        // Add SMV options
-        verificationContext.smvUseIVAR = getBooleanOption(SMV_USE_IVAR_PREF_STORE_ID, false)
-        verificationContext.smvIgnoreRangeAssumptions = getBooleanOption(SMV_IGNORE_RANGE_ASSUMPTIONS, false)
-        
-        val customSmvInvarCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID).split("\n").toList
-        val customSmvLtlCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_LTL_PREF_STORE_ID).split("\n").toList
-        val customSmvCtlCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_CTL_PREF_STORE_ID).split("\n").toList
-        verificationContext.customInteractiveSmvInvarCommands = customSmvInvarCommandsList
-        verificationContext.customInteractiveSmvLtlCommands = customSmvLtlCommandsList
-        verificationContext.customInteractiveSmvCtlCommands = customSmvCtlCommandsList
-        
-        // Add SPIN options
-        val customSpinCommands = getCustomCommands(CUSTOM_SPIN_COMMANDS_PREF_STORE_ID).split("\n").toList
-        verificationContext.customSpinCommands = customSpinCommands
-        
+
+    private def void setBooleanOption(String prefStoreId, boolean value) {
+        preferenceStore.setValue(prefStoreId, value)
+    }
+
+    private def boolean getBooleanOption(String prefStoreId, boolean defaultValue) {
+        preferenceStore.setDefault(prefStoreId, defaultValue)
+        return preferenceStore.getBoolean(prefStoreId)
+    }
+
+    private def String getCustomCommands(String prefStoreId) {
+        preferenceStore.setDefault(prefStoreId, "")
+        return preferenceStore.getString(prefStoreId)
+    }
+
+    private def void storeCustomCommands(String prefStoreId, String customSmvCommands) {
+        val store = VerificationUiPlugin.instance.preferenceStore
+        store.putValue(prefStoreId, customSmvCommands)
+    }
+
+    private def void showInDialog(Exception e) {
+        e.printStackTrace
+        StatusManager.getManager().handle(new Status(IStatus.ERROR, VerificationUiPlugin.PLUGIN_ID, e.getMessage(), e),
+            StatusManager.SHOW)
+    }
+
+    private def IPreferenceStore getPreferenceStore() {
+        return VerificationUiPlugin.instance.preferenceStore
+    }
+
+    private def addUpdater(List<VerificationProperty> verificationProperties) {
         // Add observer for changed properties
-        verificationCompileContext.addObserver[ Observable o, Object arg |
-            if(arg instanceof VerificationPropertyChanged) {
+        verLogic.verificationCompileContext.addObserver [ Observable o, Object arg |
+            if (arg instanceof VerificationPropertyChanged) {
                 val property = arg.changedProperty
-                Display.getDefault().asyncExec([ viewer.update(property, null) ])    
-            } else if(arg instanceof CompilationFinished) {
-                verificationCompileContext = null
+                Display.getDefault().asyncExec([viewer.update(property, null)])
+            } else if (arg instanceof CompilationFinished) {
+                 verLogic.verificationCompileContext = null
             }
         ]
-        
         // Update task description of the properties 
         for(property : verificationProperties) {
             property.runningTaskDescription = "Compiling..."
             property.status = VerificationPropertyStatus.RUNNING
             viewer.update(property, null)
         }
-        
-        verificationCompileContext.compileAsynchronously
     }
-    
-    private def IFile getFile(EObject model) {
-        val eUri = model.eResource.getURI();
-        if (eUri.isPlatformResource()) {
-            val platformString = eUri.toPlatformString(true);
-            val res = ResourcesPlugin.getWorkspace().getRoot().findMember(platformString)
-            if(res.exists && res instanceof IFile) {
-                return res as IFile
-            }
-        }
-    }
-    
-    private def void toggleVerificationStartStop() {
-        startVerification()
-    }
-    
-    private def void setBooleanOption(String prefStoreId, boolean value) {
-        preferenceStore.setValue(prefStoreId, value)
-    }
-    
-    private def boolean getBooleanOption(String prefStoreId, boolean defaultValue) {
-        preferenceStore.setDefault(prefStoreId, defaultValue)
-        return preferenceStore.getBoolean(prefStoreId)
-    }
-    
-    private def String getCustomCommands(String prefStoreId) {
-        preferenceStore.setDefault(prefStoreId, "")
-        return preferenceStore.getString(prefStoreId)
-    }
-    
-    private def void storeCustomCommands(String prefStoreId, String customSmvCommands) {
-        val store = VerificationUiPlugin.instance.preferenceStore
-        store.putValue(prefStoreId, customSmvCommands)
-    }
-    
-    private def void showInDialog(Exception e) {
-        e.printStackTrace
-        StatusManager.getManager().handle(new Status(IStatus.ERROR,
-            VerificationUiPlugin.PLUGIN_ID, e.getMessage(), e), StatusManager.SHOW)
-    }
-    
-    private def IPreferenceStore getPreferenceStore() {
-        return VerificationUiPlugin.instance.preferenceStore
+
+    private def IFile getFile(File file) {
+        val location = file.toURI();
+        val files = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(location);
+        return files.get(0)
     }
 }

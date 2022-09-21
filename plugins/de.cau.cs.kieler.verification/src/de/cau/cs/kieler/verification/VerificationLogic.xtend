@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright ${year} by
@@ -26,19 +26,37 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.lsp4j.jsonrpc.validation.NonNull
 import org.eclipse.xtext.resource.XtextResourceSet
+import java.io.File
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.resources.IFile
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
+import de.cau.cs.kieler.simulation.events.ISimulationListener
+import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.events.SimulationEvent
+import de.cau.cs.kieler.simulation.events.SimulationControlEvent
+import de.cau.cs.kieler.simulation.trace.TraceFileUtil
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
 
 /**
  * @author jep
- *
+ * 
  */
 class VerificationLogic {
-    
+
     @Inject
     Injector injector
-    
-    private static val MODEL_CLASS_TO_PROPERTY_ANALYZER = #{typeof(SCCharts) -> "de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer"}
+
+    private static val MODEL_CLASS_TO_PROPERTY_ANALYZER = #{typeof(SCCharts) ->
+        "de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer"}
+    public var CompilationContext verificationCompileContext
     private static var CompilationContext propertyAnalyzerContext
-    
+    private var String selectedSystemId = "de.cau.cs.kieler.sccharts.verification.nuxmv"
+
+    def setSystemId(String id) {
+        selectedSystemId = id
+    }
+
     def List<VerificationProperty> reloadPropertiesFromModel(Object currentModel) {
         if (currentModel === null) {
             return new ArrayList()
@@ -89,4 +107,125 @@ class VerificationLogic {
     def XtextResourceSet getXtextResourceSet(@NonNull URI uri) {
         return injector.getInstance(XtextResourceSet);
     }
+
+    def void prepareVerification(List<VerificationProperty> verificationProps) {
+        if (propertyAnalyzerContext === null) {
+            return
+        }
+        prepareVerification(propertyAnalyzerContext.originalModel, verificationProps)
+    }
+
+    def void prepareVerification(Object model, List<VerificationProperty> verificationProps) {
+        if (verificationProps === null) {
+            return
+        }
+        if (model === null) {
+            return
+        }
+        val verificationAssumptions = VerificationContextExtensions.getVerificationContext(propertyAnalyzerContext).
+            getVerificationAssumptions
+        val modelWithVerificationProperties = propertyAnalyzerContext.getModel
+        val modelFile = getFile(modelWithVerificationProperties)
+
+        // Start new verification
+        prepareVerification(model, modelFile, verificationProps, verificationAssumptions)
+    }
+
+    private def void prepareVerification(Object model, File modelFile,
+        List<VerificationProperty> verificationProperties, List<VerificationAssumption> verificationAssumptions) {
+        // Stop last verification if not done yet
+        stopVerification()
+
+        // Create new context for verification and compile
+        verificationCompileContext = Compile.createCompilationContext(selectedSystemId, model)
+        val verificationContext = VerificationContextExtensions.createVerificationContext(verificationCompileContext,
+            true)
+        verificationContext.verificationProperties = verificationProperties
+        verificationContext.verificationAssumptions = verificationAssumptions
+        verificationContext.verificationModelFile = modelFile
+
+    // TODO: save/get the options without IPreferenceStore
+    // Add general options
+//        verificationContext.createCounterexamples = getBooleanOption(CREATE_COUNTEREXAMPLES_PREF_STORE_ID, true)
+//        verificationContext.createCounterexamplesWithOutputs = getBooleanOption(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID, true)
+//        
+//        // Add SMV options
+//        verificationContext.smvUseIVAR = getBooleanOption(SMV_USE_IVAR_PREF_STORE_ID, false)
+//        verificationContext.smvIgnoreRangeAssumptions = getBooleanOption(SMV_IGNORE_RANGE_ASSUMPTIONS, false)
+//        
+//        val customSmvInvarCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID).split("\n").toList
+//        val customSmvLtlCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_LTL_PREF_STORE_ID).split("\n").toList
+//        val customSmvCtlCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_CTL_PREF_STORE_ID).split("\n").toList
+//        verificationContext.customInteractiveSmvInvarCommands = customSmvInvarCommandsList
+//        verificationContext.customInteractiveSmvLtlCommands = customSmvLtlCommandsList
+//        verificationContext.customInteractiveSmvCtlCommands = customSmvCtlCommandsList
+//        
+//        // Add SPIN options
+//        val customSpinCommands = getCustomCommands(CUSTOM_SPIN_COMMANDS_PREF_STORE_ID).split("\n").toList
+//        verificationContext.customSpinCommands = customSpinCommands
+    }
+
+    def startVerification() {
+        verificationCompileContext.compileAsynchronously
+    }
+
+    def void stopVerification() {
+        if (verificationCompileContext !== null) {
+            verificationCompileContext.startEnvironment.setProperty(Environment.CANCEL_COMPILATION, true)
+            verificationCompileContext = null
+        }
+    }
+
+    private def File getFile(EObject model) {
+        val eUri = model.eResource.getURI();
+        if (eUri.isPlatformResource()) {
+            val platformString = eUri.toPlatformString(true);
+            val res = ResourcesPlugin.getWorkspace().getRoot().findMember(platformString)
+            if (res.exists && res instanceof IFile) {
+                return (res as IFile).fullPath.toFile
+            }
+        } else {
+            return new File(eUri.path)
+        }
+    }
+
+    private def EObject getModel(CompilationContext context) {
+        return context?.originalModel as EObject
+    }
+
+    def void runCounterexample(VerificationProperty property, Object diagramModel) {
+        if (property !== null && property.status == VerificationPropertyStatus.FAILED &&
+            property.counterexampleFile !== null) {
+            try {
+                // Start a simulation, and when the simulation is started, load the trace from the counterexample
+                val simulationSystemId = "de.cau.cs.kieler.sccharts.simulation.tts.netlist.c"
+                val addCounterexampleSimulationListener = new ISimulationListener() {
+
+                    override update(SimulationContext ctx, SimulationEvent e) {
+                        if (e instanceof SimulationControlEvent) {
+                            if (e.operation == SimulationControlEvent.SimulationOperation.START) {
+                                val counterexampleLocation = property.counterexampleFile.path
+                                val traceFile = TraceFileUtil.loadTraceFile(new File(counterexampleLocation))
+                                CentralSimulation.currentSimulation.setTrace(traceFile.traces.head, true, true)
+                                // The listener did what it should and must be removed now.
+                                // Otherwise it will add the counterexample to following simulations as well.
+                                CentralSimulation.addListener(this)
+                            }
+                        }
+                    }
+
+                    override getName() {
+                        return "Model Checking View"
+                    }
+
+                }
+                CentralSimulation.compileAndStartSimulation(simulationSystemId, diagramModel)
+                CentralSimulation.addListener(addCounterexampleSimulationListener)
+
+            } catch (Exception e) {
+//                e.showInDialog
+            }
+        }
+    }
+
 }
