@@ -90,6 +90,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import org.eclipse.elk.alg.rectpacking.p3whitespaceelimination.WhiteSpaceEliminationStrategy
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -168,11 +169,18 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 node.setLayoutOption(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
                 node.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.HIERARCHICAL_NODE)
                 node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.COUNT_CHILDREN);
-//                node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.LOOKAHEAD_LAYOUT);
                 node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
                 node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
-                node.setLayoutOption(RectPackingOptions::EXPAND_TO_ASPECT_RATIO, true)
-            }
+                node.setLayoutOption(RectPackingOptions::WHITE_SPACE_ELIMINATION_STRATEGY, WhiteSpaceEliminationStrategy.TO_ASPECT_RATIO)
+            } else if (USE_TOPDOWN_LAYOUT.booleanValue && TOPDOWN_LAYOUT_CHOICE.objectValue.equals("Variant 3")) {
+                node.setLayoutOption(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
+                node.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.HIERARCHICAL_NODE)
+                node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.COUNT_CHILDREN);
+//                node.setLayoutOption(CoreOptions::TOPDOWN_SCALE_CAP, Double.MAX_VALUE)
+                node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
+                node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
+                node.setLayoutOption(RectPackingOptions::WHITE_SPACE_ELIMINATION_STRATEGY, WhiteSpaceEliminationStrategy.TO_ASPECT_RATIO)
+            } 
         }
         
         node.configureNodeLOD(state)
