@@ -387,7 +387,7 @@ enum ValueType returns kexpressions::ValueType:
     PURE="pure" | BOOL="bool" | 
     INT="int" | FLOAT="float" |
     STRING="string" |
-    CLOCK="clock"; // als: added clock for timed automata
+    CLOCK="clock" | TIME="clock-time"; // als: added clock for timed automata
 	
 // -------------- //
 //  Helper Rules  // 

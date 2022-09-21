@@ -157,7 +157,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
         
         val useSD = allAnnotations.exists[USE_SD_NAME.equalsIgnoreCase(name)]
         
-        val hasClocks = rootState.allStates.exists[variableDeclarations.exists[type == ValueType.CLOCK]]
+        val hasClocks = rootState.allStates.exists[hasClocks]
         val hasODEs = rootState.allStates.exists[actions.exists[it instanceof OdeAction]]
         
         if (hasClocks || hasODEs) {
@@ -259,9 +259,16 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                         ]
                     }
                 }
+                        
+                // Transform time type
+                val timeDecl = rootState.eAllContents.filter(VariableDeclaration).filter[it.type == ValueType.TIME].toList
+                for (d : timeDecl) {
+                    d.type = clockType
+                    d.hostType = intHostClockType
+                }
     
                 // Handle clock
-                for (state : rootState.allStates.filter[!it.clocks.empty].toList) {
+                for (state : rootState.allStates.filter[it.hasClocks].toList) {
                     var sdDecls = <Declaration, Declaration>newHashMap
                     for (clock : state.clocks) {
                         clock.declaration.asVariableDeclaration.type = clockType
@@ -494,7 +501,19 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             }
         }
     }
-    
+
+    def hasClocks(State state) {
+        return state.declarations.exists[
+            if (it instanceof ClassDeclaration) {
+                return it.allNestedValuedObjects.exists[it.declaration instanceof VariableDeclaration && it.variableDeclaration.type == ValueType.CLOCK]
+            } else if (it instanceof VariableDeclaration) {
+                return type == ValueType.CLOCK
+            } else {
+                return false
+            }
+        ]
+    }
+
     def getClocks(State state) {
         val clocks = newArrayList
         // in state

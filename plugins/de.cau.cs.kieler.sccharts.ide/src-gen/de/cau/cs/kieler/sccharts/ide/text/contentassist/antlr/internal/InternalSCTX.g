@@ -7532,6 +7532,12 @@ rule__ValueType__Alternatives
 		('clock')
 		{ after(grammarAccess.getValueTypeAccess().getCLOCKEnumLiteralDeclaration_5()); }
 	)
+	|
+	(
+		{ before(grammarAccess.getValueTypeAccess().getTIMEEnumLiteralDeclaration_6()); }
+		('clock-time')
+		{ after(grammarAccess.getValueTypeAccess().getTIMEEnumLiteralDeclaration_6()); }
+	)
 ;
 finally {
 	restoreStackSize(stackSize);

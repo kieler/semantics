@@ -71,6 +71,7 @@
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/CLASS"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/ENUM"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/VOID"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/TIME"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="kexpressions.ecore#//PriorityProtocol">
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//PriorityProtocol/CONFLICT"/>

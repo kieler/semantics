@@ -19790,6 +19790,14 @@ ruleValueType returns [Enumerator current=null]
 				newLeafNode(enumLiteral_5, grammarAccess.getValueTypeAccess().getCLOCKEnumLiteralDeclaration_5());
 			}
 		)
+		    |
+		(
+			enumLiteral_6='clock-time'
+			{
+				$current = grammarAccess.getValueTypeAccess().getTIMEEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_6, grammarAccess.getValueTypeAccess().getTIMEEnumLiteralDeclaration_6());
+			}
+		)
 	)
 ;
 

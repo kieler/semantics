@@ -129,6 +129,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('(' '('*)*
 	 *
@@ -144,12 +145,15 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) text=HOSTCODE
 	 *     (rule start) (ambiguity) value=BOOLEAN
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_5_0_a__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('(' '('*)+
 	 *
@@ -163,24 +167,30 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) value=INT
 	 *     (rule start) (ambiguity) value=STRING
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_5_0_a__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('(' ('('* '(')*)?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__a__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('(' | '(')*
 	 *
@@ -208,12 +218,15 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) value=STRING
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_5_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('(' | '(')+
 	 *
@@ -221,12 +234,15 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_5_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('('* '(')*
 	 *
@@ -237,12 +253,15 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('('* '(')+
 	 *
@@ -250,24 +269,30 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     '()'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     genericParameters+=GenericParameter '>' (ambiguity) (rule end)
+	 *     genericParameters+=GenericParameter '&gt;' (ambiguity) (rule end)
 	 *     target=[State|ID] (ambiguity) (rule end)
+	 
+	 * </pre>
 	 */
 	protected void emit_BaseStateReference_LeftParenthesisRightParenthesisKeyword_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' '}') | ':'
 	 *
@@ -281,12 +306,15 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     once?='once' (ambiguity) (rule end)
 	 *     override?='override' 'dataflow' (ambiguity) (rule end)
 	 *     schedule+=ScheduleObjectReference (ambiguity) (rule end)
+	 
+	 * </pre>
 	 */
 	protected void emit_DataflowRegion_ColonKeyword_9_1_0_or___LeftCurlyBracketKeyword_9_0_0_RightCurlyBracketKeyword_9_0_3__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' '}')?
 	 *
@@ -294,12 +322,15 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     parameterDeclarations+=VariableDeclarationWOSemicolon ')' (ambiguity) (rule end)
 	 *     schedule+=ScheduleObjectReference (ambiguity) (rule end)
 	 *     valuedObjects+=SimpleValuedObject '()' (ambiguity) (rule end)
+	 
+	 * </pre>
 	 */
 	protected void emit_KeywordMethodDeclarationWOSemicolon___LeftCurlyBracketKeyword_8_0_RightCurlyBracketKeyword_8_4__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' '}')?
 	 *
@@ -307,12 +338,15 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     parameterDeclarations+=VariableDeclarationWOSemicolon ')' (ambiguity) (rule end)
 	 *     schedule+=ScheduleObjectReference (ambiguity) (rule end)
 	 *     valuedObjects+=SimpleValuedObject '()' (ambiguity) (rule end)
+	 
+	 * </pre>
 	 */
 	protected void emit_MethodDeclarationWOSemicolon___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_4__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ';' | ('{' '}')
 	 *
@@ -323,35 +357,44 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     schedule+=ScheduleObjectReference (ambiguity) annotations+=CommentAnnotatonSL
 	 *     valuedObjects+=SimpleValuedObject '()' (ambiguity) (rule end)
 	 *     valuedObjects+=SimpleValuedObject '()' (ambiguity) annotations+=CommentAnnotatonSL
+	 
+	 * </pre>
 	 */
 	protected void emit_MethodDeclaration_SemicolonKeyword_7_0_or___LeftCurlyBracketKeyword_7_1_0_RightCurlyBracketKeyword_7_1_4__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     '()'?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     module=[Module|ID] (ambiguity) (rule end)
 	 *     module=[Module|ID] (ambiguity) semicolon?=';'
+	 
+	 * </pre>
 	 */
 	protected void emit_ModuleCall_LeftParenthesisRightParenthesisKeyword_3_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     '()'?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     target=[NamedObject|ID] (ambiguity) (rule end)
+	 
+	 * </pre>
 	 */
 	protected void emit_ModuleScopeCall_LeftParenthesisRightParenthesisKeyword_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ':'?
 	 *
@@ -359,34 +402,43 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     name=ID (ambiguity) (rule end)
 	 *     name=ID (ambiguity) declarations+=Declaration
 	 *     name=ID (ambiguity) statements+=Statement
+	 
+	 * </pre>
 	 */
 	protected void emit_Module_ColonKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     '()'?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) 'random' (ambiguity) (rule start)
+	 
+	 * </pre>
 	 */
 	protected void emit_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     '()'?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) 'randomize' (ambiguity) (rule start)
+	 
+	 * </pre>
 	 */
 	protected void emit_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     '()'?
 	 *
@@ -394,30 +446,36 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     cardinalities+=Expression ']' (ambiguity) '=' initialValue=Expression
 	 *     cardinalities+=Expression ']' (ambiguity) 'label' label=STRING
 	 *     cardinalities+=Expression ']' (ambiguity) (rule end)
-	 *     genericParameters+=GenericParameter '>' (ambiguity) '=' initialValue=Expression
-	 *     genericParameters+=GenericParameter '>' (ambiguity) 'label' label=STRING
-	 *     genericParameters+=GenericParameter '>' (ambiguity) (rule end)
+	 *     genericParameters+=GenericParameter '&gt;' (ambiguity) '=' initialValue=Expression
+	 *     genericParameters+=GenericParameter '&gt;' (ambiguity) 'label' label=STRING
+	 *     genericParameters+=GenericParameter '&gt;' (ambiguity) (rule end)
 	 *     name=PrimeID (ambiguity) '=' initialValue=Expression
 	 *     name=PrimeID (ambiguity) 'label' label=STRING
 	 *     name=PrimeID (ambiguity) (rule end)
+	 
+	 * </pre>
 	 */
 	protected void emit_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_4_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     '()'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     genericParameters+=GenericParameter '>' (ambiguity) (rule end)
+	 *     genericParameters+=GenericParameter '&gt;' (ambiguity) (rule end)
 	 *     target=[NamedObject|ID] (ambiguity) (rule end)
+	 
+	 * </pre>
 	 */
 	protected void emit_ScopeCall_LeftParenthesisRightParenthesisKeyword_3_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' '}')?
 	 *
@@ -426,17 +484,22 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     label=STRING (ambiguity) outgoingTransitions+=Transition
 	 *     name=ID (ambiguity) (rule end)
 	 *     name=ID (ambiguity) outgoingTransitions+=Transition
+	 
+	 * </pre>
 	 */
 	protected void emit_State___LeftCurlyBracketKeyword_8_2_2_RightCurlyBracketKeyword_8_2_6__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' '}')?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) (rule start)
+	 
+	 * </pre>
 	 */
 	protected void emit_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_4__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

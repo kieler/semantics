@@ -2042,6 +2042,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         addEEnumLiteral(valueTypeEEnum, ValueType.CLASS);
         addEEnumLiteral(valueTypeEEnum, ValueType.ENUM);
         addEEnumLiteral(valueTypeEEnum, ValueType.VOID);
+        addEEnumLiteral(valueTypeEEnum, ValueType.TIME);
 
         initEEnum(priorityProtocolEEnum, PriorityProtocol.class, "PriorityProtocol");
         addEEnumLiteral(priorityProtocolEEnum, PriorityProtocol.CONFLICT);

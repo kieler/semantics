@@ -4127,19 +4127,21 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Keyword cSTRINGStringKeyword_4_0 = (Keyword)cSTRINGEnumLiteralDeclaration_4.eContents().get(0);
 		private final EnumLiteralDeclaration cCLOCKEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
 		private final Keyword cCLOCKClockKeyword_5_0 = (Keyword)cCLOCKEnumLiteralDeclaration_5.eContents().get(0);
+		private final EnumLiteralDeclaration cTIMEEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
+		private final Keyword cTIMEClockTimeKeyword_6_0 = (Keyword)cTIMEEnumLiteralDeclaration_6.eContents().get(0);
 		
 		//@Override
 		//enum ValueType returns kexpressions::ValueType:
 		//    PURE="pure" | BOOL="bool" |
 		//    INT="int" | FLOAT="float" |
 		//    STRING="string" |
-		//    CLOCK="clock";
+		//    CLOCK="clock" | TIME="clock-time";
 		public EnumRule getRule() { return rule; }
 		
 		//PURE="pure" | BOOL="bool" |
 		//INT="int" | FLOAT="float" |
 		//STRING="string" |
-		//CLOCK="clock"
+		//CLOCK="clock" | TIME="clock-time"
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//PURE="pure"
@@ -4177,6 +4179,12 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		
 		//"clock"
 		public Keyword getCLOCKClockKeyword_5_0() { return cCLOCKClockKeyword_5_0; }
+		
+		//TIME="clock-time"
+		public EnumLiteralDeclaration getTIMEEnumLiteralDeclaration_6() { return cTIMEEnumLiteralDeclaration_6; }
+		
+		//"clock-time"
+		public Keyword getTIMEClockTimeKeyword_6_0() { return cTIMEClockTimeKeyword_6_0; }
 	}
 	
 	private final SCChartsElements pSCCharts;
@@ -5006,7 +5014,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    PURE="pure" | BOOL="bool" |
 	//    INT="int" | FLOAT="float" |
 	//    STRING="string" |
-	//    CLOCK="clock";
+	//    CLOCK="clock" | TIME="clock-time";
 	public ValueTypeElements getValueTypeAccess() {
 		return eValueType;
 	}

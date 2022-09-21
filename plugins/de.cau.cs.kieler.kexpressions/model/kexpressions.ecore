@@ -210,6 +210,7 @@
     <eLiterals name="CLASS" value="14" literal="class"/>
     <eLiterals name="ENUM" value="15" literal="enum"/>
     <eLiterals name="VOID" value="16" literal="void"/>
+    <eLiterals name="TIME" value="17" literal="time"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObjectReference" eSuperTypes="#//Expression">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
