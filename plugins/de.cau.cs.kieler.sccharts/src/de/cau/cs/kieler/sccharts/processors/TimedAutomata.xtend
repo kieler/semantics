@@ -30,6 +30,7 @@ import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
@@ -37,6 +38,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.OdeAction
@@ -259,9 +261,9 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                 }
     
                 // Handle clock
-                for (state : rootState.allStates.filter[variableDeclarations.exists[type == ValueType.CLOCK]].toList) {
+                for (state : rootState.allStates.filter[!it.clocks.empty].toList) {
                     var sdDecls = <Declaration, Declaration>newHashMap
-                    for (clock : state.variableDeclarations.filter[type == ValueType.CLOCK].map[valuedObjects].flatten.toList) {
+                    for (clock : state.clocks) {
                         clock.declaration.asVariableDeclaration.type = clockType
                         clock.declaration.asVariableDeclaration.hostType = intHostClockType
                         if (!clock.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION) && !clock.declaration.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION)) {
@@ -302,9 +304,11 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                                         }
                                     }
                                     if (scope instanceof State) {
-                                        // sleep time
-                                        if (!noSleep) {
-                                            scope.handleSleep(clock, sleepT)
+                                        if (!scope.connector) {
+                                            // sleep time
+                                            if (!noSleep) {
+                                                scope.handleSleep(clock, sleepT)
+                                            }
                                         }
                                     }
                                 }
@@ -341,7 +345,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                                 if (region === null) {
                                     environment.errors.add("Cannot handle concurrent or hierarchical timed automata using the same clock. Add @" + USE_SD_NAME + " annotation for experimental support based on schduling directives.", state)
                                 } else {
-                                    for (subState : region.states.toList) {
+                                    for (subState : region.states.filter[!it.connector].toList) {
                                         // error case
                                         if (subState.containsInnerActions || !subState.regions.nullOrEmpty) {
                                             if (subState.actions.exists[trigger?.eAllContents?.filter(ValuedObjectReference)?.exists[valuedObject == clock]] ||
@@ -489,6 +493,16 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                 during.createAssignment(sleepT, createSubExpression(createClockValue(threshold.value), clock.reference)).operator = AssignOperator.ASSIGNMIN
             }
         }
+    }
+    
+    def getClocks(State state) {
+        val clocks = newArrayList
+        // in state
+        clocks += state.variableDeclarations.filter[type == ValueType.CLOCK].map[valuedObjects].flatten
+        // in class
+        clocks += state.declarations.filter(ClassDeclaration).map[getAllNestedValuedObjects].flatten.filter[it.declaration instanceof VariableDeclaration && it.variableDeclaration.type == ValueType.CLOCK]
+        
+        return clocks       
     }
     
     def boolean isInsignificant(HashMultimap<Transition, OperatorExpression> constraints) {
