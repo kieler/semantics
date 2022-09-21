@@ -362,6 +362,12 @@ StateAccessExpression returns kexpressions::SpecialAccessExpression:
     ')'
     ('schedule' schedule += ScheduleObjectReference)?;
 
+@Override
+enum MethodReturnType returns kexpressions::ValueType:
+    VOID="void" |
+    BOOL="bool" | INT="int" | FLOAT="float" |
+    STRING="string" |
+    TIME="clock-time";
 
 // ------------ //
 //  Enum Rules  // 

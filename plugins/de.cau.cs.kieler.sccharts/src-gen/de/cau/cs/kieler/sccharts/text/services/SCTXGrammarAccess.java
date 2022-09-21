@@ -3942,6 +3942,72 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		public Keyword getShallowKeyword_3() { return cShallowKeyword_3; }
 	}
 	
+	public class MethodReturnTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.MethodReturnType");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cVOIDEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cVOIDVoidKeyword_0_0 = (Keyword)cVOIDEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cBOOLEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cBOOLBoolKeyword_1_0 = (Keyword)cBOOLEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cINTEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cINTIntKeyword_2_0 = (Keyword)cINTEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cFLOATEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cFLOATFloatKeyword_3_0 = (Keyword)cFLOATEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cSTRINGEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cSTRINGStringKeyword_4_0 = (Keyword)cSTRINGEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cTIMEEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cTIMEClockTimeKeyword_5_0 = (Keyword)cTIMEEnumLiteralDeclaration_5.eContents().get(0);
+		
+		//@Override
+		//enum MethodReturnType returns kexpressions::ValueType:
+		//    VOID="void" |
+		//    BOOL="bool" | INT="int" | FLOAT="float" |
+		//    STRING="string" |
+		//    TIME="clock-time";
+		public EnumRule getRule() { return rule; }
+		
+		//VOID="void" |
+		//BOOL="bool" | INT="int" | FLOAT="float" |
+		//STRING="string" |
+		//TIME="clock-time"
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//VOID="void"
+		public EnumLiteralDeclaration getVOIDEnumLiteralDeclaration_0() { return cVOIDEnumLiteralDeclaration_0; }
+		
+		//"void"
+		public Keyword getVOIDVoidKeyword_0_0() { return cVOIDVoidKeyword_0_0; }
+		
+		//BOOL="bool"
+		public EnumLiteralDeclaration getBOOLEnumLiteralDeclaration_1() { return cBOOLEnumLiteralDeclaration_1; }
+		
+		//"bool"
+		public Keyword getBOOLBoolKeyword_1_0() { return cBOOLBoolKeyword_1_0; }
+		
+		//INT="int"
+		public EnumLiteralDeclaration getINTEnumLiteralDeclaration_2() { return cINTEnumLiteralDeclaration_2; }
+		
+		//"int"
+		public Keyword getINTIntKeyword_2_0() { return cINTIntKeyword_2_0; }
+		
+		//FLOAT="float"
+		public EnumLiteralDeclaration getFLOATEnumLiteralDeclaration_3() { return cFLOATEnumLiteralDeclaration_3; }
+		
+		//"float"
+		public Keyword getFLOATFloatKeyword_3_0() { return cFLOATFloatKeyword_3_0; }
+		
+		//STRING="string"
+		public EnumLiteralDeclaration getSTRINGEnumLiteralDeclaration_4() { return cSTRINGEnumLiteralDeclaration_4; }
+		
+		//"string"
+		public Keyword getSTRINGStringKeyword_4_0() { return cSTRINGStringKeyword_4_0; }
+		
+		//TIME="clock-time"
+		public EnumLiteralDeclaration getTIMEEnumLiteralDeclaration_5() { return cTIMEEnumLiteralDeclaration_5; }
+		
+		//"clock-time"
+		public Keyword getTIMEClockTimeKeyword_5_0() { return cTIMEClockTimeKeyword_5_0; }
+	}
 	public class PreemptionTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.PreemptionType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -4224,6 +4290,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	private final SpecialAccessExpressionElements pSpecialAccessExpression;
 	private final SCChartAccessExpressionElements pSCChartAccessExpression;
 	private final StateAccessExpressionElements pStateAccessExpression;
+	private final MethodReturnTypeElements eMethodReturnType;
 	private final PreemptionTypeElements ePreemptionType;
 	private final PreemptionActionTypeElements ePreemptionActionType;
 	private final DelayTypeElements eDelayType;
@@ -4298,6 +4365,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		this.pSpecialAccessExpression = new SpecialAccessExpressionElements();
 		this.pSCChartAccessExpression = new SCChartAccessExpressionElements();
 		this.pStateAccessExpression = new StateAccessExpressionElements();
+		this.eMethodReturnType = new MethodReturnTypeElements();
 		this.ePreemptionType = new PreemptionTypeElements();
 		this.ePreemptionActionType = new PreemptionActionTypeElements();
 		this.eDelayType = new DelayTypeElements();
@@ -4954,6 +5022,20 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	
 	public ParserRule getStateAccessExpressionRule() {
 		return getStateAccessExpressionAccess().getRule();
+	}
+	
+	//@Override
+	//enum MethodReturnType returns kexpressions::ValueType:
+	//    VOID="void" |
+	//    BOOL="bool" | INT="int" | FLOAT="float" |
+	//    STRING="string" |
+	//    TIME="clock-time";
+	public MethodReturnTypeElements getMethodReturnTypeAccess() {
+		return eMethodReturnType;
+	}
+	
+	public EnumRule getMethodReturnTypeRule() {
+		return getMethodReturnTypeAccess().getRule();
 	}
 	
 	//// ------------ //
@@ -7300,18 +7382,6 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	
 	public EnumRule getAccessModifierRule() {
 		return getAccessModifierAccess().getRule();
-	}
-	
-	//enum MethodReturnType returns ValueType:
-	//    VOID="void" |
-	//    BOOL="bool" | INT="int" | FLOAT="float" |
-	//    STRING="string";
-	public KExpressionsGrammarAccess.MethodReturnTypeElements getMethodReturnTypeAccess() {
-		return gaKExpressions.getMethodReturnTypeAccess();
-	}
-	
-	public EnumRule getMethodReturnTypeRule() {
-		return getMethodReturnTypeAccess().getRule();
 	}
 	
 	//enum ParameterAccessType returns ParameterAccessType:

@@ -5218,7 +5218,7 @@ ruleKeywordMethodDeclarationWOSemicolon returns [EObject current=null]
 						$current,
 						"returnType",
 						lv_returnType_5_0,
-						"de.cau.cs.kieler.kexpressions.KExpressions.MethodReturnType");
+						"de.cau.cs.kieler.sccharts.text.SCTX.MethodReturnType");
 					afterParserOrEnumRuleCall();
 				}
 			)
@@ -7936,7 +7936,7 @@ ruleMethodDeclaration returns [EObject current=null]
 						$current,
 						"returnType",
 						lv_returnType_3_0,
-						"de.cau.cs.kieler.kexpressions.KExpressions.MethodReturnType");
+						"de.cau.cs.kieler.sccharts.text.SCTX.MethodReturnType");
 					afterParserOrEnumRuleCall();
 				}
 			)
@@ -8220,7 +8220,7 @@ ruleMethodDeclarationWOSemicolon returns [EObject current=null]
 						$current,
 						"returnType",
 						lv_returnType_3_0,
-						"de.cau.cs.kieler.kexpressions.KExpressions.MethodReturnType");
+						"de.cau.cs.kieler.sccharts.text.SCTX.MethodReturnType");
 					afterParserOrEnumRuleCall();
 				}
 			)
@@ -19567,6 +19567,65 @@ ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
 	)
 ;
 
+// Rule MethodReturnType
+ruleMethodReturnType returns [Enumerator current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			enumLiteral_0='void'
+			{
+				$current = grammarAccess.getMethodReturnTypeAccess().getVOIDEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_0, grammarAccess.getMethodReturnTypeAccess().getVOIDEnumLiteralDeclaration_0());
+			}
+		)
+		    |
+		(
+			enumLiteral_1='bool'
+			{
+				$current = grammarAccess.getMethodReturnTypeAccess().getBOOLEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_1, grammarAccess.getMethodReturnTypeAccess().getBOOLEnumLiteralDeclaration_1());
+			}
+		)
+		    |
+		(
+			enumLiteral_2='int'
+			{
+				$current = grammarAccess.getMethodReturnTypeAccess().getINTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_2, grammarAccess.getMethodReturnTypeAccess().getINTEnumLiteralDeclaration_2());
+			}
+		)
+		    |
+		(
+			enumLiteral_3='float'
+			{
+				$current = grammarAccess.getMethodReturnTypeAccess().getFLOATEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_3, grammarAccess.getMethodReturnTypeAccess().getFLOATEnumLiteralDeclaration_3());
+			}
+		)
+		    |
+		(
+			enumLiteral_4='string'
+			{
+				$current = grammarAccess.getMethodReturnTypeAccess().getSTRINGEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_4, grammarAccess.getMethodReturnTypeAccess().getSTRINGEnumLiteralDeclaration_4());
+			}
+		)
+		    |
+		(
+			enumLiteral_5='clock-time'
+			{
+				$current = grammarAccess.getMethodReturnTypeAccess().getTIMEEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_5, grammarAccess.getMethodReturnTypeAccess().getTIMEEnumLiteralDeclaration_5());
+			}
+		)
+	)
+;
+
 // Rule PreemptionType
 rulePreemptionType returns [Enumerator current=null]
 @init {
@@ -20567,57 +20626,6 @@ ruleAccessModifier returns [Enumerator current=null]
 			{
 				$current = grammarAccess.getAccessModifierAccess().getPRIVATEEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
 				newLeafNode(enumLiteral_2, grammarAccess.getAccessModifierAccess().getPRIVATEEnumLiteralDeclaration_2());
-			}
-		)
-	)
-;
-
-// Rule MethodReturnType
-ruleMethodReturnType returns [Enumerator current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			enumLiteral_0='void'
-			{
-				$current = grammarAccess.getMethodReturnTypeAccess().getVOIDEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_0, grammarAccess.getMethodReturnTypeAccess().getVOIDEnumLiteralDeclaration_0());
-			}
-		)
-		    |
-		(
-			enumLiteral_1='bool'
-			{
-				$current = grammarAccess.getMethodReturnTypeAccess().getBOOLEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_1, grammarAccess.getMethodReturnTypeAccess().getBOOLEnumLiteralDeclaration_1());
-			}
-		)
-		    |
-		(
-			enumLiteral_2='int'
-			{
-				$current = grammarAccess.getMethodReturnTypeAccess().getINTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_2, grammarAccess.getMethodReturnTypeAccess().getINTEnumLiteralDeclaration_2());
-			}
-		)
-		    |
-		(
-			enumLiteral_3='float'
-			{
-				$current = grammarAccess.getMethodReturnTypeAccess().getFLOATEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_3, grammarAccess.getMethodReturnTypeAccess().getFLOATEnumLiteralDeclaration_3());
-			}
-		)
-		    |
-		(
-			enumLiteral_4='string'
-			{
-				$current = grammarAccess.getMethodReturnTypeAccess().getSTRINGEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_4, grammarAccess.getMethodReturnTypeAccess().getSTRINGEnumLiteralDeclaration_4());
 			}
 		)
 	)

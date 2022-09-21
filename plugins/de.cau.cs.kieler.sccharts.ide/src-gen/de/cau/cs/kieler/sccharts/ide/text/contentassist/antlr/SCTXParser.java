@@ -130,6 +130,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getEStringBooleanAccess().getAlternatives(), "rule__EStringBoolean__Alternatives");
 			builder.put(grammarAccess.getEStringAllTypesAccess().getAlternatives(), "rule__EStringAllTypes__Alternatives");
 			builder.put(grammarAccess.getExtendedIDAccess().getAlternatives_1_0(), "rule__ExtendedID__Alternatives_1_0");
+			builder.put(grammarAccess.getMethodReturnTypeAccess().getAlternatives(), "rule__MethodReturnType__Alternatives");
 			builder.put(grammarAccess.getPreemptionTypeAccess().getAlternatives(), "rule__PreemptionType__Alternatives");
 			builder.put(grammarAccess.getPreemptionActionTypeAccess().getAlternatives(), "rule__PreemptionActionType__Alternatives");
 			builder.put(grammarAccess.getDelayTypeAccess().getAlternatives(), "rule__DelayType__Alternatives");
@@ -142,7 +143,6 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 			builder.put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 			builder.put(grammarAccess.getAccessModifierAccess().getAlternatives(), "rule__AccessModifier__Alternatives");
-			builder.put(grammarAccess.getMethodReturnTypeAccess().getAlternatives(), "rule__MethodReturnType__Alternatives");
 			builder.put(grammarAccess.getParameterAccessTypeAccess().getAlternatives(), "rule__ParameterAccessType__Alternatives");
 			builder.put(grammarAccess.getSCChartsAccess().getGroup(), "rule__SCCharts__Group__0");
 			builder.put(grammarAccess.getSCChartsAccess().getGroup_0_1(), "rule__SCCharts__Group_0_1__0");
