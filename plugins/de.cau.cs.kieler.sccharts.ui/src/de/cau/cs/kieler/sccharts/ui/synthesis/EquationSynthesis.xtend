@@ -152,8 +152,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     static val SKIN_PREFIX_DEFAULT = "default/"
     static val ANNOTATION_FIGURE = "figure"
 
-    static val PORT_LABEL_FONT_SIZE = 5
-    static val INPUT_OUTPUT_TEXT_SIZE = 9
+    public static val NODE_LABEL_FONT_SIZE = 10
+    public static val PORT_LABEL_FONT_SIZE = 8
+    public static val INPUT_OUTPUT_TEXT_SIZE = 10
     static val PADDING_INPUT_LEFT = 2
     static val PADDING_INPUT_RIGHT = 4
     static val PADDING_OUTPUT_LEFT = 4
@@ -891,12 +892,12 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         var newNode = node
 
         node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.SIMPLE)
-        node.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
+        node.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE)
         node.setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, EnumSet.of(PortLabelPlacement.INSIDE))
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); // 10.5 // 8f
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
         node.addLayoutParam(KlighdProperties::EXPAND, false)
-        node.addLayoutParam(LayeredOptions::SPACING_PORT_PORT, 20d)
+        node.addLayoutParam(LayeredOptions::SPACING_PORT_PORT, 10d)
 
         val referenceDeclaration = voRef.valuedObject.declaration as ReferenceDeclaration
         if (referenceDeclaration.hasAnnotation(ANNOTATION_FIGURE)) {
@@ -960,11 +961,18 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 setAsExpandedView;
                 addDoubleClickAction(ReferenceExpandAction::ID);
             ]
-            newNode.addNodeLabel(label)
+            if (SHOW_REFERENCED_PORT_LABELS.booleanValue && !REFERENCED_PORT_LABELS_OUTSIDE.booleanValue) {
+                newNode.addInsideCenteredNodeLabel(label, 8)
+            } else {
+                newNode.addNodeLabel(label, NODE_LABEL_FONT_SIZE)
+            }
         }
 
         newNode.setLayoutOption(LayeredOptions::NODE_SIZE_CONSTRAINTS,
-            EnumSet.of(SizeConstraint.PORTS, SizeConstraint.PORT_LABELS, SizeConstraint.MINIMUM_SIZE, 
+            EnumSet.of(
+                SizeConstraint.PORTS, 
+                SizeConstraint.PORT_LABELS,
+                SizeConstraint.MINIMUM_SIZE, 
                 SizeConstraint.NODE_LABELS
             ))
         newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
@@ -1160,6 +1168,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                         port.labels.remove(0)
                     }
                     port.createLabel().configureOutsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+                    port.node.setLayoutOption(CoreOptions::PORT_LABELS_PLACEMENT, EnumSet.of(PortLabelPlacement.OUTSIDE, PortLabelPlacement.ALWAYS_OTHER_SAME_SIDE))
                 } else {
                     if (portLabel !== null) {
                         port.labels.remove(0)

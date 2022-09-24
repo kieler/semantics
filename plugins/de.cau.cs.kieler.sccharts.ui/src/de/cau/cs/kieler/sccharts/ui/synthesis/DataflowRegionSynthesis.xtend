@@ -90,8 +90,20 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         node.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::NETWORK_SIMPLEX)
         node.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, true)
         node.setLayoutOption(LayeredOptions::HIGH_DEGREE_NODES_TREATMENT, true)
-        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d)
-        node.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 10d)
+        
+        // Spacing
+        node.setLayoutOption(LayeredOptions.SPACING_COMPONENT_COMPONENT, LayeredOptions.SPACING_COMPONENT_COMPONENT.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_NODE_NODE, LayeredOptions.SPACING_NODE_NODE.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_NODE_NODE_BETWEEN_LAYERS, LayeredOptions.SPACING_NODE_NODE_BETWEEN_LAYERS.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_PORT_PORT, LayeredOptions.SPACING_PORT_PORT.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_EDGE_NODE, LayeredOptions.SPACING_EDGE_NODE.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_EDGE_NODE_BETWEEN_LAYERS, LayeredOptions.SPACING_EDGE_NODE_BETWEEN_LAYERS.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_EDGE_EDGE, LayeredOptions.SPACING_EDGE_EDGE.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_EDGE_EDGE_BETWEEN_LAYERS, LayeredOptions.SPACING_EDGE_EDGE_BETWEEN_LAYERS.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_EDGE_EDGE, LayeredOptions.SPACING_EDGE_EDGE.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_EDGE_EDGE_BETWEEN_LAYERS, LayeredOptions.SPACING_EDGE_EDGE_BETWEEN_LAYERS.getDefault() * 0.5f);
+        //node.setLayoutOption(LayeredOptions.SPACING_EDGE_LABEL, LayeredOptions.SPACING_EDGE_LABEL.getDefault() * 0.5f);
+            
         
         if (CIRCUIT.booleanValue) {
             node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_SEMI_INTERACTIVE, true)
