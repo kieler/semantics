@@ -19,5 +19,5 @@ package de.cau.cs.kieler.sccharts.extensions
  *
  */
 enum TextFormat { 
-    KEYWORD, HIGHLIGHT, TEXT, CONTENT_PLACEHOLDER
+    KEYWORD, HIGHLIGHT, TEXT, CONTENT_PLACEHOLDER, SCHEDULE
 }

@@ -147,6 +147,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                 } else {
                     action.trigger.serialize
                 })
+                if (action.trigger.schedule.nullOrEmpty) {
+                    components.addSD(action.trigger.schedule.map[it.valuedObject?.name + " " + it.priority].join(", "))
+                }
             }
     
             if (!action.effects.empty) {
@@ -156,6 +159,10 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                 } else {
                     action.effects.serialize
                 })
+                val sdRefs = action.effects.map[it.schedule].flatten
+                if (!sdRefs.empty) {
+                    components.addSD(sdRefs.map[it.valuedObject?.name + " " + it.priority].join(", "))
+                }
             }
         }
 
@@ -218,6 +225,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                     components.addKeyword("passive")
                 }
                 components.addKeyword("clock")
+            } else if (type == ValueType.TIME) {
+                components.addKeyword("clock-time")
             }  else if (type == ValueType.STRUCT) {
                 if ((declaration as ClassDeclaration).host) components.addKeyword("host")
                 components.addKeyword("struct")
@@ -469,6 +478,10 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     
     private def addText(List<Pair<? extends CharSequence, TextFormat>> list, CharSequence text) {
         list += new Pair(text, TextFormat.TEXT)
+    }
+    
+    private def addSD(List<Pair<? extends CharSequence, TextFormat>> list, CharSequence text) {
+        list += new Pair(text, TextFormat.SCHEDULE)
     }
     
     private def addContentPlaceholder(List<Pair<? extends CharSequence, TextFormat>> list) {

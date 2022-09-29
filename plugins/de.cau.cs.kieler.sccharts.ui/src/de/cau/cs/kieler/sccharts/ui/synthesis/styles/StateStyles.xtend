@@ -316,11 +316,10 @@ class StateStyles {
                             horizontalAlignment = H_LEFT
                             selectionTextUnderline = Underline.SINGLE
                         ]
-		                if (keyword == TextFormat.KEYWORD) {
-		                	ktext.highlightKeyword
-		                }                		
-                        if (keyword == TextFormat.HIGHLIGHT) {
-                            ktext.highlightHighlight
+                        switch(keyword) {
+                            case KEYWORD: ktext.highlightKeyword
+                            case HIGHLIGHT: ktext.highlightHighlight
+                            case SCHEDULE: ktext.highlightSD
                         }
 		                builder.length = 0
                 		parts++
@@ -336,11 +335,10 @@ class StateStyles {
                     horizontalAlignment = H_LEFT
                     selectionTextUnderline = Underline.SINGLE
                 ]
-                if (keyword == TextFormat.KEYWORD) {
-                	ktext.highlightKeyword
-                }
-                if (keyword == TextFormat.HIGHLIGHT) {
-                    ktext.highlightHighlight
+                switch(keyword) {
+                    case KEYWORD: ktext.highlightKeyword
+                    case HIGHLIGHT: ktext.highlightHighlight
+                    case SCHEDULE: ktext.highlightSD
                 }
                 parts++
                 setGridPlacement(parts)
@@ -355,6 +353,10 @@ class StateStyles {
     
     package def highlightHighlight(KText ktext) {
         ktext.foreground = KEYWORD.color;
+    }
+    
+    package def highlightSD(KText ktext) {
+        ktext.foreground = USER_SCHEDULE_COLOR.color
     }
     
     /**

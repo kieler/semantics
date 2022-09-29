@@ -99,7 +99,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         // User schedules
         val userSchedule = if (transition.trigger !== null) (transition.trigger.schedule + transition.effects.map[ schedule ].flatten).toSet
             else (transition.effects.map[ schedule ].flatten).toSet
-        if (userSchedule.size > 0) {
+        if (!userSchedule.empty) {
             val sLabel = new StringBuilder
             val exists = <Pair<ValuedObject, Integer>> newHashSet
             for (s : userSchedule) {
