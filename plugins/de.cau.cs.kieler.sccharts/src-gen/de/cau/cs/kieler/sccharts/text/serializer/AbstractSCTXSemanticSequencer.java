@@ -1907,7 +1907,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         (access=AccessModifier | override?='override')? 
-	 *         returnType=MethodReturnType? 
+	 *         (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))? 
 	 *         valuedObjects+=SimpleValuedObject 
 	 *         (parameterDeclarations+=VariableDeclarationWOSemicolon parameterDeclarations+=VariableDeclarationWOSemicolon*)? 
 	 *         schedule+=ScheduleObjectReference* 

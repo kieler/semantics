@@ -113,6 +113,7 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('.' | ';')?
 	 *
@@ -131,12 +132,15 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 *     valuedObject=StateValuedObject ('let' 'tel')? (ambiguity) transitions+=ATransition
 	 *     variables+=VariableDeclarationInit ';' ('let' 'tel')? (ambiguity) (rule end)
 	 *     variables+=VariableDeclarationInit ';' ('let' 'tel')? (ambiguity) transitions+=ATransition
+	 
+	 * </pre>
 	 */
 	protected void emit_AState___FullStopKeyword_5_0_or_SemicolonKeyword_5_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('let' 'tel')?
 	 *
@@ -147,12 +151,15 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 *     valuedObject=StateValuedObject (ambiguity) ('.' | ';')? transitions+=ATransition
 	 *     variables+=VariableDeclarationInit ';' (ambiguity) ('.' | ';')? (rule end)
 	 *     variables+=VariableDeclarationInit ';' (ambiguity) ('.' | ';')? transitions+=ATransition
+	 
+	 * </pre>
 	 */
 	protected void emit_AState___LetKeyword_4_0_TelKeyword_4_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     'do'?
 	 *
@@ -161,12 +168,15 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 *     (rule start) (ambiguity) history?='resume'
 	 *     condition=BoolExpression (ambiguity) 'restart' nextState=[StateValuedObject|ID]
 	 *     condition=BoolExpression (ambiguity) history?='resume'
+	 
+	 * </pre>
 	 */
 	protected void emit_AnAction_DoKeyword_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('(' '('*)*
 	 *
@@ -178,12 +188,15 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 *     (rule start) (ambiguity) operator=ValOperator
 	 *     (rule start) (ambiguity) value=BOOLEAN
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_5_0_a__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('(' '('*)+
 	 *
@@ -200,23 +213,29 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 *     (rule start) (ambiguity) value=INT
 	 *     (rule start) (ambiguity) value=STRING
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_5_0_a__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('(' ('('* '(')*)?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) operator=NotOperator
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__a__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('(' | '(')*
 	 *
@@ -240,12 +259,15 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 *     (rule start) (ambiguity) value=STRING
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_5_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('(' | '(')+
 	 *
@@ -256,12 +278,15 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_5_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('('* '(')*
 	 *
@@ -272,12 +297,15 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 *     (rule start) (ambiguity) operator=ConditionalOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('('* '(')+
 	 *
@@ -285,12 +313,15 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 *     (rule start) (ambiguity) operator=ConditionalOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ';'?
 	 *
@@ -298,12 +329,15 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 *     inputs+=VariableDeclarationNoInit ')' 'returns' '()' (ambiguity) (rule end)
 	 *     outputs+=VariableDeclarationNoInit ')' (ambiguity) (rule end)
 	 *     valuedObjects+=NodeValuedObject '()' 'returns' '()' (ambiguity) (rule end)
+	 
+	 * </pre>
 	 */
 	protected void emit_ExternalNodeDeclaration_SemicolonKeyword_8_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ';'?
 	 *
@@ -332,12 +366,15 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 *     valuedObjects+=NodeValuedObject '()' 'returns' '()' (ambiguity) 'let' equations+=Equation
 	 *     valuedObjects+=NodeValuedObject '()' 'returns' '()' (ambiguity) 'var' variables+=VariableDeclarationInit
 	 *     valuedObjects+=NodeValuedObject '()' 'returns' '()' (ambiguity) 'var' variables+=VariableDeclarationNoInit
+	 
+	 * </pre>
 	 */
 	protected void emit_NodeDeclaration_SemicolonKeyword_7_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('.' | ';')?
 	 *
@@ -352,34 +389,43 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 *     valuedObjects+=NodeValuedObject '()' 'returns' '()' ';'? 'let' 'tel' (ambiguity) (rule end)
 	 *     variables+=VariableDeclarationInit ';' 'let' 'tel' (ambiguity) (rule end)
 	 *     variables+=VariableDeclarationNoInit ';' 'let' 'tel' (ambiguity) (rule end)
+	 
+	 * </pre>
 	 */
 	protected void emit_NodeDeclaration___FullStopKeyword_12_0_or_SemicolonKeyword_12_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     '()'?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) 'random' (ambiguity) (rule start)
+	 
+	 * </pre>
 	 */
 	protected void emit_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     '()'?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) 'randomize' (ambiguity) (rule start)
+	 
+	 * </pre>
 	 */
 	protected void emit_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     '()'?
 	 *
@@ -387,24 +433,29 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 *     cardinalities+=Expression ']' (ambiguity) '=' initialValue=Expression
 	 *     cardinalities+=Expression ']' (ambiguity) 'label' label=STRING
 	 *     cardinalities+=Expression ']' (ambiguity) (rule end)
-	 *     genericParameters+=GenericParameter '>' (ambiguity) '=' initialValue=Expression
-	 *     genericParameters+=GenericParameter '>' (ambiguity) 'label' label=STRING
-	 *     genericParameters+=GenericParameter '>' (ambiguity) (rule end)
+	 *     genericParameters+=GenericParameter '&gt;' (ambiguity) '=' initialValue=Expression
+	 *     genericParameters+=GenericParameter '&gt;' (ambiguity) 'label' label=STRING
+	 *     genericParameters+=GenericParameter '&gt;' (ambiguity) (rule end)
 	 *     name=PrimeID (ambiguity) '=' initialValue=Expression
 	 *     name=PrimeID (ambiguity) 'label' label=STRING
 	 *     name=PrimeID (ambiguity) (rule end)
+	 
+	 * </pre>
 	 */
 	protected void emit_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ';'?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     variables+=VariableDeclarationInit (ambiguity) '}' (rule end)
 	 *     variables+=VariableDeclarationNoInit (ambiguity) '}' (rule end)
+	 
+	 * </pre>
 	 */
 	protected void emit_TypeDeclaration_SemicolonKeyword_2_1_2_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

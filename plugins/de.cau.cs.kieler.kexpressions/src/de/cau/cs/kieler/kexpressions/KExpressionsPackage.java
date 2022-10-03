@@ -1328,13 +1328,22 @@ public interface KExpressionsPackage extends EPackage {
     int METHOD_DECLARATION__RETURN_TYPE = DECLARATION_FEATURE_COUNT + 2;
 
     /**
+     * The feature id for the '<em><b>Return Host Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_DECLARATION__RETURN_HOST_TYPE = DECLARATION_FEATURE_COUNT + 3;
+
+    /**
      * The feature id for the '<em><b>Parameter Declarations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int METHOD_DECLARATION__PARAMETER_DECLARATIONS = DECLARATION_FEATURE_COUNT + 3;
+    int METHOD_DECLARATION__PARAMETER_DECLARATIONS = DECLARATION_FEATURE_COUNT + 4;
 
     /**
      * The number of structural features of the '<em>Method Declaration</em>' class.
@@ -1343,7 +1352,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int METHOD_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 4;
+    int METHOD_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -2839,6 +2848,17 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getMethodDeclaration_ReturnType();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getReturnHostType <em>Return Host Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Return Host Type</em>'.
+     * @see de.cau.cs.kieler.kexpressions.MethodDeclaration#getReturnHostType()
+     * @see #getMethodDeclaration()
+     * @generated
+     */
+    EAttribute getMethodDeclaration_ReturnHostType();
+
+    /**
      * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getParameterDeclarations <em>Parameter Declarations</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3887,6 +3907,14 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EAttribute METHOD_DECLARATION__RETURN_TYPE = eINSTANCE.getMethodDeclaration_ReturnType();
+
+        /**
+         * The meta object literal for the '<em><b>Return Host Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute METHOD_DECLARATION__RETURN_HOST_TYPE = eINSTANCE.getMethodDeclaration_ReturnHostType();
 
         /**
          * The meta object literal for the '<em><b>Parameter Declarations</b></em>' containment reference list feature.

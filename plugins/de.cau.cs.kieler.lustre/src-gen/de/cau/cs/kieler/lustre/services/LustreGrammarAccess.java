@@ -4782,7 +4782,7 @@ public class LustreGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    {kexpressions::MethodDeclaration}
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
-	//    returnType=MethodReturnType?
+	//    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
 	//    valuedObjects+=SimpleValuedObject
 	//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 	//    ('schedule' schedule+=ScheduleObjectReference+)?
@@ -4801,7 +4801,7 @@ public class LustreGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    {kexpressions::MethodDeclaration}
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
-	//    returnType=MethodReturnType?
+	//    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
 	//    valuedObjects+=SimpleValuedObject
 	//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 	//    ('schedule' schedule+=ScheduleObjectReference+)?

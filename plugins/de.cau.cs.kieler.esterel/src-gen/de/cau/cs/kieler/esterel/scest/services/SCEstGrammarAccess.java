@@ -3132,7 +3132,7 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//    {MethodImplementationDeclaration}
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
-	//    returnType=MethodReturnType?
+	//    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
 	//    valuedObjects+=SimpleValuedObject
 	//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 	//    ('schedule' schedule+=ScheduleObjectReference+)?
@@ -3160,7 +3160,7 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//    {MethodImplementationDeclaration}
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
-	//    returnType=MethodReturnType?
+	//    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
 	//    valuedObjects+=SimpleValuedObject
 	//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 	//    ('schedule' schedule+=ScheduleObjectReference+)?

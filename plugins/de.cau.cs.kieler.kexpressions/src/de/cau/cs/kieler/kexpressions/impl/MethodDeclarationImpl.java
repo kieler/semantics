@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl#getSchedule <em>Schedule</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl#isOverride <em>Override</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl#getReturnType <em>Return Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl#getReturnHostType <em>Return Host Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl#getParameterDeclarations <em>Parameter Declarations</em>}</li>
  * </ul>
  *
@@ -90,6 +91,26 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
      * @ordered
      */
     protected ValueType returnType = RETURN_TYPE_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getReturnHostType() <em>Return Host Type</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getReturnHostType()
+     * @generated
+     * @ordered
+     */
+    protected static final String RETURN_HOST_TYPE_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getReturnHostType() <em>Return Host Type</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getReturnHostType()
+     * @generated
+     * @ordered
+     */
+    protected String returnHostType = RETURN_HOST_TYPE_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getParameterDeclarations() <em>Parameter Declarations</em>}' containment reference list.
@@ -185,6 +206,29 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
      * @generated
      */
     @Override
+    public String getReturnHostType() {
+        return returnHostType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setReturnHostType(String newReturnHostType) {
+        String oldReturnHostType = returnHostType;
+        returnHostType = newReturnHostType;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.METHOD_DECLARATION__RETURN_HOST_TYPE, oldReturnHostType, returnHostType));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EList<Declaration> getParameterDeclarations() {
         if (parameterDeclarations == null) {
             parameterDeclarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, KExpressionsPackage.METHOD_DECLARATION__PARAMETER_DECLARATIONS);
@@ -222,6 +266,8 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
                 return isOverride();
             case KExpressionsPackage.METHOD_DECLARATION__RETURN_TYPE:
                 return getReturnType();
+            case KExpressionsPackage.METHOD_DECLARATION__RETURN_HOST_TYPE:
+                return getReturnHostType();
             case KExpressionsPackage.METHOD_DECLARATION__PARAMETER_DECLARATIONS:
                 return getParameterDeclarations();
         }
@@ -246,6 +292,9 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
                 return;
             case KExpressionsPackage.METHOD_DECLARATION__RETURN_TYPE:
                 setReturnType((ValueType)newValue);
+                return;
+            case KExpressionsPackage.METHOD_DECLARATION__RETURN_HOST_TYPE:
+                setReturnHostType((String)newValue);
                 return;
             case KExpressionsPackage.METHOD_DECLARATION__PARAMETER_DECLARATIONS:
                 getParameterDeclarations().clear();
@@ -272,6 +321,9 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
             case KExpressionsPackage.METHOD_DECLARATION__RETURN_TYPE:
                 setReturnType(RETURN_TYPE_EDEFAULT);
                 return;
+            case KExpressionsPackage.METHOD_DECLARATION__RETURN_HOST_TYPE:
+                setReturnHostType(RETURN_HOST_TYPE_EDEFAULT);
+                return;
             case KExpressionsPackage.METHOD_DECLARATION__PARAMETER_DECLARATIONS:
                 getParameterDeclarations().clear();
                 return;
@@ -293,6 +345,8 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
                 return override != OVERRIDE_EDEFAULT;
             case KExpressionsPackage.METHOD_DECLARATION__RETURN_TYPE:
                 return returnType != RETURN_TYPE_EDEFAULT;
+            case KExpressionsPackage.METHOD_DECLARATION__RETURN_HOST_TYPE:
+                return RETURN_HOST_TYPE_EDEFAULT == null ? returnHostType != null : !RETURN_HOST_TYPE_EDEFAULT.equals(returnHostType);
             case KExpressionsPackage.METHOD_DECLARATION__PARAMETER_DECLARATIONS:
                 return parameterDeclarations != null && !parameterDeclarations.isEmpty();
         }
@@ -345,6 +399,8 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
         result.append(override);
         result.append(", returnType: ");
         result.append(returnType);
+        result.append(", returnHostType: ");
+        result.append(returnHostType);
         result.append(')');
         return result.toString();
     }

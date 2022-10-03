@@ -211,7 +211,7 @@ MethodDeclaration returns kexpressions::MethodDeclaration:
     {kexpressions::MethodDeclaration}
     annotations+=Annotation*
     access=AccessModifier?
-    returnType=MethodReturnType?
+    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
     valuedObjects+=SimpleValuedObject
     (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
     ('schedule' schedule+=ScheduleObjectReference+)?
@@ -223,7 +223,7 @@ MethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
     {kexpressions::MethodDeclaration}
     annotations+=Annotation*
     access=AccessModifier?
-    returnType=MethodReturnType?
+    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
     valuedObjects+=SimpleValuedObject
     (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
     ('schedule' schedule+=ScheduleObjectReference+)?

@@ -75,7 +75,9 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDeclarationOrMethodAccess().getAlternatives(), "rule__DeclarationOrMethod__Alternatives");
 			builder.put(grammarAccess.getClassDeclarationWOSemicolonAccess().getAlternatives_4(), "rule__ClassDeclarationWOSemicolon__Alternatives_4");
 			builder.put(grammarAccess.getDeclarationOrMethodWOSemicolonAccess().getAlternatives(), "rule__DeclarationOrMethodWOSemicolon__Alternatives");
+			builder.put(grammarAccess.getMethodDeclarationAccess().getAlternatives_3(), "rule__MethodDeclaration__Alternatives_3");
 			builder.put(grammarAccess.getMethodDeclarationAccess().getAlternatives_5(), "rule__MethodDeclaration__Alternatives_5");
+			builder.put(grammarAccess.getMethodDeclarationWOSemicolonAccess().getAlternatives_3(), "rule__MethodDeclarationWOSemicolon__Alternatives_3");
 			builder.put(grammarAccess.getMethodDeclarationWOSemicolonAccess().getAlternatives_5(), "rule__MethodDeclarationWOSemicolon__Alternatives_5");
 			builder.put(grammarAccess.getReferenceDeclarationAccess().getAlternatives_2(), "rule__ReferenceDeclaration__Alternatives_2");
 			builder.put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAlternatives_2(), "rule__ReferenceDeclarationWOSemicolon__Alternatives_2");
@@ -257,10 +259,12 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getEnumMemberDeclarationAccess().getGroup_2(), "rule__EnumMemberDeclaration__Group_2__0");
 			builder.put(grammarAccess.getEnumDeclarationWOSemicolonAccess().getGroup(), "rule__EnumDeclarationWOSemicolon__Group__0");
 			builder.put(grammarAccess.getMethodDeclarationAccess().getGroup(), "rule__MethodDeclaration__Group__0");
+			builder.put(grammarAccess.getMethodDeclarationAccess().getGroup_3_1(), "rule__MethodDeclaration__Group_3_1__0");
 			builder.put(grammarAccess.getMethodDeclarationAccess().getGroup_5_0(), "rule__MethodDeclaration__Group_5_0__0");
 			builder.put(grammarAccess.getMethodDeclarationAccess().getGroup_5_0_2(), "rule__MethodDeclaration__Group_5_0_2__0");
 			builder.put(grammarAccess.getMethodDeclarationAccess().getGroup_6(), "rule__MethodDeclaration__Group_6__0");
 			builder.put(grammarAccess.getMethodDeclarationWOSemicolonAccess().getGroup(), "rule__MethodDeclarationWOSemicolon__Group__0");
+			builder.put(grammarAccess.getMethodDeclarationWOSemicolonAccess().getGroup_3_1(), "rule__MethodDeclarationWOSemicolon__Group_3_1__0");
 			builder.put(grammarAccess.getMethodDeclarationWOSemicolonAccess().getGroup_5_0(), "rule__MethodDeclarationWOSemicolon__Group_5_0__0");
 			builder.put(grammarAccess.getMethodDeclarationWOSemicolonAccess().getGroup_5_0_2(), "rule__MethodDeclarationWOSemicolon__Group_5_0_2__0");
 			builder.put(grammarAccess.getMethodDeclarationWOSemicolonAccess().getGroup_6(), "rule__MethodDeclarationWOSemicolon__Group_6__0");
@@ -698,7 +702,9 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getEnumDeclarationWOSemicolonAccess().getAnnotationsAssignment_10(), "rule__EnumDeclarationWOSemicolon__AnnotationsAssignment_10");
 			builder.put(grammarAccess.getMethodDeclarationAccess().getAnnotationsAssignment_1(), "rule__MethodDeclaration__AnnotationsAssignment_1");
 			builder.put(grammarAccess.getMethodDeclarationAccess().getAccessAssignment_2(), "rule__MethodDeclaration__AccessAssignment_2");
-			builder.put(grammarAccess.getMethodDeclarationAccess().getReturnTypeAssignment_3(), "rule__MethodDeclaration__ReturnTypeAssignment_3");
+			builder.put(grammarAccess.getMethodDeclarationAccess().getReturnTypeAssignment_3_0(), "rule__MethodDeclaration__ReturnTypeAssignment_3_0");
+			builder.put(grammarAccess.getMethodDeclarationAccess().getReturnTypeAssignment_3_1_0(), "rule__MethodDeclaration__ReturnTypeAssignment_3_1_0");
+			builder.put(grammarAccess.getMethodDeclarationAccess().getReturnHostTypeAssignment_3_1_1(), "rule__MethodDeclaration__ReturnHostTypeAssignment_3_1_1");
 			builder.put(grammarAccess.getMethodDeclarationAccess().getValuedObjectsAssignment_4(), "rule__MethodDeclaration__ValuedObjectsAssignment_4");
 			builder.put(grammarAccess.getMethodDeclarationAccess().getParameterDeclarationsAssignment_5_0_1(), "rule__MethodDeclaration__ParameterDeclarationsAssignment_5_0_1");
 			builder.put(grammarAccess.getMethodDeclarationAccess().getParameterDeclarationsAssignment_5_0_2_1(), "rule__MethodDeclaration__ParameterDeclarationsAssignment_5_0_2_1");
@@ -706,7 +712,9 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getMethodDeclarationAccess().getAnnotationsAssignment_8(), "rule__MethodDeclaration__AnnotationsAssignment_8");
 			builder.put(grammarAccess.getMethodDeclarationWOSemicolonAccess().getAnnotationsAssignment_1(), "rule__MethodDeclarationWOSemicolon__AnnotationsAssignment_1");
 			builder.put(grammarAccess.getMethodDeclarationWOSemicolonAccess().getAccessAssignment_2(), "rule__MethodDeclarationWOSemicolon__AccessAssignment_2");
-			builder.put(grammarAccess.getMethodDeclarationWOSemicolonAccess().getReturnTypeAssignment_3(), "rule__MethodDeclarationWOSemicolon__ReturnTypeAssignment_3");
+			builder.put(grammarAccess.getMethodDeclarationWOSemicolonAccess().getReturnTypeAssignment_3_0(), "rule__MethodDeclarationWOSemicolon__ReturnTypeAssignment_3_0");
+			builder.put(grammarAccess.getMethodDeclarationWOSemicolonAccess().getReturnTypeAssignment_3_1_0(), "rule__MethodDeclarationWOSemicolon__ReturnTypeAssignment_3_1_0");
+			builder.put(grammarAccess.getMethodDeclarationWOSemicolonAccess().getReturnHostTypeAssignment_3_1_1(), "rule__MethodDeclarationWOSemicolon__ReturnHostTypeAssignment_3_1_1");
 			builder.put(grammarAccess.getMethodDeclarationWOSemicolonAccess().getValuedObjectsAssignment_4(), "rule__MethodDeclarationWOSemicolon__ValuedObjectsAssignment_4");
 			builder.put(grammarAccess.getMethodDeclarationWOSemicolonAccess().getParameterDeclarationsAssignment_5_0_1(), "rule__MethodDeclarationWOSemicolon__ParameterDeclarationsAssignment_5_0_1");
 			builder.put(grammarAccess.getMethodDeclarationWOSemicolonAccess().getParameterDeclarationsAssignment_5_0_2_1(), "rule__MethodDeclarationWOSemicolon__ParameterDeclarationsAssignment_5_0_2_1");

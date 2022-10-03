@@ -1196,11 +1196,13 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	}
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Assignment returns Assignment
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* reference=ValuedObjectReference operator=AssignOperator expression=Expression schedule+=ScheduleObjectReference*)
+	 * </pre>
 	 */
 	protected void sequence_Assignment(ISerializationContext context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1208,6 +1210,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Effect returns Assignment
 	 *
@@ -1216,6 +1219,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *         (annotations+=Annotation* reference=ValuedObjectReference operator=AssignOperator expression=Expression schedule+=ScheduleObjectReference*) | 
 	 *         (annotations+=Annotation* reference=ValuedObjectReference operator=PostfixOperator schedule+=ScheduleObjectReference*)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_Assignment_PostfixEffect(ISerializationContext context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1223,12 +1227,14 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Effect returns FunctionCallEffect
 	 *     FunctionCallEffect returns FunctionCallEffect
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* functionName=ID (parameters+=Parameter parameters+=Parameter*)?)
+	 * </pre>
 	 */
 	protected void sequence_FunctionCallEffect(ISerializationContext context, FunctionCallEffect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1236,12 +1242,14 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Effect returns HostcodeEffect
 	 *     HostcodeEffect returns HostcodeEffect
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* text=HOSTCODE)
+	 * </pre>
 	 */
 	protected void sequence_HostcodeEffect(ISerializationContext context, HostcodeEffect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1249,11 +1257,13 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PostfixEffect returns Assignment
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* reference=ValuedObjectReference operator=PostfixOperator schedule+=ScheduleObjectReference*)
+	 * </pre>
 	 */
 	protected void sequence_PostfixEffect(ISerializationContext context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1261,12 +1271,14 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Effect returns PrintCallEffect
 	 *     PrintCallEffect returns PrintCallEffect
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* parameters+=Parameter parameters+=Parameter* schedule+=ScheduleObjectReference*)
+	 * </pre>
 	 */
 	protected void sequence_PrintCallEffect(ISerializationContext context, PrintCallEffect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1274,11 +1286,13 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PureEmission returns Emission
 	 *
 	 * Constraint:
 	 *     (annotations+=QuotedStringAnnotation* reference=ValuedObjectReference schedule+=ScheduleObjectReference*)
+	 * </pre>
 	 */
 	protected void sequence_PureEmission(ISerializationContext context, Emission semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1286,6 +1300,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Effect returns Emission
 	 *     PureOrValuedEmission returns Emission
@@ -1295,6 +1310,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *         (annotations+=QuotedStringAnnotation* reference=ValuedObjectReference schedule+=ScheduleObjectReference*) | 
 	 *         (annotations+=QuotedStringAnnotation* reference=ValuedObjectReference newValue=Expression schedule+=ScheduleObjectReference*)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_PureEmission_ValuedEmission(ISerializationContext context, Emission semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1302,12 +1318,14 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Effect returns RandomizeCallEffect
 	 *     RandomizeCallEffect returns RandomizeCallEffect
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* (parameters+=Parameter parameters+=Parameter*)?)
+	 * </pre>
 	 */
 	protected void sequence_RandomizeCallEffect(ISerializationContext context, RandomizeCallEffect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1315,6 +1333,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Effect returns ReferenceCallEffect
 	 *     ReferenceCallEffect returns ReferenceCallEffect
@@ -1328,6 +1347,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *         (parameters+=Parameter parameters+=Parameter*)? 
 	 *         schedule+=ScheduleObjectReference*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ReferenceCallEffect(ISerializationContext context, ReferenceCallEffect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1335,11 +1355,13 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ValuedEmission returns Emission
 	 *
 	 * Constraint:
 	 *     (annotations+=QuotedStringAnnotation* reference=ValuedObjectReference newValue=Expression schedule+=ScheduleObjectReference*)
+	 * </pre>
 	 */
 	protected void sequence_ValuedEmission(ISerializationContext context, Emission semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

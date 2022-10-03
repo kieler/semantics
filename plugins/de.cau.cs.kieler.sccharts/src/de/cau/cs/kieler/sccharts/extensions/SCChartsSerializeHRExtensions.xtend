@@ -367,6 +367,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             components.addKeyword("void")
         } else if (method.returnType == ValueType.TIME) {
             components.addKeyword("clock-time")
+        } else if (method.returnType == ValueType.HOST) {
+            components.addKeyword(method.returnHostType)
         } else {
             components.addKeyword(method.returnType.serialize)
         }

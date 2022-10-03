@@ -1143,6 +1143,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	}
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     AddExpression returns OperatorExpression
 	 *     AddExpression.OperatorExpression_1_0 returns OperatorExpression
@@ -1233,6 +1234,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1240,6 +1242,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns OperatorExpression
 	 *
@@ -1331,6 +1334,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         ) 
 	 *         schedule+=ScheduleObjectReference?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_BoolScheduleExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1338,6 +1342,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     DivExpression returns OperatorExpression
 	 *
@@ -1427,6 +1432,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1434,6 +1440,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ModExpression returns OperatorExpression
 	 *
@@ -1523,6 +1530,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1530,6 +1538,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MultExpression returns OperatorExpression
 	 *
@@ -1619,6 +1628,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_MultExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1626,6 +1636,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftLeftExpression returns OperatorExpression
 	 *
@@ -1720,6 +1731,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1727,6 +1739,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftRightExpression returns OperatorExpression
 	 *
@@ -1821,6 +1834,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1828,6 +1842,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftRightUnsignedExpression returns OperatorExpression
 	 *
@@ -1922,6 +1937,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1929,6 +1945,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SubExpression returns OperatorExpression
 	 *     SubExpression.OperatorExpression_1_0 returns OperatorExpression
@@ -2019,6 +2036,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2026,6 +2044,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Root returns OperatorExpression
 	 *     Expression returns OperatorExpression
@@ -2160,6 +2179,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2167,11 +2187,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns BoolValue
 	 *
 	 * Constraint:
 	 *     (value=BOOLEAN schedule+=ScheduleObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_BoolValue(ISerializationContext context, BoolValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2179,11 +2201,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns FloatValue
 	 *
 	 * Constraint:
 	 *     (value=FLOAT schedule+=ScheduleObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_FloatValue(ISerializationContext context, FloatValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2191,11 +2215,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns FunctionCall
 	 *
 	 * Constraint:
 	 *     (functionName=ID (parameters+=Parameter parameters+=Parameter*)? schedule+=ScheduleObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_FunctionCall(ISerializationContext context, FunctionCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2203,11 +2229,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns IntValue
 	 *
 	 * Constraint:
 	 *     (value=INT schedule+=ScheduleObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_IntValue(ISerializationContext context, IntValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2215,11 +2243,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns NullValue
 	 *
 	 * Constraint:
 	 *     schedule+=ScheduleObjectReference?
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_NullValue(ISerializationContext context, NullValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2227,11 +2257,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns RandomCall
 	 *
 	 * Constraint:
 	 *     schedule+=ScheduleObjectReference?
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_RandomCall(ISerializationContext context, RandomCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2239,11 +2271,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns RandomizeCall
 	 *
 	 * Constraint:
 	 *     schedule+=ScheduleObjectReference?
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_RandomizeCall(ISerializationContext context, RandomizeCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2251,6 +2285,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns ReferenceCall
 	 *
@@ -2262,6 +2297,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         (parameters+=Parameter parameters+=Parameter*)? 
 	 *         schedule+=ScheduleObjectReference?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_ReferenceCall(ISerializationContext context, ReferenceCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2269,6 +2305,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns SpecialAccessExpression
 	 *
@@ -2280,6 +2317,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         subReference=ValuedObjectReference 
 	 *         schedule+=ScheduleObjectReference?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_SpecialAccessExpression(ISerializationContext context, SpecialAccessExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2287,11 +2325,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns StringValue
 	 *
 	 * Constraint:
 	 *     (value=STRING schedule+=ScheduleObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_StringValue(ISerializationContext context, StringValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2299,11 +2339,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns TextExpression
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* text=HOSTCODE schedule+=ScheduleObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_TextExpression(ISerializationContext context, TextExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2311,11 +2353,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns ValuedObjectReference
 	 *
 	 * Constraint:
 	 *     (valuedObject=[ValuedObject|PrimeID] indices+=Expression* subReference=ValuedObjectReference? schedule+=ScheduleObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_ValuedObjectReference(ISerializationContext context, ValuedObjectReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2323,6 +2367,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns VectorValue
 	 *
@@ -2331,6 +2376,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         ((values+=VectorValueMember values+=VectorValueMember*) | (values+=IntValue range?='to' (values+=IntValue | values+=ValuedObjectReference))) 
 	 *         schedule+=ScheduleObjectReference?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_VectorValue(ISerializationContext context, VectorValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2338,6 +2384,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Root returns BoolValue
 	 *     Expression returns BoolValue
@@ -2402,6 +2449,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *
 	 * Constraint:
 	 *     value=BOOLEAN
+	 * </pre>
 	 */
 	protected void sequence_BoolValue(ISerializationContext context, BoolValue semanticObject) {
 		if (errorAcceptor != null) {
@@ -2415,6 +2463,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Root returns FloatValue
 	 *     Expression returns FloatValue
@@ -2479,6 +2528,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *
 	 * Constraint:
 	 *     value=FLOAT
+	 * </pre>
 	 */
 	protected void sequence_FloatValue(ISerializationContext context, FloatValue semanticObject) {
 		if (errorAcceptor != null) {
@@ -2492,6 +2542,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Root returns FunctionCall
 	 *     Expression returns FunctionCall
@@ -2554,6 +2605,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *
 	 * Constraint:
 	 *     (functionName=ID (parameters+=Parameter parameters+=Parameter*)?)
+	 * </pre>
 	 */
 	protected void sequence_FunctionCall(ISerializationContext context, FunctionCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2561,12 +2613,14 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     VectorValueMember returns IgnoreValue
 	 *     IgnoreValue returns IgnoreValue
 	 *
 	 * Constraint:
 	 *     {IgnoreValue}
+	 * </pre>
 	 */
 	protected void sequence_IgnoreValue(ISerializationContext context, IgnoreValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2574,6 +2628,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Root returns IntValue
 	 *     Expression returns IntValue
@@ -2638,6 +2693,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *
 	 * Constraint:
 	 *     value=INT
+	 * </pre>
 	 */
 	protected void sequence_IntValue(ISerializationContext context, IntValue semanticObject) {
 		if (errorAcceptor != null) {
@@ -2651,6 +2707,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     JsonAnnotation returns JsonAnnotation
 	 *     Annotation returns JsonAnnotation
@@ -2659,6 +2716,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *
 	 * Constraint:
 	 *     (name=ExtendedID value=JsonObjectValue)
+	 * </pre>
 	 */
 	protected void sequence_JsonAnnotation(ISerializationContext context, JsonAnnotation semanticObject) {
 		if (errorAcceptor != null) {
@@ -2675,12 +2733,14 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     JsonArrayValue returns JsonArrayValue
 	 *     JsonValue returns JsonArrayValue
 	 *
 	 * Constraint:
 	 *     (elements+=JsonValue elements+=JsonValue*)?
+	 * </pre>
 	 */
 	protected void sequence_JsonArrayValue(ISerializationContext context, JsonArrayValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2688,11 +2748,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     JsonObjectMember returns JsonObjectMember
 	 *
 	 * Constraint:
 	 *     (key=STRING value=JsonValue)
+	 * </pre>
 	 */
 	protected void sequence_JsonObjectMember(ISerializationContext context, JsonObjectMember semanticObject) {
 		if (errorAcceptor != null) {
@@ -2709,12 +2771,14 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     JsonObjectValue returns JsonObjectValue
 	 *     JsonValue returns JsonObjectValue
 	 *
 	 * Constraint:
 	 *     (members+=JsonObjectMember members+=JsonObjectMember*)?
+	 * </pre>
 	 */
 	protected void sequence_JsonObjectValue(ISerializationContext context, JsonObjectValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2722,12 +2786,14 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     JsonPragma returns JsonPragma
 	 *     Pragma returns JsonPragma
 	 *
 	 * Constraint:
 	 *     (name=ExtendedID value=JsonObjectValue)
+	 * </pre>
 	 */
 	protected void sequence_JsonPragma(ISerializationContext context, JsonPragma semanticObject) {
 		if (errorAcceptor != null) {
@@ -2744,6 +2810,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Root returns NullValue
 	 *     Expression returns NullValue
@@ -2807,6 +2874,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *
 	 * Constraint:
 	 *     {NullValue}
+	 * </pre>
 	 */
 	protected void sequence_NullValue(ISerializationContext context, NullValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2814,11 +2882,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Parameter returns Parameter
 	 *
 	 * Constraint:
 	 *     ((accessType=ParameterAccessType expression=ValuedObjectReference) | expression=Expression)
+	 * </pre>
 	 */
 	protected void sequence_Parameter(ISerializationContext context, de.cau.cs.kieler.kexpressions.Parameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2826,11 +2896,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PrintCall returns PrintCall
 	 *
 	 * Constraint:
 	 *     (parameters+=Parameter parameters+=Parameter*)?
+	 * </pre>
 	 */
 	protected void sequence_PrintCall(ISerializationContext context, PrintCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2838,6 +2910,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Root returns RandomCall
 	 *     Expression returns RandomCall
@@ -2900,6 +2973,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *
 	 * Constraint:
 	 *     {RandomCall}
+	 * </pre>
 	 */
 	protected void sequence_RandomCall(ISerializationContext context, RandomCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2907,6 +2981,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Root returns RandomizeCall
 	 *     Expression returns RandomizeCall
@@ -2969,6 +3044,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *
 	 * Constraint:
 	 *     {RandomizeCall}
+	 * </pre>
 	 */
 	protected void sequence_RandomizeCall(ISerializationContext context, RandomizeCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2976,6 +3052,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Root returns ReferenceCall
 	 *     Expression returns ReferenceCall
@@ -3038,6 +3115,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *
 	 * Constraint:
 	 *     (valuedObject=[ValuedObject|PrimeID] indices+=Expression* subReference=ValuedObjectReference? (parameters+=Parameter parameters+=Parameter*)?)
+	 * </pre>
 	 */
 	protected void sequence_ReferenceCall(ISerializationContext context, ReferenceCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3045,11 +3123,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ScheduleObjectReference returns ScheduleObjectReference
 	 *
 	 * Constraint:
 	 *     (valuedObject=[ValuedObject|PrimeID] priority=INT)
+	 * </pre>
 	 */
 	protected void sequence_ScheduleObjectReference(ISerializationContext context, ScheduleObjectReference semanticObject) {
 		if (errorAcceptor != null) {
@@ -3066,6 +3146,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Root returns SpecialAccessExpression
 	 *     Expression returns SpecialAccessExpression
@@ -3128,6 +3209,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *
 	 * Constraint:
 	 *     (access='static' container=[NamedObject|PrimeID]? target=[NamedObject|PrimeID] subReference=ValuedObjectReference)
+	 * </pre>
 	 */
 	protected void sequence_SpecialAccessExpression(ISerializationContext context, SpecialAccessExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3135,6 +3217,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Root returns StringValue
 	 *     Expression returns StringValue
@@ -3199,6 +3282,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *
 	 * Constraint:
 	 *     value=STRING
+	 * </pre>
 	 */
 	protected void sequence_StringValue(ISerializationContext context, StringValue semanticObject) {
 		if (errorAcceptor != null) {
@@ -3212,6 +3296,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Root returns TextExpression
 	 *     Expression returns TextExpression
@@ -3274,6 +3359,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* text=HOSTCODE)
+	 * </pre>
 	 */
 	protected void sequence_TextExpression(ISerializationContext context, TextExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3281,11 +3367,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ThisExpression returns ThisExpression
 	 *
 	 * Constraint:
 	 *     {ThisExpression}
+	 * </pre>
 	 */
 	protected void sequence_ThisExpression(ISerializationContext context, ThisExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3293,6 +3381,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Root returns ValuedObjectReference
 	 *     Expression returns ValuedObjectReference
@@ -3356,6 +3445,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *
 	 * Constraint:
 	 *     (valuedObject=[ValuedObject|PrimeID] indices+=Expression* subReference=ValuedObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_ValuedObjectReference(ISerializationContext context, ValuedObjectReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3363,11 +3453,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ValuedObjectTestExpression returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3375,6 +3467,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Root returns VectorValue
 	 *     Expression returns VectorValue
@@ -3437,6 +3530,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *
 	 * Constraint:
 	 *     ((values+=VectorValueMember values+=VectorValueMember*) | (values+=IntValue range?='to' (values+=IntValue | values+=ValuedObjectReference)))
+	 * </pre>
 	 */
 	protected void sequence_VectorValue(ISerializationContext context, VectorValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

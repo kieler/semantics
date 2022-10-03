@@ -1493,8 +1493,14 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_1_0 = (RuleCall)cAnnotationsAssignment_1.eContents().get(0);
 		private final Assignment cAccessAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cAccessAccessModifierEnumRuleCall_2_0 = (RuleCall)cAccessAssignment_2.eContents().get(0);
-		private final Assignment cReturnTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cReturnTypeMethodReturnTypeEnumRuleCall_3_0 = (RuleCall)cReturnTypeAssignment_3.eContents().get(0);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Assignment cReturnTypeAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
+		private final RuleCall cReturnTypeMethodReturnTypeEnumRuleCall_3_0_0 = (RuleCall)cReturnTypeAssignment_3_0.eContents().get(0);
+		private final Group cGroup_3_1 = (Group)cAlternatives_3.eContents().get(1);
+		private final Assignment cReturnTypeAssignment_3_1_0 = (Assignment)cGroup_3_1.eContents().get(0);
+		private final RuleCall cReturnTypeHostTypeEnumRuleCall_3_1_0_0 = (RuleCall)cReturnTypeAssignment_3_1_0.eContents().get(0);
+		private final Assignment cReturnHostTypeAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
+		private final RuleCall cReturnHostTypeSTRINGTerminalRuleCall_3_1_1_0 = (RuleCall)cReturnHostTypeAssignment_3_1_1.eContents().get(0);
 		private final Assignment cValuedObjectsAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cValuedObjectsSimpleValuedObjectParserRuleCall_4_0 = (RuleCall)cValuedObjectsAssignment_4.eContents().get(0);
 		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
@@ -1520,7 +1526,7 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//    {kexpressions::MethodDeclaration}
 		//    annotations+=Annotation*
 		//    access=AccessModifier?
-		//    returnType=MethodReturnType?
+		//    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
 		//    valuedObjects+=SimpleValuedObject
 		//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 		//    ('schedule' schedule+=ScheduleObjectReference+)?
@@ -1532,7 +1538,7 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//{kexpressions::MethodDeclaration}
 		//annotations+=Annotation*
 		//access=AccessModifier?
-		//returnType=MethodReturnType?
+		//(returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
 		//valuedObjects+=SimpleValuedObject
 		//(('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 		//('schedule' schedule+=ScheduleObjectReference+)?
@@ -1555,11 +1561,29 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//AccessModifier
 		public RuleCall getAccessAccessModifierEnumRuleCall_2_0() { return cAccessAccessModifierEnumRuleCall_2_0; }
 		
-		//returnType=MethodReturnType?
-		public Assignment getReturnTypeAssignment_3() { return cReturnTypeAssignment_3; }
+		//(returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+		
+		//returnType=MethodReturnType
+		public Assignment getReturnTypeAssignment_3_0() { return cReturnTypeAssignment_3_0; }
 		
 		//MethodReturnType
-		public RuleCall getReturnTypeMethodReturnTypeEnumRuleCall_3_0() { return cReturnTypeMethodReturnTypeEnumRuleCall_3_0; }
+		public RuleCall getReturnTypeMethodReturnTypeEnumRuleCall_3_0_0() { return cReturnTypeMethodReturnTypeEnumRuleCall_3_0_0; }
+		
+		//(returnType=HostType returnHostType=STRING)
+		public Group getGroup_3_1() { return cGroup_3_1; }
+		
+		//returnType=HostType
+		public Assignment getReturnTypeAssignment_3_1_0() { return cReturnTypeAssignment_3_1_0; }
+		
+		//HostType
+		public RuleCall getReturnTypeHostTypeEnumRuleCall_3_1_0_0() { return cReturnTypeHostTypeEnumRuleCall_3_1_0_0; }
+		
+		//returnHostType=STRING
+		public Assignment getReturnHostTypeAssignment_3_1_1() { return cReturnHostTypeAssignment_3_1_1; }
+		
+		//STRING
+		public RuleCall getReturnHostTypeSTRINGTerminalRuleCall_3_1_1_0() { return cReturnHostTypeSTRINGTerminalRuleCall_3_1_1_0; }
 		
 		//valuedObjects+=SimpleValuedObject
 		public Assignment getValuedObjectsAssignment_4() { return cValuedObjectsAssignment_4; }
@@ -1629,8 +1653,14 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_1_0 = (RuleCall)cAnnotationsAssignment_1.eContents().get(0);
 		private final Assignment cAccessAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cAccessAccessModifierEnumRuleCall_2_0 = (RuleCall)cAccessAssignment_2.eContents().get(0);
-		private final Assignment cReturnTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cReturnTypeMethodReturnTypeEnumRuleCall_3_0 = (RuleCall)cReturnTypeAssignment_3.eContents().get(0);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Assignment cReturnTypeAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
+		private final RuleCall cReturnTypeMethodReturnTypeEnumRuleCall_3_0_0 = (RuleCall)cReturnTypeAssignment_3_0.eContents().get(0);
+		private final Group cGroup_3_1 = (Group)cAlternatives_3.eContents().get(1);
+		private final Assignment cReturnTypeAssignment_3_1_0 = (Assignment)cGroup_3_1.eContents().get(0);
+		private final RuleCall cReturnTypeHostTypeEnumRuleCall_3_1_0_0 = (RuleCall)cReturnTypeAssignment_3_1_0.eContents().get(0);
+		private final Assignment cReturnHostTypeAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
+		private final RuleCall cReturnHostTypeSTRINGTerminalRuleCall_3_1_1_0 = (RuleCall)cReturnHostTypeAssignment_3_1_1.eContents().get(0);
 		private final Assignment cValuedObjectsAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cValuedObjectsSimpleValuedObjectParserRuleCall_4_0 = (RuleCall)cValuedObjectsAssignment_4.eContents().get(0);
 		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
@@ -1655,7 +1685,7 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//    {kexpressions::MethodDeclaration}
 		//    annotations+=Annotation*
 		//    access=AccessModifier?
-		//    returnType=MethodReturnType?
+		//    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
 		//    valuedObjects+=SimpleValuedObject
 		//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 		//    ('schedule' schedule+=ScheduleObjectReference+)?
@@ -1666,7 +1696,7 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//{kexpressions::MethodDeclaration}
 		//annotations+=Annotation*
 		//access=AccessModifier?
-		//returnType=MethodReturnType?
+		//(returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
 		//valuedObjects+=SimpleValuedObject
 		//(('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 		//('schedule' schedule+=ScheduleObjectReference+)?
@@ -1688,11 +1718,29 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//AccessModifier
 		public RuleCall getAccessAccessModifierEnumRuleCall_2_0() { return cAccessAccessModifierEnumRuleCall_2_0; }
 		
-		//returnType=MethodReturnType?
-		public Assignment getReturnTypeAssignment_3() { return cReturnTypeAssignment_3; }
+		//(returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+		
+		//returnType=MethodReturnType
+		public Assignment getReturnTypeAssignment_3_0() { return cReturnTypeAssignment_3_0; }
 		
 		//MethodReturnType
-		public RuleCall getReturnTypeMethodReturnTypeEnumRuleCall_3_0() { return cReturnTypeMethodReturnTypeEnumRuleCall_3_0; }
+		public RuleCall getReturnTypeMethodReturnTypeEnumRuleCall_3_0_0() { return cReturnTypeMethodReturnTypeEnumRuleCall_3_0_0; }
+		
+		//(returnType=HostType returnHostType=STRING)
+		public Group getGroup_3_1() { return cGroup_3_1; }
+		
+		//returnType=HostType
+		public Assignment getReturnTypeAssignment_3_1_0() { return cReturnTypeAssignment_3_1_0; }
+		
+		//HostType
+		public RuleCall getReturnTypeHostTypeEnumRuleCall_3_1_0_0() { return cReturnTypeHostTypeEnumRuleCall_3_1_0_0; }
+		
+		//returnHostType=STRING
+		public Assignment getReturnHostTypeAssignment_3_1_1() { return cReturnHostTypeAssignment_3_1_1; }
+		
+		//STRING
+		public RuleCall getReturnHostTypeSTRINGTerminalRuleCall_3_1_1_0() { return cReturnHostTypeSTRINGTerminalRuleCall_3_1_1_0; }
 		
 		//valuedObjects+=SimpleValuedObject
 		public Assignment getValuedObjectsAssignment_4() { return cValuedObjectsAssignment_4; }
@@ -3816,7 +3864,7 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    {kexpressions::MethodDeclaration}
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
-	//    returnType=MethodReturnType?
+	//    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
 	//    valuedObjects+=SimpleValuedObject
 	//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 	//    ('schedule' schedule+=ScheduleObjectReference+)?
@@ -3835,7 +3883,7 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    {kexpressions::MethodDeclaration}
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
-	//    returnType=MethodReturnType?
+	//    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
 	//    valuedObjects+=SimpleValuedObject
 	//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 	//    ('schedule' schedule+=ScheduleObjectReference+)?

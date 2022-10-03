@@ -1487,6 +1487,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	}
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Conditional returns Conditional
 	 *
@@ -1498,6 +1499,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *         statements+=Statement* 
 	 *         (else=ElseScope | semicolon?=';')?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_Conditional(ISerializationContext context, Conditional semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1505,6 +1507,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Statement returns Conditional
 	 *
@@ -1519,6 +1522,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *         ) | 
 	 *         (annotations+=Annotation* expression=BoolExpression statements+=Statement* else=LegacyElseScope? semicolon?=';'?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_Conditional_LegacyConditional(ISerializationContext context, Conditional semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1526,6 +1530,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EffectOrAssignment returns Assignment
 	 *
@@ -1538,6 +1543,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *             expression=Expression
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_EffectOrAssignment(ISerializationContext context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1545,11 +1551,13 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ElseScope returns ElseScope
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* declarations+=Declaration* statements+=Statement* semicolon?=';'?)
+	 * </pre>
 	 */
 	protected void sequence_ElseScope(ISerializationContext context, ElseScope semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1557,6 +1565,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ForLoop returns Loop
 	 *
@@ -1569,6 +1578,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *         statements+=Statement* 
 	 *         semicolon?=';'?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ForLoop(ISerializationContext context, Loop semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1576,6 +1586,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Statement returns Loop
 	 *
@@ -1591,6 +1602,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *         ) | 
 	 *         (condition=BoolExpression declarations+=Declaration* statements+=Statement* semicolon?=';'?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ForLoop_WhileLoop(ISerializationContext context, Loop semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1598,12 +1610,14 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Statement returns Goto
 	 *     Goto returns Goto
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* target=[Label|ID] semicolon?=';'?)
+	 * </pre>
 	 */
 	protected void sequence_Goto(ISerializationContext context, Goto semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1611,12 +1625,14 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Statement returns Label
 	 *     Label returns Label
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* name=ID)
+	 * </pre>
 	 */
 	protected void sequence_Label(ISerializationContext context, Label semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1624,11 +1640,13 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LegacyConditional returns Conditional
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* expression=BoolExpression statements+=Statement* else=LegacyElseScope? semicolon?=';'?)
+	 * </pre>
 	 */
 	protected void sequence_LegacyConditional(ISerializationContext context, Conditional semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1636,11 +1654,13 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LegacyElseScope returns ElseScope
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* statements+=Statement*)
+	 * </pre>
 	 */
 	protected void sequence_LegacyElseScope(ISerializationContext context, ElseScope semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1648,11 +1668,13 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LoopDeclaration returns VariableDeclaration
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* (type=ValueType | (type=HostType hostType=STRING)) valuedObjects+=ValuedObject)
+	 * </pre>
 	 */
 	protected void sequence_LoopDeclaration(ISerializationContext context, VariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1660,6 +1682,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MethodDeclarationWOSemicolon returns MethodImplementationDeclaration
 	 *     DeclarationOrMethodWOSemicolon returns MethodImplementationDeclaration
@@ -1668,7 +1691,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         access=AccessModifier? 
-	 *         returnType=MethodReturnType? 
+	 *         (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))? 
 	 *         valuedObjects+=SimpleValuedObject 
 	 *         (parameterDeclarations+=VariableDeclarationWOSemicolon parameterDeclarations+=VariableDeclarationWOSemicolon*)? 
 	 *         schedule+=ScheduleObjectReference* 
@@ -1676,6 +1699,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *         declarations+=Declaration* 
 	 *         statements+=Statement*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_MethodDeclarationWOSemicolon(ISerializationContext context, MethodImplementationDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1683,6 +1707,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MethodDeclaration returns MethodImplementationDeclaration
 	 *     DeclarationOrMethod returns MethodImplementationDeclaration
@@ -1691,7 +1716,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         access=AccessModifier? 
-	 *         returnType=MethodReturnType? 
+	 *         (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))? 
 	 *         valuedObjects+=SimpleValuedObject 
 	 *         (parameterDeclarations+=VariableDeclarationWOSemicolon parameterDeclarations+=VariableDeclarationWOSemicolon*)? 
 	 *         schedule+=ScheduleObjectReference* 
@@ -1700,6 +1725,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *         statements+=Statement* 
 	 *         annotations+=CommentAnnotatonSL?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_MethodDeclaration(ISerializationContext context, MethodImplementationDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1707,6 +1733,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ModuleCallParameter returns Parameter
 	 *
@@ -1715,6 +1742,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *         ((accessType=ParameterAccessType expression=ValuedObjectReference) | expression=Expression) 
 	 *         (explicitBinding=[ValuedObject|ID] explicitBindingIndices+=Expression*)?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ModuleCallParameter(ISerializationContext context, de.cau.cs.kieler.kexpressions.Parameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1722,12 +1750,14 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Statement returns ModuleCall
 	 *     ModuleCall returns ModuleCall
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* module=[Module|ID] (parameters+=ModuleCallParameter parameters+=ModuleCallParameter*)? semicolon?=';'?)
+	 * </pre>
 	 */
 	protected void sequence_ModuleCall(ISerializationContext context, ModuleCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1735,11 +1765,13 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Module returns Module
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* name=ID declarations+=Declaration* statements+=Statement*)
+	 * </pre>
 	 */
 	protected void sequence_Module(ISerializationContext context, de.cau.cs.kieler.scl.Module semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1747,12 +1779,14 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Statement returns Parallel
 	 *     Parallel returns Parallel
 	 *
 	 * Constraint:
 	 *     (threads+=Thread threads+=Thread* semicolon?=';'?)
+	 * </pre>
 	 */
 	protected void sequence_Parallel(ISerializationContext context, Parallel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1760,12 +1794,14 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Statement returns Pause
 	 *     Pause returns Pause
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* semicolon?=';'?)
+	 * </pre>
 	 */
 	protected void sequence_Pause(ISerializationContext context, Pause semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1773,12 +1809,14 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Statement returns Return
 	 *     Return returns Return
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* expression=Expression)
+	 * </pre>
 	 */
 	protected void sequence_Return(ISerializationContext context, Return semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1786,11 +1824,13 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SCLProgram returns SCLProgram
 	 *
 	 * Constraint:
 	 *     ((pragmas+=Pragma+ modules+=Module+) | modules+=Module+)?
+	 * </pre>
 	 */
 	protected void sequence_SCLProgram(ISerializationContext context, SCLProgram semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1798,6 +1838,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SclAssignment returns Assignment
 	 *
@@ -1810,6 +1851,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *         schedule+=ScheduleObjectReference* 
 	 *         semicolon?=';'?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_SclAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1817,6 +1859,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Statement returns Assignment
 	 *
@@ -1838,6 +1881,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *             semicolon?=';'?
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_SclAssignment_SclEffectAssignment_SclPostfixAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1845,6 +1889,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SclEffectAssignment returns Assignment
 	 *
@@ -1855,6 +1900,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *         schedule+=ScheduleObjectReference* 
 	 *         semicolon?=';'?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_SclEffectAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1862,11 +1908,13 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SclPostfixAssignment returns Assignment
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* reference=ValuedObjectReference operator=PostfixOperator schedule+=ScheduleObjectReference* semicolon?=';'?)
+	 * </pre>
 	 */
 	protected void sequence_SclPostfixAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1874,12 +1922,14 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Statement returns ScopeStatement
 	 *     ScopeStatement returns ScopeStatement
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* declarations+=Declaration* statements+=Statement*)
+	 * </pre>
 	 */
 	protected void sequence_ScopeStatement(ISerializationContext context, ScopeStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1887,11 +1937,13 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Thread returns Thread
 	 *
 	 * Constraint:
 	 *     ((annotations+=Annotation* declarations+=Declaration* statements+=Statement*) | statements+=Statement+)?
+	 * </pre>
 	 */
 	protected void sequence_Thread(ISerializationContext context, de.cau.cs.kieler.scl.Thread semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1899,11 +1951,13 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     WhileLoop returns Loop
 	 *
 	 * Constraint:
 	 *     (condition=BoolExpression declarations+=Declaration* statements+=Statement* semicolon?=';'?)
+	 * </pre>
 	 */
 	protected void sequence_WhileLoop(ISerializationContext context, Loop semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

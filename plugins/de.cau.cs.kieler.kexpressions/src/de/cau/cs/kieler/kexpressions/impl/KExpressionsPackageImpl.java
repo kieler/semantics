@@ -1242,8 +1242,18 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
+    public EAttribute getMethodDeclaration_ReturnHostType() {
+        return (EAttribute)methodDeclarationEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EReference getMethodDeclaration_ParameterDeclarations() {
-        return (EReference)methodDeclarationEClass.getEStructuralFeatures().get(2);
+        return (EReference)methodDeclarationEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -1694,6 +1704,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         methodDeclarationEClass = createEClass(METHOD_DECLARATION);
         createEAttribute(methodDeclarationEClass, METHOD_DECLARATION__OVERRIDE);
         createEAttribute(methodDeclarationEClass, METHOD_DECLARATION__RETURN_TYPE);
+        createEAttribute(methodDeclarationEClass, METHOD_DECLARATION__RETURN_HOST_TYPE);
         createEReference(methodDeclarationEClass, METHOD_DECLARATION__PARAMETER_DECLARATIONS);
 
         scheduleDeclarationEClass = createEClass(SCHEDULE_DECLARATION);
@@ -1930,6 +1941,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEClass(methodDeclarationEClass, MethodDeclaration.class, "MethodDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getMethodDeclaration_Override(), ecorePackage.getEBoolean(), "override", null, 0, 1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMethodDeclaration_ReturnType(), this.getValueType(), "returnType", null, 0, 1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getMethodDeclaration_ReturnHostType(), ecorePackage.getEString(), "returnHostType", null, 0, 1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMethodDeclaration_ParameterDeclarations(), this.getDeclaration(), null, "parameterDeclarations", null, 0, -1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(scheduleDeclarationEClass, ScheduleDeclaration.class, "ScheduleDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

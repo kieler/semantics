@@ -3389,8 +3389,14 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Assignment cOverrideAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
 		private final Keyword cOverrideOverrideKeyword_2_1_0 = (Keyword)cOverrideAssignment_2_1.eContents().get(0);
 		private final Keyword cMethodKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cReturnTypeAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cReturnTypeMethodReturnTypeEnumRuleCall_4_0 = (RuleCall)cReturnTypeAssignment_4.eContents().get(0);
+		private final Alternatives cAlternatives_4 = (Alternatives)cGroup.eContents().get(4);
+		private final Assignment cReturnTypeAssignment_4_0 = (Assignment)cAlternatives_4.eContents().get(0);
+		private final RuleCall cReturnTypeMethodReturnTypeEnumRuleCall_4_0_0 = (RuleCall)cReturnTypeAssignment_4_0.eContents().get(0);
+		private final Group cGroup_4_1 = (Group)cAlternatives_4.eContents().get(1);
+		private final Assignment cReturnTypeAssignment_4_1_0 = (Assignment)cGroup_4_1.eContents().get(0);
+		private final RuleCall cReturnTypeHostTypeEnumRuleCall_4_1_0_0 = (RuleCall)cReturnTypeAssignment_4_1_0.eContents().get(0);
+		private final Assignment cReturnHostTypeAssignment_4_1_1 = (Assignment)cGroup_4_1.eContents().get(1);
+		private final RuleCall cReturnHostTypeSTRINGTerminalRuleCall_4_1_1_0 = (RuleCall)cReturnHostTypeAssignment_4_1_1.eContents().get(0);
 		private final Assignment cValuedObjectsAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cValuedObjectsSimpleValuedObjectParserRuleCall_5_0 = (RuleCall)cValuedObjectsAssignment_5.eContents().get(0);
 		private final Alternatives cAlternatives_6 = (Alternatives)cGroup.eContents().get(6);
@@ -3423,7 +3429,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//    annotations+=Annotation*
 		//    ( access=AccessModifier? | override?='override' )
 		//    'method'
-		//    returnType=MethodReturnType?
+		//    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
 		//    valuedObjects+=SimpleValuedObject
 		//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 		//    ('schedule' schedule+=ScheduleObjectReference+)?
@@ -3439,7 +3445,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//annotations+=Annotation*
 		//( access=AccessModifier? | override?='override' )
 		//'method'
-		//returnType=MethodReturnType?
+		//(returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
 		//valuedObjects+=SimpleValuedObject
 		//(('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 		//('schedule' schedule+=ScheduleObjectReference+)?
@@ -3477,11 +3483,29 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//'method'
 		public Keyword getMethodKeyword_3() { return cMethodKeyword_3; }
 		
-		//returnType=MethodReturnType?
-		public Assignment getReturnTypeAssignment_4() { return cReturnTypeAssignment_4; }
+		//(returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
+		public Alternatives getAlternatives_4() { return cAlternatives_4; }
+		
+		//returnType=MethodReturnType
+		public Assignment getReturnTypeAssignment_4_0() { return cReturnTypeAssignment_4_0; }
 		
 		//MethodReturnType
-		public RuleCall getReturnTypeMethodReturnTypeEnumRuleCall_4_0() { return cReturnTypeMethodReturnTypeEnumRuleCall_4_0; }
+		public RuleCall getReturnTypeMethodReturnTypeEnumRuleCall_4_0_0() { return cReturnTypeMethodReturnTypeEnumRuleCall_4_0_0; }
+		
+		//(returnType=HostType returnHostType=STRING)
+		public Group getGroup_4_1() { return cGroup_4_1; }
+		
+		//returnType=HostType
+		public Assignment getReturnTypeAssignment_4_1_0() { return cReturnTypeAssignment_4_1_0; }
+		
+		//HostType
+		public RuleCall getReturnTypeHostTypeEnumRuleCall_4_1_0_0() { return cReturnTypeHostTypeEnumRuleCall_4_1_0_0; }
+		
+		//returnHostType=STRING
+		public Assignment getReturnHostTypeAssignment_4_1_1() { return cReturnHostTypeAssignment_4_1_1; }
+		
+		//STRING
+		public RuleCall getReturnHostTypeSTRINGTerminalRuleCall_4_1_1_0() { return cReturnHostTypeSTRINGTerminalRuleCall_4_1_1_0; }
 		
 		//valuedObjects+=SimpleValuedObject
 		public Assignment getValuedObjectsAssignment_5() { return cValuedObjectsAssignment_5; }
@@ -4953,7 +4977,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    annotations+=Annotation*
 	//    ( access=AccessModifier? | override?='override' )
 	//    'method'
-	//    returnType=MethodReturnType?
+	//    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
 	//    valuedObjects+=SimpleValuedObject
 	//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 	//    ('schedule' schedule+=ScheduleObjectReference+)?
@@ -5490,7 +5514,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    {MethodImplementationDeclaration}
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
-	//    returnType=MethodReturnType?
+	//    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
 	//    valuedObjects+=SimpleValuedObject
 	//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 	//    ('schedule' schedule+=ScheduleObjectReference+)?
@@ -5518,7 +5542,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    {MethodImplementationDeclaration}
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
-	//    returnType=MethodReturnType?
+	//    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
 	//    valuedObjects+=SimpleValuedObject
 	//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 	//    ('schedule' schedule+=ScheduleObjectReference+)?

@@ -15,6 +15,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#isOverride <em>Override</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getReturnType <em>Return Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getReturnHostType <em>Return Host Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getParameterDeclarations <em>Parameter Declarations</em>}</li>
  * </ul>
  *
@@ -69,6 +70,28 @@ public interface MethodDeclaration extends Declaration, Schedulable {
      * @generated
      */
     void setReturnType(ValueType value);
+
+    /**
+     * Returns the value of the '<em><b>Return Host Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Return Host Type</em>' attribute.
+     * @see #setReturnHostType(String)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getMethodDeclaration_ReturnHostType()
+     * @model
+     * @generated
+     */
+    String getReturnHostType();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getReturnHostType <em>Return Host Type</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Return Host Type</em>' attribute.
+     * @see #getReturnHostType()
+     * @generated
+     */
+    void setReturnHostType(String value);
 
     /**
      * Returns the value of the '<em><b>Parameter Declarations</b></em>' containment reference list.

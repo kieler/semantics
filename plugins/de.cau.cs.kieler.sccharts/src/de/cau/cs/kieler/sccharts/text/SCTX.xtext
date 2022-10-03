@@ -326,7 +326,7 @@ KeywordMethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
     annotations+=Annotation*
     ( access=AccessModifier? | override?='override' )
     'method'
-    returnType=MethodReturnType?
+    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
     valuedObjects+=SimpleValuedObject
     (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
     ('schedule' schedule+=ScheduleObjectReference+)?
