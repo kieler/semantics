@@ -363,15 +363,17 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             })
         }
         
-        if (method.returnType !== ValueType.PURE) {
-            components.addKeyword(method.returnType.serialize)
-        } else {
+        if (method.returnType == ValueType.PURE) {
             components.addKeyword("void")
+        } else if (method.returnType == ValueType.TIME) {
+            components.addKeyword("clock-time")
+        } else {
+            components.addKeyword(method.returnType.serialize)
         }
         
-        components.addText(method.valuedObjects.head.name.applySymbolTable)
+        components.addText(method.valuedObjects.head.name.applySymbolTable + "(")
+        //components.addText("(")
         
-        components.addText("(")
         for (para : method.parameterDeclarations.indexed) {
             components.addAll((para.value as VariableDeclaration).serializeHighlighted(hr))
             if (para.key < method.parameterDeclarations.size - 1) {
