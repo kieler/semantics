@@ -16,13 +16,14 @@ import com.google.inject.Guice
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.kgraph.KLabel
+import de.cau.cs.kieler.klighd.krendering.KRenderingOptions
 import de.cau.cs.kieler.klighd.krendering.KRenderingRef
 import de.cau.cs.kieler.klighd.labels.management.SoftWrappingLabelManager
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.ui.synthesis.TransitionSynthesis
 import org.eclipse.elk.graph.ElkLabel
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.klighd.krendering.KRenderingOptions
 
 /**
  * @author als
@@ -41,17 +42,19 @@ public class SemanticSoftWrappingLabelManager extends SoftWrappingLabelManager {
      * {@inheritDoc}
      */
     override doResizeLabel(ElkLabel elkLabel, double targetWidth) {
-        var rendering = elkLabel.getProperty(KRenderingOptions.K_RENDERING)
-        if(rendering instanceof KRenderingRef) rendering = rendering.rendering
-        val kLabel = rendering?.eContainer
-        val transition = if(kLabel instanceof KLabel) kLabel.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
-        if (transition instanceof Transition) {
-            if (transition.label.isNullOrEmpty) {
-                val dummyLabel = elkLabel.copy
-                return Result.modified(transition.serializeMultilineLabel(false).map[
-                    dummyLabel.text = it
-                    super.doResizeLabel(dummyLabel, targetWidth).newText?:it
-                ].join("\n"))
+        if (elkLabel.getProperty(TransitionSynthesis.MAIN_LABEL)) {
+            var rendering = elkLabel.getProperty(KRenderingOptions.K_RENDERING)
+            if(rendering instanceof KRenderingRef) rendering = rendering.rendering
+            val kLabel = rendering?.eContainer
+            val transition = if(kLabel instanceof KLabel) kLabel.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
+            if (transition instanceof Transition) {
+                if (transition.label.isNullOrEmpty) {
+                    val dummyLabel = elkLabel.copy
+                    return Result.modified(transition.serializeMultilineLabel(false).map[
+                        dummyLabel.text = it
+                        super.doResizeLabel(dummyLabel, targetWidth).newText?:it
+                    ].join("\n"))
+                }
             }
         }
         return super.doResizeLabel(elkLabel, targetWidth)

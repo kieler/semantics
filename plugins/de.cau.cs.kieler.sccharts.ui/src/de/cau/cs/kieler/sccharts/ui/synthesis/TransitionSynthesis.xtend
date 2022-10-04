@@ -17,7 +17,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceCall
-import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
@@ -27,6 +26,7 @@ import de.cau.cs.kieler.sccharts.DeferredType
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.PolicyClassDeclaration
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.labels.TransitionLabelSerializer
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
@@ -55,11 +55,13 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
      *  number of other edges to flip to break a cycle.
      */ 
     public static val IMMEDIATE_TRANSITION_DIRECTION_THRESHOLD = 6
+    public static val MAIN_LABEL = new org.eclipse.elk.graph.properties.Property("de.cau.cs.kieler.klighd.syntheses.transition.main", false)
 
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsSerializeHRExtensions
     @Inject extension TransitionLabelSerializer
     @Inject extension TransitionStyles
     @Inject extension ColorStore
@@ -97,61 +99,53 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         }
 
         // User schedules
-        val userSchedule = if (transition.trigger !== null) (transition.trigger.schedule + transition.effects.map[ schedule ].flatten).toSet
-            else (transition.effects.map[ schedule ].flatten).toSet
-        if (!userSchedule.empty) {
-            val sLabel = new StringBuilder
-            val exists = <Pair<ValuedObject, Integer>> newHashSet
-            for (s : userSchedule) {
-                val existPair = new Pair<ValuedObject, Integer>(s.valuedObject, s.priority)
-                if (!exists.contains(existPair)) {
-                    if (s !== userSchedule.head) sLabel.append(", ")
-                    sLabel.append(s.valuedObject.name + " " + s.priority)
-                    exists.add(existPair)
+        val userSchedules = newLinkedList
+        val policySchedules = newLinkedList
+        if (transition.trigger !== null) {
+            userSchedules += (transition.trigger.schedule + transition.effects.map[ schedule ].flatten) 
+        } else  {
+            userSchedules += transition.effects.map[ schedule ].flatten.toList
+        }
+        for (call : transition.eAllContents.filter(ReferenceCall).toList) {
+            var MethodDeclaration method = null
+            if (call.valuedObject.eContainer instanceof MethodDeclaration) {
+                method = call.valuedObject.eContainer as MethodDeclaration
+            }
+            if (method === null) {
+                var vor = call as ValuedObjectReference
+                while (vor.subReference !== null && method === null) {
+                    if (vor.subReference.valuedObject.eContainer instanceof MethodDeclaration) {
+                        method = vor.subReference.valuedObject.eContainer as MethodDeclaration
+                    }
+                    vor = vor.subReference
                 }
             }
-            edge.addTailLabel(sLabel.toString) => [
+            if (method !== null) {
+                if (!method.schedule.nullOrEmpty) {
+                    userSchedules += method.schedule
+                }
+                if (method.eContainer instanceof PolicyClassDeclaration) {
+                    val classDecl = method.eContainer as PolicyClassDeclaration
+                    if (classDecl.policy !== null && !classDecl.policy.name.nullOrEmpty) {
+                        policySchedules += if (classDecl.policy.label.nullOrEmpty) classDecl.policy.label else classDecl.policy.name
+                    }
+                }
+            }
+        }
+        if (!userSchedules.empty || !policySchedules.empty) {
+            var label = userSchedules.serializeSchedule.toString
+            if (!policySchedules.empty) {
+                if (label.empty) {
+                    label = policySchedules.join(", ")
+                } else {
+                    label = label + ", " + policySchedules.join(", ")
+                }
+            }
+            edge.addTailLabel(label) => [
                 associateWith(transition)
                 configureLabelLOD(transition)
             ]
             edge.setUserScheduleStyle
-        }
-        if (PolicySynthesis.SHOW_POLICIES.booleanValue) {
-            val calls = transition.eAllContents.filter(ReferenceCall).toList
-            val userSchedules = newHashSet
-            for (call : calls) {
-                var MethodDeclaration method = null
-                if (call.valuedObject.eContainer instanceof MethodDeclaration) {
-                    method = call.valuedObject.eContainer as MethodDeclaration
-                }
-                if (method === null) {
-                    var vor = call as ValuedObjectReference
-                    while (vor.subReference !== null && method === null) {
-                        if (vor.subReference.valuedObject.eContainer instanceof MethodDeclaration) {
-                            method = vor.subReference.valuedObject.eContainer as MethodDeclaration
-                        }
-                        vor = vor.subReference
-                    }
-                }
-                if (method !== null) {
-                    if (!method.schedule.nullOrEmpty) {
-                        userSchedules += method.schedule.map[valuedObject.name]
-                    }
-                    if (method.eContainer instanceof PolicyClassDeclaration) {
-                        val classDecl = method.eContainer as PolicyClassDeclaration
-                        if (classDecl.policy !== null && !classDecl.policy.name.nullOrEmpty) {
-                            userSchedules += if (classDecl.policy.label.nullOrEmpty) classDecl.policy.label else classDecl.policy.name
-                        }
-                    }
-                }
-            }
-            if (!userSchedules.empty) {
-//                edge.addTailLabel(userSchedules.join(", ")) => [
-//                    associateWith(transition)
-//                    configureLabelLOD(transition)
-//                ]
-                edge.setUserScheduleStyle
-            }
         }
         
         switch (transition.history) {
@@ -189,6 +183,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             edge.addLabel(label.toString) => [
                 associateWith(transition)
                 configureLabelLOD(transition)
+                setProperty(MAIN_LABEL, true)
             ]
         }
         

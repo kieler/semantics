@@ -25,6 +25,7 @@ import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -56,6 +57,7 @@ import de.cau.cs.kieler.sccharts.processors.StaticAccess
 import de.cau.cs.kieler.sccharts.processors.TimedAutomata
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import de.cau.cs.kieler.scl.extensions.SCLSerializeExtensions
+import java.util.Collection
 import java.util.List
 
 import static de.cau.cs.kieler.sccharts.PreemptionType.*
@@ -148,7 +150,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                     action.trigger.serialize
                 })
                 if (action.trigger.schedule.nullOrEmpty) {
-                    components.addSD(action.trigger.schedule.map[it.valuedObject?.name + " " + it.priority].join(", "))
+                    components.addSD(action.trigger.schedule.serializeSchedule)
                 }
             }
     
@@ -223,6 +225,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             } else if (type == ValueType.CLOCK) {
                 if (declaration.hasAnnotation(TimedAutomata.PASSIVE_NAME)) {
                     components.addKeyword("passive")
+                } else if (declaration.hasAnnotation(TimedAutomata.LOGICAL_NAME)) {
+                    components.addKeyword("logical")
                 }
                 components.addKeyword("clock")
             } else if (type == ValueType.TIME) {
@@ -403,11 +407,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         }
         
         if (!method.schedule.nullOrEmpty) {
-            components.addKeyword("schedule")
-            for (schedule : method.schedule) {
-                components.addText(schedule.serialize)
-                components.addText(schedule.priority.toString)
-            }
+            components.addSD(method.schedule.serializeSchedule)
         }
 
         return components;
@@ -440,18 +440,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         }
         
         // User schedules
-        val userSchedule = region.schedule
-        if (userSchedule.size > 0) {
-            val exists = <Pair<ValuedObject, Integer>> newHashSet
-            components.addKeyword("schedule")
-            for (s : userSchedule.indexed) {
-                val existPair = new Pair<ValuedObject, Integer>(s.value.valuedObject, s.value.priority)
-                if (!exists.contains(existPair)) {
-                    if (s.key != 0) components.addText(",")
-                    components.addHighlight(s.value.valuedObject.name + " " + s.value.priority)
-                    exists.add(existPair)
-                }
-            }
+        if (!region.schedule.empty) {
+            components.addSD(region.schedule.serializeSchedule)
         }
 
         return components;
@@ -533,7 +523,17 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         region.label.applySymbolTable
     }
     
-    
+    def serializeSchedule(Collection<ScheduleObjectReference> userSchedule) {
+        val sb = new StringBuilder
+        for (s : userSchedule) {
+            val pair = s.serializeVOR + " " + s.priority
+            if (sb.indexOf(pair) == -1) {
+                if (s !== userSchedule.head) sb.append(", ")
+                sb.append(pair)
+            }
+        }
+        return sb
+    }
     
     private val nameSymbolTable = <String, String> newHashMap
     private val nameSymbolSuffixProcessor = <String, Function<String, String>> newHashMap
