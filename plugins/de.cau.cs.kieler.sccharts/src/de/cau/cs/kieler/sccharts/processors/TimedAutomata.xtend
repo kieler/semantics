@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.PriorityProtocol
@@ -48,6 +49,7 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
@@ -92,7 +94,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     // Global var names
     public static val DELTA_T_NAME = DynamicTicks.DELTA_T
     public static val SLEEP_T_NAME = DynamicTicks.SLEEP_T
-    public static val DEVIATION_NAME = "deviation"
+    public static val DEVIATION_NAME = "lag"
 
     // Experimental Switches
     public static val NO_SLEEP_NAME = "NoSleep"
@@ -108,6 +110,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     public static val INT_CLOCK_NAME_2 = "IntegerClockType"
     public static val USE_SD_NAME = "ClocksUseSD"
     public static val PASSIVE_NAME = "Passive"
+    public static val LOGICAL_NAME = "Logical"
     
     var isIntClockType = false
 
@@ -176,7 +179,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
                 }
                 voStore.update(vo, DynamicTicks.TAG)
-                vo
+                vo // return
             } else {
                 val vo = createValuedObject(DELTA_T_NAME)
                 vo.initialValue = createClockValue(0)
@@ -188,7 +191,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                 ]
                 vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
                 voStore.update(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
-                vo
+                vo // return
             }
             
             if (hasClocks) {
@@ -207,7 +210,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                         vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
                     }
                     voStore.update(vo, DynamicTicks.TAG)
-                    vo
+                    vo // return
                 } else {
                     val vo = createValuedObject(SLEEP_T_NAME)
                     if (!noSleep) {
@@ -221,26 +224,36 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                         vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
                         voStore.update(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
                     }
-                    vo
+                    vo // return
                 }
                 
                 // DeviationOutput
-                if(deviationOutput && !noSleep) {
+                val deviation = if((deviationOutput || rootState.allStates.exists[it.hasClocks && it.clocks.exists[it.declaration.hasAnnotation(LOGICAL_NAME)]]) && !noSleep) {
                     val vo = createValuedObject(DEVIATION_NAME).uniqueName
                     vo.initialValue = createClockValue(0)
                     rootState.declarations += createDeclaration => [
                         type = clockType
                         hostType = intHostClockType
-                        output = true
                         valuedObjects += vo
+                        if (deviationOutput) {
+                            output = true
+                        }
                     ]
                     vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
                     voStore.update(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
                     
                     rootState.createDuringAction => [
                         // calculate deviation
-                        effects += createAssignment(vo, createSubExpression(deltaT.reference, createPreExpression(sleepT.reference)))
+                        effects += createAssignment(vo, createConditionalExpression(
+                            createGTExpression(deltaT.reference, createPreExpression(sleepT.reference)),
+                            createSubExpression(deltaT.reference, createPreExpression(sleepT.reference)),
+                            createIntValue(0)
+                        ))
                     ]
+                    
+                    vo // return
+                } else {
+                    null
                 }
                 
                 // Global sleep time handling
@@ -261,10 +274,19 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                 }
                         
                 // Transform time type
-                val timeDecl = rootState.eAllContents.filter(VariableDeclaration).filter[it.type == ValueType.TIME].toList
-                for (d : timeDecl) {
-                    d.type = clockType
-                    d.hostType = intHostClockType
+                for (d : rootState.eAllContents.filter(Declaration).toList) {
+                    if (d instanceof MethodDeclaration) {
+                        if (d.returnType == ValueType.TIME) {
+                            d.returnType = clockType
+                            d.returnHostType = intHostClockType
+                        }
+                    } else if (d instanceof VariableDeclaration) {
+                        if (d.type == ValueType.TIME) {
+                            d.type = clockType
+                            d.hostType = intHostClockType
+                            d.valuedObjects.forEach[voStore.update(it)]
+                        }
+                    }
                 }
     
                 // Handle clock
@@ -314,7 +336,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                                         if (!scope.connector) {
                                             // sleep time
                                             if (!noSleep) {
-                                                scope.handleSleep(clock, sleepT)
+                                                scope.handleSleep(clock, sleepT, deviation)
                                             }
                                         }
                                     }
@@ -322,10 +344,22 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                                 
                                 // increment                      
                                 state.createDuringAction => [
-                                    it.createAssignment(clock, deltaT.reference) => [
-                                        operator = AssignOperator.ASSIGNADD
-                                        schedule += createScheduleReference(sd, 0)
-                                    ]
+                                    if (clock.declaration.hasAnnotation(LOGICAL_NAME)) {
+                                        it.createAssignment(clock,
+                                            createAddExpression(
+                                                createPreExpression(deviation.reference),
+                                                createSubExpression(deltaT.reference, deviation.reference)
+                                            )
+                                        ) => [
+                                            operator = AssignOperator.ASSIGNADD
+                                            schedule += createScheduleReference(sd, 0)
+                                        ]
+                                    } else {
+                                        it.createAssignment(clock, deltaT.reference) => [
+                                            operator = AssignOperator.ASSIGNADD
+                                            schedule += createScheduleReference(sd, 0)
+                                        ]
+                                    }
                                 ]
                             } else {
                                 // Increment clocks in each state -> no support of hierachy or concurrency
@@ -363,12 +397,21 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                                         
                                         // time progress
                                         subState.createDuringAction => [
-                                            it.createAssignment(clock, deltaT.reference) => [operator = AssignOperator.ASSIGNADD]
+                                            if (clock.declaration.hasAnnotation(LOGICAL_NAME)) {
+                                                it.createAssignment(clock, 
+                                                    createAddExpression(
+                                                        createPreExpression(deviation.reference),
+                                                        createSubExpression(deltaT.reference, deviation.reference)
+                                                    )
+                                                ) => [operator = AssignOperator.ASSIGNADD]
+                                            } else {
+                                                it.createAssignment(clock, deltaT.reference) => [operator = AssignOperator.ASSIGNADD]
+                                            }
                                         ]
                                         
                                         // sleep time
-                                        if (!noSleep) {
-                                            subState.handleSleep(clock, sleepT)
+                                        if (!noSleep && !subState.connector) {
+                                            subState.handleSleep(clock, sleepT, deviation)
                                         }
                                     }
                                 }
@@ -380,12 +423,15 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
         }
     }
     
-    def void handleSleep(State state, ValuedObject clock, ValuedObject sleepT) {
+    def void handleSleep(State state, ValuedObject clock, ValuedObject sleepT, ValuedObject deviation) {
         val constraints = HashMultimap.<Transition, OperatorExpression>create
         val complexConstraints = <OperatorExpression>newArrayList
         for (trans : state.outgoingTransitions.filter[trigger !== null]) {
             for (vor : trans.trigger.eAllContents.filter(ValuedObjectReference).filter[valuedObject == clock].toIterable) {
-                val exp = vor.eContainer
+                var EObject exp = vor
+                while (exp instanceof ValuedObjectReference) {
+                    exp = exp.eContainer
+                }
                 if (exp instanceof OperatorExpression) {
                     if (exp.subExpressions.size == 2) {
                         if (exp.subExpressions.filter(ValuedObjectReference).size == 1 &&
@@ -409,12 +455,12 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             val op2 = constraint.subExpressions.last
             var Expression exp = null
             if (op1 instanceof ValuedObjectReference) {
-                if (op1.valuedObject === clock) {
+                if (op1.lowermostReference.valuedObject === clock) {
                     exp = op2
                 }
             }
             if (op2 instanceof ValuedObjectReference) {
-                if (op2.valuedObject === clock) {
+                if (op2.lowermostReference.valuedObject === clock) {
                     exp = op1
                 }
             }
@@ -426,7 +472,15 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                 } else {
                     val during = state.createImmediateDuringAction
                     during.trigger = createLEExpression(clock.reference, exp.copy)
-                    during.createAssignment(sleepT, createSubExpression(exp.copy, clock.reference)).operator = AssignOperator.ASSIGNMIN
+                    if (clock.declaration.hasAnnotation(LOGICAL_NAME)) {
+                        during.createAssignment(sleepT, 
+                            createSubExpression(exp.copy, createAddExpression(clock.reference, deviation.reference))
+                        ).operator = AssignOperator.ASSIGNMIN
+                    } else {
+                        during.createAssignment(sleepT, 
+                            createSubExpression(exp.copy, clock.reference)
+                        ).operator = AssignOperator.ASSIGNMIN
+                    }
                 }
             }
             
@@ -497,7 +551,15 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             for (threshold : thresholds.indexed) {
                 val during = state.createImmediateDuringAction
                 during.trigger = createLEExpression(clock.reference, createClockValue(threshold.value))
-                during.createAssignment(sleepT, createSubExpression(createClockValue(threshold.value), clock.reference)).operator = AssignOperator.ASSIGNMIN
+                if (clock.declaration.hasAnnotation(LOGICAL_NAME)) {
+                    during.createAssignment(sleepT, 
+                        createSubExpression(createClockValue(threshold.value), createAddExpression(clock.reference, deviation.reference))
+                    ).operator = AssignOperator.ASSIGNMIN
+                } else {
+                    during.createAssignment(sleepT, 
+                        createSubExpression(createClockValue(threshold.value), clock.reference)
+                    ).operator = AssignOperator.ASSIGNMIN
+                }
             }
         }
     }
