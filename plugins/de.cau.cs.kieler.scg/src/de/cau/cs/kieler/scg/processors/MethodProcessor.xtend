@@ -277,6 +277,19 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
                     } while (mcall !== null)
                 }
             }
+            // Pass on scheduling directives
+            if (callNode instanceof Assignment && node instanceof Assignment) {
+                for (sOrig : (callNode as Assignment).schedule) {
+                    val s = sOrig.copy
+                    if (!(sOrig.valuedObject.declaration.eContainer instanceof SCGraph)) {
+                        // Is object specific schedule and should be sub reference
+                        for (vo : callVOs.reverseView) {
+                            s.prependReferenceToReference(vo)
+                        }
+                    }
+                    (node as Assignment).schedule += s
+                }
+            }
         }
         if (selfVO !== null) selfVO.declaration.remove
         

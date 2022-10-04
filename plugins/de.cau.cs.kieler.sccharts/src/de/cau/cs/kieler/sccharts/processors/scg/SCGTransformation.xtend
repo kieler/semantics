@@ -598,9 +598,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     		    
     		    if (!effect.schedule.nullOrEmpty) {
         			for (s : effect.schedule) {
-        			    assignment.schedule += s.valuedObject.getSCGValuedObject.createScheduleReference => [
-        				    it.priority = s.priority
-        			    ]
+                        assignment.schedule += s.convertToSCGExpression as ScheduleObjectReference
         			}
     		    }
     		}
@@ -614,6 +612,17 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
             // TODO  Test if this works correct? Was before:  conditional.setCondition(serializer.serialize(transitionCopy))
             conditional.setCondition(transition.trigger.convertToSCGExpression.trace(transition))
+            // Pass on trigger schedule
+            if (!transition.trigger.schedule.empty) {
+                val vors = newArrayList
+                if (conditional.condition instanceof ValuedObjectReference) {
+                    vors += conditional.condition as ValuedObjectReference
+                }
+                vors += conditional.condition.eAllContents.filter(ValuedObjectReference).filter[!it.isSubReference].toIterable
+                for (vor : vors) {
+                    vor.lowermostReference.schedule += transition.trigger.schedule.map[it.convertToSCGExpression as ScheduleObjectReference]
+                }
+            }
         } else if (stateTypeCache.get(state).contains(PatternType::FORK)) {
             val fork = sCGraph.addFork
             val join = sCGraph.addJoin

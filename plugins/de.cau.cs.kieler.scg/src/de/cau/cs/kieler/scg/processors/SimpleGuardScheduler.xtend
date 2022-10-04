@@ -72,8 +72,9 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
     	 * The {@code nodesToSchedule} {@link Set} contains the nodes that are still
     	 * not scheduled. The topological sort should remove nodes after they have been placed.
     	 */
-    	val nodesToSchedule = scg.nodes.filter[ incomingLinks.filter(GuardDependency).empty ].toSet
-    	val estimatedScheduleSize = nodesToSchedule.size 	
+    	val nodesToSchedule = new LinkedHashSet<Node>
+    	nodesToSchedule += scg.nodes.filter[ incomingLinks.filter(GuardDependency).empty ]
+    	val estimatedScheduleSize = nodesToSchedule.size
     	
     	/**
     	 * {@code Schedule} contains the schedule determined by the topological sort. 
@@ -127,7 +128,7 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
 		for(dependency : dependencies) {
 			if (nodesToSchedule.contains(dependency.eContainer as Node)) {
 				topologicalScheduling(dependency.eContainer as Node, nodesToSchedule, schedule, unscheduableNodes)
-			}			
+			}
 		}
 		
 		// Check if all required nodes were scheduled. If not, abort.
@@ -148,6 +149,16 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
 		
 		// Add this node to the schedule.
 		schedule += node
+		
+		// Immediately schedule conditional guards
+		// This is important as only their SB guard assignment is associated with their dependencies
+		for (dep : node.outgoingLinks.filter(ControlDependency)) {
+		    val next = dep.targetNode
+		    val nextDeps = next.getSchedulingDependencies.toList
+		    if (nodesToSchedule.contains(next) && (nextDeps.size == 1 || nextDeps.forall[schedule.contains(it.eContainer.asNode)])) {
+                topologicalScheduling(next, nodesToSchedule, schedule, unscheduableNodes)
+            }
+		}
 	}
 	
 	/**
