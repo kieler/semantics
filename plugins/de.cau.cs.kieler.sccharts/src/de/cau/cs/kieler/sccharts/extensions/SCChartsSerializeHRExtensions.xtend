@@ -230,7 +230,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                 }
                 components.addKeyword("clock")
             } else if (type == ValueType.TIME) {
-                components.addKeyword("clock-time")
+                components.addKeyword("time")
             }  else if (type == ValueType.STRUCT) {
                 if ((declaration as ClassDeclaration).host) components.addKeyword("host")
                 components.addKeyword("struct")
@@ -370,7 +370,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         if (method.returnType == ValueType.PURE) {
             components.addKeyword("void")
         } else if (method.returnType == ValueType.TIME) {
-            components.addKeyword("clock-time")
+            components.addKeyword("time")
         } else if (method.returnType == ValueType.HOST) {
             components.addKeyword(method.returnHostType)
         } else {
