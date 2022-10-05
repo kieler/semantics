@@ -42,18 +42,20 @@ public class SemanticSoftWrappingLabelManager extends SoftWrappingLabelManager {
      * {@inheritDoc}
      */
     override doResizeLabel(ElkLabel elkLabel, double targetWidth) {
-        if (elkLabel.getProperty(TransitionSynthesis.MAIN_LABEL)) {
-            var rendering = elkLabel.getProperty(KRenderingOptions.K_RENDERING)
-            if(rendering instanceof KRenderingRef) rendering = rendering.rendering
-            val kLabel = rendering?.eContainer
-            val transition = if(kLabel instanceof KLabel) kLabel.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
-            if (transition instanceof Transition) {
-                if (transition.label.isNullOrEmpty) {
-                    val dummyLabel = elkLabel.copy
-                    return Result.modified(transition.serializeMultilineLabel(false).map[
-                        dummyLabel.text = it
-                        super.doResizeLabel(dummyLabel, targetWidth).newText?:it
-                    ].join("\n"))
+        var rendering = elkLabel.getProperty(KRenderingOptions.K_RENDERING)
+        if(rendering instanceof KRenderingRef) rendering = rendering.rendering
+        val kLabel = rendering?.eContainer
+        if (kLabel instanceof KLabel) {
+            if (kLabel.getProperty(TransitionSynthesis.MAIN_LABEL)) {
+                val transition = if(kLabel instanceof KLabel) kLabel.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
+                if (transition instanceof Transition) {
+                    if (transition.label.isNullOrEmpty) {
+                        val dummyLabel = elkLabel.copy
+                        return Result.modified(transition.serializeMultilineLabel(false).map[
+                            dummyLabel.text = it
+                            super.doResizeLabel(dummyLabel, targetWidth).newText?:it
+                        ].join("\n"))
+                    }
                 }
             }
         }
