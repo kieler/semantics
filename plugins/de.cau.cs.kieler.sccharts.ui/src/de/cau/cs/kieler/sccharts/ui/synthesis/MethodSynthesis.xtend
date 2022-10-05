@@ -33,6 +33,7 @@ import de.cau.cs.kieler.scl.processors.transformators.SCLToSCGTransformation
 import java.lang.reflect.Method
 import java.util.EnumSet
 import java.util.List
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.ContentAlignment
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.SizeConstraint
@@ -139,6 +140,9 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
 
         node.setLayoutOption(CoreOptions::CONTENT_ALIGNMENT, ContentAlignment.topCenter())
         node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
+        node.setLayoutOption(LayeredOptions.SPACING_NODE_NODE, 15.0)
+        node.setLayoutOption(LayeredOptions.SPACING_NODE_NODE_BETWEEN_LAYERS, 15.0)
+        node.setLayoutOption(LayeredOptions.SPACING_EDGE_NODE, 15.0)
         
         return newArrayList(node)
     }
