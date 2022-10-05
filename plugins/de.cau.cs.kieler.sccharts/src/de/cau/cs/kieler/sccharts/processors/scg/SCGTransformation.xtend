@@ -790,14 +790,12 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     def dispatch Expression convertToSCGExpression(ScheduleObjectReference expression) {
         expression.valuedObject.getSCGValuedObject.createScheduleReference => [ sor |
             sor.trace(expression)
+            sor.priority = expression.priority
             sor.handleSubReferences(expression)
             expression.indices.forEach [
                 sor.indices += it.convertToSCGExpression
             ]
-            expression.schedule.forEach [
-                sor.schedule += it.copy
-            ]
-        ]    
+        ]
     }
     
     // Create a new reference Expression to the corresponding sValuedObject of the expression
@@ -807,6 +805,9 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             vor.handleSubReferences(expression)
             expression.indices.forEach [
                 vor.indices += it.convertToSCGExpression
+            ]
+            expression.schedule.forEach [
+                vor.schedule += it.convertToSCGExpression as ScheduleObjectReference
             ]
         ]
     }
@@ -909,6 +910,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         if (src.subReference !== null) {
             val ref =  src.subReference.valuedObject.SCGValuedObject.reference
             ref.indices += src.subReference.indices.map[convertToSCGExpression]
+            ref.schedule += src.schedule.map[it.convertToSCGExpression as ScheduleObjectReference]
             dest.subReference = ref
             dest.subReference.handleSubReferences(src.subReference)
         }
