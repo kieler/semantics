@@ -86,7 +86,6 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         
         if (USE_KLAY.booleanValue) {
             node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
-            
             node.setLayoutOption(CoreOptions::CONTENT_ALIGNMENT, ContentAlignment.topCenter())
             node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment::BALANCED)
             node.setLayoutOption(LayeredOptions::EDGE_LABELS_CENTER_LABEL_PLACEMENT_STRATEGY, CenterEdgeLabelPlacementStrategy::TAIL_LAYER)
