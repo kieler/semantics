@@ -5,8 +5,6 @@ package de.cau.cs.kieler.esterel.impl;
 import de.cau.cs.kieler.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.ModuleRenaming;
 
-import de.cau.cs.kieler.scl.Module;
-
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;

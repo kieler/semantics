@@ -7,7 +7,6 @@ import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
-import de.cau.cs.kieler.kexpressions.keffects.Effect;
 
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;

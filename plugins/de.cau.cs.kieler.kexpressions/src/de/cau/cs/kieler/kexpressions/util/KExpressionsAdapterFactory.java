@@ -161,12 +161,24 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createReferenceDeclarationAdapter();
             }
             @Override
-            public Adapter caseScheduleDeclaration(ScheduleDeclaration object) {
-                return createScheduleDeclarationAdapter();
+            public Adapter caseGenericParameterDeclaration(GenericParameterDeclaration object) {
+                return createGenericParameterDeclarationAdapter();
+            }
+            @Override
+            public Adapter caseGenericTypeReference(GenericTypeReference object) {
+                return createGenericTypeReferenceAdapter();
+            }
+            @Override
+            public Adapter caseValueTypeReference(ValueTypeReference object) {
+                return createValueTypeReferenceAdapter();
             }
             @Override
             public Adapter caseMethodDeclaration(MethodDeclaration object) {
                 return createMethodDeclarationAdapter();
+            }
+            @Override
+            public Adapter caseScheduleDeclaration(ScheduleDeclaration object) {
+                return createScheduleDeclarationAdapter();
             }
             @Override
             public Adapter caseScheduleObjectReference(ScheduleObjectReference object) {
@@ -211,6 +223,14 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseExternString(ExternString object) {
                 return createExternStringAdapter();
+            }
+            @Override
+            public Adapter caseSpecialAccessExpression(SpecialAccessExpression object) {
+                return createSpecialAccessExpressionAdapter();
+            }
+            @Override
+            public Adapter caseThisExpression(ThisExpression object) {
+                return createThisExpressionAdapter();
             }
             @Override
             public Adapter caseNameable(Nameable object) {
@@ -421,6 +441,48 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.GenericParameterDeclaration <em>Generic Parameter Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
+     * @generated
+     */
+    public Adapter createGenericParameterDeclarationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.GenericTypeReference <em>Generic Type Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.GenericTypeReference
+     * @generated
+     */
+    public Adapter createGenericTypeReferenceAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.ValueTypeReference <em>Value Type Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.ValueTypeReference
+     * @generated
+     */
+    public Adapter createValueTypeReferenceAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration <em>Schedule Declaration</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -557,6 +619,34 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createExternStringAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.SpecialAccessExpression <em>Special Access Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.SpecialAccessExpression
+     * @generated
+     */
+    public Adapter createSpecialAccessExpressionAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.ThisExpression <em>This Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.ThisExpression
+     * @generated
+     */
+    public Adapter createThisExpressionAdapter() {
         return null;
     }
 

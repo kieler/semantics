@@ -139,7 +139,7 @@ class SSASCL2SSAEsterel extends Processor<SCLProgram, EsterelProgram> {
                     name = vo.name
                 ]
             }
-            if (signalNestingHead == null) {
+            if (signalNestingHead === null) {
                 module.statements += sigDecl
             } else {
                 signalNestingHead.statements += sigDecl
@@ -163,14 +163,14 @@ class SSASCL2SSAEsterel extends Processor<SCLProgram, EsterelProgram> {
                 name = vo.name
             ]
         }
-        if (signalNestingHead == null) {
+        if (signalNestingHead === null) {
             module.statements += ssaSigDecl
         } else {
             signalNestingHead.statements += ssaSigDecl
         }
         signalNestingHead = ssaSigDecl
         
-        if (term != null) {
+        if (term !== null) {
             scl.statements.translateStatements(signalNestingHead)
         } else {
             // Parallel error thread

@@ -7,8 +7,6 @@ import com.google.inject.Binder;
 import com.google.inject.name.Names;
 import de.cau.cs.kieler.annotations.ide.contentassist.antlr.AnnotationsParser;
 import de.cau.cs.kieler.annotations.ide.contentassist.antlr.internal.InternalAnnotationsLexer;
-import de.cau.cs.kieler.annotations.ide.highlighting.AnnotationsHighlighting;
-import de.cau.cs.kieler.annotations.xtext.IHighlighting;
 import org.eclipse.xtext.ide.DefaultIdeModule;
 import org.eclipse.xtext.ide.LexerIdeBindings;
 import org.eclipse.xtext.ide.editor.contentassist.FQNPrefixMatcher;
@@ -57,11 +55,6 @@ public abstract class AbstractAnnotationsIdeModule extends DefaultIdeModule {
 	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
 	public Class<? extends IRenameStrategy2> bindIRenameStrategy2() {
 		return IRenameStrategy2.DefaultImpl.class;
-	}
-	
-	// contributed by de.cau.cs.kieler.annotations.xtext.GenerateKeywordsFragment
-	public Class<? extends IHighlighting> bindIHighlighting() {
-		return AnnotationsHighlighting.class;
 	}
 	
 }

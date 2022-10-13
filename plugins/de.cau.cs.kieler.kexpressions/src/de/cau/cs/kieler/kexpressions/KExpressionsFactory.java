@@ -184,6 +184,33 @@ public interface KExpressionsFactory extends EFactory {
     ReferenceDeclaration createReferenceDeclaration();
 
     /**
+     * Returns a new object of class '<em>Generic Parameter Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Generic Parameter Declaration</em>'.
+     * @generated
+     */
+    GenericParameterDeclaration createGenericParameterDeclaration();
+
+    /**
+     * Returns a new object of class '<em>Generic Type Reference</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Generic Type Reference</em>'.
+     * @generated
+     */
+    GenericTypeReference createGenericTypeReference();
+
+    /**
+     * Returns a new object of class '<em>Value Type Reference</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Value Type Reference</em>'.
+     * @generated
+     */
+    ValueTypeReference createValueTypeReference();
+
+    /**
      * Returns a new object of class '<em>Schedule Declaration</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -272,6 +299,24 @@ public interface KExpressionsFactory extends EFactory {
      * @generated
      */
     ExternString createExternString();
+
+    /**
+     * Returns a new object of class '<em>Special Access Expression</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Special Access Expression</em>'.
+     * @generated
+     */
+    SpecialAccessExpression createSpecialAccessExpression();
+
+    /**
+     * Returns a new object of class '<em>This Expression</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>This Expression</em>'.
+     * @generated
+     */
+    ThisExpression createThisExpression();
 
     /**
      * Returns the package supported by this factory.

@@ -16,9 +16,14 @@ package de.cau.cs.kieler.scg.processors
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Entry
@@ -33,17 +38,11 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import java.util.Map
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
-import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import java.util.Map
-import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
-import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /** 
  * @author ssm
@@ -65,6 +64,10 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
     @Inject extension PragmaExtensions
 
     static val String ANNOTATION_HOSTCODE = "hostcode"
+    static val ANNOTATION_COPY_BLACKLIST = #[
+        SCGAnnotations.ANNOTATION_GUARDCREATOR,
+        SCGAnnotations.ANNOTATION_GUARDED        
+    ]
     
     val globalVOMap = <ValuedObject, ValuedObject>newHashMap
      
@@ -91,7 +94,7 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
             SCGGraphs.scgs += scg.transform(SCGMap.get(scg), SCGMap)                           
         }
         // retain method SCGs
-        SCGGraphs.scgs.addAll(0, model.scgs.copyMethodSCGs(globalVOMap))    
+        SCGGraphs.scgs.addAll(0, model.scgs.copyMethodSCGs(globalVOMap, environment))    
             
         setModel(SCGGraphs)
     }
@@ -108,18 +111,14 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
          * basic blocks.
          */
          newSCG => [
+            scg.copyAnnotations(it, SCGAnnotations.TRANSFORMATION_INDICATORS)
+            annotations.removeIf[ANNOTATION_COPY_BLACKLIST.contains(it.name)]
         	addTagAnnotation(SCGAnnotations.ANNOTATION_SEQUENTIALIZED)
         	label = scg.label
         	name = scg.name
-            scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]
-//        scg.setDefaultTrace
         newSCG.trace(scg)
-        
-        val hostcodeAnnotations = scg.getAnnotations(ANNOTATION_HOSTCODE)
-        hostcodeAnnotations.forEach[
-            newSCG.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
-        ]
+
         val valuedObjectMap = scg.copyDeclarations(newSCG, SCGMap)
         valuedObjectMap.entrySet.forEach[globalVOMap.put(key, value.head)]
                 

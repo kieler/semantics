@@ -18,7 +18,6 @@ import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.Parameter;
 import de.cau.cs.kieler.kexpressions.ParameterAccessType;
-import de.cau.cs.kieler.kexpressions.ParamterAccessType;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import java.util.Collection;
 

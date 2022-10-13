@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KiCool Ui
 Bundle-SymbolicName: de.cau.cs.kieler.kicool.ui;singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.3.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.kicool.ui.internal.KiCoolActivator
 Eclipse-UI: True
 Require-Bundle: org.eclipse.ui,
@@ -38,7 +38,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt;bundle-version="3.18.200",
  org.eclipse.jdt.core;bundle-version="3.20.0",
  de.cau.cs.kieler.annotations.ide
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kicool.ui,
  de.cau.cs.kieler.kicool.ui.console,
@@ -51,7 +51,6 @@ Export-Package: de.cau.cs.kieler.kicool.ui,
  de.cau.cs.kieler.kicool.ui.klighd,
  de.cau.cs.kieler.kicool.ui.klighd.actions,
  de.cau.cs.kieler.kicool.ui.klighd.editor,
- de.cau.cs.kieler.kicool.ui.klighd.models,
  de.cau.cs.kieler.kicool.ui.klighd.syntheses,
  de.cau.cs.kieler.kicool.ui.labeling,
  de.cau.cs.kieler.kicool.ui.outline,
@@ -66,3 +65,4 @@ Export-Package: de.cau.cs.kieler.kicool.ui,
  de.cau.cs.kieler.kicool.ui.view.actions,
  de.cau.cs.kieler.kicool.ui.view.registry
 Import-Package: org.apache.log4j
+Automatic-Module-Name: de.cau.cs.kieler.kicool.ui

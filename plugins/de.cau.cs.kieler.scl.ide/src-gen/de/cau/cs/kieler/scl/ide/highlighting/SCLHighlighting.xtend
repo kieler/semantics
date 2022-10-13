@@ -4,8 +4,8 @@
 package de.cau.cs.kieler.scl.ide.highlighting
 
 
+import de.cau.cs.kieler.core.ls.IHighlighting
 import java.util.List
-import de.cau.cs.kieler.annotations.xtext.IHighlighting
 
 class SCLHighlighting implements IHighlighting {
     override String getId() {
@@ -17,15 +17,19 @@ class SCLHighlighting implements IHighlighting {
     override List<String> getKeywords() {
         return #["_",
         "bool",
+        "class",
         "combine",
-        "conflict",
-        "confluent",
+        "commuting",
+        "conflicting",
         "const",
         "else",
         "end",
+        "enum",
         "expression",
         "extern",
+        "fby",
         "float",
+        "for",
         "fork",
         "global",
         "goto",
@@ -33,7 +37,10 @@ class SCLHighlighting implements IHighlighting {
         "if",
         "input",
         "int",
+        "is",
         "join",
+        "json",
+        "label",
         "max",
         "min",
         "module",
@@ -45,20 +52,27 @@ class SCLHighlighting implements IHighlighting {
         "pre",
         "print",
         "private",
+        "protected",
+        "public",
         "pure",
         "random",
         "randomize",
         "ref",
+        "return",
         "run",
         "schedule",
         "scope",
+        "sfby",
         "signal",
         "static",
         "string",
         "struct",
         "then",
+        "this",
         "to",
-        "val"
+        "val",
+        "void",
+        "while"
         ]
     }
 }

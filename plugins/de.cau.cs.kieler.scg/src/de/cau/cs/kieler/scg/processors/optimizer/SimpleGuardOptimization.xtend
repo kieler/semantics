@@ -88,7 +88,6 @@ class SimpleGuardOptimization extends Processor<SCGraphs, SCGraphs> implements T
     public def void optimizeGuards(SCGraph scg) {
         val PartialExpressionEvaluator parEval = new PartialExpressionEvaluator(<ValuedObject, Value> newHashMap) => [ 
             compute = true
-            inplace = true
         ]
         
         var step = 0

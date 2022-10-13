@@ -5,9 +5,9 @@ package de.cau.cs.kieler.kexpressions.keffects.formatting2;
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotation
-import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.formatting2.KExpressionsFormatter
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect
@@ -15,7 +15,6 @@ import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.services.KEffectsGrammarAccess
 import org.eclipse.xtext.formatting2.IFormattableDocument
-import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 
 class KEffectsFormatter extends KExpressionsFormatter {
 	

@@ -37,7 +37,12 @@ class Identity extends Processor<Object, Object> {
     }
     
     override process() {
-        println("Identity: TEST")
+        /*
+         * This processors must not do anything!
+         * It is crucial for the CLI. Since this is the default compilation system,
+         * it allows to perform dry runs without compiling or generating diagrams.
+         */
+        println("Identity (no transformation)")
     }
     
 }

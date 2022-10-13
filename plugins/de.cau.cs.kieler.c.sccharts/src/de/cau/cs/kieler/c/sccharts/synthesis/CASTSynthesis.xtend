@@ -13,13 +13,13 @@
 package de.cau.cs.kieler.c.sccharts.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.ui.view.registry.KNodeExtensionsReplacement
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
@@ -45,7 +45,7 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 class CASTSynthesis extends AbstractDiagramSynthesis<IASTTranslationUnit> {
 
 
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
     @Inject extension KPortExtensions
     @Inject extension KRenderingExtensions

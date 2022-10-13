@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -41,6 +42,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl#getStates <em>States</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl#isFinal <em>Final</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl#isAbort <em>Abort</em>}</li>
  * </ul>
  *
  * @generated
@@ -48,11 +50,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegion {
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
-				/**
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+
+    /**
      * The cached value of the '{@link #getStates() <em>States</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -71,7 +74,8 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
      * @ordered
      */
     protected static final boolean FINAL_EDEFAULT = false;
-                /**
+
+    /**
      * The cached value of the '{@link #isFinal() <em>Final</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -80,6 +84,26 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
      * @ordered
      */
     protected boolean final_ = FINAL_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isAbort() <em>Abort</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isAbort()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean ABORT_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isAbort() <em>Abort</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isAbort()
+     * @generated
+     * @ordered
+     */
+    protected boolean abort = ABORT_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -141,6 +165,29 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public boolean isAbort() {
+        return abort;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setAbort(boolean newAbort) {
+        boolean oldAbort = abort;
+        abort = newAbort;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.CONTROLFLOW_REGION__ABORT, oldAbort, abort));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -177,6 +224,8 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
                 return getStates();
             case SCChartsPackage.CONTROLFLOW_REGION__FINAL:
                 return isFinal();
+            case SCChartsPackage.CONTROLFLOW_REGION__ABORT:
+                return isAbort();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -197,6 +246,9 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
             case SCChartsPackage.CONTROLFLOW_REGION__FINAL:
                 setFinal((Boolean)newValue);
                 return;
+            case SCChartsPackage.CONTROLFLOW_REGION__ABORT:
+                setAbort((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -215,6 +267,9 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
             case SCChartsPackage.CONTROLFLOW_REGION__FINAL:
                 setFinal(FINAL_EDEFAULT);
                 return;
+            case SCChartsPackage.CONTROLFLOW_REGION__ABORT:
+                setAbort(ABORT_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -231,6 +286,8 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
                 return states != null && !states.isEmpty();
             case SCChartsPackage.CONTROLFLOW_REGION__FINAL:
                 return final_ != FINAL_EDEFAULT;
+            case SCChartsPackage.CONTROLFLOW_REGION__ABORT:
+                return abort != ABORT_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -247,6 +304,8 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
         StringBuilder result = new StringBuilder(super.toString());
         result.append(" (final: ");
         result.append(final_);
+        result.append(", abort: ");
+        result.append(abort);
         result.append(')');
         return result.toString();
     }

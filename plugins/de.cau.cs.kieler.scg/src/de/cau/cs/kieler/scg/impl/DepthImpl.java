@@ -74,6 +74,7 @@ public class DepthImpl extends NodeImpl implements Depth {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Surface getSurface() {
         if (surface != null && surface.eIsProxy()) {
             InternalEObject oldSurface = (InternalEObject)surface;
@@ -115,6 +116,7 @@ public class DepthImpl extends NodeImpl implements Depth {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSurface(Surface newSurface) {
         if (newSurface != surface) {
             NotificationChain msgs = null;
@@ -134,6 +136,7 @@ public class DepthImpl extends NodeImpl implements Depth {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ControlFlow getNext() {
         return next;
     }
@@ -158,6 +161,7 @@ public class DepthImpl extends NodeImpl implements Depth {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNext(ControlFlow newNext) {
         if (newNext != next) {
             NotificationChain msgs = null;

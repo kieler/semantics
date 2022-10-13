@@ -79,6 +79,7 @@ public class SCGraphsImpl extends PragmatableImpl implements SCGraphs {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<SCGraph> getScgs() {
         if (scgs == null) {
             scgs = new EObjectContainmentEList<SCGraph>(SCGraph.class, this, ScgPackage.SC_GRAPHS__SCGS);

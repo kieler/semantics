@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
@@ -34,6 +35,8 @@ import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
@@ -67,6 +70,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     @Inject extension KEdgeExtensions
     @Inject extension KRenderingExtensions
     @Inject extension SCChartsSerializeHRExtensions
+    @Inject extension SCChartsInheritanceExtensions
+    @Inject extension SCChartsScopeExtensions
     @Inject extension PragmaExtensions
     @Inject extension TransitionStyles
     @Inject extension KPolylineExtensions
@@ -115,6 +120,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             SHOW_ALL_SCCHARTS,
             SHOW_INHERITANCE,
             SHOW_INHERITANCE_EDGES,
+            SHOW_AGGREGATION_EDGES,
             SHOW_BINDINGS,
             SHOW_METHOD_BODY,
             SHOW_COMMENTS,
@@ -235,6 +241,46 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
                         edge.addPolyline => [
                             lineWidth = 1
                             addInheritanceTriangleArrowDecorator
+                        ]
+                    }
+                }
+            }
+            if (SHOW_AGGREGATION_EDGES.booleanValue) {
+                rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction.UP)
+                rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20.0)
+                rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 28.0)
+                rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 28.0)
+                for(state : rootStates) {
+                    val aggregation = newHashSet
+                    for (ref : state.declarations.filter(ReferenceDeclaration)) {
+                        if (ref.reference instanceof State) {
+                            aggregation += ref.reference as State
+                        }
+                    }
+                    for (inner : state.allScopes.toIterable) {
+                        if (inner !== state) {
+                            if (inner instanceof State) {
+                                if (!inner.baseStateReferences.nullOrEmpty) {
+                                    aggregation += inner.baseStates
+                                }
+                                if (inner.isReferencing && inner.reference.target instanceof State) {
+                                    aggregation += inner.reference.target as State
+                                }
+                            }
+                            for (ref : state.declarations.filter(ReferenceDeclaration)) {
+                                if (ref.reference instanceof State) {
+                                    aggregation += ref.reference as State
+                                }
+                            }
+                        }
+                    }
+                    for (agg : aggregation) {
+                        val edge = createEdge
+                        edge.source = rootStateNodes.get(state)
+                        edge.target = rootStateNodes.get(agg)
+                        edge.addPolyline => [
+                            lineWidth = 1
+                            addAggregationArrowDecorator
                         ]
                     }
                 }

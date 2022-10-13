@@ -2,26 +2,22 @@
  */
 package de.cau.cs.kieler.kexpressions.impl;
 
-import de.cau.cs.kieler.kexpressions.ExternString;
-import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.kexpressions.Parameter;
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
-
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import de.cau.cs.kieler.kexpressions.ExternString;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.Parameter;
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,14 +27,37 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#isInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#getReference <em>Reference</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#getReferenceContainer <em>Reference Container</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#getExtern <em>Extern</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#getGenericParameters <em>Generic Parameters</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class ReferenceDeclarationImpl extends DeclarationImpl implements ReferenceDeclaration {
+    /**
+     * The default value of the '{@link #isInput() <em>Input</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isInput()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean INPUT_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isInput() <em>Input</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isInput()
+     * @generated
+     * @ordered
+     */
+    protected boolean input = INPUT_EDEFAULT;
+
     /**
      * The cached value of the '{@link #getReference() <em>Reference</em>}' reference.
      * <!-- begin-user-doc -->
@@ -48,6 +67,16 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
      * @ordered
      */
     protected EObject reference;
+
+    /**
+     * The cached value of the '{@link #getReferenceContainer() <em>Reference Container</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getReferenceContainer()
+     * @generated
+     * @ordered
+     */
+    protected EObject referenceContainer;
 
     /**
      * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
@@ -70,6 +99,16 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
     protected EList<ExternString> extern;
 
     /**
+     * The cached value of the '{@link #getGenericParameters() <em>Generic Parameters</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getGenericParameters()
+     * @generated
+     * @ordered
+     */
+    protected EList<Parameter> genericParameters;
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -86,6 +125,29 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
     @Override
     protected EClass eStaticClass() {
         return KExpressionsPackage.Literals.REFERENCE_DECLARATION;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean isInput() {
+        return input;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setInput(boolean newInput) {
+        boolean oldInput = input;
+        input = newInput;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.REFERENCE_DECLARATION__INPUT, oldInput, input));
     }
 
     /**
@@ -134,11 +196,64 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
      * @generated
      */
     @Override
+    public EObject getReferenceContainer() {
+        if (referenceContainer != null && referenceContainer.eIsProxy()) {
+            InternalEObject oldReferenceContainer = (InternalEObject)referenceContainer;
+            referenceContainer = eResolveProxy(oldReferenceContainer);
+            if (referenceContainer != oldReferenceContainer) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE_CONTAINER, oldReferenceContainer, referenceContainer));
+            }
+        }
+        return referenceContainer;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EObject basicGetReferenceContainer() {
+        return referenceContainer;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setReferenceContainer(EObject newReferenceContainer) {
+        EObject oldReferenceContainer = referenceContainer;
+        referenceContainer = newReferenceContainer;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE_CONTAINER, oldReferenceContainer, referenceContainer));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EList<ExternString> getExtern() {
         if (extern == null) {
             extern = new EObjectContainmentEList<ExternString>(ExternString.class, this, KExpressionsPackage.REFERENCE_DECLARATION__EXTERN);
         }
         return extern;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<Parameter> getGenericParameters() {
+        if (genericParameters == null) {
+            genericParameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KExpressionsPackage.REFERENCE_DECLARATION__GENERIC_PARAMETERS);
+        }
+        return genericParameters;
     }
 
     /**
@@ -166,6 +281,8 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
                 return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
             case KExpressionsPackage.REFERENCE_DECLARATION__EXTERN:
                 return ((InternalEList<?>)getExtern()).basicRemove(otherEnd, msgs);
+            case KExpressionsPackage.REFERENCE_DECLARATION__GENERIC_PARAMETERS:
+                return ((InternalEList<?>)getGenericParameters()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -178,13 +295,20 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case KExpressionsPackage.REFERENCE_DECLARATION__INPUT:
+                return isInput();
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 if (resolve) return getReference();
                 return basicGetReference();
+            case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE_CONTAINER:
+                if (resolve) return getReferenceContainer();
+                return basicGetReferenceContainer();
             case KExpressionsPackage.REFERENCE_DECLARATION__PARAMETERS:
                 return getParameters();
             case KExpressionsPackage.REFERENCE_DECLARATION__EXTERN:
                 return getExtern();
+            case KExpressionsPackage.REFERENCE_DECLARATION__GENERIC_PARAMETERS:
+                return getGenericParameters();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -198,8 +322,14 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case KExpressionsPackage.REFERENCE_DECLARATION__INPUT:
+                setInput((Boolean)newValue);
+                return;
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 setReference((EObject)newValue);
+                return;
+            case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE_CONTAINER:
+                setReferenceContainer((EObject)newValue);
                 return;
             case KExpressionsPackage.REFERENCE_DECLARATION__PARAMETERS:
                 getParameters().clear();
@@ -208,6 +338,10 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
             case KExpressionsPackage.REFERENCE_DECLARATION__EXTERN:
                 getExtern().clear();
                 getExtern().addAll((Collection<? extends ExternString>)newValue);
+                return;
+            case KExpressionsPackage.REFERENCE_DECLARATION__GENERIC_PARAMETERS:
+                getGenericParameters().clear();
+                getGenericParameters().addAll((Collection<? extends Parameter>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -221,14 +355,23 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case KExpressionsPackage.REFERENCE_DECLARATION__INPUT:
+                setInput(INPUT_EDEFAULT);
+                return;
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 setReference((EObject)null);
+                return;
+            case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE_CONTAINER:
+                setReferenceContainer((EObject)null);
                 return;
             case KExpressionsPackage.REFERENCE_DECLARATION__PARAMETERS:
                 getParameters().clear();
                 return;
             case KExpressionsPackage.REFERENCE_DECLARATION__EXTERN:
                 getExtern().clear();
+                return;
+            case KExpressionsPackage.REFERENCE_DECLARATION__GENERIC_PARAMETERS:
+                getGenericParameters().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -242,14 +385,36 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case KExpressionsPackage.REFERENCE_DECLARATION__INPUT:
+                return input != INPUT_EDEFAULT;
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 return reference != null;
+            case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE_CONTAINER:
+                return referenceContainer != null;
             case KExpressionsPackage.REFERENCE_DECLARATION__PARAMETERS:
                 return parameters != null && !parameters.isEmpty();
             case KExpressionsPackage.REFERENCE_DECLARATION__EXTERN:
                 return extern != null && !extern.isEmpty();
+            case KExpressionsPackage.REFERENCE_DECLARATION__GENERIC_PARAMETERS:
+                return genericParameters != null && !genericParameters.isEmpty();
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (input: ");
+        result.append(input);
+        result.append(')');
+        return result.toString();
     }
 
 } //ReferenceDeclarationImpl

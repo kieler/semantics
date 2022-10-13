@@ -30,10 +30,15 @@ import static de.cau.cs.kieler.kicool.deploy.TemplatePosition.*
 import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
 
 /**
+ * als: This was deprecated by a build-in mechanism for host includes (#resource) pragmas.
+ *      See: https://rtsys.informatik.uni-kiel.de/confluence/x/zgHqAw
+ *      However, not all compiler integrations currently use the new mechanism
+ * 
  * @author ssm
  * @kieler.design 2018-11-22 proposed
  * @kieler.rating 2018-11-22 proposed yellow
  */
+@Deprecated
 class ModelIncludes extends Processor<Object, CodeContainer> {
 
 // TODO: This looks pretty similar to the AbstractTemplateGeneratorProcessor. Think about a good inheritance structure.
@@ -125,7 +130,7 @@ class ModelIncludes extends Processor<Object, CodeContainer> {
         }
         
         logger.saveLog(environment, "model-includes-template.log")
-        model = cc
+        //model = cc
     }
     
     def relativeTemplatePath(String fileName) {

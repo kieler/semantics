@@ -27,7 +27,7 @@ class AnnotationsExtensions {
 	
 	def public String getStringAnnotationValue(Annotatable annotatable, String name) {
 		val annotation = annotatable.getAnnotation(name)
-		if (annotation != null) 
+		if (annotation !== null) 
 			(annotation as StringAnnotation).values.head
 		else
 			""

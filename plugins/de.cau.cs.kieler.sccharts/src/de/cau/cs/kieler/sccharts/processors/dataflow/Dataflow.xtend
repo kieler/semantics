@@ -13,9 +13,12 @@
 package de.cau.cs.kieler.sccharts.processors.dataflow
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.VectorValue
@@ -29,12 +32,12 @@ import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
@@ -55,20 +58,25 @@ class Dataflow extends SCChartsProcessor {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsActionExtensions
+    @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsInheritanceExtensions
+    @Inject extension SCChartsScopeExtensions
     
     
     extension SCChartsFactory sccFactory = SCChartsFactory.eINSTANCE
     
     static val GENERATED_PREFIX = "__df_"
+    static val IGNORE_ANNOTATION = "DFignore"
+    
+    public static val ID = "de.cau.cs.kieler.sccharts.processors.dataflow"
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.dataflow"
+        ID
     }
     
     override getName() {
@@ -120,7 +128,8 @@ class Dataflow extends SCChartsProcessor {
         for (equation : dataflowRegion.equations.immutableCopy) {
             equation.allAssignmentReferences.filter[ 
                 isReferenceDeclarationReference &&
-                (it.valuedObject.eContainer as ReferenceDeclaration).extern.size == 0
+                (it.valuedObject.eContainer as ReferenceDeclaration).extern.size == 0 &&
+                !(it.valuedObject.eContainer as ReferenceDeclaration).hasAnnotation(IGNORE_ANNOTATION)
             ].forEach[
                 rdInstances += it.valuedObject
                 rdEquationMappingForTracing.put(it.valuedObject, equation)
@@ -149,7 +158,10 @@ class Dataflow extends SCChartsProcessor {
             newRefDelayState.createTransitionTo(newRefState).trace(rdEquationMappingForTracing.get(rdInstance.value))
             
             val ref = rdInstance.value.referenceDeclaration.reference
-            newRefState.reference.scope = ref as Scope
+            newRefState.reference.target = ref as NamedObject
+            newRefState.reference.genericParameters += (
+                rdInstance.value.genericParameters.nullOrEmpty ? rdInstance.value.referenceDeclaration.genericParameters :rdInstance.value.genericParameters
+            )?:emptyList.map[copy]
             
             val decls = newArrayList()
             decls += ref.asDeclarationScope.declarations
@@ -158,6 +170,9 @@ class Dataflow extends SCChartsProcessor {
             }
             for (declaration : decls.filter(VariableDeclaration).filter[ input || output ]) {
                 val localDeclaration = createVariableDeclaration(declaration.type).trace(declaration)
+                if (declaration.type == ValueType.HOST) {
+                    localDeclaration.hostType = declaration.hostType
+                }
                 
                 for (valuedObject : declaration.valuedObjects) {
                     val localValuedObject = createValuedObject => [

@@ -33,6 +33,7 @@ import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsReplacementExtensions
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.sccharts.PreemptionType
+import de.cau.cs.kieler.sccharts.OdeAction
 
 /**
  * @author ssm
@@ -154,6 +155,10 @@ class SCChartsActionExtensions {
 
     def getSuspendActions(Scope scope) {
         scope.actions.filter(SuspendAction)
+    }
+
+    def getOdeActions(Scope scope) {
+        scope.actions.filter(OdeAction)
     }
     
     def hasEntryActions(Scope scope) {

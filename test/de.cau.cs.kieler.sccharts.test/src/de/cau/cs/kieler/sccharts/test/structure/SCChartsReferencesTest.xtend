@@ -55,6 +55,7 @@ class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<SCCharts> 
      */
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("sccharts")
+            && !modelData.modelProperties.contains("large")
             && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
             && !modelData.modelProperties.contains("must-fail")
     }
@@ -67,9 +68,10 @@ class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<SCCharts> 
             parserNodes.asTreeIterable.filter[
                 grammarElement.eClass.equals(keyword.eClass)
                 && (grammarElement as Keyword).value == keyword.value
+                && semanticElement instanceof Scope
             ].forEach[
                 assertTrue("Referenced state " + (semanticElement as Scope).name + " in " + res.getURI.segment(res.getURI.segmentCount - 1) + " cannot be resolved",
-                    (semanticElement as Scope).reference.scope !== null)
+                    (semanticElement as Scope).reference.target !== null)
             ]
         }
     }

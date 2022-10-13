@@ -23,6 +23,7 @@ import de.cau.cs.kieler.esterel.EsterelParallel
 import de.cau.cs.kieler.esterel.EsterelProgram
 import de.cau.cs.kieler.esterel.Exit
 import de.cau.cs.kieler.esterel.LocalSignalDeclaration
+import de.cau.cs.kieler.esterel.LocalVariableDeclaration
 import de.cau.cs.kieler.esterel.Loop
 import de.cau.cs.kieler.esterel.Nothing
 import de.cau.cs.kieler.esterel.Present
@@ -34,17 +35,19 @@ import de.cau.cs.kieler.esterel.extensions.EsterelExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.processors.ssa.SSATransformationExtensions
+import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
 import de.cau.cs.kieler.scl.Assignment
 import de.cau.cs.kieler.scl.Goto
 import de.cau.cs.kieler.scl.Label
@@ -55,14 +58,8 @@ import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.Scope
 import de.cau.cs.kieler.scl.Thread
 import java.util.List
-import de.cau.cs.kieler.scl.Statement
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.esterel.LocalVariableDeclaration
-import de.cau.cs.kieler.kexpressions.BoolValue
 
 /**
  * This class contains methods to transform an Kernel SC Esterel program to SCL using signal notation.
@@ -155,14 +152,15 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
         for (decl : module.signalDeclarations) {
             sclModule.declarations += createVariableDeclaration(ValueType.PURE) => [
                 it.trace(decl)
+                signal = true
                 input = decl.input
                 output = decl.output
                 for (sig : decl.signals) {
                     if (sig.type !== ValueType.PURE) {
                         if (strict) {
-                            environment.errors.add("Can only handle Esterel programs with non-pure signals!")
+                            environment.errors.add("Can only handle Esterel programs with pure signals!")
                         } else {
-                            environment.warnings.add("Can only handle Esterel programs with non-pure signals, valued signal will be treated pure!")
+                            environment.warnings.add("Can only handle Esterel programs with pure signals, valued signal will be treated pure!")
                         }
                     }
                     valuedObjects += createValuedObject(sig.name) => [
@@ -176,6 +174,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
 
         // Special Decl
         suspendDecl = createVariableDeclaration(ValueType.PURE) => [
+            signal = true
             annotations += createTagAnnotation => [
                 name = SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION
             ]
@@ -184,6 +183,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
             ]
         ]
         exitDecl = createVariableDeclaration(ValueType.PURE) => [
+            signal = true
             annotations += createTagAnnotation => [
                 name = SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION
             ]
@@ -374,6 +374,7 @@ class SCEstToSSCSCLTransformation extends Processor<EsterelProgram, SCLProgram> 
         scope.statements += createScopeStatement => [
             it.trace(lsig)
             declarations += createVariableDeclaration(ValueType.PURE).trace(lsig) => [
+                it.signal = true
                 for (localSignal : lsig.valuedObjects.filter(Signal)) {
                     valuedObjects += createValuedObject => [
                         it.trace(localSignal)

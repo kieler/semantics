@@ -454,13 +454,6 @@
        </page>
     </extension>
     <extension
-          point="de.cau.cs.kieler.klighd.diagramSyntheses">
-       <diagramSynthesis
-             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.simulation.ui.synthesis.SimulationContextSynthesis"
-             id="de.cau.cs.kieler.simulation.ui.synthesis.SimulationContext">
-       </diagramSynthesis>
-    </extension>
-    <extension
           point="de.cau.cs.kieler.klighd.extensions">
        <action
              class="de.cau.cs.kieler.simulation.ui.synthesis.action.StartSimulationAction"

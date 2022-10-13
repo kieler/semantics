@@ -5,7 +5,6 @@ package de.cau.cs.kieler.esterel.impl;
 import de.cau.cs.kieler.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.TickReference;
 
-import de.cau.cs.kieler.kexpressions.impl.ValuedObjectReferenceImpl;
 import org.eclipse.emf.ecore.EClass;
 
 /**

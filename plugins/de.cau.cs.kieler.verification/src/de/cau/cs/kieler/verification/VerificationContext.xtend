@@ -18,11 +18,15 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.verification.RangeAssumption
+import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 
 /** 
  * @author aas
  */
-class VerificationContext extends CompilationContext {
+class VerificationContext implements IKiCoolCloneable {
+    
+    // Switch between generic verification code generation and actual verification run
+    @Accessors private boolean verify = false
     
     // General options
     @Accessors private List<VerificationProperty> verificationProperties = newArrayList
@@ -73,4 +77,13 @@ class VerificationContext extends CompilationContext {
     def void addRangeAssumtion(ValuedObject vo, int start, int end) {
         this.verificationAssumptions.add(new RangeAssumption(vo, start, end))
     }
+    
+    override cloneObject() {
+        this
+    }
+    
+    override isMutable() {
+        false
+    }
+    
 }

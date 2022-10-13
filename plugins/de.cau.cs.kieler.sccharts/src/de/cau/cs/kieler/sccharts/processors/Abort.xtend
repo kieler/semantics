@@ -22,9 +22,9 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -34,7 +34,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import java.util.HashMap
 
 import static de.cau.cs.kieler.sccharts.processors.Termination.*
@@ -52,6 +51,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
 class Abort extends SCChartsProcessor implements Traceable {
 
     protected static val ANNOTATION_IGNORETHREAD = "ignore"
+    protected static val ANNOTATION_SKIP = "skipAbort"
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -98,6 +98,7 @@ class Abort extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension Termination termTrans
 
     // This prefix is used for naming of all generated signals, states and regions
@@ -111,6 +112,11 @@ class Abort extends SCChartsProcessor implements Traceable {
     // -------------------------------------------------------------------------
     // Transforming Aborts.
     def State transform(State rootState) {
+        if (rootState.hasAnnotation(ANNOTATION_SKIP)) {
+            rootState.removeAnnotations(ANNOTATION_SKIP)
+            return rootState
+        }
+        
         termTrans.setEnvironment(environments.source, environments.target)
         val abortMarkings = <Annotation>newHashSet
         abortMarkings.addAll(rootState.valuedObjectsList.map[annotations].flatten.filter[REMOVE_ANNOTATIONS.contains(name)])
@@ -136,19 +142,19 @@ class Abort extends SCChartsProcessor implements Traceable {
         // a termination is mixed with WEAK aborts
         // if a termination is mixed with strong aborts it does not matter because we do not
         // have a last wish to consider!
+        // als: But it does (KISEMA-1610)!
         val singleTermination = targetState.outgoingTransitions.filter [e|
             e.isTermination && e.implicitlyImmediate && e.trigger === null
         ].size == 1 && targetState.outgoingTransitions.filter[e|e.isTermination].size == 1
-        val noWeakAborts = targetState.outgoingTransitions.filter[e|e.isWeakAbort].size == 0
+        val noWeakAborts = !targetState.outgoingTransitions.exists[isWeakAbort]
+        val noMixedStrongAborts = !targetState.outgoingTransitions.exists[isStrongAbort && implicitlyImmediate] || !targetState.outgoingTransitions.exists[isStrongAbort && !implicitlyImmediate]
         
         // TEST: TerminationImmediateAndAbort
         val delayedStrongAbortButImmediateTermination =
         (targetState.outgoingTransitions.filter[e|e.isStrongAbort && !e.implicitlyImmediate].size > 0) 
         && (targetState.canImmediateTerminate)
         
-        // val strongAborts = targetState.outgoingTransitions.filter[e|e.typeStrongAbort].size > 0
-        // noStrongMixedAborts
-        if ((!(singleTermination && noWeakAborts)) || delayedStrongAbortButImmediateTermination) { // }||(singleTermination && strongAborts)) {
+        if ((!(singleTermination && noWeakAborts && noMixedStrongAborts)) || delayedStrongAbortButImmediateTermination) { // }||(singleTermination && strongAborts)) {
             // optimization: If this termination is the only outgoing then do not transform terminations first
             targetState.transformTermination(rootState)
         }

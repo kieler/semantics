@@ -14,33 +14,22 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
-import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
+import de.cau.cs.kieler.annotations.CommentAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
-import org.eclipse.elk.alg.layered.options.LayerConstraint
-import org.eclipse.elk.alg.layered.options.LayeredOptions
-import org.eclipse.elk.core.math.ElkPadding
-import org.eclipse.elk.core.options.CoreOptions
-
-import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
-
-import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import java.util.List
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.annotations.CommentAnnotation
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.CommentStyles
-import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import java.util.List
+import org.eclipse.elk.core.options.CoreOptions
+
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -53,7 +42,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 @ViewSynthesisShared
 class CommentSynthesis extends SubSynthesis<CommentAnnotation, KNode> {
 
-    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SCChartsStateExtensions

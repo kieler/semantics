@@ -13,10 +13,10 @@
 package de.cau.cs.kieler.language.server.registration
 
 import com.google.inject.Singleton
+import de.cau.cs.kieler.core.ls.IHighlighting
 import de.cau.cs.kieler.core.services.KielerServiceLoader
 import de.cau.cs.kieler.klighd.lsp.launch.AbstractRegistrationLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.launch.Language
-import de.cau.cs.kieler.language.server.IHighlightingContribution
 import de.cau.cs.kieler.pragmatics.language.server.PragmaticsRegistrationLanguageServerExtension
 
 /**
@@ -30,8 +30,7 @@ class RegistrationLanguageServerExtension extends PragmaticsRegistrationLanguage
     
     override getLanguageExtensions() {
         val languages = super.getLanguageExtensions
-        for (contribution : KielerServiceLoader.load(IHighlightingContribution)) {
-            val highlighting = contribution.highlighting
+        for (highlighting : KielerServiceLoader.load(IHighlighting)) {
         	languages.add(new Language(highlighting.getId, highlighting.name, highlighting.keywords))
         }
         return languages

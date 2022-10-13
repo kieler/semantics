@@ -79,6 +79,7 @@ public abstract class AnnotatableImpl extends EObjectImpl implements Annotatable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Annotation> getAnnotations() {
         if (annotations == null) {
             annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, AnnotationsPackage.ANNOTATABLE__ANNOTATIONS);

@@ -13,15 +13,12 @@
 package de.cau.cs.kieler.esterel.processors.transformators.incremental
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
-import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
-import de.cau.cs.kieler.esterel.EsterelProgram
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.esterel.EsterelFunctionCall
-import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.esterel.FunctionDeclaration
+import de.cau.cs.kieler.esterel.extensions.EsterelTransformationExtensions
+import de.cau.cs.kieler.scl.Module
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * @author mrb

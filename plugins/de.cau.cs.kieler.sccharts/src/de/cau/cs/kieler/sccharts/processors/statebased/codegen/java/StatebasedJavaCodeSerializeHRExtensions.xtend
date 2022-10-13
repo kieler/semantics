@@ -31,7 +31,7 @@ import com.google.inject.Inject
 @Singleton
 class StatebasedJavaCodeSerializeHRExtensions extends StatebasedCCodeSerializeHRExtensions {
     
-    @Inject static extension KExpressionsTypeExtensions
+    @Inject extension KExpressionsTypeExtensions
     
     public static val IMPORTS = "imports"
     public static val GLOBAL_OBJECTS = "globalObjects"
@@ -103,7 +103,7 @@ class StatebasedJavaCodeSerializeHRExtensions extends StatebasedCCodeSerializeHR
         return "random.setSeed(System.currentTimeMillis())"
     }  
     
-    override def CharSequence serializeHROperatorExpressionEQ(OperatorExpression expression) {
+    override CharSequence serializeHROperatorExpressionEQ(OperatorExpression expression) {
         if (expression.subExpressions.forall[hasString]) {
             return "(" + combineOperatorsHR(expression.subExpressions.iterator, ").equals( ") + " )"
         }

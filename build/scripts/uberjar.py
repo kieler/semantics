@@ -34,7 +34,7 @@ from fnmatch import fnmatch
 from os.path import isfile, isdir, join, abspath, relpath, dirname, basename
 
 IGNORED_JARS = [
-    'org.apache.ant*'
+    'org.apache.ant*',
 ]
 IGNORE_NESTED_JARS = [
 ]
@@ -42,6 +42,7 @@ IGNORED_FILES = [
     'org/*/*.java',
     'com/*/*.java',
     'de/*/*.java',
+    'module-info.class',
     '*._trace',
     '*.g',
     '*.mwe2',
@@ -70,7 +71,9 @@ IGNORED_FILES = [
     'META-INF/NOTICE.txt',
     'META-INF/NOTICE',
     'META-INF/p2.inf',
+    'META-INF/versions/*/module-info.class',
     'OSGI-INF/l10n/bundle.properties',
+    'OSGI-INF/repositoryManager.xml',
     'docs/*',
     '*readme.txt',
     'plugin.xml',
@@ -78,13 +81,13 @@ IGNORED_FILES = [
     'profile.list',
     'systembundle.properties',
     'version.txt',
-    'xtend-gen/*'
+    'xtend-gen/*',
 ]
 APPEND_MERGE = [
     'plugin.properties',
     'META-INF/services/*',
     'META-INF/LICENSE.txt',
-    'META-INF/LICENSE'
+    'META-INF/LICENSE',
 ]
 IGNORE_MERGE = [
     'eclipse32.png',
@@ -92,7 +95,10 @@ IGNORE_MERGE = [
     'icons/*.png', # Assuming icons are always the same if they have the same name or de.* overrides org.*
     'icons/*.gif',
     'epl-v10.html',
-    'org/osgi/service/log/*', # known duplicate in org.eclipse.osgi and org.eclipse.osgi.services
+    'org/osgi/service/log/*', # known duplicate in org.eclipse.osgi and org.eclipse.osgi.services,
+    'META-INF/AL*',
+    'META-INF/LGPL*',
+    'META-INF/GPL*',
 ]
 
 # Special klighd handling
@@ -100,17 +106,19 @@ KLIGHD_JARS_BLACKLIST = [
     'org.eclipse.ui*',
     'org.eclipse.e4*',
     'org.eclipse.*.ui*',
-    'de.cau.cs.kieler.simulation.ui*'
+    'de.cau.cs.kieler.simulation.ui*',
 ]
 KLIGHD_JARS_WHITELIST = [
-    'org.eclipse.ui.workbench*'
+    'org.eclipse.ui.workbench_*',
+    'org.eclipse.ui.ide_*', # For some reason IStorageEditorInput is required
 ]
 KLIGHD_IGNORED_FILES = [
     'org/eclipse/ui/[!I]*', # Keep Interfaces for Klighd
     'org/eclipse/ui/*/*',
-    'de.cau.cs.kieler.simulation.ui/*/*'
-    'de.cau.cs.kieler.simulation.ui/[!icons]/*'
-    'fragment.properties'
+    'org.eclipse.ui.ide*/icons/*',
+    'de.cau.cs.kieler.simulation.ui/*/*',
+    'de.cau.cs.kieler.simulation.ui/[!icons]/*',
+    'fragment.properties',
 ]
 klighd_swt = {}
 
@@ -157,12 +165,18 @@ def main(args):
 def extract(args, extracted, merged, klighd):
     conflicts = False
     jars = sorted(os.listdir(args.source))
+    processed_jars = [] # Tuples of plugin name and jar
     for jar in jars:
         if not jar.endswith('.jar') or any(fnmatch(jar, ign) for ign in IGNORED_JARS):
             print('Skipping file:', jar)
             continue
         elif klighd and any(fnmatch(jar, ign) for ign in KLIGHD_JARS_BLACKLIST) and not any(fnmatch(jar, req) for req in KLIGHD_JARS_WHITELIST):
             print('Skipping file (special klighd handling):', jar)
+            continue
+        elif jar.split("_")[0] in (p[0] for p in processed_jars):
+            print('Multiple versions of the same plugin detected.')
+            print('WARNING: This script does not support shading. Only the lower version of this plugin will be used (%s). This will cause runtime errors if any plugin requires a higher version API.' % next((p[1] for p in processed_jars if p[0] == jar.split("_")[0]), None))
+            print('Skipping file:', jar)
             continue
         else:
             print('Extracting jar:', jar)
@@ -171,7 +185,7 @@ def extract(args, extracted, merged, klighd):
                 os.makedirs(target)
 
             # Unpack jar
-            check_call(['jar', 'xf', abspath(join(args.source, jar))], cwd=target)
+            check_call([args.jar, 'xf', abspath(join(args.source, jar))], cwd=target)
 
             if klighd and jar.startswith('org.eclipse.swt.'): # Do not merge swt fragments
                 if 'gtk.linux.x86_64' in jar:
@@ -217,6 +231,7 @@ def extract(args, extracted, merged, klighd):
                             if not isdir(dirname(dest)):
                                 os.makedirs(dirname(dest))
                             os.rename(src, dest)
+                processed_jars.append((jar.split("_")[0], jar))
     return conflicts
 
 def handleNestedJarsOnClasspath(dir, jars_dir):
@@ -224,12 +239,20 @@ def handleNestedJarsOnClasspath(dir, jars_dir):
     manifest = join(dir, join('META-INF', 'MANIFEST.MF'))
     if isfile(manifest):
         with open(manifest, 'r') as file:
-            text = file.read()
-            if 'Bundle-ClassPath:' in text:
-                classpath = re.findall(r'Bundle-ClassPath:([^:]+)\s\S+:', text, re.MULTILINE)[0]
-                classpath = re.sub(r'\s', '', classpath)
-                if classpath != '.':
-                    for cpFile in classpath.split(','):
+            lines = file.readlines()
+            classpath = None
+            for line in lines:
+                if 'Bundle-ClassPath:' in line: # start of classpath
+                    startCP = line[17:].strip()
+                    classpath = startCP if startCP else " " # assure truthy content if found
+                elif classpath and ':' in line: # end of classpath
+                    break
+                elif classpath: # continue classpath collection
+                    classpath += line.strip()
+            if classpath:
+                for cp in classpath.split(','):
+                    cpFile = cp.strip()
+                    if cpFile and cpFile != '.' and '.jar' in cpFile:
                         jarFile = join(dir, cpFile)
                         if isfile(jarFile):
                             print('Found nested jar on bundle class path: ', cpFile)
@@ -246,16 +269,16 @@ def bundle(args, target_dir, merged, klighd):
     if not isdir(dirname(jar)):
         os.makedirs(dirname(jar))
 
-    check_call(['jar', 'cfe', jar, args.main, '.'], cwd=merged)
+    check_call([args.jar, 'cfe', jar, args.main, '.'], cwd=merged)
 
-    if klighd: # Include SWT
+    if klighd and not args.noswt: # Include SWT
         jars = {}
         for platform in klighd_swt.keys():
             pjar = jar[:-4] + '.' + platform + '.jar'
             print('Creating jar:', relpath(pjar, target_dir))
 
             shutil.copy(jar, pjar) # copy SWT-less base jar
-            check_call(['jar', 'uf', pjar, '.'], cwd=klighd_swt[platform]) # Bundle platform-spefic SWT into new platform-spefic jar
+            check_call([args.jar, 'uf', pjar, '.'], cwd=klighd_swt[platform]) # Bundle platform-spefic SWT into new platform-spefic jar
             
             jars[platform] = pjar
 
@@ -268,9 +291,10 @@ def bundle(args, target_dir, merged, klighd):
 def create_standalone_scripts(args, jar, target_dir, klighd):
     # This is some magic found in the depth of the internet by chsch
     print('-- Creating standalone scripts --')
+    default_options = '-Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -Xmx512m'
     java9_options = ' --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/jdk.internal.loader=ALL-UNNAMED'
 
-    if klighd:
+    if klighd and not args.noswt:
         jar_linux = jar['linux']
         jar_win = jar['win']
         jar_osx = jar['osx']
@@ -281,39 +305,41 @@ def create_standalone_scripts(args, jar, target_dir, klighd):
     if jar_linux:
         with open(jar_linux, 'rb') as jar_file:
             code = jar_file.read()
-            linux_cmd = '#!/usr/bin/env bash\nexec java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -Xmx512m %s -jar $0 "$@"\n'
+            linux_cmd = '#!/usr/bin/env bash\nexec java %s -jar $0 "$@"\n'
             
             with open(join(target_dir, args.name + '-linux'), 'wb') as file:
-                write_script(file, linux_cmd % java9_options, code)
-            with open(join(target_dir, args.name + '-linuxJava8'), 'wb') as file:
-                write_script(file, linux_cmd % '', code)
+                write_script(file, linux_cmd % (default_options + java9_options), code)
+            if args.java8:
+                with open(join(target_dir, args.name + '-linuxJava8'), 'wb') as file:
+                    write_script(file, linux_cmd % default_options, code)
 
     # windows
     if jar_win:
         with open(jar_win, 'rb') as jar_file:
             code = jar_file.read()
-            win_cmd = 'java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -Xmx512m %s -jar %%0 %%* \r\n exit /b %%errorlevel%%\r\n' # escaped percent sign because of format string!
+            win_cmd = 'java %s -jar %%0 %%* \r\n exit /b %%errorlevel%%\r\n' # escaped percent sign because of format string!
             
             with open(join(target_dir, args.name + '-win.bat'), 'wb') as file:
-                write_script(file, win_cmd % java9_options, code)
-            with open(join(target_dir, args.name + '-winJava8.bat'), 'wb') as file:
-                write_script(file, win_cmd % '', code)
+                write_script(file, win_cmd % (default_options + java9_options), code)
+            if args.java8:
+                with open(join(target_dir, args.name + '-winJava8.bat'), 'wb') as file:
+                    write_script(file, win_cmd % default_options, code)
         
     # osx
     if jar_osx:
         with open(jar_osx, 'rb') as jar_file:
             code = jar_file.read()
-            osx_cmd = '#!/usr/bin/env bash\nexec java -Djava.system.class.loader=de.cau.cs.kieler.kicool.cli.CLILoader -XstartOnFirstThread -Xmx512m %s -jar $0 "$@"'
+            osx_cmd = '#!/usr/bin/env bash\nexec java -XstartOnFirstThread %s -jar $0 "$@" \n'
             
             with open(join(target_dir, args.name + '-osx'), 'wb') as file:
-                write_script(file, osx_cmd % java9_options, code)
-            with open(join(target_dir, args.name + '-osxJava8'), 'wb') as file:
-                write_script(file, osx_cmd % '', code)
-
+                write_script(file, osx_cmd % (default_options + java9_options), code)
+            if args.java8:
+                with open(join(target_dir, args.name + '-osxJava8'), 'wb') as file:
+                    write_script(file, osx_cmd % default_options, code)
 
 def write_script(file, command, code):
     print('Creating script', basename(file.name))
-    file.write(command)
+    file.write(command.encode('ascii'))
     file.write(code)
     flags = os.fstat(file.fileno()).st_mode
     flags |= stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH
@@ -331,6 +357,9 @@ def errPrint(*args, **kwargs):
 if __name__ == '__main__':
     argParser = argparse.ArgumentParser(description='This script bundles a self-contained eclipse update site into an executable uber-jar (no shading!) and several platform specific executable scripts bundling the jar.')
     argParser.add_argument('-s', dest='scripts', action='store_true', help='create platform specific standalone scripts of the jar')
+    argParser.add_argument('-jar', default='jar', help='override jar command to adjust java version, e.g. /usr/lib/jvm/java-11-openjdk-amd64/bin/jar')
+    argParser.add_argument('--java8', dest='java8', action='store_true', help='activate Java 8 support')
+    argParser.add_argument('--no-swt', dest='noswt', action='store_true', help='skips bundling platform specific SWT dependencies.')
     argParser.add_argument('--ignore-conflicts', dest='ignore_conflicts', action='store_true', help='prevents failing if merge fail due to a conflict.')
     argParser.add_argument('source', help='directory containing all plugins that should be bundled (self-contained update site)')
     argParser.add_argument('name', help='name of the generated executable jar/script')

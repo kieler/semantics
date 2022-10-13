@@ -6,31 +6,27 @@
  */
 package de.cau.cs.kieler.kexpressions.impl;
 
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+
 import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.annotations.impl.NamedObjectImpl;
 import de.cau.cs.kieler.kexpressions.CombineOperator;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.Parameter;
 import de.cau.cs.kieler.kexpressions.Referenceable;
-import de.cau.cs.kieler.kexpressions.ValueType;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
-
-import java.util.Collection;
-import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -45,6 +41,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl#getInitialValue <em>Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl#getCardinalities <em>Cardinalities</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl#getLabel <em>Label</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl#getGenericParameters <em>Generic Parameters</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl#getParameters <em>Parameters</em>}</li>
  * </ul>
  *
  * @generated
@@ -119,6 +117,26 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
      * @ordered
      */
     protected String label = LABEL_EDEFAULT;
+
+                /**
+     * The cached value of the '{@link #getGenericParameters() <em>Generic Parameters</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getGenericParameters()
+     * @generated
+     * @ordered
+     */
+    protected EList<Parameter> genericParameters;
+
+                /**
+     * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getParameters()
+     * @generated
+     * @ordered
+     */
+    protected EList<Parameter> parameters;
 
                 /**
      * <!-- begin-user-doc -->
@@ -239,6 +257,32 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
      * @generated
      */
     @Override
+    public EList<Parameter> getGenericParameters() {
+        if (genericParameters == null) {
+            genericParameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS);
+        }
+        return genericParameters;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<Parameter> getParameters() {
+        if (parameters == null) {
+            parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KExpressionsPackage.VALUED_OBJECT__PARAMETERS);
+        }
+        return parameters;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS:
@@ -247,6 +291,10 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
                 return basicSetInitialValue(null, msgs);
             case KExpressionsPackage.VALUED_OBJECT__CARDINALITIES:
                 return ((InternalEList<?>)getCardinalities()).basicRemove(otherEnd, msgs);
+            case KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS:
+                return ((InternalEList<?>)getGenericParameters()).basicRemove(otherEnd, msgs);
+            case KExpressionsPackage.VALUED_OBJECT__PARAMETERS:
+                return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -292,6 +340,10 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
                 return getCardinalities();
             case KExpressionsPackage.VALUED_OBJECT__LABEL:
                 return getLabel();
+            case KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS:
+                return getGenericParameters();
+            case KExpressionsPackage.VALUED_OBJECT__PARAMETERS:
+                return getParameters();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -322,6 +374,14 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
             case KExpressionsPackage.VALUED_OBJECT__LABEL:
                 setLabel((String)newValue);
                 return;
+            case KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS:
+                getGenericParameters().clear();
+                getGenericParameters().addAll((Collection<? extends Parameter>)newValue);
+                return;
+            case KExpressionsPackage.VALUED_OBJECT__PARAMETERS:
+                getParameters().clear();
+                getParameters().addAll((Collection<? extends Parameter>)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -349,6 +409,12 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
             case KExpressionsPackage.VALUED_OBJECT__LABEL:
                 setLabel(LABEL_EDEFAULT);
                 return;
+            case KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS:
+                getGenericParameters().clear();
+                return;
+            case KExpressionsPackage.VALUED_OBJECT__PARAMETERS:
+                getParameters().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -371,6 +437,10 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
                 return cardinalities != null && !cardinalities.isEmpty();
             case KExpressionsPackage.VALUED_OBJECT__LABEL:
                 return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+            case KExpressionsPackage.VALUED_OBJECT__GENERIC_PARAMETERS:
+                return genericParameters != null && !genericParameters.isEmpty();
+            case KExpressionsPackage.VALUED_OBJECT__PARAMETERS:
+                return parameters != null && !parameters.isEmpty();
         }
         return super.eIsSet(featureID);
     }

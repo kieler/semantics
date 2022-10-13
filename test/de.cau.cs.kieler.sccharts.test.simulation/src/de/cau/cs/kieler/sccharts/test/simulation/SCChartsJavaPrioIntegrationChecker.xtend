@@ -43,6 +43,7 @@ class SCChartsJavaPrioIntegrationChecker extends AbstractSimulationTest<SCCharts
     override filter(TestModelData modelData) {
         return modelData.hasSimulationTrace
             && modelData.modelProperties.contains("sccharts")
+            && !modelData.modelProperties.contains("large")
             && !modelData.modelProperties.contains("known-to-fail")
             && !modelData.modelProperties.contains("must-fail")
     }

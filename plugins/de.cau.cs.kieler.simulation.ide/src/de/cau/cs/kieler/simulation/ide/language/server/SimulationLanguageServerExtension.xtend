@@ -30,8 +30,12 @@ import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.ISimulationListener
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
+import de.cau.cs.kieler.simulation.events.TraceFinishedEvent
+import de.cau.cs.kieler.simulation.events.TraceMismatchEvent
 import de.cau.cs.kieler.simulation.ide.CentralSimulation
 import de.cau.cs.kieler.simulation.ide.language.server.data.ClientInputs
+import de.cau.cs.kieler.simulation.ide.language.server.data.LoadedTraceMessage
+import de.cau.cs.kieler.simulation.ide.language.server.data.SavedTraceMessage
 import de.cau.cs.kieler.simulation.ide.language.server.data.SimulationStartedMessage
 import de.cau.cs.kieler.simulation.ide.language.server.data.SimulationStepMessage
 import de.cau.cs.kieler.simulation.ide.language.server.data.SimulationStoppedMessage
@@ -39,6 +43,8 @@ import de.cau.cs.kieler.simulation.ide.server.SimulationServer
 import de.cau.cs.kieler.simulation.mode.DynamicTickMode
 import de.cau.cs.kieler.simulation.mode.ManualMode
 import de.cau.cs.kieler.simulation.mode.PeriodicMode
+import de.cau.cs.kieler.simulation.trace.TraceFileUtil
+import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
 import java.io.File
 import java.net.URLDecoder
 import java.util.ArrayList
@@ -53,6 +59,7 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 
 import static de.cau.cs.kieler.simulation.ide.CentralSimulation.*
+import static de.cau.cs.kieler.simulation.ide.language.server.data.ClientInputs.*
 
 /**
  * LS extension to simulate models. Supports starting, stepping, and stopping or simulations.
@@ -228,6 +235,43 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
             new SimulationStoppedMessage(true, "Stopped simulation")
         ]
     }
+    
+    /**
+     * Loads the trace from the file uri given in this message.
+     */
+    override loadTrace(String fileUri) {
+        return this.requestManager.runRead [ cancelIndicator |
+            if (currentSimulation === null) {
+                return new LoadedTraceMessage(null, false,
+                    "There is no simulation currently running to load the trace into.")
+            }
+            val TraceFile traceFile = TraceFileUtil.loadTraceFile(URLDecoder.decode(fileUri, "UTF-8"))
+            
+            // TODO: multiple traces in a single file?
+            val trace = traceFile.traces.get(0)
+            // TODO: whatever these do
+            val check = true
+            val allowLoops = true
+            
+            currentSimulation.setTrace(trace, check, allowLoops);
+        
+            return new LoadedTraceMessage(trace, true, "Loading successful.")
+        ]
+    }
+    
+    /**
+     * Saves the trace in the current simulation and notifies the client if that trace is saved successfully.
+     */
+     override saveTrace(String fileUri) {
+         return this.requestManager.runRead [ cancelIndicator |
+             if (currentSimulation === null) {
+                 return new SavedTraceMessage(false,
+                 "There is no simulation currently running to save a trace from.")
+             }
+             TraceFileUtil.saveTraceToFile(URLDecoder.decode(fileUri, "UTF-8"), currentSimulation)
+             return new SavedTraceMessage(true, "Saving successful.")
+         ]
+     }
 
     /**
      * Handle compilation events.
@@ -305,6 +349,11 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
                     }
                 }
             }
+        } else if (e instanceof TraceFinishedEvent) { 
+            client.sendMessage("Trace finished: The current Trace reached its last tick.", "info")
+        } else if (e instanceof TraceMismatchEvent /*&& menuCheckTrace.checked*/) { // TODO: implement check trace option
+            client.sendMessage("Trace Mismatch: Program output differs from trace\n" + // TODO: find another way of being able to display multiline notifications
+                (e as TraceMismatchEvent).toString, "error")
         } else { // Handle unknown events, log the classes for which this is executed.
             println(e.class + ", " + o.class)
         }
@@ -372,6 +421,10 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
      */
     override update(SimulationContext ctx, SimulationEvent e) {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
+    }
+    
+    override startVisualizationServer() {
+        SimulationServer.start
     }
 
 }

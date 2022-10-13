@@ -37,14 +37,14 @@ class NodePriorityActions implements IAction {
     @Inject
     extension KRenderingExtensions
 
-    public static val SHOW_NODE_PRIORITY = SynthesisOption::createCheckOption(NodePriorityActions, "Node Priorities", true).
-        setUpdateAction(NODE_ID).setCategory(PRIO);
+    public static val SynthesisOption SHOW_NODE_PRIORITY = SynthesisOption::createCheckOption(NodePriorityActions,
+        "Node Priorities", true).setUpdateAction(NODE_ID).setCategory(PRIO)
 
     override execute(ActionContext context) {
         val viewContext = context.contextViewer.viewContext
         val rootNode = context.KNode
         for (node : rootNode.eAllContentsOfType(KNode).toIterable) {
-            if (viewContext.getSourceElement(node) != null) {
+            if (viewContext.getSourceElement(node) !== null) {
                 val container = node.KContainerRendering
                 for (text : container.children) {
                     if (text.getProperty(SCGraphSynthesisHelper.NODE_PRIO_PROPERTY)) {
@@ -65,7 +65,7 @@ class NodePriorityActions implements IAction {
     def booleanValue(SynthesisOption option, ViewContext viewContext) {
         val value = viewContext.getOptionValue(option)
 
-        if (value == null) {
+        if (value === null) {
             return false
         } else if (value instanceof Boolean) {
             return value as Boolean;

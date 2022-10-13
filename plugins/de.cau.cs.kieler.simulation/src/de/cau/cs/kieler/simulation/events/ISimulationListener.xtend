@@ -15,7 +15,6 @@ package de.cau.cs.kieler.simulation.events
 import de.cau.cs.kieler.simulation.SimulationContext
 import java.util.Observable
 import java.util.Observer
-import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Interface that notifies about the simulation.

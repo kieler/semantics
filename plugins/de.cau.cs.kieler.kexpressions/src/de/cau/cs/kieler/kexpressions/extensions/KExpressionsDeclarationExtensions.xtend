@@ -14,12 +14,14 @@
 package de.cau.cs.kieler.kexpressions.extensions
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ExternString
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.StringValue
@@ -27,13 +29,11 @@ import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import java.util.List
-import org.eclipse.emf.ecore.EObject
-import java.util.Map
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.KExtFactory
-import de.cau.cs.kieler.kexpressions.MethodDeclaration
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import java.util.List
+import java.util.Map
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm
@@ -188,6 +188,8 @@ class KExpressionsDeclarationExtensions {
     def ReferenceDeclaration createReferenceDeclaration(ReferenceDeclaration declaration) {
         (createReferenceDeclaration as ReferenceDeclaration) => [ d |
             d.reference = declaration.reference
+            d.access = declaration.access
+            d.genericParameters += declaration.genericParameters.map[copy]
             declaration.extern.forEach[
                 d.extern += it.createExternString
             ]
@@ -275,7 +277,21 @@ class KExpressionsDeclarationExtensions {
         <ReferenceDeclaration> newArrayList => [ list |
             eObject.eContents.filter(ReferenceDeclaration).forEach[ list += it ]
         ]
-    }   
+    }
+    
+    def List<MethodDeclaration> getMethodDeclarations(EObject eObject) {
+        <MethodDeclaration> newArrayList => [ list |
+            eObject.eContents.filter(MethodDeclaration).forEach[ list += it ]
+        ]
+    } 
+    
+    def isMethod(Declaration decl) {
+        return decl instanceof MethodDeclaration
+    }
+    
+    def Iterable<Declaration> excludeMethods(Iterable<Declaration> iter) {
+        return iter.filter[!isMethod]
+    }
     
 //    def ReferenceDeclaration getReferenceDeclaration(ValuedObject valuedObject) {
 //        valuedObject.eContainer as ReferenceDeclaration
@@ -294,6 +310,51 @@ class KExpressionsDeclarationExtensions {
 
     def getAllNestedValuedObjects(ClassDeclaration decl) {
         return decl.innerValuedObjects + decl.declarations.filter(ClassDeclaration).map[innerValuedObjects].flatten
+    }
+
+    def getEnclosingClass(Declaration decl) {
+        val parent = decl.eContainer
+        if (parent instanceof ClassDeclaration) {
+            return parent
+        }
+        return null
+    }
+
+    def isStruct(Declaration decl) {
+        if (decl instanceof ClassDeclaration) {
+            return decl.type === ValueType.STRUCT
+        }
+        return false
+    }
+    
+    def isClass(Declaration decl) {
+        if (decl instanceof ClassDeclaration) {
+            return decl.type === ValueType.STRUCT || decl.type === ValueType.CLASS
+        }
+        return false
+    }
+    
+    def isEnum(Declaration decl) {
+        if (decl instanceof ClassDeclaration) {
+            return decl.type === ValueType.ENUM
+        }
+        return false
+    }
+    
+    def isInput(Declaration decl) {
+        if (decl instanceof VariableDeclaration) {
+            return decl.input
+        } else if (decl instanceof ReferenceDeclaration) {
+            return decl.input
+        }
+        return false
+    }
+    
+    def isOutput(Declaration decl) {
+        if (decl instanceof VariableDeclaration) {
+            return decl.output
+        }
+        return false
     }
     
 }

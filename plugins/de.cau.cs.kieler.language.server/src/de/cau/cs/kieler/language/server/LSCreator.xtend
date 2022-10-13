@@ -52,6 +52,7 @@ class LSCreator extends AbstractLsCreator {
     }
     
     override onConnect() {
+        super.onConnect()
         for (Object ext : iLanguageServerExtensions) {
             if (ext instanceof ILanguageClientProvider) {
                 ext.languageClient = languageClient
@@ -61,7 +62,9 @@ class LSCreator extends AbstractLsCreator {
         rectPack.client = languageClient as KGraphLanguageClient
         diagramHighlighters = newArrayList
         for (iLSdhc : KielerServiceLoader.load(ILSDiagramHighlighterContribution)) {
-            diagramHighlighters.add(iLSdhc.getHighlighter(injector))
+            var highlighter = iLSdhc.getHighlighter(injector)
+            diagramHighlighters.add(highlighter)
+            highlighter.registerObserver
         }
     }
     

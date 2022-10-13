@@ -9,7 +9,6 @@ package de.cau.cs.kieler.sccharts.legacy.klighd.layout;
  * @kieler.design 2015-12-14 proposed
  * @kieler.rating 2015-12-14 proposed yellow
  */
-@SuppressWarnings("restriction")
 public class SidebarOverrideLayoutConfig {}
 // NOT YET MIGRATED TO PRACMATICS 2016-05
 //public class SidebarOverrideLayoutConfig extends KGraphPropertyLayoutConfig {

@@ -168,6 +168,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="cardinalities" upperBound="-1"
         eType="#//Expression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="genericParameters" upperBound="-1"
+        eType="#//Parameter" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="#//Parameter" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ValueType">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -251,6 +255,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="VectorValue" eSuperTypes="#//Value">
     <eStructuralFeatures xsi:type="ecore:EReference" name="values" lowerBound="1"
         upperBound="-1" eType="#//Expression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="range" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IgnoreValue" eSuperTypes="#//Value"/>
   <eClassifiers xsi:type="ecore:EClass" name="JsonPragma" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Pragma">
@@ -319,22 +325,44 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hostType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ReferenceDeclaration" eSuperTypes="#//Declaration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="input" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="reference" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referenceContainer" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
         eType="#//Parameter" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="extern" upperBound="-1"
         eType="#//ExternString" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="genericParameters" upperBound="-1"
+        eType="#//Parameter" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GenericParameterDeclaration" eSuperTypes="#//Declaration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reference" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="valueType" eType="#//ValueType"
+        defaultValueLiteral="UNKNOWN"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GenericTypeReference" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="ecore:EClass ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="genericParameters" upperBound="-1"
+        eType="#//Parameter" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ValueTypeReference" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="valueType" lowerBound="1"
+        eType="#//ValueType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MethodDeclaration" eSuperTypes="#//Declaration #//Schedulable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="override" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="returnType" eType="#//ValueType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDeclarations"
+        upperBound="-1" eType="#//Declaration" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ScheduleDeclaration" eSuperTypes="#//Declaration">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="global" eType="#//PriorityProtocol"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="priorities" unique="false"
         upperBound="-1" eType="#//PriorityProtocol"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MethodDeclaration" eSuperTypes="#//Declaration #//Schedulable">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="returnType" eType="#//ValueType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDeclarations"
-        upperBound="-1" eType="#//Declaration" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="PriorityProtocol">
     <eLiterals name="CONFLICT"/>
@@ -378,8 +406,18 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="AccessModifier">
-    <eLiterals name="PUBLIC"/>
-    <eLiterals name="PROTECTED" value="1"/>
-    <eLiterals name="PRIVATE" value="2"/>
+    <eLiterals name="UNDEF" literal="UNDEF"/>
+    <eLiterals name="PRIVATE" value="1"/>
+    <eLiterals name="PROTECTED" value="2"/>
+    <eLiterals name="PUBLIC" value="3"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SpecialAccessExpression" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="access" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subReference" eType="#//ValuedObjectReference"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="container" eType="ecore:EClass ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ThisExpression" eSuperTypes="#//Expression"/>
 </ecore:EPackage>

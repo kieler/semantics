@@ -3,9 +3,8 @@
  */
 package de.cau.cs.kieler.kivis.ide.highlighting
 
-
+import de.cau.cs.kieler.core.ls.IHighlighting
 import java.util.List
-import de.cau.cs.kieler.annotations.xtext.IHighlighting
 
 class KiVisHighlighting implements IHighlighting {
     override String getId() {

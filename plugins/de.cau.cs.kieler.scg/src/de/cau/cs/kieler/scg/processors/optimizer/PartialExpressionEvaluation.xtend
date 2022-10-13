@@ -56,7 +56,6 @@ class PartialExpressionEvaluation extends InplaceProcessor<SCGraphs> implements 
 
     extension PartialExpressionEvaluator = new PartialExpressionEvaluator() => [ 
         compute = true
-        inplace = true
     ]
 
     // -------------------------------------------------------------------------

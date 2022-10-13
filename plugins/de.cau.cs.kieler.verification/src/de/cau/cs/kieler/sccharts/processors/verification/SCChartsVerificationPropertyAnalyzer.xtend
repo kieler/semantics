@@ -55,9 +55,10 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
     }
     
     override process() {
-        val verificationContext = compilationContext.asVerificationContext
+        var verificationContext = compilationContext.verificationContext
         if(verificationContext === null) {
-            return
+            // This will result in synthesizing assumption and properties even in normal compilation
+            verificationContext = compilationContext.createVerificationContext(false)
         }
         
         // Only set the properties in the environment if they are not set yet.

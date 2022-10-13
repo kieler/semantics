@@ -4,15 +4,29 @@
 package de.cau.cs.kieler.sccharts.text.scoping
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
+import de.cau.cs.kieler.kexpressions.GenericTypeReference
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider
+import de.cau.cs.kieler.sccharts.BaseStateReference
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.SCChartsPackage
@@ -22,18 +36,17 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.processors.MethodSignaling
+import de.cau.cs.kieler.sccharts.processors.StaticAccess
+import de.cau.cs.kieler.scl.Loop
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.xbase.lib.Functions.Function1
-import de.cau.cs.kieler.kexpressions.MethodDeclaration
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.kexpressions.AccessModifier
-import de.cau.cs.kieler.scl.Loop
-import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 
 /**
  * This class contains custom scoping description.
@@ -45,20 +58,25 @@ import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 class SCTXScopeProvider extends KExtScopeProvider {
     
     @Inject extension SCChartsCoreExtensions
+    @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsInheritanceExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsGenericParameterExtensions
+    @Inject extension KExpressionsAccessVisibilityExtensions
     
     @Inject SCTXQualifiedNameProvider nameProvider
 
     override getScope(EObject context, EReference reference) {
-//        println(context + "\n  " + reference)
-        
         switch(context) {
             Transition: return getScopeForTransition(context, reference)
-            State: return getScopeForState(context, reference)
             Region: return getScopeForRegion(context, reference)
-            ScopeCall: return getScopeForScopeCall(context, reference)  
+            ScopeCall: return getScopeForScopeCall(context, reference)
+            GenericTypeReference: return getScopeForGenericTypeReference(context, reference)
+            GenericParameterDeclaration: return getScopeForGenericParameterDeclaration(context, reference)
+            BaseStateReference: return getScopeForBaseStateReference(context, reference)
+            SpecialAccessExpression: return getScopeForSpecialAccess(context, reference)
         }
         
         return super.getScope(context, reference);
@@ -76,16 +94,16 @@ class SCTXScopeProvider extends KExtScopeProvider {
         return SCTXScopes.scopeFor(states)
     }
     
-    protected def IScope getScopeForState(State state, EReference reference) {
-        if (reference.name.equals("scope") || reference == SCChartsPackage.Literals.STATE__BASE_STATES) {
-            return state.eResource.allAvailableRootStates
+    protected def IScope getScopeForBaseStateReference(BaseStateReference ref, EReference reference) {
+        if (reference == SCChartsPackage.Literals.BASE_STATE_REFERENCE__TARGET) {
+            return SCTXScopes.scopeFor(ref.eResource.allAvailableRootStates)
         }
         
-        return super.getScope(state, reference)
+        return super.getScope(ref, reference)
     }
     
     protected def IScope getScopeForRegion(Region region, EReference reference) {
-        if (reference.name.equals("scope")) {
+        if (reference == SCChartsPackage.Literals.SCOPE_CALL__TARGET) {
             return SCTXScopes.scopeFor(region.nextSuperStateWithBaseStates.allVisibleInheritedRegions)
         }
         
@@ -93,9 +111,15 @@ class SCTXScopeProvider extends KExtScopeProvider {
     }
     
     protected def IScope getScopeForScopeCall(ScopeCall scopeCall, EReference reference) {
-        if (reference.name.equals("scope")) {
+        if (reference == SCChartsPackage.Literals.SCOPE_CALL__TARGET) {
             if (scopeCall.eContainer instanceof State) {
-                return scopeCall.eResource.allAvailableRootStates
+                val candidates = <NamedObject>newLinkedList
+                var rootState = scopeCall.eContainer?.asScope.rootState
+                if (rootState instanceof State && !(rootState as State).genericParameterDeclarations.nullOrEmpty) {
+                    candidates += (rootState as State).genericTypeParameters
+                }
+                candidates += scopeCall.eResource.allAvailableRootStates
+                return SCTXScopes.scopeFor(candidates)
             } else if (scopeCall.eContainer instanceof Region) {
                 return SCTXScopes.scopeFor((scopeCall.eContainer as Scope).nextSuperStateWithBaseStates.getAllVisibleInheritedRegions(!scopeCall.super))
             }
@@ -107,18 +131,38 @@ class SCTXScopeProvider extends KExtScopeProvider {
     }
         
     override IScope getScopeForParameter(Parameter parameter, EReference reference) {        
-        if (reference.name.equals("explicitBinding")) {
+        if (reference == KExpressionsPackage.Literals.PARAMETER__EXPLICIT_BINDING) {
             val voCandidates = <ValuedObject> newArrayList
             
-            val scopeCall = parameter.eContainer as ScopeCall
-            if (scopeCall !== null && scopeCall.scope !== null) {
-                val scope = scopeCall.scope
-                for (declaration : scope.variableDeclarations.filter[ input || output ]) {
-                    voCandidates += declaration.valuedObjects
+            var EObject target
+            val container = parameter.eContainer
+            
+            if (container instanceof ScopeCall) {
+                target = container.target
+            } else if (container instanceof BaseStateReference) {
+                target = container.target
+            } else if (container instanceof ValuedObject) {
+                target = container.referenceDeclaration?.reference
+            }
+            
+            if (target !== null) {
+                if (target instanceof Scope) {
+                    for (declaration : target.variableDeclarations.filter[ input || output ]) {
+                        voCandidates += declaration.valuedObjects
+                    }
+                } else if (target instanceof ValuedObject) {
+                    if (target.isGenericParamter) {
+                        val type = target.genericParameterDeclaration?.type
+                        if (type instanceof Scope) {
+                            for (declaration : type.variableDeclarations.filter[ input || output ]) {
+                                voCandidates += declaration.valuedObjects
+                            }
+                        }
+                    }
                 }
                 // Inherited Decls
-                if (scope instanceof State) {
-                    for (declaration : scope.allVisibleInheritedDeclarations.filter(VariableDeclaration).filter[ input || output ]) {
+                if (target instanceof State) {
+                    for (declaration : target.allVisibleInheritedDeclarations.filter(VariableDeclaration).filter[ input || output ]) {
                         voCandidates += declaration.valuedObjects
                     }
                 }
@@ -130,16 +174,122 @@ class SCTXScopeProvider extends KExtScopeProvider {
         return super.getScopeForParameter(parameter, reference)
     }
     
-    override def IScope getScopeForReferenceDeclaration(EObject context, EReference reference) {
-        if (reference == KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE) {
-            
+    override IScope getScopeForReferenceDeclaration(EObject context, EReference reference) {
+        if (reference == KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE || reference == KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE_CONTAINER) {
             val declaration = context
             if (declaration instanceof ReferenceDeclaration) {
-                return declaration.eResource.allAvailableRootStates
+                val candidates = <NamedObject>newLinkedList
+                val rootState = declaration.nextScope?.rootState
+                val rootStates = declaration.eResource.allAvailableRootStates
+                
+                if (reference == KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE) {
+                    val refContainer = declaration.referenceContainer
+                    if (refContainer !== null) {
+                        if (refContainer instanceof DeclarationScope) {
+                            candidates += refContainer.declarations.filter(ClassDeclaration).map[(it.isEnum ? valuedObjects.head : it) as NamedObject]
+                        }
+                    } else {
+                        candidates += rootStates
+                        candidates += rootState.declarations.filter(ClassDeclaration).map[(it.isEnum ? valuedObjects.head : it) as NamedObject]
+                        if (!rootState.baseStateReferences.nullOrEmpty) {
+                            candidates += rootState.getAllVisibleInheritedDeclarations.filter(ClassDeclaration).map[(it.isEnum ? valuedObjects.head : it) as NamedObject]
+                        }
+                        if (rootState !== null && !rootState.genericParameterDeclarations.nullOrEmpty) {
+                            candidates += (rootState as State).genericTypeParameters
+                        }
+                    }
+                } else if (reference == KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE_CONTAINER) {
+                    candidates += rootStates
+                }
+                
+                return SCTXScopes.scopeFor(candidates)
             }
         } 
         return context.getScopeHierarchical(reference)
-    }       
+    }
+    
+    def IScope getScopeForGenericTypeReference(GenericTypeReference context, EReference reference) {
+        val declaration = context.getGenericParameterDeclaration
+        val candidates = <NamedObject>newLinkedList
+        
+        // States
+        var states = context.eResource.allAvailableRootStates.toList
+        if (declaration !== null && !states.empty) {
+            val type = declaration.type
+            if (type instanceof Scope) {
+                states = states.filter[
+                    it === type || it.baseStates.contains(type)
+                ].toList
+            }
+        }
+        candidates += states
+        
+        // Special case for parser ambiguity => also match ValuedObjects for later transformation into VOReference
+        if (context.genericParameters.nullOrEmpty) {
+            var rootState = context.nextScope?.rootState
+            if (rootState !== null && !rootState.genericParameterDeclarations.nullOrEmpty) {
+                candidates += (rootState as State).genericTypeParameters
+            }
+            return SCTXScopes.scopeFor(candidates, context.getScopeForValuedObjectReference(reference))
+        }
+        return SCTXScopes.scopeFor(candidates)
+    }
+    
+    def IScope getScopeForGenericParameterDeclaration(GenericParameterDeclaration context, EReference reference) {
+        if (reference == KExpressionsPackage.Literals.GENERIC_PARAMETER_DECLARATION__TYPE) {
+            return SCTXScopes.scopeFor(context.eResource.allAvailableRootStates)
+        }
+        return IScope.NULLSCOPE
+    }
+    
+    def IScope getScopeForSpecialAccess(SpecialAccessExpression context, EReference reference) {
+        switch(context.access) {
+            case StaticAccess.ACCESS_KEYWORD: {
+                if (reference == KExpressionsPackage.Literals.SPECIAL_ACCESS_EXPRESSION__CONTAINER) {
+                    return IScope.NULLSCOPE // SCChart access does not allows container
+                } else if (reference == KExpressionsPackage.Literals.SPECIAL_ACCESS_EXPRESSION__TARGET) {
+                    return SCTXScopes.scopeFor(context.eResource.getAllAvailableRootStates)
+                }
+            }
+            case MethodSignaling.ACCESS_KEYWORD: {
+                val scope = context.nextScope
+                if (reference == KExpressionsPackage.Literals.SPECIAL_ACCESS_EXPRESSION__CONTAINER) {
+                    if (scope instanceof State) {
+                        return SCTXScopes.scopeFor(scope.regions.filter[!name.nullOrEmpty])
+                    }
+                } else if (reference == KExpressionsPackage.Literals.SPECIAL_ACCESS_EXPRESSION__TARGET) {
+                    if (context.container !== null) {
+                        val region = context.container
+                        if (region instanceof ControlflowRegion) {
+                            return SCTXScopes.scopeFor(region.states)
+                        }
+                    } else if (scope instanceof State) {
+                        // Validator will check for ambiguity
+                        return SCTXScopes.scopeFor(scope.regions.filter(ControlflowRegion).filter[name.nullOrEmpty].map[states].flatten)
+                    } else if (scope instanceof ControlflowRegion) {
+                        return SCTXScopes.scopeFor(scope.states)
+                    }
+                }
+            }
+            default: return IScope.NULLSCOPE
+        }
+        return IScope.NULLSCOPE
+    }
+    
+    override protected getScopeForValuedObjectReference(EObject context, EReference reference) {
+        val contextContainer = context.eContainer
+        if (contextContainer instanceof SpecialAccessExpression && (contextContainer as SpecialAccessExpression).subReference === context) {
+            val target = (contextContainer as SpecialAccessExpression).target
+            // The context is a subreference of static access!
+            if (target instanceof DeclarationScope) {
+                return Scopes.scopeFor(target.declarations.filter[allowsGlobalAccess].map[valuedObjects].flatten)
+            } else {
+                return IScope.NULLSCOPE
+            }
+        } else {
+            return super.getScopeForValuedObjectReference(context, reference)
+        }
+    }
 
     override IScope getScopeHierarchical(EObject context, EReference reference) {
         val candidates = <ValuedObject> newArrayList
@@ -149,7 +299,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
                 for(VO : declaration.valuedObjects) {
                     candidates += VO
                 }
-            }   
+            }
             
             // Add for regions counter variable            
             if (declarationScope instanceof Region) {
@@ -170,23 +320,26 @@ class SCTXScopeProvider extends KExtScopeProvider {
                 candidates += declarationScope.parameterDeclarations.map[valuedObjects].flatten
             }
             
-            // Inherited VOs
             if (declarationScope instanceof State) {
-                if (!declarationScope.baseStates.nullOrEmpty) {
+                // Inherited VOs
+                if (!declarationScope.baseStateReferences.nullOrEmpty) {
                     for (decl : declarationScope.allVisibleInheritedDeclarations) {
                         for(VO : decl.valuedObjects) {
                             candidates += VO
                         }
                     }
                 }
+                // Generic Parameters
+                candidates += declarationScope.genericValuedObjectParameters
             }
             
+            // This also give nested classes access to variable of surrounding scopes (only partially supported in code gen)
             declarationScope = declarationScope.nextDeclarationScope
         }
         return Scopes.scopeFor(candidates)
     }
     
-    protected def getAllAvailableRootStates(Resource eResource) {
+    def getAllAvailableRootStates(Resource eResource) {
         if (eResource !== null) {
             val scchartsInScope = newHashSet(eResource.contents.head as SCCharts)
             val eResourceSet = eResource.resourceSet
@@ -195,33 +348,45 @@ class SCTXScopeProvider extends KExtScopeProvider {
                     scchartsInScope += it
                 ]
             }
-            return SCTXScopes.scopeFor(scchartsInScope.map[rootStates].flatten)
+            return scchartsInScope.map[rootStates].flatten
         }
-        return IScope.NULLSCOPE
+        return emptyList
     }
     
-    override IScope getScopeForReferencedDeclarationObject(ReferenceDeclaration declaration, ValuedObjectReference context,
+    override IScope getScopeForReferencedType(EObject reference, ValuedObjectReference context,
         Function1<? super VariableDeclaration, Boolean> predicate) {
         var EObject region = context
         while (region !== null && !(region instanceof Region)) {
             region = region.eContainer
         }
-        val adjustedPredicate = if (region instanceof DataflowRegion) predicate else [VariableDeclaration vd | vd.access == AccessModifier.PUBLIC]
-        if (declaration.reference instanceof State) {
-            val state = declaration.reference as State
+        
+        val adjustedPredicate = if (region instanceof DataflowRegion) predicate else [VariableDeclaration vd | vd.isPublic]
+        
+        if (reference instanceof State) {
             val additionalCandidates = newArrayList
-            additionalCandidates += state.declarations.filter(MethodDeclaration).map[valuedObjects.head]
-            if (!state.baseStates.nullOrEmpty) {
-                for (decl : state.allVisibleInheritedDeclarations) {
+            additionalCandidates += reference.declarations.filter(MethodDeclaration).map[valuedObjects.head]
+            if (!reference.baseStateReferences.nullOrEmpty) {
+                for (decl : reference.allVisibleInheritedDeclarations) {
                     for(VO : decl.valuedObjects) {
                         additionalCandidates += VO
                     }
                 }
             }
-            return Scopes.scopeFor(additionalCandidates, super.getScopeForReferencedDeclarationObject(declaration, context, adjustedPredicate))
+            return Scopes.scopeFor(additionalCandidates, super.getScopeForReferencedType(reference, context, adjustedPredicate))
         } else {
-            return super.getScopeForReferencedDeclarationObject(declaration, context, adjustedPredicate)
+            return super.getScopeForReferencedType(reference, context, adjustedPredicate)
         }
+    }
+    
+    private def boolean allowsGlobalAccess(Declaration decl) {
+        if (decl instanceof VariableDeclaration) {
+            if (!decl.input && decl.isPublic) {
+                if (decl.const || decl instanceof ClassDeclaration) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 
 }

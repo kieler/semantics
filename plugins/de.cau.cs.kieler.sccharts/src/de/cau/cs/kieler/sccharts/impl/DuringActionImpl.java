@@ -18,7 +18,9 @@ import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
@@ -37,12 +39,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class DuringActionImpl extends LocalActionImpl implements DuringAction {
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-				/**
+    /**
      * The default value of the '{@link #getReset() <em>Reset</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -51,6 +53,7 @@ public class DuringActionImpl extends LocalActionImpl implements DuringAction {
      * @ordered
      */
     protected static final DelayType RESET_EDEFAULT = DelayType.UNDEFINED;
+
     /**
      * The cached value of the '{@link #getReset() <em>Reset</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -61,7 +64,7 @@ public class DuringActionImpl extends LocalActionImpl implements DuringAction {
      */
     protected DelayType reset = RESET_EDEFAULT;
 
-                /**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

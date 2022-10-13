@@ -13,14 +13,9 @@
 package de.cau.cs.kieler.lustre.ide
 
 import com.google.inject.Guice
+import de.cau.cs.kieler.core.ls.ILSSetup
 import de.cau.cs.kieler.lustre.LustreRuntimeModule
 import de.cau.cs.kieler.lustre.LustreStandaloneSetup
-import org.eclipse.emf.ecore.EPackage
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
-import org.eclipse.xtext.XtextPackage
-import org.eclipse.xtext.resource.impl.BinaryGrammarResourceFactoryImpl
 import org.eclipse.xtext.util.Modules2
 
 /**
@@ -29,7 +24,7 @@ import org.eclipse.xtext.util.Modules2
  * @author sdo
  * 
  */
-class LustreIdeSetup extends LustreStandaloneSetup {
+class LustreIdeSetup extends LustreStandaloneSetup implements ILSSetup {
 
 	override createInjector() {
 		Guice.createInjector(Modules2.mixin(new LustreRuntimeModule, new LustreIdeModule))
@@ -42,23 +37,8 @@ class LustreIdeSetup extends LustreStandaloneSetup {
         return injector
     }
     
-    override createInjectorAndDoEMFRegistration() {
-        // register default ePackages
-        if (!Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().containsKey("ecore"))
-            Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
-                "ecore", new EcoreResourceFactoryImpl());
-        if (!Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().containsKey("xmi"))
-            Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
-                "xmi", new XMIResourceFactoryImpl());
-        if (!Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().containsKey("xtextbin"))
-            Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
-                "xtextbin", new BinaryGrammarResourceFactoryImpl());
-        if (!EPackage.Registry.INSTANCE.containsKey(XtextPackage.eNS_URI))
-            EPackage.Registry.INSTANCE.put(XtextPackage.eNS_URI, XtextPackage.eINSTANCE);
-
-        val injector = createInjector();
-        register(injector);
-        return injector;
+    override doLSSetup() {
+        return LustreIdeSetup.doSetup
     }
 	
 }

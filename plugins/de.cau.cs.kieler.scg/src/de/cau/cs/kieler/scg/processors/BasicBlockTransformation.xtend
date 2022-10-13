@@ -142,8 +142,8 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
             if (bb.goBlock) {
                 bb.deadBlock = false
             } else {
-                if (bb.synchronizerBlock) {
-                    bb.deadBlock = bb.predecessors.map[basicBlock].filter[deadBlock&&!finalBlock].size > 0
+                if (bb.synchronizerBlock && !bb.schedulingBlocks.head.nodes.head.asJoin.any) {
+                    bb.deadBlock = bb.predecessors.map[basicBlock].filter[deadBlock && !finalBlock].size > 0
                 } else if (bb.depthBlock) {
                     bb.deadBlock = basicBlockGuardCache.get(bb.preGuard).deadBlock
                 } else {

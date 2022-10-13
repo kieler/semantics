@@ -14,18 +14,20 @@ package de.cau.cs.kieler.simulation.trace
 
 import de.cau.cs.kieler.core.model.ModelUtil
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.trace.ktrace.KTraceFactory
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
+import java.io.ByteArrayInputStream
 import java.io.File
+import java.io.InputStream
 import org.eclipse.emf.common.util.URI
+import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
-import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
-import de.cau.cs.kieler.simulation.trace.ktrace.Tick
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.keffects.Emission
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import org.eclipse.xtext.serializer.ISerializer
 
 /**
  * @author als
@@ -41,11 +43,38 @@ class TraceFileUtil {
     static extension KEffectsFactory = KEffectsFactory.eINSTANCE
     static extension KExpressionsCompareExtensions = new KExpressionsCompareExtensions()
     
-    
+    /**
+     * Loads a trace from a file into a {@link TraceFile}.
+     * @param file The file to load
+     * @return The loaded {@link TraceFile} model.
+     */
     static def loadTraceFile(File file) {
+        return loadTraceFile(file.absolutePath)
+    }
+    
+    /**
+     * Loads a trace from a file URI into a {@link TraceFile}.
+     * @param fileUri The uri of the file to load as a String
+     * @return The loaded {@link TraceFile} model.
+     */
+    static def loadTraceFile(String fileUri) {
         val resourceSet = KTraceStandaloneSetup.doSetup.getInstance(XtextResourceSet)
-        val uri = URI.createFileURI(file.absolutePath)
+        val uri = URI.createFileURI(fileUri)
         val resource = resourceSet.getResource(uri, true)
+        return resource.getContents().head as TraceFile
+    }
+    
+    /**
+     * Loads a trace from a String into a {@link TraceFile}.
+     * @param fileContent The trace content to load.
+     * @return The loaded {@link TraceFile} model.
+     */
+    static def loadTraceString(String fileContent) {
+        val resourceSet = KTraceStandaloneSetup.doSetup.getInstance(XtextResourceSet)
+        val uri = URI.createURI("dummy:/trace.ktrace")
+        val resource = resourceSet.createResource(uri)
+        val InputStream in = new ByteArrayInputStream(fileContent.getBytes());
+        resource.load(in, resourceSet.getLoadOptions());
         return resource.getContents().head as TraceFile
     }
     
@@ -57,6 +86,51 @@ class TraceFileUtil {
         } else {
             createTraceFile
         }
+        
+        saveContextToTraceFile(traceFile, context, eso)
+        
+        // save
+        if (append) {
+            traceFile.eResource.save(emptyMap)
+        } else {
+            val uri = URI.createFileURI(file.absolutePath)
+            ModelUtil.saveModel(traceFile, uri)
+        }
+    }
+    
+    /**
+     * Saves the trace in the {@code context} into the file given by the {@code fileUri}.
+     */
+    static def saveTraceToFile(String fileUri, SimulationContext context) {
+        val eso = fileUri.endsWith(".eso") || fileUri.endsWith(".esi")
+        val traceFile = createTraceFile
+        
+        saveContextToTraceFile(traceFile, context, eso)
+        
+        // save
+        val uri = URI.createFileURI(fileUri)
+        ModelUtil.saveModel(traceFile, uri)
+    }
+    
+    
+    /**
+     * The content of a trace file for the given simulation context as a String.
+     */
+    static def String saveTraceToString(SimulationContext context) {
+        // TODO: what about eso?
+        val eso = false
+        val traceFile = createTraceFile
+        
+        saveContextToTraceFile(traceFile, context, eso)
+        
+        val ISerializer serializer = KTraceStandaloneSetup.doSetup.getInstance(ISerializer)
+        return serializer.serialize(traceFile)
+    }
+    
+    /**
+     * Save the trace from the simulation context to the already created TraceFile.
+     */
+    private static def saveContextToTraceFile(TraceFile traceFile, SimulationContext context, boolean eso) {
         val trace = createTrace
         traceFile.traces += trace
         
@@ -143,14 +217,6 @@ class TraceFileUtil {
             if (KEYWORDS.contains(variable.name)) {
                 variable.name = "^" + variable.name // escape
             }
-        }
-        
-        // save
-        if (append) {
-            traceFile.eResource.save(emptyMap)
-        } else {
-            val uri = URI.createFileURI(file.absolutePath)
-            ModelUtil.saveModel(traceFile, uri)
         }
     }
     

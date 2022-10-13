@@ -18,11 +18,13 @@ import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /**
  * C Code Generator Struct Module
@@ -37,6 +39,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
     
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension AnnotationsExtensions
     @Accessors @Inject CCodeSerializeHRExtensions serializer
     
@@ -54,7 +57,11 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
     }    
     
     override generateInit() {
-        code.append("typedef struct {\n")
+        // Prepend all inner classes
+        for (classDecl : scg.eAllContents.filter(ClassDeclaration).filter[!host].toList.reverseView) {
+            classDecl.generateClassDeclaration(serializer)
+        }
+        code.append("\ntypedef struct {\n")
     }
     
     override generate() {
@@ -65,21 +72,30 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
         // Add the declarations of the model.
         scg.declarations.generateDeclarations(0, serializer)
     }
+        
+    def void generateClassDeclaration(ClassDeclaration declaration, extension CCodeSerializeHRExtensions serializer) {
+        code.append("typedef struct {\n")
+        declaration.declarations.generateDeclarations(0, serializer)
+        code.append("} ")
+        code.append(declaration.name)
+        code.append(";\n")
+    }
     
     def void generateDeclarations(List<Declaration> declarations, int depth, extension CCodeSerializeHRExtensions serializer) {
-        for (declaration : declarations) {
+        for (declaration : declarations.filter[!it.isEnum]) {
             if (declaration instanceof ClassDeclaration) {
                 (0..depth).forEach[code.append(indentation)]
-                if (!declaration.host || !declaration.hasAnnotation("typedef")) {
-                    code.append("struct ")
-                }
+//                if (!declaration.host || !declaration.hasAnnotation("typedef")) {
+//                    code.append("struct ")
+//                }
                 code.append(declaration.name)
-                if (!declaration.host) {
-                    code.append(" {\n")
-                    declaration.declarations.generateDeclarations(depth + 1, serializer)
-                    (0..depth).forEach[code.append(indentation)]
-                    code.append("}")
-                }
+                // Disabled this code because nested structs do not allow methods with access via self paramter
+//                if (!declaration.host) {
+//                    code.append(" {\n")
+//                    declaration.declarations.generateDeclarations(depth + 1, serializer)
+//                    (0..depth).forEach[code.append(indentation)]
+//                    code.append("}")
+//                }
                 for (valuedObject : declaration.valuedObjects) {
                     code.append(" ")
                     code.append(valuedObject.name)
@@ -94,9 +110,15 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
             } else if (declaration instanceof VariableDeclaration) {
                 for (valuedObject : declaration.valuedObjects) {
                     (0..depth).forEach[code.append(indentation)]
-                    val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
+                    val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) {
                         declaration.type.serializeHR
-                        else declaration.hostType
+                    } else {
+                        var type = declaration.hostType
+                        if (declaration.hasAnnotation(VariableStore.ENUM)) {
+                            type = "enum " + type
+                        }
+                        type
+                    }
                     code.append(declarationType)
                     code.append(" ")
                     code.append(valuedObject.name)

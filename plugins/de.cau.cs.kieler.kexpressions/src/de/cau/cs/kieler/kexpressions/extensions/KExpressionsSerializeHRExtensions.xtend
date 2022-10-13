@@ -98,10 +98,14 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     def dispatch CharSequence serializeHR(RandomizeCall randomizeCall) {
         return "randomize"
     }
-        
+    
     def CharSequence serializeHRParameters(List<Parameter> parameters) {
+        parameters.serializeHRParameters("(", ")")
+    }
+        
+    def CharSequence serializeHRParameters(List<Parameter> parameters, String start, String end) {
         val sb = new StringBuilder
-        sb.append("(")
+        sb.append(start)
         var cnt = 0
         for (par : parameters) {
             if (cnt > 0) {
@@ -117,7 +121,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             sb.append(par.expression.serializeHR)
             cnt = cnt + 1
         }
-        sb.append(")") 
+        sb.append(end) 
         return sb.toString      
     }    
 
@@ -449,11 +453,15 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     }  
     
     def dispatch CharSequence serializeHR(VectorValue expression) {
-        var s = "{" 
-        for (value : expression.values) {
-            s = s + value.serializeHR + ", "
+        if (expression.range) {
+            return "{" + expression.values.head?.serializeHR + " to " + expression.values.last?.serializeHR + "}"
+        } else {
+            var s = "{"
+            for (value : expression.values) {
+                s = s + value.serializeHR + ", "
+            }
+            return s.substring(0, s.length - 2) + "}"
         }
-        return s.substring(0, s.length - 2) + "}"
     }    
     
     def dispatch CharSequence serializeHR(IgnoreValue expression) {

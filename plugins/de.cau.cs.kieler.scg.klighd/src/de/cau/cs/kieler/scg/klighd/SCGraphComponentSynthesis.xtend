@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.kgraph.KPort
+import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
@@ -37,6 +38,7 @@ import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.ForkType
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
@@ -463,7 +465,15 @@ class SCGraphComponentSynthesis {
         } else {
             node.addPolygon().createTriangleLandscapeShape();
         }
-        node.initialiseFigure(SHOW_CAPTION.booleanValue ? "fork" : "")
+        
+        val type = switch(fork.type) {
+            case PARALLEL: "fork"
+            case SEQUENTIAL: "fork\nseq"
+            case SEQUENTIAL_PREEMPTIVE: "fork seq\npreempt"
+        }
+        node.initialiseFigure(SHOW_CAPTION.booleanValue ? type : "")
+        if (fork.type !== ForkType.PARALLEL) node.KRendering.background = Colors.ORANGE
+        
         // Only add one port for incoming control flow edges.
         // Outgoing ports are added by the control flows.
         node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
@@ -502,7 +512,10 @@ class SCGraphComponentSynthesis {
         } else {
             node.addPolygon().createTriangleLandscapeShapeReversed()
         }
-        node.initialiseFigure("join")
+        
+        node.initialiseFigure(SHOW_CAPTION.booleanValue ? (join.any ? "join\nany" : "join") : "")
+        if (join.any) node.KRendering.background = Colors.ORANGE
+        
         // Only add one port for an outgoing control flow edge.
         // Incoming ports are added by the control flows.
         node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);

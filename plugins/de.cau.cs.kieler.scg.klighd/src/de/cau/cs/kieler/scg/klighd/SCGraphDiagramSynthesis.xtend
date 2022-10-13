@@ -72,7 +72,6 @@ import javax.inject.Inject
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.options.LayeringStrategy
 import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
-import org.eclipse.elk.alg.layered.options.OrderingStrategy
 import org.eclipse.elk.alg.layered.options.WrappingStrategy
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
@@ -308,7 +307,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 25.0);
         node.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         node.setLayoutOption(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
-        node.setLayoutOption(LayeredOptions::CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES);
+        //TODO Reactivate when related bug is fixed: https://github.com/eclipse/elk/issues/696
+        //node.setLayoutOption(LayeredOptions::CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES);
         node.setLayoutOption(LayeredOptions::THOROUGHNESS, 100)
         node.setLayoutOption(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);
         if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {

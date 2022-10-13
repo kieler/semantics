@@ -13,10 +13,11 @@
 package de.cau.cs.kieler.sccharts.ide.text
 
 import com.google.inject.Guice
+import de.cau.cs.kieler.core.ls.ILSSetup
 import de.cau.cs.kieler.sccharts.text.SCTXRuntimeModule
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
-import org.eclipse.xtext.util.Modules2
 import de.cau.cs.kieler.scl.ide.SCLIdeSetup
+import org.eclipse.xtext.util.Modules2
 
 /**
  * Initialization support for running Xtext languages as language servers.
@@ -24,7 +25,7 @@ import de.cau.cs.kieler.scl.ide.SCLIdeSetup
  * @author sdo
  * 
  */
-class SCTXIdeSetup extends SCTXStandaloneSetup {
+class SCTXIdeSetup extends SCTXStandaloneSetup implements ILSSetup {
 
 	override createInjector() {
 		Guice.createInjector(Modules2.mixin(new SCTXRuntimeModule, new SCTXIdeModule))
@@ -40,6 +41,10 @@ class SCTXIdeSetup extends SCTXStandaloneSetup {
         return injector
     }
     
+    override doLSSetup() {
+        return SCTXIdeSetup.doSetup
+    }
+    
     override createInjectorAndDoEMFRegistration() {
         SCLIdeSetup.doSetup();
 
@@ -47,4 +52,5 @@ class SCTXIdeSetup extends SCTXStandaloneSetup {
         register(injector);
         return injector;
     }
+    
 }

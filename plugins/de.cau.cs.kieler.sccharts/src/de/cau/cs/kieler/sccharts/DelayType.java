@@ -79,10 +79,6 @@ public enum DelayType implements Enumerator {
     /**
      * The '<em><b>UNDEFINED</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>UNDEFINED</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #UNDEFINED
      * @model
@@ -94,10 +90,6 @@ public enum DelayType implements Enumerator {
     /**
      * The '<em><b>DELAYED</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>DELAYED</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #DELAYED
      * @model
@@ -109,10 +101,6 @@ public enum DelayType implements Enumerator {
     /**
      * The '<em><b>IMMEDIATE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>IMMEDIATE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #IMMEDIATE
      * @model
@@ -124,10 +112,6 @@ public enum DelayType implements Enumerator {
     /**
      * The '<em><b>AUTOMATIC</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>AUTOMATIC</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #AUTOMATIC
      * @model

@@ -27,6 +27,7 @@ import de.cau.cs.kieler.scg.Entry;
 import de.cau.cs.kieler.scg.Exit;
 import de.cau.cs.kieler.scg.ExpressionDependency;
 import de.cau.cs.kieler.scg.Fork;
+import de.cau.cs.kieler.scg.ForkType;
 import de.cau.cs.kieler.scg.Guard;
 import de.cau.cs.kieler.scg.GuardDependency;
 import de.cau.cs.kieler.scg.Join;
@@ -189,6 +190,13 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
     /**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum forkTypeEEnum = null;
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -273,6 +281,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getSCGraphs() {
         return scGraphsEClass;
     }
@@ -282,6 +291,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getSCGraphs_Scgs() {
         return (EReference)scGraphsEClass.getEStructuralFeatures().get(0);
     }
@@ -291,7 +301,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getSCGraph() {
+	@Override
+    public EClass getSCGraph() {
         return scGraphEClass;
     }
 
@@ -300,7 +311,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getSCGraph_Nodes() {
+	@Override
+    public EReference getSCGraph_Nodes() {
         return (EReference)scGraphEClass.getEStructuralFeatures().get(0);
     }
 
@@ -309,7 +321,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getSCGraph_BasicBlocks() {
+	@Override
+    public EReference getSCGraph_BasicBlocks() {
         return (EReference)scGraphEClass.getEStructuralFeatures().get(1);
     }
 
@@ -318,7 +331,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getSCGraph_Guards() {
+	@Override
+    public EReference getSCGraph_Guards() {
         return (EReference)scGraphEClass.getEStructuralFeatures().get(2);
     }
 
@@ -327,7 +341,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getSCGraph_Label() {
+	@Override
+    public EAttribute getSCGraph_Label() {
         return (EAttribute)scGraphEClass.getEStructuralFeatures().get(3);
     }
 
@@ -336,7 +351,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getNode() {
+	@Override
+    public EClass getNode() {
         return nodeEClass;
     }
 
@@ -345,7 +361,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getNode_IsInitial() {
+	@Override
+    public EAttribute getNode_IsInitial() {
         return (EAttribute)nodeEClass.getEStructuralFeatures().get(0);
     }
 
@@ -354,6 +371,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getNode_Schizophrenic() {
         return (EAttribute)nodeEClass.getEStructuralFeatures().get(1);
     }
@@ -363,7 +381,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getConditional() {
+	@Override
+    public EClass getConditional() {
         return conditionalEClass;
     }
 
@@ -372,7 +391,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getConditional_Then() {
+	@Override
+    public EReference getConditional_Then() {
         return (EReference)conditionalEClass.getEStructuralFeatures().get(0);
     }
 
@@ -381,7 +401,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getConditional_Else() {
+	@Override
+    public EReference getConditional_Else() {
         return (EReference)conditionalEClass.getEStructuralFeatures().get(1);
     }
 
@@ -390,7 +411,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getConditional_Condition() {
+	@Override
+    public EReference getConditional_Condition() {
         return (EReference)conditionalEClass.getEStructuralFeatures().get(2);
     }
 
@@ -399,7 +421,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getSurface() {
+	@Override
+    public EClass getSurface() {
         return surfaceEClass;
     }
 
@@ -408,7 +431,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getSurface_Depth() {
+	@Override
+    public EReference getSurface_Depth() {
         return (EReference)surfaceEClass.getEStructuralFeatures().get(0);
     }
 
@@ -417,7 +441,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getDepth() {
+	@Override
+    public EClass getDepth() {
         return depthEClass;
     }
 
@@ -426,7 +451,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getDepth_Surface() {
+	@Override
+    public EReference getDepth_Surface() {
         return (EReference)depthEClass.getEStructuralFeatures().get(0);
     }
 
@@ -435,7 +461,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getDepth_Next() {
+	@Override
+    public EReference getDepth_Next() {
         return (EReference)depthEClass.getEStructuralFeatures().get(1);
     }
 
@@ -444,7 +471,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getAssignment() {
+	@Override
+    public EClass getAssignment() {
         return assignmentEClass;
     }
 
@@ -453,7 +481,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getAssignment_Next() {
+	@Override
+    public EReference getAssignment_Next() {
         return (EReference)assignmentEClass.getEStructuralFeatures().get(0);
     }
 
@@ -462,7 +491,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getFork() {
+	@Override
+    public EClass getFork() {
         return forkEClass;
     }
 
@@ -471,7 +501,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getFork_Join() {
+	@Override
+    public EReference getFork_Join() {
         return (EReference)forkEClass.getEStructuralFeatures().get(0);
     }
 
@@ -480,16 +511,28 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getFork_Next() {
+	@Override
+    public EReference getFork_Next() {
         return (EReference)forkEClass.getEStructuralFeatures().get(1);
     }
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getFork_Type() {
+        return (EAttribute)forkEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getJoin() {
+	@Override
+    public EClass getJoin() {
         return joinEClass;
     }
 
@@ -498,7 +541,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getJoin_Fork() {
+	@Override
+    public EReference getJoin_Fork() {
         return (EReference)joinEClass.getEStructuralFeatures().get(0);
     }
 
@@ -507,16 +551,28 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getJoin_Next() {
+	@Override
+    public EReference getJoin_Next() {
         return (EReference)joinEClass.getEStructuralFeatures().get(1);
     }
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getJoin_Any() {
+        return (EAttribute)joinEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getEntry() {
+	@Override
+    public EClass getEntry() {
         return entryEClass;
     }
 
@@ -525,7 +581,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getEntry_Exit() {
+	@Override
+    public EReference getEntry_Exit() {
         return (EReference)entryEClass.getEStructuralFeatures().get(0);
     }
 
@@ -534,7 +591,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getEntry_Next() {
+	@Override
+    public EReference getEntry_Next() {
         return (EReference)entryEClass.getEStructuralFeatures().get(1);
     }
 
@@ -543,6 +601,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getEntry_ResetSCG() {
         return (EReference)entryEClass.getEStructuralFeatures().get(2);
     }
@@ -552,7 +611,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getExit() {
+	@Override
+    public EClass getExit() {
         return exitEClass;
     }
 
@@ -561,7 +621,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getExit_Entry() {
+	@Override
+    public EReference getExit_Entry() {
         return (EReference)exitEClass.getEStructuralFeatures().get(0);
     }
 
@@ -570,7 +631,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getExit_Next() {
+	@Override
+    public EReference getExit_Next() {
         return (EReference)exitEClass.getEStructuralFeatures().get(1);
     }
 
@@ -579,6 +641,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getExit_Final() {
         return (EAttribute)exitEClass.getEStructuralFeatures().get(2);
     }
@@ -588,7 +651,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getControlFlow() {
+	@Override
+    public EClass getControlFlow() {
         return controlFlowEClass;
     }
 
@@ -597,7 +661,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getBasicBlock() {
+	@Override
+    public EClass getBasicBlock() {
         return basicBlockEClass;
     }
 
@@ -606,7 +671,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getBasicBlock_SchedulingBlocks() {
+	@Override
+    public EReference getBasicBlock_SchedulingBlocks() {
         return (EReference)basicBlockEClass.getEStructuralFeatures().get(0);
     }
 
@@ -615,7 +681,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getBasicBlock_Predecessors() {
+	@Override
+    public EReference getBasicBlock_Predecessors() {
         return (EReference)basicBlockEClass.getEStructuralFeatures().get(1);
     }
 
@@ -624,6 +691,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getBasicBlock_ThreadEntry() {
         return (EReference)basicBlockEClass.getEStructuralFeatures().get(2);
     }
@@ -633,7 +701,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getBasicBlock_GoBlock() {
+	@Override
+    public EAttribute getBasicBlock_GoBlock() {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(3);
     }
 
@@ -642,7 +711,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getBasicBlock_DepthBlock() {
+	@Override
+    public EAttribute getBasicBlock_DepthBlock() {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(4);
     }
 
@@ -651,7 +721,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getBasicBlock_SynchronizerBlock() {
+	@Override
+    public EAttribute getBasicBlock_SynchronizerBlock() {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(5);
     }
 
@@ -660,7 +731,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getBasicBlock_EntryBlock() {
+	@Override
+    public EAttribute getBasicBlock_EntryBlock() {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(6);
     }
 
@@ -669,7 +741,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getBasicBlock_DeadBlock() {
+	@Override
+    public EAttribute getBasicBlock_DeadBlock() {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(7);
     }
 
@@ -678,6 +751,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getBasicBlock_TermBlock() {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(8);
     }
@@ -687,7 +761,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getBasicBlock_PreGuard() {
+	@Override
+    public EReference getBasicBlock_PreGuard() {
         return (EReference)basicBlockEClass.getEStructuralFeatures().get(9);
     }
 
@@ -696,6 +771,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getBasicBlock_FinalBlock() {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(10);
     }
@@ -705,7 +781,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getSchedulingBlock() {
+	@Override
+    public EClass getSchedulingBlock() {
         return schedulingBlockEClass;
     }
 
@@ -714,7 +791,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getSchedulingBlock_Nodes() {
+	@Override
+    public EReference getSchedulingBlock_Nodes() {
         return (EReference)schedulingBlockEClass.getEStructuralFeatures().get(0);
     }
 
@@ -723,7 +801,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getSchedulingBlock_Dependencies() {
+	@Override
+    public EReference getSchedulingBlock_Dependencies() {
         return (EReference)schedulingBlockEClass.getEStructuralFeatures().get(1);
     }
 
@@ -732,7 +811,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getSchedulingBlock_Guards() {
+	@Override
+    public EReference getSchedulingBlock_Guards() {
         return (EReference)schedulingBlockEClass.getEStructuralFeatures().get(2);
     }
 
@@ -741,6 +821,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getSchedulingBlock_Label() {
         return (EAttribute)schedulingBlockEClass.getEStructuralFeatures().get(3);
     }
@@ -750,7 +831,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getPredecessor() {
+	@Override
+    public EClass getPredecessor() {
         return predecessorEClass;
     }
 
@@ -759,7 +841,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getPredecessor_BasicBlock() {
+	@Override
+    public EReference getPredecessor_BasicBlock() {
         return (EReference)predecessorEClass.getEStructuralFeatures().get(0);
     }
 
@@ -768,7 +851,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getPredecessor_Conditional() {
+	@Override
+    public EReference getPredecessor_Conditional() {
         return (EReference)predecessorEClass.getEStructuralFeatures().get(1);
     }
 
@@ -777,7 +861,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getPredecessor_BranchType() {
+	@Override
+    public EAttribute getPredecessor_BranchType() {
         return (EAttribute)predecessorEClass.getEStructuralFeatures().get(2);
     }
 
@@ -786,7 +871,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getExpressionDependency() {
+	@Override
+    public EClass getExpressionDependency() {
         return expressionDependencyEClass;
     }
 
@@ -795,7 +881,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getGuardDependency() {
+	@Override
+    public EClass getGuardDependency() {
         return guardDependencyEClass;
     }
 
@@ -804,7 +891,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getScheduleDependency() {
+	@Override
+    public EClass getScheduleDependency() {
         return scheduleDependencyEClass;
     }
 
@@ -813,8 +901,19 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTickBoundaryDependency() {
         return tickBoundaryDependencyEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EEnum getForkType() {
+        return forkTypeEEnum;
     }
 
     /**
@@ -822,7 +921,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getGuard() {
+	@Override
+    public EClass getGuard() {
         return guardEClass;
     }
 
@@ -831,7 +931,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EEnum getBranchType() {
+	@Override
+    public EEnum getBranchType() {
         return branchTypeEEnum;
     }
 
@@ -840,7 +941,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public ScgFactory getScgFactory() {
+	@Override
+    public ScgFactory getScgFactory() {
         return (ScgFactory)getEFactoryInstance();
     }
 
@@ -894,10 +996,12 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         forkEClass = createEClass(FORK);
         createEReference(forkEClass, FORK__JOIN);
         createEReference(forkEClass, FORK__NEXT);
+        createEAttribute(forkEClass, FORK__TYPE);
 
         joinEClass = createEClass(JOIN);
         createEReference(joinEClass, JOIN__FORK);
         createEReference(joinEClass, JOIN__NEXT);
+        createEAttribute(joinEClass, JOIN__ANY);
 
         entryEClass = createEClass(ENTRY);
         createEReference(entryEClass, ENTRY__EXIT);
@@ -946,6 +1050,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         tickBoundaryDependencyEClass = createEClass(TICK_BOUNDARY_DEPENDENCY);
 
         // Create enums
+        forkTypeEEnum = createEEnum(FORK_TYPE);
         branchTypeEEnum = createEEnum(BRANCH_TYPE);
     }
 
@@ -1039,10 +1144,12 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEClass(forkEClass, Fork.class, "Fork", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getFork_Join(), this.getJoin(), this.getJoin_Fork(), "join", null, 1, 1, Fork.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getFork_Next(), this.getControlFlow(), null, "next", null, 1, -1, Fork.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getFork_Type(), this.getForkType(), "type", "PARALLEL", 1, 1, Fork.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(joinEClass, Join.class, "Join", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getJoin_Fork(), this.getFork(), this.getFork_Join(), "fork", null, 1, 1, Join.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getJoin_Next(), this.getControlFlow(), null, "next", null, 0, 1, Join.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getJoin_Any(), ecorePackage.getEBoolean(), "any", null, 0, 1, Join.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(entryEClass, Entry.class, "Entry", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getEntry_Exit(), this.getExit(), this.getExit_Entry(), "exit", null, 1, 1, Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1091,6 +1198,11 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEClass(tickBoundaryDependencyEClass, TickBoundaryDependency.class, "TickBoundaryDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
+        initEEnum(forkTypeEEnum, ForkType.class, "ForkType");
+        addEEnumLiteral(forkTypeEEnum, ForkType.PARALLEL);
+        addEEnumLiteral(forkTypeEEnum, ForkType.SEQUENTIAL);
+        addEEnumLiteral(forkTypeEEnum, ForkType.SEQUENTIAL_PREEMPTIVE);
+
         initEEnum(branchTypeEEnum, BranchType.class, "BranchType");
         addEEnumLiteral(branchTypeEEnum, BranchType.NORMAL);
         addEEnumLiteral(branchTypeEEnum, BranchType.TRUEBRANCH);

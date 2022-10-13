@@ -7,6 +7,8 @@ developer system de.cau.cs.kieler.sccharts.priority.legacy
 
 system de.cau.cs.kieler.sccharts.extended.core
 de.cau.cs.kieler.sccharts.scg.processors.SCG
+post process de.cau.cs.kieler.scg.processors.str
+post process de.cau.cs.kieler.scg.processors.sfr
 post process de.cau.cs.kieler.scg.processors.methods
 system de.cau.cs.kieler.scg.priority
 de.cau.cs.kieler.scg.processors.sclp

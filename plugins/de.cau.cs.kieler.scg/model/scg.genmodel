@@ -3,12 +3,17 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="KIELER - Kiel Integrated Environment for Layout Eclipse RichClient&#xD;&#xA;&#xD;&#xA;http://www.informatik.uni-kiel.de/rtsys/kieler/&#xD;&#xA;&#xD;&#xA;Copyright 2013 by&#xD;&#xA;+ Kiel University&#xD;&#xA;  + Department of Computer Science&#xD;&#xA;    + Real-Time and Embedded Systems Group&#xD;&#xA;&#xD;&#xA;This code is provided under the terms of the Eclipse Public License (EPL).&#xD;&#xA;See the file epl-v10.html for the license text."
     modelDirectory="/de.cau.cs.kieler.scg/src" modelPluginID="de.cau.cs.kieler.scg"
     modelName="Scg" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="11.0" copyrightFields="false"
     usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.kexpressions/model/keffects.genmodel#//keffects ../../de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions ../../de.cau.cs.kieler.kexpressions/model/kext.genmodel#//kext"
     importOrganizing="true">
   <foreignModel>scg.ecore</foreignModel>
   <genPackages prefix="Scg" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
       ecorePackage="scg.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="scg.ecore#//ForkType">
+      <genEnumLiterals ecoreEnumLiteral="scg.ecore#//ForkType/PARALLEL"/>
+      <genEnumLiterals ecoreEnumLiteral="scg.ecore#//ForkType/SEQUENTIAL"/>
+      <genEnumLiterals ecoreEnumLiteral="scg.ecore#//ForkType/SEQUENTIAL_PREEMPTIVE"/>
+    </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="scg.ecore#//BranchType">
       <genEnumLiterals ecoreEnumLiteral="scg.ecore#//BranchType/NORMAL"/>
       <genEnumLiterals ecoreEnumLiteral="scg.ecore#//BranchType/TRUEBRANCH"/>
@@ -45,10 +50,12 @@
     <genClasses ecoreClass="scg.ecore#//Fork">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Fork/join"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Fork/next"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Fork/type"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Join">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Join/fork"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Join/next"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Join/any"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Entry">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Entry/exit"/>

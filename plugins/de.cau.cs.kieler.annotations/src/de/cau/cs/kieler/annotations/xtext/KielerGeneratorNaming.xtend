@@ -19,7 +19,7 @@ import org.eclipse.xtext.xtext.generator.model.TypeReference
 import org.eclipse.xtext.xtext.generator.model.project.IXtextProjectConfig
 
 import static org.eclipse.xtext.GrammarUtil.*
-import org.eclipse.xtext.util.MergeableManifest
+import org.eclipse.xtext.util.MergeableManifest2
 
 /** 
  * GeneratorNaming for multiple languages in the same plugin.
@@ -71,8 +71,8 @@ class KielerGeneratorNaming extends XtextGeneratorNaming {
             } else if (!grammarPackageName.startsWith("org.eclipse")) {
                 try {
                     var in = projectConfig.runtime.metaInf.readBinaryFile(projectConfig.runtime.manifest.path)
-                    val manifest = new MergeableManifest(in, projectConfig.runtime.manifest.bundleName)
-                    val bundles = manifest.mainAttributes.get(MergeableManifest.REQUIRE_BUNDLE) as String
+                    val manifest = new MergeableManifest2(in, projectConfig.runtime.manifest.bundleName)
+                    val bundles = manifest.mainAttributes.get(MergeableManifest2.REQUIRE_BUNDLE) as String
                     var name = grammarPackageName
                     while (name.contains(".") && !bundles.contains(name)) {
                         name = name.substring(0, name.lastIndexOf("."))

@@ -128,7 +128,7 @@ class LayoutHook extends SynthesisActionHook {
                     node.setProperty(HV_DEPTH, baseDepth)
                     // Default layout direction for controlflow region
                     if (source instanceof ControlflowRegion) {
-                        if (golbalDirection != null) {
+                        if (golbalDirection !== null) {
                             node.setLayoutOption(CoreOptions.DIRECTION, golbalDirection)
                         }
                     }
@@ -189,7 +189,7 @@ class LayoutHook extends SynthesisActionHook {
             val value = data?.parseValue(annotation.values?.head ?: "".toLowerCase)
 
             // Set layout option
-            if (data != null && value != null) {
+            if (data !== null && value !== null) {
                 element.setLayoutOption(data.id, value)
                 if (data.id == CoreOptions.DIRECTION.id && element instanceof KNode) {
                     element.setLayoutOption(BLOCK_ALTERNATIN_LAYOUT, true);

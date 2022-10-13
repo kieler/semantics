@@ -4,8 +4,8 @@
 package de.cau.cs.kieler.esterel.ide.highlighting
 
 
+import de.cau.cs.kieler.core.ls.IHighlighting
 import java.util.List
-import de.cau.cs.kieler.annotations.xtext.IHighlighting
 
 class EsterelHighlighting implements IHighlighting {
     override String getId() {
@@ -23,9 +23,10 @@ class EsterelHighlighting implements IHighlighting {
         "boolean",
         "call",
         "case",
+        "class",
         "combine",
-        "conflict",
-        "confluent",
+        "commuting",
+        "conflicting",
         "const",
         "constant",
         "copymodule",
@@ -36,12 +37,15 @@ class EsterelHighlighting implements IHighlighting {
         "elsif",
         "emit",
         "end",
+        "enum",
         "every",
         "exec",
         "exit",
         "expression",
         "extern",
+        "fby",
         "float",
+        "for",
         "fork",
         "function",
         "global",
@@ -56,7 +60,10 @@ class EsterelHighlighting implements IHighlighting {
         "inputoutput",
         "int",
         "integer",
+        "is",
         "join",
+        "json",
+        "label",
         "loop",
         "max",
         "min",
@@ -76,6 +83,8 @@ class EsterelHighlighting implements IHighlighting {
         "print",
         "private",
         "procedure",
+        "protected",
+        "public",
         "pure",
         "random",
         "randomize",
@@ -87,6 +96,7 @@ class EsterelHighlighting implements IHighlighting {
         "schedule",
         "scope",
         "sensor",
+        "sfby",
         "signal",
         "static",
         "string",
@@ -95,6 +105,7 @@ class EsterelHighlighting implements IHighlighting {
         "sustain",
         "task",
         "then",
+        "this",
         "tick",
         "timeout",
         "times",
@@ -105,9 +116,11 @@ class EsterelHighlighting implements IHighlighting {
         "upto",
         "val",
         "var",
+        "void",
         "watching",
         "weak",
         "when",
+        "while",
         "with"
         ]
     }

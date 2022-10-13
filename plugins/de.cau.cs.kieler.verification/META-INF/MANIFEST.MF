@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Verification
 Bundle-SymbolicName: de.cau.cs.kieler.verification;singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.3.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.verification.VerificationPlugin
 Bundle-Vendor: Kiel University
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Require-Bundle: com.google.guava,
  com.google.inject,
@@ -26,3 +26,4 @@ Export-Package: de.cau.cs.kieler.sccharts.processors.verification,
  de.cau.cs.kieler.verification.processors,
  de.cau.cs.kieler.verification.processors.nuxmv,
  de.cau.cs.kieler.verification.processors.spin
+Automatic-Module-Name: de.cau.cs.kieler.verification

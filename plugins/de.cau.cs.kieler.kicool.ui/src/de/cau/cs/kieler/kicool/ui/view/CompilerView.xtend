@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.ui.view
 
-import de.cau.cs.kieler.kicool.ide.view.IdeCompilerView
 import de.cau.cs.kieler.kicool.ui.InstallSystemsHandler
 import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
 import de.cau.cs.kieler.kicool.ui.view.actions.AbstractAction

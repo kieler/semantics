@@ -14,7 +14,6 @@ package de.cau.cs.kieler.scg.processors.codegen.promela
 
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.processors.codegen.CodeGeneratorModuleBase
-import de.cau.cs.kieler.scg.processors.codegen.smv.ScgConditionalAssignmentAnalyzer
 
 /** 
  * @author aas

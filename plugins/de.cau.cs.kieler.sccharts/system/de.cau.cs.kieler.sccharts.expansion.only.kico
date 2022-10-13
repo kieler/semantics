@@ -1,4 +1,5 @@
 developer system de.cau.cs.kieler.sccharts.expansion.only 
 	label "SCCharts Reference Expansion"
 
+pre process silent de.cau.cs.kieler.sccharts.processors.staticAccess
 de.cau.cs.kieler.sccharts.processors.reference

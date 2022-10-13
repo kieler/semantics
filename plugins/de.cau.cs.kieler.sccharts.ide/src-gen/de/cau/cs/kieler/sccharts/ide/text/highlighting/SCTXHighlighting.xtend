@@ -4,8 +4,8 @@
 package de.cau.cs.kieler.sccharts.ide.text.highlighting
 
 
+import de.cau.cs.kieler.core.ls.IHighlighting
 import java.util.List
-import de.cau.cs.kieler.annotations.xtext.IHighlighting
 
 class SCTXHighlighting implements IHighlighting {
     override String getId() {
@@ -20,6 +20,7 @@ class SCTXHighlighting implements IHighlighting {
         "abort",
         "auto",
         "bool",
+        "calls",
         "class",
         "clock",
         "combine",
@@ -35,10 +36,12 @@ class SCTXHighlighting implements IHighlighting {
         "else",
         "end",
         "entry",
+        "enum",
         "exit",
         "expression",
         "extends",
         "extern",
+        "fby",
         "final",
         "float",
         "for",
@@ -56,6 +59,7 @@ class SCTXHighlighting implements IHighlighting {
         "int",
         "is",
         "join",
+        "json",
         "label",
         "max",
         "method",
@@ -64,6 +68,7 @@ class SCTXHighlighting implements IHighlighting {
         "nondeterministic",
         "none",
         "null",
+        "ode",
         "once",
         "output",
         "override",
@@ -72,7 +77,6 @@ class SCTXHighlighting implements IHighlighting {
         "period",
         "policy",
         "pre",
-        "preceding",
         "print",
         "private",
         "protected",
@@ -88,15 +92,18 @@ class SCTXHighlighting implements IHighlighting {
         "scchart",
         "schedule",
         "scope",
+        "seq",
+        "sfby",
         "shallow",
         "signal",
         "state",
         "static",
         "string",
+        "strong",
         "struct",
-        "succeeding",
         "suspend",
         "then",
+        "this",
         "to",
         "undefined",
         "val",
