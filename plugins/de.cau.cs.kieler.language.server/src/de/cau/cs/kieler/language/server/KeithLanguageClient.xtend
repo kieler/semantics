@@ -74,5 +74,5 @@ interface KeithLanguageClient extends KGraphLanguageClient, LanguageClient {
     def void sendVerificationProperties(Object props, String dummy)   
         
     @JsonNotification("verification/updatePropertyStatus")
-    def void sendPropertyStatus(Object id, Object status)
+    def void sendPropertyStatus(Object id, Object status, Object counterexampleUri)
 }

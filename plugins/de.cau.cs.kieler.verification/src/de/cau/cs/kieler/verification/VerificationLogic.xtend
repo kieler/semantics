@@ -37,6 +37,8 @@ import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.trace.TraceFileUtil
 import de.cau.cs.kieler.simulation.ide.CentralSimulation
+import java.util.Observable
+import de.cau.cs.kieler.core.properties.IProperty
 
 /**
  * @author jep
@@ -130,6 +132,13 @@ class VerificationLogic {
         // Start new verification
         prepareVerification(model, modelFile, verificationProps, verificationAssumptions)
     }
+    
+    
+    public static val IProperty<Boolean> USE_TEMPORARY_PROJECT = 
+        new de.cau.cs.kieler.core.properties.Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.use", true)
+        
+    public static val IProperty<Boolean> USE_GENERATED_FOLDER = 
+        new de.cau.cs.kieler.core.properties.Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.generated.use", true)
 
     private def void prepareVerification(Object model, File modelFile,
         List<VerificationProperty> verificationProperties, List<VerificationAssumption> verificationAssumptions) {
@@ -219,8 +228,10 @@ class VerificationLogic {
                     }
 
                 }
-                CentralSimulation.compileAndStartSimulation(simulationSystemId, diagramModel)
+                
                 CentralSimulation.addListener(addCounterexampleSimulationListener)
+                CentralSimulation.compileAndStartSimulation(simulationSystemId, diagramModel)
+
 
             } catch (Exception e) {
 //                e.showInDialog

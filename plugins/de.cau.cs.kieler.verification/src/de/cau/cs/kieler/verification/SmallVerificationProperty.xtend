@@ -23,6 +23,7 @@ class SmallVerificationProperty {
     @Accessors private String name = ""
     @Accessors private String formula = ""
     @Accessors private String id = ""
+    @Accessors private String counterexampleFileUri 
     @Accessors VerificationPropertyStatus status = VerificationPropertyStatus.PENDING
 
     new(String name, String formula, String id) {

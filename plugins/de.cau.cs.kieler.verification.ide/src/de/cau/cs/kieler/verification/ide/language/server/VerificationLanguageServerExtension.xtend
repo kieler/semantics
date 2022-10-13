@@ -94,7 +94,10 @@ class VerificationLanguageServerExtension implements ILanguageServerExtension, V
         verLogic.verificationCompileContext.addObserver [ Observable o, Object arg |
             if (arg instanceof VerificationPropertyChanged) {
                 val property = arg.changedProperty
-                client.sendPropertyStatus(property.id, property.status)
+                if (property.counterexampleFile !== null) {
+                    client.sendPropertyStatus(property.id, property.status, property.counterexampleFile.path)
+                }
+                client.sendPropertyStatus(property.id, property.status, "")
             } else if (arg instanceof CompilationFinished) {
                 verLogic.verificationCompileContext = null
             }
@@ -103,14 +106,6 @@ class VerificationLanguageServerExtension implements ILanguageServerExtension, V
         for (property : verificationProperties) {
             property.runningTaskDescription = "Compiling..."
             property.status = VerificationPropertyStatus.RUNNING
-        }
-    }
-
-    override runCounterExample(String uri, String propertyId) {
-        if (uri !== null) {
-            val currentModel = verLogic.getModelFromUri(uri)
-            val property = verificationProperties.get(uri).findFirst[prop | prop.id == propertyId]
-            verLogic.runCounterexample(property, currentModel)
         }
     }
 
