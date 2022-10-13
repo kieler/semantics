@@ -116,12 +116,12 @@ class ModelOrderHook extends SynthesisHook {
                 node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER_CROSSING_COUNTER_PORT_INFLUENCE, 0.01)
                 node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER_CROSSING_COUNTER_NODE_INFLUENCE, 0.01)
             }
-        	case NONE: {
-        		
-        	}
-        	default: {
-        		
-        	}
+            case NONE: {
+                
+            }
+            default: {
+                
+            }
         }
     }
     
