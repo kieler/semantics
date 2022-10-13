@@ -27,7 +27,6 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.lsp4j.jsonrpc.validation.NonNull
 import org.eclipse.xtext.resource.XtextResourceSet
 
 /**
@@ -109,7 +108,7 @@ class VerificationLogic {
      * @param uri URI of file without file://
      * @return the correct XtextResourceSet for the given uri based in its file extension.
      */
-    def XtextResourceSet getXtextResourceSet(@NonNull URI uri) {
+    def XtextResourceSet getXtextResourceSet(URI uri) {
         return injector.getInstance(XtextResourceSet);
     }
 
