@@ -47,6 +47,7 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
     @Accessors(PUBLIC_GETTER) private val verificationProperties = <VerificationProperty>newArrayList
     @Accessors(PUBLIC_GETTER) private val verificationAssumptions = <VerificationAssumption>newArrayList
     
+    /** Verification properties need IDs  */
     private VerificationPropertyIDGenerator idGen = new VerificationPropertyIDGenerator()
     
     override getId() {

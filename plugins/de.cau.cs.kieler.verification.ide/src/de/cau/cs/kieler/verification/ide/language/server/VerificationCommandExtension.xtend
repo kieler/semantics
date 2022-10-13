@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2022 by
@@ -19,14 +19,22 @@ import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
  * Interface to the LSP extension commands
  * 
  * @author jep
- *
+ * 
  */
 @JsonSegment('keith/verification')
 interface VerificationCommandExtension {
-    
+
+    /**
+     * Requests the verification properties that are stated in the file given by uri.
+     * It is assumed that the model was compiled via a model checker before.
+     */
     @JsonNotification('loadProperties')
     def void loadProperties(String uri)
-    
+
+    /**
+     * Runs the model checker for the file given by uri.
+     * It is assumed that the model was compiled via a model checker & verification properties were loaded before.
+     */
     @JsonNotification('runChecker')
     def void runChecker(String uri)
 

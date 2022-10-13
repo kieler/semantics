@@ -16,6 +16,8 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.language.server.ILanguageServerContribution
 
 /**
+ * Contribution to provide the corresponding language server extension
+ * 
  * @author jep
  *
  */

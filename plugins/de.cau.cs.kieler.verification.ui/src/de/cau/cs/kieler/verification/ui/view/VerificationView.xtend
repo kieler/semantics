@@ -545,6 +545,9 @@ Example commands:
         }
     }
 
+    /**
+     * Translates a file to an IFile.
+     */
     private def IFile getFile(File file) {
         val location = file.toURI();
         val files = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(location);

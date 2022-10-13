@@ -69,10 +69,16 @@ interface KeithLanguageClient extends KGraphLanguageClient, LanguageClient {
     @JsonNotification("simulation/started")
     def void startedSimulation(Object message)
     
-    
+    /**
+     * Send to client if verification properties were requested. Since props is a list, 
+     * a second dummy argument is needed to guarantee that the type is interpreted correctly.
+     */
     @JsonNotification("verification/properties")
     def void sendVerificationProperties(Object props, String dummy)   
         
+    /**
+     * Send to client if verification properties are updated due to running the model checker.
+     */
     @JsonNotification("verification/updatePropertyStatus")
     def void sendPropertyStatus(Object id, Object status, Object counterexampleUri)
 }

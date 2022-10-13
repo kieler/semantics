@@ -14,34 +14,34 @@ package de.cau.cs.kieler.verification
 
 import com.google.inject.Inject
 import com.google.inject.Injector
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.CompilationSystem
 import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.verification.VerificationProperty
+import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.events.ISimulationListener
+import de.cau.cs.kieler.simulation.events.SimulationControlEvent
+import de.cau.cs.kieler.simulation.events.SimulationEvent
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
+import de.cau.cs.kieler.simulation.trace.TraceFileUtil
 import de.cau.cs.kieler.verification.extensions.VerificationContextExtensions
+import java.io.File
 import java.util.ArrayList
 import java.util.List
+import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.lsp4j.jsonrpc.validation.NonNull
 import org.eclipse.xtext.resource.XtextResourceSet
-import java.io.File
-import org.eclipse.core.resources.ResourcesPlugin
-import org.eclipse.core.resources.IFile
-import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
-import de.cau.cs.kieler.simulation.events.ISimulationListener
-import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.events.SimulationControlEvent
-import de.cau.cs.kieler.simulation.trace.TraceFileUtil
-import de.cau.cs.kieler.simulation.ide.CentralSimulation
-import java.util.Observable
-import de.cau.cs.kieler.core.properties.IProperty
 
 /**
- * @author jep
+ * The logic for verifying models. Can be used for the Eclipse environment as well as for VS Code.
+ * 
+ * @author aas, jep
  * 
  */
 class VerificationLogic {
@@ -49,16 +49,25 @@ class VerificationLogic {
     @Inject
     Injector injector
 
-    private static val MODEL_CLASS_TO_PROPERTY_ANALYZER = #{typeof(SCCharts) ->
-        "de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer"}
     public var CompilationContext verificationCompileContext
-    private static var CompilationContext propertyAnalyzerContext
-    private var String selectedSystemId = "de.cau.cs.kieler.sccharts.verification.nuxmv"
+
+    static val MODEL_CLASS_TO_PROPERTY_ANALYZER = #{typeof(SCCharts) ->
+        "de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer"}
+    static var CompilationContext propertyAnalyzerContext
+
+    var String selectedSystemId = "de.cau.cs.kieler.sccharts.verification.nuxmv"
 
     def setSystemId(String id) {
         selectedSystemId = id
     }
 
+    /**
+     * Collects the verification properties of the {@code currentModel}.
+     * 
+     * @param currentModel The model for which the properties should be collected.
+     * @return List containing the verification properties of the model. If an exception occurs or the model
+     * is invalid, the list is empty.
+     */
     def List<VerificationProperty> reloadPropertiesFromModel(Object currentModel) {
         if (currentModel === null) {
             return new ArrayList()
@@ -71,12 +80,14 @@ class VerificationLogic {
                     getVerificationProperties
                 return properties
             } catch (Exception e) {
-                // e.showInDialog
                 return new ArrayList()
             }
         }
     }
 
+    /**
+     * Creates context for analyzing the properties and compiles.
+     */
     def CompilationContext runPropertyAnalyzer(String processorId, EObject model) {
         val compilationSystem = CompilationSystem.createCompilationSystem(processorId, #[processorId])
         val context = Compile.createCompilationContext(compilationSystem, model)
@@ -132,13 +143,6 @@ class VerificationLogic {
         // Start new verification
         prepareVerification(model, modelFile, verificationProps, verificationAssumptions)
     }
-    
-    
-    public static val IProperty<Boolean> USE_TEMPORARY_PROJECT = 
-        new de.cau.cs.kieler.core.properties.Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.use", true)
-        
-    public static val IProperty<Boolean> USE_GENERATED_FOLDER = 
-        new de.cau.cs.kieler.core.properties.Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.generated.use", true)
 
     private def void prepareVerification(Object model, File modelFile,
         List<VerificationProperty> verificationProperties, List<VerificationAssumption> verificationAssumptions) {
@@ -185,6 +189,9 @@ class VerificationLogic {
         }
     }
 
+    /**
+     * Gets the file for the given model.
+     */
     private def File getFile(EObject model) {
         val eUri = model.eResource.getURI();
         if (eUri.isPlatformResource()) {
@@ -202,6 +209,9 @@ class VerificationLogic {
         return context?.originalModel as EObject
     }
 
+    /**
+     * Starts the simulation of the counterexample of the given property.
+     */
     def void runCounterexample(VerificationProperty property, Object diagramModel) {
         if (property !== null && property.status == VerificationPropertyStatus.FAILED &&
             property.counterexampleFile !== null) {
@@ -228,10 +238,9 @@ class VerificationLogic {
                     }
 
                 }
-                
+
                 CentralSimulation.addListener(addCounterexampleSimulationListener)
                 CentralSimulation.compileAndStartSimulation(simulationSystemId, diagramModel)
-
 
             } catch (Exception e) {
 //                e.showInDialog

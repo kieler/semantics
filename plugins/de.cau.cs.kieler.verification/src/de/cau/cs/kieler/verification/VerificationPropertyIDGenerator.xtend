@@ -26,12 +26,12 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class VerificationPropertyIDGenerator {
     
     /**
-     * Internal map to remember the ID for all {@link KGraphElement}s for that IDs already have been generated.
+     * Internal map to remember the ID for all {@link VerificationProperty}s for that IDs already have been generated.
      */
     Map<VerificationProperty, String> elementToIdMap
     
     /**
-     * Map to remember the {@link KGraphElement} for all IDs for that IDs already have been generated.
+     * Map to remember the {@link VerificationProperty} for all IDs for that IDs already have been generated.
      */
     @Accessors(PUBLIC_GETTER)
     Map<String, VerificationProperty> idToElementMap
@@ -49,9 +49,9 @@ class VerificationPropertyIDGenerator {
     }
     
     /**
-     * Generates a unique ID for any {@link KGraphElement}. Returns the same ID for the element if called a second time.
+     * Generates a unique ID for any {@link VerificationProperty}. Returns the same ID for the element if called a second time.
      * 
-     * @param element The graph element to generate the id for.
+     * @param property The verification property to generate the id for.
      * @return The id string or empty string if the element is null
      */
     def String getId(VerificationProperty property) {

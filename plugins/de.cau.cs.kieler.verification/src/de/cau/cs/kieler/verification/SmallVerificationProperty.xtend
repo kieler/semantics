@@ -13,17 +13,19 @@
 package de.cau.cs.kieler.verification
 
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.verification.VerificationPropertyStatus
 
 /**
+ * A reduced version of VerifcationProperty. It is used to send properties to the client.
+ * 
  * @author jep
  * 
  */
 class SmallVerificationProperty {
-    @Accessors private String name = ""
-    @Accessors private String formula = ""
-    @Accessors private String id = ""
-    @Accessors private String counterexampleFileUri 
+    
+    @Accessors String name = ""
+    @Accessors String formula = ""
+    @Accessors String id = ""
+    @Accessors String counterexampleUri 
     @Accessors VerificationPropertyStatus status = VerificationPropertyStatus.PENDING
 
     new(String name, String formula, String id) {

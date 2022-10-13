@@ -19,17 +19,17 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  */
 class VerificationProperty {
-    @Accessors private String name = ""
-    @Accessors private String formula = ""
-    @Accessors private VerificationPropertyType type = VerificationPropertyType.INVARIANT
-    @Accessors private String id = ""
+    @Accessors String name = ""
+    @Accessors String formula = ""
+    @Accessors VerificationPropertyType type = VerificationPropertyType.INVARIANT
+    @Accessors String id = ""
     @Accessors VerificationPropertyStatus status = VerificationPropertyStatus.PENDING
     
     /**
      * Description which task is currently performed for verification of this property.
      * This values is only of interest when the status is RUNNING.
      */
-    @Accessors private String runningTaskDescription = ""
+    @Accessors String runningTaskDescription = ""
     
     /**
      * Pointer to a ktrace file with the counterexample.
