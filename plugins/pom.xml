@@ -55,6 +55,7 @@
     <module>de.cau.cs.kieler.simulation.ide</module>
     <module>de.cau.cs.kieler.simulation</module>
     <module>de.cau.cs.kieler.verification</module>
+    <module>de.cau.cs.kieler.verification.ide</module>
     <module>de.cau.cs.kieler.verification.ui</module>
   </modules>
 
