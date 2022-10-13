@@ -14,19 +14,11 @@ package de.cau.cs.kieler.verification
 
 import com.google.inject.Inject
 import com.google.inject.Injector
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.CompilationSystem
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.events.ISimulationListener
-import de.cau.cs.kieler.simulation.events.SimulationControlEvent
-import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.ide.CentralSimulation
-import de.cau.cs.kieler.simulation.trace.TraceFileUtil
 import de.cau.cs.kieler.verification.extensions.VerificationContextExtensions
 import java.io.File
 import java.util.ArrayList
@@ -209,43 +201,5 @@ class VerificationLogic {
         return context?.originalModel as EObject
     }
 
-    /**
-     * Starts the simulation of the counterexample of the given property.
-     */
-    def void runCounterexample(VerificationProperty property, Object diagramModel) {
-        if (property !== null && property.status == VerificationPropertyStatus.FAILED &&
-            property.counterexampleFile !== null) {
-            try {
-                // Start a simulation, and when the simulation is started, load the trace from the counterexample
-                val simulationSystemId = "de.cau.cs.kieler.sccharts.simulation.tts.netlist.c"
-                val addCounterexampleSimulationListener = new ISimulationListener() {
-
-                    override update(SimulationContext ctx, SimulationEvent e) {
-                        if (e instanceof SimulationControlEvent) {
-                            if (e.operation == SimulationControlEvent.SimulationOperation.START) {
-                                val counterexampleLocation = property.counterexampleFile.path
-                                val traceFile = TraceFileUtil.loadTraceFile(new File(counterexampleLocation))
-                                CentralSimulation.currentSimulation.setTrace(traceFile.traces.head, true, true)
-                                // The listener did what it should and must be removed now.
-                                // Otherwise it will add the counterexample to following simulations as well.
-                                CentralSimulation.addListener(this)
-                            }
-                        }
-                    }
-
-                    override getName() {
-                        return "Model Checking View"
-                    }
-
-                }
-
-                CentralSimulation.addListener(addCounterexampleSimulationListener)
-                CentralSimulation.compileAndStartSimulation(simulationSystemId, diagramModel)
-
-            } catch (Exception e) {
-//                e.showInDialog
-            }
-        }
-    }
 
 }
