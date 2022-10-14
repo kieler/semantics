@@ -20,11 +20,6 @@ Copyright 2014 by Kiel University, Department of Computer Science, Real-Time and
    </configIni>
 
    <launcherArgs>
-      <programArgs>--launcher.XXPermSize
-128m
---launcher.XXMaxPermSize
-256m
-      </programArgs>
       <programArgsMac>-showsplash
 org.eclipse.platform
 --launcher.defaultAction
@@ -33,9 +28,7 @@ openFile
       <vmArgs>-Xss4m
 -Xms512m
 -Xmn256m
--Xmx1024m 
--XX:PermSize=128m
--XX:MaxPermSize=256m
+-Xmx1024m
 --add-modules=ALL-SYSTEM
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread
