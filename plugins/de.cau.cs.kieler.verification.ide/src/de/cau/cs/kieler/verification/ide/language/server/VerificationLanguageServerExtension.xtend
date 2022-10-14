@@ -90,7 +90,7 @@ class VerificationLanguageServerExtension implements ILanguageServerExtension, V
                 smallProps.add(smallProp)
             }
             // send props to client
-            client.sendVerificationProperties(smallProps, "")
+            client.sendVerificationProperties(new VerificationPropertiesMessage(smallProps))
         }
     }
 
