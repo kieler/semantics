@@ -3,13 +3,14 @@
  * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2022 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
+ 
 package de.cau.cs.kieler.verification.ide.language.server
 
 import com.google.inject.Inject
@@ -52,6 +53,7 @@ class VerificationLanguageServerExtension implements ILanguageServerExtension, V
      * Notifications are preferred, since they allow more asynchronity.
      */
     protected KeithLanguageClient client
+    
     protected extension ILanguageServerAccess languageServerAccess
 
     /** stores the verification properties for a file */

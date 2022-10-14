@@ -65,6 +65,7 @@ import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.ISimulationListener
 import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.trace.TraceFileUtil
+import de.cau.cs.kieler.verification.VerificationContext
 
 /** 
  * @author aas
@@ -298,7 +299,10 @@ Example commands:
         val run = new Action("Start Verification", IAction.AS_PUSH_BUTTON) {
             override run() {
                 val verificationProps = selectedProperties
-                verLogic.prepareVerification(verificationProps)
+                val verificationContext = verLogic.prepareVerification(verificationProps)
+                if (verificationContext !== null) {
+                    addOptions(verificationContext)
+                }
                 addUpdater(verificationProps)
                 verLogic.startVerification
             }
@@ -492,14 +496,20 @@ Example commands:
             return
         }
         val verificationProps = selectedProperties
-        verLogic.prepareVerification(diagramModel as EObject, verificationProps)
+        val verificationContext = verLogic.prepareVerification(diagramModel as EObject, verificationProps)
+        if (verificationContext !== null) {
+            addOptions(verificationContext)
+        }
         addUpdater(verificationProps)
         verLogic.startVerification
     }
 
     private def void toggleVerificationStartStop() {
         val verificationProps = selectedProperties
-        verLogic.prepareVerification(verificationProps)
+        val verificationContext = verLogic.prepareVerification(verificationProps)
+        if (verificationContext !== null) {
+            addOptions(verificationContext)
+        }
         addUpdater(verificationProps)
         verLogic.startVerification
     }
@@ -558,6 +568,27 @@ Example commands:
         val location = file.toURI();
         val files = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(location);
         return files.get(0)
+    }
+    
+    private def addOptions(VerificationContext verificationContext) {
+        // Add general options
+        verificationContext.createCounterexamples = getBooleanOption(CREATE_COUNTEREXAMPLES_PREF_STORE_ID, true)
+        verificationContext.createCounterexamplesWithOutputs = getBooleanOption(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID, true)
+        
+        // Add SMV options
+        verificationContext.smvUseIVAR = getBooleanOption(SMV_USE_IVAR_PREF_STORE_ID, false)
+        verificationContext.smvIgnoreRangeAssumptions = getBooleanOption(SMV_IGNORE_RANGE_ASSUMPTIONS, false)
+        
+        val customSmvInvarCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID).split("\n").toList
+        val customSmvLtlCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_LTL_PREF_STORE_ID).split("\n").toList
+        val customSmvCtlCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_CTL_PREF_STORE_ID).split("\n").toList
+        verificationContext.customInteractiveSmvInvarCommands = customSmvInvarCommandsList
+        verificationContext.customInteractiveSmvLtlCommands = customSmvLtlCommandsList
+        verificationContext.customInteractiveSmvCtlCommands = customSmvCtlCommandsList
+        
+        // Add SPIN options
+        val customSpinCommands = getCustomCommands(CUSTOM_SPIN_COMMANDS_PREF_STORE_ID).split("\n").toList
+        verificationContext.customSpinCommands = customSpinCommands
     }
     
         /**

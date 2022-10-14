@@ -3,7 +3,7 @@
  * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2022 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -112,19 +112,19 @@ class VerificationLogic {
         return injector.getInstance(XtextResourceSet);
     }
 
-    def void prepareVerification(List<VerificationProperty> verificationProps) {
+    def VerificationContext prepareVerification(List<VerificationProperty> verificationProps) {
         if (propertyAnalyzerContext === null) {
-            return
+            return null
         }
-        prepareVerification(propertyAnalyzerContext.originalModel, verificationProps)
+        return prepareVerification(propertyAnalyzerContext.originalModel, verificationProps)
     }
 
-    def void prepareVerification(Object model, List<VerificationProperty> verificationProps) {
+    def VerificationContext prepareVerification(Object model, List<VerificationProperty> verificationProps) {
         if (verificationProps === null) {
-            return
+            return null
         }
         if (model === null) {
-            return
+            return null
         }
         val verificationAssumptions = VerificationContextExtensions.getVerificationContext(propertyAnalyzerContext).
             getVerificationAssumptions
@@ -132,10 +132,10 @@ class VerificationLogic {
         val modelFile = getFile(modelWithVerificationProperties)
 
         // Start new verification
-        prepareVerification(model, modelFile, verificationProps, verificationAssumptions)
+        return prepareVerification(model, modelFile, verificationProps, verificationAssumptions)
     }
 
-    private def void prepareVerification(Object model, File modelFile,
+    private def VerificationContext prepareVerification(Object model, File modelFile,
         List<VerificationProperty> verificationProperties, List<VerificationAssumption> verificationAssumptions) {
         // Stop last verification if not done yet
         stopVerification()
@@ -147,26 +147,7 @@ class VerificationLogic {
         verificationContext.verificationProperties = verificationProperties
         verificationContext.verificationAssumptions = verificationAssumptions
         verificationContext.verificationModelFile = modelFile
-
-    // TODO: save/get the options without IPreferenceStore
-    // Add general options
-//        verificationContext.createCounterexamples = getBooleanOption(CREATE_COUNTEREXAMPLES_PREF_STORE_ID, true)
-//        verificationContext.createCounterexamplesWithOutputs = getBooleanOption(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID, true)
-//        
-//        // Add SMV options
-//        verificationContext.smvUseIVAR = getBooleanOption(SMV_USE_IVAR_PREF_STORE_ID, false)
-//        verificationContext.smvIgnoreRangeAssumptions = getBooleanOption(SMV_IGNORE_RANGE_ASSUMPTIONS, false)
-//        
-//        val customSmvInvarCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID).split("\n").toList
-//        val customSmvLtlCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_LTL_PREF_STORE_ID).split("\n").toList
-//        val customSmvCtlCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_CTL_PREF_STORE_ID).split("\n").toList
-//        verificationContext.customInteractiveSmvInvarCommands = customSmvInvarCommandsList
-//        verificationContext.customInteractiveSmvLtlCommands = customSmvLtlCommandsList
-//        verificationContext.customInteractiveSmvCtlCommands = customSmvCtlCommandsList
-//        
-//        // Add SPIN options
-//        val customSpinCommands = getCustomCommands(CUSTOM_SPIN_COMMANDS_PREF_STORE_ID).split("\n").toList
-//        verificationContext.customSpinCommands = customSpinCommands
+        return verificationContext
     }
 
     def startVerification() {

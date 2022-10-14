@@ -3,7 +3,7 @@
  * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2022 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -15,7 +15,7 @@ package de.cau.cs.kieler.verification
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
- * A reduced version of VerifcationProperty. It is used to send properties to the client.
+ * A reduced version of VerificationProperty. It is used to send properties to the client.
  * 
  * @author jep
  * 

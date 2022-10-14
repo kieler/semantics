@@ -79,6 +79,6 @@ interface KeithLanguageClient extends KGraphLanguageClient, LanguageClient {
     /**
      * Send to client if verification properties are updated due to running the model checker.
      */
-    @JsonNotification("verification/updatePropertyStatus")
+    @JsonNotification("verification/update-property-status")
     def void sendPropertyStatus(Object id, Object status, Object counterexampleUri)
 }

@@ -28,14 +28,14 @@ interface VerificationCommandExtension {
      * Requests the verification properties that are stated in the file given by uri.
      * It is assumed that the model was compiled via a model checker before.
      */
-    @JsonNotification('loadProperties')
+    @JsonNotification('load-properties')
     def void loadProperties(String uri)
 
     /**
      * Runs the model checker for the file given by uri.
      * It is assumed that the model was compiled via a model checker & verification properties were loaded before.
      */
-    @JsonNotification('runChecker')
+    @JsonNotification('run-checker')
     def void runChecker(String uri)
 
 }
