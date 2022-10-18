@@ -20,6 +20,7 @@
    <bundle id="de.cau.cs.kieler.scg"/>
    <bundle id="de.cau.cs.kieler.scg.klighd"/>
    <bundle id="de.cau.cs.kieler.simulation.ide"/>
+   <bundle id="de.cau.cs.kieler.verification.ide"/>
 </site>
 
 
