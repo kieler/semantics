@@ -22,9 +22,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class SmallVerificationProperty {
     
-    @Accessors String name = ""
-    @Accessors String formula = ""
-    @Accessors String id = ""
+    @Accessors(PUBLIC_GETTER) String name = ""
+    @Accessors(PUBLIC_GETTER) String formula = ""
+    @Accessors(PUBLIC_GETTER) String id = ""
     @Accessors String counterexampleUri 
     @Accessors VerificationPropertyStatus status = VerificationPropertyStatus.PENDING
 

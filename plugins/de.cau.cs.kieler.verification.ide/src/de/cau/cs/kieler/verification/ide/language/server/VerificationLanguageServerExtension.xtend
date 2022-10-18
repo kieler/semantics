@@ -20,7 +20,6 @@ import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.language.server.ILanguageClientProvider
 import de.cau.cs.kieler.language.server.KeithLanguageClient
 import de.cau.cs.kieler.verification.SmallVerificationProperty
-import de.cau.cs.kieler.verification.VerificationLogic
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
@@ -32,6 +31,8 @@ import java.util.Observable
 import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
+import de.cau.cs.kieler.verification.VerificationManager
+import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
 
 /**
  * LS extension to verify models. Supports loading of verification properties and running the model checker.
@@ -46,7 +47,10 @@ class VerificationLanguageServerExtension implements ILanguageServerExtension, V
     Injector injector
 
     @Inject
-    VerificationLogic verLogic
+    VerificationManager verLogic
+    
+    @Inject
+    KiCoolLanguageServerExtension kico
 
     /**
      * The language client allows to send notifications or requests from the server to the client.
@@ -80,7 +84,7 @@ class VerificationLanguageServerExtension implements ILanguageServerExtension, V
     override loadProperties(String uri) {
         if (uri !== null) {
             // collect properties
-            val currentModel = verLogic.getModelFromUri(uri)
+            val currentModel = kico.getModelFromUri(uri)
             val props = verLogic.reloadPropertiesFromModel(currentModel)
             verificationProperties.put(uri, props)
             // create small versions of them since we do not want Files on the client
@@ -130,8 +134,6 @@ class VerificationLanguageServerExtension implements ILanguageServerExtension, V
                     client.sendPropertyStatus(property.id, property.status, property.counterexampleFile.path)
                 }
                 client.sendPropertyStatus(property.id, property.status, "")
-            } else if (arg instanceof CompilationFinished) {
-                verLogic.verificationCompileContext = null
             }
         ]
         // Update task description of the properties 
@@ -140,5 +142,6 @@ class VerificationLanguageServerExtension implements ILanguageServerExtension, V
             property.status = VerificationPropertyStatus.RUNNING
         }
     }
+
 
 }

@@ -12,9 +12,9 @@
  */
 package de.cau.cs.kieler.verification
 
-import java.util.HashMap
-import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
+import com.google.common.collect.HashBiMap
+import com.google.common.collect.BiMap
 
 /**
  * Class for generating unique IDs for any {@link VerificationProperty}. Use a single instance of this and call getId() for all
@@ -26,15 +26,10 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class VerificationPropertyIDGenerator {
     
     /**
-     * Internal map to remember the ID for all {@link VerificationProperty}s for that IDs already have been generated.
-     */
-    Map<VerificationProperty, String> elementToIdMap
-    
-    /**
      * Map to remember the {@link VerificationProperty} for all IDs for that IDs already have been generated.
      */
     @Accessors(PUBLIC_GETTER)
-    Map<String, VerificationProperty> idToElementMap
+    final BiMap<String, VerificationProperty> idToElementMap = HashBiMap.create()
     
     /**
      * Properties are prefixed with this in their ID.
@@ -42,11 +37,6 @@ class VerificationPropertyIDGenerator {
     static final String PREFIX = "Prop"
     
     static int counter = 0
-    
-    new() {
-        elementToIdMap = new HashMap
-        idToElementMap = new HashMap
-    }
     
     /**
      * Generates a unique ID for any {@link VerificationProperty}. Returns the same ID for the element if called a second time.
@@ -60,13 +50,12 @@ class VerificationPropertyIDGenerator {
         }
         
         // if the ID was already calculated, use that
-        if (elementToIdMap.get(property) !== null) {
-            return elementToIdMap.get(property)
+        if (idToElementMap.containsValue(property)) {
+            return idToElementMap.inverse().get(property)
         }
         
         var String id = PREFIX  + property.hashCode + counter++
 
-        elementToIdMap.put(property, id)
         idToElementMap.put(id, property)
         return id
     }

@@ -17,7 +17,14 @@ import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
-import de.cau.cs.kieler.verification.VerificationLogic
+import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.events.ISimulationListener
+import de.cau.cs.kieler.simulation.events.SimulationControlEvent
+import de.cau.cs.kieler.simulation.events.SimulationEvent
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
+import de.cau.cs.kieler.simulation.trace.TraceFileUtil
+import de.cau.cs.kieler.verification.VerificationContext
+import de.cau.cs.kieler.verification.VerificationManager
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
@@ -59,20 +66,13 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
-import de.cau.cs.kieler.simulation.ide.CentralSimulation
-import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.events.SimulationControlEvent
-import de.cau.cs.kieler.simulation.events.ISimulationListener
-import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.trace.TraceFileUtil
-import de.cau.cs.kieler.verification.VerificationContext
 
 /** 
  * @author aas
  */
 class VerificationView extends ViewPart {
 
-    VerificationLogic verLogic = new VerificationLogic()
+    VerificationManager verManager = new VerificationManager()
 
     /**
      * The single instance
@@ -286,7 +286,7 @@ Example commands:
                 }
                 comboViewer.addSelectionChangedListener [ SelectionChangedEvent e |
                     val selectedSystem = e.structuredSelection.firstElement as System
-                    verLogic.systemId = selectedSystem.id
+                    verManager.systemId = selectedSystem.id
                 ]
                 val modelCheckingSystems = MODEL_CHECKER_SYSTEM_IDS.map[KiCoolRegistration.getSystemById(it)]
                 comboViewer.setContentProvider(ArrayContentProvider.instance);
@@ -299,19 +299,19 @@ Example commands:
         val run = new Action("Start Verification", IAction.AS_PUSH_BUTTON) {
             override run() {
                 val verificationProps = selectedProperties
-                val verificationContext = verLogic.prepareVerification(verificationProps)
+                val verificationContext = verManager.prepareVerification(verificationProps)
                 if (verificationContext !== null) {
                     addOptions(verificationContext)
                 }
                 addUpdater(verificationProps)
-                verLogic.startVerification
+                verManager.startVerification
             }
         }
         run.imageDescriptor = PLAY_ICON
 
         val stop = new Action("Stop Verification", IAction.AS_PUSH_BUTTON) {
             override run() {
-                if (verLogic.verificationCompileContext !== null) {
+                if (verManager.verificationCompileContext !== null) {
                     if(viewer.input !== null) {
                         val properties = viewer.input as List<VerificationProperty>
                         for(property : properties) {
@@ -321,7 +321,7 @@ Example commands:
                             }
                         }
                     }
-                    verLogic.stopVerification
+                    verManager.stopVerification
                 }
             }
         }
@@ -330,7 +330,7 @@ Example commands:
         val refresh = new Action("Reload Properties", IAction.AS_PUSH_BUTTON) {
             override run() {
                 val currentModel = getCurrentDiagramModel
-                val properties = verLogic.reloadPropertiesFromModel(currentModel)
+                val properties = verManager.reloadPropertiesFromModel(currentModel)
                 setVerificationPropertiesInUi(properties)
             }
         }
@@ -496,22 +496,22 @@ Example commands:
             return
         }
         val verificationProps = selectedProperties
-        val verificationContext = verLogic.prepareVerification(diagramModel as EObject, verificationProps)
+        val verificationContext = verManager.prepareVerification(diagramModel as EObject, verificationProps)
         if (verificationContext !== null) {
             addOptions(verificationContext)
         }
         addUpdater(verificationProps)
-        verLogic.startVerification
+        verManager.startVerification
     }
 
     private def void toggleVerificationStartStop() {
         val verificationProps = selectedProperties
-        val verificationContext = verLogic.prepareVerification(verificationProps)
+        val verificationContext = verManager.prepareVerification(verificationProps)
         if (verificationContext !== null) {
             addOptions(verificationContext)
         }
         addUpdater(verificationProps)
-        verLogic.startVerification
+        verManager.startVerification
     }
 
     private def void setBooleanOption(String prefStoreId, boolean value) {
@@ -545,12 +545,10 @@ Example commands:
 
     private def addUpdater(List<VerificationProperty> verificationProperties) {
         // Add observer for changed properties
-        verLogic.verificationCompileContext.addObserver [ Observable o, Object arg |
+        verManager.verificationCompileContext.addObserver [ Observable o, Object arg |
             if (arg instanceof VerificationPropertyChanged) {
                 val property = arg.changedProperty
                 Display.getDefault().asyncExec([viewer.update(property, null)])
-            } else if (arg instanceof CompilationFinished) {
-                 verLogic.verificationCompileContext = null
             }
         ]
         // Update task description of the properties 

@@ -25,9 +25,10 @@ import java.util.ArrayList
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.ResourcesPlugin
-import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.xtend.lib.annotations.Accessors
+import java.util.Observable
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 
 /**
  * The logic for verifying models. Can be used for the Eclipse environment as well as for VS Code.
@@ -35,17 +36,18 @@ import org.eclipse.xtext.resource.XtextResourceSet
  * @author aas, jep
  * 
  */
-class VerificationLogic {
+class VerificationManager {
 
     @Inject
     Injector injector
 
-    public var CompilationContext verificationCompileContext
+    @Accessors(PUBLIC_GETTER) var CompilationContext verificationCompileContext
 
     static val MODEL_CLASS_TO_PROPERTY_ANALYZER = #{typeof(SCCharts) ->
         "de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer"}
-    static var CompilationContext propertyAnalyzerContext
-
+    
+    var CompilationContext propertyAnalyzerContext
+    
     var String selectedSystemId = "de.cau.cs.kieler.sccharts.verification.nuxmv"
 
     def setSystemId(String id) {
@@ -71,6 +73,7 @@ class VerificationLogic {
                     getVerificationProperties
                 return properties
             } catch (Exception e) {
+                // TODO improve error reporting
                 return new ArrayList()
             }
         }
@@ -89,27 +92,6 @@ class VerificationLogic {
             throw exception
         }
         return context
-    }
-
-    /**
-     * Gets the model for resource specified by given an uri String
-     * 
-     * @param uri uri String of model resource
-     * @return model of specified resource
-     */
-    def Object getModelFromUri(String uri) {
-        val uriObject = URI.createURI(uri)
-        val resource = uriObject.xtextResourceSet.getResource(uriObject, true)
-
-        return resource.getContents().head
-    }
-
-    /**
-     * @param uri URI of file without file://
-     * @return the correct XtextResourceSet for the given uri based in its file extension.
-     */
-    def XtextResourceSet getXtextResourceSet(URI uri) {
-        return injector.getInstance(XtextResourceSet);
     }
 
     def VerificationContext prepareVerification(List<VerificationProperty> verificationProps) {
@@ -147,6 +129,12 @@ class VerificationLogic {
         verificationContext.verificationProperties = verificationProperties
         verificationContext.verificationAssumptions = verificationAssumptions
         verificationContext.verificationModelFile = modelFile
+        
+        verificationCompileContext.addObserver [ Observable o, Object arg |
+            if (arg instanceof CompilationFinished) {
+                 verificationCompileContext = null
+            }
+        ]
         return verificationContext
     }
 

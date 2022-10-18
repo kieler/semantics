@@ -28,5 +28,6 @@ Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.elk.core;bundle-version="0.7.0",
  com.google.gson;bundle-version="2.8.6",
  de.cau.cs.kieler.kicool;bundle-version="1.3.0",
- de.cau.cs.kieler.sccharts;bundle-version="1.3.0"
+ de.cau.cs.kieler.sccharts;bundle-version="1.3.0",
+ de.cau.cs.kieler.kicool.ide;bundle-version="1.3.0"
 
