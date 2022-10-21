@@ -23,7 +23,6 @@ import de.cau.cs.kieler.klighd.lsp.interactive.ConstraintProperty
 import de.cau.cs.kieler.klighd.lsp.interactive.IConstraintSerializer
 import de.cau.cs.kieler.sccharts.impl.StateImpl
 import java.io.ByteArrayOutputStream
-import java.util.HashMap
 import java.util.List
 import java.util.Map
 import org.eclipse.elk.graph.properties.IProperty
