@@ -470,7 +470,9 @@ class Reference extends SCChartsProcessor implements Traceable {
                 }
             }
         }
-        val referencesDecls = state.allScopes.map[declarations.filter(ReferenceDeclaration).filter[reference !== null].iterator].flatten.toList
+        val referencesDecls = state.allScopes.map[
+            declarations.filter(ReferenceDeclaration).filter[reference !== null].iterator
+        ].flatten.toList
         for (refDecl : referencesDecls) {
             if (refDecl.reference.isGenericParamter) {
                 val typeExpr = replacements.typeReplacements.get((refDecl.reference as ValuedObject).name)
