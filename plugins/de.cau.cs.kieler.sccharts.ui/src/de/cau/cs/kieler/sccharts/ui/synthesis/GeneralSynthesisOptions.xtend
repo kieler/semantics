@@ -75,9 +75,18 @@ final class GeneralSynthesisOptions {
     public static final SynthesisOption SHOW_INHERITANCE = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Inheritance Preview", true).setCategory(OO)
     public static final SynthesisOption SHOW_INHERITANCE_EDGES = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Inheritance Hierarchy", false).setCategory(OO)
     public static final SynthesisOption SHOW_AGGREGATION_EDGES = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Aggregation", false).setCategory(OO)
-    public static final SynthesisOption SHOW_METHOD_BODY = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Method Implementation", true).setCategory(OO)
+//    public static final SynthesisOption SHOW_METHOD_BODY = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Method Implementation", true).setCategory(OO)
+    public static final SynthesisOption SHOW_METHODS = SynthesisOption.createChoiceOption(GeneralSynthesisOptions, "Methods", MethodDisplayOptions.OPTIONS, MethodDisplayOptions.REGIONS).setCategory(OO)
     /** 
      * inherited declarations and regions synthesis option 
      */
     public static final SynthesisOption SHOW_CAUSAL_DATAFLOW = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Causal Dataflow",false).setCategory(DEBUGGING)
+}
+
+final class MethodDisplayOptions {
+    public static val SIGNATURES = "Signatures"
+    public static val PREVIEW = "Code Preview"
+    public static val REGIONS = "SCGraph"
+    
+    public static val OPTIONS = #[SIGNATURES,PREVIEW,REGIONS]
 }

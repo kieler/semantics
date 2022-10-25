@@ -180,7 +180,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             val newName = if(region.label.nullOrEmpty) "" else region.serializeHR.toString
             val refRegion = region.reference.scope !== null ? (region.reference.scope as Region).serializeHR : "UnresolvedReference"
             val refSCC = region.reference.scope !== null ? (region.reference.scope as Region).eContainer.serializeHR : "UnresolvedReference"
-            var label = refSCC + "::" + refRegion
+            var label = refSCC + "." + refRegion
             if (!newName.equals(refRegion)) {
                 label = newName + "@" + label
             }

@@ -258,10 +258,23 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             
             // Add declarations
             val declarations = new ArrayList<Declaration>(state.declarations)
-            if (SHOW_INHERITANCE.booleanValue) declarations.addAll(0, state.allVisibleInheritedDeclarations.toList)
-            for (declaration : declarations.filter[!(it instanceof MethodImplementationDeclaration) || !SHOW_METHOD_BODY.booleanValue]) {
+            if (SHOW_INHERITANCE.booleanValue) declarations.addAll(0, state.getAllVisibleInheritedDeclarationsDepthFirst.toList)
+            for (declaration : declarations) {
                 if (declaration instanceof ClassDeclaration) {
                     node.addStructDeclarations(declaration, 0)
+                } else if (declaration instanceof MethodImplementationDeclaration) {
+                    if (SHOW_METHODS.objectValue !== MethodDisplayOptions.REGIONS) {
+                        node.addDeclarationLabel(
+                            declaration.serializeMethodHighlighted(true, SHOW_METHODS.objectValue === MethodDisplayOptions.PREVIEW)
+                        ) => [
+                            setProperty(TracingVisualizationProperties.TRACING_NODE, true)
+                            associateWith(declaration)
+                            eAllContents.filter(KRendering).toList.forEach[
+                                associateWith(declaration)
+                                if (it instanceof KText) configureTextLOD(declaration)
+                            ]
+                        ]
+                    }
                 } else {
                     node.addDeclarationLabel(declaration.serializeHighlighted(true)) => [
                         setProperty(TracingVisualizationProperties.TRACING_NODE, true)
@@ -315,7 +328,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
 
         // Transform methods
-        if (SHOW_METHOD_BODY.booleanValue) {
+        if (SHOW_METHODS.objectValue === MethodDisplayOptions.REGIONS) {
             for (method : state.declarations.filter(MethodImplementationDeclaration)) {
                 node.children += method.transform
             }
@@ -382,7 +395,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 node.addStructDeclarations(declaration, indent + 1)
             } else {
                 val serialized = if (declaration instanceof MethodDeclaration) {
-                    declaration.serializeMethodHighlighted(true, SHOW_METHOD_BODY.booleanValue)
+                    declaration.serializeMethodHighlighted(true, SHOW_METHODS.objectValue !== MethodDisplayOptions.SIGNATURES)
                 } else {
                     declaration.serializeHighlighted(true)
                 }

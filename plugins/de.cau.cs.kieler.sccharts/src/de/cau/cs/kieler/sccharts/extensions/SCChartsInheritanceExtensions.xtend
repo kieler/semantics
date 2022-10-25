@@ -75,6 +75,38 @@ class SCChartsInheritanceExtensions {
     }
     
     /**
+     * Returns a set of all states contained in the inheritance hierarchy of the given state in depth first order.
+     */
+    def List<State> getAllInheritedStatesDepthFirst(State state) {
+        val allBaseStates = <State>newLinkedList
+        
+        if (state !== null && !state.baseStateReferences.nullOrEmpty) {
+            val work = newLinkedList
+            work.addAll(state.baseStates.toSet.filter[it != state].map[new Pair(it, null)])
+            
+            while (!work.empty) {
+                val entry = work.pop
+                val s = entry.key
+                val parent = entry.value
+                if (allBaseStates.contains(parent)) {
+                    allBaseStates.add(allBaseStates.indexOf(parent), s)
+                } else {
+                    allBaseStates += s
+                }
+                for (base : s.baseStateReferences.reverseView.map[target].filterNull) { // Depth first
+                    if (base != state 
+                        && !work.exists[it.key == base]
+                        && !allBaseStates.contains(base)
+                    ) {
+                        work.push(new Pair(base, s))
+                    }
+                }
+            }
+        }
+        return allBaseStates
+    }
+    
+    /**
      * Returns a list of all base states references contained in the inheritance hierarchy acending depth.
      */
     def List<BaseStateReference> getAllInheritedStateReferencesHierachically(State state) {
@@ -113,6 +145,9 @@ class SCChartsInheritanceExtensions {
      */
     def Iterable<Declaration> getAllVisibleInheritedDeclarations(State state) {
         return state.getAllInheritedStates.map[it.declarations].flatten.filter[!it.isPrivate]
+    }
+    def Iterable<Declaration> getAllVisibleInheritedDeclarationsDepthFirst(State state) {
+        return state.allInheritedStatesDepthFirst.map[it.declarations].flatten.filter[!it.isPrivate]
     }
     
     /**
