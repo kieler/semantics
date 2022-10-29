@@ -249,6 +249,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }
         } else if (declaration instanceof ReferenceDeclaration) {
             if (declaration.extern.nullOrEmpty) {
+                if (declaration.isInput) {
+                    components.addKeyword("input")
+                }
                 components.addKeyword("ref")
                 
                 var containerPrefix = ""
