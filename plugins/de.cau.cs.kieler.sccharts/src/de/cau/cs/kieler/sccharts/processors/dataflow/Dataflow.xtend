@@ -139,28 +139,34 @@ class Dataflow extends SCChartsProcessor {
         // Create local version of the interface of the referenced states.
         // Additionally, store the mapping information, so that later references can be corrected.
         val referenceReplacements = <Pair<ValuedObject, ValuedObject>, ValuedObject> newHashMap
-        for (rdInstance : rdInstances.indexed) {
+        for (kv : rdInstances.indexed) {
+            val rdInstance = kv.value
+            val rdInstanceIdx = kv.key
+            val refDecl = rdInstance.referenceDeclaration
             val newRefCfRegion = 
-                newMainState.createControlflowRegion(GENERATED_PREFIX + "refRegion_" + rdInstance.key).
-                trace(rdEquationMappingForTracing.get(rdInstance.value))
-            val newRefState = newRefCfRegion.createState(GENERATED_PREFIX + "" + rdInstance.key) => [ 
+                newMainState.createControlflowRegion(GENERATED_PREFIX + "refRegion_" + rdInstanceIdx).
+                trace(rdEquationMappingForTracing.get(rdInstance))
+            val newRefState = newRefCfRegion.createState(GENERATED_PREFIX + "" + rdInstanceIdx) => [ 
                 initial = true
-                reference = createScopeCall
-                trace(rdEquationMappingForTracing.get(rdInstance.value))
+                reference = createScopeCall => [
+                    parameters += refDecl.parameters.map[copy]
+                    parameters += rdInstance.parameters
+                ]
+                trace(rdEquationMappingForTracing.get(rdInstance))
             ]
             val newRefDelayState = 
-                newRefCfRegion.createState(GENERATED_PREFIX + "d" + rdInstance.key).
-                trace(rdEquationMappingForTracing.get(rdInstance.value))
+                newRefCfRegion.createState(GENERATED_PREFIX + "d" + rdInstanceIdx).
+                trace(rdEquationMappingForTracing.get(rdInstance))
             newRefState.createTransitionTo(newRefDelayState) => [ 
                 preemption = PreemptionType.TERMINATION
-                trace(rdEquationMappingForTracing.get(rdInstance.value))
+                trace(rdEquationMappingForTracing.get(rdInstance))
             ]
-            newRefDelayState.createTransitionTo(newRefState).trace(rdEquationMappingForTracing.get(rdInstance.value))
+            newRefDelayState.createTransitionTo(newRefState).trace(rdEquationMappingForTracing.get(rdInstance))
             
-            val ref = rdInstance.value.referenceDeclaration.reference
+            val ref = refDecl.reference
             newRefState.reference.target = ref as NamedObject
             newRefState.reference.genericParameters += (
-                rdInstance.value.genericParameters.nullOrEmpty ? rdInstance.value.referenceDeclaration.genericParameters :rdInstance.value.genericParameters
+                rdInstance.genericParameters.nullOrEmpty ? refDecl.genericParameters :rdInstance.genericParameters
             )?:emptyList.map[copy]
             
             val decls = newArrayList()
@@ -168,6 +174,8 @@ class Dataflow extends SCChartsProcessor {
             if (ref instanceof State) {
                 decls += ref.allInheritedDeclarations
             }
+            // FIXME only for unbound variables
+            // TODO Add validation for partial binding
             for (declaration : decls.filter(VariableDeclaration).filter[ input || output ]) {
                 val localDeclaration = createVariableDeclaration(declaration.type).trace(declaration)
                 if (declaration.type == ValueType.HOST) {
@@ -176,7 +184,7 @@ class Dataflow extends SCChartsProcessor {
                 
                 for (valuedObject : declaration.valuedObjects) {
                     val localValuedObject = createValuedObject => [
-                        name = GENERATED_PREFIX + "" + rdInstance.value.name + "_" + valuedObject.name
+                        name = GENERATED_PREFIX + "" + rdInstance.name + "_" + valuedObject.name
                         trace(valuedObject)
                     ]
                     localDeclaration.valuedObjects += localValuedObject
@@ -184,10 +192,12 @@ class Dataflow extends SCChartsProcessor {
                     newRefState.reference.parameters += createParameter => [ 
                         expression = localValuedObject.reference
                     ]
-                    referenceReplacements.put(new Pair(rdInstance.value, valuedObject), localValuedObject)
+                    referenceReplacements.put(new Pair(rdInstance, valuedObject), localValuedObject)
                 }
                 
-                rdInstance.value.getDeclarationScope.declarations += localDeclaration
+                if (!localDeclaration.valuedObjects.empty) {
+                    rdInstance.getDeclarationScope.declarations += localDeclaration
+                }
             }
         }
 

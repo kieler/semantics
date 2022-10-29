@@ -32,6 +32,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.processors.Reference
 import java.util.List
@@ -180,6 +181,15 @@ class SCChartsTypeExtensions {
             return refDecl.reference.checkForSubtypeProblem(decl.reference)
         } else if (decl instanceof GenericParameterDeclaration) {
             // TODO handle generics
+        } else if (decl instanceof ClassDeclaration) {
+            if (decl.hasAnnotation(Reference.REF_CLASS_ORIGIN)) {
+                val types = decl.getStringAnnotationValues(Reference.REF_CLASS_ORIGIN)
+                if (!types.contains(refDecl.reference.asNamedObject?.name)) {
+                    return "Cannot substitute reference of type %s by object of types %s".format(refDecl.reference.asNamedObject?.name, decl.getStringAnnotationValues(Reference.REF_CLASS_ORIGIN).join("[", ", ", "]", [it]))
+                }
+            } else {
+                return "Cannot substitute reference of type %s by native class of type %s".format(refDecl.reference.asNamedObject?.name, decl.name)
+            }
         } else {
             return "Cannot substitute reference of type %s by valued object of type %s".format(refDecl.reference.asNamedObject?.name, if (decl instanceof VariableDeclaration) decl.type.literal else decl.class.simpleName)
         }
