@@ -16,6 +16,8 @@ import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.sccharts.BaseStateReference
@@ -282,10 +284,34 @@ class SCChartsInheritanceExtensions {
                         val repl = effective.get(info.name)
                         
                         if (info.inheritanceLevel < repl.inheritanceLevel) {
-                            info.errors += "Multiple definitions of the same method (%s) in the inheritance hierachy but no overrider to solve this ambiguity (diamond problem).".format(info.name)
-                            repl.errors += "Multiple definitions of the same method (%s) in the inheritance hierachy but no overrider to solve this ambiguity (diamond problem).".format(info.name)
+                            info.errors += "Multiple definitions of the same method (%s) in the inheritance hierarchy but no overrider to solve this ambiguity (diamond problem).".format(info.name)
+                            repl.errors += "Multiple definitions of the same method (%s) in the inheritance hierarchy but no overrider to solve this ambiguity (diamond problem).".format(info.name)
                         } else if (!repl.decl.^override) {
-                            info.errors += "Method (%s) was redefined in the inheritance hierachy but not marked as override (keyword).".format(info.name)
+                            info.errors += "Method (%s) was redefined in the inheritance hierarchy but not marked as override (keyword).".format(info.name)
+                        } 
+                        if (repl.decl.^override) {
+                            if (method.returnType != repl.decl.returnType) {
+                                repl.errors += "Overriding methods must not declare a different return type (%s vs. %s).".format(method.returnType, repl.decl.returnType)
+                            }
+                            if (method.parameterDeclarations.size != repl.decl.parameterDeclarations.size) {
+                                repl.errors += "Overriding methods must not declare a parameter with a different length (%s vs. %s).".format(method.parameterDeclarations.size, repl.decl.parameterDeclarations.size)
+                            } else {
+                                for (i : 0..<method.parameterDeclarations.size) {
+                                    val oP = method.parameterDeclarations.get(i)
+                                    val rP = repl.decl.parameterDeclarations.get(i)
+                                    if (oP.class != rP.class) {
+                                        repl.errors += "Overriding methods must not declare a parameter with a different type (index %d).".format(i)
+                                    } else if (oP instanceof VariableDeclaration && rP instanceof VariableDeclaration) {
+                                        if ((oP as VariableDeclaration).type != (rP as VariableDeclaration).type) {
+                                            repl.errors += "Overriding methods must not declare a parameter with a different type (index %d: %s vs. %s).".format(i, (oP as VariableDeclaration).type, (rP as VariableDeclaration).type)
+                                        }
+                                    } else if (oP instanceof ReferenceDeclaration && rP instanceof ReferenceDeclaration) {
+                                        if ((oP as ReferenceDeclaration).reference != (rP as ReferenceDeclaration).reference) {
+                                            repl.errors += "Overriding methods must not declare a parameter with a different type (index %d: %s vs. %s).".format(i, (oP as ReferenceDeclaration).reference, (rP as ReferenceDeclaration).reference)
+                                        }
+                                    }
+                                }
+                            }
                         }
                         info.overrider = repl.decl
                         repl.overriding = true
