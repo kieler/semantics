@@ -51,6 +51,20 @@ jobs:
           if-no-files-found: error
 
       # Archive Eclipse RCA
+      - name: Archive All Products
+        uses: actions/upload-artifact@v2
+        with:
+          name: Semantics All Products
+          path: |
+            build/de.cau.cs.kieler.semantics.product.repository/target/products/sccharts_rca_nightly_*-win32.win32.x86_64.zip
+            build/de.cau.cs.kieler.semantics.product.repository/target/products/sccharts_rca_nightly_*-win32.win32.x86_64.zip
+            build/de.cau.cs.kieler.semantics.product.repository/target/products/sccharts_rca_nightly_*-macosx.cocoa.x86_64.tar.gz
+            build/de.cau.cs.kieler.kicool.cli/target/exe/
+            build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/
+            build/de.cau.cs.kieler.language.server.cli/target/exe/
+          if-no-files-found: error
+
+      # Archive Eclipse RCA
       - name: Archive KIELER Semantics RCA Windows
         uses: actions/upload-artifact@v2
         with:
