@@ -44,6 +44,7 @@ jobs:
 
       # Archive Repository
       - name: Archive Semantics Repository Artifact
+        if: github.ref == 'refs/heads/master'
         uses: actions/upload-artifact@v2
         with:
           name: Semantics Repository Artifact
@@ -52,15 +53,17 @@ jobs:
 
       # Collect and Archive all Products
       - name: Collect All Products
+        if: github.ref == 'refs/heads/master'
         run: |
           mkdir products
-          cp -r build/de.cau.cs.kieler.semantics.product.repository/target/products/* products/
+          cp -r build/de.cau.cs.kieler.semantics.product.repository/target/products/sccharts_rca_nightly_* products/
           mkdir products/cli
           cp -r build/de.cau.cs.kieler.kicool.cli/target/exe/* products/cli
           cp -r build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/* products/cli
           mkdir products/ls
           cp -r build/de.cau.cs.kieler.language.server.cli/target/exe/* products/ls
       - name: Archive All Products
+        if: github.ref == 'refs/heads/master'
         uses: actions/upload-artifact@v2
         with:
           name: All Semantics Products
