@@ -77,11 +77,6 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
     override performTranformation(ControlflowRegion region) {
         val node = region.createNode().associateWith(region);
         
-        // default value of interactive layout for regions
-        if (!region.annotations.contains(CoreOptions.INTERACTIVE_LAYOUT)) {
-            node.setLayoutOption(CoreOptions::INTERACTIVE_LAYOUT, true)
-        }
-        
         node.configureNodeLOD(region)
 
         // Set KIdentifier for use with incremental update

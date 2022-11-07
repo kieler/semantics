@@ -31,6 +31,8 @@ import org.eclipse.lsp4j.Range
 import org.eclipse.lsp4j.TextEdit
 
 /**
+ * Serialize a constraint for an SCChart node (region or state) as a layout annotation.
+ * 
  * @author sdo
  * 
  */
@@ -72,29 +74,30 @@ class SCTXConstraintSerializer implements IConstraintSerializer {
      * is different to the value on the State.
      * If the new value on the KNode was the default value of the property 
      * then the property is set to null on the State.
-     * @param state The target sate
-     * @param kNode The source KNode of the property
-     * @param annotation The annotation that should be set
-     * @param prop Determines which IProperty should be copied
+     * 
+     * @param state The target state.
+     * @param kNode The source KNode of the property.
+     * @param annotation The annotation that should be set.
+     * @param property Determines which IProperty should be copied.
      */
-    static def <T> copyConstraintAnnotations(Annotatable state, KNode kNode, String annotation, IProperty<T> prop) {
-        val String value = "" + kNode.getProperty(prop)
+    static def <T> copyConstraintAnnotations(Annotatable state, KNode kNode, String annotation, IProperty<T> property) {
+        val String value = "" + kNode.getProperty(property)
         
-        val anns = state.getAnnotations().filter(TypedStringAnnotation)
+        val annotations = state.getAnnotations().filter(TypedStringAnnotation)
 
-        // remove old annotation if it exists
-        var TypedStringAnnotation removeA = null
-        for (ann : anns) {
-            if (ann.type.equals(annotation)) {
-                removeA = ann
+        // Remove old annotation if it exists.
+        var TypedStringAnnotation annotationToRemove = null
+        for (a : annotations) {
+            if (a.type.equals(annotation)) {
+                annotationToRemove = a
             }
         }
-        if (removeA !== null) {
-            state.annotations.remove(removeA)
+        if (annotationToRemove !== null) {
+            state.annotations.remove(annotationToRemove)
         }
         
-        // add annotation with new value if the value is not the default one
-        if (kNode.getProperty(prop) !== null && !kNode.getProperty(prop).equals(prop.^default)) {
+        // Add annotation with new value if the value is not the default one.
+        if (kNode.getProperty(property) !== null && !kNode.getProperty(property).equals(property.^default)) {
             var newA = AnnotationsFactory::eINSTANCE.createTypedStringAnnotation => [
                 it.name = "layout"
                 it.type = annotation
