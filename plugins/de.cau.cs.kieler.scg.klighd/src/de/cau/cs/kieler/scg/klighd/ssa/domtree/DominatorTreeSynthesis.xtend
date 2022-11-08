@@ -16,6 +16,7 @@ package de.cau.cs.kieler.scg.klighd.ssa.domtree
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
@@ -33,13 +34,15 @@ import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.processors.ssa.DominatorTree
+import java.util.List
 import java.util.Map
+import org.eclipse.elk.alg.mrtree.options.EdgeRoutingMode
+import org.eclipse.elk.alg.mrtree.options.MrTreeOptions
+import org.eclipse.elk.alg.mrtree.options.OrderWeighting
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.klighd.SynthesisOption
-import java.util.List
 
 class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
     
@@ -133,8 +136,11 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
         nodes.entrySet.forEach[nodes.createDTEdge(value, key, dt)]
 
         val dtDiagram = createNode
-        dtDiagram.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.mrtree")
+        dtDiagram.addLayoutParam(CoreOptions::ALGORITHM, MrTreeOptions.ALGORITHM_ID)
         dtDiagram.addLayoutParam(CoreOptions::DIRECTION, Direction.DOWN)
+        dtDiagram.addLayoutParam(MrTreeOptions::EDGE_ROUTING_MODE, EdgeRoutingMode.AvoidOverlap)
+        dtDiagram.addLayoutParam(MrTreeOptions::WEIGHTING, OrderWeighting.NONE)
+        dtDiagram.addLayoutParam(MrTreeOptions::COMPACTION, false)
         dtDiagram.children += nodes.values
 
         return dtDiagram
