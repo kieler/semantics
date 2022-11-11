@@ -58,7 +58,7 @@ class LSCreator extends AbstractLsCreator {
         constraints = injector.getInstance(LayeredInteractiveLanguageServerExtension)
         rectPack = injector.getInstance(RectpackingInteractiveLanguageServerExtension)
         mrTree = injector.getInstance(MrTreeInteractiveLanguageServerExtension)
-        iLanguageServerExtensions = newArrayList(constraints, rectPack)
+        iLanguageServerExtensions = newArrayList(constraints, rectPack, mrTree)
         for (lse : KielerServiceLoader.load(ILanguageServerContribution)) {
             iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
         }

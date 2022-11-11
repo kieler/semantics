@@ -138,8 +138,8 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
         val dtDiagram = createNode
         dtDiagram.addLayoutParam(CoreOptions::ALGORITHM, MrTreeOptions.ALGORITHM_ID)
         dtDiagram.addLayoutParam(CoreOptions::DIRECTION, Direction.DOWN)
-        dtDiagram.addLayoutParam(MrTreeOptions::EDGE_ROUTING_MODE, EdgeRoutingMode.AvoidOverlap)
-        dtDiagram.addLayoutParam(MrTreeOptions::WEIGHTING, OrderWeighting.NONE)
+        dtDiagram.addLayoutParam(MrTreeOptions::EDGE_ROUTING_MODE, EdgeRoutingMode.AVOID_OVERLAP)
+        dtDiagram.addLayoutParam(MrTreeOptions::WEIGHTING, OrderWeighting.MODEL_ORDER)
         dtDiagram.addLayoutParam(MrTreeOptions::COMPACTION, false)
         dtDiagram.children += nodes.values
 
