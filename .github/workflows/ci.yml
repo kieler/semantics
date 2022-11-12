@@ -63,6 +63,7 @@ jobs:
           mkdir products/cli
           cp -r build/de.cau.cs.kieler.kicool.cli/target/exe/* products/cli
           cp -r build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/* products/cli
+          cp -r build/de.cau.cs.kieler.sccharts.cli/target/exe/* products/cli
           mkdir products/ls
           cp -r build/de.cau.cs.kieler.language.server.cli/target/exe/* products/ls
       - name: Archive All Products
