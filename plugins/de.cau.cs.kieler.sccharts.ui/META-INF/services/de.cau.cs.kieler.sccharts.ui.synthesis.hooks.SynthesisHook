@@ -16,3 +16,4 @@ de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ShowStateDependencyHook
 de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ActionsAsDataflowHook
 de.cau.cs.kieler.sccharts.ui.debug.hooks.SetBreakpointActionHook
 de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ModelOrderHook
+de.cau.cs.kieler.sccharts.ui.synthesis.hooks.StructuralEditingHook
