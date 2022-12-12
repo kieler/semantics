@@ -13,17 +13,19 @@
 package de.cau.cs.kieler.kexpressions.extensions
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.Value
-import de.cau.cs.kieler.kexpressions.FloatValue
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+
+import static de.cau.cs.kieler.kexpressions.ValueType.*
 
 /**
  * @author ssm
@@ -33,19 +35,21 @@ import de.cau.cs.kieler.kexpressions.OperatorType
  */
 class KExpressionsTypeExtensions {
     
+    public static val PRIMITIVES = #[INT, FLOAT, BOOL, PURE]
+    
     @Inject extension KExpressionsValuedObjectExtensions
     
     def ValueType inferTypeStrict(Expression expression) {
-        if (expression.isBool) return ValueType.BOOL;
-        if (expression.isInt) return ValueType.INT;
-        if (expression.isFloat) return ValueType.FLOAT;
-        if (expression.isString) return ValueType.STRING;
-        return ValueType.UNKNOWN;
+        if (expression.isBool) return BOOL;
+        if (expression.isInt) return INT;
+        if (expression.isFloat) return FLOAT;
+        if (expression.isString) return STRING;
+        return UNKNOWN;
     }
     
     def ValueType inferType(Expression expression) {
         if (expression.arithmetic) {
-            if (expression.hasFloat) return ValueType.FLOAT
+            if (expression.hasFloat) return FLOAT
         } 
         return expression.inferTypeStrict
     }
@@ -58,7 +62,7 @@ class KExpressionsTypeExtensions {
     
     
     def boolean isFloatExpression(Expression expression) {
-        expression.inferType == ValueType.FLOAT
+        expression.inferType == FLOAT
     }
     
     
@@ -66,8 +70,8 @@ class KExpressionsTypeExtensions {
     def boolean isFloat(Expression expression) {
         switch(expression) {
             Value: return expression instanceof FloatValue
-            ValuedObject: return compareTypes(expression, ValueType.FLOAT)
-            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, ValueType.FLOAT)
+            ValuedObject: return compareTypes(expression, FLOAT)
+            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, FLOAT)
             OperatorExpression: {
                 var skipFirst = expression.operator == OperatorType.CONDITIONAL
                 for (subExpression : expression.subExpressions) {
@@ -88,8 +92,8 @@ class KExpressionsTypeExtensions {
     def boolean hasFloat(Expression expression) {
         switch(expression) {
             Value: return expression instanceof FloatValue
-            ValuedObject: return compareTypes(expression, ValueType.FLOAT)
-            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, ValueType.FLOAT)
+            ValuedObject: return compareTypes(expression, FLOAT)
+            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, FLOAT)
             OperatorExpression: {
                 var skipFirst = expression.operator == OperatorType.CONDITIONAL
                 for (subExpression : expression.subExpressions) {
@@ -112,8 +116,8 @@ class KExpressionsTypeExtensions {
     def boolean isInt(Expression expression) {
         switch(expression) {
             Value: return expression instanceof IntValue
-            ValuedObject: return compareTypes(expression, ValueType.INT)
-            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, ValueType.INT)
+            ValuedObject: return compareTypes(expression, INT)
+            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, INT)
             OperatorExpression: {
                 var skipFirst = expression.operator == OperatorType.CONDITIONAL
                 for (subExpression : expression.subExpressions) {
@@ -134,8 +138,8 @@ class KExpressionsTypeExtensions {
     def boolean hasInt(Expression expression) {
         switch(expression) {
             Value: return expression instanceof IntValue
-            ValuedObject: return compareTypes(expression, ValueType.INT)
-            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, ValueType.INT)
+            ValuedObject: return compareTypes(expression, INT)
+            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, INT)
             OperatorExpression: {
                 var skipFirst = expression.operator == OperatorType.CONDITIONAL
                 for (subExpression : expression.subExpressions) {
@@ -158,8 +162,8 @@ class KExpressionsTypeExtensions {
     def boolean isBool(Expression expression) {
         switch(expression) {
             Value: return expression instanceof BoolValue
-            ValuedObject: return compareTypes(expression, ValueType.BOOL)
-            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, ValueType.BOOL)
+            ValuedObject: return compareTypes(expression, BOOL)
+            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, BOOL)
             OperatorExpression: {
                 var skipFirst = expression.operator == OperatorType.CONDITIONAL
                 for (subExpression : expression.subExpressions) {
@@ -180,8 +184,8 @@ class KExpressionsTypeExtensions {
     def boolean hasBool(Expression expression) {
         switch(expression) {
             Value: return expression instanceof BoolValue
-            ValuedObject: return compareTypes(expression, ValueType.BOOL)
-            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, ValueType.BOOL)
+            ValuedObject: return compareTypes(expression, BOOL)
+            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, BOOL)
             OperatorExpression: {
                 var skipFirst = expression.operator == OperatorType.CONDITIONAL
                 for (subExpression : expression.subExpressions) {
@@ -204,8 +208,8 @@ class KExpressionsTypeExtensions {
     def boolean isString(Expression expression) {
         switch(expression) {
             Value: return expression instanceof StringValue
-            ValuedObject: return compareTypes(expression, ValueType.STRING)
-            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, ValueType.STRING)
+            ValuedObject: return compareTypes(expression, STRING)
+            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, STRING)
             OperatorExpression: {
                 var skipFirst = expression.operator == OperatorType.CONDITIONAL
                 for (subExpression : expression.subExpressions) {
@@ -226,8 +230,8 @@ class KExpressionsTypeExtensions {
     def boolean hasString(Expression expression) {
         switch(expression) {
             Value: return expression instanceof StringValue
-            ValuedObject: return compareTypes(expression, ValueType.STRING)
-            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, ValueType.STRING)
+            ValuedObject: return compareTypes(expression, STRING)
+            ValuedObjectReference: return compareTypes(expression.lowermostReference.valuedObject, STRING)
             OperatorExpression: {
                 var skipFirst = expression.operator == OperatorType.CONDITIONAL
                 for (subExpression : expression.subExpressions) {
@@ -251,13 +255,13 @@ class KExpressionsTypeExtensions {
     
     def getValueType(Value value) {
         if (value.isBool) {
-            return ValueType.BOOL
+            return BOOL
         } else if (value.isInt) {
-            return ValueType.INT
+            return INT
         } else if (value.isFloat) {
-            return ValueType.FLOAT
+            return FLOAT
         } else {
-            return ValueType.UNKNOWN
+            return UNKNOWN
         }
     }
     

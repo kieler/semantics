@@ -3359,13 +3359,14 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final RuleCall cDeclarationWOSemicolonParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cKeywordMethodDeclarationWOSemicolonParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cEnumDeclarationWOSemicolonParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cPrimitiveDeclarationWOSemicolonParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		//DeclarationOrMethodWithKeywordWOSemicolon returns kexpressions::Declaration:
-		//    DeclarationWOSemicolon | KeywordMethodDeclarationWOSemicolon | EnumDeclarationWOSemicolon
+		//    DeclarationWOSemicolon | KeywordMethodDeclarationWOSemicolon | EnumDeclarationWOSemicolon | PrimitiveDeclarationWOSemicolon
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//DeclarationWOSemicolon | KeywordMethodDeclarationWOSemicolon | EnumDeclarationWOSemicolon
+		//DeclarationWOSemicolon | KeywordMethodDeclarationWOSemicolon | EnumDeclarationWOSemicolon | PrimitiveDeclarationWOSemicolon
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//DeclarationWOSemicolon
@@ -3376,6 +3377,29 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		
 		//EnumDeclarationWOSemicolon
 		public RuleCall getEnumDeclarationWOSemicolonParserRuleCall_2() { return cEnumDeclarationWOSemicolonParserRuleCall_2; }
+		
+		//PrimitiveDeclarationWOSemicolon
+		public RuleCall getPrimitiveDeclarationWOSemicolonParserRuleCall_3() { return cPrimitiveDeclarationWOSemicolonParserRuleCall_3; }
+	}
+	public class MethodParameterDeclarationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.MethodParameterDeclaration");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cVariableDeclarationWOSemicolonParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cPrimitiveDeclarationWOSemicolonParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//MethodParameterDeclaration returns kexpressions::Declaration:
+		//    VariableDeclarationWOSemicolon | PrimitiveDeclarationWOSemicolon
+		//;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//VariableDeclarationWOSemicolon | PrimitiveDeclarationWOSemicolon
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//VariableDeclarationWOSemicolon
+		public RuleCall getVariableDeclarationWOSemicolonParserRuleCall_0() { return cVariableDeclarationWOSemicolonParserRuleCall_0; }
+		
+		//PrimitiveDeclarationWOSemicolon
+		public RuleCall getPrimitiveDeclarationWOSemicolonParserRuleCall_1() { return cPrimitiveDeclarationWOSemicolonParserRuleCall_1; }
 	}
 	public class KeywordMethodDeclarationWOSemicolonElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.KeywordMethodDeclarationWOSemicolon");
@@ -3397,17 +3421,23 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final RuleCall cReturnTypeHostTypeEnumRuleCall_4_1_0_0 = (RuleCall)cReturnTypeAssignment_4_1_0.eContents().get(0);
 		private final Assignment cReturnHostTypeAssignment_4_1_1 = (Assignment)cGroup_4_1.eContents().get(1);
 		private final RuleCall cReturnHostTypeSTRINGTerminalRuleCall_4_1_1_0 = (RuleCall)cReturnHostTypeAssignment_4_1_1.eContents().get(0);
+		private final Group cGroup_4_2 = (Group)cAlternatives_4.eContents().get(2);
+		private final Assignment cReturnTypeAssignment_4_2_0 = (Assignment)cGroup_4_2.eContents().get(0);
+		private final RuleCall cReturnTypePrimitiveValueTypeEnumRuleCall_4_2_0_0 = (RuleCall)cReturnTypeAssignment_4_2_0.eContents().get(0);
+		private final Assignment cReturnReferenceAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
+		private final CrossReference cReturnReferenceNamedObjectCrossReference_4_2_1_0 = (CrossReference)cReturnReferenceAssignment_4_2_1.eContents().get(0);
+		private final RuleCall cReturnReferenceNamedObjectPrimeIDParserRuleCall_4_2_1_0_1 = (RuleCall)cReturnReferenceNamedObjectCrossReference_4_2_1_0.eContents().get(1);
 		private final Assignment cValuedObjectsAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cValuedObjectsSimpleValuedObjectParserRuleCall_5_0 = (RuleCall)cValuedObjectsAssignment_5.eContents().get(0);
 		private final Alternatives cAlternatives_6 = (Alternatives)cGroup.eContents().get(6);
 		private final Group cGroup_6_0 = (Group)cAlternatives_6.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_6_0_0 = (Keyword)cGroup_6_0.eContents().get(0);
 		private final Assignment cParameterDeclarationsAssignment_6_0_1 = (Assignment)cGroup_6_0.eContents().get(1);
-		private final RuleCall cParameterDeclarationsVariableDeclarationWOSemicolonParserRuleCall_6_0_1_0 = (RuleCall)cParameterDeclarationsAssignment_6_0_1.eContents().get(0);
+		private final RuleCall cParameterDeclarationsMethodParameterDeclarationParserRuleCall_6_0_1_0 = (RuleCall)cParameterDeclarationsAssignment_6_0_1.eContents().get(0);
 		private final Group cGroup_6_0_2 = (Group)cGroup_6_0.eContents().get(2);
 		private final Keyword cCommaKeyword_6_0_2_0 = (Keyword)cGroup_6_0_2.eContents().get(0);
 		private final Assignment cParameterDeclarationsAssignment_6_0_2_1 = (Assignment)cGroup_6_0_2.eContents().get(1);
-		private final RuleCall cParameterDeclarationsVariableDeclarationWOSemicolonParserRuleCall_6_0_2_1_0 = (RuleCall)cParameterDeclarationsAssignment_6_0_2_1.eContents().get(0);
+		private final RuleCall cParameterDeclarationsMethodParameterDeclarationParserRuleCall_6_0_2_1_0 = (RuleCall)cParameterDeclarationsAssignment_6_0_2_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_6_0_3 = (Keyword)cGroup_6_0.eContents().get(3);
 		private final Keyword cLeftParenthesisRightParenthesisKeyword_6_1 = (Keyword)cAlternatives_6.eContents().get(1);
 		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
@@ -3429,9 +3459,13 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//    annotations+=Annotation*
 		//    ( access=AccessModifier? | override?='override' )
 		//    'method'
-		//    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
+		//    (
+		//        returnType=MethodReturnType
+		//        | (returnType=HostType returnHostType=STRING)
+		//        | (returnType=PrimitiveValueType returnReference=[annotations::NamedObject|PrimeID])
+		//    )?
 		//    valuedObjects+=SimpleValuedObject
-		//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
+		//    (('(' parameterDeclarations+=MethodParameterDeclaration (',' parameterDeclarations+=MethodParameterDeclaration)* ')') | '()')
 		//    ('schedule' schedule+=ScheduleObjectReference+)?
 		//    ('{'
 		//        annotations+=CommentAnnotatonSL?
@@ -3445,9 +3479,13 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//annotations+=Annotation*
 		//( access=AccessModifier? | override?='override' )
 		//'method'
-		//(returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
+		//(
+		//    returnType=MethodReturnType
+		//    | (returnType=HostType returnHostType=STRING)
+		//    | (returnType=PrimitiveValueType returnReference=[annotations::NamedObject|PrimeID])
+		//)?
 		//valuedObjects+=SimpleValuedObject
-		//(('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
+		//(('(' parameterDeclarations+=MethodParameterDeclaration (',' parameterDeclarations+=MethodParameterDeclaration)* ')') | '()')
 		//('schedule' schedule+=ScheduleObjectReference+)?
 		//('{'
 		//    annotations+=CommentAnnotatonSL?
@@ -3483,7 +3521,11 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//'method'
 		public Keyword getMethodKeyword_3() { return cMethodKeyword_3; }
 		
-		//(returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
+		//(
+		//    returnType=MethodReturnType
+		//    | (returnType=HostType returnHostType=STRING)
+		//    | (returnType=PrimitiveValueType returnReference=[annotations::NamedObject|PrimeID])
+		//)?
 		public Alternatives getAlternatives_4() { return cAlternatives_4; }
 		
 		//returnType=MethodReturnType
@@ -3507,38 +3549,56 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//STRING
 		public RuleCall getReturnHostTypeSTRINGTerminalRuleCall_4_1_1_0() { return cReturnHostTypeSTRINGTerminalRuleCall_4_1_1_0; }
 		
+		//(returnType=PrimitiveValueType returnReference=[annotations::NamedObject|PrimeID])
+		public Group getGroup_4_2() { return cGroup_4_2; }
+		
+		//returnType=PrimitiveValueType
+		public Assignment getReturnTypeAssignment_4_2_0() { return cReturnTypeAssignment_4_2_0; }
+		
+		//PrimitiveValueType
+		public RuleCall getReturnTypePrimitiveValueTypeEnumRuleCall_4_2_0_0() { return cReturnTypePrimitiveValueTypeEnumRuleCall_4_2_0_0; }
+		
+		//returnReference=[annotations::NamedObject|PrimeID]
+		public Assignment getReturnReferenceAssignment_4_2_1() { return cReturnReferenceAssignment_4_2_1; }
+		
+		//[annotations::NamedObject|PrimeID]
+		public CrossReference getReturnReferenceNamedObjectCrossReference_4_2_1_0() { return cReturnReferenceNamedObjectCrossReference_4_2_1_0; }
+		
+		//PrimeID
+		public RuleCall getReturnReferenceNamedObjectPrimeIDParserRuleCall_4_2_1_0_1() { return cReturnReferenceNamedObjectPrimeIDParserRuleCall_4_2_1_0_1; }
+		
 		//valuedObjects+=SimpleValuedObject
 		public Assignment getValuedObjectsAssignment_5() { return cValuedObjectsAssignment_5; }
 		
 		//SimpleValuedObject
 		public RuleCall getValuedObjectsSimpleValuedObjectParserRuleCall_5_0() { return cValuedObjectsSimpleValuedObjectParserRuleCall_5_0; }
 		
-		//(('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
+		//(('(' parameterDeclarations+=MethodParameterDeclaration (',' parameterDeclarations+=MethodParameterDeclaration)* ')') | '()')
 		public Alternatives getAlternatives_6() { return cAlternatives_6; }
 		
-		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')')
+		//('(' parameterDeclarations+=MethodParameterDeclaration (',' parameterDeclarations+=MethodParameterDeclaration)* ')')
 		public Group getGroup_6_0() { return cGroup_6_0; }
 		
 		//'('
 		public Keyword getLeftParenthesisKeyword_6_0_0() { return cLeftParenthesisKeyword_6_0_0; }
 		
-		//parameterDeclarations+=VariableDeclarationWOSemicolon
+		//parameterDeclarations+=MethodParameterDeclaration
 		public Assignment getParameterDeclarationsAssignment_6_0_1() { return cParameterDeclarationsAssignment_6_0_1; }
 		
-		//VariableDeclarationWOSemicolon
-		public RuleCall getParameterDeclarationsVariableDeclarationWOSemicolonParserRuleCall_6_0_1_0() { return cParameterDeclarationsVariableDeclarationWOSemicolonParserRuleCall_6_0_1_0; }
+		//MethodParameterDeclaration
+		public RuleCall getParameterDeclarationsMethodParameterDeclarationParserRuleCall_6_0_1_0() { return cParameterDeclarationsMethodParameterDeclarationParserRuleCall_6_0_1_0; }
 		
-		//(',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
+		//(',' parameterDeclarations+=MethodParameterDeclaration)*
 		public Group getGroup_6_0_2() { return cGroup_6_0_2; }
 		
 		//','
 		public Keyword getCommaKeyword_6_0_2_0() { return cCommaKeyword_6_0_2_0; }
 		
-		//parameterDeclarations+=VariableDeclarationWOSemicolon
+		//parameterDeclarations+=MethodParameterDeclaration
 		public Assignment getParameterDeclarationsAssignment_6_0_2_1() { return cParameterDeclarationsAssignment_6_0_2_1; }
 		
-		//VariableDeclarationWOSemicolon
-		public RuleCall getParameterDeclarationsVariableDeclarationWOSemicolonParserRuleCall_6_0_2_1_0() { return cParameterDeclarationsVariableDeclarationWOSemicolonParserRuleCall_6_0_2_1_0; }
+		//MethodParameterDeclaration
+		public RuleCall getParameterDeclarationsMethodParameterDeclarationParserRuleCall_6_0_2_1_0() { return cParameterDeclarationsMethodParameterDeclarationParserRuleCall_6_0_2_1_0; }
 		
 		//')'
 		public Keyword getRightParenthesisKeyword_6_0_3() { return cRightParenthesisKeyword_6_0_3; }
@@ -3934,6 +3994,237 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//ScheduleObjectReference
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_5_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_5_1_0; }
 	}
+	public class GenericParameterDeclarationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.GenericParameterDeclaration");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsQuotedStringAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Assignment cValuedObjectsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cValuedObjectsSimpleValuedObjectParserRuleCall_1_0 = (RuleCall)cValuedObjectsAssignment_1.eContents().get(0);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
+		private final Keyword cIsKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final Assignment cValueTypeAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
+		private final RuleCall cValueTypeValueTypeEnumRuleCall_2_0_1_0 = (RuleCall)cValueTypeAssignment_2_0_1.eContents().get(0);
+		private final Group cGroup_2_1 = (Group)cAlternatives_2.eContents().get(1);
+		private final Keyword cIsKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
+		private final Assignment cReferenceAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
+		private final Keyword cReferenceRefKeyword_2_1_1_0 = (Keyword)cReferenceAssignment_2_1_1.eContents().get(0);
+		private final Assignment cTypeAssignment_2_1_2 = (Assignment)cGroup_2_1.eContents().get(2);
+		private final CrossReference cTypeNamedObjectCrossReference_2_1_2_0 = (CrossReference)cTypeAssignment_2_1_2.eContents().get(0);
+		private final RuleCall cTypeNamedObjectPrimeIDParserRuleCall_2_1_2_0_1 = (RuleCall)cTypeNamedObjectCrossReference_2_1_2_0.eContents().get(1);
+		private final Group cGroup_2_2 = (Group)cAlternatives_2.eContents().get(2);
+		private final Keyword cIsKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cValueTypeAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cValueTypePrimitiveValueTypeEnumRuleCall_2_2_1_0 = (RuleCall)cValueTypeAssignment_2_2_1.eContents().get(0);
+		
+		//@Override
+		//GenericParameterDeclaration returns kexpressions::GenericParameterDeclaration:
+		//    annotations+=QuotedStringAnnotation*
+		//    valuedObjects+=SimpleValuedObject
+		//    (
+		//        ('is' valueType = ValueType)
+		//        |
+		//        ('is' (reference?='ref')? type = [annotations::NamedObject|PrimeID])
+		//        |
+		//        ('is' valueType = PrimitiveValueType) // Explicit primitive generic
+		//    )?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//annotations+=QuotedStringAnnotation*
+		//valuedObjects+=SimpleValuedObject
+		//(
+		//    ('is' valueType = ValueType)
+		//    |
+		//    ('is' (reference?='ref')? type = [annotations::NamedObject|PrimeID])
+		//    |
+		//    ('is' valueType = PrimitiveValueType) // Explicit primitive generic
+		//)?
+		public Group getGroup() { return cGroup; }
+		
+		//annotations+=QuotedStringAnnotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+		
+		//QuotedStringAnnotation
+		public RuleCall getAnnotationsQuotedStringAnnotationParserRuleCall_0_0() { return cAnnotationsQuotedStringAnnotationParserRuleCall_0_0; }
+		
+		//valuedObjects+=SimpleValuedObject
+		public Assignment getValuedObjectsAssignment_1() { return cValuedObjectsAssignment_1; }
+		
+		//SimpleValuedObject
+		public RuleCall getValuedObjectsSimpleValuedObjectParserRuleCall_1_0() { return cValuedObjectsSimpleValuedObjectParserRuleCall_1_0; }
+		
+		//(
+		//    ('is' valueType = ValueType)
+		//    |
+		//    ('is' (reference?='ref')? type = [annotations::NamedObject|PrimeID])
+		//    |
+		//    ('is' valueType = PrimitiveValueType) // Explicit primitive generic
+		//)?
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+		
+		//('is' valueType = ValueType)
+		public Group getGroup_2_0() { return cGroup_2_0; }
+		
+		//'is'
+		public Keyword getIsKeyword_2_0_0() { return cIsKeyword_2_0_0; }
+		
+		//valueType = ValueType
+		public Assignment getValueTypeAssignment_2_0_1() { return cValueTypeAssignment_2_0_1; }
+		
+		//ValueType
+		public RuleCall getValueTypeValueTypeEnumRuleCall_2_0_1_0() { return cValueTypeValueTypeEnumRuleCall_2_0_1_0; }
+		
+		//('is' (reference?='ref')? type = [annotations::NamedObject|PrimeID])
+		public Group getGroup_2_1() { return cGroup_2_1; }
+		
+		//'is'
+		public Keyword getIsKeyword_2_1_0() { return cIsKeyword_2_1_0; }
+		
+		//(reference?='ref')?
+		public Assignment getReferenceAssignment_2_1_1() { return cReferenceAssignment_2_1_1; }
+		
+		//'ref'
+		public Keyword getReferenceRefKeyword_2_1_1_0() { return cReferenceRefKeyword_2_1_1_0; }
+		
+		//type = [annotations::NamedObject|PrimeID]
+		public Assignment getTypeAssignment_2_1_2() { return cTypeAssignment_2_1_2; }
+		
+		//[annotations::NamedObject|PrimeID]
+		public CrossReference getTypeNamedObjectCrossReference_2_1_2_0() { return cTypeNamedObjectCrossReference_2_1_2_0; }
+		
+		//PrimeID
+		public RuleCall getTypeNamedObjectPrimeIDParserRuleCall_2_1_2_0_1() { return cTypeNamedObjectPrimeIDParserRuleCall_2_1_2_0_1; }
+		
+		//('is' valueType = PrimitiveValueType)
+		public Group getGroup_2_2() { return cGroup_2_2; }
+		
+		//'is'
+		public Keyword getIsKeyword_2_2_0() { return cIsKeyword_2_2_0; }
+		
+		//valueType = PrimitiveValueType
+		public Assignment getValueTypeAssignment_2_2_1() { return cValueTypeAssignment_2_2_1; }
+		
+		//PrimitiveValueType
+		public RuleCall getValueTypePrimitiveValueTypeEnumRuleCall_2_2_1_0() { return cValueTypePrimitiveValueTypeEnumRuleCall_2_2_1_0; }
+	}
+	public class PrimitiveDeclarationWOSemicolonElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.PrimitiveDeclarationWOSemicolon");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Assignment cAccessAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cAccessAccessModifierEnumRuleCall_1_0 = (RuleCall)cAccessAssignment_1.eContents().get(0);
+		private final Assignment cInputAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cInputInputKeyword_2_0 = (Keyword)cInputAssignment_2.eContents().get(0);
+		private final Assignment cOutputAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Keyword cOutputOutputKeyword_3_0 = (Keyword)cOutputAssignment_3.eContents().get(0);
+		private final Keyword cConstKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cSimpleAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final Keyword cSimplePrimitiveKeyword_5_0 = (Keyword)cSimpleAssignment_5.eContents().get(0);
+		private final Assignment cReferenceAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final CrossReference cReferenceNamedObjectCrossReference_6_0 = (CrossReference)cReferenceAssignment_6.eContents().get(0);
+		private final RuleCall cReferenceNamedObjectPrimeIDParserRuleCall_6_0_1 = (RuleCall)cReferenceNamedObjectCrossReference_6_0.eContents().get(1);
+		private final Assignment cValuedObjectsAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cValuedObjectsReferenceValuedObjectParserRuleCall_7_0 = (RuleCall)cValuedObjectsAssignment_7.eContents().get(0);
+		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
+		private final Keyword cCommaKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
+		private final Assignment cValuedObjectsAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
+		private final RuleCall cValuedObjectsReferenceValuedObjectParserRuleCall_8_1_0 = (RuleCall)cValuedObjectsAssignment_8_1.eContents().get(0);
+		private final Assignment cAnnotationsAssignment_9 = (Assignment)cGroup.eContents().get(9);
+		private final RuleCall cAnnotationsCommentAnnotatonSLParserRuleCall_9_0 = (RuleCall)cAnnotationsAssignment_9.eContents().get(0);
+		
+		//PrimitiveDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
+		//    annotations+=Annotation*
+		//    access=AccessModifier?
+		//    input?='input'?
+		//    output?='output'?
+		//    'const'? // needed?
+		//    simple?='primitive'
+		//    reference = [annotations::NamedObject|PrimeID] // should be primitive generic type
+		//    valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)*
+		//    annotations+=CommentAnnotatonSL?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//annotations+=Annotation*
+		//access=AccessModifier?
+		//input?='input'?
+		//output?='output'?
+		//'const'? // needed?
+		//simple?='primitive'
+		//reference = [annotations::NamedObject|PrimeID] // should be primitive generic type
+		//valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)*
+		//annotations+=CommentAnnotatonSL?
+		public Group getGroup() { return cGroup; }
+		
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+		
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
+		
+		//access=AccessModifier?
+		public Assignment getAccessAssignment_1() { return cAccessAssignment_1; }
+		
+		//AccessModifier
+		public RuleCall getAccessAccessModifierEnumRuleCall_1_0() { return cAccessAccessModifierEnumRuleCall_1_0; }
+		
+		//input?='input'?
+		public Assignment getInputAssignment_2() { return cInputAssignment_2; }
+		
+		//'input'
+		public Keyword getInputInputKeyword_2_0() { return cInputInputKeyword_2_0; }
+		
+		//output?='output'?
+		public Assignment getOutputAssignment_3() { return cOutputAssignment_3; }
+		
+		//'output'
+		public Keyword getOutputOutputKeyword_3_0() { return cOutputOutputKeyword_3_0; }
+		
+		//'const'?
+		public Keyword getConstKeyword_4() { return cConstKeyword_4; }
+		
+		//// needed?
+		//   simple?='primitive'
+		public Assignment getSimpleAssignment_5() { return cSimpleAssignment_5; }
+		
+		//'primitive'
+		public Keyword getSimplePrimitiveKeyword_5_0() { return cSimplePrimitiveKeyword_5_0; }
+		
+		//reference = [annotations::NamedObject|PrimeID]
+		public Assignment getReferenceAssignment_6() { return cReferenceAssignment_6; }
+		
+		//[annotations::NamedObject|PrimeID]
+		public CrossReference getReferenceNamedObjectCrossReference_6_0() { return cReferenceNamedObjectCrossReference_6_0; }
+		
+		//PrimeID
+		public RuleCall getReferenceNamedObjectPrimeIDParserRuleCall_6_0_1() { return cReferenceNamedObjectPrimeIDParserRuleCall_6_0_1; }
+		
+		//// should be primitive generic type
+		//   valuedObjects+=ReferenceValuedObject
+		public Assignment getValuedObjectsAssignment_7() { return cValuedObjectsAssignment_7; }
+		
+		//ReferenceValuedObject
+		public RuleCall getValuedObjectsReferenceValuedObjectParserRuleCall_7_0() { return cValuedObjectsReferenceValuedObjectParserRuleCall_7_0; }
+		
+		//(',' valuedObjects+=ReferenceValuedObject)*
+		public Group getGroup_8() { return cGroup_8; }
+		
+		//','
+		public Keyword getCommaKeyword_8_0() { return cCommaKeyword_8_0; }
+		
+		//valuedObjects+=ReferenceValuedObject
+		public Assignment getValuedObjectsAssignment_8_1() { return cValuedObjectsAssignment_8_1; }
+		
+		//ReferenceValuedObject
+		public RuleCall getValuedObjectsReferenceValuedObjectParserRuleCall_8_1_0() { return cValuedObjectsReferenceValuedObjectParserRuleCall_8_1_0; }
+		
+		//annotations+=CommentAnnotatonSL?
+		public Assignment getAnnotationsAssignment_9() { return cAnnotationsAssignment_9; }
+		
+		//CommentAnnotatonSL
+		public RuleCall getAnnotationsCommentAnnotatonSLParserRuleCall_9_0() { return cAnnotationsCommentAnnotatonSLParserRuleCall_9_0; }
+	}
 	public class HiddenKeywordsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.HiddenKeywords");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -3942,7 +4233,6 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Keyword cJoinKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
 		private final Keyword cShallowKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
 		
-		// // als: added clock for timed automata
 		//// -------------- //
 		////  Helper Rules  //
 		//// -------------- //
@@ -4276,6 +4566,22 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//"clock-time"
 		public Keyword getTIMEClockTimeKeyword_6_0() { return cTIMEClockTimeKeyword_6_0; }
 	}
+	public class PrimitiveValueTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.PrimitiveValueType");
+		private final EnumLiteralDeclaration cPRIMITIVEEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cPRIMITIVEPrimitiveKeyword_0 = (Keyword)cPRIMITIVEEnumLiteralDeclaration.eContents().get(0);
+		
+		// // new: clocks for timed automata
+		//enum PrimitiveValueType returns kexpressions::ValueType:
+		//    PRIMITIVE="primitive";
+		public EnumRule getRule() { return rule; }
+		
+		//PRIMITIVE="primitive"
+		public EnumLiteralDeclaration getPRIMITIVEEnumLiteralDeclaration() { return cPRIMITIVEEnumLiteralDeclaration; }
+		
+		//"primitive"
+		public Keyword getPRIMITIVEPrimitiveKeyword_0() { return cPRIMITIVEPrimitiveKeyword_0; }
+	}
 	
 	private final SCChartsElements pSCCharts;
 	private final RootStateElements pRootState;
@@ -4309,18 +4615,22 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	private final PolicyStateElements pPolicyState;
 	private final PolicyTransitionElements pPolicyTransition;
 	private final DeclarationOrMethodWithKeywordWOSemicolonElements pDeclarationOrMethodWithKeywordWOSemicolon;
+	private final MethodParameterDeclarationElements pMethodParameterDeclaration;
 	private final KeywordMethodDeclarationWOSemicolonElements pKeywordMethodDeclarationWOSemicolon;
 	private final ReferenceValuedObjectElements pReferenceValuedObject;
 	private final SpecialAccessExpressionElements pSpecialAccessExpression;
 	private final SCChartAccessExpressionElements pSCChartAccessExpression;
 	private final StateAccessExpressionElements pStateAccessExpression;
 	private final MethodReturnTypeElements eMethodReturnType;
+	private final GenericParameterDeclarationElements pGenericParameterDeclaration;
+	private final PrimitiveDeclarationWOSemicolonElements pPrimitiveDeclarationWOSemicolon;
 	private final PreemptionTypeElements ePreemptionType;
 	private final PreemptionActionTypeElements ePreemptionActionType;
 	private final DelayTypeElements eDelayType;
 	private final HistoryTypeElements eHistoryType;
 	private final DeferredTypeElements eDeferredType;
 	private final ValueTypeElements eValueType;
+	private final PrimitiveValueTypeElements ePrimitiveValueType;
 	private final HiddenKeywordsElements pHiddenKeywords;
 	
 	private final Grammar grammar;
@@ -4384,18 +4694,22 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		this.pPolicyState = new PolicyStateElements();
 		this.pPolicyTransition = new PolicyTransitionElements();
 		this.pDeclarationOrMethodWithKeywordWOSemicolon = new DeclarationOrMethodWithKeywordWOSemicolonElements();
+		this.pMethodParameterDeclaration = new MethodParameterDeclarationElements();
 		this.pKeywordMethodDeclarationWOSemicolon = new KeywordMethodDeclarationWOSemicolonElements();
 		this.pReferenceValuedObject = new ReferenceValuedObjectElements();
 		this.pSpecialAccessExpression = new SpecialAccessExpressionElements();
 		this.pSCChartAccessExpression = new SCChartAccessExpressionElements();
 		this.pStateAccessExpression = new StateAccessExpressionElements();
 		this.eMethodReturnType = new MethodReturnTypeElements();
+		this.pGenericParameterDeclaration = new GenericParameterDeclarationElements();
+		this.pPrimitiveDeclarationWOSemicolon = new PrimitiveDeclarationWOSemicolonElements();
 		this.ePreemptionType = new PreemptionTypeElements();
 		this.ePreemptionActionType = new PreemptionActionTypeElements();
 		this.eDelayType = new DelayTypeElements();
 		this.eHistoryType = new HistoryTypeElements();
 		this.eDeferredType = new DeferredTypeElements();
 		this.eValueType = new ValueTypeElements();
+		this.ePrimitiveValueType = new PrimitiveValueTypeElements();
 		this.pHiddenKeywords = new HiddenKeywordsElements();
 	}
 	
@@ -4962,7 +5276,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	}
 	
 	//DeclarationOrMethodWithKeywordWOSemicolon returns kexpressions::Declaration:
-	//    DeclarationWOSemicolon | KeywordMethodDeclarationWOSemicolon | EnumDeclarationWOSemicolon
+	//    DeclarationWOSemicolon | KeywordMethodDeclarationWOSemicolon | EnumDeclarationWOSemicolon | PrimitiveDeclarationWOSemicolon
 	//;
 	public DeclarationOrMethodWithKeywordWOSemicolonElements getDeclarationOrMethodWithKeywordWOSemicolonAccess() {
 		return pDeclarationOrMethodWithKeywordWOSemicolon;
@@ -4972,14 +5286,29 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		return getDeclarationOrMethodWithKeywordWOSemicolonAccess().getRule();
 	}
 	
+	//MethodParameterDeclaration returns kexpressions::Declaration:
+	//    VariableDeclarationWOSemicolon | PrimitiveDeclarationWOSemicolon
+	//;
+	public MethodParameterDeclarationElements getMethodParameterDeclarationAccess() {
+		return pMethodParameterDeclaration;
+	}
+	
+	public ParserRule getMethodParameterDeclarationRule() {
+		return getMethodParameterDeclarationAccess().getRule();
+	}
+	
 	//KeywordMethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
 	//    {scl::MethodImplementationDeclaration}
 	//    annotations+=Annotation*
 	//    ( access=AccessModifier? | override?='override' )
 	//    'method'
-	//    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
+	//    (
+	//        returnType=MethodReturnType
+	//        | (returnType=HostType returnHostType=STRING)
+	//        | (returnType=PrimitiveValueType returnReference=[annotations::NamedObject|PrimeID])
+	//    )?
 	//    valuedObjects+=SimpleValuedObject
-	//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
+	//    (('(' parameterDeclarations+=MethodParameterDeclaration (',' parameterDeclarations+=MethodParameterDeclaration)* ')') | '()')
 	//    ('schedule' schedule+=ScheduleObjectReference+)?
 	//    ('{'
 	//        annotations+=CommentAnnotatonSL?
@@ -5062,6 +5391,43 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		return getMethodReturnTypeAccess().getRule();
 	}
 	
+	//@Override
+	//GenericParameterDeclaration returns kexpressions::GenericParameterDeclaration:
+	//    annotations+=QuotedStringAnnotation*
+	//    valuedObjects+=SimpleValuedObject
+	//    (
+	//        ('is' valueType = ValueType)
+	//        |
+	//        ('is' (reference?='ref')? type = [annotations::NamedObject|PrimeID])
+	//        |
+	//        ('is' valueType = PrimitiveValueType) // Explicit primitive generic
+	//    )?;
+	public GenericParameterDeclarationElements getGenericParameterDeclarationAccess() {
+		return pGenericParameterDeclaration;
+	}
+	
+	public ParserRule getGenericParameterDeclarationRule() {
+		return getGenericParameterDeclarationAccess().getRule();
+	}
+	
+	//PrimitiveDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
+	//    annotations+=Annotation*
+	//    access=AccessModifier?
+	//    input?='input'?
+	//    output?='output'?
+	//    'const'? // needed?
+	//    simple?='primitive'
+	//    reference = [annotations::NamedObject|PrimeID] // should be primitive generic type
+	//    valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)*
+	//    annotations+=CommentAnnotatonSL?;
+	public PrimitiveDeclarationWOSemicolonElements getPrimitiveDeclarationWOSemicolonAccess() {
+		return pPrimitiveDeclarationWOSemicolon;
+	}
+	
+	public ParserRule getPrimitiveDeclarationWOSemicolonRule() {
+		return getPrimitiveDeclarationWOSemicolonAccess().getRule();
+	}
+	
 	//// ------------ //
 	////  Enum Rules  //
 	//// ------------ //
@@ -5129,7 +5495,17 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		return getValueTypeAccess().getRule();
 	}
 	
-	// // als: added clock for timed automata
+	// // new: clocks for timed automata
+	//enum PrimitiveValueType returns kexpressions::ValueType:
+	//    PRIMITIVE="primitive";
+	public PrimitiveValueTypeElements getPrimitiveValueTypeAccess() {
+		return ePrimitiveValueType;
+	}
+	
+	public EnumRule getPrimitiveValueTypeRule() {
+		return getPrimitiveValueTypeAccess().getRule();
+	}
+	
 	//// -------------- //
 	////  Helper Rules  //
 	//// -------------- //
@@ -5706,14 +6082,15 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
-	//    const?='const'?
 	//    input?='input'?
 	//    output?='output'?
+	//    const?='const'?
 	//    global?='global'?
 	//    static?='static'?
-	//    ((signal?='signal'? type = ValueType) |
-	//        signal?='signal' |
-	//        (type = HostType hostType = STRING)
+	//    (
+	//        (signal?='signal'? type = ValueType)
+	//        | signal?='signal'
+	//        | (type = HostType hostType = STRING)
 	//    )
 	//    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	//    annotations+=CommentAnnotatonSL?;
@@ -5863,6 +6240,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    access=AccessModifier?
 	//    ((
 	//        input?='input'?
+	//        output?='output'?
 	//        'ref'
 	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 	//        reference = [annotations::NamedObject|PrimeID]
@@ -5891,26 +6269,6 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	
 	public ParserRule getExternStringRule() {
 		return getExternStringAccess().getRule();
-	}
-	
-	//// ---
-	////  Generics
-	//// ---
-	//GenericParameterDeclaration returns kexpressions::GenericParameterDeclaration:
-	//    annotations+=QuotedStringAnnotation*
-	//    valuedObjects+=SimpleValuedObject
-	//    (
-	//        ('is' valueType = ValueType)
-	//        |
-	//        ('is' (reference?='ref')? type = [annotations::NamedObject|PrimeID])
-	//    )?
-	//;
-	public KExtGrammarAccess.GenericParameterDeclarationElements getGenericParameterDeclarationAccess() {
-		return gaKExt.getGenericParameterDeclarationAccess();
-	}
-	
-	public ParserRule getGenericParameterDeclarationRule() {
-		return getGenericParameterDeclarationAccess().getRule();
 	}
 	
 	//GenericParameter returns kexpressions::Parameter:
@@ -6223,6 +6581,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//// A reference call effect works similar to the reference call expression. Additionally, it may be
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect returns keffects::ReferenceCallEffect:
+	//    super?='super.'?
 	//    (annotations+=Annotation)*
 	//    valuedObject=[kexpressions::ValuedObject|PrimeID]
 	//    ('[' indices+=Expression ']')*
@@ -6899,6 +7258,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//// Reference Call Rule
 	//// Calls to references. They may include a parameter list.
 	//ReferenceCall returns ReferenceCall:
+	//    super?='super.'?
 	//    valuedObject=[ValuedObject|PrimeID]
 	//    ('[' indices+=Expression ']')*
 	//    ('.' subReference=ValuedObjectReference)?

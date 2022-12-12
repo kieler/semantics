@@ -20,6 +20,7 @@ import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.IODeclaration;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
@@ -263,8 +264,9 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseDeclarationScope(policyClassDeclaration);
                 if (result == null) result = caseVariableDeclaration(policyClassDeclaration);
                 if (result == null) result = caseNamedObject(policyClassDeclaration);
-                if (result == null) result = caseDeclaration(policyClassDeclaration);
+                if (result == null) result = caseIODeclaration(policyClassDeclaration);
                 if (result == null) result = caseNameable(policyClassDeclaration);
+                if (result == null) result = caseDeclaration(policyClassDeclaration);
                 if (result == null) result = caseAnnotatable(policyClassDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -890,6 +892,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseDeclaration(Declaration object) {
+        return null;
+    }
+
+                /**
+     * Returns the result of interpreting the object as an instance of '<em>IO Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>IO Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIODeclaration(IODeclaration object) {
         return null;
     }
 

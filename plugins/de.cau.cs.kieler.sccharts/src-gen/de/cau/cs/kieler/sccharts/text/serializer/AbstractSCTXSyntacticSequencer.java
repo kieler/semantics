@@ -37,6 +37,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	protected AbstractElementAlias match_ModuleCall_LeftParenthesisRightParenthesisKeyword_3_1_q;
 	protected AbstractElementAlias match_ModuleScopeCall_LeftParenthesisRightParenthesisKeyword_2_1_q;
 	protected AbstractElementAlias match_Module_ColonKeyword_3_q;
+	protected AbstractElementAlias match_PrimitiveDeclarationWOSemicolon_ConstKeyword_4_q;
 	protected AbstractElementAlias match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q;
 	protected AbstractElementAlias match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q;
 	protected AbstractElementAlias match_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_4_1_q;
@@ -62,6 +63,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 		match_ModuleCall_LeftParenthesisRightParenthesisKeyword_3_1_q = new TokenAlias(false, true, grammarAccess.getModuleCallAccess().getLeftParenthesisRightParenthesisKeyword_3_1());
 		match_ModuleScopeCall_LeftParenthesisRightParenthesisKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getModuleScopeCallAccess().getLeftParenthesisRightParenthesisKeyword_2_1());
 		match_Module_ColonKeyword_3_q = new TokenAlias(false, true, grammarAccess.getModuleAccess().getColonKeyword_3());
+		match_PrimitiveDeclarationWOSemicolon_ConstKeyword_4_q = new TokenAlias(false, true, grammarAccess.getPrimitiveDeclarationWOSemicolonAccess().getConstKeyword_4());
 		match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
 		match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomizeCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
 		match_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_4_1_q = new TokenAlias(false, true, grammarAccess.getReferenceValuedObjectAccess().getLeftParenthesisRightParenthesisKeyword_4_1());
@@ -112,6 +114,8 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 				emit_ModuleScopeCall_LeftParenthesisRightParenthesisKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Module_ColonKeyword_3_q.equals(syntax))
 				emit_Module_ColonKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_PrimitiveDeclarationWOSemicolon_ConstKeyword_4_q.equals(syntax))
+				emit_PrimitiveDeclarationWOSemicolon_ConstKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q.equals(syntax))
 				emit_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q.equals(syntax))
@@ -142,6 +146,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) annotations+=Annotation
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
+	 *     (rule start) (ambiguity) super?='super.'
 	 *     (rule start) (ambiguity) text=HOSTCODE
 	 *     (rule start) (ambiguity) value=BOOLEAN
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
@@ -211,6 +216,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
 	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
+	 *     (rule start) (ambiguity) super?='super.'
 	 *     (rule start) (ambiguity) text=HOSTCODE
 	 *     (rule start) (ambiguity) value=BOOLEAN
 	 *     (rule start) (ambiguity) value=FLOAT
@@ -319,7 +325,7 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     ('{' '}')?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     parameterDeclarations+=VariableDeclarationWOSemicolon ')' (ambiguity) (rule end)
+	 *     parameterDeclarations+=MethodParameterDeclaration ')' (ambiguity) (rule end)
 	 *     schedule+=ScheduleObjectReference (ambiguity) (rule end)
 	 *     valuedObjects+=SimpleValuedObject '()' (ambiguity) (rule end)
 	 
@@ -406,6 +412,24 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 * </pre>
 	 */
 	protected void emit_Module_ColonKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * <pre>
+	 * Ambiguous syntax:
+	 *     'const'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) simple?='primitive'
+	 *     access=AccessModifier (ambiguity) simple?='primitive'
+	 *     annotations+=Annotation (ambiguity) simple?='primitive'
+	 *     input?='input' (ambiguity) simple?='primitive'
+	 *     output?='output' (ambiguity) simple?='primitive'
+	 
+	 * </pre>
+	 */
+	protected void emit_PrimitiveDeclarationWOSemicolon_ConstKeyword_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

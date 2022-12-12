@@ -3324,14 +3324,15 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
-	//    const?='const'?
 	//    input?='input'?
 	//    output?='output'?
+	//    const?='const'?
 	//    global?='global'?
 	//    static?='static'?
-	//    ((signal?='signal'? type = ValueType) |
-	//        signal?='signal' |
-	//        (type = HostType hostType = STRING)
+	//    (
+	//        (signal?='signal'? type = ValueType)
+	//        | signal?='signal'
+	//        | (type = HostType hostType = STRING)
 	//    )
 	//    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	//    annotations+=CommentAnnotatonSL?;
@@ -3510,6 +3511,7 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//    access=AccessModifier?
 	//    ((
 	//        input?='input'?
+	//        output?='output'?
 	//        'ref'
 	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 	//        reference = [annotations::NamedObject|PrimeID]
@@ -3887,6 +3889,7 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//// A reference call effect works similar to the reference call expression. Additionally, it may be
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect returns keffects::ReferenceCallEffect:
+	//    super?='super.'?
 	//    (annotations+=Annotation)*
 	//    valuedObject=[kexpressions::ValuedObject|PrimeID]
 	//    ('[' indices+=Expression ']')*
@@ -4367,6 +4370,7 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//// Reference Call Rule
 	//// Calls to references. They may include a parameter list.
 	//ReferenceCall returns ReferenceCall:
+	//    super?='super.'?
 	//    valuedObject=[ValuedObject|PrimeID]
 	//    ('[' indices+=Expression ']')*
 	//    ('.' subReference=ValuedObjectReference)?

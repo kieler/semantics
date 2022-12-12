@@ -185,6 +185,7 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     (rule start) (ambiguity) operator=NorOperator
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
+	 *     (rule start) (ambiguity) super?='super.'
 	 *     (rule start) (ambiguity) value=BOOLEAN
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
 	 
@@ -251,6 +252,7 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
 	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
+	 *     (rule start) (ambiguity) super?='super.'
 	 *     (rule start) (ambiguity) value=BOOLEAN
 	 *     (rule start) (ambiguity) value=FLOAT
 	 *     (rule start) (ambiguity) value=INT

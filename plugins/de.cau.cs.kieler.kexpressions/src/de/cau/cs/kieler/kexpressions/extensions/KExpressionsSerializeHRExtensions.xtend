@@ -84,7 +84,13 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     }
     
     def dispatch CharSequence serializeHR(ReferenceCall referenceCall) {
-        return referenceCall.serializeVOR.toString + referenceCall.parameters.serializeHRParameters
+        var text = new StringBuilder()
+        if (referenceCall.super) {
+            text.append("super.")
+        }
+        text.append(referenceCall.serializeVOR)
+        text.append(referenceCall.parameters.serializeHRParameters)
+        return text
     }    
 
     def dispatch CharSequence serializeHR(FunctionCall functionCall) {

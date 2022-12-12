@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.kexpressions.impl;
 
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.MethodDeclaration;
@@ -33,9 +34,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl#getSchedule <em>Schedule</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl#isStatic <em>Static</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl#isOverride <em>Override</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl#getReturnType <em>Return Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl#getReturnHostType <em>Return Host Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl#getReturnReference <em>Return Reference</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl#getReturnReferenceContainer <em>Return Reference Container</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl#getParameterDeclarations <em>Parameter Declarations</em>}</li>
  * </ul>
  *
@@ -51,6 +55,26 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
      * @ordered
      */
     protected EList<ScheduleObjectReference> schedule;
+
+    /**
+     * The default value of the '{@link #isStatic() <em>Static</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isStatic()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean STATIC_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isStatic() <em>Static</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isStatic()
+     * @generated
+     * @ordered
+     */
+    protected boolean static_ = STATIC_EDEFAULT;
 
     /**
      * The default value of the '{@link #isOverride() <em>Override</em>}' attribute.
@@ -113,6 +137,26 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
     protected String returnHostType = RETURN_HOST_TYPE_EDEFAULT;
 
     /**
+     * The cached value of the '{@link #getReturnReference() <em>Return Reference</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getReturnReference()
+     * @generated
+     * @ordered
+     */
+    protected NamedObject returnReference;
+
+    /**
+     * The cached value of the '{@link #getReturnReferenceContainer() <em>Return Reference Container</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getReturnReferenceContainer()
+     * @generated
+     * @ordered
+     */
+    protected NamedObject returnReferenceContainer;
+
+    /**
      * The cached value of the '{@link #getParameterDeclarations() <em>Parameter Declarations</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -152,6 +196,29 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.METHOD_DECLARATION__SCHEDULE);
         }
         return schedule;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean isStatic() {
+        return static_;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setStatic(boolean newStatic) {
+        boolean oldStatic = static_;
+        static_ = newStatic;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.METHOD_DECLARATION__STATIC, oldStatic, static_));
     }
 
     /**
@@ -229,6 +296,86 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
      * @generated
      */
     @Override
+    public NamedObject getReturnReference() {
+        if (returnReference != null && returnReference.eIsProxy()) {
+            InternalEObject oldReturnReference = (InternalEObject)returnReference;
+            returnReference = (NamedObject)eResolveProxy(oldReturnReference);
+            if (returnReference != oldReturnReference) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, KExpressionsPackage.METHOD_DECLARATION__RETURN_REFERENCE, oldReturnReference, returnReference));
+            }
+        }
+        return returnReference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NamedObject basicGetReturnReference() {
+        return returnReference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setReturnReference(NamedObject newReturnReference) {
+        NamedObject oldReturnReference = returnReference;
+        returnReference = newReturnReference;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.METHOD_DECLARATION__RETURN_REFERENCE, oldReturnReference, returnReference));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NamedObject getReturnReferenceContainer() {
+        if (returnReferenceContainer != null && returnReferenceContainer.eIsProxy()) {
+            InternalEObject oldReturnReferenceContainer = (InternalEObject)returnReferenceContainer;
+            returnReferenceContainer = (NamedObject)eResolveProxy(oldReturnReferenceContainer);
+            if (returnReferenceContainer != oldReturnReferenceContainer) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, KExpressionsPackage.METHOD_DECLARATION__RETURN_REFERENCE_CONTAINER, oldReturnReferenceContainer, returnReferenceContainer));
+            }
+        }
+        return returnReferenceContainer;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NamedObject basicGetReturnReferenceContainer() {
+        return returnReferenceContainer;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setReturnReferenceContainer(NamedObject newReturnReferenceContainer) {
+        NamedObject oldReturnReferenceContainer = returnReferenceContainer;
+        returnReferenceContainer = newReturnReferenceContainer;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.METHOD_DECLARATION__RETURN_REFERENCE_CONTAINER, oldReturnReferenceContainer, returnReferenceContainer));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EList<Declaration> getParameterDeclarations() {
         if (parameterDeclarations == null) {
             parameterDeclarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, KExpressionsPackage.METHOD_DECLARATION__PARAMETER_DECLARATIONS);
@@ -262,12 +409,20 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
         switch (featureID) {
             case KExpressionsPackage.METHOD_DECLARATION__SCHEDULE:
                 return getSchedule();
+            case KExpressionsPackage.METHOD_DECLARATION__STATIC:
+                return isStatic();
             case KExpressionsPackage.METHOD_DECLARATION__OVERRIDE:
                 return isOverride();
             case KExpressionsPackage.METHOD_DECLARATION__RETURN_TYPE:
                 return getReturnType();
             case KExpressionsPackage.METHOD_DECLARATION__RETURN_HOST_TYPE:
                 return getReturnHostType();
+            case KExpressionsPackage.METHOD_DECLARATION__RETURN_REFERENCE:
+                if (resolve) return getReturnReference();
+                return basicGetReturnReference();
+            case KExpressionsPackage.METHOD_DECLARATION__RETURN_REFERENCE_CONTAINER:
+                if (resolve) return getReturnReferenceContainer();
+                return basicGetReturnReferenceContainer();
             case KExpressionsPackage.METHOD_DECLARATION__PARAMETER_DECLARATIONS:
                 return getParameterDeclarations();
         }
@@ -287,6 +442,9 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
                 getSchedule().clear();
                 getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
                 return;
+            case KExpressionsPackage.METHOD_DECLARATION__STATIC:
+                setStatic((Boolean)newValue);
+                return;
             case KExpressionsPackage.METHOD_DECLARATION__OVERRIDE:
                 setOverride((Boolean)newValue);
                 return;
@@ -295,6 +453,12 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
                 return;
             case KExpressionsPackage.METHOD_DECLARATION__RETURN_HOST_TYPE:
                 setReturnHostType((String)newValue);
+                return;
+            case KExpressionsPackage.METHOD_DECLARATION__RETURN_REFERENCE:
+                setReturnReference((NamedObject)newValue);
+                return;
+            case KExpressionsPackage.METHOD_DECLARATION__RETURN_REFERENCE_CONTAINER:
+                setReturnReferenceContainer((NamedObject)newValue);
                 return;
             case KExpressionsPackage.METHOD_DECLARATION__PARAMETER_DECLARATIONS:
                 getParameterDeclarations().clear();
@@ -315,6 +479,9 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
             case KExpressionsPackage.METHOD_DECLARATION__SCHEDULE:
                 getSchedule().clear();
                 return;
+            case KExpressionsPackage.METHOD_DECLARATION__STATIC:
+                setStatic(STATIC_EDEFAULT);
+                return;
             case KExpressionsPackage.METHOD_DECLARATION__OVERRIDE:
                 setOverride(OVERRIDE_EDEFAULT);
                 return;
@@ -323,6 +490,12 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
                 return;
             case KExpressionsPackage.METHOD_DECLARATION__RETURN_HOST_TYPE:
                 setReturnHostType(RETURN_HOST_TYPE_EDEFAULT);
+                return;
+            case KExpressionsPackage.METHOD_DECLARATION__RETURN_REFERENCE:
+                setReturnReference((NamedObject)null);
+                return;
+            case KExpressionsPackage.METHOD_DECLARATION__RETURN_REFERENCE_CONTAINER:
+                setReturnReferenceContainer((NamedObject)null);
                 return;
             case KExpressionsPackage.METHOD_DECLARATION__PARAMETER_DECLARATIONS:
                 getParameterDeclarations().clear();
@@ -341,12 +514,18 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
         switch (featureID) {
             case KExpressionsPackage.METHOD_DECLARATION__SCHEDULE:
                 return schedule != null && !schedule.isEmpty();
+            case KExpressionsPackage.METHOD_DECLARATION__STATIC:
+                return static_ != STATIC_EDEFAULT;
             case KExpressionsPackage.METHOD_DECLARATION__OVERRIDE:
                 return override != OVERRIDE_EDEFAULT;
             case KExpressionsPackage.METHOD_DECLARATION__RETURN_TYPE:
                 return returnType != RETURN_TYPE_EDEFAULT;
             case KExpressionsPackage.METHOD_DECLARATION__RETURN_HOST_TYPE:
                 return RETURN_HOST_TYPE_EDEFAULT == null ? returnHostType != null : !RETURN_HOST_TYPE_EDEFAULT.equals(returnHostType);
+            case KExpressionsPackage.METHOD_DECLARATION__RETURN_REFERENCE:
+                return returnReference != null;
+            case KExpressionsPackage.METHOD_DECLARATION__RETURN_REFERENCE_CONTAINER:
+                return returnReferenceContainer != null;
             case KExpressionsPackage.METHOD_DECLARATION__PARAMETER_DECLARATIONS:
                 return parameterDeclarations != null && !parameterDeclarations.isEmpty();
         }
@@ -395,7 +574,9 @@ public class MethodDeclarationImpl extends DeclarationImpl implements MethodDecl
         if (eIsProxy()) return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (override: ");
+        result.append(" (static: ");
+        result.append(static_);
+        result.append(", override: ");
         result.append(override);
         result.append(", returnType: ");
         result.append(returnType);

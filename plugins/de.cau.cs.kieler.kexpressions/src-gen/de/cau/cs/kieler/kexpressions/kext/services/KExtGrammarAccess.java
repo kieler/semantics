@@ -552,12 +552,12 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Assignment cAccessAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cAccessAccessModifierEnumRuleCall_1_0 = (RuleCall)cAccessAssignment_1.eContents().get(0);
-		private final Assignment cConstAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final Keyword cConstConstKeyword_2_0 = (Keyword)cConstAssignment_2.eContents().get(0);
-		private final Assignment cInputAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cInputInputKeyword_3_0 = (Keyword)cInputAssignment_3.eContents().get(0);
-		private final Assignment cOutputAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final Keyword cOutputOutputKeyword_4_0 = (Keyword)cOutputAssignment_4.eContents().get(0);
+		private final Assignment cInputAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cInputInputKeyword_2_0 = (Keyword)cInputAssignment_2.eContents().get(0);
+		private final Assignment cOutputAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Keyword cOutputOutputKeyword_3_0 = (Keyword)cOutputAssignment_3.eContents().get(0);
+		private final Assignment cConstAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Keyword cConstConstKeyword_4_0 = (Keyword)cConstAssignment_4.eContents().get(0);
 		private final Assignment cGlobalAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final Keyword cGlobalGlobalKeyword_5_0 = (Keyword)cGlobalAssignment_5.eContents().get(0);
 		private final Assignment cStaticAssignment_6 = (Assignment)cGroup.eContents().get(6);
@@ -587,14 +587,15 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
 		//    annotations+=Annotation*
 		//    access=AccessModifier?
-		//    const?='const'?
 		//    input?='input'?
 		//    output?='output'?
+		//    const?='const'?
 		//    global?='global'?
 		//    static?='static'?
-		//    ((signal?='signal'? type = ValueType) |
-		//        signal?='signal' |
-		//        (type = HostType hostType = STRING)
+		//    (
+		//        (signal?='signal'? type = ValueType)
+		//        | signal?='signal'
+		//        | (type = HostType hostType = STRING)
 		//    )
 		//    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 		//    annotations+=CommentAnnotatonSL?;
@@ -602,14 +603,15 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		
 		//annotations+=Annotation*
 		//access=AccessModifier?
-		//const?='const'?
 		//input?='input'?
 		//output?='output'?
+		//const?='const'?
 		//global?='global'?
 		//static?='static'?
-		//((signal?='signal'? type = ValueType) |
-		//    signal?='signal' |
-		//    (type = HostType hostType = STRING)
+		//(
+		//    (signal?='signal'? type = ValueType)
+		//    | signal?='signal'
+		//    | (type = HostType hostType = STRING)
 		//)
 		//valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 		//annotations+=CommentAnnotatonSL?
@@ -627,23 +629,23 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//AccessModifier
 		public RuleCall getAccessAccessModifierEnumRuleCall_1_0() { return cAccessAccessModifierEnumRuleCall_1_0; }
 		
-		//const?='const'?
-		public Assignment getConstAssignment_2() { return cConstAssignment_2; }
-		
-		//'const'
-		public Keyword getConstConstKeyword_2_0() { return cConstConstKeyword_2_0; }
-		
 		//input?='input'?
-		public Assignment getInputAssignment_3() { return cInputAssignment_3; }
+		public Assignment getInputAssignment_2() { return cInputAssignment_2; }
 		
 		//'input'
-		public Keyword getInputInputKeyword_3_0() { return cInputInputKeyword_3_0; }
+		public Keyword getInputInputKeyword_2_0() { return cInputInputKeyword_2_0; }
 		
 		//output?='output'?
-		public Assignment getOutputAssignment_4() { return cOutputAssignment_4; }
+		public Assignment getOutputAssignment_3() { return cOutputAssignment_3; }
 		
 		//'output'
-		public Keyword getOutputOutputKeyword_4_0() { return cOutputOutputKeyword_4_0; }
+		public Keyword getOutputOutputKeyword_3_0() { return cOutputOutputKeyword_3_0; }
+		
+		//const?='const'?
+		public Assignment getConstAssignment_4() { return cConstAssignment_4; }
+		
+		//'const'
+		public Keyword getConstConstKeyword_4_0() { return cConstConstKeyword_4_0; }
 		
 		//global?='global'?
 		public Assignment getGlobalAssignment_5() { return cGlobalAssignment_5; }
@@ -657,9 +659,10 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//'static'
 		public Keyword getStaticStaticKeyword_6_0() { return cStaticStaticKeyword_6_0; }
 		
-		//((signal?='signal'? type = ValueType) |
-		//    signal?='signal' |
-		//    (type = HostType hostType = STRING)
+		//(
+		//    (signal?='signal'? type = ValueType)
+		//    | signal?='signal'
+		//    | (type = HostType hostType = STRING)
 		//)
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
 		
@@ -2065,30 +2068,32 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
 		private final Assignment cInputAssignment_2_0_0 = (Assignment)cGroup_2_0.eContents().get(0);
 		private final Keyword cInputInputKeyword_2_0_0_0 = (Keyword)cInputAssignment_2_0_0.eContents().get(0);
-		private final Keyword cRefKeyword_2_0_1 = (Keyword)cGroup_2_0.eContents().get(1);
-		private final Group cGroup_2_0_2 = (Group)cGroup_2_0.eContents().get(2);
-		private final Assignment cReferenceContainerAssignment_2_0_2_0 = (Assignment)cGroup_2_0_2.eContents().get(0);
-		private final CrossReference cReferenceContainerNamedObjectCrossReference_2_0_2_0_0 = (CrossReference)cReferenceContainerAssignment_2_0_2_0.eContents().get(0);
-		private final RuleCall cReferenceContainerNamedObjectPrimeIDParserRuleCall_2_0_2_0_0_1 = (RuleCall)cReferenceContainerNamedObjectCrossReference_2_0_2_0_0.eContents().get(1);
-		private final Keyword cFullStopKeyword_2_0_2_1 = (Keyword)cGroup_2_0_2.eContents().get(1);
-		private final Assignment cReferenceAssignment_2_0_3 = (Assignment)cGroup_2_0.eContents().get(3);
-		private final CrossReference cReferenceNamedObjectCrossReference_2_0_3_0 = (CrossReference)cReferenceAssignment_2_0_3.eContents().get(0);
-		private final RuleCall cReferenceNamedObjectPrimeIDParserRuleCall_2_0_3_0_1 = (RuleCall)cReferenceNamedObjectCrossReference_2_0_3_0.eContents().get(1);
-		private final Group cGroup_2_0_4 = (Group)cGroup_2_0.eContents().get(4);
-		private final Keyword cLessThanSignKeyword_2_0_4_0 = (Keyword)cGroup_2_0_4.eContents().get(0);
-		private final Assignment cGenericParametersAssignment_2_0_4_1 = (Assignment)cGroup_2_0_4.eContents().get(1);
-		private final RuleCall cGenericParametersGenericParameterParserRuleCall_2_0_4_1_0 = (RuleCall)cGenericParametersAssignment_2_0_4_1.eContents().get(0);
-		private final Group cGroup_2_0_4_2 = (Group)cGroup_2_0_4.eContents().get(2);
-		private final Keyword cCommaKeyword_2_0_4_2_0 = (Keyword)cGroup_2_0_4_2.eContents().get(0);
-		private final Assignment cGenericParametersAssignment_2_0_4_2_1 = (Assignment)cGroup_2_0_4_2.eContents().get(1);
-		private final RuleCall cGenericParametersGenericParameterParserRuleCall_2_0_4_2_1_0 = (RuleCall)cGenericParametersAssignment_2_0_4_2_1.eContents().get(0);
-		private final Keyword cGreaterThanSignKeyword_2_0_4_3 = (Keyword)cGroup_2_0_4.eContents().get(3);
-		private final Assignment cValuedObjectsAssignment_2_0_5 = (Assignment)cGroup_2_0.eContents().get(5);
-		private final RuleCall cValuedObjectsReferenceValuedObjectParserRuleCall_2_0_5_0 = (RuleCall)cValuedObjectsAssignment_2_0_5.eContents().get(0);
-		private final Group cGroup_2_0_6 = (Group)cGroup_2_0.eContents().get(6);
-		private final Keyword cCommaKeyword_2_0_6_0 = (Keyword)cGroup_2_0_6.eContents().get(0);
-		private final Assignment cValuedObjectsAssignment_2_0_6_1 = (Assignment)cGroup_2_0_6.eContents().get(1);
-		private final RuleCall cValuedObjectsReferenceValuedObjectParserRuleCall_2_0_6_1_0 = (RuleCall)cValuedObjectsAssignment_2_0_6_1.eContents().get(0);
+		private final Assignment cOutputAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
+		private final Keyword cOutputOutputKeyword_2_0_1_0 = (Keyword)cOutputAssignment_2_0_1.eContents().get(0);
+		private final Keyword cRefKeyword_2_0_2 = (Keyword)cGroup_2_0.eContents().get(2);
+		private final Group cGroup_2_0_3 = (Group)cGroup_2_0.eContents().get(3);
+		private final Assignment cReferenceContainerAssignment_2_0_3_0 = (Assignment)cGroup_2_0_3.eContents().get(0);
+		private final CrossReference cReferenceContainerNamedObjectCrossReference_2_0_3_0_0 = (CrossReference)cReferenceContainerAssignment_2_0_3_0.eContents().get(0);
+		private final RuleCall cReferenceContainerNamedObjectPrimeIDParserRuleCall_2_0_3_0_0_1 = (RuleCall)cReferenceContainerNamedObjectCrossReference_2_0_3_0_0.eContents().get(1);
+		private final Keyword cFullStopKeyword_2_0_3_1 = (Keyword)cGroup_2_0_3.eContents().get(1);
+		private final Assignment cReferenceAssignment_2_0_4 = (Assignment)cGroup_2_0.eContents().get(4);
+		private final CrossReference cReferenceNamedObjectCrossReference_2_0_4_0 = (CrossReference)cReferenceAssignment_2_0_4.eContents().get(0);
+		private final RuleCall cReferenceNamedObjectPrimeIDParserRuleCall_2_0_4_0_1 = (RuleCall)cReferenceNamedObjectCrossReference_2_0_4_0.eContents().get(1);
+		private final Group cGroup_2_0_5 = (Group)cGroup_2_0.eContents().get(5);
+		private final Keyword cLessThanSignKeyword_2_0_5_0 = (Keyword)cGroup_2_0_5.eContents().get(0);
+		private final Assignment cGenericParametersAssignment_2_0_5_1 = (Assignment)cGroup_2_0_5.eContents().get(1);
+		private final RuleCall cGenericParametersGenericParameterParserRuleCall_2_0_5_1_0 = (RuleCall)cGenericParametersAssignment_2_0_5_1.eContents().get(0);
+		private final Group cGroup_2_0_5_2 = (Group)cGroup_2_0_5.eContents().get(2);
+		private final Keyword cCommaKeyword_2_0_5_2_0 = (Keyword)cGroup_2_0_5_2.eContents().get(0);
+		private final Assignment cGenericParametersAssignment_2_0_5_2_1 = (Assignment)cGroup_2_0_5_2.eContents().get(1);
+		private final RuleCall cGenericParametersGenericParameterParserRuleCall_2_0_5_2_1_0 = (RuleCall)cGenericParametersAssignment_2_0_5_2_1.eContents().get(0);
+		private final Keyword cGreaterThanSignKeyword_2_0_5_3 = (Keyword)cGroup_2_0_5.eContents().get(3);
+		private final Assignment cValuedObjectsAssignment_2_0_6 = (Assignment)cGroup_2_0.eContents().get(6);
+		private final RuleCall cValuedObjectsReferenceValuedObjectParserRuleCall_2_0_6_0 = (RuleCall)cValuedObjectsAssignment_2_0_6.eContents().get(0);
+		private final Group cGroup_2_0_7 = (Group)cGroup_2_0.eContents().get(7);
+		private final Keyword cCommaKeyword_2_0_7_0 = (Keyword)cGroup_2_0_7.eContents().get(0);
+		private final Assignment cValuedObjectsAssignment_2_0_7_1 = (Assignment)cGroup_2_0_7.eContents().get(1);
+		private final RuleCall cValuedObjectsReferenceValuedObjectParserRuleCall_2_0_7_1_0 = (RuleCall)cValuedObjectsAssignment_2_0_7_1.eContents().get(0);
 		private final Group cGroup_2_1 = (Group)cAlternatives_2.eContents().get(1);
 		private final Keyword cExternKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
 		private final Assignment cExternAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
@@ -2111,6 +2116,7 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//    access=AccessModifier?
 		//    ((
 		//        input?='input'?
+		//        output?='output'?
 		//        'ref'
 		//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 		//        reference = [annotations::NamedObject|PrimeID]
@@ -2127,6 +2133,7 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//access=AccessModifier?
 		//((
 		//    input?='input'?
+		//    output?='output'?
 		//    'ref'
 		//    (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 		//    reference = [annotations::NamedObject|PrimeID]
@@ -2153,6 +2160,7 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		
 		//((
 		//    input?='input'?
+		//    output?='output'?
 		//    'ref'
 		//    (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 		//    reference = [annotations::NamedObject|PrimeID]
@@ -2166,6 +2174,7 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		
 		//(
 		//        input?='input'?
+		//        output?='output'?
 		//        'ref'
 		//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 		//        reference = [annotations::NamedObject|PrimeID]
@@ -2180,77 +2189,83 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//'input'
 		public Keyword getInputInputKeyword_2_0_0_0() { return cInputInputKeyword_2_0_0_0; }
 		
+		//output?='output'?
+		public Assignment getOutputAssignment_2_0_1() { return cOutputAssignment_2_0_1; }
+		
+		//'output'
+		public Keyword getOutputOutputKeyword_2_0_1_0() { return cOutputOutputKeyword_2_0_1_0; }
+		
 		//'ref'
-		public Keyword getRefKeyword_2_0_1() { return cRefKeyword_2_0_1; }
+		public Keyword getRefKeyword_2_0_2() { return cRefKeyword_2_0_2; }
 		
 		//(referenceContainer = [annotations::NamedObject|PrimeID] '.')?
-		public Group getGroup_2_0_2() { return cGroup_2_0_2; }
+		public Group getGroup_2_0_3() { return cGroup_2_0_3; }
 		
 		//referenceContainer = [annotations::NamedObject|PrimeID]
-		public Assignment getReferenceContainerAssignment_2_0_2_0() { return cReferenceContainerAssignment_2_0_2_0; }
+		public Assignment getReferenceContainerAssignment_2_0_3_0() { return cReferenceContainerAssignment_2_0_3_0; }
 		
 		//[annotations::NamedObject|PrimeID]
-		public CrossReference getReferenceContainerNamedObjectCrossReference_2_0_2_0_0() { return cReferenceContainerNamedObjectCrossReference_2_0_2_0_0; }
+		public CrossReference getReferenceContainerNamedObjectCrossReference_2_0_3_0_0() { return cReferenceContainerNamedObjectCrossReference_2_0_3_0_0; }
 		
 		//PrimeID
-		public RuleCall getReferenceContainerNamedObjectPrimeIDParserRuleCall_2_0_2_0_0_1() { return cReferenceContainerNamedObjectPrimeIDParserRuleCall_2_0_2_0_0_1; }
+		public RuleCall getReferenceContainerNamedObjectPrimeIDParserRuleCall_2_0_3_0_0_1() { return cReferenceContainerNamedObjectPrimeIDParserRuleCall_2_0_3_0_0_1; }
 		
 		//'.'
-		public Keyword getFullStopKeyword_2_0_2_1() { return cFullStopKeyword_2_0_2_1; }
+		public Keyword getFullStopKeyword_2_0_3_1() { return cFullStopKeyword_2_0_3_1; }
 		
 		//reference = [annotations::NamedObject|PrimeID]
-		public Assignment getReferenceAssignment_2_0_3() { return cReferenceAssignment_2_0_3; }
+		public Assignment getReferenceAssignment_2_0_4() { return cReferenceAssignment_2_0_4; }
 		
 		//[annotations::NamedObject|PrimeID]
-		public CrossReference getReferenceNamedObjectCrossReference_2_0_3_0() { return cReferenceNamedObjectCrossReference_2_0_3_0; }
+		public CrossReference getReferenceNamedObjectCrossReference_2_0_4_0() { return cReferenceNamedObjectCrossReference_2_0_4_0; }
 		
 		//PrimeID
-		public RuleCall getReferenceNamedObjectPrimeIDParserRuleCall_2_0_3_0_1() { return cReferenceNamedObjectPrimeIDParserRuleCall_2_0_3_0_1; }
+		public RuleCall getReferenceNamedObjectPrimeIDParserRuleCall_2_0_4_0_1() { return cReferenceNamedObjectPrimeIDParserRuleCall_2_0_4_0_1; }
 		
 		//('<' genericParameters += GenericParameter (',' genericParameters += GenericParameter)* '>')?
-		public Group getGroup_2_0_4() { return cGroup_2_0_4; }
+		public Group getGroup_2_0_5() { return cGroup_2_0_5; }
 		
 		//'<'
-		public Keyword getLessThanSignKeyword_2_0_4_0() { return cLessThanSignKeyword_2_0_4_0; }
+		public Keyword getLessThanSignKeyword_2_0_5_0() { return cLessThanSignKeyword_2_0_5_0; }
 		
 		//genericParameters += GenericParameter
-		public Assignment getGenericParametersAssignment_2_0_4_1() { return cGenericParametersAssignment_2_0_4_1; }
+		public Assignment getGenericParametersAssignment_2_0_5_1() { return cGenericParametersAssignment_2_0_5_1; }
 		
 		//GenericParameter
-		public RuleCall getGenericParametersGenericParameterParserRuleCall_2_0_4_1_0() { return cGenericParametersGenericParameterParserRuleCall_2_0_4_1_0; }
+		public RuleCall getGenericParametersGenericParameterParserRuleCall_2_0_5_1_0() { return cGenericParametersGenericParameterParserRuleCall_2_0_5_1_0; }
 		
 		//(',' genericParameters += GenericParameter)*
-		public Group getGroup_2_0_4_2() { return cGroup_2_0_4_2; }
+		public Group getGroup_2_0_5_2() { return cGroup_2_0_5_2; }
 		
 		//','
-		public Keyword getCommaKeyword_2_0_4_2_0() { return cCommaKeyword_2_0_4_2_0; }
+		public Keyword getCommaKeyword_2_0_5_2_0() { return cCommaKeyword_2_0_5_2_0; }
 		
 		//genericParameters += GenericParameter
-		public Assignment getGenericParametersAssignment_2_0_4_2_1() { return cGenericParametersAssignment_2_0_4_2_1; }
+		public Assignment getGenericParametersAssignment_2_0_5_2_1() { return cGenericParametersAssignment_2_0_5_2_1; }
 		
 		//GenericParameter
-		public RuleCall getGenericParametersGenericParameterParserRuleCall_2_0_4_2_1_0() { return cGenericParametersGenericParameterParserRuleCall_2_0_4_2_1_0; }
+		public RuleCall getGenericParametersGenericParameterParserRuleCall_2_0_5_2_1_0() { return cGenericParametersGenericParameterParserRuleCall_2_0_5_2_1_0; }
 		
 		//'>'
-		public Keyword getGreaterThanSignKeyword_2_0_4_3() { return cGreaterThanSignKeyword_2_0_4_3; }
+		public Keyword getGreaterThanSignKeyword_2_0_5_3() { return cGreaterThanSignKeyword_2_0_5_3; }
 		
 		//valuedObjects+=ReferenceValuedObject
-		public Assignment getValuedObjectsAssignment_2_0_5() { return cValuedObjectsAssignment_2_0_5; }
+		public Assignment getValuedObjectsAssignment_2_0_6() { return cValuedObjectsAssignment_2_0_6; }
 		
 		//ReferenceValuedObject
-		public RuleCall getValuedObjectsReferenceValuedObjectParserRuleCall_2_0_5_0() { return cValuedObjectsReferenceValuedObjectParserRuleCall_2_0_5_0; }
+		public RuleCall getValuedObjectsReferenceValuedObjectParserRuleCall_2_0_6_0() { return cValuedObjectsReferenceValuedObjectParserRuleCall_2_0_6_0; }
 		
 		//(',' valuedObjects+=ReferenceValuedObject)*
-		public Group getGroup_2_0_6() { return cGroup_2_0_6; }
+		public Group getGroup_2_0_7() { return cGroup_2_0_7; }
 		
 		//','
-		public Keyword getCommaKeyword_2_0_6_0() { return cCommaKeyword_2_0_6_0; }
+		public Keyword getCommaKeyword_2_0_7_0() { return cCommaKeyword_2_0_7_0; }
 		
 		//valuedObjects+=ReferenceValuedObject
-		public Assignment getValuedObjectsAssignment_2_0_6_1() { return cValuedObjectsAssignment_2_0_6_1; }
+		public Assignment getValuedObjectsAssignment_2_0_7_1() { return cValuedObjectsAssignment_2_0_7_1; }
 		
 		//ReferenceValuedObject
-		public RuleCall getValuedObjectsReferenceValuedObjectParserRuleCall_2_0_6_1_0() { return cValuedObjectsReferenceValuedObjectParserRuleCall_2_0_6_1_0; }
+		public RuleCall getValuedObjectsReferenceValuedObjectParserRuleCall_2_0_7_1_0() { return cValuedObjectsReferenceValuedObjectParserRuleCall_2_0_7_1_0; }
 		
 		//(
 		//       'extern' extern += ExternString (',' extern += ExternString)*
@@ -3703,14 +3718,15 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
 	//    annotations+=Annotation*
 	//    access=AccessModifier?
-	//    const?='const'?
 	//    input?='input'?
 	//    output?='output'?
+	//    const?='const'?
 	//    global?='global'?
 	//    static?='static'?
-	//    ((signal?='signal'? type = ValueType) |
-	//        signal?='signal' |
-	//        (type = HostType hostType = STRING)
+	//    (
+	//        (signal?='signal'? type = ValueType)
+	//        | signal?='signal'
+	//        | (type = HostType hostType = STRING)
 	//    )
 	//    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	//    annotations+=CommentAnnotatonSL?;
@@ -3926,6 +3942,7 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    access=AccessModifier?
 	//    ((
 	//        input?='input'?
+	//        output?='output'?
 	//        'ref'
 	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 	//        reference = [annotations::NamedObject|PrimeID]
@@ -4303,6 +4320,7 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//// A reference call effect works similar to the reference call expression. Additionally, it may be
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect returns keffects::ReferenceCallEffect:
+	//    super?='super.'?
 	//    (annotations+=Annotation)*
 	//    valuedObject=[kexpressions::ValuedObject|PrimeID]
 	//    ('[' indices+=Expression ']')*
@@ -4994,6 +5012,7 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//// Reference Call Rule
 	//// Calls to references. They may include a parameter list.
 	//ReferenceCall returns ReferenceCall:
+	//    super?='super.'?
 	//    valuedObject=[ValuedObject|PrimeID]
 	//    ('[' indices+=Expression ']')*
 	//    ('.' subReference=ValuedObjectReference)?

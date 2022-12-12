@@ -933,8 +933,16 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case KExpressionsPackage.REFERENCE_DECLARATION:
-				if (rule == grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonRule()
-						|| rule == grammarAccess.getDeclarationWOSemicolonRule()
+				if (rule == grammarAccess.getMethodParameterDeclarationRule()
+						|| rule == grammarAccess.getPrimitiveDeclarationWOSemicolonRule()) {
+					sequence_PrimitiveDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonRule()) {
+					sequence_PrimitiveDeclarationWOSemicolon_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
 						|| rule == grammarAccess.getReferenceDeclarationWOSemicolonRule()) {
 					sequence_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
@@ -1295,6 +1303,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					return; 
 				}
 				else if (rule == grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonRule()
+						|| rule == grammarAccess.getMethodParameterDeclarationRule()
 						|| rule == grammarAccess.getDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
@@ -1872,6 +1881,24 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	/**
 	 * <pre>
 	 * Contexts:
+	 *     GenericParameterDeclaration returns GenericParameterDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=QuotedStringAnnotation* 
+	 *         valuedObjects+=SimpleValuedObject 
+	 *         (valueType=ValueType | (reference?='ref'? type=[NamedObject|PrimeID]) | valueType=PrimitiveValueType)?
+	 *     )
+	 * </pre>
+	 */
+	protected void sequence_GenericParameterDeclaration(ISerializationContext context, GenericParameterDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * <pre>
+	 * Contexts:
 	 *     ImplicitControlflowRegion returns ControlflowRegion
 	 *
 	 * Constraint:
@@ -1907,9 +1934,9 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         (access=AccessModifier | override?='override')? 
-	 *         (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))? 
+	 *         (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING) | (returnType=PrimitiveValueType returnReference=[NamedObject|PrimeID]))? 
 	 *         valuedObjects+=SimpleValuedObject 
-	 *         (parameterDeclarations+=VariableDeclarationWOSemicolon parameterDeclarations+=VariableDeclarationWOSemicolon*)? 
+	 *         (parameterDeclarations+=MethodParameterDeclaration parameterDeclarations+=MethodParameterDeclaration*)? 
 	 *         schedule+=ScheduleObjectReference* 
 	 *         annotations+=CommentAnnotatonSL? 
 	 *         declarations+=Declaration* 
@@ -2016,6 +2043,74 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	/**
 	 * <pre>
 	 * Contexts:
+	 *     MethodParameterDeclaration returns ReferenceDeclaration
+	 *     PrimitiveDeclarationWOSemicolon returns ReferenceDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         access=AccessModifier? 
+	 *         input?='input'? 
+	 *         output?='output'? 
+	 *         simple?='primitive' 
+	 *         reference=[NamedObject|PrimeID] 
+	 *         valuedObjects+=ReferenceValuedObject 
+	 *         valuedObjects+=ReferenceValuedObject* 
+	 *         annotations+=CommentAnnotatonSL?
+	 *     )
+	 * </pre>
+	 */
+	protected void sequence_PrimitiveDeclarationWOSemicolon(ISerializationContext context, ReferenceDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * <pre>
+	 * Contexts:
+	 *     DeclarationOrMethodWithKeywordWOSemicolon returns ReferenceDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             input?='input'? 
+	 *             output?='output'? 
+	 *             simple?='primitive' 
+	 *             reference=[NamedObject|PrimeID] 
+	 *             valuedObjects+=ReferenceValuedObject 
+	 *             valuedObjects+=ReferenceValuedObject* 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         ) | 
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             (
+	 *                 (
+	 *                     input?='input'? 
+	 *                     output?='output'? 
+	 *                     referenceContainer=[NamedObject|PrimeID]? 
+	 *                     reference=[NamedObject|PrimeID] 
+	 *                     (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
+	 *                     valuedObjects+=ReferenceValuedObject 
+	 *                     valuedObjects+=ReferenceValuedObject*
+	 *                 ) | 
+	 *                 (extern+=ExternString extern+=ExternString* valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
+	 *             ) 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         )
+	 *     )
+	 * </pre>
+	 */
+	protected void sequence_PrimitiveDeclarationWOSemicolon_ReferenceDeclarationWOSemicolon(ISerializationContext context, ReferenceDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * <pre>
+	 * Contexts:
 	 *     Declaration returns ReferenceDeclaration
 	 *     DeclarationOrMethod returns ReferenceDeclaration
 	 *
@@ -2043,6 +2138,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *             (
 	 *                 (
 	 *                     input?='input'? 
+	 *                     output?='output'? 
 	 *                     referenceContainer=[NamedObject|PrimeID]? 
 	 *                     reference=[NamedObject|PrimeID] 
 	 *                     (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
@@ -2409,9 +2505,9 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         (
 	 *             annotations+=Annotation* 
 	 *             access=AccessModifier? 
-	 *             const?='const'? 
 	 *             input?='input'? 
 	 *             output?='output'? 
+	 *             const?='const'? 
 	 *             global?='global'? 
 	 *             static?='static'? 
 	 *             ((signal?='signal'? type=ValueType) | signal?='signal' | (type=HostType hostType=STRING)) 

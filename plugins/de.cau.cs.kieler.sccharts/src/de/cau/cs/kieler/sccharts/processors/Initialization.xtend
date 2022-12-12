@@ -244,7 +244,7 @@ class Initialization extends SCChartsProcessor implements Traceable {
     	if (members === null) {
     	    if (vo.declaration.isClass && !(vo.declaration as ClassDeclaration).host) {
     	        val classDecl = vo.declaration as ClassDeclaration
-    	        if (classDecl.allNestedValuedObjects.exists[it instanceof VariableDeclaration]) {
+    	        if (classDecl.allNestedValuedObjects.exists[it.declaration instanceof VariableDeclaration]) {
         	        val init = classDecl.getOrCreateInitMethod
         	        if (vo.cardinalities.empty) {
         	            inits += createReferenceCallEffect => [

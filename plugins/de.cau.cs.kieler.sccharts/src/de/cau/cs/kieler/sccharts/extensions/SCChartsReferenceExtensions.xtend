@@ -310,7 +310,7 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
             val param = i < params.size ? params.get(i) : null
             
             val binding = new Binding => [
-                type = decl === null || decl.isTypeDeclaration ? BindingType.GENERIC_TYPE : BindingType.GENERIC_PARAM
+                type = decl === null || (decl.isComplexTypeDeclaration || decl.isPrimitiveTypeDeclaration) ? BindingType.GENERIC_TYPE : BindingType.GENERIC_PARAM
                 targetValuedObject = decl?.valuedObjects?.head
                 sourceExpression = param?.expression
             ]
@@ -370,13 +370,15 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
         return (ref.reference as State).getOutputValuedObjects.toList
     }
     
-    def separateGenericTypeDependentReferenceDeclarations(List<ReferenceDeclaration> decls) {
+    def void separateReferenceDeclarationsWithIndividualBindingsInVOs(List<ReferenceDeclaration> decls) {
         val separated = newArrayList
         
         for (decl : decls) {
-            if (decl.valuedObjects.size > 1 && decl.valuedObjects.exists[!genericParameters.nullOrEmpty]) {
-                for (voPair : decl.valuedObjects.indexed.drop(1)) {
+            if (decl.valuedObjects.size > 1 && decl.valuedObjects.exists[!genericParameters.nullOrEmpty || !parameters.nullOrEmpty]) {
+                val container = (decl.eContainer as DeclarationScope).declarations
+                for (voPair : decl.valuedObjects.indexed.drop(1).toList) {
                     val sDecl = createReferenceDeclaration(decl)
+                    container.add(container.indexOf(decl)+1,sDecl)
                     sDecl.valuedObjects += voPair.value
                     separated += sDecl
                 }

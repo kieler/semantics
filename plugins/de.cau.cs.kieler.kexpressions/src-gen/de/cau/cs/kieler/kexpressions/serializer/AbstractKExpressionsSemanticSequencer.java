@@ -2291,6 +2291,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *
 	 * Constraint:
 	 *     (
+	 *         super?='super.'? 
 	 *         valuedObject=[ValuedObject|PrimeID] 
 	 *         indices+=Expression* 
 	 *         subReference=ValuedObjectReference? 
@@ -3114,7 +3115,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     VectorValueMember returns ReferenceCall
 	 *
 	 * Constraint:
-	 *     (valuedObject=[ValuedObject|PrimeID] indices+=Expression* subReference=ValuedObjectReference? (parameters+=Parameter parameters+=Parameter*)?)
+	 *     (
+	 *         super?='super.'? 
+	 *         valuedObject=[ValuedObject|PrimeID] 
+	 *         indices+=Expression* 
+	 *         subReference=ValuedObjectReference? 
+	 *         (parameters+=Parameter parameters+=Parameter*)?
+	 *     )
 	 * </pre>
 	 */
 	protected void sequence_ReferenceCall(ISerializationContext context, ReferenceCall semanticObject) {

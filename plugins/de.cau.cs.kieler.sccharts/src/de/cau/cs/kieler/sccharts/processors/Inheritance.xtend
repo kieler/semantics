@@ -13,13 +13,16 @@
 package de.cau.cs.kieler.sccharts.processors
 
 import com.google.common.collect.HashMultimap
+import com.google.common.collect.Iterables
 import com.google.common.collect.LinkedHashMultimap
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
 import de.cau.cs.kieler.kexpressions.GenericTypeReference
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueTypeReference
@@ -27,6 +30,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCallExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
@@ -42,6 +46,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.emf.ecore.EObject
@@ -63,6 +68,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
     @Inject extension KExpressionsGenericParameterExtensions
     @Inject extension KExpressionsCompareExtensions
     @Inject extension KExpressionsAccessVisibilityExtensions
+    @Inject extension KExpressionsCallExtensions
     
     public static val GENERATED_PREFIX = "_"
     
@@ -91,7 +97,6 @@ class Inheritance extends SCChartsProcessor implements Traceable {
             // copy annotations
             state.annotations.addAll(allBaseStates.map[annotations.map[copy]].flatten)
             
-            // copy declarations
             val replacements = newHashMap
             val voNames = HashMultimap.<String, ValuedObject>create
             for (decl : state.declarations) {
@@ -100,6 +105,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                 }
             }
             
+            // Create binding
             val implicitlyBoundInSuperState = newHashSet
             var container = state.eContainer
             while (container !== null) {
@@ -111,9 +117,12 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                 container = container.eContainer
             }
             
-            val methods = newHashMap
+            // Analyze methods
+            val inheritedMethods = newHashMap
+            val localMethods = state.declarations.filter(MethodDeclaration).toSet
             val methodReplacements = state.getMethodInheritanceInfos // must be analyzed before state declarations are changed
             
+            // Copy declarations
             val newDecls = newArrayList
             for (baseDecl : allBaseStates.map[declarations].flatten.filter[!implicitlyBoundInSuperState.contains(it)]) {
                 var newDecl = baseDecl.copy
@@ -129,7 +138,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                     val baseVO = baseVoIdx.value
                     val newVO = newDecl.valuedObjects.get(baseVoIdx.key)
                     if (newDecl instanceof MethodDeclaration) {
-                        methods.put(baseDecl, newDecl)
+                        inheritedMethods.put(baseDecl, newDecl)
                         replacements.put(baseVO, newVO)
                         voStore.update(newVO, "inherited")
                     } else if (voNames.containsKey(newVO.name)) {
@@ -142,7 +151,9 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                     }
                     voNames.put(newVO.name, newVO)
                 }
-                newDecl.valuedObjects.removeIf[voNames.get(it.name).size > 1]
+                if (!(newDecl instanceof MethodDeclaration)) {
+                    newDecl.valuedObjects.removeIf[voNames.get(it.name).size > 1]
+                }
                 if (!newDecl.valuedObjects.empty) {
                     newDecls += newDecl
                     if (baseDecl.isEnum) {
@@ -152,31 +163,8 @@ class Inheritance extends SCChartsProcessor implements Traceable {
             }
             state.declarations.addAll(0, newDecls)
             
-            // Handle method override and abstract methods
-            for (method : methodReplacements) {
-                if (!method.errors.empty) {
-                    environment.errors.add(method.errors.join("\n"), method.inherited ? methods.get(method.decl) : method.decl, true)
-                } else if (method.overrider !== null) {
-                    if (methods.containsKey(method.overrider)) {
-                        val oldVO = method.decl.valuedObjects.head
-                        val newVO = methods.get(method.overrider).valuedObjects.head
-                        replacements.put(oldVO, newVO)
-                        voStore.remove(methods.get(method.decl).valuedObjects.head)
-                        method.decl.remove
-                    }
-                } else if (!method.body) {
-                    environment.errors.add("Method " + method.decl.valuedObjects.head.name + " has no implementation. All abstract methods require overrides for futher compilation", method.inherited ? methods.get(method.decl) : method.decl, true)
-                }
-            }
-            
-            // replace references in declarations/methods
-            state.declarations.forEach[replaceVOR(replacements)]
-            
             // copy actions
             state.actions.addAll(0, allBaseStates.map[actions.map[copy]].flatten.toList)
-            
-            // replace references in state actions
-            state.actions.forEach[replaceVOR(replacements)]
             
             // copy regions
             val overrriders = state.regions.filter[override].toList
@@ -194,6 +182,74 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                     environment.errors.add("Conflicting region with name " + r.name + " in inheritance hierarchy.", r, true)
                 }
             }
+            
+            // Collect all super calls
+            val superMethodCalls = HashMultimap.create
+            if (!methodReplacements.empty) {
+                val scopes = Iterables.concat(
+                    state.declarations.filter(MethodImplementationDeclaration),
+                    state.actions,
+                    state.regions
+                );
+                for (c : scopes) {
+                    for (call : c.eAllContents.filter(ReferenceCall).filter[it.super && it.isMethodCall].toIterable) {
+                        superMethodCalls.put(call.lowermostReference.valuedObject.declaration as MethodDeclaration, call)
+                    }
+                }
+            }
+            
+            // Handle method override and abstract methods
+            val handledSuperMethods = newHashSet
+            for (method : methodReplacements) {
+                if (!method.errors.empty) {
+                    environment.errors.add(method.errors.join("\n"), method.inherited ? inheritedMethods.get(method.decl) : method.decl, true)
+                } else if (method.overrider !== null) {
+                    if (inheritedMethods.containsKey(method.overrider) || localMethods.contains(method.overrider)) {
+                        val oldDecl = method.decl
+                        if (superMethodCalls.containsKey(oldDecl)) {
+                            // Keep super implementations if used
+                            if (!handledSuperMethods.contains(oldDecl)) {
+                                val oldVO = oldDecl.valuedObjects.head
+                                // Check ambiguity
+                                val overriderInfo = methodReplacements.findFirst[decl == method.overrider]
+                                if (overriderInfo.overrides.size > 1) {
+                                    for (call : superMethodCalls.get(oldDecl)) {
+                                        environment.errors.add("Cannot refer to super scope in method call of %s, if super scope has ambiguous definitions (diamond problem)".format(oldVO.name), call, true)
+                                    }
+                                }
+                                
+                                // Rename
+                                val newVO = replacements.get(oldVO)
+                                newVO.name = (oldDecl.eContainer as NamedObject).name + "_" + oldVO.name
+                                
+                                // Remember
+                                handledSuperMethods += oldDecl
+                            }
+                        } else {
+                            val oldVO = oldDecl.valuedObjects.head
+                            val newVO = if (inheritedMethods.containsKey(method.overrider)) {
+                                inheritedMethods.get(method.overrider).valuedObjects.head
+                            } else {
+                                method.overrider.valuedObjects.head
+                            }
+                            replacements.put(oldVO, newVO)
+                            voStore.remove(inheritedMethods.get(method.decl).valuedObjects.head)
+                            method.decl.remove
+                        }
+                    }
+                } else if (!method.body) {
+                    environment.errors.add("Method " + method.decl.valuedObjects.head.name + " has no implementation. All abstract methods require overrides for futher compilation", method.inherited ? inheritedMethods.get(method.decl) : method.decl, true)
+                }
+            }
+            
+            // remove super in methods
+            superMethodCalls.values.forEach[it.setSuper(false)]
+            
+            // replace references in declarations/methods
+            state.declarations.forEach[replaceVOR(replacements)]
+            
+            // replace references in state actions
+            state.actions.forEach[replaceVOR(replacements)]
 
             // replace references in state regions
             state.regions.forEach[replaceVOR(replacements)]
@@ -203,7 +259,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
             val bindingReplacements = <ValuedObject, Expression>newHashMap
             // Bound upstream
             if (rootReplacements !== null) {
-                for (name : rootReplacements.keySet) {
+                for (name : rootReplacements.allNames) {
                     if (voNames.containsKey(name)) {
                         for (vo : voNames.get(name)) {
                             bindingReplacements.put(vo, rootReplacements.peek(name))
@@ -216,7 +272,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
             if (rootReplacements !== null) {
                 for (param : state.genericParameterDeclarations) {
                     val vo = param.valuedObjects.head
-                    if (param.isTypeDeclaration) {
+                    if (param.isComplexTypeDeclaration || param.isPrimitiveTypeDeclaration) {
                         if (rootReplacements.typeReplacements.containsKey(vo)) {
                             typeReplacements.put(vo, rootReplacements.typeReplacements.get(vo.name))
                         }
@@ -390,9 +446,6 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                     }
                 }
             }
-            
-            // clear generics
-            state.genericParameterDeclarations.clear
             
             // clear override flags
             state.declarations.filter(MethodDeclaration).forEach[override = false]

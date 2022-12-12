@@ -9,6 +9,7 @@ import de.cau.cs.kieler.annotations.NamedObject;
 
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.IODeclaration;
 import de.cau.cs.kieler.kexpressions.Referenceable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
@@ -169,6 +170,11 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
       public Adapter caseDeclaration(Declaration object)
       {
         return createDeclarationAdapter();
+      }
+      @Override
+      public Adapter caseIODeclaration(IODeclaration object)
+      {
+        return createIODeclarationAdapter();
       }
       @Override
       public Adapter caseVariableDeclaration(VariableDeclaration object)
@@ -478,6 +484,21 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createDeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.IODeclaration <em>IO Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kexpressions.IODeclaration
+   * @generated
+   */
+  public Adapter createIODeclarationAdapter()
   {
     return null;
   }

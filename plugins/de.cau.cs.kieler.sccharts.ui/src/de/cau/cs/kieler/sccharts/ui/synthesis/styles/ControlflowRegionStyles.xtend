@@ -120,6 +120,14 @@ class ControlflowRegionStyles {
         ]
     }
     
+    def KRectangle addOverrideMethodStyle(KRectangle rect) {
+        return rect => [
+            background = METHOD_BACKGROUND.color
+            foreground = REGION_OVERRIDE_FOREGROUND.color
+            lineWidth = 1.3f;
+        ]
+    }
+    
     /**
      * Sets the selection style of the region.
      */

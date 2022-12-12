@@ -22,7 +22,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ScopeCall" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Call">
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="super" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="super" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="genericParameters" upperBound="-1"
         eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Parameter"
         containment="true"/>

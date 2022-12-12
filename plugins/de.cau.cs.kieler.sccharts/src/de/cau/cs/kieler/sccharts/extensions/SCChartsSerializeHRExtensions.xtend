@@ -200,9 +200,6 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             if (declaration.isStatic) {
                 components.addKeyword("static")
             }
-            if (declaration.isConst) {
-                components.addKeyword("const")
-            }
             if (declaration.isVolatile) {
                 components.addKeyword("volatile")
             }
@@ -211,6 +208,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }
             if (declaration.isOutput) {
                 components.addKeyword("output")
+            }
+            if (declaration.isConst) {
+                components.addKeyword("const")
             }
             if (declaration.isSignal) {
                 components.addKeyword("signal")
@@ -252,7 +252,12 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                 if (declaration.isInput) {
                     components.addKeyword("input")
                 }
-                components.addKeyword("ref")
+                if (declaration.isOutput) {
+                    components.addKeyword("output")
+                }
+                if (!declaration.simple) {
+                    components.addKeyword("ref")
+                }
                 
                 var containerPrefix = ""
                 if (declaration.referenceContainer !== null) {
@@ -291,8 +296,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             if (!declaration.name.nullOrEmpty) {
                 components.addHighlight(declaration.name)
             }
-        }
-        
+        }        
         
         if (declaration instanceof ClassDeclaration) {
             if (!declaration.name.nullOrEmpty) {
@@ -311,9 +315,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             while (voIter.hasNext) {
                 val vo = voIter.next;
                 components.addText(if (hr) {
-                    vo.serializeHR
+                    vo.serializeHR + (vo.parameters.empty ? "" : vo.parameters.serializeHRParameters.toString)
                 } else {
-                    vo.serialize
+                    vo.serialize + (vo.parameters.empty ? "" : vo.parameters.serializeParameters.toString)
                 })
                 if (vo.initialValue !== null) {
                     components.addText("=");
@@ -340,7 +344,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         if (declaration instanceof GenericParameterDeclaration) {
             if (declaration.valueDeclaration) {
                 components.addKeyword("is")
-                components.addText(declaration.valueType.serializeHR)
+                components.addKeyword(declaration.valueType.serializeHR)
             } else if (declaration.referenceDeclaration) {
                 components.addKeyword("is")
                 components.addKeyword("ref")
@@ -361,7 +365,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     def List<Pair<? extends CharSequence, TextFormat>> serializeMethodHighlighted(MethodDeclaration method, boolean hr, boolean body) {
         val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
         
-        if (method.access != AccessModifier.PUBLIC) {
+        if (method.override) {
+            components.addKeyword("override")
+        } else if (method.access != AccessModifier.PUBLIC) {
             components.addKeyword(switch(method.access) {
                 case PRIVATE: "public"
                 case PROTECTED: "protected"
@@ -376,6 +382,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             components.addKeyword("time")
         } else if (method.returnType == ValueType.HOST) {
             components.addKeyword(method.returnHostType)
+        } else if (method.returnType == ValueType.PRIMITIVE) {
+            components.addHighlight(method.returnReference.name)
         } else {
             components.addKeyword(method.returnType.serialize)
         }
@@ -384,7 +392,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         //components.addText("(")
         
         for (para : method.parameterDeclarations.indexed) {
-            components.addAll((para.value as VariableDeclaration).serializeHighlighted(hr))
+            components.addAll(para.value.serializeHighlighted(hr))
             if (para.key < method.parameterDeclarations.size - 1) {
                 components.addText(",")
             }

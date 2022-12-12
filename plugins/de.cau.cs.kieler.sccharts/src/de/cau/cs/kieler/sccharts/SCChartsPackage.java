@@ -1998,15 +1998,6 @@ public interface SCChartsPackage extends EPackage {
     int POLICY_CLASS_DECLARATION__ACCESS = KExtPackage.CLASS_DECLARATION__ACCESS;
 
     /**
-     * The feature id for the '<em><b>Type</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int POLICY_CLASS_DECLARATION__TYPE = KExtPackage.CLASS_DECLARATION__TYPE;
-
-    /**
      * The feature id for the '<em><b>Input</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2023,6 +2014,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int POLICY_CLASS_DECLARATION__OUTPUT = KExtPackage.CLASS_DECLARATION__OUTPUT;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__TYPE = KExtPackage.CLASS_DECLARATION__TYPE;
 
     /**
      * The feature id for the '<em><b>Static</b></em>' attribute.

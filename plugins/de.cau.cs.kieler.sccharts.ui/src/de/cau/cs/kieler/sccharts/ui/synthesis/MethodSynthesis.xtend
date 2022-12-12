@@ -80,6 +80,7 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
             setAsExpandedView
             associateWith(method)
             addDoubleClickAction(CollapseExpandAction.ID)
+            if (method.override) addOverrideMethodStyle()
             if (method.declarations.empty) {
                 addStatesArea(!label.nullOrEmpty);
             } else {
@@ -113,6 +114,7 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
             associateWith(method)
             if (method.schedule.size > 0) it.setUserScheduleStyle
             addDoubleClickAction(CollapseExpandAction.ID)
+            if (method.override) addOverrideMethodStyle()
             addExpandButton(label) => [
                 addSingleClickAction(CollapseExpandAction.ID)
                 addDoubleClickAction(CollapseExpandAction.ID)

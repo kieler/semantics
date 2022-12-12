@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsOverloadingExtensions
 import de.cau.cs.kieler.sccharts.BaseStateReference
 import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.sccharts.Region
@@ -28,11 +29,13 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.Collection
+import java.util.HashSet
 import java.util.LinkedHashMap
 import java.util.List
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtend.lib.annotations.ToString
 
 import static extension java.lang.String.format
 
@@ -264,13 +267,18 @@ class SCChartsInheritanceExtensions {
         for (method : state.methodDeclarations) {
             val info = new MethodInheritanceInfo(method)
             infos += info
-            effective.put(info.name, info)
+            if (effective.containsKey(info.signatureID)) {
+                info.errors += "Multiple definitions of methods with the same signature (%s).".format(info.signatureID) +
+                    // TODO remove when implemented
+                    " Note that method overloading is currently only supported for parameters of different length, not type."
+            } else {
+                effective.put(info.signatureID, info)
+            }
         }
         
+        // TODO: implement overloading based on types
+        
         // inherited
-        // TODO:
-        // - add/handle super. access
-        // - add/handle overloading
         val leveldBaseStates = state.allInheritedStateReferencesHierachicallyLeveled
         for (base : leveldBaseStates.entrySet) {
             val baseState = base.key.target
@@ -280,15 +288,18 @@ class SCChartsInheritanceExtensions {
                 infos += info
                 
                 if (!method.isPrivate) {
-                    if (effective.containsKey(info.name)) {
-                        val repl = effective.get(info.name)
+                    if (effective.containsKey(info.signatureID)) {
+                        val repl = effective.get(info.signatureID)
                         
                         if (info.inheritanceLevel < repl.inheritanceLevel) {
                             info.errors += "Multiple definitions of the same method (%s) in the inheritance hierarchy but no overrider to solve this ambiguity (diamond problem).".format(info.name)
                             repl.errors += "Multiple definitions of the same method (%s) in the inheritance hierarchy but no overrider to solve this ambiguity (diamond problem).".format(info.name)
                         } else if (!repl.decl.^override) {
-                            info.errors += "Method (%s) was redefined in the inheritance hierarchy but not marked as override (keyword).".format(info.name)
-                        } 
+                            info.errors += "Method (%s) was redefined in the inheritance hierarchy but not marked as override.".format(info.name)
+                            repl.errors += "Methods with the same signature is already inherited (%s). Mark this declaration as override (keyword) to replace previous definitions.".format(info.signatureID) +
+                                // TODO remove when implemented
+                                " Note that method overloading is currently only supported for parameters of different length, not type."
+                        }
                         if (repl.decl.^override) {
                             if (method.returnType != repl.decl.returnType) {
                                 repl.errors += "Overriding methods must not declare a different return type (%s vs. %s).".format(method.returnType, repl.decl.returnType)
@@ -315,6 +326,7 @@ class SCChartsInheritanceExtensions {
                         }
                         info.overrider = repl.decl
                         repl.overriding = true
+                        repl.overrides += info.decl
                     } else {
                         effective.put(info.name, info)
                     }
@@ -359,19 +371,24 @@ class SCChartsInheritanceExtensions {
 }
 
 @Accessors
+@ToString
 class MethodInheritanceInfo {
     val MethodDeclaration decl
+    val String signatureID
     val boolean body
     val List<String> errors = newArrayList
     
     var int inheritanceLevel = 0
     var boolean overriding = false
+    var boolean overloaded = false
     var MethodDeclaration overrider = null
+    val Set<MethodDeclaration> overrides = new HashSet()
     
     new(MethodDeclaration decl) {
         this.decl = decl
         this.body = (decl instanceof MethodImplementationDeclaration)
                     && !(decl as MethodImplementationDeclaration).statements.nullOrEmpty
+        this.signatureID = KExpressionsOverloadingExtensions.getMethodSignatureID(decl)       
     }
     
     def getName() {

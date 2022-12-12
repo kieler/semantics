@@ -26,13 +26,15 @@ import java.util.Stack
  * @kieler.design 2017-07-18 proposed
  * @kieler.rating 2017-07-18 proposed yellow  
  */
-class Replacements extends HashMap<String, Stack<Expression>> {
+class Replacements {
     
     /** 
      * Nested replacement for generic types.
-     * Static parameters that are not types will appear in normal replacemnts!
+     * Static parameters that are not types will appear in normal replacements!
      */
     public val HashMap<String, Expression> typeReplacements = newHashMap
+    
+    private val HashMap<String, Stack<Expression>> stackMap = newHashMap
     
     new () {
         super()
@@ -42,12 +44,12 @@ class Replacements extends HashMap<String, Stack<Expression>> {
         super()
         
         if (replacements !== null) {
-            for (k : replacements.keySet) {
-                val st = replacements.get(k)
+            for (k : replacements.stackMap.keySet) {
+                val st = replacements.stackMap.get(k)
                 // The iterator method on java.util.Stack iterates through a Stack from the bottom up. ;-)
                 for (s : st) {
                     this.push(k, s)
-                }    
+                }
             }
         }
     }
@@ -60,9 +62,9 @@ class Replacements extends HashMap<String, Stack<Expression>> {
     
     /** Push the replacement expression to a given name onto the stack. */
     def push(String valuedObjectName, Expression expression) {
-        val stack = get(valuedObjectName)
+        val stack = stackMap.get(valuedObjectName)
         if (stack === null) {
-            put(valuedObjectName, new Stack => [ push(expression) ])
+            stackMap.put(valuedObjectName, new Stack => [ push(expression) ])
         } else {
             stack.push(expression)
         }
@@ -75,7 +77,7 @@ class Replacements extends HashMap<String, Stack<Expression>> {
     
     /** Peek the expression of a given name. */
     def Expression peek(String valuedObjectName) {
-        val stack = get(valuedObjectName)
+        val stack = stackMap.get(valuedObjectName)
         if (stack === null || stack.length == 0) {
             return null
         } else {
@@ -90,7 +92,7 @@ class Replacements extends HashMap<String, Stack<Expression>> {
 
     /** Pop the replacement expression of a name from the stack. */
     def Expression pop(String valuedObjectName) {
-        val stack = get(valuedObjectName)
+        val stack = stackMap.get(valuedObjectName)
         if (stack === null) {
             return null
         } else {
@@ -100,6 +102,21 @@ class Replacements extends HashMap<String, Stack<Expression>> {
     
     /** Returns true if there is a entry for a VO with the same name */
     def boolean containsKey(ValuedObject valuedObject) {
-        return containsKey(valuedObject.name)
+        return stackMap.containsKey(valuedObject.name)
     }
+    
+    def allNames() {
+        return stackMap.keySet
+    }
+    
+    // Delegates
+    
+    def boolean containsKey(String valuedObjectName) {
+        return stackMap.containsKey(valuedObjectName)
+    }
+    
+    def boolean isEmpty() {
+        return stackMap.empty
+    }
+    
 }

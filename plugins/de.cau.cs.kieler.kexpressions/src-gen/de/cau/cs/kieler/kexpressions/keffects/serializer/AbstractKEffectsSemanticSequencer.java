@@ -1340,6 +1340,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *
 	 * Constraint:
 	 *     (
+	 *         super?='super.'? 
 	 *         annotations+=Annotation* 
 	 *         valuedObject=[ValuedObject|PrimeID] 
 	 *         indices+=Expression* 

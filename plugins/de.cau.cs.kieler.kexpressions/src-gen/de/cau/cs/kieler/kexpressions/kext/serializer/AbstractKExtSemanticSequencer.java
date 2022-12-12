@@ -1759,6 +1759,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         (
 	 *             (
 	 *                 input?='input'? 
+	 *                 output?='output'? 
 	 *                 referenceContainer=[NamedObject|PrimeID]? 
 	 *                 reference=[NamedObject|PrimeID] 
 	 *                 (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
@@ -1987,9 +1988,9 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         access=AccessModifier? 
-	 *         const?='const'? 
 	 *         input?='input'? 
 	 *         output?='output'? 
+	 *         const?='const'? 
 	 *         global?='global'? 
 	 *         static?='static'? 
 	 *         ((signal?='signal'? type=ValueType) | signal?='signal' | (type=HostType hostType=STRING)) 

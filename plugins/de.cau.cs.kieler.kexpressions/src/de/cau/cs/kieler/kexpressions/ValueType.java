@@ -223,7 +223,15 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    TIME(17, "TIME", "time");
+    TIME(17, "TIME", "time"), /**
+     * The '<em><b>PRIMITIVE</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #PRIMITIVE_VALUE
+     * @generated
+     * @ordered
+     */
+    PRIMITIVE(18, "PRIMITIVE", "primitive");
 
     /**
      * The '<em><b>PURE</b></em>' literal value.
@@ -442,6 +450,17 @@ public enum ValueType implements Enumerator {
     public static final int TIME_VALUE = 17;
 
     /**
+     * The '<em><b>PRIMITIVE</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #PRIMITIVE
+     * @model literal="primitive"
+     * @generated
+     * @ordered
+     */
+    public static final int PRIMITIVE_VALUE = 18;
+
+    /**
      * An array of all the '<em><b>Value Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -467,6 +486,7 @@ public enum ValueType implements Enumerator {
             ENUM,
             VOID,
             TIME,
+            PRIMITIVE,
         };
 
     /**
@@ -541,6 +561,7 @@ public enum ValueType implements Enumerator {
             case ENUM_VALUE: return ENUM;
             case VOID_VALUE: return VOID;
             case TIME_VALUE: return TIME;
+            case PRIMITIVE_VALUE: return PRIMITIVE;
         }
         return null;
     }

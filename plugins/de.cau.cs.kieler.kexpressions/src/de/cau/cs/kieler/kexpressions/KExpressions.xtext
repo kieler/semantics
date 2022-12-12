@@ -368,6 +368,7 @@ ScheduleObjectReference returns ScheduleObjectReference:
 // Reference Call Rule
 // Calls to references. They may include a parameter list. 
 ReferenceCall returns ReferenceCall:
+    super?='super.'?
     valuedObject=[ValuedObject|PrimeID] 
     ('[' indices+=Expression ']')*
     ('.' subReference=ValuedObjectReference)?

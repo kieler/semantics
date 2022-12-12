@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration;
 import de.cau.cs.kieler.kexpressions.GenericTypeReference;
+import de.cau.cs.kieler.kexpressions.IODeclaration;
 import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.JsonAnnotation;
@@ -199,6 +200,13 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     private EClass declarationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass ioDeclarationEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -902,6 +910,36 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
+    public EClass getIODeclaration() {
+        return ioDeclarationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getIODeclaration_Input() {
+        return (EAttribute)ioDeclarationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getIODeclaration_Output() {
+        return (EAttribute)ioDeclarationEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getVariableDeclaration() {
         return variableDeclarationEClass;
     }
@@ -922,7 +960,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EAttribute getVariableDeclaration_Input() {
+    public EAttribute getVariableDeclaration_Static() {
         return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(1);
     }
 
@@ -932,7 +970,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EAttribute getVariableDeclaration_Output() {
+    public EAttribute getVariableDeclaration_Signal() {
         return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(2);
     }
 
@@ -942,7 +980,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EAttribute getVariableDeclaration_Static() {
+    public EAttribute getVariableDeclaration_Const() {
         return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(3);
     }
 
@@ -952,7 +990,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EAttribute getVariableDeclaration_Signal() {
+    public EAttribute getVariableDeclaration_Extern() {
         return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(4);
     }
 
@@ -962,7 +1000,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EAttribute getVariableDeclaration_Const() {
+    public EAttribute getVariableDeclaration_Volatile() {
         return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(5);
     }
 
@@ -972,7 +1010,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EAttribute getVariableDeclaration_Extern() {
+    public EAttribute getVariableDeclaration_Global() {
         return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(6);
     }
 
@@ -982,28 +1020,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EAttribute getVariableDeclaration_Volatile() {
-        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(7);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EAttribute getVariableDeclaration_Global() {
-        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(8);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EAttribute getVariableDeclaration_HostType() {
-        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(9);
+        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(7);
     }
 
     /**
@@ -1022,7 +1040,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EAttribute getReferenceDeclaration_Input() {
+    public EAttribute getReferenceDeclaration_Simple() {
         return (EAttribute)referenceDeclarationEClass.getEStructuralFeatures().get(0);
     }
 
@@ -1222,7 +1240,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EAttribute getMethodDeclaration_Override() {
+    public EAttribute getMethodDeclaration_Static() {
         return (EAttribute)methodDeclarationEClass.getEStructuralFeatures().get(0);
     }
 
@@ -1232,7 +1250,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EAttribute getMethodDeclaration_ReturnType() {
+    public EAttribute getMethodDeclaration_Override() {
         return (EAttribute)methodDeclarationEClass.getEStructuralFeatures().get(1);
     }
 
@@ -1242,7 +1260,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EAttribute getMethodDeclaration_ReturnHostType() {
+    public EAttribute getMethodDeclaration_ReturnType() {
         return (EAttribute)methodDeclarationEClass.getEStructuralFeatures().get(2);
     }
 
@@ -1252,8 +1270,38 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
+    public EAttribute getMethodDeclaration_ReturnHostType() {
+        return (EAttribute)methodDeclarationEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMethodDeclaration_ReturnReference() {
+        return (EReference)methodDeclarationEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMethodDeclaration_ReturnReferenceContainer() {
+        return (EReference)methodDeclarationEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EReference getMethodDeclaration_ParameterDeclarations() {
-        return (EReference)methodDeclarationEClass.getEStructuralFeatures().get(3);
+        return (EReference)methodDeclarationEClass.getEStructuralFeatures().get(6);
     }
 
     /**
@@ -1354,6 +1402,16 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
     @Override
     public EClass getReferenceCall() {
         return referenceCallEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getReferenceCall_Super() {
+        return (EAttribute)referenceCallEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -1669,10 +1727,12 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         createEReference(declarationEClass, DECLARATION__VALUED_OBJECTS);
         createEAttribute(declarationEClass, DECLARATION__ACCESS);
 
+        ioDeclarationEClass = createEClass(IO_DECLARATION);
+        createEAttribute(ioDeclarationEClass, IO_DECLARATION__INPUT);
+        createEAttribute(ioDeclarationEClass, IO_DECLARATION__OUTPUT);
+
         variableDeclarationEClass = createEClass(VARIABLE_DECLARATION);
         createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__TYPE);
-        createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__INPUT);
-        createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__OUTPUT);
         createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__STATIC);
         createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__SIGNAL);
         createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__CONST);
@@ -1682,7 +1742,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__HOST_TYPE);
 
         referenceDeclarationEClass = createEClass(REFERENCE_DECLARATION);
-        createEAttribute(referenceDeclarationEClass, REFERENCE_DECLARATION__INPUT);
+        createEAttribute(referenceDeclarationEClass, REFERENCE_DECLARATION__SIMPLE);
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__REFERENCE);
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__REFERENCE_CONTAINER);
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__PARAMETERS);
@@ -1702,9 +1762,12 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         createEAttribute(valueTypeReferenceEClass, VALUE_TYPE_REFERENCE__VALUE_TYPE);
 
         methodDeclarationEClass = createEClass(METHOD_DECLARATION);
+        createEAttribute(methodDeclarationEClass, METHOD_DECLARATION__STATIC);
         createEAttribute(methodDeclarationEClass, METHOD_DECLARATION__OVERRIDE);
         createEAttribute(methodDeclarationEClass, METHOD_DECLARATION__RETURN_TYPE);
         createEAttribute(methodDeclarationEClass, METHOD_DECLARATION__RETURN_HOST_TYPE);
+        createEReference(methodDeclarationEClass, METHOD_DECLARATION__RETURN_REFERENCE);
+        createEReference(methodDeclarationEClass, METHOD_DECLARATION__RETURN_REFERENCE_CONTAINER);
         createEReference(methodDeclarationEClass, METHOD_DECLARATION__PARAMETER_DECLARATIONS);
 
         scheduleDeclarationEClass = createEClass(SCHEDULE_DECLARATION);
@@ -1725,6 +1788,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         createEReference(callEClass, CALL__PARAMETERS);
 
         referenceCallEClass = createEClass(REFERENCE_CALL);
+        createEAttribute(referenceCallEClass, REFERENCE_CALL__SUPER);
 
         functionCallEClass = createEClass(FUNCTION_CALL);
         createEAttribute(functionCallEClass, FUNCTION_CALL__FUNCTION_NAME);
@@ -1813,8 +1877,9 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         textExpressionEClass.getESuperTypes().add(this.getExpression());
         textExpressionEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         declarationEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
-        variableDeclarationEClass.getESuperTypes().add(this.getDeclaration());
-        referenceDeclarationEClass.getESuperTypes().add(this.getDeclaration());
+        ioDeclarationEClass.getESuperTypes().add(this.getDeclaration());
+        variableDeclarationEClass.getESuperTypes().add(this.getIODeclaration());
+        referenceDeclarationEClass.getESuperTypes().add(this.getIODeclaration());
         genericParameterDeclarationEClass.getESuperTypes().add(this.getDeclaration());
         genericTypeReferenceEClass.getESuperTypes().add(this.getExpression());
         valueTypeReferenceEClass.getESuperTypes().add(this.getExpression());
@@ -1906,10 +1971,12 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEReference(getDeclaration_ValuedObjects(), this.getValuedObject(), null, "valuedObjects", null, 0, -1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDeclaration_Access(), this.getAccessModifier(), "access", null, 0, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+        initEClass(ioDeclarationEClass, IODeclaration.class, "IODeclaration", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIODeclaration_Input(), ecorePackage.getEBoolean(), "input", null, 1, 1, IODeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIODeclaration_Output(), ecorePackage.getEBoolean(), "output", null, 1, 1, IODeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
         initEClass(variableDeclarationEClass, VariableDeclaration.class, "VariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getVariableDeclaration_Type(), this.getValueType(), "type", null, 1, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getVariableDeclaration_Input(), ecorePackage.getEBoolean(), "input", null, 1, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getVariableDeclaration_Output(), ecorePackage.getEBoolean(), "output", null, 1, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getVariableDeclaration_Static(), ecorePackage.getEBoolean(), "static", null, 1, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getVariableDeclaration_Signal(), ecorePackage.getEBoolean(), "signal", null, 1, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getVariableDeclaration_Const(), ecorePackage.getEBoolean(), "const", null, 1, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1919,7 +1986,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEAttribute(getVariableDeclaration_HostType(), ecorePackage.getEString(), "hostType", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(referenceDeclarationEClass, ReferenceDeclaration.class, "ReferenceDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getReferenceDeclaration_Input(), ecorePackage.getEBoolean(), "input", "false", 1, 1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getReferenceDeclaration_Simple(), ecorePackage.getEBoolean(), "simple", "false", 1, 1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReferenceDeclaration_Reference(), ecorePackage.getEObject(), null, "reference", null, 0, 1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReferenceDeclaration_ReferenceContainer(), ecorePackage.getEObject(), null, "referenceContainer", null, 0, 1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReferenceDeclaration_Parameters(), this.getParameter(), null, "parameters", null, 0, -1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1939,9 +2006,12 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEAttribute(getValueTypeReference_ValueType(), this.getValueType(), "valueType", null, 1, 1, ValueTypeReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(methodDeclarationEClass, MethodDeclaration.class, "MethodDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getMethodDeclaration_Override(), ecorePackage.getEBoolean(), "override", null, 0, 1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getMethodDeclaration_Static(), ecorePackage.getEBoolean(), "static", null, 1, 1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getMethodDeclaration_Override(), ecorePackage.getEBoolean(), "override", null, 1, 1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMethodDeclaration_ReturnType(), this.getValueType(), "returnType", null, 0, 1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMethodDeclaration_ReturnHostType(), ecorePackage.getEString(), "returnHostType", null, 0, 1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMethodDeclaration_ReturnReference(), theAnnotationsPackage.getNamedObject(), null, "returnReference", null, 0, 1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMethodDeclaration_ReturnReferenceContainer(), theAnnotationsPackage.getNamedObject(), null, "returnReferenceContainer", null, 0, 1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getMethodDeclaration_ParameterDeclarations(), this.getDeclaration(), null, "parameterDeclarations", null, 0, -1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(scheduleDeclarationEClass, ScheduleDeclaration.class, "ScheduleDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1962,6 +2032,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEReference(getCall_Parameters(), this.getParameter(), null, "parameters", null, 0, -1, Call.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(referenceCallEClass, ReferenceCall.class, "ReferenceCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getReferenceCall_Super(), ecorePackage.getEBoolean(), "super", null, 1, 1, ReferenceCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(functionCallEClass, FunctionCall.class, "FunctionCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getFunctionCall_FunctionName(), ecorePackage.getEString(), "functionName", null, 0, 1, FunctionCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2055,6 +2126,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         addEEnumLiteral(valueTypeEEnum, ValueType.ENUM);
         addEEnumLiteral(valueTypeEEnum, ValueType.VOID);
         addEEnumLiteral(valueTypeEEnum, ValueType.TIME);
+        addEEnumLiteral(valueTypeEEnum, ValueType.PRIMITIVE);
 
         initEEnum(priorityProtocolEEnum, PriorityProtocol.class, "PriorityProtocol");
         addEEnumLiteral(priorityProtocolEEnum, PriorityProtocol.CONFLICT);

@@ -20,10 +20,12 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
 import de.cau.cs.kieler.kexpressions.GenericTypeReference
+import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ThisExpression
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValueTypeReference
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
@@ -33,6 +35,8 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExte
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.ScopeCall
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.processors.Reference
 import java.util.List
@@ -57,6 +61,7 @@ class SCChartsTypeExtensions {
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension SCChartsInheritanceExtensions
     @Inject extension SCChartsTypeExtensions 
+    @Inject extension SCChartsReferenceExtensions
     
     def dispatch boolean isValidSubtypeOf(EObject type, EObject base) {
         return type.checkForSubtypeProblem(base) === null
@@ -64,7 +69,7 @@ class SCChartsTypeExtensions {
     
     def dispatch String checkForSubtypeProblem(GenericParameterDeclaration decl, Expression exp) {
         val vo = decl.valuedObjects.head
-        if (decl.isTypeDeclaration) {
+        if (decl.isComplexTypeDeclaration && !decl.isPrimitiveTypeDeclaration) {
             val type = decl.type
             if (type instanceof State) {
                 var EObject paramType = null
@@ -125,6 +130,22 @@ class SCChartsTypeExtensions {
                 }
             } else {
                 return "Invalid generic type declaration of %s! Base type %s is not a state.".format(vo?.name, type?.name)
+            }
+        } else if (decl.isPrimitiveTypeDeclaration) {
+             if (exp instanceof ValueTypeReference) {
+                val type = decl.valueType
+                if (type === ValueType.PRIMITIVE) {
+                    if (!KExpressionsTypeExtensions.PRIMITIVES.contains(exp.valueType)) {
+                        return "Type mismatch! Generic parameter %s of type %s cannot accept type %s."
+                            .format(vo?.name, type?.literal, exp.valueType?.literal)
+                    }
+                } else if (exp.valueType !== type) {
+                    return "Type mismatch! Generic parameter %s of type %s cannot accept type %s."
+                        .format(vo?.name,type?.literal, exp.valueType?.literal)
+                }
+            } else {
+                return "Generic parameter %s with primitive type restriction must be bound to a concrete primitive type, not %s."
+                        .format(vo?.name, exp.class.simpleName)
             }
         } else {
             val type = decl.valueType
@@ -195,6 +216,33 @@ class SCChartsTypeExtensions {
         }
         
         return null
+    }
+
+    def dispatch String checkForSubtypeProblem(ReferenceDeclaration refDecl, Value value) {
+        if (refDecl.simple) { // primitive ref
+            try {
+                val genericVO = refDecl.reference as ValuedObject
+                val param = value.eContainer as Parameter
+                val bindingSubject = param.eContainer
+                val genericBindings = if (bindingSubject instanceof ScopeCall) {
+                    (bindingSubject.eContainer as Scope).createGenericParameterBindings
+                } else if (bindingSubject instanceof ValuedObject) {
+                    bindingSubject.createGenericParameterBindings
+                }
+                val genericBinding = genericBindings.findFirst[targetValuedObject == genericVO]
+                val typeExp = genericBinding.sourceExpression as ValueTypeReference
+                
+                if (typeExp.valueType !== value.inferTypeStrict) {
+                    return "Type of literal value %s does not match generic type argument %s for %s".format(value.inferTypeStrict, typeExp.valueType, genericVO.name)
+                }
+                
+                return null
+            } catch(Exception e) {
+                return "Cannot determine type of %s".format(refDecl.reference.asNamedObject?.name)
+            }
+        } else {
+            return "Cannot substitute complex reference type %s with value literal of type %s".format(refDecl.reference.asNamedObject?.name, value.class.simpleName)
+        }
     }
  
     def dispatch String checkForSubtypeProblem(EObject type, EObject base) {
