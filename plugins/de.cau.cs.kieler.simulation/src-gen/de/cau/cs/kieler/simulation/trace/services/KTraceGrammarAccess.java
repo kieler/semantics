@@ -1001,6 +1001,8 @@ public class KTraceGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    access=AccessModifier?
 	//    ((
 	//        input?='input'?
+	//        output?='output'?
+	//        const?='const'?
 	//        'ref'
 	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 	//        reference = [annotations::NamedObject|PrimeID]
@@ -1026,6 +1028,7 @@ public class KTraceGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    ((
 	//        input?='input'?
 	//        output?='output'?
+	//        const?='const'?
 	//        'ref'
 	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 	//        reference = [annotations::NamedObject|PrimeID]

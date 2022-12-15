@@ -33,6 +33,7 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
@@ -55,7 +56,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
      *  number of other edges to flip to break a cycle.
      */ 
     public static val IMMEDIATE_TRANSITION_DIRECTION_THRESHOLD = 6
-    public static val MAIN_LABEL = new org.eclipse.elk.graph.properties.Property("de.cau.cs.kieler.klighd.syntheses.transition.main", false)
+    public static val MAIN_LABEL = new Property("de.cau.cs.kieler.klighd.syntheses.transition.main", false)
 
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
@@ -126,8 +127,17 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
                 }
                 if (method.eContainer instanceof PolicyClassDeclaration) {
                     val classDecl = method.eContainer as PolicyClassDeclaration
-                    if (classDecl.policy !== null && !classDecl.policy.name.nullOrEmpty) {
-                        policySchedules += if (classDecl.policy.label.nullOrEmpty) classDecl.policy.label else classDecl.policy.name
+                    for (policy : classDecl.policies) {
+                        if (!policy.name.nullOrEmpty) {
+                            val methodNames = policy.states
+                                .map[outgoingTransitions].flatten
+                                .map[trigger].filter(ValuedObjectReference)
+                                .map[it.valuedObject.name].toSet
+                            // TODO name matching is to sloppy but checking only referenced method does not catch overloaded methods
+                            if (methodNames.contains(method.valuedObjects.head.name)) {
+                                policySchedules += if (policy.label.nullOrEmpty) policy.label else policy.name
+                            }
+                        }
                     }
                 }
             }

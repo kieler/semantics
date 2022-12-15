@@ -10313,7 +10313,7 @@ public class EsterelGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//    (
 	//        ';'
 	//        |
-	//        '{'
+	//        implemented?='{'
 	//        annotations+=CommentAnnotatonSL?
 	//        declarations+=Declaration*
 	//        statements+=Statement*
@@ -10338,7 +10338,7 @@ public class EsterelGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//    valuedObjects+=SimpleValuedObject
 	//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 	//    ('schedule' schedule+=ScheduleObjectReference+)?
-	//    ('{'
+	//    (implemented?='{'
 	//        annotations+=CommentAnnotatonSL?
 	//        declarations+=Declaration*
 	//        statements+=Statement*
@@ -10661,6 +10661,8 @@ public class EsterelGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//    access=AccessModifier?
 	//    ((
 	//        input?='input'?
+	//        output?='output'?
+	//        const?='const'?
 	//        'ref'
 	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 	//        reference = [annotations::NamedObject|PrimeID]
@@ -10686,6 +10688,7 @@ public class EsterelGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//    ((
 	//        input?='input'?
 	//        output?='output'?
+	//        const?='const'?
 	//        'ref'
 	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 	//        reference = [annotations::NamedObject|PrimeID]

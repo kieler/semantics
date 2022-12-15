@@ -130,8 +130,11 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Alternatives cAlternatives_9 = (Alternatives)cGroup.eContents().get(9);
 		private final Assignment cRegionsAssignment_9_0 = (Assignment)cAlternatives_9.eContents().get(0);
 		private final RuleCall cRegionsImplicitControlflowRegionParserRuleCall_9_0_0 = (RuleCall)cRegionsAssignment_9_0.eContents().get(0);
-		private final Assignment cRegionsAssignment_9_1 = (Assignment)cAlternatives_9.eContents().get(1);
-		private final RuleCall cRegionsRegionParserRuleCall_9_1_0 = (RuleCall)cRegionsAssignment_9_1.eContents().get(0);
+		private final Alternatives cAlternatives_9_1 = (Alternatives)cAlternatives_9.eContents().get(1);
+		private final Assignment cRegionsAssignment_9_1_0 = (Assignment)cAlternatives_9_1.eContents().get(0);
+		private final RuleCall cRegionsRegionParserRuleCall_9_1_0_0 = (RuleCall)cRegionsAssignment_9_1_0.eContents().get(0);
+		private final Assignment cPoliciesAssignment_9_1_1 = (Assignment)cAlternatives_9_1.eContents().get(1);
+		private final RuleCall cPoliciesPolicyRegionParserRuleCall_9_1_1_0 = (RuleCall)cPoliciesAssignment_9_1_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_10 = (Keyword)cGroup.eContents().get(10);
 		
 		//// ------------- //
@@ -145,7 +148,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//    '{'
 		//        declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
 		//        actions+=LocalAction*
-		//        (regions+=ImplicitControlflowRegion | regions+=Region*)
+		//        (regions+=ImplicitControlflowRegion | (regions+=Region | policies+=PolicyRegion)*)
 		//    '}';
 		@Override public ParserRule getRule() { return rule; }
 		
@@ -156,7 +159,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//'{'
 		//    declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
 		//    actions+=LocalAction*
-		//    (regions+=ImplicitControlflowRegion | regions+=Region*)
+		//    (regions+=ImplicitControlflowRegion | (regions+=Region | policies+=PolicyRegion)*)
 		//'}'
 		public Group getGroup() { return cGroup; }
 		
@@ -247,7 +250,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//LocalAction
 		public RuleCall getActionsLocalActionParserRuleCall_8_0() { return cActionsLocalActionParserRuleCall_8_0; }
 		
-		//(regions+=ImplicitControlflowRegion | regions+=Region*)
+		//(regions+=ImplicitControlflowRegion | (regions+=Region | policies+=PolicyRegion)*)
 		public Alternatives getAlternatives_9() { return cAlternatives_9; }
 		
 		//regions+=ImplicitControlflowRegion
@@ -256,11 +259,20 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//ImplicitControlflowRegion
 		public RuleCall getRegionsImplicitControlflowRegionParserRuleCall_9_0_0() { return cRegionsImplicitControlflowRegionParserRuleCall_9_0_0; }
 		
-		//regions+=Region*
-		public Assignment getRegionsAssignment_9_1() { return cRegionsAssignment_9_1; }
+		//(regions+=Region | policies+=PolicyRegion)*
+		public Alternatives getAlternatives_9_1() { return cAlternatives_9_1; }
+		
+		//regions+=Region
+		public Assignment getRegionsAssignment_9_1_0() { return cRegionsAssignment_9_1_0; }
 		
 		//Region
-		public RuleCall getRegionsRegionParserRuleCall_9_1_0() { return cRegionsRegionParserRuleCall_9_1_0; }
+		public RuleCall getRegionsRegionParserRuleCall_9_1_0_0() { return cRegionsRegionParserRuleCall_9_1_0_0; }
+		
+		//policies+=PolicyRegion
+		public Assignment getPoliciesAssignment_9_1_1() { return cPoliciesAssignment_9_1_1; }
+		
+		//PolicyRegion
+		public RuleCall getPoliciesPolicyRegionParserRuleCall_9_1_1_0() { return cPoliciesPolicyRegionParserRuleCall_9_1_1_0; }
 		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_10() { return cRightCurlyBracketKeyword_10; }
@@ -2883,11 +2895,12 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Assignment cNameAssignment_4_0_1 = (Assignment)cGroup_4_0.eContents().get(1);
 		private final RuleCall cNameEStringParserRuleCall_4_0_1_0 = (RuleCall)cNameAssignment_4_0_1.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_4_0_2 = (Keyword)cGroup_4_0.eContents().get(2);
-		private final Assignment cPolicyAssignment_4_0_3 = (Assignment)cGroup_4_0.eContents().get(3);
-		private final RuleCall cPolicyPolicyRegionParserRuleCall_4_0_3_0 = (RuleCall)cPolicyAssignment_4_0_3.eContents().get(0);
-		private final Assignment cDeclarationsAssignment_4_0_4 = (Assignment)cGroup_4_0.eContents().get(4);
-		private final RuleCall cDeclarationsDeclarationOrMethodWOSemicolonParserRuleCall_4_0_4_0 = (RuleCall)cDeclarationsAssignment_4_0_4.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_4_0_5 = (Keyword)cGroup_4_0.eContents().get(5);
+		private final Alternatives cAlternatives_4_0_3 = (Alternatives)cGroup_4_0.eContents().get(3);
+		private final Assignment cPoliciesAssignment_4_0_3_0 = (Assignment)cAlternatives_4_0_3.eContents().get(0);
+		private final RuleCall cPoliciesPolicyRegionParserRuleCall_4_0_3_0_0 = (RuleCall)cPoliciesAssignment_4_0_3_0.eContents().get(0);
+		private final Assignment cDeclarationsAssignment_4_0_3_1 = (Assignment)cAlternatives_4_0_3.eContents().get(1);
+		private final RuleCall cDeclarationsDeclarationOrMethodWOSemicolonParserRuleCall_4_0_3_1_0 = (RuleCall)cDeclarationsAssignment_4_0_3_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_4_0_4 = (Keyword)cGroup_4_0.eContents().get(4);
 		private final Group cGroup_4_1 = (Group)cAlternatives_4.eContents().get(1);
 		private final Assignment cTypeAssignment_4_1_0 = (Assignment)cGroup_4_1.eContents().get(0);
 		private final RuleCall cTypeStructTypeEnumRuleCall_4_1_0_0 = (RuleCall)cTypeAssignment_4_1_0.eContents().get(0);
@@ -2920,8 +2933,9 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//        type = ClassType
 		//        (name = EString)?
 		//        '{'
-		//            policy=PolicyRegion?
-		//            declarations+=DeclarationOrMethodWOSemicolon*
+		//            ( policies+=PolicyRegion
+		//            | declarations+=DeclarationOrMethodWOSemicolon
+		//            )*
 		//        '}'
 		//    )|(
 		//        type = StructType
@@ -2943,8 +2957,9 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//    type = ClassType
 		//    (name = EString)?
 		//    '{'
-		//        policy=PolicyRegion?
-		//        declarations+=DeclarationOrMethodWOSemicolon*
+		//        ( policies+=PolicyRegion
+		//        | declarations+=DeclarationOrMethodWOSemicolon
+		//        )*
 		//    '}'
 		//)|(
 		//    type = StructType
@@ -2982,8 +2997,9 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//    type = ClassType
 		//    (name = EString)?
 		//    '{'
-		//        policy=PolicyRegion?
-		//        declarations+=DeclarationOrMethodWOSemicolon*
+		//        ( policies+=PolicyRegion
+		//        | declarations+=DeclarationOrMethodWOSemicolon
+		//        )*
 		//    '}'
 		//)|(
 		//    type = StructType
@@ -2998,8 +3014,9 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//        type = ClassType
 		//        (name = EString)?
 		//        '{'
-		//            policy=PolicyRegion?
-		//            declarations+=DeclarationOrMethodWOSemicolon*
+		//            ( policies+=PolicyRegion
+		//            | declarations+=DeclarationOrMethodWOSemicolon
+		//            )*
 		//        '}'
 		//    )
 		public Group getGroup_4_0() { return cGroup_4_0; }
@@ -3019,20 +3036,25 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_4_0_2() { return cLeftCurlyBracketKeyword_4_0_2; }
 		
-		//policy=PolicyRegion?
-		public Assignment getPolicyAssignment_4_0_3() { return cPolicyAssignment_4_0_3; }
+		//( policies+=PolicyRegion
+		//| declarations+=DeclarationOrMethodWOSemicolon
+		//)*
+		public Alternatives getAlternatives_4_0_3() { return cAlternatives_4_0_3; }
+		
+		//policies+=PolicyRegion
+		public Assignment getPoliciesAssignment_4_0_3_0() { return cPoliciesAssignment_4_0_3_0; }
 		
 		//PolicyRegion
-		public RuleCall getPolicyPolicyRegionParserRuleCall_4_0_3_0() { return cPolicyPolicyRegionParserRuleCall_4_0_3_0; }
+		public RuleCall getPoliciesPolicyRegionParserRuleCall_4_0_3_0_0() { return cPoliciesPolicyRegionParserRuleCall_4_0_3_0_0; }
 		
-		//declarations+=DeclarationOrMethodWOSemicolon*
-		public Assignment getDeclarationsAssignment_4_0_4() { return cDeclarationsAssignment_4_0_4; }
+		//declarations+=DeclarationOrMethodWOSemicolon
+		public Assignment getDeclarationsAssignment_4_0_3_1() { return cDeclarationsAssignment_4_0_3_1; }
 		
 		//DeclarationOrMethodWOSemicolon
-		public RuleCall getDeclarationsDeclarationOrMethodWOSemicolonParserRuleCall_4_0_4_0() { return cDeclarationsDeclarationOrMethodWOSemicolonParserRuleCall_4_0_4_0; }
+		public RuleCall getDeclarationsDeclarationOrMethodWOSemicolonParserRuleCall_4_0_3_1_0() { return cDeclarationsDeclarationOrMethodWOSemicolonParserRuleCall_4_0_3_1_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_4_0_5() { return cRightCurlyBracketKeyword_4_0_5; }
+		public Keyword getRightCurlyBracketKeyword_4_0_4() { return cRightCurlyBracketKeyword_4_0_4; }
 		
 		//(
 		//        type = StructType
@@ -3445,7 +3467,8 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Assignment cScheduleAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
 		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_7_1_0 = (RuleCall)cScheduleAssignment_7_1.eContents().get(0);
 		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
-		private final Keyword cLeftCurlyBracketKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
+		private final Assignment cImplementedAssignment_8_0 = (Assignment)cGroup_8.eContents().get(0);
+		private final Keyword cImplementedLeftCurlyBracketKeyword_8_0_0 = (Keyword)cImplementedAssignment_8_0.eContents().get(0);
 		private final Assignment cAnnotationsAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
 		private final RuleCall cAnnotationsCommentAnnotatonSLParserRuleCall_8_1_0 = (RuleCall)cAnnotationsAssignment_8_1.eContents().get(0);
 		private final Assignment cDeclarationsAssignment_8_2 = (Assignment)cGroup_8.eContents().get(2);
@@ -3467,7 +3490,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//    valuedObjects+=SimpleValuedObject
 		//    (('(' parameterDeclarations+=MethodParameterDeclaration (',' parameterDeclarations+=MethodParameterDeclaration)* ')') | '()')
 		//    ('schedule' schedule+=ScheduleObjectReference+)?
-		//    ('{'
+		//    (implemented?='{'
 		//        annotations+=CommentAnnotatonSL?
 		//        declarations+=Declaration*
 		//        statements+=Statement*
@@ -3487,7 +3510,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//valuedObjects+=SimpleValuedObject
 		//(('(' parameterDeclarations+=MethodParameterDeclaration (',' parameterDeclarations+=MethodParameterDeclaration)* ')') | '()')
 		//('schedule' schedule+=ScheduleObjectReference+)?
-		//('{'
+		//(implemented?='{'
 		//    annotations+=CommentAnnotatonSL?
 		//    declarations+=Declaration*
 		//    statements+=Statement*
@@ -3618,15 +3641,18 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//ScheduleObjectReference
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_7_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_7_1_0; }
 		
-		//('{'
+		//(implemented?='{'
 		//    annotations+=CommentAnnotatonSL?
 		//    declarations+=Declaration*
 		//    statements+=Statement*
 		//'}')?
 		public Group getGroup_8() { return cGroup_8; }
 		
+		//implemented?='{'
+		public Assignment getImplementedAssignment_8_0() { return cImplementedAssignment_8_0; }
+		
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_8_0() { return cLeftCurlyBracketKeyword_8_0; }
+		public Keyword getImplementedLeftCurlyBracketKeyword_8_0_0() { return cImplementedLeftCurlyBracketKeyword_8_0_0; }
 		
 		//annotations+=CommentAnnotatonSL?
 		public Assignment getAnnotationsAssignment_8_1() { return cAnnotationsAssignment_8_1; }
@@ -4119,7 +4145,8 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Keyword cInputInputKeyword_2_0 = (Keyword)cInputAssignment_2.eContents().get(0);
 		private final Assignment cOutputAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final Keyword cOutputOutputKeyword_3_0 = (Keyword)cOutputAssignment_3.eContents().get(0);
-		private final Keyword cConstKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cConstAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Keyword cConstConstKeyword_4_0 = (Keyword)cConstAssignment_4.eContents().get(0);
 		private final Assignment cSimpleAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final Keyword cSimplePrimitiveKeyword_5_0 = (Keyword)cSimpleAssignment_5.eContents().get(0);
 		private final Assignment cReferenceAssignment_6 = (Assignment)cGroup.eContents().get(6);
@@ -4139,7 +4166,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//    access=AccessModifier?
 		//    input?='input'?
 		//    output?='output'?
-		//    'const'? // needed?
+		//    const?='const'?
 		//    simple?='primitive'
 		//    reference = [annotations::NamedObject|PrimeID] // should be primitive generic type
 		//    valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)*
@@ -4150,7 +4177,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//access=AccessModifier?
 		//input?='input'?
 		//output?='output'?
-		//'const'? // needed?
+		//const?='const'?
 		//simple?='primitive'
 		//reference = [annotations::NamedObject|PrimeID] // should be primitive generic type
 		//valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)*
@@ -4181,11 +4208,13 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//'output'
 		public Keyword getOutputOutputKeyword_3_0() { return cOutputOutputKeyword_3_0; }
 		
-		//'const'?
-		public Keyword getConstKeyword_4() { return cConstKeyword_4; }
+		//const?='const'?
+		public Assignment getConstAssignment_4() { return cConstAssignment_4; }
 		
-		//// needed?
-		//   simple?='primitive'
+		//'const'
+		public Keyword getConstConstKeyword_4_0() { return cConstConstKeyword_4_0; }
+		
+		//simple?='primitive'
 		public Assignment getSimpleAssignment_5() { return cSimpleAssignment_5; }
 		
 		//'primitive'
@@ -4789,7 +4818,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    '{'
 	//        declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
 	//        actions+=LocalAction*
-	//        (regions+=ImplicitControlflowRegion | regions+=Region*)
+	//        (regions+=ImplicitControlflowRegion | (regions+=Region | policies+=PolicyRegion)*)
 	//    '}';
 	public RootStateElements getRootStateAccess() {
 		return pRootState;
@@ -5210,8 +5239,9 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//        type = ClassType
 	//        (name = EString)?
 	//        '{'
-	//            policy=PolicyRegion?
-	//            declarations+=DeclarationOrMethodWOSemicolon*
+	//            ( policies+=PolicyRegion
+	//            | declarations+=DeclarationOrMethodWOSemicolon
+	//            )*
 	//        '}'
 	//    )|(
 	//        type = StructType
@@ -5310,7 +5340,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    valuedObjects+=SimpleValuedObject
 	//    (('(' parameterDeclarations+=MethodParameterDeclaration (',' parameterDeclarations+=MethodParameterDeclaration)* ')') | '()')
 	//    ('schedule' schedule+=ScheduleObjectReference+)?
-	//    ('{'
+	//    (implemented?='{'
 	//        annotations+=CommentAnnotatonSL?
 	//        declarations+=Declaration*
 	//        statements+=Statement*
@@ -5415,7 +5445,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    access=AccessModifier?
 	//    input?='input'?
 	//    output?='output'?
-	//    'const'? // needed?
+	//    const?='const'?
 	//    simple?='primitive'
 	//    reference = [annotations::NamedObject|PrimeID] // should be primitive generic type
 	//    valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)*
@@ -5897,7 +5927,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    (
 	//        ';'
 	//        |
-	//        '{'
+	//        implemented?='{'
 	//        annotations+=CommentAnnotatonSL?
 	//        declarations+=Declaration*
 	//        statements+=Statement*
@@ -5922,7 +5952,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    valuedObjects+=SimpleValuedObject
 	//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 	//    ('schedule' schedule+=ScheduleObjectReference+)?
-	//    ('{'
+	//    (implemented?='{'
 	//        annotations+=CommentAnnotatonSL?
 	//        declarations+=Declaration*
 	//        statements+=Statement*
@@ -6216,6 +6246,8 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    access=AccessModifier?
 	//    ((
 	//        input?='input'?
+	//        output?='output'?
+	//        const?='const'?
 	//        'ref'
 	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 	//        reference = [annotations::NamedObject|PrimeID]
@@ -6241,6 +6273,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    ((
 	//        input?='input'?
 	//        output?='output'?
+	//        const?='const'?
 	//        'ref'
 	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 	//        reference = [annotations::NamedObject|PrimeID]

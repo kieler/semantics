@@ -410,6 +410,16 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
+    public EReference getScope_Policies() {
+        return (EReference)scopeEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getScopeCall() {
         return scopeCallEClass;
     }
@@ -930,7 +940,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
-    public EReference getPolicyClassDeclaration_Policy() {
+    public EReference getPolicyClassDeclaration_Policies() {
         return (EReference)policyClassDeclarationEClass.getEStructuralFeatures().get(0);
     }
 
@@ -1112,6 +1122,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEReference(scopeEClass, SCOPE__ACTIONS);
         createEReference(scopeEClass, SCOPE__REFERENCE);
         createEReference(scopeEClass, SCOPE__GENERIC_PARAMETER_DECLARATIONS);
+        createEReference(scopeEClass, SCOPE__POLICIES);
 
         scopeCallEClass = createEClass(SCOPE_CALL);
         createEReference(scopeCallEClass, SCOPE_CALL__TARGET);
@@ -1178,7 +1189,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         periodActionEClass = createEClass(PERIOD_ACTION);
 
         policyClassDeclarationEClass = createEClass(POLICY_CLASS_DECLARATION);
-        createEReference(policyClassDeclarationEClass, POLICY_CLASS_DECLARATION__POLICY);
+        createEReference(policyClassDeclarationEClass, POLICY_CLASS_DECLARATION__POLICIES);
 
         policyRegionEClass = createEClass(POLICY_REGION);
 
@@ -1277,6 +1288,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEReference(getScope_Actions(), this.getLocalAction(), null, "actions", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_Reference(), this.getScopeCall(), null, "reference", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_GenericParameterDeclarations(), theKExpressionsPackage.getGenericParameterDeclaration(), null, "genericParameterDeclarations", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getScope_Policies(), this.getPolicyRegion(), null, "policies", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(scopeCallEClass, ScopeCall.class, "ScopeCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getScopeCall_Target(), theAnnotationsPackage.getNamedObject(), null, "target", null, 0, 1, ScopeCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1343,7 +1355,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEClass(periodActionEClass, PeriodAction.class, "PeriodAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(policyClassDeclarationEClass, PolicyClassDeclaration.class, "PolicyClassDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getPolicyClassDeclaration_Policy(), this.getPolicyRegion(), null, "policy", null, 0, 1, PolicyClassDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getPolicyClassDeclaration_Policies(), this.getPolicyRegion(), null, "policies", null, 0, -1, PolicyClassDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(policyRegionEClass, PolicyRegion.class, "PolicyRegion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

@@ -3139,7 +3139,7 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//    (
 	//        ';'
 	//        |
-	//        '{'
+	//        implemented?='{'
 	//        annotations+=CommentAnnotatonSL?
 	//        declarations+=Declaration*
 	//        statements+=Statement*
@@ -3164,7 +3164,7 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//    valuedObjects+=SimpleValuedObject
 	//    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
 	//    ('schedule' schedule+=ScheduleObjectReference+)?
-	//    ('{'
+	//    (implemented?='{'
 	//        annotations+=CommentAnnotatonSL?
 	//        declarations+=Declaration*
 	//        statements+=Statement*
@@ -3487,6 +3487,8 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//    access=AccessModifier?
 	//    ((
 	//        input?='input'?
+	//        output?='output'?
+	//        const?='const'?
 	//        'ref'
 	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 	//        reference = [annotations::NamedObject|PrimeID]
@@ -3512,6 +3514,7 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//    ((
 	//        input?='input'?
 	//        output?='output'?
+	//        const?='const'?
 	//        'ref'
 	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 	//        reference = [annotations::NamedObject|PrimeID]

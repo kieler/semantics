@@ -67,8 +67,7 @@ import static de.cau.cs.kieler.sccharts.PreemptionType.*
  */
 class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     
-    @Inject
-    var SCLSerializeExtensions sclSerializer
+    @Inject var SCLSerializeExtensions sclSerializer
     @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsGenericParameterExtensions
     @Inject extension KExpressionsDeclarationExtensions
@@ -180,17 +179,18 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     def dispatch List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Declaration declaration, boolean hr) {
         val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
 
+        if (declaration.access == AccessModifier.PRIVATE) {
+            components.addKeyword("private")
+        }
+        if (declaration.access == AccessModifier.PROTECTED) {
+            components.addKeyword("protected")
+        }
+        if (declaration.access == AccessModifier.PUBLIC) {
+            components.addKeyword("public")
+        }
+
         // Modifiers
         if (declaration instanceof VariableDeclaration) {
-            if (declaration.access == AccessModifier.PRIVATE) {
-                components.addKeyword("private")
-            }
-            if (declaration.access == AccessModifier.PROTECTED) {
-                components.addKeyword("protected")
-            }
-            if (declaration.access == AccessModifier.PUBLIC) {
-                components.addKeyword("public")
-            }
             if (declaration.isExtern) {
                 components.addKeyword("extern")
             }
@@ -254,6 +254,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                 }
                 if (declaration.isOutput) {
                     components.addKeyword("output")
+                }
+                if (declaration.isConst) {
+                    components.addKeyword("const")
                 }
                 if (!declaration.simple) {
                     components.addKeyword("ref")
@@ -342,10 +345,10 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         }
         
         if (declaration instanceof GenericParameterDeclaration) {
-            if (declaration.valueDeclaration) {
+            if (declaration.isValueDeclaration || declaration.isPrimitiveTypeDeclaration) {
                 components.addKeyword("is")
                 components.addKeyword(declaration.valueType.serializeHR)
-            } else if (declaration.referenceDeclaration) {
+            } else if (declaration.isReferenceDeclaration) {
                 components.addKeyword("is")
                 components.addKeyword("ref")
                 components.addText(declaration.type.serializeHR)
@@ -364,6 +367,12 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     
     def List<Pair<? extends CharSequence, TextFormat>> serializeMethodHighlighted(MethodDeclaration method, boolean hr, boolean body) {
         val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
+        
+        if (method instanceof MethodImplementationDeclaration) {
+            if (!method.implemented) {
+                components.addKeyword("abstract")
+            }
+        }
         
         if (method.override) {
             components.addKeyword("override")

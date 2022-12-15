@@ -1688,7 +1688,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         access=AccessModifier? 
 	 *         host?='host'? 
 	 *         (
-	 *             (type=ClassType name=EString? policy=PolicyRegion? declarations+=DeclarationOrMethodWOSemicolon*) | 
+	 *             (type=ClassType name=EString? (policies+=PolicyRegion | declarations+=DeclarationOrMethodWOSemicolon)*) | 
 	 *             (type=StructType name=EString? declarations+=DeclarationWOSemicolon*)
 	 *         ) 
 	 *         (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
@@ -1938,9 +1938,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         valuedObjects+=SimpleValuedObject 
 	 *         (parameterDeclarations+=MethodParameterDeclaration parameterDeclarations+=MethodParameterDeclaration*)? 
 	 *         schedule+=ScheduleObjectReference* 
-	 *         annotations+=CommentAnnotatonSL? 
-	 *         declarations+=Declaration* 
-	 *         statements+=Statement*
+	 *         (implemented?='{' annotations+=CommentAnnotatonSL? declarations+=Declaration* statements+=Statement*)?
 	 *     )
 	 * </pre>
 	 */
@@ -2052,6 +2050,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         access=AccessModifier? 
 	 *         input?='input'? 
 	 *         output?='output'? 
+	 *         const?='const'? 
 	 *         simple?='primitive' 
 	 *         reference=[NamedObject|PrimeID] 
 	 *         valuedObjects+=ReferenceValuedObject 
@@ -2077,6 +2076,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *             access=AccessModifier? 
 	 *             input?='input'? 
 	 *             output?='output'? 
+	 *             const?='const'? 
 	 *             simple?='primitive' 
 	 *             reference=[NamedObject|PrimeID] 
 	 *             valuedObjects+=ReferenceValuedObject 
@@ -2090,6 +2090,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *                 (
 	 *                     input?='input'? 
 	 *                     output?='output'? 
+	 *                     const?='const'? 
 	 *                     referenceContainer=[NamedObject|PrimeID]? 
 	 *                     reference=[NamedObject|PrimeID] 
 	 *                     (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
@@ -2122,6 +2123,8 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *             (
 	 *                 (
 	 *                     input?='input'? 
+	 *                     output?='output'? 
+	 *                     const?='const'? 
 	 *                     referenceContainer=[NamedObject|PrimeID]? 
 	 *                     reference=[NamedObject|PrimeID] 
 	 *                     (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
@@ -2139,6 +2142,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *                 (
 	 *                     input?='input'? 
 	 *                     output?='output'? 
+	 *                     const?='const'? 
 	 *                     referenceContainer=[NamedObject|PrimeID]? 
 	 *                     reference=[NamedObject|PrimeID] 
 	 *                     (genericParameters+=GenericParameter genericParameters+=GenericParameter*)? 
@@ -2193,7 +2197,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         (baseStateReferences+=BaseStateReference baseStateReferences+=BaseStateReference*)? 
 	 *         declarations+=DeclarationOrMethodWithKeywordWOSemicolon* 
 	 *         actions+=LocalAction* 
-	 *         (regions+=ImplicitControlflowRegion | regions+=Region+)?
+	 *         (regions+=ImplicitControlflowRegion | (regions+=Region | policies+=PolicyRegion)+)?
 	 *     )
 	 * </pre>
 	 */

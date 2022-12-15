@@ -904,11 +904,12 @@ class Reference extends SCChartsProcessor implements Traceable {
                     }
                     
                     val classDecl = createPolicyClassDeclaration => [
-                        type = ValueType.CLASS
-                        name = newState.name
-                        valuedObjects += ref.valuedObjects
-                        declarations += newState.declarations
-                        annotations += newState.annotations
+                        it.type = ValueType.CLASS
+                        it.name = newState.name
+                        it.valuedObjects += ref.valuedObjects
+                        it.declarations += newState.declarations
+                        it.annotations += newState.annotations
+                        it.policies += newState.policies
                     ]
                     classDecl.uniqueName
                     classDecl.addStringAnnotation(REF_CLASS_ORIGIN, Iterables.concat(#[refTarget.name], refTarget.baseStates.map[name]))

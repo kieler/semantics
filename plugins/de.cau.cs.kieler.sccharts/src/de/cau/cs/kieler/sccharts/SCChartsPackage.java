@@ -229,13 +229,22 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__GENERIC_PARAMETER_DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
 
     /**
+     * The feature id for the '<em><b>Policies</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCOPE__POLICIES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 9;
+
+    /**
      * The number of structural features of the '<em>Scope</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 9;
+    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 10;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl <em>Scope Call</em>}' class.
@@ -620,6 +629,15 @@ public interface SCChartsPackage extends EPackage {
     int STATE__GENERIC_PARAMETER_DECLARATIONS = SCOPE__GENERIC_PARAMETER_DECLARATIONS;
 
     /**
+     * The feature id for the '<em><b>Policies</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATE__POLICIES = SCOPE__POLICIES;
+
+    /**
      * The feature id for the '<em><b>Parent Region</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -810,6 +828,15 @@ public interface SCChartsPackage extends EPackage {
     int REGION__GENERIC_PARAMETER_DECLARATIONS = SCOPE__GENERIC_PARAMETER_DECLARATIONS;
 
     /**
+     * The feature id for the '<em><b>Policies</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__POLICIES = SCOPE__POLICIES;
+
+    /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -962,6 +989,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int CONTROLFLOW_REGION__GENERIC_PARAMETER_DECLARATIONS = REGION__GENERIC_PARAMETER_DECLARATIONS;
+
+    /**
+     * The feature id for the '<em><b>Policies</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__POLICIES = REGION__POLICIES;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -1143,6 +1179,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int DATAFLOW_REGION__GENERIC_PARAMETER_DECLARATIONS = REGION__GENERIC_PARAMETER_DECLARATIONS;
+
+    /**
+     * The feature id for the '<em><b>Policies</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__POLICIES = REGION__POLICIES;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -2106,13 +2151,13 @@ public interface SCChartsPackage extends EPackage {
     int POLICY_CLASS_DECLARATION__HOST = KExtPackage.CLASS_DECLARATION__HOST;
 
     /**
-     * The feature id for the '<em><b>Policy</b></em>' containment reference.
+     * The feature id for the '<em><b>Policies</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int POLICY_CLASS_DECLARATION__POLICY = KExtPackage.CLASS_DECLARATION_FEATURE_COUNT + 0;
+    int POLICY_CLASS_DECLARATION__POLICIES = KExtPackage.CLASS_DECLARATION_FEATURE_COUNT + 0;
 
     /**
      * The number of structural features of the '<em>Policy Class Declaration</em>' class.
@@ -2222,6 +2267,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int POLICY_REGION__GENERIC_PARAMETER_DECLARATIONS = CONTROLFLOW_REGION__GENERIC_PARAMETER_DECLARATIONS;
+
+    /**
+     * The feature id for the '<em><b>Policies</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__POLICIES = CONTROLFLOW_REGION__POLICIES;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -2815,6 +2869,17 @@ public interface SCChartsPackage extends EPackage {
     EReference getScope_GenericParameterDeclarations();
 
     /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getPolicies <em>Policies</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Policies</em>'.
+     * @see de.cau.cs.kieler.sccharts.Scope#getPolicies()
+     * @see #getScope()
+     * @generated
+     */
+    EReference getScope_Policies();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ScopeCall <em>Scope Call</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3373,15 +3438,15 @@ public interface SCChartsPackage extends EPackage {
     EClass getPolicyClassDeclaration();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.PolicyClassDeclaration#getPolicy <em>Policy</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.PolicyClassDeclaration#getPolicies <em>Policies</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Policy</em>'.
-     * @see de.cau.cs.kieler.sccharts.PolicyClassDeclaration#getPolicy()
+     * @return the meta object for the containment reference list '<em>Policies</em>'.
+     * @see de.cau.cs.kieler.sccharts.PolicyClassDeclaration#getPolicies()
      * @see #getPolicyClassDeclaration()
      * @generated
      */
-    EReference getPolicyClassDeclaration_Policy();
+    EReference getPolicyClassDeclaration_Policies();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.PolicyRegion <em>Policy Region</em>}'.
@@ -3616,6 +3681,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference SCOPE__GENERIC_PARAMETER_DECLARATIONS = eINSTANCE.getScope_GenericParameterDeclarations();
+
+        /**
+         * The meta object literal for the '<em><b>Policies</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SCOPE__POLICIES = eINSTANCE.getScope_Policies();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl <em>Scope Call</em>}' class.
@@ -4062,12 +4135,12 @@ public interface SCChartsPackage extends EPackage {
         EClass POLICY_CLASS_DECLARATION = eINSTANCE.getPolicyClassDeclaration();
 
         /**
-         * The meta object literal for the '<em><b>Policy</b></em>' containment reference feature.
+         * The meta object literal for the '<em><b>Policies</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference POLICY_CLASS_DECLARATION__POLICY = eINSTANCE.getPolicyClassDeclaration_Policy();
+        EReference POLICY_CLASS_DECLARATION__POLICIES = eINSTANCE.getPolicyClassDeclaration_Policies();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.PolicyRegionImpl <em>Policy Region</em>}' class.

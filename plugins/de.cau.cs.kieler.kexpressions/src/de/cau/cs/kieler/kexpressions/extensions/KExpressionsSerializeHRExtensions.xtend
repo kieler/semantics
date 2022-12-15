@@ -72,6 +72,9 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             return "<BROKEN_REFERENCE>"
         }
         var vo = valuedObjectReference.valuedObject.name
+        if (vo.startsWith("^")) {
+            vo = vo.substring(1)
+        }
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serializeHR + "]"
         }

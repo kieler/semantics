@@ -1126,13 +1126,22 @@ public interface KExpressionsPackage extends EPackage {
     int REFERENCE_DECLARATION__SIMPLE = IO_DECLARATION_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Const</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_DECLARATION__CONST = IO_DECLARATION_FEATURE_COUNT + 1;
+
+    /**
      * The feature id for the '<em><b>Reference</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION__REFERENCE = IO_DECLARATION_FEATURE_COUNT + 1;
+    int REFERENCE_DECLARATION__REFERENCE = IO_DECLARATION_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Reference Container</b></em>' reference.
@@ -1141,7 +1150,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION__REFERENCE_CONTAINER = IO_DECLARATION_FEATURE_COUNT + 2;
+    int REFERENCE_DECLARATION__REFERENCE_CONTAINER = IO_DECLARATION_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
@@ -1150,7 +1159,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION__PARAMETERS = IO_DECLARATION_FEATURE_COUNT + 3;
+    int REFERENCE_DECLARATION__PARAMETERS = IO_DECLARATION_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Extern</b></em>' containment reference list.
@@ -1159,7 +1168,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION__EXTERN = IO_DECLARATION_FEATURE_COUNT + 4;
+    int REFERENCE_DECLARATION__EXTERN = IO_DECLARATION_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Generic Parameters</b></em>' containment reference list.
@@ -1168,7 +1177,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION__GENERIC_PARAMETERS = IO_DECLARATION_FEATURE_COUNT + 5;
+    int REFERENCE_DECLARATION__GENERIC_PARAMETERS = IO_DECLARATION_FEATURE_COUNT + 6;
 
     /**
      * The number of structural features of the '<em>Reference Declaration</em>' class.
@@ -1177,7 +1186,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION_FEATURE_COUNT = IO_DECLARATION_FEATURE_COUNT + 6;
+    int REFERENCE_DECLARATION_FEATURE_COUNT = IO_DECLARATION_FEATURE_COUNT + 7;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.GenericParameterDeclarationImpl <em>Generic Parameter Declaration</em>}' class.
@@ -2750,6 +2759,17 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getReferenceDeclaration_Simple();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#isConst <em>Const</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Const</em>'.
+     * @see de.cau.cs.kieler.kexpressions.ReferenceDeclaration#isConst()
+     * @see #getReferenceDeclaration()
+     * @generated
+     */
+    EAttribute getReferenceDeclaration_Const();
+
+    /**
      * Returns the meta object for the reference '{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getReference <em>Reference</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3911,6 +3931,14 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EAttribute REFERENCE_DECLARATION__SIMPLE = eINSTANCE.getReferenceDeclaration_Simple();
+
+        /**
+         * The meta object literal for the '<em><b>Const</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute REFERENCE_DECLARATION__CONST = eINSTANCE.getReferenceDeclaration_Const();
 
         /**
          * The meta object literal for the '<em><b>Reference</b></em>' reference feature.

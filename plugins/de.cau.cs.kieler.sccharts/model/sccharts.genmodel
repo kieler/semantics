@@ -40,6 +40,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Scope/actions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Scope/reference"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Scope/genericParameterDeclarations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Scope/policies"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//ScopeCall">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//ScopeCall/target"/>
@@ -104,7 +105,7 @@
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//PeriodAction"/>
     <genClasses ecoreClass="sccharts.ecore#//PolicyClassDeclaration">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//PolicyClassDeclaration/policy"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//PolicyClassDeclaration/policies"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//PolicyRegion"/>
     <genClasses ecoreClass="sccharts.ecore#//CodeEffect"/>

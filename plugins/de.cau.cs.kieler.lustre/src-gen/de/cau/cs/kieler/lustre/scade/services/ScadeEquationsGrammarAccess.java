@@ -1690,6 +1690,8 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//    access=AccessModifier?
 	//    ((
 	//        input?='input'?
+	//        output?='output'?
+	//        const?='const'?
 	//        'ref'
 	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 	//        reference = [annotations::NamedObject|PrimeID]
@@ -1715,6 +1717,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	//    ((
 	//        input?='input'?
 	//        output?='output'?
+	//        const?='const'?
 	//        'ref'
 	//        (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
 	//        reference = [annotations::NamedObject|PrimeID]

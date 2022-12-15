@@ -1695,9 +1695,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *         valuedObjects+=SimpleValuedObject 
 	 *         (parameterDeclarations+=VariableDeclarationWOSemicolon parameterDeclarations+=VariableDeclarationWOSemicolon*)? 
 	 *         schedule+=ScheduleObjectReference* 
-	 *         annotations+=CommentAnnotatonSL? 
-	 *         declarations+=Declaration* 
-	 *         statements+=Statement*
+	 *         (implemented?='{' annotations+=CommentAnnotatonSL? declarations+=Declaration* statements+=Statement*)?
 	 *     )
 	 * </pre>
 	 */
@@ -1720,9 +1718,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *         valuedObjects+=SimpleValuedObject 
 	 *         (parameterDeclarations+=VariableDeclarationWOSemicolon parameterDeclarations+=VariableDeclarationWOSemicolon*)? 
 	 *         schedule+=ScheduleObjectReference* 
-	 *         annotations+=CommentAnnotatonSL? 
-	 *         declarations+=Declaration* 
-	 *         statements+=Statement* 
+	 *         (implemented?='{' annotations+=CommentAnnotatonSL? declarations+=Declaration* statements+=Statement*)? 
 	 *         annotations+=CommentAnnotatonSL?
 	 *     )
 	 * </pre>

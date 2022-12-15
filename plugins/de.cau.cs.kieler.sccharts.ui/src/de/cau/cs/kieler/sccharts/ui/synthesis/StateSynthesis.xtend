@@ -333,6 +333,18 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 node.children += method.transform
             }
         }
+        
+        if(PolicySynthesis.SHOW_POLICIES.booleanValue) {
+            val classPolicies = newArrayList
+            classPolicies += state.declarations.filter(PolicyClassDeclaration).map[it.policies].flatten.filterNull
+            classPolicies += state.regions.map[declarations].flatten.filter(PolicyClassDeclaration).map[it.policies].flatten.filterNull
+            for (policy : classPolicies.reverseView) {
+                node.children.addAll(0, policy.transform)
+            }
+            for (policy : state.getPolicies()) {
+                node.children.addAll(policy.transform)
+            }
+        }
 
         // Transform regions
         val regions = new ArrayList<Region>(state.regions)
@@ -341,15 +353,6 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             switch region {
                 ControlflowRegion: node.children += region.transform
                 DataflowRegion: node.children += region.transform
-            }
-        }
-        
-        if(PolicySynthesis.SHOW_POLICIES.booleanValue) {
-            val policies = newArrayList
-            policies += state.declarations.filter(PolicyClassDeclaration).map[policy].filterNull
-            policies += state.regions.map[declarations].flatten.filter(PolicyClassDeclaration).map[policy].filterNull
-            for (policy : policies.reverseView) {
-                node.children.addAll(0, policy.transform)
             }
         }
         
@@ -383,11 +386,13 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             eAllContents.filter(KRendering).forEach[associateWith(struct)]
         ]
         if (struct instanceof PolicyClassDeclaration) {
-            if (struct.policy !== null && !struct.policy.name.nullOrEmpty) {
-                val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
-                components += new Pair("policy", TextFormat.KEYWORD)
-                components += new Pair(if (struct.policy.label.nullOrEmpty) struct.policy.label else struct.policy.name, TextFormat.TEXT)
-                node.addDeclarationLabel(components, indent + 1)
+            for (policy : struct.policies) {
+                if (!policy.name.nullOrEmpty) {
+                    val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
+                    components += new Pair("policy", TextFormat.KEYWORD)
+                    components += new Pair(if (policy.label.nullOrEmpty) policy.label else policy.name, TextFormat.TEXT)
+                    node.addDeclarationLabel(components, indent + 1)
+                }
             }
         }
         for (declaration : struct.declarations) {

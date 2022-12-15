@@ -32,7 +32,7 @@ RootState returns sccharts::State:
 	'{'
 		declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
 		actions+=LocalAction*
-		(regions+=ImplicitControlflowRegion | regions+=Region*)
+		(regions+=ImplicitControlflowRegion | (regions+=Region | policies+=PolicyRegion)*)
 	'}';
 
 State returns sccharts::State:
@@ -280,8 +280,9 @@ ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
         type = ClassType
         (name = EString)?
         '{'
-            policy=PolicyRegion?
-            declarations+=DeclarationOrMethodWOSemicolon*
+            ( policies+=PolicyRegion
+            | declarations+=DeclarationOrMethodWOSemicolon
+            )*
         '}'
     )|(
         type = StructType
@@ -338,7 +339,7 @@ KeywordMethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
     valuedObjects+=SimpleValuedObject
     (('(' parameterDeclarations+=MethodParameterDeclaration (',' parameterDeclarations+=MethodParameterDeclaration)* ')') | '()')
     ('schedule' schedule+=ScheduleObjectReference+)?
-    ('{'
+    (implemented?='{'
         annotations+=CommentAnnotatonSL?
         declarations+=Declaration*
         statements+=Statement*
@@ -394,7 +395,7 @@ PrimitiveDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     access=AccessModifier?
     input?='input'?
     output?='output'?
-    'const'? // needed?
+    const?='const'?
     simple?='primitive'
     reference = [annotations::NamedObject|PrimeID] // should be primitive generic type
     valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)*

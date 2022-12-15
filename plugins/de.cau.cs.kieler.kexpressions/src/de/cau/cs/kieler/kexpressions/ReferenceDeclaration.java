@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#isSimple <em>Simple</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#isConst <em>Const</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getReferenceContainer <em>Reference Container</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getParameters <em>Parameters</em>}</li>
@@ -50,6 +51,28 @@ public interface ReferenceDeclaration extends IODeclaration {
      * @generated
      */
     void setSimple(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Const</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Const</em>' attribute.
+     * @see #setConst(boolean)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getReferenceDeclaration_Const()
+     * @model required="true"
+     * @generated
+     */
+    boolean isConst();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#isConst <em>Const</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Const</em>' attribute.
+     * @see #isConst()
+     * @generated
+     */
+    void setConst(boolean value);
 
     /**
      * Returns the value of the '<em><b>Reference</b></em>' reference.

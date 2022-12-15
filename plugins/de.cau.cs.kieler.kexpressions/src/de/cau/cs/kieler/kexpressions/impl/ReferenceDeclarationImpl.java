@@ -28,6 +28,7 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#isSimple <em>Simple</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#isConst <em>Const</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#getReferenceContainer <em>Reference Container</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#getParameters <em>Parameters</em>}</li>
@@ -57,6 +58,26 @@ public class ReferenceDeclarationImpl extends IODeclarationImpl implements Refer
      * @ordered
      */
     protected boolean simple = SIMPLE_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isConst() <em>Const</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isConst()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean CONST_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isConst() <em>Const</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isConst()
+     * @generated
+     * @ordered
+     */
+    protected boolean const_ = CONST_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getReference() <em>Reference</em>}' reference.
@@ -148,6 +169,29 @@ public class ReferenceDeclarationImpl extends IODeclarationImpl implements Refer
         simple = newSimple;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.REFERENCE_DECLARATION__SIMPLE, oldSimple, simple));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean isConst() {
+        return const_;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setConst(boolean newConst) {
+        boolean oldConst = const_;
+        const_ = newConst;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.REFERENCE_DECLARATION__CONST, oldConst, const_));
     }
 
     /**
@@ -297,6 +341,8 @@ public class ReferenceDeclarationImpl extends IODeclarationImpl implements Refer
         switch (featureID) {
             case KExpressionsPackage.REFERENCE_DECLARATION__SIMPLE:
                 return isSimple();
+            case KExpressionsPackage.REFERENCE_DECLARATION__CONST:
+                return isConst();
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 if (resolve) return getReference();
                 return basicGetReference();
@@ -324,6 +370,9 @@ public class ReferenceDeclarationImpl extends IODeclarationImpl implements Refer
         switch (featureID) {
             case KExpressionsPackage.REFERENCE_DECLARATION__SIMPLE:
                 setSimple((Boolean)newValue);
+                return;
+            case KExpressionsPackage.REFERENCE_DECLARATION__CONST:
+                setConst((Boolean)newValue);
                 return;
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 setReference((EObject)newValue);
@@ -358,6 +407,9 @@ public class ReferenceDeclarationImpl extends IODeclarationImpl implements Refer
             case KExpressionsPackage.REFERENCE_DECLARATION__SIMPLE:
                 setSimple(SIMPLE_EDEFAULT);
                 return;
+            case KExpressionsPackage.REFERENCE_DECLARATION__CONST:
+                setConst(CONST_EDEFAULT);
+                return;
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 setReference((EObject)null);
                 return;
@@ -387,6 +439,8 @@ public class ReferenceDeclarationImpl extends IODeclarationImpl implements Refer
         switch (featureID) {
             case KExpressionsPackage.REFERENCE_DECLARATION__SIMPLE:
                 return simple != SIMPLE_EDEFAULT;
+            case KExpressionsPackage.REFERENCE_DECLARATION__CONST:
+                return const_ != CONST_EDEFAULT;
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 return reference != null;
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE_CONTAINER:
@@ -413,6 +467,8 @@ public class ReferenceDeclarationImpl extends IODeclarationImpl implements Refer
         StringBuilder result = new StringBuilder(super.toString());
         result.append(" (simple: ");
         result.append(simple);
+        result.append(", const: ");
+        result.append(const_);
         result.append(')');
         return result.toString();
     }

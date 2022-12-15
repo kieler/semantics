@@ -140,108 +140,109 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
     def void transformContracts(State rootState) {
         // Handle Policies
         // ---------------
-        val policiesClasses = rootState.allScopes.map[declarations.iterator].flatten.filter(PolicyClassDeclaration).filter[policy !== null].toList
+        val policiesClasses = rootState.allScopes.map[declarations.iterator].flatten.filter(PolicyClassDeclaration).filter[!policies.empty].toList
         for (policyClass : policiesClasses) {
-            val policy = policyClass.policy
-            val methods = policyClass.declarations.filter(MethodDeclaration).toList
-            val methodVO = methods.toMap[valuedObjects.head]
-            
-            // Add SD
-            val sdVO = createValuedObject(policy.name)
-            val sdDecl = createScheduleDeclaration => [valuedObjects += sdVO]
-            policyClass.declarations.add(0, sdDecl)
-            
-            var collectedMethods = newLinkedHashSet
-            var collectedMethodsInStates = newLinkedHashSet
-            val allBlockings = HashMultimap.create
-            val collectedStrategies = HashMultimap.create
-            
-            val visited = newHashSet
-            val next = newLinkedHashSet
-            next += policy.states.findFirst[initial]
-            while (!next.empty) {
-                val state = next.head
-                next.remove(state)
-                visited += state
+            for (policy : policyClass.policies) {
+                val methods = policyClass.declarations.filter(MethodDeclaration).toList
+                val methodVO = methods.toMap[valuedObjects.head]
                 
-                for (transition : state.outgoingTransitions.filter[trigger !== null]) {
-                    // find blockings
-                    val trig = transition.trigger
-                    if (trig instanceof ValuedObjectReference) {
-                        val method = methodVO.get(trig.valuedObject)
-                        if (method !== null) {
-                            collectedMethods += method
-                            val blockings = transition.effects.filter(Emission).map[methodVO.get(reference.valuedObject)].filterNull.toList
-                            val sequentialBlockings = collectedMethodsInStates.filter[it !== method].toList
-                            collectedStrategies.put(method, if (blockings.contains(method)) PriorityProtocol.CONFLICT else PriorityProtocol.CONFLUENT)
-                            allBlockings.putAll(method, blockings + sequentialBlockings)
+                // Add SD
+                val sdVO = createValuedObject(policy.name)
+                val sdDecl = createScheduleDeclaration => [valuedObjects += sdVO]
+                policyClass.declarations.add(0, sdDecl)
+                
+                var collectedMethods = newLinkedHashSet
+                var collectedMethodsInStates = newLinkedHashSet
+                val allBlockings = HashMultimap.create
+                val collectedStrategies = HashMultimap.create
+                
+                val visited = newHashSet
+                val next = newLinkedHashSet
+                next += policy.states.findFirst[initial]
+                while (!next.empty) {
+                    val state = next.head
+                    next.remove(state)
+                    visited += state
+                    
+                    for (transition : state.outgoingTransitions.filter[trigger !== null]) {
+                        // find blockings
+                        val trig = transition.trigger
+                        if (trig instanceof ValuedObjectReference) {
+                            val method = methodVO.get(trig.valuedObject)
+                            if (method !== null) {
+                                collectedMethods += method
+                                val blockings = transition.effects.filter(Emission).map[methodVO.get(reference.valuedObject)].filterNull.toList
+                                val sequentialBlockings = collectedMethodsInStates.filter[it !== method].toList
+                                collectedStrategies.put(method, if (blockings.contains(method)) PriorityProtocol.CONFLICT else PriorityProtocol.CONFLUENT)
+                                allBlockings.putAll(method, blockings + sequentialBlockings)
+                            }
+                        }
+                        
+                        // next
+                        val target = transition.targetState
+                        if (!visited.contains(target) && !next.contains(target)) {
+                            next += target
                         }
                     }
-                    
-                    // next
-                    val target = transition.targetState
-                    if (!visited.contains(target) && !next.contains(target)) {
-                        next += target
+                    collectedMethodsInStates += collectedMethods
+                }
+                
+                // Order
+                val orderedMethods = collectedMethods.toList.topologicalSort(allBlockings)
+                orderedMethods.reverse
+                
+                //println(orderedMethods.map[valuedObjects.head.name].join(" "))
+                
+                val strategies = newHashMap
+                for (method : collectedStrategies.keySet) {
+                    if (collectedStrategies.get(method).contains(PriorityProtocol.CONFLICT)) {
+                        strategies.put(method, PriorityProtocol.CONFLICT)
+                    } else {
+                        strategies.put(method, PriorityProtocol.CONFLUENT)
                     }
                 }
-                collectedMethodsInStates += collectedMethods
-            }
-            
-            // Order
-            val orderedMethods = collectedMethods.toList.topologicalSort(allBlockings)
-            orderedMethods.reverse
-            
-            //println(orderedMethods.map[valuedObjects.head.name].join(" "))
-            
-            val strategies = newHashMap
-            for (method : collectedStrategies.keySet) {
-                if (collectedStrategies.get(method).contains(PriorityProtocol.CONFLICT)) {
-                    strategies.put(method, PriorityProtocol.CONFLICT)
-                } else {
-                    strategies.put(method, PriorityProtocol.CONFLUENT)
+                
+                // Create groups
+                var index = 1
+                val indices = HashMultimap.create
+                indices.put(0, orderedMethods.head)
+                for (method : orderedMethods.drop(1)) {
+                    val prev = indices.get(index - 1)
+                                    
+                    if (allBlockings.get(method).toSet.equals(prev.map[allBlockings.get(it)].flatten.toSet)
+                        && prev.map[strategies.get(it)].forall[it === strategies.get(method)]) { // Same index
+                        indices.put(index - 1, method)
+                    } else {
+                        indices.put(index, method)
+                        index++
+                    }
                 }
-            }
-            
-            // Create groups
-            var index = 1
-            val indices = HashMultimap.create
-            indices.put(0, orderedMethods.head)
-            for (method : orderedMethods.drop(1)) {
-                val prev = indices.get(index - 1)
-                                
-                if (allBlockings.get(method).toSet.equals(prev.map[allBlockings.get(it)].flatten.toSet)
-                    && prev.map[strategies.get(it)].forall[it === strategies.get(method)]) { // Same index
-                    indices.put(index - 1, method)
-                } else {
-                    indices.put(index, method)
-                    index++
+                
+                // Check validity
+                var valid = true
+                val revIndicies = newHashMap
+                indices.entries.forEach[revIndicies.put(value, key)]
+                for (blocker : allBlockings.entries) {
+                    if (revIndicies.get(blocker.value) >= revIndicies.get(blocker.key)) {
+                        println("Invalid ordering in static policy approximation for: " + blocker.value.valuedObjects.head.name + " with precedence over " + blocker.key.valuedObjects.head.name)
+                        valid = false
+                    }
                 }
-            }
-            
-            // Check validity
-            var valid = true
-            val revIndicies = newHashMap
-            indices.entries.forEach[revIndicies.put(value, key)]
-            for (blocker : allBlockings.entries) {
-                if (revIndicies.get(blocker.value) >= revIndicies.get(blocker.key)) {
-                    println("Invalid ordering in static policy approximation for: " + blocker.value.valuedObjects.head.name + " with precedence over " + blocker.key.valuedObjects.head.name)
-                    valid = false
+                if (!valid) {
+                    environment.errors.add("Cannot find static approximation for policy automaton")
                 }
-            }
-            if (!valid) {
-                environment.errors.add("Cannot find static approximation for policy automaton")
-            }
-            
-            
-            // Apply SDs
-            for (i : 0..index-1) {
-                val indexMethods = indices.get(i)
-                sdDecl.priorities += strategies.get(methods.head)
-                indexMethods.forEach[schedule += createScheduleReference(sdVO) => [priority = i]]
+                
+                
+                // Apply SDs
+                for (i : 0..index-1) {
+                    val indexMethods = indices.get(i)
+                    sdDecl.priorities += strategies.get(methods.head)
+                    indexMethods.forEach[schedule += createScheduleReference(sdVO) => [priority = i]]
+                }
             }
             
             // Remove
-            policyClass.policy = null
+            policyClass.policies.clear
             snapshot
         }
         

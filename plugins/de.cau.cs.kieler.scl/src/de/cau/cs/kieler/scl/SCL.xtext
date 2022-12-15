@@ -251,7 +251,7 @@ MethodDeclaration returns kexpressions::MethodDeclaration:
     (
         ';'
         |
-        '{'
+        implemented?='{'
         annotations+=CommentAnnotatonSL?
         declarations+=Declaration*
         statements+=Statement*
@@ -269,7 +269,7 @@ MethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
     valuedObjects+=SimpleValuedObject
     (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
     ('schedule' schedule+=ScheduleObjectReference+)?
-    ('{'
+    (implemented?='{'
         annotations+=CommentAnnotatonSL?
         declarations+=Declaration*
         statements+=Statement*
