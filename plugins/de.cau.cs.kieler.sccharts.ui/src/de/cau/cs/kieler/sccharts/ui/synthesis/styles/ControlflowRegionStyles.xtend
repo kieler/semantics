@@ -21,6 +21,7 @@ import de.cau.cs.kieler.klighd.krendering.KGridPlacement
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.Underline
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
@@ -116,7 +117,6 @@ class ControlflowRegionStyles {
         return node.addRegionFigure => [
             background = METHOD_BACKGROUND.color
             foreground = METHOD_FOREGROUND.color
-            //lineStyle = LineStyle.DASH
         ]
     }
     
@@ -125,6 +125,12 @@ class ControlflowRegionStyles {
             background = METHOD_BACKGROUND.color
             foreground = REGION_OVERRIDE_FOREGROUND.color
             lineWidth = 1.3f;
+        ]
+    }
+    
+    def KRectangle addAbstractMethodStyle(KRectangle rect) {
+        return rect => [
+            lineStyle = LineStyle.DASH
         ]
     }
     
@@ -141,7 +147,7 @@ class ControlflowRegionStyles {
     /**
      * Adds a button with text.
      */
-    private def KRendering addRegionButton(KContainerRendering container, String text, List<Pair<? extends CharSequence, TextFormat>> label) {
+    def KRendering addRegionButton(KContainerRendering container, String text, List<Pair<? extends CharSequence, TextFormat>> label) {
         val button = container.addPolygon => [
             lineWidth = 0
             background = container.foreground.color.copy
@@ -150,15 +156,20 @@ class ControlflowRegionStyles {
             addKPosition(LEFT, 0.5f, 0, TOP, 19, 0)
             addKPosition(LEFT, 18, 0, TOP, 0.5f, 0)
         ]
-        button.addText(text) => [
-            suppressSelectability
-            foreground = REGION_BUTTON_FOREGROUND.color
-            selectionForeground = REGION_BUTTON_FOREGROUND.color
-            fontSize = 8;
-            fontBold = true
-            val size = estimateTextSize;
-            setPointPlacementData(LEFT, if (text.equals("-")) 3f else 2f, 0, TOP, 0, 0, H_LEFT, V_TOP, 0, 0, size.width, size.height);
-        ]
+        if (text !== null) {
+            button.addText(text) => [
+                suppressSelectability
+                foreground = REGION_BUTTON_FOREGROUND.color
+                selectionForeground = REGION_BUTTON_FOREGROUND.color
+                fontSize = 8;
+                fontBold = true
+                val size = estimateTextSize;
+                setPointPlacementData(LEFT, if (text.equals("-")) 3f else 2f, 0, TOP, 0, 0, H_LEFT, V_TOP, 0, 0, size.width, size.height);
+            ]
+        } else {
+            // Disabled appearance
+            button.foreground = REGION_FOREGROUND.color
+        }
         if (!label.nullOrEmpty) {
             if (label.size == 1 && label.head.value == TextFormat.TEXT) {
                 container.addText(label.head.key.toString) => [

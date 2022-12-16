@@ -75,50 +75,58 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
 
         val label = method.serializeHighlighted(true)
 
-        // Expanded
-        node.addMethodFigure => [
-            setAsExpandedView
-            associateWith(method)
-            addDoubleClickAction(CollapseExpandAction.ID)
-            if (method.override) addOverrideMethodStyle()
-            if (method.declarations.empty) {
-                addStatesArea(!label.nullOrEmpty);
-            } else {
-                addStatesAndDeclarationsAndActionsArea(!label.nullOrEmpty, method.declarations.size > 3);
-                // Add declarations
-                for (declaration : method.declarations) {
-                    val declCopy = declaration.copy
-                    declCopy.valuedObjects.forEach[initialValue = null] // Prevent dublicate initialization
-                    addDeclarationLabel(declCopy.serializeHighlighted(true)) => [
-                        setProperty(TracingVisualizationProperties.TRACING_NODE, true);
-                        associateWith(declaration)
-                        eAllContentsOfType2(KRendering).forEach[
-                            associateWith(declaration)
-                            if (it instanceof KText) configureTextLOD(declaration)
-                        ]
-                    ]
-                }
-            }
-            if (method.schedule.size > 0) it.setUserScheduleStyle
-            // Add Button after area to assure correct overlapping
-            addCollapseButton(label) => [
-                addSingleClickAction(CollapseExpandAction.ID)
+        if (method.implemented) {
+            // Expanded
+            node.addMethodFigure => [
+                setAsExpandedView
+                associateWith(method)
                 addDoubleClickAction(CollapseExpandAction.ID)
-            ] 
-//            if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
-        ]
+                if (method.override) addOverrideMethodStyle()
+                if (method.declarations.empty) {
+                    addStatesArea(!label.nullOrEmpty);
+                } else {
+                    addStatesAndDeclarationsAndActionsArea(!label.nullOrEmpty, method.declarations.size > 3);
+                    // Add declarations
+                    for (declaration : method.declarations) {
+                        val declCopy = declaration.copy
+                        declCopy.valuedObjects.forEach[initialValue = null] // Prevent dublicate initialization
+                        addDeclarationLabel(declCopy.serializeHighlighted(true)) => [
+                            setProperty(TracingVisualizationProperties.TRACING_NODE, true);
+                            associateWith(declaration)
+                            eAllContentsOfType2(KRendering).forEach[
+                                associateWith(declaration)
+                                if (it instanceof KText) configureTextLOD(declaration)
+                            ]
+                        ]
+                    }
+                }
+                if (method.schedule.size > 0) it.setUserScheduleStyle
+                // Add Button after area to assure correct overlapping
+                addCollapseButton(label) => [
+                    addSingleClickAction(CollapseExpandAction.ID)
+                    addDoubleClickAction(CollapseExpandAction.ID)
+                ] 
+    //            if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
+            ]
+        }
 
         // Collapsed
         node.addMethodFigure => [
-            setAsCollapsedView
+            if (method.implemented) {
+                setAsCollapsedView
+                addDoubleClickAction(CollapseExpandAction.ID)
+                addExpandButton(label) => [
+                    addSingleClickAction(CollapseExpandAction.ID)
+                    addDoubleClickAction(CollapseExpandAction.ID)
+                ]
+            } else {
+                addRegionButton(null, label)
+                addAbstractMethodStyle()
+            }
+            
             associateWith(method)
             if (method.schedule.size > 0) it.setUserScheduleStyle
-            addDoubleClickAction(CollapseExpandAction.ID)
             if (method.override) addOverrideMethodStyle()
-            addExpandButton(label) => [
-                addSingleClickAction(CollapseExpandAction.ID)
-                addDoubleClickAction(CollapseExpandAction.ID)
-            ]
 //            if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
         ]
         node.setSelectionStyle
