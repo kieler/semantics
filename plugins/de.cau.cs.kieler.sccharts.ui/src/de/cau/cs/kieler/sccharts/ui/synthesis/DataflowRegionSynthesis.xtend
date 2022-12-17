@@ -191,7 +191,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             region.getCommentAnnotations.forEach[
                 node.children += it.transform                
             ]
-        }           
+        } 
 
         // translate all direct dataflow equations
         node.children += region.equations.performTranformation(node)
@@ -211,16 +211,9 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
      */
     def KNode createReferenceDataflowRegion(ValuedObject valuedObject) {
         val node = createNode().associateWith(valuedObject); // This association is important for the ReferenceExpandAction
-//        if (USE_KLAY.booleanValue) {
-            node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
-            node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
-            node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
-//        } else {
-//            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
-//            node.setLayoutOption(LayoutOptions::SPACING, 40f);
-//        }
-//        node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-//        node.setLayoutOption(LayoutOptions::SPACING, 40f);
+        node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
+        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
+        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
 
         // Set initially collapsed
         node.setLayoutOption(KlighdProperties::EXPAND, false);

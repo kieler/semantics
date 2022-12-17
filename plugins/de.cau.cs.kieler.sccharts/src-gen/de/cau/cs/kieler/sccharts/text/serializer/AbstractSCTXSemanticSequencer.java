@@ -61,6 +61,7 @@ import de.cau.cs.kieler.sccharts.BaseStateReference;
 import de.cau.cs.kieler.sccharts.CodeEffect;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.DataflowAssignment;
+import de.cau.cs.kieler.sccharts.DataflowReferenceCall;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
@@ -187,7 +188,8 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 		else if (epackage == KEffectsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case KEffectsPackage.ASSIGNMENT:
-				if (rule == grammarAccess.getAssignmentRule()) {
+				if (rule == grammarAccess.getEquationsRule()
+						|| rule == grammarAccess.getAssignmentRule()) {
 					sequence_Assignment(context, (Assignment) semanticObject); 
 					return; 
 				}
@@ -1462,6 +1464,9 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			case SCChartsPackage.DATAFLOW_ASSIGNMENT:
 				sequence_DataflowAssignment(context, (DataflowAssignment) semanticObject); 
 				return; 
+			case SCChartsPackage.DATAFLOW_REFERENCE_CALL:
+				sequence_DataflowReferenceCall(context, (DataflowReferenceCall) semanticObject); 
+				return; 
 			case SCChartsPackage.DATAFLOW_REGION:
 				sequence_DataflowRegion(context, (DataflowRegion) semanticObject); 
 				return; 
@@ -1770,6 +1775,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	/**
 	 * <pre>
 	 * Contexts:
+	 *     Equations returns DataflowAssignment
 	 *     DataflowAssignment returns DataflowAssignment
 	 *
 	 * Constraint:
@@ -1791,6 +1797,31 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	/**
 	 * <pre>
 	 * Contexts:
+	 *     Equations returns DataflowReferenceCall
+	 *     DataflowReferenceCall returns DataflowReferenceCall
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         super?='super.'? 
+	 *         valuedObject=[ValuedObject|PrimeID] 
+	 *         indices+=Expression* 
+	 *         subReference=ValuedObjectReference? 
+	 *         (parameters+=Parameter parameters+=Parameter*)? 
+	 *         expression=Expression? 
+	 *         schedule+=ScheduleObjectReference* 
+	 *         (sequential?=';' | sequential?='seq')?
+	 *     )
+	 * </pre>
+	 */
+	protected void sequence_DataflowReferenceCall(ISerializationContext context, DataflowReferenceCall semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * <pre>
+	 * Contexts:
 	 *     Region returns DataflowRegion
 	 *     DataflowRegion returns DataflowRegion
 	 *
@@ -1803,10 +1834,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
 	 *         schedule+=ScheduleObjectReference* 
 	 *         once?='once'? 
-	 *         (
-	 *             (declarations+=DeclarationWOSemicolon* (equations+=DataflowAssignment | equations+=Assignment)*) | 
-	 *             (declarations+=DeclarationWOSemicolon* (equations+=DataflowAssignment | equations+=Assignment)*)
-	 *         )
+	 *         ((declarations+=DeclarationWOSemicolon* equations+=Equations*) | (declarations+=DeclarationWOSemicolon* equations+=Equations*))
 	 *     )
 	 * </pre>
 	 */

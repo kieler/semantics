@@ -18,8 +18,11 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 import de.cau.cs.kieler.kexpressions.TextExpression
@@ -28,6 +31,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
@@ -52,6 +56,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.sccharts.DataflowReferenceCall
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
@@ -76,6 +81,7 @@ import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortLabelPlacement
 import org.eclipse.elk.core.options.PortSide
 import org.eclipse.elk.core.options.SizeConstraint
+import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
@@ -134,6 +140,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension SCChartsSynthesis
     @Inject extension EquationStyles
     @Inject extension KExtDeclarationExtensions
+    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension KRenderingExtensions
     @Inject extension SCChartsDataflowRegionExtensions
@@ -171,7 +178,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     protected static val INOUT_PORT = "inout"
     protected static val INSTANCE_IN_PORT = "in_inst"
     protected static val INSTANCE_OUT_PORT = "out_inst"
-
+    
+    public static val Property<Integer> METHOD_PORT_ID = 
+        new Property<Integer>("de.cau.cs.kieler.sccharts.ui.synthesis.equation.method.port.id", null);
+    
     protected val defaultFigures = #{
         OperatorType.NOT.getName ->
             #["OperatorExpressionNOT.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
@@ -284,6 +294,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         showWireLabels = SHOW_WIRE_LABELS.booleanValue
         combineAllDataAccessNodes = COMBINE_ALL_DATA_ACCESS.booleanValue
         showArrows = SHOW_ARROWS.booleanValue
+        
         currentRegion = rootNode.sourceElement as DataflowRegion
         var nodes = <KNode>newLinkedList
         val List<KNode> lastKNodes = newArrayList
@@ -304,12 +315,20 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 lastKNodes.clear
             }
         }
-        nodes.addInstanceEdges.addSequentialEdges.simplifyAndCombine(rootNode)
+        
+        nodes.addInstanceEdges
+        nodes.addSequentialEdges
+        nodes.simplifyAndCombine(rootNode)
+        
         for (n : nodes) {
             n.addLayoutParam(CoreOptions.NODE_SIZE_MINIMUM, new KVector(0, 0))
             n.addLayoutParam(CoreOptions.PADDING, new ElkPadding(0, 0, 0, 0))
         }
-        return nodes.reWireInlining.addMissingReferenceInputs
+        
+        nodes.reWireInlining
+        nodes.addMissingReferenceInputs
+        
+        return nodes
     }
 
     /**
@@ -406,8 +425,12 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }
 
         val nodes = <KNode>newLinkedList
-        val source = assignment.expression.performTransformation(nodes, false)
-        if (assignment.expression instanceof VectorValue) {
+        var expr = assignment.expression
+        if (expr === null && assignment instanceof DataflowReferenceCall) {
+            expr = TRUE
+        }
+        val source = expr.performTransformation(nodes, false)
+        if (expr instanceof VectorValue) {
             source.associateWith(assignment.reference)
             source.setProperty(OUTPUT_FLAG, true)
             source.setProperty(DATA_ACCESS_FLAG, true)
@@ -416,11 +439,39 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 ref.indices.add(p.sourceElement as IntValue)
                 p.associateWith(ref)
             }
+        } else if (expr instanceof ReferenceCall) {
+            if (expr.lowermostReference.valuedObject.declaration.isMethod) {
+                source.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint.NONE)
+                val mTrigger = TRUE.performTransformation(nodes, false)
+                val tSourcePort = mTrigger.findPortById(OUT_PORT)
+                val targetPort = source.findPortById(PORT0_IN_PREFIX)
+                tSourcePort.connectWith(targetPort, null)
+                
+                nodes += addMethodParameters(expr.parameters, source)
+            }
         }
+                    
         val sourcePort = source.findPortById(OUT_PORT)
         val target = assignment.reference.performTransformation(nodes, true)
         val targetPort = target.findPortById(PORT0_IN_PREFIX)
-        sourcePort.connectWith(targetPort, assignment.expression.serializeHR.toString)
+        sourcePort.connectWith(targetPort, expr.serializeHR.toString)
+        
+        if (assignment instanceof DataflowReferenceCall) {
+            nodes += addMethodParameters(assignment.parameters, target)
+        }
+        
+        return nodes
+    }
+    
+    def addMethodParameters(List<Parameter> parameters, KNode target) {
+        val nodes = newArrayList
+        for (entry : parameters.indexed) {
+            val p = entry.value
+            val pSource = p.expression.performTransformation(nodes, false)
+            val pSourcePort = pSource.findPortById(OUT_PORT)
+            val pTargetPort = target.getInputPortWithNumber(entry.key + 1)
+            pSourcePort.connectWith(pTargetPort, p.expression.serializeHR.toString)
+        }
         return nodes
     }
 
@@ -442,10 +493,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
      * @param nodes All created nodes are added to this list
      * @param output Should be true if output nodes should be generated
      */
-    private def dispatch KNode performTransformation(ValuedObjectReference reference, List<KNode> nodes,
-        boolean output) {
+    private def dispatch KNode performTransformation(ValuedObjectReference reference, List<KNode> nodes, boolean output) {
         if (!reference.isModelReference &&
-            ((reference.isClassReference && reference.subReference !== null) || reference.isArrayReference)) {
+            ((reference.isClassReference && 
+                reference.subReference !== null
+            ) || reference.isArrayReference)) {
             // go through the sub references and indices and create a data access node for each index of sub reference
             var ref = reference
             var KNode firstNode = null
@@ -502,6 +554,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }
         var node = reference.valuedObject.createKGTNode(output ? "OUTPUT" : "INPUT", "")
         var text = reference.valuedObject.reference.serializeHR.toString
+        node.setProperty(output ? OUTPUT_FLAG : INPUT_FLAG, true)
+        
         if (reference.isModelReference) {
             // in case of a model reference the subreference should not be in the label of the node
             text = reference.valuedObject.reference.serializeHR.toString
@@ -511,12 +565,57 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             node = node.createReferenceNode(reference, text)
             // write the subreferences to the port labels
             if (reference.subReference !== null) {
-                if (output) {
-                    node.getInputPortWithNumber(0).setLabel(reference.subReference.serializeHR.toString, true)
-                    node.getInputPortWithNumber(0).associateWith(reference.subReference)
+                if (reference instanceof ReferenceCall && (reference as ReferenceCall).lowermostReference.valuedObject.declaration.isMethod) {
+                    val call = reference as ReferenceCall
+                    val method = call.lowermostReference.valuedObject.declaration as MethodDeclaration
+                    node.setLayoutOption(CoreOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER)
+                    
+                    // Method trigger
+                    val mPort = node.getInputPortWithNumber(0, true)
+                    mPort.setLabel(reference.subReference.serializeHR.toString, true)
+                    mPort.associateWith(reference.subReference)
+                    mPort.setProperty(METHOD_PORT_ID, call.hashCode)
+                    mPort.addMethodPortFigure()
+                    
+                    // Parameters
+                    for (entry : method.parameterDeclarations.indexed) {
+                        val param = entry.value
+//                        val pPort = createPort(param.valuedObjects.head) // Problematic
+                        val pPort = createPort()
+                        pPort.KID = EquationSynthesis.PORT_IN_PREFIX + (entry.key + 1)
+                        pPort.setLabel(param.valuedObjects.head.serializeHR.toString, true)
+                        pPort.associateWith(param.valuedObjects.head)
+                        pPort.setProperty(CoreOptions::PORT_SIDE, PortSide.WEST)
+                        pPort.setProperty(METHOD_PORT_ID, call.hashCode)
+                        node.ports.add(0, pPort) // LAYOUT ORDER 
+
+                        // association edge
+                        val edge = mPort.associateMethodPorts(pPort, false)
+                        edge.setProperty(METHOD_PORT_ID, call.hashCode)
+                    }
+                    
+                    // Return value
+                    if (!output) { // return value access
+                        val rPort = node.findPortById(OUT_PORT)
+                        rPort.setLabel(reference.subReference.serializeHR.toString, true)
+                        rPort.associateWith(reference.subReference)
+                        rPort.setProperty(METHOD_PORT_ID, call.hashCode)
+                        // association edge
+                        val edge = mPort.associateMethodPorts(rPort, true)
+                        edge.setProperty(METHOD_PORT_ID, call.hashCode)
+                        edge.setProperty(ReferenceExpandAction.VISIBLE_ONLY_COLLAPSED, true)
+                    }
+                    
+                    node.setProperty(INPUT_FLAG, false)
+                    node.setProperty(OUTPUT_FLAG, false)
                 } else {
-                    node.findPortById(OUT_PORT)?.setLabel(reference.subReference.serializeHR.toString, true)
-                    node.findPortById(OUT_PORT)?.associateWith(reference.subReference)
+                    if (output) {
+                        node.getInputPortWithNumber(0).setLabel(reference.subReference.serializeHR.toString, true)
+                        node.getInputPortWithNumber(0).associateWith(reference.subReference)
+                    } else {
+                        node.findPortById(OUT_PORT)?.setLabel(reference.subReference.serializeHR.toString, true)
+                        node.findPortById(OUT_PORT)?.associateWith(reference.subReference)
+                    }
                 }
             }
             var ref = reference.valuedObject.reference
@@ -533,7 +632,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 node.setProperty(DATA_ARRAY_FLAG, true)
             }
         }
-        node.setProperty(output ? OUTPUT_FLAG : INPUT_FLAG, true)
         if (ALIGN_INPUTS_OUTPUTS.booleanValue) {
             node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT,
                 output ? LayerConstraint::LAST : LayerConstraint::FIRST)
@@ -644,8 +742,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
      * @param nodes All created nodes are added to this list
      * @param output Should be true if output nodes should be generated
      */
-    private def dispatch KNode performTransformation(OperatorExpression operatorExpr, List<KNode> nodes,
-        boolean output) {
+    private def dispatch KNode performTransformation(OperatorExpression operatorExpr, List<KNode> nodes, boolean output) {
         var figureId = operatorExpr.operator.getName()
         if (operatorExpr.operator == OperatorType.SUB) {
             figureId = if(operatorExpr.subExpressions.size == 1) "UNARY_SUB" else "ARITHMETICAL_SUB"
@@ -664,6 +761,20 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             val sourcePort = source.findPortById(OUT_PORT)
             val targetPort = node.getInputPortWithNumber(operatorExpr.subExpressions.indexOf(subExpr))
             sourcePort.connectWith(targetPort, subExpr.serializeHR.toString)
+            
+            if (subExpr instanceof ReferenceCall) {
+                if (subExpr.lowermostReference.valuedObject.declaration.isMethod) {
+                    source.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint.NONE)
+                    // TODO illustrate individual triggering by lazy logic evaluation and ?:
+                    var trig = TRUE
+                    val mTrigger = trig.performTransformation(nodes, false)
+                    val tSourcePort = mTrigger.findPortById(OUT_PORT)
+                    val mTargetPort = source.findPortById(PORT0_IN_PREFIX)
+                    tSourcePort.connectWith(mTargetPort, null)
+                    
+                    nodes += addMethodParameters(subExpr.parameters, source)
+                }
+            }
         }
         // show or hide port labels
         if (SHOW_EXPRESSION_PORT_LABELS.booleanValue) {
@@ -1054,15 +1165,24 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     private def addMissingReferenceInputs(List<KNode> nodes) {
         nodes.filter[isReference].forEach [ node |
             val refDec = (node.sourceElement as ValuedObjectReference).valuedObject.declaration as ReferenceDeclaration
-            refDec.getInputs.forEach [ input |
-                if (!node.ports.exists [
-                    sourceElement !== null && (sourceElement as ValuedObjectReference).valuedObject == input
-                ]) {
-                    node.getInputPortWithNumber(node.incomingEdges.filter[!isInstance && !isSequential].size +
-                        node.ports.filter[it.edges.empty].size, true).setLabel(input.serializeHR.toString, true).
-                        associateWith(input)
+            val portVOs = newHashSet
+            for (p : node.ports) {
+                val source = p.sourceElement
+                if (source !== null) {
+                    if (source instanceof ValuedObjectReference) {
+                        portVOs += source.valuedObject
+                    } else if (source instanceof ValuedObject) {
+                        portVOs += source
+                    }
                 }
-            ]
+            }
+            for (input : refDec.getInputs) {
+                if (!portVOs.contains(input)) {
+                    val p = node.getInputPortWithNumber(node.ports.filter[it.getProperty(CoreOptions::PORT_SIDE) == PortSide.WEST].size, true)
+                    p.setLabel(input.serializeHR.toString, true)
+                    p.associateWith(input)
+                }
+            }
         ]
         return nodes
     }

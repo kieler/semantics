@@ -17,10 +17,12 @@ import com.google.common.base.Joiner
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KFontSize
 import de.cau.cs.kieler.klighd.krendering.KPointPlacementData
+import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.KRoundedBendsPolyline
@@ -269,6 +271,27 @@ class EquationStyles {
         ]
         return edge
     }
+    
+    def KPolygon addMethodPortFigure(KPort port) {
+        port.setSize(8, 8);
+        port.setProperty(CoreOptions.PORT_BORDER_OFFSET, -4d);
+        
+        // Create triangle port
+        val trianglePort = port.addPolygon();
+        
+        // Set line width and background color according to multiport or not
+        trianglePort.setLineWidth(1);
+        trianglePort.background = Colors.BLACK;
+        
+        val points =List.of(
+            createKPosition(LEFT, 0, 0, TOP, 0, 0),
+            createKPosition(RIGHT, 0, 0, TOP, 0, 0.5f),
+            createKPosition(LEFT, 0, 0, BOTTOM, 0, 0)
+        );
+        trianglePort.getPoints().addAll(points);
+        return trianglePort;
+    }
+    
     
     /**
      * Adds a macro state figure.

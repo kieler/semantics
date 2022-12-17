@@ -26,6 +26,7 @@ import de.cau.cs.kieler.sccharts.BaseStateReference;
 import de.cau.cs.kieler.sccharts.CodeEffect;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.DataflowAssignment;
+import de.cau.cs.kieler.sccharts.DataflowReferenceCall;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DeferredType;
 import de.cau.cs.kieler.sccharts.DelayType;
@@ -206,6 +207,13 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     private EClass dataflowAssignmentEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass dataflowReferenceCallEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -990,6 +998,26 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
+    public EClass getDataflowReferenceCall() {
+        return dataflowReferenceCallEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getDataflowReferenceCall_Sequential() {
+        return (EAttribute)dataflowReferenceCallEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getBaseStateReference() {
         return baseStateReferenceEClass;
     }
@@ -1198,6 +1226,9 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         dataflowAssignmentEClass = createEClass(DATAFLOW_ASSIGNMENT);
         createEAttribute(dataflowAssignmentEClass, DATAFLOW_ASSIGNMENT__SEQUENTIAL);
 
+        dataflowReferenceCallEClass = createEClass(DATAFLOW_REFERENCE_CALL);
+        createEAttribute(dataflowReferenceCallEClass, DATAFLOW_REFERENCE_CALL__SEQUENTIAL);
+
         baseStateReferenceEClass = createEClass(BASE_STATE_REFERENCE);
         createEReference(baseStateReferenceEClass, BASE_STATE_REFERENCE__TARGET);
         createEReference(baseStateReferenceEClass, BASE_STATE_REFERENCE__GENERIC_PARAMETERS);
@@ -1275,6 +1306,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         codeEffectEClass.getESuperTypes().add(theKEffectsPackage.getEffect());
         codeEffectEClass.getESuperTypes().add(theSCLPackage.getScope());
         dataflowAssignmentEClass.getESuperTypes().add(theKEffectsPackage.getAssignment());
+        dataflowReferenceCallEClass.getESuperTypes().add(theKExpressionsPackage.getReferenceCall());
+        dataflowReferenceCallEClass.getESuperTypes().add(theKEffectsPackage.getAssignment());
         odeActionEClass.getESuperTypes().add(this.getLocalAction());
         moduleScopeCallEClass.getESuperTypes().add(this.getScopeCall());
 
@@ -1363,6 +1396,9 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         initEClass(dataflowAssignmentEClass, DataflowAssignment.class, "DataflowAssignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getDataflowAssignment_Sequential(), ecorePackage.getEBoolean(), "sequential", "false", 0, 1, DataflowAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(dataflowReferenceCallEClass, DataflowReferenceCall.class, "DataflowReferenceCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getDataflowReferenceCall_Sequential(), ecorePackage.getEBoolean(), "sequential", "false", 0, 1, DataflowReferenceCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(baseStateReferenceEClass, BaseStateReference.class, "BaseStateReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getBaseStateReference_Target(), this.getState(), null, "target", null, 0, 1, BaseStateReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

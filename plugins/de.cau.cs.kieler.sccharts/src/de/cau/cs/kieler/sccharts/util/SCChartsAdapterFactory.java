@@ -21,7 +21,9 @@ import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.IODeclaration;
+import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.Schedulable;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
@@ -176,6 +178,10 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createDataflowAssignmentAdapter();
             }
             @Override
+            public Adapter caseDataflowReferenceCall(DataflowReferenceCall object) {
+                return createDataflowReferenceCallAdapter();
+            }
+            @Override
             public Adapter caseBaseStateReference(BaseStateReference object) {
                 return createBaseStateReferenceAdapter();
             }
@@ -254,6 +260,14 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseAssignment(Assignment object) {
                 return createAssignmentAdapter();
+            }
+            @Override
+            public Adapter caseValuedObjectReference(ValuedObjectReference object) {
+                return createValuedObjectReferenceAdapter();
+            }
+            @Override
+            public Adapter caseReferenceCall(ReferenceCall object) {
+                return createReferenceCallAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -556,6 +570,34 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.ValuedObjectReference <em>Valued Object Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.ValuedObjectReference
+     * @generated
+     */
+    public Adapter createValuedObjectReferenceAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.ReferenceCall <em>Reference Call</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.ReferenceCall
+     * @generated
+     */
+    public Adapter createReferenceCallAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.PolicyRegion <em>Policy Region</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -594,6 +636,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDataflowAssignmentAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.DataflowReferenceCall <em>Dataflow Reference Call</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.DataflowReferenceCall
+     * @generated
+     */
+    public Adapter createDataflowReferenceCallAdapter() {
         return null;
     }
 

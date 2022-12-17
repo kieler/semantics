@@ -2523,6 +2523,142 @@ public interface SCChartsPackage extends EPackage {
     int DATAFLOW_ASSIGNMENT_FEATURE_COUNT = KEffectsPackage.ASSIGNMENT_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowReferenceCallImpl <em>Dataflow Reference Call</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.DataflowReferenceCallImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDataflowReferenceCall()
+     * @generated
+     */
+    int DATAFLOW_REFERENCE_CALL = 19;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REFERENCE_CALL__SCHEDULE = KExpressionsPackage.REFERENCE_CALL__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REFERENCE_CALL__VALUED_OBJECT = KExpressionsPackage.REFERENCE_CALL__VALUED_OBJECT;
+
+    /**
+     * The feature id for the '<em><b>Indices</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REFERENCE_CALL__INDICES = KExpressionsPackage.REFERENCE_CALL__INDICES;
+
+    /**
+     * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REFERENCE_CALL__SUB_REFERENCE = KExpressionsPackage.REFERENCE_CALL__SUB_REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REFERENCE_CALL__PARAMETERS = KExpressionsPackage.REFERENCE_CALL__PARAMETERS;
+
+    /**
+     * The feature id for the '<em><b>Super</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REFERENCE_CALL__SUPER = KExpressionsPackage.REFERENCE_CALL__SUPER;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REFERENCE_CALL__ANNOTATIONS = KExpressionsPackage.REFERENCE_CALL_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REFERENCE_CALL__OUTGOING_LINKS = KExpressionsPackage.REFERENCE_CALL_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REFERENCE_CALL__INCOMING_LINKS = KExpressionsPackage.REFERENCE_CALL_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Reference</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REFERENCE_CALL__REFERENCE = KExpressionsPackage.REFERENCE_CALL_FEATURE_COUNT + 3;
+
+    /**
+     * The feature id for the '<em><b>Expression</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REFERENCE_CALL__EXPRESSION = KExpressionsPackage.REFERENCE_CALL_FEATURE_COUNT + 4;
+
+    /**
+     * The feature id for the '<em><b>Operator</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REFERENCE_CALL__OPERATOR = KExpressionsPackage.REFERENCE_CALL_FEATURE_COUNT + 5;
+
+    /**
+     * The feature id for the '<em><b>Sequential</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REFERENCE_CALL__SEQUENTIAL = KExpressionsPackage.REFERENCE_CALL_FEATURE_COUNT + 6;
+
+    /**
+     * The number of structural features of the '<em>Dataflow Reference Call</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REFERENCE_CALL_FEATURE_COUNT = KExpressionsPackage.REFERENCE_CALL_FEATURE_COUNT + 7;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.BaseStateReferenceImpl <em>Base State Reference</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2530,7 +2666,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getBaseStateReference()
      * @generated
      */
-    int BASE_STATE_REFERENCE = 19;
+    int BASE_STATE_REFERENCE = 20;
 
     /**
      * The feature id for the '<em><b>Target</b></em>' reference.
@@ -2576,7 +2712,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getOdeAction()
      * @generated
      */
-    int ODE_ACTION = 20;
+    int ODE_ACTION = 21;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -2685,7 +2821,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getModuleScopeCall()
      * @generated
      */
-    int MODULE_SCOPE_CALL = 21;
+    int MODULE_SCOPE_CALL = 22;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -2749,7 +2885,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPreemptionType()
      * @generated
      */
-    int PREEMPTION_TYPE = 22;
+    int PREEMPTION_TYPE = 23;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -2759,7 +2895,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
      * @generated
      */
-    int HISTORY_TYPE = 23;
+    int HISTORY_TYPE = 24;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DelayType <em>Delay Type</em>}' enum.
@@ -2769,7 +2905,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDelayType()
      * @generated
      */
-    int DELAY_TYPE = 24;
+    int DELAY_TYPE = 25;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DeferredType <em>Deferred Type</em>}' enum.
@@ -2779,7 +2915,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDeferredType()
      * @generated
      */
-    int DEFERRED_TYPE = 25;
+    int DEFERRED_TYPE = 26;
 
 
     /**
@@ -3490,6 +3626,27 @@ public interface SCChartsPackage extends EPackage {
     EAttribute getDataflowAssignment_Sequential();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.DataflowReferenceCall <em>Dataflow Reference Call</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Dataflow Reference Call</em>'.
+     * @see de.cau.cs.kieler.sccharts.DataflowReferenceCall
+     * @generated
+     */
+    EClass getDataflowReferenceCall();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.DataflowReferenceCall#isSequential <em>Sequential</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Sequential</em>'.
+     * @see de.cau.cs.kieler.sccharts.DataflowReferenceCall#isSequential()
+     * @see #getDataflowReferenceCall()
+     * @generated
+     */
+    EAttribute getDataflowReferenceCall_Sequential();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.BaseStateReference <em>Base State Reference</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4179,6 +4336,24 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EAttribute DATAFLOW_ASSIGNMENT__SEQUENTIAL = eINSTANCE.getDataflowAssignment_Sequential();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowReferenceCallImpl <em>Dataflow Reference Call</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.DataflowReferenceCallImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDataflowReferenceCall()
+         * @generated
+         */
+        EClass DATAFLOW_REFERENCE_CALL = eINSTANCE.getDataflowReferenceCall();
+
+        /**
+         * The meta object literal for the '<em><b>Sequential</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DATAFLOW_REFERENCE_CALL__SEQUENTIAL = eINSTANCE.getDataflowReferenceCall_Sequential();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.BaseStateReferenceImpl <em>Base State Reference</em>}' class.

@@ -156,11 +156,36 @@ ControlflowRegion returns sccharts::ControlflowRegion:
             states+=State*
         ))
     ));
+    
+Equations returns keffects::Assignment:
+    DataflowAssignment | Assignment | DataflowReferenceCall
+;
 
 DataflowAssignment returns sccharts::DataflowAssignment:
     (annotations+=Annotation)*    
     reference=ValuedObjectReference
+    
     operator=AssignOperator expression = Expression
+    ('schedule' schedule+=ScheduleObjectReference+)?
+    sequential?=(';'|'seq')?;
+    
+DataflowReferenceCall returns sccharts::DataflowReferenceCall:
+    (annotations+=Annotation)*
+    
+    // Ref Call
+    super?='super.'?
+    valuedObject=[kexpressions::ValuedObject|PrimeID] 
+    ('[' indices+=Expression ']')*
+    ('.' subReference=ValuedObjectReference)?
+    (
+        ('(' parameters += Parameter 
+            (',' parameters += Parameter)* ')'
+        ) | '()'
+    )
+    
+    // Assignment
+    // No reference since it is its own ValuedObjectReference
+    ('=' expression = Expression)?
     ('schedule' schedule+=ScheduleObjectReference+)?
     sequential?=(';'|'seq')?;
     
@@ -175,12 +200,12 @@ DataflowRegion returns sccharts::DataflowRegion:
     ((
         '{'
         declarations+=DeclarationWOSemicolon*
-        equations+=(DataflowAssignment|Assignment)*
+        equations+=Equations*
         '}'
     )|(
         ':'
         declarations+=DeclarationWOSemicolon*
-        equations+=(DataflowAssignment|Assignment)*
+        equations+=Equations*
     ));
     
 IntOrReference returns kexpressions::Expression:

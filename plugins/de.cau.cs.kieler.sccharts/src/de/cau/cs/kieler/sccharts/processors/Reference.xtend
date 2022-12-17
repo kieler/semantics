@@ -21,6 +21,7 @@ import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.GenericTypeReference
+import de.cau.cs.kieler.kexpressions.IODeclaration
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.OperatorExpression
@@ -860,6 +861,7 @@ class Reference extends SCChartsProcessor implements Traceable {
             // TODO Simple bindings should not cause a separation, e.g. initial values can be handled by assignment
             refs.separateReferenceDeclarationsWithIndividualBindingsInVOs
             for (ref : refs) {
+                val noBinidng = ref.hasAnnotation(Dataflow.DF_BINDING)
                 var refTarget = ref.reference
                 if (refTarget instanceof State) {
                     val tracedCopy = refTarget.tracedCopyAndReturnCopier
@@ -881,8 +883,9 @@ class Reference extends SCChartsProcessor implements Traceable {
                                 state, true)
                         } else if (binding.type === BindingType.GENERIC_TYPE) {
                             replacements.typeReplacements.put(binding.targetValuedObject.name, binding.sourceExpression)
-                        } else {
+                        } else if (!noBinidng) {
                             // TODO: target indices not supported yet
+                            // TODO: Add support for partial binding in DF references
                             replacements.push(binding.targetValuedObject, binding.sourceExpression)
                         }
                     }
@@ -914,8 +917,17 @@ class Reference extends SCChartsProcessor implements Traceable {
                     classDecl.uniqueName
                     classDecl.addStringAnnotation(REF_CLASS_ORIGIN, Iterables.concat(#[refTarget.name], refTarget.baseStates.map[name]))
                     
-                    // Remove the input/output declarations from the new class. They should be bound beforehand.
-                    classDecl.declarations.removeIf[ input || output ]
+                    if (noBinidng) {
+                        // Turn them into local variables
+                        for (d : classDecl.declarations.filter(IODeclaration).filter[ input || output ]) {
+                            d.input = false
+                            d.output = false
+                            d.access = AccessModifier.PUBLIC
+                        }
+                    } else {
+                        // Remove the input/output declarations from the new class. They should be bound beforehand.
+                        classDecl.declarations.removeIf[ input || output ]
+                    }
                     // All declarations will be public to enable access by regions that are moved outside the class
                     classDecl.declarations.forEach[ access = AccessModifier.PUBLIC ]
                     // Clear parameters

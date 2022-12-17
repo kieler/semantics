@@ -203,6 +203,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="sequential" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="false"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataflowReferenceCall" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ReferenceCall ../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Assignment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sequential" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="DeferredType">
     <eLiterals name="NONE"/>
     <eLiterals name="SHALLOW" value="1"/>
