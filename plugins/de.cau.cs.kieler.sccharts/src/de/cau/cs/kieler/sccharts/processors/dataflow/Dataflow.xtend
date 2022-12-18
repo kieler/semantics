@@ -130,6 +130,8 @@ class Dataflow extends SCChartsProcessor {
             initial = true
             trace(dataflowRegion)
         ]
+        
+        var canTerminate = dataflowRegion.canTerminate()        
         if (dataflowRegion.once) {
             newControlflowRegion.createState(GENERATED_PREFIX + "done") => [
                 final = true
@@ -137,7 +139,7 @@ class Dataflow extends SCChartsProcessor {
                 trace(dataflowRegion)
             ]
             trace(dataflowRegion)
-        } else { // Delayed restart
+        } else if (canTerminate) { // Delayed restart
             newControlflowRegion.createState(GENERATED_PREFIX + "restart").trace(dataflowRegion) => [
                 newMainState.createTransitionTo(it) => [ 
                     preemption = PreemptionType.TERMINATION
@@ -252,10 +254,12 @@ class Dataflow extends SCChartsProcessor {
                 ]
                 
                 if (dataflowRegion.once) {
-                    newEqDelayState.final = true           
+                    newEqDelayState.final = true
                 } else {
                     newEqDelayState.createTransitionTo(newEqState).trace(dataflowRegion)
-                    newEqCfRegion.final = true
+                    if (canTerminate) {
+                        newEqCfRegion.final = true
+                    }
                 }
                 
                 if (assignment instanceof DataflowReferenceCall) {
@@ -291,6 +295,31 @@ class Dataflow extends SCChartsProcessor {
         for (r : removeList) {
             r.remove
         }
+    }
+    
+    def boolean canTerminate(DataflowRegion region) {
+        val states = region.declarations.filter(ReferenceDeclaration).map[reference].filter(State).toSet
+        for (s : states.immutableCopy) {
+            states += s.allInheritedStates
+        }
+        
+        var hasTerminatingRegion = false
+        for (s : states) {
+            if (!s.duringActions.empty || !s.dataflowRegions.empty) { // These prevent termination
+                return false
+            }
+            for (r : s.controlflowRegions) {
+                val innerStates = r.states
+                if (r.final || innerStates.forall[!final]) { // Does not contribute to termination
+                    return false
+                } else if (innerStates.exists[final]) {
+                    // This can terminate, but DF region must not kept alive by others, so continue check
+                    hasTerminatingRegion = true
+                }
+            }
+        }
+        
+        return hasTerminatingRegion
     }
     
     def processDataflowRegionClassic(DataflowRegion dataflowRegion) {
