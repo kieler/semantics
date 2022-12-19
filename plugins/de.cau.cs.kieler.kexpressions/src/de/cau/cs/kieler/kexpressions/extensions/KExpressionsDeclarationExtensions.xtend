@@ -268,6 +268,12 @@ class KExpressionsDeclarationExtensions {
         return newDecls
     }   
     
+    def List<IODeclaration> getIODeclarations(EObject eObject) {
+        <IODeclaration> newArrayList => [ list |
+            eObject.eContents.filter(IODeclaration).forEach[ list += it ]
+        ]
+    }
+    
     def List<VariableDeclaration> getVariableDeclarations(EObject eObject) {
         <VariableDeclaration> newArrayList => [ list |
             eObject.eContents.filter(VariableDeclaration).forEach[ list += it ]

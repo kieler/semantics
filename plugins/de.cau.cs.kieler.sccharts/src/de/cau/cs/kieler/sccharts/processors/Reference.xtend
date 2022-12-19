@@ -639,6 +639,8 @@ class Reference extends SCChartsProcessor implements Traceable {
             } else if (newRef instanceof Value) {
                 // If the replacement is a literal, delegate.
                 valuedObjectReference.replaceReferenceWithLiteral(newRef)
+            } else if (newRef instanceof SpecialAccessExpression) {
+                valuedObjectReference.replace(newRef)
             } else {
                 // If there is an unknown replacement, report an error.
                 environment.errors.add("A binding for the valued object reference \"" + valuedObjectReference.valuedObject.name + 

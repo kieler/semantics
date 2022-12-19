@@ -18,6 +18,7 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
@@ -45,7 +46,6 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
@@ -308,6 +308,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 || state.isReferencing
                 || (SHOW_INHERITANCE.booleanValue && !state.allVisibleInheritedRegions.empty)
                 || !state.declarations.filter(MethodImplementationDeclaration).empty
+                || (SHOW_INSTANCES.booleanValue && !state.declarations.filter(ReferenceDeclaration).empty)
             ) {
                 node.addRegionsArea
                 node.setLayoutOption(CoreOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
@@ -343,6 +344,13 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             }
             for (policy : state.getPolicies()) {
                 node.children.addAll(policy.transform)
+            }
+        }
+
+        // Reference Instantiations
+        if (SHOW_INSTANCES.booleanValue) {
+            for (ref : state.declarations.filter(ReferenceDeclaration).filter[reference instanceof State]) {
+                node.children += ref.createReferenceDeclarationRegion
             }
         }
 

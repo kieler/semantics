@@ -148,14 +148,14 @@ class SCTXScopeProvider extends KExtScopeProvider {
             
             if (target !== null) {
                 if (target instanceof Scope) {
-                    for (declaration : target.variableDeclarations.filter[ input || output ]) {
+                    for (declaration : target.IODeclarations.filter[ input || output ]) {
                         voCandidates += declaration.valuedObjects
                     }
                 } else if (target instanceof ValuedObject) {
                     if (target.isGenericParamter) {
                         val type = target.genericParameterDeclaration?.type
                         if (type instanceof Scope) {
-                            for (declaration : type.variableDeclarations.filter[ input || output ]) {
+                            for (declaration : type.IODeclarations.filter[ input || output ]) {
                                 voCandidates += declaration.valuedObjects
                             }
                         }

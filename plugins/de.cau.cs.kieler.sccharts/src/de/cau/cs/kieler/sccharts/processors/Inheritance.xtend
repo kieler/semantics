@@ -24,6 +24,7 @@ import de.cau.cs.kieler.kexpressions.GenericTypeReference
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueTypeReference
 import de.cau.cs.kieler.kexpressions.ValuedObject
@@ -234,7 +235,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                             }
                             replacements.put(oldVO, newVO)
                             voStore.remove(inheritedMethods.get(method.decl).valuedObjects.head)
-                            method.decl.remove
+                            inheritedMethods.get(method.decl).remove
                         }
                     }
                 } else if (!method.body) {
@@ -403,6 +404,8 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                             vor.subReference.fixMemberReferenceIfParentChanged(true)
                         }
                     } else if (replacement instanceof Value) {
+                        vor.replace(replacement)
+                    } else if (replacement instanceof SpecialAccessExpression) {
                         vor.replace(replacement)
                     } else {
                         // If there is an unknown replacement, report an error.

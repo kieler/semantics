@@ -244,7 +244,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                 case CLASS,
                 case STRUCT: '''cJSON_CreateObject()'''
                 default: {
-                    environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + type)
+                    environment.errors.add("Cannot serialize simulation interface. Unsupported type " + type + " for variable " + varName);
                     ""
                 }
             }
@@ -271,7 +271,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                 case CLASS,
                 case STRUCT: '''cJSON_CreateObject()'''
                 default: {
-                    environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + info.type)
+                    environment.errors.add("Cannot serialize simulation interface. Unsupported type " + info.type + " for variable " + varName);
                     ""
                 }
             }
