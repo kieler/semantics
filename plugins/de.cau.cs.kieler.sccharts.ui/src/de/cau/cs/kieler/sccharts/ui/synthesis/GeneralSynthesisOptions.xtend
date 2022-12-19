@@ -65,6 +65,7 @@ final class GeneralSynthesisOptions {
     public static final SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "All SCCharts", false).setCategory(APPEARANCE)
     public static final SynthesisOption SHOW_COMMENTS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Comment Nodes", true).setCategory(APPEARANCE)
     public static final SynthesisOption SHOW_USER_LABELS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "User Labels", true).setCategory(APPEARANCE)
+    
     /** 
      * Scope call parameters synthesis option 
      */
@@ -75,6 +76,7 @@ final class GeneralSynthesisOptions {
     public static final SynthesisOption SHOW_INHERITANCE = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Inheritance Preview", true).setCategory(OO)
     public static final SynthesisOption SHOW_INHERITANCE_EDGES = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Inheritance Hierarchy", false).setCategory(OO)
     public static final SynthesisOption SHOW_AGGREGATION_EDGES = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Associations", false).setCategory(OO)
+    public static final SynthesisOption SHOW_INSTANCES = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Instantiations", false).setCategory(OO)
 //    public static final SynthesisOption SHOW_METHOD_BODY = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Method Implementation", true).setCategory(OO)
     public static final SynthesisOption SHOW_METHODS = SynthesisOption.createChoiceOption(GeneralSynthesisOptions, "Methods", MethodDisplayOptions.OPTIONS, MethodDisplayOptions.REGIONS).setCategory(OO)
     /** 

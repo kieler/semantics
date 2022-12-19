@@ -115,7 +115,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             if (method === null) {
                 var vor = call as ValuedObjectReference
                 while (vor.subReference !== null && method === null) {
-                    if (vor.subReference.valuedObject.eContainer instanceof MethodDeclaration) {
+                    if (vor.subReference.valuedObject?.eContainer instanceof MethodDeclaration) {
                         method = vor.subReference.valuedObject.eContainer as MethodDeclaration
                     }
                     vor = vor.subReference

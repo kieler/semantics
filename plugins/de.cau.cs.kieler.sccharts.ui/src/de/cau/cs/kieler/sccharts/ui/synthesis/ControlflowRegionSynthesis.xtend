@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager
@@ -31,11 +32,13 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.extensions.TextFormat
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
 import java.util.EnumSet
+import java.util.List
 import org.eclipse.elk.alg.layered.options.CenterEdgeLabelPlacementStrategy
 import org.eclipse.elk.alg.layered.options.FixedAlignment
 import org.eclipse.elk.alg.layered.options.LayeredOptions
@@ -188,7 +191,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 label += region.reference.parameters.serializeHRParameters
             }
             
-            node.createReferenceRegionFigures(label, region) => [
+            node.createReferenceRegionFigures(newArrayList(new Pair(label, TextFormat.TEXT)), region) => [
                 node.data.filter(KRectangle).forEach[
                     it.foreground = ColorStore.Color.STATE_REFERENCED_BACKGROUND_GRADIENT_2.color
                     it.lineWidth = it.lineWidth.lineWidth + 1
@@ -231,11 +234,38 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
 
         node.createReferenceRegionFigures(null, null)
+        
+        node.setSelectionStyle
 
         return node;
     }
     
-    protected def KNode createReferenceRegionFigures(KNode node, String label, Region region) {
+    /**
+     * Create region area for reference declaration
+     * 
+     * @param ref the declaration
+     */
+    def KNode createReferenceDeclarationRegion(ReferenceDeclaration ref) {
+        val node = createNode().associateWith(ref); // This association is important for the ReferenceExpandAction
+        if (USE_KLAY.booleanValue) {
+            node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
+            node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER_STRATEGY, OrderingStrategy.PREFER_EDGES)
+        } else {
+            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
+            node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 40.0);
+        }
+        node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+
+        node.createReferenceRegionFigures(ref.serializeHighlighted(true), null)
+        
+        node.data.filter(KRectangle).forEach[setReferencedStyle]
+        
+        node.setSelectionStyle
+
+        return node;
+    }
+    
+    protected def KNode createReferenceRegionFigures(KNode node, List<Pair<? extends CharSequence, TextFormat>> label, Region region) {
         // Set initially collapsed
         node.setLayoutOption(KlighdProperties::EXPAND, false);
 
@@ -246,7 +276,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             addDoubleClickAction(ReferenceExpandAction::ID)
             // Add Button after area to assure correct overlapping
             // Use special expand action to resolve references
-            addCollapseButton(label?:"") => [
+            addCollapseButton(label) => [
                 addSingleClickAction(ReferenceExpandAction.ID)
                 addDoubleClickAction(ReferenceExpandAction.ID)
             ]
@@ -257,7 +287,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         node.addRegionFigure => [
             setAsCollapsedView
             addDoubleClickAction(ReferenceExpandAction::ID)
-            addExpandButton(label?:"") => [
+            addExpandButton(label) => [
                 addSingleClickAction(ReferenceExpandAction.ID)
                 addDoubleClickAction(ReferenceExpandAction.ID)
             ]

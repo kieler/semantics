@@ -121,6 +121,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             SHOW_INHERITANCE,
             SHOW_INHERITANCE_EDGES,
             SHOW_AGGREGATION_EDGES,
+            SHOW_INSTANCES,
             SHOW_BINDINGS,
             SHOW_METHODS,
             SHOW_COMMENTS,
@@ -280,6 +281,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
                         edge.target = rootStateNodes.get(agg)
                         edge.addPolyline => [
                             lineWidth = 1
+                            // TODO handle input ref
+                            // TODO add multiplcities if possible
                             addAggregationArrowDecorator
                         ]
                     }

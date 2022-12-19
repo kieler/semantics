@@ -23,6 +23,7 @@ import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis
@@ -102,6 +103,18 @@ class ReferenceExpandAction extends CollapseExpandAction {
                         context.getKNode.children += extractedDataflow
                     }
                 } 
+            } else if (modelElement instanceof ReferenceDeclaration) {
+                val ref = modelElement as ReferenceDeclaration
+                if (ref.reference instanceof Scope) {
+                    val diagram = LightDiagramServices.translateModel(
+                        ref.reference as Scope,
+                        context.viewContext,
+                        new MapPropertyHolder => [ 
+                            setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.sccharts.ui.synthesis.ScopeSynthesis") 
+                        ]
+                    );
+                    context.getKNode.children += diagram.children;
+                }
             }
         }
         val result = super.execute(context)
