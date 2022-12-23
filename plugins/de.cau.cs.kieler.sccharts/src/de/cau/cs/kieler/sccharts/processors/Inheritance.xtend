@@ -255,6 +255,11 @@ class Inheritance extends SCChartsProcessor implements Traceable {
             // replace references in state regions
             state.regions.forEach[replaceVOR(replacements)]
             
+            // replace references in policy
+            state.policies.forEach[replaceVOR(replacements)]
+            
+            // replace references in transitions
+            state.outgoingTransitions.forEach[replaceVOR(replacements)]
             
             // Handle explicit binding and generic params
             val bindingReplacements = <ValuedObject, Expression>newHashMap
@@ -375,13 +380,15 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                     }
                 }
             }
+            
             // Save bindings in case we need them for later overriding (super reference)
             // TODO support scoping
             val laterBinding = newArrayList
-            laterBinding += replacements.entrySet.map[e | new Binding() => [targetValuedObject = e.key; sourceExpression = e.value.reference]]
-            laterBinding += bindingReplacements.entrySet.map[e | new Binding() => [targetValuedObject = e.key; sourceExpression = e.value]]
+            laterBinding += replacements.entrySet.map[e | new Binding() => [targetValuedObject = e.key; sourceExpression = bindingReplacements.containsKey(e.value) ? bindingReplacements.get(e.value) : e.value.reference]]
+            laterBinding += bindingReplacements.entrySet.filter[!replacements.containsValue(it.key)].map[e | new Binding() => [targetValuedObject = e.key; sourceExpression = e.value]]
             laterBinding += typeReplacements.entrySet.map[e | new Binding() => [type = BindingType.GENERIC_TYPE; targetValuedObject = e.key; sourceExpression = e.value]]
             lateInheritanceBindings.put(state, laterBinding)
+            
             // Replace bound VOs
             for (vor : state.eAllContents.filter(ValuedObjectReference).filter[!it.isSubReference].toIterable) {
                 // replace with binding
@@ -401,7 +408,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                             vor.subReference = replacement.subReference
                         }
                         if (vor.subReference !== null) {
-                            vor.subReference.fixMemberReferenceIfParentChanged(true)
+                            vor.subReference.fixMemberAssociationForSubReference(true)
                         }
                     } else if (replacement instanceof Value) {
                         vor.replace(replacement)
@@ -464,17 +471,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
         for (vor: object.eAllContents.filter(ValuedObjectReference).filter[replacements.containsKey(valuedObject)].toList) {
             if (!(vor.eContainer instanceof ValuedObjectReference)) {
                 vor.valuedObject = replacements.get(vor.valuedObject)
-                vor.subReference.replaceSubVOR(vor.valuedObject)
-            }
-        }
-    }
-    
-    def void replaceSubVOR(ValuedObjectReference vor, ValuedObject parent) {
-        if (vor !== null && parent !== null) {
-            val decl = parent.declaration
-            if (decl instanceof ClassDeclaration) {
-                vor.valuedObject = decl.innerValuedObjects.findFirst[it.name == vor.valuedObject.name]
-                vor.subReference.replaceSubVOR(vor.valuedObject)
+                vor.fixMemberAssociation(true)
             }
         }
     }

@@ -48,6 +48,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.xbase.lib.Functions.Function1
+import com.google.common.collect.Iterables
 
 /**
  * This class contains custom scoping description.
@@ -369,9 +370,24 @@ class SCTXScopeProvider extends KExtScopeProvider {
             if (declarationScope instanceof State) {
                 // Inherited VOs
                 if (!declarationScope.baseStateReferences.nullOrEmpty) {
-                    for (decl : declarationScope.allVisibleInheritedDeclarations) {
-                        for(VO : decl.valuedObjects) {
-                            candidates += VO
+                    if (context.eContainer instanceof Parameter
+                        && context.eContainer.eContainer instanceof BaseStateReference
+                        && context.eContainer.eContainer.eContainer == declarationScope) {
+                        val bsr = context.eContainer.eContainer as BaseStateReference
+                        for (base : declarationScope.baseStateReferences.takeWhile[it != bsr]) {
+                            for (decl : Iterables.concat(
+                                base.target.declarations.filter[!it.isPrivate],
+                                base.target.allVisibleInheritedDeclarations)) {
+                                for(VO : decl.valuedObjects) {
+                                    candidates += VO
+                                }
+                            }
+                        }
+                    } else {
+                        for (decl : declarationScope.allVisibleInheritedDeclarations) {
+                            for(VO : decl.valuedObjects) {
+                                candidates += VO
+                            }
                         }
                     }
                 }
@@ -382,6 +398,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
             // This also give nested classes access to variable of surrounding scopes (only partially supported in code gen)
             declarationScope = declarationScope.nextDeclarationScope
         }
+        
         return Scopes.scopeFor(candidates)
     }
     

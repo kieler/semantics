@@ -20,9 +20,9 @@ import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.kexpressions.converter.KExpressionsOverloadingConverter
+import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.converter.KEffectsEmissionReferenceCallConverter
 import de.cau.cs.kieler.kexpressions.kext.converter.KExtGenericParamterConverter
-import de.cau.cs.kieler.sccharts.BaseStateReference
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -131,9 +131,10 @@ public class SCTXResource extends LazyLinkingResource {
         this.getContents().clear();
 
         // Handle imports
+        var clearLinks = false
         if (parseResult.rootASTElement !== null) {
             try {
-                updateImports(parseResult.rootASTElement as SCCharts)
+                clearLinks = updateImports(parseResult.rootASTElement as SCCharts)
             } catch (Exception e) {
                 // fail silent
             }
@@ -144,11 +145,17 @@ public class SCTXResource extends LazyLinkingResource {
         
         // Fix Type vs. VOReference uncertainty in Generic Parameter.
         parseResult.fixValuedObjectReferenceDetectionInGenericParamter
-                
-        super.updateInternalState(parseResult)
         
-        if (parseResult.rootASTElement !== null && parseResult.rootASTElement.eAllContents.exists[it instanceof BaseStateReference]) {
-            // Fix again to catch inherited VORs
+        if (clearLinks) {
+            clearReferencesBeforeLinking = true
+        }
+        super.updateInternalState(parseResult)
+        if (clearLinks) {
+            clearReferencesBeforeLinking = false
+        }
+        
+        if (parseResult.rootASTElement !== null && parseResult.rootASTElement.eAllContents.exists[it instanceof Emission]) {
+            // Fix again to catch inherited VORs and reference declarations
             parseResult.fixEmissionReferenceCallEffectDuality
         }
         
@@ -189,7 +196,7 @@ public class SCTXResource extends LazyLinkingResource {
     }
     
     // ---------------------------------------------------------------------------------------
-    protected def void updateImports(SCCharts scc) {
+    protected def boolean updateImports(SCCharts scc) {
         // Assure resource set
         if (this.resourceSet === null) {
             SCTXStandaloneSetup.doSetup.getInstance(XtextResourceSet).resources.add(this)
@@ -255,7 +262,9 @@ public class SCTXResource extends LazyLinkingResource {
         // Remove from resource set
         if (!removedImports.empty || folderImportChanged) {
             removedImports.unimportResources
+            return true // clear ref on relink
         }
+        return false
     }
 
     protected def importResource(URI importUri, String importName) {

@@ -15,7 +15,9 @@ package de.cau.cs.kieler.sccharts.extensions
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -37,6 +39,8 @@ import de.cau.cs.kieler.sccharts.ScopeCall
 import de.cau.cs.kieler.sccharts.State
 import java.util.List
 import java.util.Map
+
+import static de.cau.cs.kieler.kexpressions.extensions.KExpressionsOverloadingExtensions.getMethodSignatureID
 
 import static extension java.lang.String.format
 
@@ -388,17 +392,39 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
         decls += separated
     }
     
-    def boolean fixMemberReferenceIfParentChanged(ValuedObjectReference ref, boolean recursive) {
-        val parent = ref.eContainer
-        if (parent instanceof ValuedObjectReference) {
-            if (parent.subReference === ref) {
-                val decl = parent.valuedObject?.declaration
-                if (decl instanceof ClassDeclaration) {
-                    val match = decl.innerValuedObjects.findFirst[name?.equals(ref.valuedObject?.name)]
-                    if (match !== null && match !== ref.valuedObject) {
-                        ref.valuedObject = match
-                        if (ref.subReference !== null && recursive) {
-                            ref.subReference.fixMemberReferenceIfParentChanged(recursive)
+    def boolean fixMemberAssociation(ValuedObjectReference ref, boolean recursive) {
+        if (ref !== null && ref.subReference !== null) {
+            if (ref.valuedObject?.declaration instanceof ClassDeclaration) {
+                return ref.subReference.fixMemberAssociationForSubReference(recursive)
+            }
+        }
+        return false
+    }
+    
+    def boolean fixMemberAssociationForSubReference(ValuedObjectReference ref, boolean recursive) {
+        if (ref !== null) {
+            val parent = ref.eContainer
+            if (parent instanceof ValuedObjectReference) {
+                if (parent.subReference === ref) {
+                    val decl = parent.valuedObject?.declaration
+                    if (decl instanceof ClassDeclaration) {
+                        var ValuedObject match = null
+                        if (ref.topmostReference instanceof ReferenceCall && ref.subReference === null && ref.valuedObject.declaration.isMethod) {
+                            val previousSignature = getMethodSignatureID(ref.valuedObject.declaration as MethodDeclaration)
+                            // Find by signature (overloading)
+                            match = decl.declarations.filter(MethodDeclaration).findFirst[
+                                previousSignature.equals(getMethodSignatureID(it))
+                            ]?.valuedObjects?.head
+                        } else {
+                            // Find by name
+                            match = decl.innerValuedObjects.findFirst[name?.equals(ref.valuedObject?.name)]
+                        }
+                        
+                        if (match !== null) {
+                            ref.valuedObject = match
+                            if (ref.subReference !== null && recursive) {
+                                ref.subReference.fixMemberAssociationForSubReference(recursive)
+                            }
                         }
                     }
                 }

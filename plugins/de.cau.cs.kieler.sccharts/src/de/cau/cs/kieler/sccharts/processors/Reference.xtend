@@ -653,7 +653,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                 index.replaceReferences(replacements)
             }
             // Try to fix sub reference if no longer contained in parent
-            valuedObjectReference.fixMemberReferenceIfParentChanged(false)
+            valuedObjectReference.fixMemberAssociationForSubReference(false)
             // Process further sub refs
             if (valuedObjectReference.subReference !== null) {
                 valuedObjectReference.subReference.replaceReferences(replacements)
@@ -962,6 +962,13 @@ class Reference extends SCChartsProcessor implements Traceable {
                                         val value = ((car as ValuedObjectReference).valuedObject.initialValue as IntValue).value
                                         allCardinalities *= value
                                         maxIndices += value
+                                } else if (car instanceof SpecialAccessExpression
+                                    && StaticAccess.isStaticAccess(car as SpecialAccessExpression) 
+                                    && (car as SpecialAccessExpression).subReference?.lowermostReference?.valuedObject?.variableDeclaration?.const
+                                    && (car as SpecialAccessExpression).subReference.lowermostReference.valuedObject.initialValue instanceof IntValue) {
+                                        val value = ((car as SpecialAccessExpression).subReference.lowermostReference.valuedObject.initialValue as IntValue).value
+                                        allCardinalities *= value
+                                        maxIndices += value
                                 } else {
                                     environment.errors.add("Can only handle reference arrays with constant cardinality", scope, true)
                                 }
@@ -1014,27 +1021,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                     
                     // Fix (sub) VORs
                     for (vor : state.eAllContents.filter(ValuedObjectReference).filter[classDecl.valuedObjects.contains(it.valuedObject)].toList) {
-                        var sub = vor.subReference
-                        while (sub !== null) {
-                            val vo = sub.valuedObject
-                            val parent = sub.eContainer as ValuedObjectReference
-                            if (vo !== null && parent !== null) {
-                                val decl = parent.valuedObject.eContainer as Declaration
-                                if (decl instanceof ClassDeclaration) {
-                                    if (vor instanceof ReferenceCall && sub.subReference === null && sub.valuedObject.declaration.isMethod) {
-                                        val previousSignature = getMethodSignatureID(sub.valuedObject.declaration as MethodDeclaration)
-                                        // Find by signature (overloading)
-                                        sub.valuedObject = decl.declarations.filter(MethodDeclaration).findFirst[
-                                            previousSignature.equals(getMethodSignatureID(it))
-                                        ].valuedObjects.head
-                                    } else {
-                                        // Find by name
-                                        sub.valuedObject = decl.innerValuedObjects.findFirst[vo.name.equals(name)]
-                                    }
-                                }
-                            }
-                            sub = sub.subReference
-                        }
+                        vor.fixMemberAssociation(true)
                     }
                     
                     if (initialSnapshotsFlag) {

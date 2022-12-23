@@ -16,6 +16,7 @@ import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import java.util.HashMap
 import java.util.Stack
+import org.eclipse.xtend.lib.annotations.ToString
 
 /**
  * Class for handling valued object replacements in referenced SCCharts and bindings.
@@ -26,6 +27,7 @@ import java.util.Stack
  * @kieler.design 2017-07-18 proposed
  * @kieler.rating 2017-07-18 proposed yellow  
  */
+@ToString
 class Replacements {
     
     /** 
