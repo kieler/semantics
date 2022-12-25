@@ -18,7 +18,6 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -54,6 +53,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import de.cau.cs.kieler.scg.extensions.SCGSequentialForkExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.processors.synchronizer.SynchronizerSelector
 import java.util.HashMap
@@ -298,10 +298,11 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
         val forks = ownEntry?.ancestorForks
         
         if (forks !== null && forks.exists[join.any]) { // Weak abort
-            // Join.any joins as soon any thread terminates and weakly aborts all remaining
-            // Supress continuing a weakly aborted thead by checking if it was join in the last tick
+            // Join.any joins as soon any thread terminates and weakly aborts all remaining threads
+            // Kill a weakly aborted threads by checking if it was join in the last tick
             // Hence, overrule pre(guard) guard with pre(join)
-            val joinPreemtion = not(or(forks.map[join].filter[any && !it.basicBlock.deadBlock].map[createPreExpression(it.schedulingBlockCached.createGuardRef)].toList))
+            val joinKill = not(or(forks.map[join].filter[any && !it.basicBlock.deadBlock]
+                .map[createPreExpression(it.schedulingBlockCached.createGuardRef)].toList))
             
             // But only if surface node of depth is not in thread surface and could be revived by thread reincanation
             // TODO Currently only works for single revival by next ancestor par-or fork
@@ -358,9 +359,9 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
                         revival = and(revival, not(or(nonRevivalPathTaken.map[createPreExpression(ownEntry.exit.schedulingBlock.createGuardRef)])))
                     }
                 }
-                firstExpression = and(firstExpression, or(joinPreemtion, revival))
+                firstExpression = and(firstExpression, or(joinKill, revival))
             } else {
-                firstExpression = and(firstExpression, joinPreemtion)
+                firstExpression = and(firstExpression, joinKill)
             }
             
         }
@@ -368,40 +369,20 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
         if (forks !== null && forks.exists[nonParallel]) { // Sequential start and strong abort
             val guards = <Expression>newArrayList(firstExpression)
             for (fork : forks.filter[nonParallel]) {
-                // Special guards for deths in sequential forks
-                // Only start deth if all left-hand threads under sequential forks are finished (run into a surface or exit)
-                // Strong preemtion in is achived by not considering exit as trigger
-                
+                // Special guards for depths in sequential forks
                 val entries = fork.allNextNodes.filter(Entry).toList
                 var ownEntryInFork = ownEntry
                 while (ownEntryInFork !== null && !entries.contains(ownEntryInFork)) {
                     ownEntryInFork = ownEntryInFork.threadEntry
                 }
                 if (entries.head !== ownEntryInFork) { // Not first
-                    val leftEntry = entries.get(entries.indexOf(ownEntryInFork) - 1)
-                    // Deactivated old code that used surface
-//                    val surfaceSBs = leftEntry.getThreadNodes.filter(Surface).map[it.schedulingBlock].toSet
-//                    guards += or(surfaceSBs.map[it.createGuardRef].toList)
-//                    if (fork.asFork.type === ForkType.SEQUENTIAL) {
-//                        // If no preemtion, than also start is predecessor
-//                        val or = (guard.expression as OperatorExpression).subExpressions.last as OperatorExpression
-//                        or.subExpressions += leftEntry.exit.schedulingBlock.createGuardRef
-//                    }
-
-                    // For depth guard we use depth guards of other thread instead of surfaces, because one always depends on entry
-                    // which causes cycle in case of thread reincanation!
-                    // Assumption: SequentialFork processor make sure left thread is really scheduled sequentially before right
-                    val startSBs = leftEntry.getThreadNodes.filter(Depth).map[it.schedulingBlockCached].filter[!basicBlock.deadBlock].toSet
-                    if (leftEntry.exit.schedulingBlock.basicBlock.deadBlock) {
-                        guards += or(startSBs.map[createGuardRef].toList)
-                    } else if (fork.asFork.type === ForkType.SEQUENTIAL) {
-                        // If no preemtion, than exit also starts is successor
-                        startSBs += leftEntry.exit.schedulingBlockCached
-                        guards += or(startSBs.map[createGuardRef].toList)
-                    } else {
-                        // if left exit is active preemt this thread otherwise start if depth is active
-                        guards += and(not(leftEntry.exit.schedulingBlockCached.createGuardRef), or(startSBs.map[createGuardRef].toList))
+                    if (fork.type === ForkType.SEQUENTIAL_PREEMPTIVE) { // Strong abort
+                        // Suppress start from this depth if previous thread exited this tick
+                        val leftExit = entries.get(entries.indexOf(ownEntryInFork) - 1).exit
+                        guards += not(leftExit.schedulingBlockCached.createGuardRef)             
                     }
+                    // The Guard transformation will take care of introducing appropriate 
+                    // control dependencies to order the threads
                 }
             }
             
@@ -479,7 +460,6 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
 
         // If there are more than one predecessor, create an operator expression and connect them via OR.
         if (relevantPredecessors.size > 1) {
-
             // Create OR operator expression via kexpressions factory.
             val expr = KExpressionsFactory::eINSTANCE.createOperatorExpression
             expr.setOperator(OperatorType::LOGICAL_OR)
@@ -495,30 +475,49 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
         else if (relevantPredecessors.size == 1) {
             val pred = relevantPredecessors.head
             if (pred.isNonParalellFork) {
-                // Special guards for entries with sequential forks
-                // Only start entry if left-hand thread is finished (run into surface or exit)
-                // Preemtion in first tick is achived by not considering exit as trigger
+                // Special guards for entries with sequential forks.
+                // Only start an entry node, if left-hand thread is finished (ran into surface or exited).
+                // Preemtion in first tick is achieved by not considering exit as trigger.
+                // SimpleGuardTransformation will take that this entry is placed after all (surface) nodes 
+                // in the previous thread, otherwise this might not work because entry only depends on the
+                // previous surface.
                 val fork = pred.basicBlock.fork
                 val ownEntry = schedulingBlock.nodes.head as Entry
                 
                 val entries = fork.allNextNodes.filter(Entry).toList
-                if (entries.head == ownEntry) { // First
-                    guard.expression = guard.predecessorExpression(pred, schedulingBlock, scg)
-                } else {
-                    val leftEntry = entries.get(entries.indexOf(ownEntry) - 1)
-                    // Using surface nodes is ok since entry is always in thread suface. Depth guard uses depth to prevent dependencies with reentry
-                    val surfaceSBs = leftEntry.getShallowSurfaceThreadNodes.filter(Surface).map[it.schedulingBlockCached].toSet
-                    guard.expression = and(guard.predecessorExpression(pred, schedulingBlock, scg), 
-                                        or(surfaceSBs.map[it.createGuardRef].toList))
-                    
-                    // If no preemtion, than exit also start is predecessor
-                    if (fork.type === ForkType.SEQUENTIAL && !leftEntry.exit.schedulingBlockCached.basicBlock.deadBlock) {
-                        val or = (guard.expression as OperatorExpression).subExpressions.last as OperatorExpression
-                        or.subExpressions += leftEntry.exit.schedulingBlockCached.createGuardRef
+                if (entries.head !== ownEntry && fork.type === ForkType.SEQUENTIAL_PREEMPTIVE) { // Strong abort
+                    // If this may be preempted by any preceeding thread, add exit check.
+                    val prevEntries = entries.takeWhile[it !== ownEntry].toList
+                    var Expression preemtionExpression = not(or(prevEntries.map[it.exit.schedulingBlockCached.createGuardRef])) // not any prev exit active
+                                        
+                    // Check if thread could be reincarated
+                    // TODO Currently only works for single revival by next ancestor par-or fork
+                    if (fork.join.immediateFeedback && fork.join.any) {
+                        val relevantThreadTypes = prevEntries.map[
+                            it.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2
+                        ].toList
+                        if (relevantThreadTypes.exists[it == ThreadPathType.UNKNOWN]) {
+                            environment.errors.add("Cannot handle thread reincarnation without thread type information", ownEntry, true)
+                        } else if (relevantThreadTypes.forall[it == ThreadPathType.DELAYED]) {
+                            preemtionExpression = or(preemtionExpression,
+                                or(prevEntries.map[
+                                    and(it.schedulingBlockCached.createGuardRef,
+                                        it.exit.schedulingBlockCached.createGuardRef
+                                        )]
+                                  ))
+                        } else {
+                            environment.errors.add("Cannot handle thread reincarnation with (potentially) instantaneous threads", ownEntry, true)
+                        }
                     }
+                                                   
+                    guard.expression = and(guard.predecessorExpression(pred, schedulingBlock, scg), preemtionExpression)
+                } else {
+                    // If first or not preempted, start immediately.
+                    // The Guard transformation will take care of introducing appropriate 
+                    // control dependencies to order them
+                    guard.expression = guard.predecessorExpression(pred, schedulingBlock, scg)
                 }
             } else {
-                //            if (!scheduledBlock.schizophrenic || basicBlock.predecessors.head.basicBlock.entryBlock)
                 guard.expression = guard.predecessorExpression(pred, schedulingBlock, scg)
             }
         } else {
