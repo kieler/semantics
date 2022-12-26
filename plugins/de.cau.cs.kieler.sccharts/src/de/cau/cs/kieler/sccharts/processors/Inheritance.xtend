@@ -238,7 +238,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                             inheritedMethods.get(method.decl).remove
                         }
                     }
-                } else if (!method.body) {
+                } else if (!method.implemented) {
                     environment.errors.add("Method " + method.decl.valuedObjects.head.name + " has no implementation. All abstract methods require overrides for futher compilation", method.inherited ? inheritedMethods.get(method.decl) : method.decl, true)
                 }
             }

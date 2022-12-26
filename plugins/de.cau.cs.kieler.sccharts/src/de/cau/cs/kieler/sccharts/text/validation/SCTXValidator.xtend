@@ -98,6 +98,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Inject extension KExpressionsOverloadingExtensions
     @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions
+    @Inject extension OOClassAnnotations
     
     /** Service class for accessing layout options by name */
     private static final LayoutMetaDataService LAYOUT_OPTIONS_SERVICE = LayoutMetaDataService.getInstance();
@@ -383,6 +384,25 @@ class SCTXValidator extends AbstractSCTXValidator {
                 container = container.eContainer
             }
             error(NO_STATE_ACCESS_OUTSIDE_METHOD, acc, null)
+        }
+    }
+    
+    /**
+     * OO Class annotations
+     */
+    @Check
+    def void checkOOClassAnnotationInSCChart(de.cau.cs.kieler.sccharts.State state) {
+        if (state.isRootState) {
+            validateOOClassAnnotationInSCChart(state, getMessageAcceptor())
+        }
+    }
+    /**
+     * OO Class annotations
+     */
+    @Check
+    def void checkOOClassAnnotationInReference(ReferenceDeclaration decl) {
+        if (decl.reference !== null) {
+            validateOOClassAnnotationInReference(decl, getMessageAcceptor())
         }
     }
     

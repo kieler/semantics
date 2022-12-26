@@ -340,7 +340,7 @@ class SCChartsInheritanceExtensions {
                 if (!info.overriding) {
                     info.errors += "No matching or visible method found with this signature to override."
                 }
-                if (!info.body) {
+                if (!info.implemented) {
                     info.errors += "An overriding method must provide an implementation!"
                 }
             }
@@ -375,7 +375,7 @@ class SCChartsInheritanceExtensions {
 class MethodInheritanceInfo {
     val MethodDeclaration decl
     val String signatureID
-    val boolean body
+    val boolean implemented
     val List<String> errors = newArrayList
     
     var int inheritanceLevel = 0
@@ -386,8 +386,8 @@ class MethodInheritanceInfo {
     
     new(MethodDeclaration decl) {
         this.decl = decl
-        this.body = (decl instanceof MethodImplementationDeclaration)
-                    && !(decl as MethodImplementationDeclaration).statements.nullOrEmpty
+        this.implemented = (decl instanceof MethodImplementationDeclaration)
+                    && (decl as MethodImplementationDeclaration).implemented
         this.signatureID = KExpressionsOverloadingExtensions.getMethodSignatureID(decl)       
     }
     
