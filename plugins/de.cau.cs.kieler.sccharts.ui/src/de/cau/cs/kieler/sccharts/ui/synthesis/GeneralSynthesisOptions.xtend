@@ -56,6 +56,7 @@ final class GeneralSynthesisOptions {
      * References and OO / Inheritance
      */
     public static final SynthesisOption OO = SynthesisOption.createCategory(GeneralSynthesisOptions, "Object Orientation / References", false).setCategory(APPEARANCE)
+    public static final SynthesisOption OO_UML = SynthesisOption.createCategory(GeneralSynthesisOptions, "Class Diagram", false).setCategory(OO)
     
     // -- OPTIONS --
     /** 
@@ -67,21 +68,23 @@ final class GeneralSynthesisOptions {
     public static final SynthesisOption SHOW_USER_LABELS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "User Labels", true).setCategory(APPEARANCE)
     
     /** 
-     * Scope call parameters synthesis option 
-     */
-    public static final SynthesisOption SHOW_BINDINGS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Binding Parameters", true).setCategory(OO)
-    /** 
      * inherited declarations and regions synthesis option 
      */
     public static final SynthesisOption SHOW_INHERITANCE = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Inheritance Preview", true).setCategory(OO)
-    public static final SynthesisOption SHOW_INHERITANCE_EDGES = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Inheritance Hierarchy", false).setCategory(OO)
-    public static final SynthesisOption SHOW_AGGREGATION_EDGES = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Associations", false).setCategory(OO)
-    public static final SynthesisOption SHOW_INSTANCES = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Instantiations", false).setCategory(OO)
 //    public static final SynthesisOption SHOW_METHOD_BODY = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Method Implementation", true).setCategory(OO)
+    public static final SynthesisOption SHOW_BASE_STATES = SynthesisOption.createChoiceOption(GeneralSynthesisOptions, "Inherited States", BaseStateDisplayOptions.OPTIONS, BaseStateDisplayOptions.LIST).setCategory(OO)
     public static final SynthesisOption SHOW_METHODS = SynthesisOption.createChoiceOption(GeneralSynthesisOptions, "Methods", MethodDisplayOptions.OPTIONS, MethodDisplayOptions.REGIONS).setCategory(OO)
-    /** 
-     * inherited declarations and regions synthesis option 
-     */
+    public static final SynthesisOption SHOW_GENERICS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Generics", true).setCategory(OO)
+    public static final SynthesisOption SHOW_INSTANCES = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Instantiations", false).setCategory(OO)
+    public static final SynthesisOption SHOW_BINDINGS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Binding Parameters", true).setCategory(OO)
+    
+    public static final SynthesisOption SHOW_INHERITANCE_EDGES = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Inheritance", false).setCategory(OO_UML)
+    public static final SynthesisOption SHOW_AGGREGATION_EDGES = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Associations", false).setCategory(OO_UML)
+    public static final SynthesisOption SHOW_AGGREGATION_MULTI = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Association Multiplicities", false).setCategory(OO_UML)
+    public static final SynthesisOption SHOW_AGGREGATION_FIELDS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Association Fields", false).setCategory(OO_UML)
+    public static final SynthesisOption SHOW_AGGREGATION_REVERSE = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Associations in Reverse Direction", false).setCategory(OO_UML)
+
+
     public static final SynthesisOption SHOW_CAUSAL_DATAFLOW = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Causal Dataflow",false).setCategory(DEBUGGING)
 }
 
@@ -91,4 +94,12 @@ final class MethodDisplayOptions {
     public static val REGIONS = "SCGraph"
     
     public static val OPTIONS = #[SIGNATURES,PREVIEW,REGIONS]
+}
+
+final class BaseStateDisplayOptions {
+    public static val NONE = "Hide"
+    public static val LIST = "List"
+    public static val STACK = "Stack"
+    
+    public static val OPTIONS = #[NONE,LIST,STACK]
 }

@@ -96,7 +96,7 @@ class OOClassAnnotations {
                             + methodInfos.filter[!it.implemented && it.overrides.empty].join("(", ", ", ")", [it.name]),
                              state, AnnotationsPackage.eINSTANCE.namedObject_Name)
                     }
-                    if (baseStateTypes.values.filter[it !== ClassType.INTERFACE && it !== null].size > 1) {
+                    if (baseStateTypes.entrySet.filter[it.value !== ClassType.INTERFACE && it.value !== null && state.baseStates.contains(it.key)].size > 1) {
                         var ok = false
                         val anno = state.classTypeAnnotation
                         if (anno instanceof TypedStringAnnotation) {
@@ -106,8 +106,8 @@ class OOClassAnnotations {
                         }
                         if (!ok) {
                             validator.warn(msgPrefix + "Multiple inheritance is discouraged. "
-                                + baseStateTypes.entrySet.filter[it.value !== ClassType.INTERFACE && it.value !== null].join("(", ", ", ")", [it.key.name])
-                                + "Resolve or add '[MultipleInheritance] true' to the annotation to bypass this rule.",
+                                + baseStateTypes.entrySet.filter[it.value !== ClassType.INTERFACE && it.value !== null && state.baseStates.contains(it.key)].join("(", ", ", ")", [it.key.name])
+                                + "\n Resolve or add '[MultipleInheritance] true' to the annotation to bypass this rule.",
                                  state, AnnotationsPackage.eINSTANCE.namedObject_Name)
                         }
                     }

@@ -46,6 +46,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
@@ -202,13 +203,12 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (!isConnector) {
             // Add label
             if (!state.label.nullOrEmpty) {
-                (if (state.isMacroState) {
-                    val label = <Pair<? extends CharSequence, TextFormat>>newArrayList
-                    label += new Pair(state.serializeHR, TextFormat.TEXT)
-                    if (!state.genericParameterDeclarations.nullOrEmpty) {
-                        label += state.genericParameterDeclarations.serializeGenericParametersHighlighted
-                    }
-                    if (state.reference !== null) {
+                var KRendering labelRendering = null
+                val name = state.serializeHR.toString
+                if (state.isMacroState) {
+                    val List<Pair<? extends CharSequence, TextFormat>> label = newArrayList
+                    label += new Pair(name, TextFormat.TEXT)
+                    if (state.reference !== null) { // Reference State
                         label += new Pair("@", TextFormat.KEYWORD)
                         if (state.isReferencing) {
                             label += new Pair(state.reference.target.name, TextFormat.TEXT)
@@ -218,8 +218,22 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                         if (SHOW_BINDINGS.booleanValue) {
                             label += new Pair(state.reference.parameters.serializeHRParameters, TextFormat.TEXT)
                         }
-                    } else if (!state.baseStateReferences.nullOrEmpty) {
+                    }
+                    val stack = BaseStateDisplayOptions.STACK.equals(SHOW_BASE_STATES.objectValue)
+                    if (!state.genericParameterDeclarations.nullOrEmpty && SHOW_GENERICS.booleanValue) { // Generics
+                        if (stack) {
+                            label += new Pair("", TextFormat.BREAK)
+                        }
+                        label += state.genericParameterDeclarations.serializeGenericParametersHighlighted()
+                    }
+                    if (!state.baseStateReferences.nullOrEmpty && !BaseStateDisplayOptions.NONE.equals(SHOW_BASE_STATES.objectValue)) { // 
+                        if (stack) {
+                            label += new Pair("", TextFormat.BREAK)
+                        }
                         label += new Pair("extends", TextFormat.KEYWORD)
+                        if (stack) {
+                            label += new Pair("", TextFormat.BREAK)
+                        }
                         for (baseState : state.baseStateReferences.indexed) {
                             val baseRef = baseState.value
                             if (baseRef.target !== null) {
@@ -236,22 +250,34 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                                 }
                             }
                             if (baseState.key < state.baseStates.length - 1) {
-                                label += new Pair(",", TextFormat.TEXT)
+                                if (stack) {
+                                    label += new Pair("", TextFormat.BREAK)
+                                } else {
+                                    label += new Pair(",", TextFormat.TEXT)
+                                }
                             }
+                            
                         }
                     }
-                    node.addMacroStateLabel(label)
+                    labelRendering = node.addMacroStateLabel(label)
                 } else {
-                    node.addSimpleStateLabel(state.serializeHR.toString)
-                }) => [
-                    setProperty(TracingVisualizationProperties.TRACING_NODE, true)
-                    associateWith(state)
-                    if (it instanceof KText) configureTextLOD(state)
-                    eAllContents.filter(KRendering).toList.forEach[
-                        associateWith(state)
-                        if (it instanceof KText) configureTextLOD(state)
+                    labelRendering = node.addSimpleStateLabel(name)
+                }
+                // Configure Ktexts
+                labelRendering.setProperty(TracingVisualizationProperties.TRACING_NODE, true)
+                labelRendering.associateWith(state)
+                if (labelRendering instanceof KText) {
+                    labelRendering.configureTextLOD(state)
+                    labelRendering.setProperty(KlighdProperties.IS_NODE_TITLE, true)
+                } else {
+                    labelRendering.eAllContents.filter(KRendering).toList.forEach[
+                        it.associateWith(state)
+                        it.setProperty(KlighdProperties.IS_NODE_TITLE, true)
+                        if (it instanceof KText) {
+                            it.configureTextLOD(state)
+                        } 
                     ]
-                ]
+                }
             } else {
                 node.addEmptyStateLabel
             }
@@ -260,29 +286,27 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             val declarations = new ArrayList<Declaration>(state.declarations)
             if (SHOW_INHERITANCE.booleanValue) declarations.addAll(0, state.getAllVisibleInheritedDeclarationsDepthFirst.toList)
             for (declaration : declarations) {
+                var KRendering declRendering = null
                 if (declaration instanceof ClassDeclaration) {
                     node.addStructDeclarations(declaration, 0)
                 } else if (declaration instanceof MethodImplementationDeclaration) {
                     if (SHOW_METHODS.objectValue !== MethodDisplayOptions.REGIONS) {
-                        node.addDeclarationLabel(
+                        declRendering = node.addDeclarationLabel(
                             declaration.serializeMethodHighlighted(true, SHOW_METHODS.objectValue === MethodDisplayOptions.PREVIEW)
-                        ) => [
-                            setProperty(TracingVisualizationProperties.TRACING_NODE, true)
-                            associateWith(declaration)
-                            eAllContents.filter(KRendering).toList.forEach[
-                                associateWith(declaration)
-                                if (it instanceof KText) configureTextLOD(declaration)
-                            ]
-                        ]
+                        )
                     }
+                } else if (declaration instanceof ReferenceDeclaration) {
+                    declRendering = node.addDeclarationLabel(declaration.serializeHighlighted(true, SHOW_BINDINGS.booleanValue))
                 } else {
-                    node.addDeclarationLabel(declaration.serializeHighlighted(true)) => [
-                        setProperty(TracingVisualizationProperties.TRACING_NODE, true)
+                    declRendering = node.addDeclarationLabel(declaration.serializeHighlighted(true))
+                }
+                // Postprocess
+                if (declRendering !== null) {
+                    declRendering.setProperty(TracingVisualizationProperties.TRACING_NODE, true)
+                    declRendering.associateWith(declaration)
+                    declRendering.eAllContents.filter(KRendering).toList.forEach[
                         associateWith(declaration)
-                        eAllContents.filter(KRendering).toList.forEach[
-                            associateWith(declaration)
-                            if (it instanceof KText) configureTextLOD(declaration)
-                        ]
+                        if (it instanceof KText) configureTextLOD(declaration)
                     ]
                 }
             }           

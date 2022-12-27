@@ -82,6 +82,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     @Inject CommentSynthesis commentSynthesis
     @Inject MethodSynthesis methodSynthesis
     @Inject PolicySynthesis policySynthesis
+    @Inject SCChartsClassDiagramSynthesis classDiagramSynthesis
         
     @Inject package SynthesisHooks hooks  
     
@@ -112,18 +113,23 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         val options = new LinkedHashSet()
         
         // Add categories options
-        options.addAll(APPEARANCE, NAVIGATION, DATAFLOW, OO, DEBUGGING, LAYOUT)
+        options.addAll(APPEARANCE, NAVIGATION, DATAFLOW, OO, OO_UML, DEBUGGING, LAYOUT)
         
         // General options
         options.addAll(
             USE_KLAY,
             SHOW_ALL_SCCHARTS,
             SHOW_INHERITANCE,
-            SHOW_INHERITANCE_EDGES,
-            SHOW_AGGREGATION_EDGES,
+            SHOW_BASE_STATES,
+            SHOW_METHODS,
+            SHOW_GENERICS,
             SHOW_INSTANCES,
             SHOW_BINDINGS,
-            SHOW_METHODS,
+            SHOW_INHERITANCE_EDGES,
+            SHOW_AGGREGATION_EDGES,
+            SHOW_AGGREGATION_MULTI,
+            SHOW_AGGREGATION_FIELDS,
+            SHOW_AGGREGATION_REVERSE,
             SHOW_COMMENTS,
             SHOW_USER_LABELS,
             SHOW_CAUSAL_DATAFLOW
@@ -226,67 +232,15 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
                 hooks.invokeFinish(rootState, rootNode)
             }
             rootNode.children.addAll(rootStateNodes.values)
-            if (scc.rootStates.size > 1) {
+//            if (scc.rootStates.size > 1) {
 //                rootNode.configureInterChartCommunication(scc, rootStateNodes)
-            }
+//            }
+
             if (SHOW_INHERITANCE_EDGES.booleanValue) {
-                rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction.UP)
-                rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20.0)
-                rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 28.0)
-                rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 28.0)
-                for(state : rootStates) {
-                    for (base : state.baseStates) {
-                        val edge = createEdge
-                        edge.source = rootStateNodes.get(state)
-                        edge.target = rootStateNodes.get(base)
-                        edge.addPolyline => [
-                            lineWidth = 1
-                            addInheritanceTriangleArrowDecorator
-                        ]
-                    }
-                }
+                classDiagramSynthesis.addInheritanceEdges(rootNode, rootStateNodes)
             }
             if (SHOW_AGGREGATION_EDGES.booleanValue) {
-                rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction.UP)
-                rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20.0)
-                rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 28.0)
-                rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 28.0)
-                for(state : rootStates) {
-                    val aggregation = newHashSet
-                    for (ref : state.declarations.filter(ReferenceDeclaration)) {
-                        if (ref.reference instanceof State) {
-                            aggregation += ref.reference as State
-                        }
-                    }
-                    for (inner : state.allScopes.toIterable) {
-                        if (inner !== state) {
-                            if (inner instanceof State) {
-                                if (!inner.baseStateReferences.nullOrEmpty) {
-                                    aggregation += inner.baseStates
-                                }
-                                if (inner.isReferencing && inner.reference.target instanceof State) {
-                                    aggregation += inner.reference.target as State
-                                }
-                            }
-                            for (ref : state.declarations.filter(ReferenceDeclaration)) {
-                                if (ref.reference instanceof State) {
-                                    aggregation += ref.reference as State
-                                }
-                            }
-                        }
-                    }
-                    for (agg : aggregation) {
-                        val edge = createEdge
-                        edge.source = rootStateNodes.get(state)
-                        edge.target = rootStateNodes.get(agg)
-                        edge.addPolyline => [
-                            lineWidth = 1
-                            // TODO handle input ref
-                            // TODO add multiplcities if possible
-                            addAggregationArrowDecorator
-                        ]
-                    }
-                }
+                classDiagramSynthesis.addAssociationEdges(rootNode, rootStateNodes, !SHOW_AGGREGATION_REVERSE.booleanValue, SHOW_AGGREGATION_MULTI.booleanValue, SHOW_AGGREGATION_FIELDS.booleanValue)
             }
         } else {
             hooks.invokeStart(scc.rootStates.head, rootNode)

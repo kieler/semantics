@@ -177,6 +177,10 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     }
 
     def dispatch List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Declaration declaration, boolean hr) {
+        serializeHighlighted(declaration, hr, true)
+    }
+        
+    def List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Declaration declaration, boolean hr, boolean bindings) {
         val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
 
         if (declaration.access == AccessModifier.PRIVATE) {
@@ -277,6 +281,18 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                 } else {
                     components.addHighlight("<BROKEN-REFERENCE>")
                 }
+                if (bindings) {
+                    if (!declaration.genericParameters.empty) {
+                        components.addText(hr ? 
+                            declaration.genericParameters.serializeHRParameters("<", ">").toString
+                            : declaration.genericParameters.serializeParameters.toString.replace('(', '<').replace(')', '>'))
+                    }
+                    if (!declaration.parameters.empty) {
+                        components.addText(hr ? 
+                            declaration.parameters.serializeHRParameters.toString
+                            : declaration.parameters.serializeParameters.toString)
+                    }
+                }
             } else {
                 components.addKeyword("extern")
                 components.addHighlight(declaration.extern.head.code)
@@ -317,11 +333,19 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             val voIter = declaration.valuedObjects.iterator;
             while (voIter.hasNext) {
                 val vo = voIter.next;
-                components.addText(if (hr) {
-                    vo.serializeHR + (vo.parameters.empty ? "" : vo.parameters.serializeHRParameters.toString)
+                if (bindings) {
+                    components.addText(if (hr) {
+                        vo.serializeHR 
+                        + (vo.genericParameters.empty ? "" : vo.parameters.serializeHRParameters("<", ">").toString)
+                        + (vo.parameters.empty ? "" : vo.parameters.serializeHRParameters.toString)
+                    } else {
+                        vo.serialize 
+                        + (vo.genericParameters.empty ? "" : vo.parameters.serializeParameters.toString.replace('(', '<').replace(')', '>'))
+                        + (vo.parameters.empty ? "" : vo.parameters.serializeParameters.toString)
+                    })
                 } else {
-                    vo.serialize + (vo.parameters.empty ? "" : vo.parameters.serializeParameters.toString)
-                })
+                    components.addText(vo.serializeHR)
+                }
                 if (vo.initialValue !== null) {
                     components.addText("=");
                     components.addText(if (hr) {
@@ -433,7 +457,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         return components;
     }
     
-    def List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Region region, boolean hr) {
+    def dispatch List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Region region, boolean hr) {
         val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
         
         if (region instanceof PolicyRegion) {
