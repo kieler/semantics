@@ -285,6 +285,9 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             // Add declarations
             val declarations = new ArrayList<Declaration>(state.declarations)
             if (SHOW_INHERITANCE.booleanValue) declarations.addAll(0, state.getAllVisibleInheritedDeclarationsDepthFirst.toList)
+            if (SHOW_INSTANCES.booleanValue) {
+                declarations.removeIf[it instanceof ReferenceDeclaration && (it as ReferenceDeclaration).reference instanceof State]
+            }
             for (declaration : declarations) {
                 var KRendering declRendering = null
                 if (declaration instanceof ClassDeclaration) {
@@ -351,6 +354,13 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 }
             ];
         }
+        
+        // Reference Instantiations
+        if (SHOW_INSTANCES.booleanValue) {
+            for (ref : state.declarations.filter(ReferenceDeclaration).filter[reference instanceof State]) {
+                node.children += ref.createReferenceDeclarationRegion
+            }
+        }
 
         // Transform methods
         if (SHOW_METHODS.objectValue === MethodDisplayOptions.REGIONS) {
@@ -368,13 +378,6 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             }
             for (policy : state.getPolicies()) {
                 node.children.addAll(policy.transform)
-            }
-        }
-
-        // Reference Instantiations
-        if (SHOW_INSTANCES.booleanValue) {
-            for (ref : state.declarations.filter(ReferenceDeclaration).filter[reference instanceof State]) {
-                node.children += ref.createReferenceDeclarationRegion
             }
         }
 
