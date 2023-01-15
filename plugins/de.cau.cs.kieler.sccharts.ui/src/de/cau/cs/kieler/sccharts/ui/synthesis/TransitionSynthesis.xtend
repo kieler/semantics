@@ -38,6 +38,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -191,6 +192,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
                 configureLabelLOD(transition)
             ]
         }
+        edge.setProperty(KlighdProperties.NODE_TYPE, "transition") 
         
         return <KEdge> newArrayList(edge)
     }

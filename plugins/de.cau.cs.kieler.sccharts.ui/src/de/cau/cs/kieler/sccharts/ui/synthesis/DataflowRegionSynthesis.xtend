@@ -187,7 +187,8 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         if (!CIRCUIT.booleanValue) {
             node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(18d, 7d, 7d, 7d));
         }
-
+        node.setProperty(KlighdProperties.NODE_TYPE, "dataflowRegion")
+        
         return <KNode> newArrayList(node)
     }
     

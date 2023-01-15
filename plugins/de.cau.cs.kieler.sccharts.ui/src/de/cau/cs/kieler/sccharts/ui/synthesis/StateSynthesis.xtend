@@ -240,8 +240,10 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                             }
                         }
                     }
+                    node.setProperty(KlighdProperties.NODE_TYPE, "hierarchicalState")
                     node.addMacroStateLabel(label)
                 } else {
+                    node.setProperty(KlighdProperties.NODE_TYPE, "simpleState")
                     node.addSimpleStateLabel(state.serializeHR.toString)
                 }) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true)
@@ -299,6 +301,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 node.addRegionsArea
                 node.setLayoutOption(CoreOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
             }
+        } else {
+            node.setProperty(KlighdProperties.NODE_TYPE, "connectorState") 
         }
 
         // Transform all outgoing transitions

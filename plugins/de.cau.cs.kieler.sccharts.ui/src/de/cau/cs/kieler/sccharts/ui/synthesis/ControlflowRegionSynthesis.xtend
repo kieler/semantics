@@ -200,7 +200,8 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 if (region.final) addFinalRegionStyle
             ]
         }
-
+        node.setProperty(KlighdProperties.NODE_TYPE, "controlflowRegion")
+        
         val returnNodes = <KNode> newArrayList(node)
         
         if (SHOW_COMMENTS.booleanValue) {
