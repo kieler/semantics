@@ -28,6 +28,9 @@ import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangeDestinat
 import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangeSourceAction
 import de.cau.cs.kieler.sccharts.Scope
 import java.util.HashMap
+import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangeToAbortingEdgeAction
+import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangeToTerminationgEdgeAction
+import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangeToWeakEdgeAction
 
 //import java.lang.reflect.Field
 
@@ -48,8 +51,11 @@ class StructuralEditingHook extends SynthesisHook {
         val StructuredEditMsg changeDest = new StructuredEditMsg("New Destination", ChangeDestinationAction.KIND, false, ChangeDestinationAction.getInputs())
         val StructuredEditMsg changeSource = new StructuredEditMsg("New Source", ChangeSourceAction.KIND, false, ChangeSourceAction.getInputs())
         val StructuredEditMsg changeIO = new StructuredEditMsg("Change Input/Output", ChangeIOAction.KIND, false, ChangeIOAction.getInputs())
-        
-        map.put("transition", #[changeDest, changeSource, changeIO, deleteEdge])
+        val StructuredEditMsg changeToAbort = new StructuredEditMsg("Change To Aborting Edge", ChangeToAbortingEdgeAction.KIND, false, ChangeToAbortingEdgeAction.getInputs())       
+        val StructuredEditMsg changeToTerminating = new StructuredEditMsg("Change To Terminating Edge", ChangeToTerminationgEdgeAction.KIND, false, ChangeToTerminationgEdgeAction.getInputs())       
+        val StructuredEditMsg changeToWeak = new StructuredEditMsg("Change To Weak/Default Edge", ChangeToWeakEdgeAction.KIND, false, ChangeToWeakEdgeAction.getInputs())       
+       
+        map.put("transition", #[changeDest, changeSource, changeIO, deleteEdge, changeToAbort, changeToTerminating, changeToWeak])
         
                      
         val StructuredEditMsg deleteRegion = new StructuredEditMsg("Delete Region", DeleteAction.KIND, true, DeleteAction.getInputs())
