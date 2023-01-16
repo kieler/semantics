@@ -31,6 +31,8 @@ import java.util.HashMap
 import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangeToAbortingEdgeAction
 import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangeToTerminationgEdgeAction
 import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangeToWeakEdgeAction
+import org.eclipse.ui.internal.handlers.NewEditorHandler
+import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.AddEdgeAction
 
 //import java.lang.reflect.Field
 
@@ -44,8 +46,9 @@ class StructuralEditingHook extends SynthesisHook {
         val StructuredEditMsg rename = new StructuredEditMsg("Rename Node", RenameNodeAction.KIND, false, RenameNodeAction.getInputs())
         val StructuredEditMsg successor = new StructuredEditMsg("Add Successor Node", AddSuccessorNodeAction.KIND, false, AddSuccessorNodeAction.getInputs())
         val StructuredEditMsg hirachical = new StructuredEditMsg("Add Hirachical Node", AddHirachicalNodeAction.KIND, false, AddHirachicalNodeAction.getInputs())
+        val StructuredEditMsg newEdge = new StructuredEditMsg("Add new Edge", AddEdgeAction.KIND, false, AddEdgeAction.getInputs())
         
-        map.put("simpleState,hierarchicalState", #[rename, successor, hirachical, delete])
+        map.put("simpleState,hierarchicalState", #[rename, successor, hirachical, delete, newEdge])
         
         val StructuredEditMsg deleteEdge = new StructuredEditMsg("Delete Edge", DeleteAction.KIND, true, DeleteAction.getInputs())
         val StructuredEditMsg changeDest = new StructuredEditMsg("New Destination", ChangeDestinationAction.KIND, false, ChangeDestinationAction.getInputs())
