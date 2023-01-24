@@ -1,0 +1,5 @@
+system de.cau.cs.kieler.sccharts.scenarios 
+    label "Scenario Generation"
+
+de.cau.cs.kieler.sccharts.processors.efsm
+de.cau.cs.kieler.sccharts.processors.scenarioGeneration
