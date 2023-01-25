@@ -32,6 +32,7 @@ import java.util.HashMap
 import de.cau.cs.kieler.kexpressions.ValueType
 import java.util.Map
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.annotations.StringAnnotation
 
 /**
  * @author jep
@@ -68,15 +69,15 @@ class ScenarioGeneration extends SCChartsProcessor {
     def State transform(State rootState) {
         // determines how many pairs of start and end state are inspected
         // TODO: let the user determine this number?
-        val testsuites = 20
+        val testsuites = 2
         // determine for how many paths between a start/end state pair is searched
         // TODO: eliminate in the future? number of paths should depend on coverage criteria. if the criteria is near 100% we can generate the next start/end pair
-        val numberPaths = 10
+        val numberPaths = 2
 
         // a random generator is needed to determine start/end state and path calculation
         val random = new Random()
         // map for the variables used in the scchart        
-        val variableMap = new HashMap()
+        val variableMap = new HashMap<String, Object>()
 
         // calculate test cases
         for (var i = 0; i < testsuites; i++) {
@@ -87,30 +88,70 @@ class ScenarioGeneration extends SCChartsProcessor {
 
             for (var pathNumber = 0; pathNumber < numberPaths; pathNumber++) {
                 // init/reset variable values and determine random input values
-                initTestCase(rootState, variableMap)
+                initTestCase(rootState, variableMap, random)
 
                 // generate possible paths between the two states by modeling randomly the behavior of the other vehicle
                 // TODO
+                println("test")
             }
         }
 
         return rootState
     }
 
-    def void initTestCase(State rootState, Map map) {
+    def void initTestCase(State rootState, Map<String, Object> map, Random random) {
         // initialize the variables of the model and save them in a map
         initVariableMap(rootState.declarations, map)
-        // determine randomly values for the input variables
+        // collect input variables
         val List<VariableDeclaration> inputVariables = new ArrayList()
         for (decl : rootState.declarations) {
             if (decl instanceof VariableDeclaration && (decl as VariableDeclaration).input) {
                 inputVariables.add(decl as VariableDeclaration)
             }
         }
-    // TODO: assign random values to input
+        // assign random values to input variables based on their assumed range annotation
+        for (inputVar : inputVariables) {
+            if (inputVar.type === ValueType.BOOL) {
+                inputVar.valuedObjects.forEach[variable|map.put(variable.name, random.nextBoolean())]
+            } else {
+                val rangeAnnotation = inputVar.annotations.findFirst[anno|anno.name.equals("AssumeRange")]
+                val first = (rangeAnnotation as StringAnnotation).values.get(0)
+                val second = (rangeAnnotation as StringAnnotation).values.get(1)
+                switch (inputVar.type) {
+                    case ValueType.INT: {
+                        val firstInt = Integer.parseInt(first)
+                        val secondInt = Integer.parseInt(second)
+                        if (firstInt === secondInt) {
+                            inputVar.valuedObjects.forEach [ variable |
+                                map.put(variable.name, firstInt)
+                            ]
+                        } else {
+                            inputVar.valuedObjects.forEach [ variable |
+                                map.put(variable.name, random.nextInt(secondInt - firstInt) + firstInt)
+                            ]
+                        }
+                    }
+                    case ValueType.FLOAT: {
+                        val firstFloat = Float.parseFloat(first)
+                        val secondFloat = Float.parseFloat(second)
+                        if (firstFloat === secondFloat) {
+                            inputVar.valuedObjects.forEach [ variable |
+                                map.put(variable.name, firstFloat)
+                            ]
+                        } else {
+                            inputVar.valuedObjects.forEach [ variable |
+                                map.put(variable.name, random.nextFloat() * secondFloat + firstFloat)
+                            ]
+                        }
+                    }
+                    default:
+                        println("ValueType of an input variable not supported")
+                }
+            }
+        }
     }
 
-    def void initVariableMap(List<Declaration> declarations, Map map) {
+    def void initVariableMap(List<Declaration> declarations, Map<String, Object> map) {
         for (decl : declarations) {
             if (decl instanceof VariableDeclaration) {
                 // TODO: support arrays
