@@ -14,4 +14,5 @@
    <bundle id="de.cau.cs.kieler.simulation"/>
    <bundle id="de.cau.cs.kieler.kivis"/>
    <bundle id="de.cau.cs.kieler.verification"/>
+   <bundle id="de.cau.cs.kieler.testCases"/>
 </site>

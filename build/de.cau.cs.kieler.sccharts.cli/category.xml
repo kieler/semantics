@@ -6,4 +6,5 @@
    <bundle id="de.cau.cs.kieler.sccharts"/>
    <bundle id="de.cau.cs.kieler.scg"/>
    <bundle id="de.cau.cs.kieler.kicool"/>
+   <bundle id="de.cau.cs.kieler.testCases"/>
 </site>

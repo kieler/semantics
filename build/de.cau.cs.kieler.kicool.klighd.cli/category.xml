@@ -28,4 +28,5 @@
    <bundle id="org.eclipse.elk.alg.mrtree"/>
    <bundle id="org.eclipse.elk.alg.radial"/>
    <bundle id="org.eclipse.elk.alg.rectpacking"/>
+   <bundle id="de.cau.cs.kieler.testCases"/>
 </site>

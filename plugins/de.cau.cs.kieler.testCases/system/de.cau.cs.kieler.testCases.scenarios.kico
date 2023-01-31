@@ -1,0 +1,6 @@
+system de.cau.cs.kieler.testCases.scenarios 
+    label "Scenario Generation"
+
+system de.cau.cs.kieler.sccharts.netlist
+system de.cau.cs.kieler.^simulation.c
+de.cau.cs.kieler.testCases.processors.scenarioGeneration

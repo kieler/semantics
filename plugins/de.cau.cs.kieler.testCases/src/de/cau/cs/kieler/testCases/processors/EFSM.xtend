@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.scenarios
+package de.cau.cs.kieler.testCases.processors
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
@@ -31,7 +31,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 class EFSM extends SCChartsProcessor implements Traceable {
 
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.efsm"
+        "de.cau.cs.kieler.testCases.processors.efsm"
     }
 
     override getName() {
@@ -78,9 +78,16 @@ class EFSM extends SCChartsProcessor implements Traceable {
                             transition.effects.addAll(actions)
                         // TODO: translate during and exit actions
                         }
+                        child.initial = false
                     }
                 }
+                for (in : incoming) {
+                    in.sourceState.outgoingTransitions.remove(in)
+                }
 
+                state.incomingTransitions.removeAll(state.incomingTransitions)
+                state.outgoingTransitions.removeAll(state.outgoingTransitions)
+                
                 state.parentRegion.states.addAll(children)
                 state.parentRegion.states.remove(state)
                 flatten(children)
