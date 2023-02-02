@@ -20,6 +20,7 @@ Require-Bundle: com.google.guava,
  de.cau.cs.kieler.sccharts,
  de.cau.cs.kieler.scg,
  org.eclipse.xtext,
- de.cau.cs.kieler.simulation
+ de.cau.cs.kieler.simulation,
+ com.google.gson
 Export-Package: de.cau.cs.kieler.testCases
 Automatic-Module-Name: de.cau.cs.kieler.testCases

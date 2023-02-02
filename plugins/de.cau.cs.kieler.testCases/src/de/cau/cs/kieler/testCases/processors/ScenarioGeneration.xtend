@@ -19,6 +19,15 @@ import de.cau.cs.kieler.simulation.SimulationContext
 import java.util.List
 import java.util.Map
 import java.util.Random
+import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.KiCoolFactory
+import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.simulation.SimulationHistory
+import com.google.gson.JsonElement
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
+import java.nio.file.Path
+import java.io.File
+import java.io.FileWriter
 
 /**
  * @author jep
@@ -34,12 +43,10 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
 //    @Inject extension SCChartsTransitionExtensions
 //    @Inject extension SCChartsFixExtensions
 //    @Inject extension SCChartsOptimization
-
-    protected Map<String, Object> variableMap
-    protected List<VariableDeclaration> inputVariables
-    // a random generator is needed to determine input variables and end states
-    protected Random random = new Random()
-
+//    protected Map<String, Object> variableMap
+//    protected List<VariableDeclaration> inputVariables
+//    // a random generator is needed to determine input variables and end states
+//    protected Random random = new Random()
     override getId() {
         "de.cau.cs.kieler.testCases.processors.scenarioGeneration"
     }
@@ -54,16 +61,121 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
 
     def SimulationContext transform(SimulationContext sim) {
 //        val scenarioPragma = sccharts.pragmas.filter[pragma|pragma.name.equals("scenarios")]
-//        sccharts => [rootStates.forEach[transform]]
+        println("scenario processor")
 
-        println("test")
-//        sim.start(true)
-//        sim.controller.performInternalStep
-        
+        registerProcessors(sim)
+        val numberSteps = 20
+        val testsuites = 5
+
+        for (var testNumber = 0; testNumber < testsuites; testNumber++) {
+            // start simluation
+            sim.start(false)
+            // generate test
+            for (var step = 0; step < numberSteps; step++) {
+                sim.controller.performInternalStep
+            }
+            // create KTrace
+            // TODO: simulation is not yet finished!
+            val ktrace = createKtrace(true, sim.history)
+            // save KTrace
+            val ktraceFile = saveText(getCounterexampleFilePath(testNumber + ""), ktrace)
+            // reset simulation
+            sim.stop
+            sim.reset
+        }
+
+        // load one of the traces?
         return sim
     }
 
-    
+    protected def Path getOutputFolder() {
+        return Path.of("testCases")
+    }
+
+    protected def Path getOutputFile(String fileName) {
+        return Path.of(outputFolder.toString, fileName)
+    }
+
+    protected def Path getOutputFile(String tsetName, String fileExtension) {
+        var String name = "testCase"
+        if (!name.isNullOrEmpty) {
+            name += ("-" + tsetName + "")
+        }
+        name += fileExtension
+        return getOutputFile(name)
+    }
+
+    protected def Path getCounterexampleFilePath(String name) {
+        return getOutputFile(name, ".ktrace")
+    }
+
+    protected def File getFileInTemporaryProject(Path path) {
+        val projectInfrastructure = ProjectInfrastructure.getProjectInfrastructure(environment)
+        val file = Path.of(projectInfrastructure.generatedCodeFolder.path, path.toString).toFile
+        return file
+    }
+
+    protected def File saveText(Path path, String text) {
+        val file = getFileInTemporaryProject(path)
+        if (file.exists) {
+            file.delete()
+        }
+        file.parentFile.mkdirs
+        if (file.createNewFile()) {
+            val myWriter = new FileWriter(file.path)
+            myWriter.write(text)
+            myWriter.close()
+        }
+        return file
+    }
+
+    public def String createKtrace(boolean includeOutputs, SimulationHistory history) {
+        val sb = new StringBuilder()
+        for (data : history) {
+            var inputVariableMapping = ""
+            var outputVariableMapping = ""
+            for (variableMapping : data.input.entrySet) {
+                val variable = variableMapping.key
+                val expression = variableMapping.value
+                inputVariableMapping += '''«variable» = «expression.toKExpression» '''
+            }
+            if (includeOutputs) {
+                for (variableMapping : data.output.entrySet) {
+                    val variable = variableMapping.key
+                    val expression = variableMapping.value
+                    outputVariableMapping += '''«variable» = «expression.toKExpression» '''
+                }
+            }
+
+            sb.append(inputVariableMapping)
+            if (!outputVariableMapping.isNullOrEmpty) {
+                sb.append('''=> «outputVariableMapping»''')
+            }
+            sb.append(";\n")
+        }
+        return sb.toString
+    }
+
+    protected def String toKExpression(JsonElement exp) {
+        return exp.asString
+    }
+
+    def void registerProcessors(SimulationContext sim) {
+        val root = sim.system.processors as ProcessorGroup
+        if (!root.processors.exists[InputGenerator.ID.equals(id)]) {
+            // Add reader processor
+            root.processors.add(0, KiCoolFactory.eINSTANCE.createProcessorReference => [
+                id = InputGenerator.ID
+            ])
+        }
+        if (!root.processors.exists[OutputTester.ID.equals(id)]) {
+            // Add check processor
+            root.processors.add(KiCoolFactory.eINSTANCE.createProcessorReference => [
+                id = OutputTester.ID
+            ])
+        }
+    }
+
 //    def State transform(State rootState) {
 //        // determines how many pairs of start and end state are inspected
 //        // TODO: let the user determine this number?

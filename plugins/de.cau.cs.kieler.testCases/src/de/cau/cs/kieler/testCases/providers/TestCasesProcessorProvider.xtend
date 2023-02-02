@@ -24,7 +24,9 @@ class TestCasesProcessorProvider implements IProcessorProvider {
     override getProcessors() {
         #[
             de.cau.cs.kieler.testCases.processors.EFSM,
-            de.cau.cs.kieler.testCases.processors.ScenarioGeneration
+            de.cau.cs.kieler.testCases.processors.ScenarioGeneration,
+            de.cau.cs.kieler.testCases.processors.InputGenerator,
+            de.cau.cs.kieler.testCases.processors.OutputTester
         ]
     }
     
