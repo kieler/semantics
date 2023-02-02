@@ -12,19 +12,16 @@
  */
 package de.cau.cs.kieler.testCases.processors
 
-import de.cau.cs.kieler.simulation.DataPool
-import de.cau.cs.kieler.simulation.internal.processor.SimulationProcessor
-import com.google.gson.JsonObject
-import java.util.TreeMap
-import java.util.Random
-import java.util.Map.Entry
 import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive
-import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.Simulatable
-import com.google.gson.Gson
-import com.google.gson.JsonParser
+import de.cau.cs.kieler.simulation.internal.processor.SimulationProcessor
+import java.util.Map.Entry
+import java.util.Random
 
 /**
  * @author jep
@@ -46,7 +43,6 @@ class InputGenerator extends SimulationProcessor {
     }
 
     override process() {
-//        val context = simulationContext
         setModel(model.transform)
     }
 
@@ -60,17 +56,20 @@ class InputGenerator extends SimulationProcessor {
     }
 
     def void randomValueAssignment(Entry<String, JsonElement> input, Simulatable model, DataPool data) {
-        // TODO: respect range assumptions
-        // assign random values to input variables based on their assumed range annotation
-//        val rangeAnnotation = inputVar.annotations.findFirst[anno|anno.name.equals("AssumeRange")]
-//        val first = (rangeAnnotation as StringAnnotation).values.get(0)
-//        val second = (rangeAnnotation as StringAnnotation).values.get(1)
         val variableInfos = model.variableInformation.variables.get(input.key).get(0)
+        // assign random values to input variables based on their assumed range annotation
+        val rangeAnnotation = (variableInfos.valuedObject.eContainer as VariableDeclaration).annotations.findFirst[anno|anno.name.equals("AssumeRange")]
+        var first = "0" 
+        var second = "100"
+        if (rangeAnnotation !== null) {
+            first = (rangeAnnotation as StringAnnotation).values.get(0)
+            second = (rangeAnnotation as StringAnnotation).values.get(1)
+        }
 
         switch (variableInfos.type) {
             case ValueType.INT: {
-                val firstInt = 0 // Integer.parseInt(first)
-                val secondInt = 100 // Integer.parseInt(second)
+                val firstInt = Integer.parseInt(first)
+                val secondInt = Integer.parseInt(second)
                 if (firstInt === secondInt) {
                     data.setValue(input.key, new JsonPrimitive(firstInt))
                 } else {
@@ -79,8 +78,8 @@ class InputGenerator extends SimulationProcessor {
                 }
             }
             case ValueType.FLOAT: {
-                val firstFloat = 0 // Float.parseFloat(first)
-                val secondFloat = 100 // Float.parseFloat(second)
+                val firstFloat = Float.parseFloat(first)
+                val secondFloat = Float.parseFloat(second)
                 if (firstFloat === secondFloat) {
                     data.setValue(input.key, new JsonPrimitive(firstFloat))
                 } else {
