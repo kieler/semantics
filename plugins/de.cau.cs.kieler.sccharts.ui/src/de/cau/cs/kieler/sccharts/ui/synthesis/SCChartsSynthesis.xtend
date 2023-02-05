@@ -55,6 +55,10 @@ import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
+import de.cau.cs.kieler.klighd.filtering.SemanticFilterRule
+import de.cau.cs.kieler.klighd.filtering.SemanticFilterTag
+import de.cau.cs.kieler.klighd.KlighdOptions
+import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterRules
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -167,6 +171,12 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             } else sccharts
         
         val rootNode = createNode
+        
+        // Set semantic filter rules
+        val rules = SCChartsSemanticFilterRules.fields.map[
+            get(null) as SemanticFilterRule
+        ]
+        rootNode.setLayoutOption(KlighdOptions.SEMANTIC_FILTER_RULES, rules)
                 
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue)
