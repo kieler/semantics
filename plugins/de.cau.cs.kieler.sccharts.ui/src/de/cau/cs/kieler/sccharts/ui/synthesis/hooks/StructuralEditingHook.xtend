@@ -33,8 +33,9 @@ import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangeToWeakTr
 import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ToggleFinalStateAction
 import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.AddTransitionAction
 import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.EditSemanticDeclarationAction
-
-
+import de.cau.cs.kieler.klighd.filtering.SemanticFilterTag
+import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterTags
+import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.MakeInitialStateAction
 
 @ViewSynthesisShared
 class StructuralEditingHook extends SynthesisHook {
@@ -42,7 +43,7 @@ class StructuralEditingHook extends SynthesisHook {
     override finish(Scope scope, KNode node) {
         val map = new HashMap()
 
-        map.put("simpleState,hierarchicalState", #[
+        map.put(SCChartsSemanticFilterTags.STATE, #[
             EditSemanticDeclarationAction.getMsg(),
             RenameStateAction.getMsg(),
             AddSuccessorStateAction.getMsg(),
@@ -51,18 +52,32 @@ class StructuralEditingHook extends SynthesisHook {
             ToggleFinalStateAction.getMsg(),
             DeleteAction.getMsg()
         ])
+        
+        map.put(SCChartsSemanticFilterTags.NOT_INITIAL_STATE, #[
+            MakeInitialStateAction.getMsg()
+        ])
 
-        map.put("transition", #[
+        map.put(SCChartsSemanticFilterTags.TRANSITION, #[
             ChangeTargetStateAction.getMsg(),
             ChangeSourceStateAction.getMsg(),
             ChangeTriggerEffectAction.getMsg(),
-            ChangeToWeakTransitionAction.getMsg(),
-            ChangeToTerminatingTransitionAction.getMsg(),
-            ChangeToAbortingTransitionAction.getMsg(),
             DeleteAction.getMsg()
         ])
+        
+        map.put(SCChartsSemanticFilterTags.WEAK_TRANSITION, #[
+            ChangeToTerminatingTransitionAction.getMsg(),
+            ChangeToAbortingTransitionAction.getMsg()
+        ])
+        map.put(SCChartsSemanticFilterTags.ABORTING_TRANSITION, #[
+            ChangeToWeakTransitionAction.getMsg(),
+            ChangeToTerminatingTransitionAction.getMsg()
+        ])
+        map.put(SCChartsSemanticFilterTags.TERMINATING_TRANSITION, #[
+            ChangeToWeakTransitionAction.getMsg(),
+            ChangeToAbortingTransitionAction.getMsg()
+        ])
 
-        map.put("controlflowRegion,dataflowRegion", #[
+        map.put(SCChartsSemanticFilterTags.REGION, #[
             RenameRegionAction.getMsg(),
             AddConcurrentRegionAction.getMsg(),
             DeleteAction.getMsg()

@@ -39,6 +39,8 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterTags
+import de.cau.cs.kieler.klighd.KlighdOptions
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -69,7 +71,9 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
     override performTranformation(Transition transition) {
         val edge = transition.createEdge().associateWith(transition);
         edge.configureEdgeLOD(transition)
-
+        
+        val semanticTags = newArrayList(SCChartsSemanticFilterTags.TRANSITION)
+        
         if (USE_KLAY.booleanValue) {
             edge.setLayoutOption(LayeredOptions::SPACING_EDGE_LABEL, 3.0)
             if (transition.isImplicitlyImmediate) {
@@ -167,9 +171,16 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         }
 
         switch (transition.preemption) {
-            case STRONG: edge.addStrongAbortionDecorator
-            case TERMINATION: edge.addNormalTerminationDecorator
+            case STRONG:{
+                edge.addStrongAbortionDecorator
+                semanticTags.add(SCChartsSemanticFilterTags.ABORTING_TRANSITION)
+            }
+            case TERMINATION:{ 
+                edge.addNormalTerminationDecorator
+                semanticTags.add(SCChartsSemanticFilterTags.TERMINATING_TRANSITION)
+            }
             default: {
+                semanticTags.add(SCChartsSemanticFilterTags.WEAK_TRANSITION)
             }
         };
         
@@ -192,7 +203,8 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
                 configureLabelLOD(transition)
             ]
         }
-        edge.setProperty(KlighdProperties.NODE_TYPE, "transition") 
+        
+        edge.setProperty(KlighdProperties.SEMANTIC_FILTER_TAGS, semanticTags)
         
         return <KEdge> newArrayList(edge)
     }

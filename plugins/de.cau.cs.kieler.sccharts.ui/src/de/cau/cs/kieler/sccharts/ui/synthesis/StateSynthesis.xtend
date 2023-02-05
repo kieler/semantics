@@ -204,6 +204,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             if (USE_KLAY.booleanValue && state.parentRegion.states.head == state) {
                 node.setLayoutOption(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST);
             }
+        }else{
+            semanticTags.add(SCChartsSemanticFilterTags.NOT_INITIAL_STATE)
         }
         if (state.isFinal) {
             node.setFinalStyle

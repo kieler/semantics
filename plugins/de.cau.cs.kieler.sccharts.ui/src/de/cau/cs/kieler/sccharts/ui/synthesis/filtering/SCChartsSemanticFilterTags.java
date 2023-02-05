@@ -37,9 +37,20 @@ public class SCChartsSemanticFilterTags {
             new SemanticFilterTag("controlflowRegion");
     /** Tag giving semantic meaning that the element is a dataflow region. */
     public static final SemanticFilterTag DATAFLOW_REGION = new SemanticFilterTag("dataflowRegion");
+    
+    /** Tag giving semantic meaning that the element is a transition. */
+    public static final SemanticFilterTag TRANSITION = new SemanticFilterTag("transition");    
+    /** Tag giving semantic meaning that the element is a transition. */
+    public static final SemanticFilterTag WEAK_TRANSITION = new SemanticFilterTag("weakTransition");    
+    /** Tag giving semantic meaning that the element is a transition. */
+    public static final SemanticFilterTag TERMINATING_TRANSITION = new SemanticFilterTag("terminatingTransition");    
+    /** Tag giving semantic meaning that the element is a transition. */
+    public static final SemanticFilterTag ABORTING_TRANSITION = new SemanticFilterTag("abortingTransition");
 
     /** Tag giving semantic meaning that the element is an initial state. */
     public static final SemanticFilterTag INITIAL_STATE = new SemanticFilterTag("initialState");
+    /** Tag giving semantic meaning that the element is a dataflow region. */
+    public static final SemanticFilterTag NOT_INITIAL_STATE = new SemanticFilterTag("notInitialState");
     /** Tag giving semantic meaning that the element is a final state. */
     public static final SemanticFilterTag FINAL_STATE = new SemanticFilterTag("finalState");
 }

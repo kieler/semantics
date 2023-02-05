@@ -193,7 +193,6 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                         label.set(0, new Pair(name.key.subSequence(0, maxProxyLabelLength) + "...", name.value))
                     }
                 }
-                addProxyRegion(label)
             }
         ]
         
@@ -217,7 +216,6 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         if (!CIRCUIT.booleanValue) {
             node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(18d, 7d, 7d, 7d));
         }
-        node.setProperty(KlighdProperties.NODE_TYPE, "dataflowRegion")
         
         
         // Set size to be square and at least 34 (same as minimal node size)

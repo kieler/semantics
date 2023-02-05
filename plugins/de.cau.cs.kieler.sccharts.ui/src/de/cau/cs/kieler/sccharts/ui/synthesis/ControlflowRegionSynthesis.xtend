@@ -222,7 +222,6 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                     label.set(0, new Pair(name.key.subSequence(0, maxProxyLabelLength) + "...", name.value))
                 }
             }
-            addProxyRegion(label)
         ]
 
         val returnNodes = <KNode> newArrayList(node)

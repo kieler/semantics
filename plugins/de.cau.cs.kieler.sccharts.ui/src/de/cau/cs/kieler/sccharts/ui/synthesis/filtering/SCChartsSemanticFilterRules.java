@@ -20,42 +20,42 @@ import de.cau.cs.kieler.klighd.filtering.*;
  * @author stu215592
  */
 public class SCChartsSemanticFilterRules {
+    // Not sure wy those strings were added since they throw errors since the constructor only takes the Tag
     /** Rule to exclude elements that are states. */
     public static final SemanticFilterRule NO_STATES =
-            new NegationConnective(SCChartsSemanticFilterTags.STATE, "Don't Show States");
+            new NegationConnective(SCChartsSemanticFilterTags.STATE);//, "Don't Show States"); 
     /** Rule to exclude elements that are regions. */
     public static final SemanticFilterRule NO_REGIONS =
-            new NegationConnective(SCChartsSemanticFilterTags.REGION, "Don't Show Regions");
+            new NegationConnective(SCChartsSemanticFilterTags.REGION);//, "Don't Show Regions");
 
     /** Rule to exclude elements that are simple states. */
     public static final SemanticFilterRule NO_SIMPLE_STATE = new NegationConnective(
-            SCChartsSemanticFilterTags.SIMPLE_STATE, "Don't Show Simple States");
+            SCChartsSemanticFilterTags.SIMPLE_STATE);//, "Don't Show Simple States");
     /** Rule to exclude elements that are hierarchical states. */
     public static final SemanticFilterRule NO_HIERARCHICAL_STATE = new NegationConnective(
-            SCChartsSemanticFilterTags.HIERARCHICAL_STATE, "Don't Show Hierarchical States");
+            SCChartsSemanticFilterTags.HIERARCHICAL_STATE);//, "Don't Show Hierarchical States");
     /** Rule to exclude elements that are connector states. */
     public static final SemanticFilterRule NO_CONNECTOR_STATE = new NegationConnective(
-            SCChartsSemanticFilterTags.CONNECTOR_STATE, "Don't Show Connector States");
+            SCChartsSemanticFilterTags.CONNECTOR_STATE);//, "Don't Show Connector States");
     /** Rule to exclude elements that are controlflow regions. */
     public static final SemanticFilterRule NO_CONTROLFLOW_REGION = new NegationConnective(
-            SCChartsSemanticFilterTags.CONTROLFLOW_REGION, "Don't Show Controlflow Regions");
+            SCChartsSemanticFilterTags.CONTROLFLOW_REGION);//, "Don't Show Controlflow Regions");
     /** Rule to exclude elements that are dataflow regions. */
     public static final SemanticFilterRule NO_DATAFLOW_REGION = new NegationConnective(
-            SCChartsSemanticFilterTags.DATAFLOW_REGION, "Don't Show Dataflow Regions");
+            SCChartsSemanticFilterTags.DATAFLOW_REGION);//, "Don't Show Dataflow Regions");
 
     /** Rule to exclude elements that are initial states. */
     public static final SemanticFilterRule NO_INITIAL_STATE = new NegationConnective(
-            SCChartsSemanticFilterTags.INITIAL_STATE, "Don't Show Initial States");
+            SCChartsSemanticFilterTags.INITIAL_STATE);//, "Don't Show Initial States");
     /** Rule to exclude elements that are final states. */
     public static final SemanticFilterRule NO_FINAL_STATE = new NegationConnective(
-            SCChartsSemanticFilterTags.FINAL_STATE, "Don't Show Final States");
+            SCChartsSemanticFilterTags.FINAL_STATE);//, "Don't Show Final States");
 
     /** Rule to exclude elements that are either initial XOR final states. */
     public static final SemanticFilterRule NO_INITIAL_XOR_FINAL_STATE = new NegationConnective(
             new OrConnective(
                     new AndConnective(SCChartsSemanticFilterTags.INITIAL_STATE, NO_FINAL_STATE),
-                    new AndConnective(NO_INITIAL_STATE, SCChartsSemanticFilterTags.FINAL_STATE)),
-            "Don't Show Initial XOR Final States"); // TODO
+                    new AndConnective(NO_INITIAL_STATE, SCChartsSemanticFilterTags.FINAL_STATE)));//, "Don't Show Initial XOR Final States"); // TODO
     // new NegationConnective(
     // new OrConnective(
     // new AndConnective(SCChartsSemanticFilterTags.INITIAL_STATE,
