@@ -33,9 +33,9 @@ import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangeToWeakTr
 import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ToggleFinalStateAction
 import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.AddTransitionAction
 import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.EditSemanticDeclarationAction
-import de.cau.cs.kieler.klighd.filtering.SemanticFilterTag
 import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterTags
 import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.MakeInitialStateAction
+import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangePriorityAction
 
 @ViewSynthesisShared
 class StructuralEditingHook extends SynthesisHook {
@@ -61,7 +61,10 @@ class StructuralEditingHook extends SynthesisHook {
             ChangeTargetStateAction.getMsg(),
             ChangeSourceStateAction.getMsg(),
             ChangeTriggerEffectAction.getMsg(),
-            DeleteAction.getMsg()
+            DeleteAction.getMsg(),
+            
+            ChangePriorityAction.getMsg()
+            
         ])
         
         map.put(SCChartsSemanticFilterTags.WEAK_TRANSITION, #[
