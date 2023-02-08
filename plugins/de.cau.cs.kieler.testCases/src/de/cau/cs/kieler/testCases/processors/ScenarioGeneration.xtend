@@ -12,15 +12,21 @@
  */
 package de.cau.cs.kieler.testCases.processors
 
+import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.SimulationHistory
 import java.io.File
 import java.io.FileWriter
 import java.nio.file.Path
+import java.lang.reflect.Array
+import javax.sound.sampled.BooleanControl.Type
+import java.util.List
+import de.cau.cs.kieler.annotations.Annotation
 
 /**
  * @author jep
@@ -46,15 +52,30 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
 
         registerProcessors(sim)
         val numberSteps = 50
-        val testsuites = 5
+//        val testsuites = 5
 
-        for (var testNumber = 0; testNumber < testsuites; testNumber++) {
-            // start simluation
+        // collect LTLs
+        val scchart = this.environments.source.compilationContext.originalModel as SCCharts
+        var List<StringAnnotation> annotations = scchart.rootStates.get(0).annotations.filter(StringAnnotation).toList
+        annotations = annotations.filter [ annotation |
+            annotation instanceof StringAnnotation && annotation.name.equals("LTL")
+        ].toList 
+
+        // used to check LTL coverage by the test cases
+        val checkedLTLOverall = newBooleanArrayOfSize(annotations.length)
+        var allLTLChecked = false
+
+        for (var testNumber = 0; /*testNumber < testsuites &&*/ !allLTLChecked; testNumber++) {
+            // start simulation
             sim.start(false)
             // generate test
+            val checkedLTL = newBooleanArrayOfSize(annotations.length)
             for (var step = 0; step < numberSteps; step++) {
                 sim.controller.performInternalStep
+                updateCheckedLTLs(annotations, checkedLTL, sim.history)
             }
+            updateOverallCheckedLTL(checkedLTLOverall, checkedLTL)
+            // TODO: save checked LTL (write it in scchart file above LTL?)
             // create KTrace
             val ktrace = createKtrace(true, sim.history)
             // save KTrace
@@ -62,12 +83,25 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
             // reset simulation
             sim.stop
             sim.reset
+            // update stop condition
+            allLTLChecked = !checkedLTL.contains(false)
         }
 
-        // load one of the traces?
+        // TODO: load one of the traces?
         return sim
     }
     
+    def updateOverallCheckedLTL(boolean[] checkedLTLOverall, boolean[] checkedLTL) {
+
+    }
+
+    def updateCheckedLTLs(List<StringAnnotation> annotations, boolean[] checkedLTL, SimulationHistory history) {
+        val data = history.get(history.size - 1)
+        for (anno : annotations) {
+            val formula = anno.values.get(0)
+        }
+    }
+
     /**
      * Registers the processors to generate the input before each tick and to check the output after a tick
      */
@@ -109,7 +143,7 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
                     outputVariableMapping += '''«variable» = «expression.asString» '''
                 }
             }
-            
+
             // create ktrace
             sb.append(inputVariableMapping)
             if (!outputVariableMapping.isNullOrEmpty) {

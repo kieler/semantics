@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2023 by
@@ -17,12 +17,12 @@ import de.cau.cs.kieler.simulation.internal.processor.SimulationProcessor
 
 /**
  * @author jep
- *
+ * 
  */
 class OutputTester extends SimulationProcessor {
-    
+
     public static val ID = "de.cau.cs.kieler.testCases.processors.outputTester"
-    
+
     override getId() {
         ID
     }
@@ -39,5 +39,5 @@ class OutputTester extends SimulationProcessor {
     def DataPool transform(DataPool data) {
         return data
     }
-    
+
 }

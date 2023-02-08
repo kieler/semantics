@@ -58,8 +58,10 @@ class InputGenerator extends SimulationProcessor {
     def void randomValueAssignment(Entry<String, JsonElement> input, Simulatable model, DataPool data) {
         val variableInfos = model.variableInformation.variables.get(input.key).get(0)
         // assign random values to input variables based on their assumed range annotation
-        val rangeAnnotation = (variableInfos.valuedObject.eContainer as VariableDeclaration).annotations.findFirst[anno|anno.name.equals("AssumeRange")]
-        var first = "0" 
+        val rangeAnnotation = (variableInfos.valuedObject.eContainer as VariableDeclaration).annotations.findFirst [ anno |
+            anno instanceof StringAnnotation && anno.name.equals("AssumeRange")
+        ]
+        var first = "0"
         var second = "100"
         if (rangeAnnotation !== null) {
             first = (rangeAnnotation as StringAnnotation).values.get(0)
