@@ -29,6 +29,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -246,6 +247,39 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
             snapshot
         }
         
+        // Handle default schedule for host classes
+        // ----------------------------------------
+        val hostClasses = rootState.allScopes.map[declarations.iterator].flatten.filter(ClassDeclaration).filter[host].toList
+        for (hostClass : hostClasses) {
+            val noSDMethods = hostClass.methodDeclarations.filter[schedule.empty].toList
+            val sDMethods = hostClass.methodDeclarations.filter[!schedule.empty].toList
+            if (!noSDMethods.empty && (noSDMethods.size > 1 || !sDMethods.empty)) {
+                // Add SD
+                val sdVO = createValuedObject("_defaultSD").uniqueName
+                val sdDecl = createScheduleDeclaration => [
+                    valuedObjects += sdVO
+                    name = "LexicalOrder"
+                ]
+                hostClass.declarations.add(0, sdDecl)
+                
+                var sd = false
+                var sdIdx = 0
+                for (mIdx : hostClass.methodDeclarations.indexed) {
+                    val method = mIdx.value
+                    if (mIdx.key == 0) {
+                        sd = !method.schedule.empty
+                        sdDecl.priorities.add(sd ? PriorityProtocol.CONFLUENT : PriorityProtocol.CONFLICT)
+                    } else if (method.schedule.empty || sd != !method.schedule.empty) {
+                        sd = !method.schedule.empty
+                        sdDecl.priorities.add(sd ? PriorityProtocol.CONFLUENT : PriorityProtocol.CONFLICT)
+                        sdIdx++
+                    }
+                    val sdr = createScheduleReference(sdVO)
+                    sdr.priority = sdIdx
+                    method.schedule += sdr
+                }
+            }
+        }
         
         // Handle Class SDs
         // ----------------
@@ -294,6 +328,10 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
         }
         // Move schedule decl to top level
         for (sdDecl : handledScheduleDecl) {
+            if (sdDecl.eContainer instanceof ClassDeclaration) {
+                val classDecl = (sdDecl.eContainer as ClassDeclaration)
+                sdDecl.valuedObjects.forEach[it.name = classDecl.name + it.name; it.uniqueName]
+            }
             rootState.declarations += sdDecl
             sdDecl.access = AccessModifier.PUBLIC
         }

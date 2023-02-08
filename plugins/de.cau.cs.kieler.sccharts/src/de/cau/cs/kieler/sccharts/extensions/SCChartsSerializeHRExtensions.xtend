@@ -394,7 +394,13 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         
         if (method instanceof MethodImplementationDeclaration) {
             if (!method.implemented) {
-                components.addKeyword("abstract")
+                var host = false
+                if (method.eContainer instanceof ClassDeclaration) {
+                    host = (method.eContainer as ClassDeclaration).host
+                }
+                if (!host) {
+                    components.addKeyword("abstract")
+                }
             }
         }
         
