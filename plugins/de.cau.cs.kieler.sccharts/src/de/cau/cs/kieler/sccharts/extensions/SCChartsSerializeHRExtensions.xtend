@@ -632,12 +632,13 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serializeHR + "]"
         }
-        if( valuedObjectReference.valuedObject.label !== null )
+        if (valuedObjectReference.valuedObject.label !== null) {
             vo = valuedObjectReference.valuedObject.label
+        }
         if (valuedObjectReference.subReference !== null && valuedObjectReference.subReference.valuedObject !== null) {
             vo = vo + "." + valuedObjectReference.subReference.serializeVOR
         }
-        vo
+        return vo
     }
     
     override def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
@@ -650,16 +651,17 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         return res
     }    
     
-    override dispatch CharSequence serialize(Emission emission) {
+    override dispatch CharSequence serializeHR(Emission emission) {
         val objectContainer = emission.reference.valuedObject.eContainer
+        val vor = emission.reference.serializeVOR
         if (objectContainer instanceof VariableDeclaration) {
-            if (objectContainer.type != ValueType::PURE) {
-                return (emission.reference.valuedObject.name.applySymbolTable + "(" + emission.newValue.serialize + ")")             
+            if (objectContainer.type != ValueType::PURE && emission.newValue !== null) {
+                return vor + "(" + emission.newValue.serialize + ")"
             } else {
-                return emission.reference.valuedObject.name.applySymbolTable
+                return vor
             }
         } else {
-            return emission.reference.valuedObject.name.applySymbolTable
+            return vor
         }
     }
     
