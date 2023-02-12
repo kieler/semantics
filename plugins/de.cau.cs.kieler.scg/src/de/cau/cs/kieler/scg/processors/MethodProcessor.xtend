@@ -231,7 +231,11 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         val exit = scg.nodes.filter(Exit).head
         val returnVO = scg.nodes.filter(Assignment).findFirst[isReturn]?.valuedObject
         val selfVO = scg.declarations.findFirst[isSelfVO]?.valuedObjects?.head
-        val params = scg.declarations.map[valuedObjects].flatten.filter[isParameter].toMap([it],[parameterIndex])
+        val params = newHashMap
+        // Old params
+        params.putAll(methodSCG.declarations.map[valuedObjects].flatten.filter[isParameter].toMap([it],[parameterIndex]))
+        // New params (not sure if this is necessary)
+        params.putAll(scg.declarations.map[valuedObjects].flatten.filter[isParameter].toMap([it],[parameterIndex]))
         
         // Replace params
         val methodCalls = HashBasedTable.create
