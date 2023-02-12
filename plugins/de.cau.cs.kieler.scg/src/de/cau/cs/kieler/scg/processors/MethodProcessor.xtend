@@ -95,8 +95,9 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         
         for (scg : model.scgs) {
             if (scg.isMethod) {
-                methodSCGs.put(scg.methodDeclaration, scg)
-                scg.methodDeclaration.preprocess(scg)
+                val method = scg.methodDeclaration
+                methodSCGs.put(method, scg)
+                method.preprocess(scg)
             } else {
                 normalSCGs += scg
             }
@@ -195,6 +196,9 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         if (!SUPPORTED_RETURN_TYPES.contains(method.returnType)) {
             method.returnType = ValueType.VOID
         }
+        // Fix name (escape characters)
+        val vo = method.valuedObjects.head
+        vo.name = vo.name.replace("^","")
     }
     
     def void inlineMethod(MethodDeclaration method, ReferenceCall call, Node callNode, Map<MethodDeclaration, SCGraph> methodSCGs,  Set<MethodDeclaration> callStack, Set<SCGraph> inlined) {
