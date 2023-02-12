@@ -317,7 +317,7 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
             }
             val ownEntryInFork = _ownEntryInFork // finalize
             
-            // Can be revived if entry in feedback fork can instantaneouly reach the surface node
+            // Can be revived if entry in feedback fork can instantaneously reach the surface node
             val revivalPaths = ownEntryInFork?.getInstantaneousControlFlows(surface).toList
             if (firstFeedbackFork !== null && !revivalPaths.empty) {
                 // Find guard expression that indicates revival.
@@ -378,8 +378,15 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
                 if (entries.head !== ownEntryInFork) { // Not first
                     if (fork.type === ForkType.SEQUENTIAL_PREEMPTIVE) { // Strong abort
                         // Suppress start from this depth if previous thread exited this tick
-                        val leftExit = entries.get(entries.indexOf(ownEntryInFork) - 1).exit
-                        guards += not(leftExit.schedulingBlockCached.createGuardRef)             
+                        //val leftExit = entries.get(entries.indexOf(ownEntryInFork) - 1).exit
+                        //guards += not(leftExit.schedulingBlockCached.createGuardRef) 
+                        // NEW
+                        // Suppress start from this depth if any previous thread exited this tick
+                        val leftExits = entries.take(entries.indexOf(ownEntryInFork) - 1).map[exit].toList
+                        val leftExitSBs = leftExits.map[schedulingBlockCached].filter[!it.basicBlock.deadBlock].toList
+                        if (!leftExitSBs.empty) {
+                            guards += not(or(leftExitSBs.map[createGuardRef].toList))
+                        }
                     }
                     // The Guard transformation will take care of introducing appropriate 
                     // control dependencies to order the threads
@@ -488,7 +495,11 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
                 if (entries.head !== ownEntry && fork.type === ForkType.SEQUENTIAL_PREEMPTIVE) { // Strong abort
                     // If this may be preempted by any preceeding thread, add exit check.
                     val prevEntries = entries.takeWhile[it !== ownEntry].toList
-                    var Expression preemtionExpression = not(or(prevEntries.map[it.exit.schedulingBlockCached.createGuardRef])) // not any prev exit active
+                    val prevExitSBs = prevEntries.map[it.exit.schedulingBlockCached].filter[!it.basicBlock.deadBlock].toList
+                    var Expression preemtionExpression = null
+                    if (!prevExitSBs.empty) {
+                        preemtionExpression = not(or(prevExitSBs.map[createGuardRef])) // not any prev exit active
+                    }
                                         
                     // Check if thread could be reincarated
                     // TODO Currently only works for single revival by next ancestor par-or fork
@@ -499,18 +510,26 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
                         if (relevantThreadTypes.exists[it == ThreadPathType.UNKNOWN]) {
                             environment.errors.add("Cannot handle thread reincarnation without thread type information", ownEntry, true)
                         } else if (relevantThreadTypes.forall[it == ThreadPathType.DELAYED]) {
-                            preemtionExpression = or(preemtionExpression,
-                                or(prevEntries.map[
-                                    and(it.schedulingBlockCached.createGuardRef,
-                                        it.exit.schedulingBlockCached.createGuardRef
-                                        )]
-                                  ))
+                            val reincarate = or(prevEntries.map[
+                                and(it.schedulingBlockCached.createGuardRef,
+                                    it.exit.schedulingBlockCached.createGuardRef
+                                    )]
+                                )
+                            if (preemtionExpression === null) {
+                                preemtionExpression = reincarate
+                            } else {
+                                preemtionExpression = or(preemtionExpression, reincarate)
+                            }
                         } else {
                             environment.errors.add("Cannot handle thread reincarnation with (potentially) instantaneous threads", ownEntry, true)
                         }
                     }
-                                                   
-                    guard.expression = and(guard.predecessorExpression(pred, schedulingBlock, scg), preemtionExpression)
+                    
+                    if (preemtionExpression === null) {
+                        guard.expression = guard.predecessorExpression(pred, schedulingBlock, scg)
+                    } else {
+                        guard.expression = and(guard.predecessorExpression(pred, schedulingBlock, scg), preemtionExpression)
+                    }                               
                 } else {
                     // If first or not preempted, start immediately.
                     // The Guard transformation will take care of introducing appropriate 
