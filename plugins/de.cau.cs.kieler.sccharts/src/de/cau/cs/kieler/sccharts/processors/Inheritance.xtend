@@ -450,6 +450,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                         }
                     } else if (typeExpr instanceof ValueTypeReference) {
                         val vDecl = createVariableDeclaration(typeExpr.valueType)
+                        vDecl.annotations += refDecl.annotations
                         vDecl.valuedObjects += refDecl.valuedObjects
                         vDecl.access = refDecl.access
                         refDecl.replace(vDecl)
