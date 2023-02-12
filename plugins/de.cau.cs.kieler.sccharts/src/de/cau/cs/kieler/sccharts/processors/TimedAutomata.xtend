@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.PriorityProtocol
+import de.cau.cs.kieler.kexpressions.Schedulable
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
@@ -111,6 +112,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     public static val USE_SD_NAME = "ClocksUseSD"
     public static val PASSIVE_NAME = "Passive"
     public static val LOGICAL_NAME = "Logical"
+    public static val NO_SLEEP_SD_COPY = "DoNotCopySDForSleep"
     
     var isIntClockType = false
 
@@ -480,6 +482,12 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                         during.createAssignment(sleepT, 
                             createSubExpression(exp.copy, clock.reference)
                         ).operator = AssignOperator.ASSIGNMIN
+                    }
+                    if (state.hasAnnotation(NO_SLEEP_SD_COPY)) {
+                        during.eAllContents.filter(Schedulable).forEach[schedule.clear]
+                    } else if (!constraint.schedule.empty) {
+                        during.trigger.schedule += constraint.schedule.map[it.copy]
+                        during.effects.head.schedule += constraint.schedule.map[it.copy]
                     }
                 }
             }
