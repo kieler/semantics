@@ -35,6 +35,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExte
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.sccharts.BaseStateReference
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.ScopeCall
 import de.cau.cs.kieler.sccharts.State
@@ -62,6 +63,7 @@ class SCChartsTypeExtensions {
     @Inject extension SCChartsInheritanceExtensions
     @Inject extension SCChartsTypeExtensions 
     @Inject extension SCChartsReferenceExtensions
+    @Inject extension SCChartsGenericTypeExtensions
     
     def dispatch boolean isValidSubtypeOf(EObject type, EObject base) {
         return type.checkForSubtypeProblem(base) === null
@@ -221,6 +223,7 @@ class SCChartsTypeExtensions {
     def dispatch String checkForSubtypeProblem(ReferenceDeclaration refDecl, Value value) {
         if (refDecl.simple) { // primitive ref
             try {
+                var ValueType actualType = null
                 val genericVO = refDecl.reference as ValuedObject
                 val param = value.eContainer as Parameter
                 val bindingSubject = param.eContainer
@@ -230,10 +233,41 @@ class SCChartsTypeExtensions {
                     bindingSubject.createGenericParameterBindings
                 }
                 val genericBinding = genericBindings.findFirst[targetValuedObject == genericVO]
-                val typeExp = genericBinding.sourceExpression as ValueTypeReference
+                if (genericBinding !== null) {
+                    val exp = genericBinding.sourceExpression
+                    if (exp instanceof ValueTypeReference) {
+                        actualType = exp.valueType
+                    }
+                } else { // Type was not bound directly but somewhere in the inheritance hierarchy
+                    var State sccClass = null
+                    var EObject container = value.eContainer
+                    // Find SCChart that is target by this binding
+                    while (sccClass === null && container !== null && !(container instanceof Scope)) {
+                        if (container instanceof BaseStateReference) {
+                            sccClass = container.target
+                        } else if (container instanceof ReferenceDeclaration) {
+                            sccClass = container.reference as State
+                        }
+                        container = container.eContainer
+                    }
+                    if (sccClass !== null) {
+                        val genericState = genericVO.declaration.nextScope
+                        val genericIdx = genericState.genericParameterDeclarations.indexOf(genericVO.declaration)
+                        val baseRef = sccClass.allInheritedStateReferencesHierachically.findFirst[it.target === genericState]
+                        if (baseRef !== null) {
+                            val typeArg = baseRef.genericParameters.get(genericIdx).expression
+                            // TODO support further indirection
+                            if (typeArg instanceof ValueTypeReference) {
+                                actualType = typeArg.valueType
+                            }
+                        }
+                    }
+                }
                 
-                if (typeExp.valueType !== value.inferTypeStrict) {
-                    return "Type of literal value %s does not match generic type argument %s for %s".format(value.inferTypeStrict, typeExp.valueType, genericVO.name)
+                if (actualType === null) {
+                    return "Cannot determine type of %s".format(refDecl.reference.asNamedObject?.name)
+                } else if (actualType !== value.inferTypeStrict) {
+                    return "Type of literal value %s does not match generic type argument %s for %s".format(value.inferTypeStrict, actualType, genericVO.name)
                 }
                 
                 return null

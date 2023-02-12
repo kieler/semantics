@@ -1,22 +1,22 @@
 package de.cau.cs.kieler.kexpressions.extensions
 
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeExtensions
+import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.FunctionCall
-import java.util.Iterator
-import java.util.List
 import de.cau.cs.kieler.kexpressions.Parameter
-import de.cau.cs.kieler.kexpressions.ReferenceCall
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.VectorValue
-import de.cau.cs.kieler.kexpressions.IgnoreValue
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
 import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
-import de.cau.cs.kieler.annotations.NamedObject
-import de.cau.cs.kieler.kexpressions.ParameterAccessType
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ValueTypeReference
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VectorValue
+import java.util.Iterator
+import java.util.List
 
 /**
  * Serialization of KExpressions in human readable form.
@@ -84,6 +84,10 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             vo = vo + "." + valuedObjectReference.subReference.serializeVOR
         }
         vo
+    }
+    
+    def dispatch CharSequence serializeHR(ValueTypeReference vtr) {
+        return vtr.valueType.serializeHR
     }
     
     def dispatch CharSequence serializeHR(ReferenceCall referenceCall) {

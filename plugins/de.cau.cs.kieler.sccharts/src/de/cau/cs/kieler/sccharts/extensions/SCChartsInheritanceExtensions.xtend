@@ -17,9 +17,12 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsOverloadingExtensions
 import de.cau.cs.kieler.sccharts.BaseStateReference
 import de.cau.cs.kieler.sccharts.LocalAction
@@ -47,6 +50,8 @@ class SCChartsInheritanceExtensions {
     
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsAccessVisibilityExtensions
+    @Inject extension KExpressionsGenericParameterExtensions
+    @Inject extension SCChartsGenericTypeExtensions
     
     /**
      * Returns all base states.
@@ -290,28 +295,59 @@ class SCChartsInheritanceExtensions {
                 if (!method.isPrivate) {
                     if (effective.containsKey(info.signatureID)) {
                         val repl = effective.get(info.signatureID)
+                        val replMethod = repl.decl
                         
                         if (info.inheritanceLevel < repl.inheritanceLevel) {
                             info.errors += "Multiple definitions of the same method (%s) in the inheritance hierarchy but no overrider to solve this ambiguity (diamond problem).".format(info.name)
                             repl.errors += "Multiple definitions of the same method (%s) in the inheritance hierarchy but no overrider to solve this ambiguity (diamond problem).".format(info.name)
-                        } else if (!repl.decl.^override) {
+                        } else if (!replMethod.^override) {
                             info.errors += "Method (%s) was redefined in the inheritance hierarchy but not marked as override.".format(info.name)
                             repl.errors += "Methods with the same signature is already inherited (%s). Mark this declaration as override (keyword) to replace previous definitions.".format(info.signatureID) +
                                 // TODO remove when implemented
                                 " Note that method overloading is currently only supported for parameters of different length, not type."
                         }
-                        if (repl.decl.^override) {
-                            if (method.returnType != repl.decl.returnType) {
-                                repl.errors += "Overriding methods must not declare a different return type (%s vs. %s).".format(method.returnType, repl.decl.returnType)
+                        if (replMethod.^override) {
+                            if (method.returnType != replMethod.returnType) {
+                                if (method.returnType === ValueType.PRIMITIVE) {
+                                    var ValueType actualType = null
+                                    val typeVO = method.returnReference
+                                    if (typeVO instanceof ValuedObject) {
+                                        actualType = typeVO.inferGenericType(replMethod)
+                                    }
+                                    
+                                    if (actualType === null) {
+                                        repl.errors += "Overriding methods must not declare a different return type (%s vs. %s). Generic types must be kept generic until concretized.".format(method.returnType, replMethod.returnType)
+                                    } else if (actualType !== replMethod.returnType) {
+                                        repl.errors += "Overriding methods must not declare a different return type than the given generic type argument (%s vs. %s).".format(actualType, replMethod.returnType)
+                                    }
+                                } else {
+                                    repl.errors += "Overriding methods must not declare a different return type (%s vs. %s).".format(method.returnType, replMethod.returnType)
+                                }
                             }
-                            if (method.parameterDeclarations.size != repl.decl.parameterDeclarations.size) {
-                                repl.errors += "Overriding methods must not declare a parameter with a different length (%s vs. %s).".format(method.parameterDeclarations.size, repl.decl.parameterDeclarations.size)
+                            if (method.parameterDeclarations.size != replMethod.parameterDeclarations.size) {
+                                repl.errors += "Overriding methods must not declare a parameter with a different length (%s vs. %s).".format(method.parameterDeclarations.size, replMethod.parameterDeclarations.size)
                             } else {
                                 for (i : 0..<method.parameterDeclarations.size) {
                                     val oP = method.parameterDeclarations.get(i)
-                                    val rP = repl.decl.parameterDeclarations.get(i)
+                                    val rP = replMethod.parameterDeclarations.get(i)
                                     if (oP.class != rP.class) {
-                                        repl.errors += "Overriding methods must not declare a parameter with a different type (index %d).".format(i)
+                                        if (rP instanceof VariableDeclaration && oP instanceof ReferenceDeclaration && (oP as ReferenceDeclaration).reference.isGenericParamter) {
+                                            // Special case concretizing generic parameter types
+                                            val rPType = (rP as VariableDeclaration).type
+                                            var ValueType actualType = null
+                                            val typeVO = (oP as ReferenceDeclaration).reference
+                                            if (typeVO instanceof ValuedObject) {
+                                                actualType = typeVO.inferGenericType(replMethod)
+                                            }
+                                            
+                                            if (actualType === null) {
+                                                repl.errors += "Overriding methods must not declare a parameter with a different type (index %d). Generic types must be kept generic until concretized.".format(i)
+                                            } else if (actualType !== rPType) {
+                                                repl.errors += "Overriding methods must not declare a different return type than the given generic type argument (index %d: %s vs. %s).".format(i, actualType, rPType)
+                                            }
+                                        } else {
+                                            repl.errors += "Overriding methods must not declare a parameter with a different type (index %d).".format(i)
+                                        }
                                     } else if (oP instanceof VariableDeclaration && rP instanceof VariableDeclaration) {
                                         if ((oP as VariableDeclaration).type != (rP as VariableDeclaration).type) {
                                             repl.errors += "Overriding methods must not declare a parameter with a different type (index %d: %s vs. %s).".format(i, (oP as VariableDeclaration).type, (rP as VariableDeclaration).type)
@@ -324,7 +360,7 @@ class SCChartsInheritanceExtensions {
                                 }
                             }
                         }
-                        info.overrider = repl.decl
+                        info.overrider = replMethod
                         repl.overriding = true
                         repl.overrides += info.decl
                     } else {
