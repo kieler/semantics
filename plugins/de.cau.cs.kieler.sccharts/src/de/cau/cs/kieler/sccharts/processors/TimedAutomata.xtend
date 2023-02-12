@@ -170,10 +170,10 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                 if (vo.initialValue === null) {
                     vo.initialValue = createClockValue(0)
                 }
-                if (!vo.input || vo.type !== clockType) {
+                if (!vo.input || (vo.type !== clockType && vo.type !== ValueType.TIME)) {
                     environment.errors.add("A variable with name " + DELTA_T_NAME + " already exists and is not an input variable of type " + clockType.literal)
                 } else {
-                    environment.warnings.add("A variable with name " + DELTA_T_NAME + " already exists and is used.", rootState, true)
+                    environment.infos.add("A variable with name " + DELTA_T_NAME + " already exists and is used.", rootState, true)
                 }
                 if (!vo.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION) && !vo.declaration.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION)) {
                     vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
@@ -201,10 +201,10 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     if (vo.initialValue === null) {
                         vo.initialValue = createClockValue(0)
                     }
-                    if (!vo.output || vo.type !== clockType) {
+                    if (!vo.output || (vo.type !== clockType && vo.type !== ValueType.TIME)) {
                         environment.errors.add("A variable with name " + SLEEP_T_NAME + " already exists and is not an output variable of type " + clockType.literal)
                     } else {
-                        environment.warnings.add("A variable with name " + SLEEP_T_NAME + " already exists and is used.", rootState, true)
+                        environment.infos.add("A variable with name " + SLEEP_T_NAME + " already exists and is used.", rootState, true)
                     }
                     if (!vo.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION) && !vo.declaration.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION)) {
                         vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
