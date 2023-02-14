@@ -30,4 +30,5 @@ Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  de.cau.cs.kieler.kicool;bundle-version="1.3.0",
  de.cau.cs.kieler.sccharts;bundle-version="1.3.0",
  de.cau.cs.kieler.kicool.ide;bundle-version="1.3.0"
-
+Export-Package: de.cau.cs.kieler.verification.ide.ltl.contentassist.antlr.internal,
+ de.cau.cs.kieler.verification.ide.ltl.contentassist.antlr

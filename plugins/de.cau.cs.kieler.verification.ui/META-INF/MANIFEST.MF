@@ -10,8 +10,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
  com.google.guava,
- org.eclipse.xtext.xbase.lib,
- org.eclipse.xtend.lib,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
  org.eclipse.xtend.lib.macro,
  de.cau.cs.kieler.verification,
  de.cau.cs.kieler.sccharts,
@@ -22,7 +22,13 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.klighd.ui,
  de.cau.cs.kieler.klighd.ui.view,
- de.cau.cs.kieler.simulation.ide
+ de.cau.cs.kieler.simulation.ide,
+ org.eclipse.xtext.ui,
+ org.eclipse.ui.editors,
+ org.eclipse.xtext.ui.shared
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: de.cau.cs.kieler.verification.ui
 Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.verification.ui.ltl.contentassist,
+ de.cau.cs.kieler.verification.ui.ltl.quickfix
+Import-Package: org.apache.log4j

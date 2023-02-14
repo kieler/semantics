@@ -1,0 +1,51 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2023 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+ grammar de.cau.cs.kieler.verification.ltl.LTLFormula with org.eclipse.xtext.common.Terminals
+
+generate lTLFormula "http://www.cau.de/cs/kieler/verification/ltl/LTLFormula"
+
+LTLFormula:
+    formulas+=Or ('->' formulas+=Or)*
+;
+	
+    
+And:
+    formulas+=Last ('&&' formulas+=Last)*
+;
+
+Or:
+    formulas+=And ('||' formulas+=And)*
+;
+
+Last:
+    operator='G' '(' formulas+=LTLFormula ')' |
+    operator='F' '(' formulas+=LTLFormula ')' |
+    operator='X' '(' formulas+=LTLFormula ')' |
+    operator='!' '(' formulas+=LTLFormula ')' |
+    '(' formulas+=LTLFormula ')' operator='U' '(' formulas+=LTLFormula ')'
+    '(' formulas+=LTLFormula ')' |
+    formulas+=Variable
+;
+	
+Variable:
+    // TODO: value could also be a number
+	name=ID operator='==' value=ID |
+    name=ID operator='!=' value=ID |
+    name=ID operator='>=' value=ID |
+    name=ID operator='<=' value=ID |
+    name=ID operator='>' value=ID |
+    name=ID operator='<' value=ID
+;
+
+	

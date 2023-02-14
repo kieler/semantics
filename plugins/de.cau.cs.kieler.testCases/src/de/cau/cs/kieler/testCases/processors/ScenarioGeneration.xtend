@@ -27,6 +27,7 @@ import java.lang.reflect.Array
 import javax.sound.sampled.BooleanControl.Type
 import java.util.List
 import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.verification.ltl.LTLFormulaStandaloneParser
 
 /**
  * @author jep
@@ -52,7 +53,7 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
 
         registerProcessors(sim)
         val numberSteps = 50
-//        val testsuites = 5
+        val testsuites = 5
 
         // collect LTLs
         val scchart = this.environments.source.compilationContext.originalModel as SCCharts
@@ -60,12 +61,18 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
         annotations = annotations.filter [ annotation |
             annotation instanceof StringAnnotation && annotation.name.equals("LTL")
         ].toList 
+        // parse strings to LTL formulas
+        for (anno : annotations) {
+            val formula = anno.values.get(0)
+            val test = LTLFormulaStandaloneParser.parseLTLFormula(formula)
+            println(test)
+        }
 
         // used to check LTL coverage by the test cases
         val checkedLTLOverall = newBooleanArrayOfSize(annotations.length)
         var allLTLChecked = false
 
-        for (var testNumber = 0; /*testNumber < testsuites &&*/ !allLTLChecked; testNumber++) {
+        for (var testNumber = 0; testNumber < testsuites /* && !allLTLChecked */; testNumber++) {
             // start simulation
             sim.start(false)
             // generate test
@@ -97,9 +104,7 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
 
     def updateCheckedLTLs(List<StringAnnotation> annotations, boolean[] checkedLTL, SimulationHistory history) {
         val data = history.get(history.size - 1)
-        for (anno : annotations) {
-            val formula = anno.values.get(0)
-        }
+        
     }
 
     /**
