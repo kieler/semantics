@@ -20,7 +20,6 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager
 import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
@@ -191,12 +190,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 label += region.reference.parameters.serializeHRParameters
             }
             
-            node.createReferenceRegionFigures(newArrayList(new Pair(label, TextFormat.TEXT)), region) => [
-                node.data.filter(KRectangle).forEach[
-                    it.foreground = ColorStore.Color.STATE_REFERENCED_BACKGROUND_GRADIENT_2.color
-                    it.lineWidth = it.lineWidth.lineWidth + 1
-                ]
-            ]
+            node.createReferenceRegionFigures(newArrayList(new Pair(label, TextFormat.TEXT)), region, true)
         } else {
             node.addRegionFigure => [
                 if (region.override) addOverrideRegionStyle
@@ -233,7 +227,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         }
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
 
-        node.createReferenceRegionFigures(null, null)
+        node.createReferenceRegionFigures(null, null, false)
         
         node.setSelectionStyle
 
@@ -256,16 +250,14 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         }
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
 
-        node.createReferenceRegionFigures(ref.serializeHighlighted(true), null)
-        
-        node.data.filter(KRectangle).forEach[setReferencedStyle]
+        node.createReferenceRegionFigures(ref.serializeHighlighted(true), null, true)
         
         node.setSelectionStyle
 
         return node;
     }
     
-    protected def KNode createReferenceRegionFigures(KNode node, List<Pair<? extends CharSequence, TextFormat>> label, Region region) {
+    protected def KNode createReferenceRegionFigures(KNode node, List<Pair<? extends CharSequence, TextFormat>> label, Region region, boolean color) {
         // Set initially collapsed
         node.setLayoutOption(KlighdProperties::EXPAND, false);
 
@@ -273,6 +265,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         node.addRegionFigure => [
             setAsExpandedView
             addStatesArea(label !== null)
+            if (color) addReferenceRegionStyle
             addDoubleClickAction(ReferenceExpandAction::ID)
             // Add Button after area to assure correct overlapping
             // Use special expand action to resolve references
@@ -286,6 +279,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         // Collapsed
         node.addRegionFigure => [
             setAsCollapsedView
+            if (color) addReferenceRegionStyle
             addDoubleClickAction(ReferenceExpandAction::ID)
             addExpandButton(label) => [
                 addSingleClickAction(ReferenceExpandAction.ID)

@@ -113,6 +113,14 @@ class ControlflowRegionStyles {
         ]
     }
     
+    def KRectangle addReferenceRegionStyle(KRectangle rect) {
+        return rect => [
+            background = REGION_REFERENCE_BACKGROUND.color
+            foreground = REGION_REFERENCE_FOREGROUND.color
+            lineWidth = 1.3f;
+        ]
+    }
+    
     def KRectangle addMethodFigure(KNode node) {
         return node.addRegionFigure => [
             background = METHOD_BACKGROUND.color
@@ -325,9 +333,5 @@ class ControlflowRegionStyles {
     
     def KRectangle setUserScheduleStyle(KRectangle krendering) {
         krendering.foreground = USER_SCHEDULE_COLOR.color
-    }
-    
-    def KRectangle setReferencedStyle(KRectangle krendering) {
-        krendering.foreground = REGION_REFERENCE_FOREGROUND.color
     }
 }
