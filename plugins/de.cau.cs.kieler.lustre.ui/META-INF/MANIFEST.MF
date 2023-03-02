@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Lustre UI
 Bundle-Vendor: Kiel University
-Bundle-Version: 1.3.0.qualifier
+Bundle-Version: 1.4.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.lustre.ui; singleton:=true
 Eclipse-UI: True
 Require-Bundle: de.cau.cs.kieler.lustre,

@@ -466,7 +466,7 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
         val workspaceRoot = ResourcesPlugin.getWorkspace.getRoot
         val project = workspaceRoot.getProject("-")
         val file = project.getFile(path)
-        return file
+        return file.fullPath.toFile
     }
     
     override configureContext(CompilationContext context) {
