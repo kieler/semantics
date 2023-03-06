@@ -404,12 +404,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (SHOW_INHERITANCE.booleanValue) regions.addAll(0, state.allVisibleInheritedRegions.toList)
         for (region : regions) {
             switch region {
-                ControlflowRegion: {
-                    node.children += region.transform
-                }
-                DataflowRegion: {
-                    node.children += region.transform
-                }
+                ControlflowRegion: node.children += region.transform
+                DataflowRegion: node.children += region.transform
             }
         }
         
@@ -449,8 +445,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             val proxyBounds = PlacementUtil.estimateSize(proxy)
             val minProxySize = StateStyles.DEFAULT_FIGURE_MIN_NODE_SIZE
             // Don't need to resize proxy if the node is already big enough by itself
-            val minSize = 10
-            val bigEnough = proxyBounds.width > minSize && proxyBounds.height > minSize
+            val bigEnough = proxyBounds.width > ProxyStyles.MIN_PROXY_SIZE 
+                && proxyBounds.height > ProxyStyles.MIN_PROXY_SIZE
             
             proxy.width = bigEnough ? proxyBounds.width : minProxySize
             proxy.height = bigEnough ? proxyBounds.height : minProxySize
