@@ -70,6 +70,7 @@ import de.cau.cs.kieler.sccharts.processors.dataflow.RegionLCAFMap
 import de.cau.cs.kieler.sccharts.processors.dataflow.StateDependencies
 import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterTags
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ToggleDependencyAction
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ProxyStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.ArrayList
@@ -145,7 +146,6 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         val node = state.createNode().associateWith(state)
         node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(SCChartsSemanticFilterTags.STATE)
         val proxy = createNode().associateWith(state)
-        val maxProxyLabelLength = 5
 
         // Set KIdentifier for use with incremental update
         if (!state.name.nullOrEmpty) {
@@ -268,16 +268,16 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     node.addMacroStateLabel(label)
                     if (label.length > 0) {
                         val name = label.get(0)
-                        if (name.key.length > maxProxyLabelLength) {
-                            label.set(0, new Pair(name.key.subSequence(0, maxProxyLabelLength) + "...", name.value))
+                        if (name.key.length > ProxyStyles.MAX_PROXY_LABEL_LENGTH) {
+                            label.set(0, new Pair(name.key.subSequence(0, ProxyStyles.MAX_PROXY_LABEL_LENGTH) + "...", name.value))
                         }
                     }
                     proxy.addMacroStateLabel(label)
                 } else {
                     val label = state.serializeHR.toString
                     node.addSimpleStateLabel(label)
-                    if (label.length > maxProxyLabelLength) {
-                        proxy.addSimpleStateLabel(label.substring(0, maxProxyLabelLength) + "...")
+                    if (label.length > ProxyStyles.MAX_PROXY_LABEL_LENGTH) {
+                        proxy.addSimpleStateLabel(label.substring(0, ProxyStyles.MAX_PROXY_LABEL_LENGTH) + "...")
                     } else {
                         proxy.addSimpleStateLabel(label)
                     }
