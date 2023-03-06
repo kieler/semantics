@@ -93,7 +93,7 @@ class StateStyles {
     /** The default figure's corner radius. */
     public static final int DEFAULT_FIGURE_CORNER_RADIUS = 17;
     /** The default figure's minimal node size. */
-    public static final int DEFAULT_FIGURE_MIN_NODE_SIZE = 34; // 2 x corner radius
+    public static final int DEFAULT_FIGURE_MIN_NODE_SIZE = 2 * DEFAULT_FIGURE_CORNER_RADIUS;
     /** The connector figure's size. */
     public static final int CONNECTOR_FIGURE_SIZE = 7;
 
