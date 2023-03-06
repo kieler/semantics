@@ -37,6 +37,7 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterTa
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ProxyStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
 import java.util.EnumSet
 import org.eclipse.elk.alg.layered.options.CenterEdgeLabelPlacementStrategy
@@ -84,7 +85,6 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             SCChartsSemanticFilterTags.CONTROLFLOW_REGION
         )
         val proxy = createNode().associateWith(region)
-        val maxProxyLabelLength = 5
         
         node.configureNodeLOD(region)
 
@@ -222,8 +222,8 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             val label = region.serializeHighlighted(true)
             if (label.length > 0) {
                 val name = label.get(0)
-                if (name.key.length > maxProxyLabelLength) {
-                    label.set(0, new Pair(name.key.subSequence(0, maxProxyLabelLength) + "...", name.value))
+                if (name.key.length > ProxyStyles.MAX_PROXY_LABEL_LENGTH) {
+                    label.set(0, new Pair(name.key.subSequence(0, ProxyStyles.MAX_PROXY_LABEL_LENGTH) + "...", name.value))
                 }
             }
             addProxyRegion(label)
@@ -242,18 +242,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             ]
         }
         
-        // Set size to be at least minimal node size
-        val proxyBounds = PlacementUtil.estimateSize(proxy)
-        val minProxySize = StateStyles.DEFAULT_FIGURE_MIN_NODE_SIZE
-        // Don't need to resize proxy if the node is already big enough by itself
-        val minSize = 10
-        val bigEnough = proxyBounds.width > minSize && proxyBounds.height > minSize
-        
-        proxy.width = bigEnough ? proxyBounds.width : minProxySize
-        proxy.height = bigEnough ? proxyBounds.height : minProxySize
-        
-        node.setProperty(KlighdProperties.PROXY_VIEW_RENDER_NODE_AS_PROXY, true)
-        node.setProperty(KlighdProperties.PROXY_VIEW_PROXY_RENDERING, proxy.data)
+        ProxyStyles.setProxySize(node, proxy)
         
         return returnNodes
     }
