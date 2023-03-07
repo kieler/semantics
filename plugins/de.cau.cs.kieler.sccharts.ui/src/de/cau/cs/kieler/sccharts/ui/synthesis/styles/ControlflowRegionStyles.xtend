@@ -18,6 +18,7 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.klighd.krendering.KGridPlacement
+import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KText
@@ -131,27 +132,39 @@ class ControlflowRegionStyles {
     }
     
     /**
-     * Adds a button with text.
+     * Adds a button with text and a label.
      */
     private def KRendering addRegionButton(KContainerRendering container, String text, List<Pair<? extends CharSequence, TextFormat>> label) {
-        val button = container.addPolygon => [
-            lineWidth = 0
-            background = container.foreground.color.copy
-            selectionBackground = SELECTION.color
-            addKPosition(LEFT, 0.5f, 0, TOP, 0.5f, 0)
-            addKPosition(LEFT, 0.5f, 0, TOP, 19, 0)
-            addKPosition(LEFT, 18, 0, TOP, 0.5f, 0)
-        ]
-        button.addText(text) => [
-            suppressSelectability
-            foreground = REGION_BUTTON_FOREGROUND.color
-            selectionForeground = REGION_BUTTON_FOREGROUND.color
-            fontSize = 8;
-            fontBold = true
-            val size = estimateTextSize;
-            setPointPlacementData(LEFT, if (text.equals("-")) 3f else 2f, 0, TOP, 0, 0, H_LEFT, V_TOP, 0, 0, size.width, size.height);
-        ]
+        return addRegionButton(container, text, label, false)
+    }
+    
+    /**
+     * Adds a button with text and a label.
+     * For a proxy, only adds the label and no button.
+     */
+    private def KRendering addRegionButton(KContainerRendering container, String text, List<Pair<? extends CharSequence, TextFormat>> label, boolean proxy) {
+        var KPolygon button = null
+        if (!proxy) {            
+            button = container.addPolygon => [
+                lineWidth = 0
+                background = container.foreground.color.copy
+                selectionBackground = SELECTION.color
+                addKPosition(LEFT, 0.5f, 0, TOP, 0.5f, 0)
+                addKPosition(LEFT, 0.5f, 0, TOP, 19, 0)
+                addKPosition(LEFT, 18, 0, TOP, 0.5f, 0)
+            ]
+            button.addText(text) => [
+                suppressSelectability
+                foreground = REGION_BUTTON_FOREGROUND.color
+                selectionForeground = REGION_BUTTON_FOREGROUND.color
+                fontSize = 8;
+                fontBold = true
+                val size = estimateTextSize;
+                setPointPlacementData(LEFT, if (text.equals("-")) 3f else 2f, 0, TOP, 0, 0, H_LEFT, V_TOP, 0, 0, size.width, size.height);
+            ]
+        }
         if (!label.nullOrEmpty) {
+            val absLeftOffset = if(proxy) 1 else 14;
             if (label.size == 1 && label.head.value == TextFormat.TEXT) {
                 container.addText(label.head.key.toString) => [
                     suppressSelectability
@@ -159,14 +172,14 @@ class ControlflowRegionStyles {
                     fontSize = 10;
                     selectionTextUnderline = Underline.NONE // prevents default selection style
                     val size = estimateTextSize;
-                    setPointPlacementData(LEFT, 14, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, size.width + 5, size.height)
+                    setPointPlacementData(LEFT, absLeftOffset, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, size.width + 5, size.height)
                     setProperty(KlighdProperties.IS_NODE_TITLE, true)
                 ]
             } else {
                 container.addKeywordLabel(label, 0) => [
                     foreground = REGION_LABEL.color
                     fontSize = 10
-                    setPointPlacementData(LEFT, 14, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
+                    setPointPlacementData(LEFT, absLeftOffset, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
                     setProperty(KlighdProperties.IS_NODE_TITLE, true)
                     (children.last as KContainerRendering) => [ // Just for spacing at the end
                         val grid = it?.getChildPlacement()
@@ -189,51 +202,6 @@ class ControlflowRegionStyles {
             }
         }
         return button
-    }
-    
-    /**
-     * Adds a region figure similar to {@link addExpandButton()} and {@link addCollapseButton()} but without
-     * the button symbol and therefore without the text offset - since proxies for regions shouldn't be expandable
-     * or collapsable.
-     */
-    def KRendering addProxyRegion(KContainerRendering container, List<Pair<? extends CharSequence, TextFormat>> label) {
-        if (!label.nullOrEmpty) {
-            if (label.size == 1 && label.head.value == TextFormat.TEXT) {
-                container.addText(label.head.key.toString) => [
-                    suppressSelectability
-                    foreground = REGION_LABEL.color;
-                    fontSize = 10;
-                    selectionTextUnderline = Underline.NONE // prevents default selection style
-                    val size = estimateTextSize;
-                    setPointPlacementData(LEFT, 1, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, size.width + 5, size.height)
-                    setProperty(KlighdProperties.IS_NODE_TITLE, true)
-                ]
-            } else {
-                container.addKeywordLabel(label, 0) => [
-                    foreground = REGION_LABEL.color
-                    fontSize = 10
-                    setPointPlacementData(LEFT, 1, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
-                    setProperty(KlighdProperties.IS_NODE_TITLE, true)
-                    (children.last as KContainerRendering) => [ // Just for spacing at the end
-                        val grid = it?.getChildPlacement()
-                        if (grid instanceof KGridPlacement) {
-                            grid.numColumns = grid.numColumns + 1
-                            addRectangle => [
-                                setGridPlacementData(5,5)
-                                invisible = true
-                            ]
-                        }
-                    ]
-                    eAllContents.filter(KText).forEach[
-                        suppressSelectability
-                        selectionTextUnderline = Underline.NONE // prevents default selection style
-                        if (!styles.exists[it instanceof KForeground]) {
-                            foreground = REGION_LABEL.color
-                        }
-                    ]
-                ]
-            }
-        }
     }
     
     /**
@@ -270,6 +238,13 @@ class ControlflowRegionStyles {
     }
     def KRendering addCollapseButton(KContainerRendering container, String label) {
         return container.addRegionButton("-", newArrayList(new Pair(label, TextFormat.TEXT)))
+    }
+    
+    /**
+     * Adds a region with a label and no button.
+     */
+    def KRendering addRegionLabel(KContainerRendering container, List<Pair<? extends CharSequence, TextFormat>> label) {
+        return container.addRegionButton(null, label, true)
     }
 
     /**

@@ -25,7 +25,6 @@ import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
@@ -38,7 +37,6 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandColl
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ProxyStyles
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
 import java.util.EnumSet
 import org.eclipse.elk.alg.layered.options.CenterEdgeLabelPlacementStrategy
 import org.eclipse.elk.alg.layered.options.FixedAlignment
@@ -114,14 +112,6 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         
         // This node does not support comment boxes on the same layer, because regions are layouted by the box layouter.
         node.setProperty(MessageObjectReferencesManager.SUPPORTS_COMMENT_BOXES, false)
-        
-        val addCorrespondingRegionFigure = [ KNode x |
-            x.addRegionFigure => [
-                if (region.override) addOverrideRegionStyle
-                if (region.abort) addAbortRegionStyle
-                if (region.final) addFinalRegionStyle
-            ]
-        ]
 
         if (!region.states.empty) {
             val label = region.serializeHighlighted(true)
@@ -226,7 +216,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                     label.set(0, new Pair(name.key.subSequence(0, ProxyStyles.MAX_PROXY_LABEL_LENGTH) + "...", name.value))
                 }
             }
-            addProxyRegion(label)
+            addRegionLabel(label)
         ]
 
         val returnNodes = <KNode> newArrayList(node)

@@ -192,7 +192,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                         label.set(0, new Pair(name.key.subSequence(0, ProxyStyles.MAX_PROXY_LABEL_LENGTH) + "...", name.value))
                     }
                 }
-                addProxyRegion(label)
+                addRegionLabel(label)
             }
         ]
         

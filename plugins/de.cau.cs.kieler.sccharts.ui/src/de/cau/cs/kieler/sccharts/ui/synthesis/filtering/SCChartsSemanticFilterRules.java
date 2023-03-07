@@ -17,21 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.cau.cs.kieler.klighd.filtering.AndConnective;
-import de.cau.cs.kieler.klighd.filtering.FalseConnective;
-import de.cau.cs.kieler.klighd.filtering.GreaterEqualsConnective;
-import de.cau.cs.kieler.klighd.filtering.GreaterThanConnective;
-import de.cau.cs.kieler.klighd.filtering.IfThenElseConnective;
-import de.cau.cs.kieler.klighd.filtering.LessThanConnective;
-import de.cau.cs.kieler.klighd.filtering.LogicEqualConnective;
 import de.cau.cs.kieler.klighd.filtering.NegationConnective;
-import de.cau.cs.kieler.klighd.filtering.NumericAdditionConnective;
-import de.cau.cs.kieler.klighd.filtering.NumericConstantConnective;
-import de.cau.cs.kieler.klighd.filtering.NumericEqualConnective;
-import de.cau.cs.kieler.klighd.filtering.NumericSubtractionConnective;
-import de.cau.cs.kieler.klighd.filtering.OrConnective;
 import de.cau.cs.kieler.klighd.filtering.SemanticFilterRule;
-import de.cau.cs.kieler.klighd.filtering.SemanticFilterRuleUtil;
-import de.cau.cs.kieler.klighd.filtering.TrueConnective;
 
 /**
  * Contains semantic filter rules for SCCharts.
