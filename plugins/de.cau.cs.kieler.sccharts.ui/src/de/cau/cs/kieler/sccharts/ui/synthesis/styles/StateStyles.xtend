@@ -233,7 +233,7 @@ class StateStyles {
             fontSize = stateLabelTextSize
             suppressSelectability
             selectionTextUnderline = Underline.NONE // prevents default selection style
-            setProperty(KlighdProperties.IS_NODE_TITLE, true)
+//            setProperty(KlighdProperties.IS_NODE_TITLE, true)
         ]
     }
 
