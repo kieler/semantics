@@ -37,12 +37,17 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterTa
 import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.MakeInitialStateAction
 import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangePriorityAction
 
+/**
+ * Class for adding a property to the root state of a scchart diagram
+ * @author fjo
+ */
 @ViewSynthesisShared
 class StructuralEditingHook extends SynthesisHook {
 
     override finish(Scope scope, KNode node) {
         val map = new HashMap()
 
+        // all states support the following actions
         map.put(SCChartsSemanticFilterTags.STATE, #[
             EditSemanticDeclarationAction.getMsg(),
             RenameStateAction.getMsg(),
@@ -52,21 +57,21 @@ class StructuralEditingHook extends SynthesisHook {
             ToggleFinalStateAction.getMsg(),
             DeleteAction.getMsg()
         ])
-        
+
+        // Non initial states support one more action
         map.put(SCChartsSemanticFilterTags.NOT_INITIAL_STATE, #[
             MakeInitialStateAction.getMsg()
         ])
 
+        // Transitions supported actions
         map.put(SCChartsSemanticFilterTags.TRANSITION, #[
             ChangeTargetStateAction.getMsg(),
             ChangeSourceStateAction.getMsg(),
             ChangeTriggerEffectAction.getMsg(),
             DeleteAction.getMsg(),
-            
             ChangePriorityAction.getMsg()
-            
         ])
-        
+        // Depending on the type of transition we can change it to the other two options
         map.put(SCChartsSemanticFilterTags.WEAK_TRANSITION, #[
             ChangeToTerminatingTransitionAction.getMsg(),
             ChangeToAbortingTransitionAction.getMsg()
@@ -80,6 +85,7 @@ class StructuralEditingHook extends SynthesisHook {
             ChangeToAbortingTransitionAction.getMsg()
         ])
 
+        // Actions supported by regions
         map.put(SCChartsSemanticFilterTags.REGION, #[
             RenameRegionAction.getMsg(),
             AddConcurrentRegionAction.getMsg(),
@@ -87,7 +93,7 @@ class StructuralEditingHook extends SynthesisHook {
         ])
 
         val options = new StructuredEditOptions(map)
-
+        // sets the property for the root node
         node.setProperty(KlighdProperties.STRUCTURED_EDITING, options)
     }
 }
