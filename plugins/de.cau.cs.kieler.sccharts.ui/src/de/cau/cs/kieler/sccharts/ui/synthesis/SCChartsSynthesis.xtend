@@ -129,7 +129,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             SHOW_METHOD_BODY,
             SHOW_COMMENTS,
             SHOW_USER_LABELS,
-            SHOW_CAUSAL_DATAFLOW
+            SHOW_CAUSAL_DATAFLOW,
+            ENABLE_STRUCTURED_PROGRAMMING
         )
 
         // Adaptive Zoom
@@ -197,7 +198,12 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         if (scc.hasPragma(PRAGMA_SKINPATH)) {
             setSkinPath(scc.getStringPragmas(PRAGMA_SKINPATH).head.values.head, usedContext)
         }
-
+        
+        //Enables or disables the display of the contextmenu on the client. 
+        //We want this on the server since not all languages are suported and the contextmenu should only be generated if there is a server implementation for it
+        rootNode.setProperty(KlighdProperties.SHOW_STRUCTURED_EDITING_MENU, ENABLE_STRUCTURED_PROGRAMMING.booleanValue)
+        
+        
         if (SHOW_ALL_SCCHARTS.booleanValue) {
             val rootStateNodes = <State, KNode> newHashMap
             val rootStates = newLinkedHashSet
