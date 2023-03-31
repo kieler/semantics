@@ -4,29 +4,11 @@
 package de.cau.cs.kieler.verification.ltl.formatting2
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.verification.ltl.lTLFormula.And
-import de.cau.cs.kieler.verification.ltl.lTLFormula.Impl
+import de.cau.cs.kieler.kexpressions.formatting2.KExpressionsFormatter
 import de.cau.cs.kieler.verification.ltl.services.LTLFormulaGrammarAccess
-import org.eclipse.xtext.formatting2.AbstractFormatter2
-import org.eclipse.xtext.formatting2.IFormattableDocument
 
-class LTLFormulaFormatter extends AbstractFormatter2 {
+class LTLFormulaFormatter extends KExpressionsFormatter {
 	
 	@Inject extension LTLFormulaGrammarAccess
-
-	def dispatch void format(Impl impl, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (or : impl.formulas) {
-			or.format
-		}
-	}
-
-	def dispatch void format(And and, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (last : and.formulas) {
-			last.format
-		}
-	}
 	
-	// TODO: implement for Or, Last
 }

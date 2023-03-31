@@ -11,41 +11,75 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
- grammar de.cau.cs.kieler.verification.ltl.LTLFormula with org.eclipse.xtext.common.Terminals
+grammar de.cau.cs.kieler.verification.ltl.LTLFormula with de.cau.cs.kieler.kexpressions.KExpressions
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
 
 generate lTLFormula "http://www.cau.de/cs/kieler/verification/ltl/LTLFormula"
 
-LTLFormula:
-    formulas+=Or ('->' formulas+=Or)*
-;
+LTLFormula returns kexpressions::Expression:
+    LTLExpression;
+
+LTLExpression returns kexpressions::Expression:
+    {LTLExpression} operator=(GlobalOperator | FinalOperator | NextOperator) '(' subExpressions+=LTLExpression ')'
+    | BoolExpression 
+    ({OperatorExpression.subExpressions+=current} 
+        (operator=UntilOperator subExpressions+=BoolExpression)
+        ('U' '(' subExpressions+=BoolExpression ')')*
+    )?;
+
+enum GlobalOperator returns LTLOperatorType:
+    GLOBAL="G";
+
+enum FinalOperator returns LTLOperatorType:
+    FINAL="F";
+
+enum NextOperator returns LTLOperatorType:
+    NEXT="X";
+
+enum UntilOperator returns LTLOperatorType:
+    UNTIL="U";
+    
+@Override
+AtomicExpression returns kexpressions::Expression:
+    BoolValue
+    | '(' LTLExpression ')'
+    | ReferenceCall
+    | FunctionCall
+    | RandomCall
+    | RandomizeCall
+    | ValuedObjectTestExpression // Last to allow detection of calls
+    | SpecialAccessExpression
+    | TextExpression;
 	
     
-And:
-    formulas+=Last ('&&' formulas+=Last)*
-;
-
-Or:
-    formulas+=And ('||' formulas+=And)*
-;
-
-Last:
-    operator='G' '(' formulas+=LTLFormula ')' |
-    operator='F' '(' formulas+=LTLFormula ')' |
-    operator='X' '(' formulas+=LTLFormula ')' |
-    operator='!' '(' formulas+=LTLFormula ')' |
-    '(' formulas+=LTLFormula ')' operator='U' '(' formulas+=LTLFormula ')'
-    '(' formulas+=LTLFormula ')' |
-    formulas+=Variable
-;
-	
-Variable:
-    // TODO: value could also be a number
-	name=ID operator='==' value=ID |
-    name=ID operator='!=' value=ID |
-    name=ID operator='>=' value=ID |
-    name=ID operator='<=' value=ID |
-    name=ID operator='>' value=ID |
-    name=ID operator='<' value=ID
-;
+//And:
+//    formulas+=Last ('&&' formulas+=Last)*
+//;
+//
+//Or:
+//    formulas+=And ('||' formulas+=And)*
+//;
+//
+//Last:
+//    operator='G' '(' formulas+=LTLFormula ')' |
+//    operator='F' '(' formulas+=LTLFormula ')' |
+//    operator='X' '(' formulas+=LTLFormula ')' |
+//    operator='!' '(' formulas+=LTLFormula ')' |
+//    '(' formulas+=LTLFormula ')' operator='U' '(' formulas+=LTLFormula ')'
+//    '(' formulas+=LTLFormula ')' |
+//    formulas+=Variable
+//;
+//	
+//Variable:
+//    // TODO: value could also be a number
+//	name=ID operator='==' value=ID |
+//    name=ID operator='!=' value=ID |
+//    name=ID operator='>=' value=ID |
+//    name=ID operator='<=' value=ID |
+//    name=ID operator='>' value=ID |
+//    name=ID operator='<' value=ID
+//;
 
 	

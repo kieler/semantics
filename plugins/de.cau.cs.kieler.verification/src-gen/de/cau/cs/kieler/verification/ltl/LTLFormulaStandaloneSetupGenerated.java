@@ -5,11 +5,11 @@ package de.cau.cs.kieler.verification.ltl;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import de.cau.cs.kieler.kexpressions.KExpressionsStandaloneSetup;
 import de.cau.cs.kieler.verification.ltl.lTLFormula.LTLFormulaPackage;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.ISetup;
-import org.eclipse.xtext.common.TerminalsStandaloneSetup;
 import org.eclipse.xtext.resource.IResourceFactory;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
 
@@ -18,7 +18,7 @@ public class LTLFormulaStandaloneSetupGenerated implements ISetup {
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration() {
-		TerminalsStandaloneSetup.doSetup();
+		KExpressionsStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);

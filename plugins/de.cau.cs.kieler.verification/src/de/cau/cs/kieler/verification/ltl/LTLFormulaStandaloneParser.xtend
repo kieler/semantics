@@ -15,7 +15,7 @@ package de.cau.cs.kieler.verification.ltl
 import java.nio.charset.StandardCharsets
 import java.nio.charset.Charset
 import java.io.ByteArrayInputStream
-import de.cau.cs.kieler.verification.ltl.lTLFormula.LTLFormula
+import de.cau.cs.kieler.kexpressions.Expression
 
 /**
  * @author jep
@@ -28,21 +28,21 @@ class LTLFormulaStandaloneParser {
     /**
      * Parses a Expression from the given text.
      */
-    static def LTLFormula parseLTLFormula(String text) {
+    static def Expression parseLTLFormula(String text) {
         return text.parseLTLFormula(StandardCharsets.UTF_8)
     }
 
     /**
      * Parses a LTL formula from the given text with given encoding
      */
-    static def LTLFormula parseLTLFormula(String text, Charset encoding) {
+    static def Expression parseLTLFormula(String text, Charset encoding) {
         var res = injector.getInstance(LTLFormulaResource)
         res.standaloneParse = true
         res.load(new ByteArrayInputStream(text.getBytes(encoding)), emptyMap)
 
         if (!res.contents.empty && res.errors.empty) {
             val formula = res.contents.head
-            if (formula instanceof LTLFormula) {
+            if (formula instanceof Expression) {
                 return formula
             }
         }

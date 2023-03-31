@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.verification.ltl
 
 import com.google.inject.Injector
+import de.cau.cs.kieler.verification.ltl.lTLFormula.LTLFormulaPackage
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
@@ -30,9 +31,9 @@ class LTLFormulaStandaloneSetup extends LTLFormulaStandaloneSetupGenerated {
         return injector
 	}
 	
-//	override register(Injector injector) {
-//        super.register(injector)
-//        // Ensure package is registered 
-//        KExtPackage.eINSTANCE.eClass()
-//    }
+	override register(Injector injector) {
+        super.register(injector)
+        // Ensure package is registered 
+        LTLFormulaPackage.eINSTANCE.eClass()
+    }
 }

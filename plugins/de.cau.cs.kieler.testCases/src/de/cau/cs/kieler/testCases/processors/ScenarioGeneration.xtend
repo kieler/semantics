@@ -28,6 +28,9 @@ import javax.sound.sampled.BooleanControl.Type
 import java.util.List
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.verification.ltl.LTLFormulaStandaloneParser
+import de.cau.cs.kieler.kexpressions.Expression
+import java.util.ArrayList
+import java.util.HashSet
 
 /**
  * @author jep
@@ -61,11 +64,12 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
         annotations = annotations.filter [ annotation |
             annotation instanceof StringAnnotation && annotation.name.equals("LTL")
         ].toList 
+        val List<Expression> ltlExpressions = new ArrayList<Expression>()
         // parse strings to LTL formulas
         for (anno : annotations) {
             val formula = anno.values.get(0)
-            val test = LTLFormulaStandaloneParser.parseLTLFormula(formula)
-            println(test)
+            val expr = LTLFormulaStandaloneParser.parseLTLFormula(formula)
+            ltlExpressions.add(expr)
         }
 
         // used to check LTL coverage by the test cases
@@ -76,10 +80,10 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
             // start simulation
             sim.start(false)
             // generate test
-            val checkedLTL = newBooleanArrayOfSize(annotations.length)
+            val checkedLTL = new HashSet<Integer>()
             for (var step = 0; step < numberSteps; step++) {
                 sim.controller.performInternalStep
-                updateCheckedLTLs(annotations, checkedLTL, sim.history)
+                updateCheckedLTLs(annotations, checkedLTL, sim.history, ltlExpressions)
             }
             updateOverallCheckedLTL(checkedLTLOverall, checkedLTL)
             // TODO: save checked LTL (write it in scchart file above LTL?)
@@ -91,20 +95,23 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
             sim.stop
             sim.reset
             // update stop condition
-            allLTLChecked = !checkedLTL.contains(false)
+            allLTLChecked = !checkedLTLOverall.contains(false)
         }
 
         // TODO: load one of the traces?
         return sim
     }
     
-    def updateOverallCheckedLTL(boolean[] checkedLTLOverall, boolean[] checkedLTL) {
-
+    def updateOverallCheckedLTL(boolean[] checkedLTLOverall, HashSet<Integer> checkedLTL) {
+        for (i : checkedLTL) {
+            checkedLTLOverall.set(i, true);
+        }
     }
 
-    def updateCheckedLTLs(List<StringAnnotation> annotations, boolean[] checkedLTL, SimulationHistory history) {
+    def updateCheckedLTLs(List<StringAnnotation> annotations, HashSet<Integer> checkedLTL, SimulationHistory history,
+        List<Expression> ltlExpressions) {
         val data = history.get(history.size - 1)
-        
+
     }
 
     /**
