@@ -33,15 +33,15 @@ Export-Package: de.cau.cs.kieler.sccharts.processors.verification,
  de.cau.cs.kieler.verification.processors,
  de.cau.cs.kieler.verification.processors.nuxmv,
  de.cau.cs.kieler.verification.processors.spin,
- de.cau.cs.kieler.verification.ltl.lTLFormula,
  de.cau.cs.kieler.verification.ltl.formatting2,
  de.cau.cs.kieler.verification.ltl.scoping,
- de.cau.cs.kieler.verification.ltl.lTLFormula.impl,
  de.cau.cs.kieler.verification.ltl.validation,
  de.cau.cs.kieler.verification.ltl.services,
- de.cau.cs.kieler.verification.ltl.lTLFormula.util,
  de.cau.cs.kieler.verification.ltl.serializer,
  de.cau.cs.kieler.verification.ltl.parser.antlr.internal,
- de.cau.cs.kieler.verification.ltl.parser.antlr
+ de.cau.cs.kieler.verification.ltl.parser.antlr,
+ de.cau.cs.kieler.verification.ltl.lTLFormula,
+ de.cau.cs.kieler.verification.ltl.lTLFormula.impl,
+ de.cau.cs.kieler.verification.ltl.lTLFormula.util
 Automatic-Module-Name: de.cau.cs.kieler.verification
 Import-Package: org.apache.log4j

@@ -24,49 +24,22 @@ public interface LTLFormulaFactory extends EFactory
   LTLFormulaFactory eINSTANCE = de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>LTL Formula</em>'.
+   * Returns a new object of class '<em>LTL Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>LTL Formula</em>'.
+   * @return a new object of class '<em>LTL Expression</em>'.
    * @generated
    */
-  LTLFormula createLTLFormula();
+  LTLExpression createLTLExpression();
 
   /**
-   * Returns a new object of class '<em>And</em>'.
+   * Returns a new object of class '<em>Operator Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>And</em>'.
+   * @return a new object of class '<em>Operator Expression</em>'.
    * @generated
    */
-  And createAnd();
-
-  /**
-   * Returns a new object of class '<em>Or</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Or</em>'.
-   * @generated
-   */
-  Or createOr();
-
-  /**
-   * Returns a new object of class '<em>Last</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Last</em>'.
-   * @generated
-   */
-  Last createLast();
-
-  /**
-   * Returns a new object of class '<em>Variable</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Variable</em>'.
-   * @generated
-   */
-  Variable createVariable();
+  OperatorExpression createOperatorExpression();
 
   /**
    * Returns the package supported by this factory.

@@ -3,6 +3,9 @@
  */
 package de.cau.cs.kieler.verification.ltl.lTLFormula.util;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.Schedulable;
+
 import de.cau.cs.kieler.verification.ltl.lTLFormula.*;
 
 import org.eclipse.emf.ecore.EObject;
@@ -73,38 +76,21 @@ public class LTLFormulaSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-      case LTLFormulaPackage.LTL_FORMULA:
+      case LTLFormulaPackage.LTL_EXPRESSION:
       {
-        LTLFormula ltlFormula = (LTLFormula)theEObject;
-        T result = caseLTLFormula(ltlFormula);
+        LTLExpression ltlExpression = (LTLExpression)theEObject;
+        T result = caseLTLExpression(ltlExpression);
+        if (result == null) result = caseExpression(ltlExpression);
+        if (result == null) result = caseSchedulable(ltlExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case LTLFormulaPackage.AND:
+      case LTLFormulaPackage.OPERATOR_EXPRESSION:
       {
-        And and = (And)theEObject;
-        T result = caseAnd(and);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case LTLFormulaPackage.OR:
-      {
-        Or or = (Or)theEObject;
-        T result = caseOr(or);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case LTLFormulaPackage.LAST:
-      {
-        Last last = (Last)theEObject;
-        T result = caseLast(last);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case LTLFormulaPackage.VARIABLE:
-      {
-        Variable variable = (Variable)theEObject;
-        T result = caseVariable(variable);
+        OperatorExpression operatorExpression = (OperatorExpression)theEObject;
+        T result = caseOperatorExpression(operatorExpression);
+        if (result == null) result = caseExpression(operatorExpression);
+        if (result == null) result = caseSchedulable(operatorExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -113,81 +99,65 @@ public class LTLFormulaSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>LTL Formula</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>LTL Expression</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>LTL Formula</em>'.
+   * @return the result of interpreting the object as an instance of '<em>LTL Expression</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseLTLFormula(LTLFormula object)
+  public T caseLTLExpression(LTLExpression object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>And</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Operator Expression</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>And</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Operator Expression</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseAnd(And object)
+  public T caseOperatorExpression(OperatorExpression object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Or</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Schedulable</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Or</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Schedulable</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseOr(Or object)
+  public T caseSchedulable(Schedulable object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Last</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Expression</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Last</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Expression</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseLast(Last object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Variable</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Variable</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseVariable(Variable object)
+  public T caseExpression(Expression object)
   {
     return null;
   }

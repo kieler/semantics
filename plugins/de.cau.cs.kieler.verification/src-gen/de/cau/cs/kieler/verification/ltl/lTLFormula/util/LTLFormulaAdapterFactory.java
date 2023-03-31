@@ -3,6 +3,9 @@
  */
 package de.cau.cs.kieler.verification.ltl.lTLFormula.util;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.Schedulable;
+
 import de.cau.cs.kieler.verification.ltl.lTLFormula.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -76,29 +79,24 @@ public class LTLFormulaAdapterFactory extends AdapterFactoryImpl
     new LTLFormulaSwitch<Adapter>()
     {
       @Override
-      public Adapter caseLTLFormula(LTLFormula object)
+      public Adapter caseLTLExpression(LTLExpression object)
       {
-        return createLTLFormulaAdapter();
+        return createLTLExpressionAdapter();
       }
       @Override
-      public Adapter caseAnd(And object)
+      public Adapter caseOperatorExpression(OperatorExpression object)
       {
-        return createAndAdapter();
+        return createOperatorExpressionAdapter();
       }
       @Override
-      public Adapter caseOr(Or object)
+      public Adapter caseSchedulable(Schedulable object)
       {
-        return createOrAdapter();
+        return createSchedulableAdapter();
       }
       @Override
-      public Adapter caseLast(Last object)
+      public Adapter caseExpression(Expression object)
       {
-        return createLastAdapter();
-      }
-      @Override
-      public Adapter caseVariable(Variable object)
-      {
-        return createVariableAdapter();
+        return createExpressionAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -123,76 +121,61 @@ public class LTLFormulaAdapterFactory extends AdapterFactoryImpl
 
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLFormula <em>LTL Formula</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression <em>LTL Expression</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.LTLFormula
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression
    * @generated
    */
-  public Adapter createLTLFormulaAdapter()
+  public Adapter createLTLExpressionAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.And <em>And</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.OperatorExpression <em>Operator Expression</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.And
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.OperatorExpression
    * @generated
    */
-  public Adapter createAndAdapter()
+  public Adapter createOperatorExpressionAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.Or <em>Or</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Schedulable <em>Schedulable</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.Or
+   * @see de.cau.cs.kieler.kexpressions.Schedulable
    * @generated
    */
-  public Adapter createOrAdapter()
+  public Adapter createSchedulableAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.Last <em>Last</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Expression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.Last
+   * @see de.cau.cs.kieler.kexpressions.Expression
    * @generated
    */
-  public Adapter createLastAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.Variable <em>Variable</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.Variable
-   * @generated
-   */
-  public Adapter createVariableAdapter()
+  public Adapter createExpressionAdapter()
   {
     return null;
   }

@@ -3,16 +3,19 @@
  */
 package de.cau.cs.kieler.verification.ltl.lTLFormula.impl;
 
-import de.cau.cs.kieler.verification.ltl.lTLFormula.And;
-import de.cau.cs.kieler.verification.ltl.lTLFormula.LTLFormula;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+
+import de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression;
 import de.cau.cs.kieler.verification.ltl.lTLFormula.LTLFormulaFactory;
 import de.cau.cs.kieler.verification.ltl.lTLFormula.LTLFormulaPackage;
-import de.cau.cs.kieler.verification.ltl.lTLFormula.Last;
-import de.cau.cs.kieler.verification.ltl.lTLFormula.Or;
-import de.cau.cs.kieler.verification.ltl.lTLFormula.Variable;
+import de.cau.cs.kieler.verification.ltl.lTLFormula.LTLOperatorType;
+import de.cau.cs.kieler.verification.ltl.lTLFormula.OperatorExpression;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -31,35 +34,21 @@ public class LTLFormulaPackageImpl extends EPackageImpl implements LTLFormulaPac
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass ltlFormulaEClass = null;
+  private EClass ltlExpressionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass andEClass = null;
+  private EClass operatorExpressionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass orEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass lastEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass variableEClass = null;
+  private EEnum ltlOperatorTypeEEnum = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -109,6 +98,10 @@ public class LTLFormulaPackageImpl extends EPackageImpl implements LTLFormulaPac
 
     isInited = true;
 
+    // Initialize simple dependencies
+    KExpressionsPackage.eINSTANCE.eClass();
+    AnnotationsPackage.eINSTANCE.eClass();
+
     // Create package meta-data objects
     theLTLFormulaPackage.createPackageContents();
 
@@ -129,9 +122,9 @@ public class LTLFormulaPackageImpl extends EPackageImpl implements LTLFormulaPac
    * @generated
    */
   @Override
-  public EClass getLTLFormula()
+  public EClass getLTLExpression()
   {
-    return ltlFormulaEClass;
+    return ltlExpressionEClass;
   }
 
   /**
@@ -140,9 +133,9 @@ public class LTLFormulaPackageImpl extends EPackageImpl implements LTLFormulaPac
    * @generated
    */
   @Override
-  public EReference getLTLFormula_Formulas()
+  public EAttribute getLTLExpression_Operator()
   {
-    return (EReference)ltlFormulaEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)ltlExpressionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -151,9 +144,9 @@ public class LTLFormulaPackageImpl extends EPackageImpl implements LTLFormulaPac
    * @generated
    */
   @Override
-  public EClass getAnd()
+  public EReference getLTLExpression_SubExpressions()
   {
-    return andEClass;
+    return (EReference)ltlExpressionEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -162,9 +155,9 @@ public class LTLFormulaPackageImpl extends EPackageImpl implements LTLFormulaPac
    * @generated
    */
   @Override
-  public EReference getAnd_Formulas()
+  public EClass getOperatorExpression()
   {
-    return (EReference)andEClass.getEStructuralFeatures().get(0);
+    return operatorExpressionEClass;
   }
 
   /**
@@ -173,9 +166,9 @@ public class LTLFormulaPackageImpl extends EPackageImpl implements LTLFormulaPac
    * @generated
    */
   @Override
-  public EClass getOr()
+  public EReference getOperatorExpression_SubExpressions()
   {
-    return orEClass;
+    return (EReference)operatorExpressionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -184,9 +177,9 @@ public class LTLFormulaPackageImpl extends EPackageImpl implements LTLFormulaPac
    * @generated
    */
   @Override
-  public EReference getOr_Formulas()
+  public EAttribute getOperatorExpression_Operator()
   {
-    return (EReference)orEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)operatorExpressionEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -195,75 +188,9 @@ public class LTLFormulaPackageImpl extends EPackageImpl implements LTLFormulaPac
    * @generated
    */
   @Override
-  public EClass getLast()
+  public EEnum getLTLOperatorType()
   {
-    return lastEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getLast_Operator()
-  {
-    return (EAttribute)lastEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getLast_Formulas()
-  {
-    return (EReference)lastEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EClass getVariable()
-  {
-    return variableEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getVariable_Name()
-  {
-    return (EAttribute)variableEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getVariable_Operator()
-  {
-    return (EAttribute)variableEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getVariable_Value()
-  {
-    return (EAttribute)variableEClass.getEStructuralFeatures().get(2);
+    return ltlOperatorTypeEEnum;
   }
 
   /**
@@ -297,23 +224,16 @@ public class LTLFormulaPackageImpl extends EPackageImpl implements LTLFormulaPac
     isCreated = true;
 
     // Create classes and their features
-    ltlFormulaEClass = createEClass(LTL_FORMULA);
-    createEReference(ltlFormulaEClass, LTL_FORMULA__FORMULAS);
+    ltlExpressionEClass = createEClass(LTL_EXPRESSION);
+    createEAttribute(ltlExpressionEClass, LTL_EXPRESSION__OPERATOR);
+    createEReference(ltlExpressionEClass, LTL_EXPRESSION__SUB_EXPRESSIONS);
 
-    andEClass = createEClass(AND);
-    createEReference(andEClass, AND__FORMULAS);
+    operatorExpressionEClass = createEClass(OPERATOR_EXPRESSION);
+    createEReference(operatorExpressionEClass, OPERATOR_EXPRESSION__SUB_EXPRESSIONS);
+    createEAttribute(operatorExpressionEClass, OPERATOR_EXPRESSION__OPERATOR);
 
-    orEClass = createEClass(OR);
-    createEReference(orEClass, OR__FORMULAS);
-
-    lastEClass = createEClass(LAST);
-    createEAttribute(lastEClass, LAST__OPERATOR);
-    createEReference(lastEClass, LAST__FORMULAS);
-
-    variableEClass = createEClass(VARIABLE);
-    createEAttribute(variableEClass, VARIABLE__NAME);
-    createEAttribute(variableEClass, VARIABLE__OPERATOR);
-    createEAttribute(variableEClass, VARIABLE__VALUE);
+    // Create enums
+    ltlOperatorTypeEEnum = createEEnum(LTL_OPERATOR_TYPE);
   }
 
   /**
@@ -340,30 +260,32 @@ public class LTLFormulaPackageImpl extends EPackageImpl implements LTLFormulaPac
     setNsPrefix(eNS_PREFIX);
     setNsURI(eNS_URI);
 
+    // Obtain other dependent packages
+    KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
+
     // Create type parameters
 
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    ltlExpressionEClass.getESuperTypes().add(theKExpressionsPackage.getExpression());
+    operatorExpressionEClass.getESuperTypes().add(theKExpressionsPackage.getExpression());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(ltlFormulaEClass, LTLFormula.class, "LTLFormula", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getLTLFormula_Formulas(), this.getOr(), null, "formulas", null, 0, -1, LTLFormula.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(ltlExpressionEClass, LTLExpression.class, "LTLExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLTLExpression_Operator(), this.getLTLOperatorType(), "operator", null, 0, 1, LTLExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLTLExpression_SubExpressions(), theKExpressionsPackage.getExpression(), null, "subExpressions", null, 0, -1, LTLExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(andEClass, And.class, "And", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAnd_Formulas(), this.getLast(), null, "formulas", null, 0, -1, And.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(operatorExpressionEClass, OperatorExpression.class, "OperatorExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getOperatorExpression_SubExpressions(), theKExpressionsPackage.getExpression(), null, "subExpressions", null, 0, -1, OperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getOperatorExpression_Operator(), this.getLTLOperatorType(), "operator", null, 0, 1, OperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(orEClass, Or.class, "Or", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getOr_Formulas(), this.getAnd(), null, "formulas", null, 0, -1, Or.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(lastEClass, Last.class, "Last", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getLast_Operator(), ecorePackage.getEString(), "operator", null, 0, 1, Last.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getLast_Formulas(), ecorePackage.getEObject(), null, "formulas", null, 0, -1, Last.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(variableEClass, Variable.class, "Variable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getVariable_Name(), ecorePackage.getEString(), "name", null, 0, 1, Variable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getVariable_Operator(), ecorePackage.getEString(), "operator", null, 0, 1, Variable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getVariable_Value(), ecorePackage.getEString(), "value", null, 0, 1, Variable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    // Initialize enums and add enum literals
+    initEEnum(ltlOperatorTypeEEnum, LTLOperatorType.class, "LTLOperatorType");
+    addEEnumLiteral(ltlOperatorTypeEEnum, LTLOperatorType.GLOBAL);
+    addEEnumLiteral(ltlOperatorTypeEEnum, LTLOperatorType.FINAL);
+    addEEnumLiteral(ltlOperatorTypeEEnum, LTLOperatorType.NEXT);
+    addEEnumLiteral(ltlOperatorTypeEEnum, LTLOperatorType.UNTIL);
 
     // Create resource
     createResource(eNS_URI);

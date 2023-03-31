@@ -6,6 +6,7 @@ package de.cau.cs.kieler.verification.ltl.lTLFormula.impl;
 import de.cau.cs.kieler.verification.ltl.lTLFormula.*;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -65,11 +66,8 @@ public class LTLFormulaFactoryImpl extends EFactoryImpl implements LTLFormulaFac
   {
     switch (eClass.getClassifierID())
     {
-      case LTLFormulaPackage.LTL_FORMULA: return createLTLFormula();
-      case LTLFormulaPackage.AND: return createAnd();
-      case LTLFormulaPackage.OR: return createOr();
-      case LTLFormulaPackage.LAST: return createLast();
-      case LTLFormulaPackage.VARIABLE: return createVariable();
+      case LTLFormulaPackage.LTL_EXPRESSION: return createLTLExpression();
+      case LTLFormulaPackage.OPERATOR_EXPRESSION: return createOperatorExpression();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -81,10 +79,15 @@ public class LTLFormulaFactoryImpl extends EFactoryImpl implements LTLFormulaFac
    * @generated
    */
   @Override
-  public LTLFormula createLTLFormula()
+  public Object createFromString(EDataType eDataType, String initialValue)
   {
-    LTLFormulaImpl ltlFormula = new LTLFormulaImpl();
-    return ltlFormula;
+    switch (eDataType.getClassifierID())
+    {
+      case LTLFormulaPackage.LTL_OPERATOR_TYPE:
+        return createLTLOperatorTypeFromString(eDataType, initialValue);
+      default:
+        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    }
   }
 
   /**
@@ -93,10 +96,15 @@ public class LTLFormulaFactoryImpl extends EFactoryImpl implements LTLFormulaFac
    * @generated
    */
   @Override
-  public And createAnd()
+  public String convertToString(EDataType eDataType, Object instanceValue)
   {
-    AndImpl and = new AndImpl();
-    return and;
+    switch (eDataType.getClassifierID())
+    {
+      case LTLFormulaPackage.LTL_OPERATOR_TYPE:
+        return convertLTLOperatorTypeToString(eDataType, instanceValue);
+      default:
+        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    }
   }
 
   /**
@@ -105,10 +113,10 @@ public class LTLFormulaFactoryImpl extends EFactoryImpl implements LTLFormulaFac
    * @generated
    */
   @Override
-  public Or createOr()
+  public LTLExpression createLTLExpression()
   {
-    OrImpl or = new OrImpl();
-    return or;
+    LTLExpressionImpl ltlExpression = new LTLExpressionImpl();
+    return ltlExpression;
   }
 
   /**
@@ -117,10 +125,10 @@ public class LTLFormulaFactoryImpl extends EFactoryImpl implements LTLFormulaFac
    * @generated
    */
   @Override
-  public Last createLast()
+  public OperatorExpression createOperatorExpression()
   {
-    LastImpl last = new LastImpl();
-    return last;
+    OperatorExpressionImpl operatorExpression = new OperatorExpressionImpl();
+    return operatorExpression;
   }
 
   /**
@@ -128,11 +136,21 @@ public class LTLFormulaFactoryImpl extends EFactoryImpl implements LTLFormulaFac
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public Variable createVariable()
+  public LTLOperatorType createLTLOperatorTypeFromString(EDataType eDataType, String initialValue)
   {
-    VariableImpl variable = new VariableImpl();
-    return variable;
+    LTLOperatorType result = LTLOperatorType.get(initialValue);
+    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertLTLOperatorTypeToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**

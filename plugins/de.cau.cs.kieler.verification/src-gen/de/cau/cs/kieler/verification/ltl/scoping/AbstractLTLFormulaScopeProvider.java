@@ -3,7 +3,7 @@
  */
 package de.cau.cs.kieler.verification.ltl.scoping;
 
-import org.eclipse.xtext.scoping.impl.DelegatingScopeProvider;
+import de.cau.cs.kieler.kexpressions.scoping.KExpressionsScopeProvider;
 
-public abstract class AbstractLTLFormulaScopeProvider extends DelegatingScopeProvider {
+public abstract class AbstractLTLFormulaScopeProvider extends KExpressionsScopeProvider {
 }

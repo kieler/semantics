@@ -3,8 +3,11 @@
  */
 package de.cau.cs.kieler.verification.ltl.lTLFormula;
 
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -58,98 +61,23 @@ public interface LTLFormulaPackage extends EPackage
   LTLFormulaPackage eINSTANCE = de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaImpl <em>LTL Formula</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLExpressionImpl <em>LTL Expression</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaImpl
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaPackageImpl#getLTLFormula()
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLExpressionImpl
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaPackageImpl#getLTLExpression()
    * @generated
    */
-  int LTL_FORMULA = 0;
+  int LTL_EXPRESSION = 0;
 
   /**
-   * The feature id for the '<em><b>Formulas</b></em>' containment reference list.
+   * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LTL_FORMULA__FORMULAS = 0;
-
-  /**
-   * The number of structural features of the '<em>LTL Formula</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LTL_FORMULA_FEATURE_COUNT = 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.AndImpl <em>And</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.AndImpl
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaPackageImpl#getAnd()
-   * @generated
-   */
-  int AND = 1;
-
-  /**
-   * The feature id for the '<em><b>Formulas</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int AND__FORMULAS = 0;
-
-  /**
-   * The number of structural features of the '<em>And</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int AND_FEATURE_COUNT = 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.OrImpl <em>Or</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.OrImpl
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaPackageImpl#getOr()
-   * @generated
-   */
-  int OR = 2;
-
-  /**
-   * The feature id for the '<em><b>Formulas</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int OR__FORMULAS = 0;
-
-  /**
-   * The number of structural features of the '<em>Or</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int OR_FEATURE_COUNT = 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LastImpl <em>Last</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LastImpl
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaPackageImpl#getLast()
-   * @generated
-   */
-  int LAST = 3;
+  int LTL_EXPRESSION__SCHEDULE = KExpressionsPackage.EXPRESSION__SCHEDULE;
 
   /**
    * The feature id for the '<em><b>Operator</b></em>' attribute.
@@ -158,44 +86,53 @@ public interface LTLFormulaPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LAST__OPERATOR = 0;
+  int LTL_EXPRESSION__OPERATOR = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Formulas</b></em>' containment reference list.
+   * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LAST__FORMULAS = 1;
+  int LTL_EXPRESSION__SUB_EXPRESSIONS = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 1;
 
   /**
-   * The number of structural features of the '<em>Last</em>' class.
+   * The number of structural features of the '<em>LTL Expression</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LAST_FEATURE_COUNT = 2;
+  int LTL_EXPRESSION_FEATURE_COUNT = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.VariableImpl <em>Variable</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.OperatorExpressionImpl <em>Operator Expression</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.VariableImpl
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaPackageImpl#getVariable()
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.OperatorExpressionImpl
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaPackageImpl#getOperatorExpression()
    * @generated
    */
-  int VARIABLE = 4;
+  int OPERATOR_EXPRESSION = 1;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VARIABLE__NAME = 0;
+  int OPERATOR_EXPRESSION__SCHEDULE = KExpressionsPackage.EXPRESSION__SCHEDULE;
+
+  /**
+   * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OPERATOR_EXPRESSION__SUB_EXPRESSIONS = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Operator</b></em>' attribute.
@@ -204,164 +141,101 @@ public interface LTLFormulaPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE__OPERATOR = 1;
+  int OPERATOR_EXPRESSION__OPERATOR = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * The number of structural features of the '<em>Operator Expression</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VARIABLE__VALUE = 2;
+  int OPERATOR_EXPRESSION_FEATURE_COUNT = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 2;
 
   /**
-   * The number of structural features of the '<em>Variable</em>' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLOperatorType <em>LTL Operator Type</em>}' enum.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.LTLOperatorType
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaPackageImpl#getLTLOperatorType()
    * @generated
-   * @ordered
    */
-  int VARIABLE_FEATURE_COUNT = 3;
+  int LTL_OPERATOR_TYPE = 2;
 
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLFormula <em>LTL Formula</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression <em>LTL Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>LTL Formula</em>'.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.LTLFormula
+   * @return the meta object for class '<em>LTL Expression</em>'.
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression
    * @generated
    */
-  EClass getLTLFormula();
+  EClass getLTLExpression();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLFormula#getFormulas <em>Formulas</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Formulas</em>'.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.LTLFormula#getFormulas()
-   * @see #getLTLFormula()
-   * @generated
-   */
-  EReference getLTLFormula_Formulas();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.And <em>And</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>And</em>'.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.And
-   * @generated
-   */
-  EClass getAnd();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.And#getFormulas <em>Formulas</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Formulas</em>'.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.And#getFormulas()
-   * @see #getAnd()
-   * @generated
-   */
-  EReference getAnd_Formulas();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.Or <em>Or</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Or</em>'.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.Or
-   * @generated
-   */
-  EClass getOr();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.Or#getFormulas <em>Formulas</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Formulas</em>'.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.Or#getFormulas()
-   * @see #getOr()
-   * @generated
-   */
-  EReference getOr_Formulas();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.Last <em>Last</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Last</em>'.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.Last
-   * @generated
-   */
-  EClass getLast();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.Last#getOperator <em>Operator</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getOperator <em>Operator</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Operator</em>'.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.Last#getOperator()
-   * @see #getLast()
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getOperator()
+   * @see #getLTLExpression()
    * @generated
    */
-  EAttribute getLast_Operator();
+  EAttribute getLTLExpression_Operator();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.Last#getFormulas <em>Formulas</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getSubExpressions <em>Sub Expressions</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Formulas</em>'.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.Last#getFormulas()
-   * @see #getLast()
+   * @return the meta object for the containment reference list '<em>Sub Expressions</em>'.
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getSubExpressions()
+   * @see #getLTLExpression()
    * @generated
    */
-  EReference getLast_Formulas();
+  EReference getLTLExpression_SubExpressions();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.Variable <em>Variable</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.OperatorExpression <em>Operator Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Variable</em>'.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.Variable
+   * @return the meta object for class '<em>Operator Expression</em>'.
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.OperatorExpression
    * @generated
    */
-  EClass getVariable();
+  EClass getOperatorExpression();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.Variable#getName <em>Name</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.OperatorExpression#getSubExpressions <em>Sub Expressions</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.Variable#getName()
-   * @see #getVariable()
+   * @return the meta object for the containment reference list '<em>Sub Expressions</em>'.
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.OperatorExpression#getSubExpressions()
+   * @see #getOperatorExpression()
    * @generated
    */
-  EAttribute getVariable_Name();
+  EReference getOperatorExpression_SubExpressions();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.Variable#getOperator <em>Operator</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.OperatorExpression#getOperator <em>Operator</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Operator</em>'.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.Variable#getOperator()
-   * @see #getVariable()
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.OperatorExpression#getOperator()
+   * @see #getOperatorExpression()
    * @generated
    */
-  EAttribute getVariable_Operator();
+  EAttribute getOperatorExpression_Operator();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.Variable#getValue <em>Value</em>}'.
+   * Returns the meta object for enum '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLOperatorType <em>LTL Operator Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Value</em>'.
-   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.Variable#getValue()
-   * @see #getVariable()
+   * @return the meta object for enum '<em>LTL Operator Type</em>'.
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.LTLOperatorType
    * @generated
    */
-  EAttribute getVariable_Value();
+  EEnum getLTLOperatorType();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -387,68 +261,14 @@ public interface LTLFormulaPackage extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaImpl <em>LTL Formula</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLExpressionImpl <em>LTL Expression</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaImpl
-     * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaPackageImpl#getLTLFormula()
+     * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLExpressionImpl
+     * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaPackageImpl#getLTLExpression()
      * @generated
      */
-    EClass LTL_FORMULA = eINSTANCE.getLTLFormula();
-
-    /**
-     * The meta object literal for the '<em><b>Formulas</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference LTL_FORMULA__FORMULAS = eINSTANCE.getLTLFormula_Formulas();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.AndImpl <em>And</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.AndImpl
-     * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaPackageImpl#getAnd()
-     * @generated
-     */
-    EClass AND = eINSTANCE.getAnd();
-
-    /**
-     * The meta object literal for the '<em><b>Formulas</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference AND__FORMULAS = eINSTANCE.getAnd_Formulas();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.OrImpl <em>Or</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.OrImpl
-     * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaPackageImpl#getOr()
-     * @generated
-     */
-    EClass OR = eINSTANCE.getOr();
-
-    /**
-     * The meta object literal for the '<em><b>Formulas</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference OR__FORMULAS = eINSTANCE.getOr_Formulas();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LastImpl <em>Last</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LastImpl
-     * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaPackageImpl#getLast()
-     * @generated
-     */
-    EClass LAST = eINSTANCE.getLast();
+    EClass LTL_EXPRESSION = eINSTANCE.getLTLExpression();
 
     /**
      * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
@@ -456,33 +276,33 @@ public interface LTLFormulaPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute LAST__OPERATOR = eINSTANCE.getLast_Operator();
+    EAttribute LTL_EXPRESSION__OPERATOR = eINSTANCE.getLTLExpression_Operator();
 
     /**
-     * The meta object literal for the '<em><b>Formulas</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Sub Expressions</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference LAST__FORMULAS = eINSTANCE.getLast_Formulas();
+    EReference LTL_EXPRESSION__SUB_EXPRESSIONS = eINSTANCE.getLTLExpression_SubExpressions();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.VariableImpl <em>Variable</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.OperatorExpressionImpl <em>Operator Expression</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.VariableImpl
-     * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaPackageImpl#getVariable()
+     * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.OperatorExpressionImpl
+     * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaPackageImpl#getOperatorExpression()
      * @generated
      */
-    EClass VARIABLE = eINSTANCE.getVariable();
+    EClass OPERATOR_EXPRESSION = eINSTANCE.getOperatorExpression();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Sub Expressions</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VARIABLE__NAME = eINSTANCE.getVariable_Name();
+    EReference OPERATOR_EXPRESSION__SUB_EXPRESSIONS = eINSTANCE.getOperatorExpression_SubExpressions();
 
     /**
      * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
@@ -490,15 +310,17 @@ public interface LTLFormulaPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VARIABLE__OPERATOR = eINSTANCE.getVariable_Operator();
+    EAttribute OPERATOR_EXPRESSION__OPERATOR = eINSTANCE.getOperatorExpression_Operator();
 
     /**
-     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * The meta object literal for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLOperatorType <em>LTL Operator Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.verification.ltl.lTLFormula.LTLOperatorType
+     * @see de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLFormulaPackageImpl#getLTLOperatorType()
      * @generated
      */
-    EAttribute VARIABLE__VALUE = eINSTANCE.getVariable_Value();
+    EEnum LTL_OPERATOR_TYPE = eINSTANCE.getLTLOperatorType();
 
   }
 
