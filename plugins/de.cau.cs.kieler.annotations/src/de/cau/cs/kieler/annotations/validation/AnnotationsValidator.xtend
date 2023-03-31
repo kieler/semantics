@@ -3,7 +3,11 @@
  */
 package de.cau.cs.kieler.annotations.validation
 
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.annotations.Pragma
+import de.cau.cs.kieler.core.services.KielerServiceLoader
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.validation.Check
 
 /**
  * This class contains custom validation rules. 
@@ -11,6 +15,8 @@ import org.eclipse.emf.ecore.EObject
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 class AnnotationsValidator extends AbstractAnnotationsValidator {
+    
+    private static val EXTERNAL_RULES = KielerServiceLoader.load(ExternalAnnotationValidationRule).toList
 
     protected def boolean hasParent(EObject eObj, Class<? extends EObject> parentType) {
         var test = eObj.eContainer
@@ -19,5 +25,25 @@ class AnnotationsValidator extends AbstractAnnotationsValidator {
             test = test.eContainer
         }
         return false
+    }
+    
+    /**
+     * Checks any annotation based on registered external validation rules.
+     */
+    @Check
+    def void checkExternalAnnotationValidationRules(Annotation anno) {
+        for (rule : EXTERNAL_RULES) {
+            rule.apply(getMessageAcceptor(), anno)
+        }
+    }
+    
+    /**
+     * Checks any pragma based on registered external validation rules.
+     */
+    @Check
+    def void checkExternalPragmaValidationRules(Pragma pragma) {
+        for (rule : EXTERNAL_RULES) {
+            rule.apply(getMessageAcceptor(), pragma)
+        }
     }
 }

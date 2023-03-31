@@ -36,9 +36,7 @@ class LTLFormulaStandaloneParser {
      * Parses a LTL formula from the given text with given encoding
      */
     static def LTLFormula parseLTLFormula(String text, Charset encoding) {
-        var res = injector.getInstance(LTLFormulaResource)
-        res.standaloneParse = true
-        res.load(new ByteArrayInputStream(text.getBytes(encoding)), emptyMap)
+        var res = createLTLResource(text, encoding)
 
         if (!res.contents.empty && res.errors.empty) {
             val formula = res.contents.head
@@ -47,6 +45,16 @@ class LTLFormulaStandaloneParser {
             }
         }
         return null
+    }
+    
+    /**
+     * Create resource model for given text with given encoding
+     */
+    static def LTLFormulaResource createLTLResource(String text, Charset encoding) {
+        var res = injector.getInstance(LTLFormulaResource)
+        res.standaloneParse = true
+        res.load(new ByteArrayInputStream(text.getBytes(encoding)), emptyMap)
+        return res
     }
 
 }
