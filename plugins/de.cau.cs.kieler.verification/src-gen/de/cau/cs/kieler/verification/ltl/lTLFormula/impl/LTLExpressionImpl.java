@@ -3,6 +3,7 @@
  */
 package de.cau.cs.kieler.verification.ltl.lTLFormula.impl;
 
+import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 
@@ -35,6 +36,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLExpressionImpl#getSchedule <em>Schedule</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLExpressionImpl#getExpr <em>Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLExpressionImpl#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLExpressionImpl#getOperator <em>Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.LTLExpressionImpl#getSubExpressions <em>Sub Expressions</em>}</li>
  * </ul>
@@ -52,6 +55,26 @@ public class LTLExpressionImpl extends MinimalEObjectImpl.Container implements L
    * @ordered
    */
   protected EList<ScheduleObjectReference> schedule;
+
+  /**
+   * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getExpr()
+   * @generated
+   * @ordered
+   */
+  protected Expression expr;
+
+  /**
+   * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDeclarations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Declaration> declarations;
 
   /**
    * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
@@ -125,6 +148,71 @@ public class LTLExpressionImpl extends MinimalEObjectImpl.Container implements L
    * @generated
    */
   @Override
+  public Expression getExpr()
+  {
+    return expr;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetExpr(Expression newExpr, NotificationChain msgs)
+  {
+    Expression oldExpr = expr;
+    expr = newExpr;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LTLFormulaPackage.LTL_EXPRESSION__EXPR, oldExpr, newExpr);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setExpr(Expression newExpr)
+  {
+    if (newExpr != expr)
+    {
+      NotificationChain msgs = null;
+      if (expr != null)
+        msgs = ((InternalEObject)expr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LTLFormulaPackage.LTL_EXPRESSION__EXPR, null, msgs);
+      if (newExpr != null)
+        msgs = ((InternalEObject)newExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LTLFormulaPackage.LTL_EXPRESSION__EXPR, null, msgs);
+      msgs = basicSetExpr(newExpr, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, LTLFormulaPackage.LTL_EXPRESSION__EXPR, newExpr, newExpr));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EList<Declaration> getDeclarations()
+  {
+    if (declarations == null)
+    {
+      declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, LTLFormulaPackage.LTL_EXPRESSION__DECLARATIONS);
+    }
+    return declarations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public LTLOperatorType getOperator()
   {
     return operator;
@@ -171,6 +259,10 @@ public class LTLExpressionImpl extends MinimalEObjectImpl.Container implements L
     {
       case LTLFormulaPackage.LTL_EXPRESSION__SCHEDULE:
         return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
+      case LTLFormulaPackage.LTL_EXPRESSION__EXPR:
+        return basicSetExpr(null, msgs);
+      case LTLFormulaPackage.LTL_EXPRESSION__DECLARATIONS:
+        return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
       case LTLFormulaPackage.LTL_EXPRESSION__SUB_EXPRESSIONS:
         return ((InternalEList<?>)getSubExpressions()).basicRemove(otherEnd, msgs);
     }
@@ -189,6 +281,10 @@ public class LTLExpressionImpl extends MinimalEObjectImpl.Container implements L
     {
       case LTLFormulaPackage.LTL_EXPRESSION__SCHEDULE:
         return getSchedule();
+      case LTLFormulaPackage.LTL_EXPRESSION__EXPR:
+        return getExpr();
+      case LTLFormulaPackage.LTL_EXPRESSION__DECLARATIONS:
+        return getDeclarations();
       case LTLFormulaPackage.LTL_EXPRESSION__OPERATOR:
         return getOperator();
       case LTLFormulaPackage.LTL_EXPRESSION__SUB_EXPRESSIONS:
@@ -211,6 +307,13 @@ public class LTLExpressionImpl extends MinimalEObjectImpl.Container implements L
       case LTLFormulaPackage.LTL_EXPRESSION__SCHEDULE:
         getSchedule().clear();
         getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
+        return;
+      case LTLFormulaPackage.LTL_EXPRESSION__EXPR:
+        setExpr((Expression)newValue);
+        return;
+      case LTLFormulaPackage.LTL_EXPRESSION__DECLARATIONS:
+        getDeclarations().clear();
+        getDeclarations().addAll((Collection<? extends Declaration>)newValue);
         return;
       case LTLFormulaPackage.LTL_EXPRESSION__OPERATOR:
         setOperator((LTLOperatorType)newValue);
@@ -236,6 +339,12 @@ public class LTLExpressionImpl extends MinimalEObjectImpl.Container implements L
       case LTLFormulaPackage.LTL_EXPRESSION__SCHEDULE:
         getSchedule().clear();
         return;
+      case LTLFormulaPackage.LTL_EXPRESSION__EXPR:
+        setExpr((Expression)null);
+        return;
+      case LTLFormulaPackage.LTL_EXPRESSION__DECLARATIONS:
+        getDeclarations().clear();
+        return;
       case LTLFormulaPackage.LTL_EXPRESSION__OPERATOR:
         setOperator(OPERATOR_EDEFAULT);
         return;
@@ -258,6 +367,10 @@ public class LTLExpressionImpl extends MinimalEObjectImpl.Container implements L
     {
       case LTLFormulaPackage.LTL_EXPRESSION__SCHEDULE:
         return schedule != null && !schedule.isEmpty();
+      case LTLFormulaPackage.LTL_EXPRESSION__EXPR:
+        return expr != null;
+      case LTLFormulaPackage.LTL_EXPRESSION__DECLARATIONS:
+        return declarations != null && !declarations.isEmpty();
       case LTLFormulaPackage.LTL_EXPRESSION__OPERATOR:
         return operator != OPERATOR_EDEFAULT;
       case LTLFormulaPackage.LTL_EXPRESSION__SUB_EXPRESSIONS:

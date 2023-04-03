@@ -80,13 +80,31 @@ public interface LTLFormulaPackage extends EPackage
   int LTL_EXPRESSION__SCHEDULE = KExpressionsPackage.EXPRESSION__SCHEDULE;
 
   /**
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LTL_EXPRESSION__EXPR = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LTL_EXPRESSION__DECLARATIONS = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
    * The feature id for the '<em><b>Operator</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LTL_EXPRESSION__OPERATOR = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 0;
+  int LTL_EXPRESSION__OPERATOR = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
@@ -95,7 +113,7 @@ public interface LTLFormulaPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LTL_EXPRESSION__SUB_EXPRESSIONS = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 1;
+  int LTL_EXPRESSION__SUB_EXPRESSIONS = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>LTL Expression</em>' class.
@@ -104,7 +122,7 @@ public interface LTLFormulaPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LTL_EXPRESSION_FEATURE_COUNT = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 2;
+  int LTL_EXPRESSION_FEATURE_COUNT = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.OperatorExpressionImpl <em>Operator Expression</em>}' class.
@@ -172,6 +190,28 @@ public interface LTLFormulaPackage extends EPackage
    * @generated
    */
   EClass getLTLExpression();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getExpr <em>Expr</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expr</em>'.
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getExpr()
+   * @see #getLTLExpression()
+   * @generated
+   */
+  EReference getLTLExpression_Expr();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getDeclarations <em>Declarations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Declarations</em>'.
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getDeclarations()
+   * @see #getLTLExpression()
+   * @generated
+   */
+  EReference getLTLExpression_Declarations();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getOperator <em>Operator</em>}'.
@@ -269,6 +309,22 @@ public interface LTLFormulaPackage extends EPackage
      * @generated
      */
     EClass LTL_EXPRESSION = eINSTANCE.getLTLExpression();
+
+    /**
+     * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LTL_EXPRESSION__EXPR = eINSTANCE.getLTLExpression_Expr();
+
+    /**
+     * The meta object literal for the '<em><b>Declarations</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LTL_EXPRESSION__DECLARATIONS = eINSTANCE.getLTLExpression_Declarations();
 
     /**
      * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.

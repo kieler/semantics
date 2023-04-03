@@ -12,10 +12,11 @@
  */
 package de.cau.cs.kieler.verification.ltl
 
-import java.nio.charset.StandardCharsets
-import java.nio.charset.Charset
-import java.io.ByteArrayInputStream
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression
+import java.io.ByteArrayInputStream
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
 
 /**
  * @author jep
@@ -39,7 +40,7 @@ class LTLFormulaStandaloneParser {
         var res = createLTLResource(text, encoding)
         if (!res.contents.empty && res.errors.empty) {
             val formula = res.contents.head
-            if (formula instanceof Expression) {
+            if (formula instanceof LTLExpression) {
                 return formula
             }
         }

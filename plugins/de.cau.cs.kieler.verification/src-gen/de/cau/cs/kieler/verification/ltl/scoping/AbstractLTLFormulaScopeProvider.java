@@ -3,7 +3,7 @@
  */
 package de.cau.cs.kieler.verification.ltl.scoping;
 
-import de.cau.cs.kieler.kexpressions.scoping.KExpressionsScopeProvider;
+import de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider;
 
-public abstract class AbstractLTLFormulaScopeProvider extends KExpressionsScopeProvider {
+public abstract class AbstractLTLFormulaScopeProvider extends KExtScopeProvider {
 }

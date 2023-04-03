@@ -31,6 +31,7 @@ public abstract class AbstractLTLFormulaSyntacticSequencer extends AbstractSynta
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__p;
 	protected AbstractElementAlias match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q;
 	protected AbstractElementAlias match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q;
+	protected AbstractElementAlias match_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
@@ -44,6 +45,7 @@ public abstract class AbstractLTLFormulaSyntacticSequencer extends AbstractSynta
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__p = new GroupAlias(true, false, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_5_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()));
 		match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
 		match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomizeCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
+		match_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q = new TokenAlias(false, true, grammarAccess.getReferenceValuedObjectAccess().getLeftParenthesisRightParenthesisKeyword_5_1());
 	}
 	
 	@Override
@@ -76,6 +78,8 @@ public abstract class AbstractLTLFormulaSyntacticSequencer extends AbstractSynta
 				emit_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q.equals(syntax))
 				emit_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q.equals(syntax))
+				emit_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -260,6 +264,28 @@ public abstract class AbstractLTLFormulaSyntacticSequencer extends AbstractSynta
 	 * </pre>
 	 */
 	protected void emit_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * <pre>
+	 * Ambiguous syntax:
+	 *     '()'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     cardinalities+=Expression ']' (ambiguity) '=' initialValue=Expression
+	 *     cardinalities+=Expression ']' (ambiguity) 'label' label=STRING
+	 *     cardinalities+=Expression ']' (ambiguity) (rule end)
+	 *     genericParameters+=GenericParameter '&gt;' (ambiguity) '=' initialValue=Expression
+	 *     genericParameters+=GenericParameter '&gt;' (ambiguity) 'label' label=STRING
+	 *     genericParameters+=GenericParameter '&gt;' (ambiguity) (rule end)
+	 *     name=PrimeID (ambiguity) '=' initialValue=Expression
+	 *     name=PrimeID (ambiguity) 'label' label=STRING
+	 *     name=PrimeID (ambiguity) (rule end)
+	 
+	 * </pre>
+	 */
+	protected void emit_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

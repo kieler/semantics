@@ -3,6 +3,7 @@
  */
 package de.cau.cs.kieler.verification.ltl.lTLFormula;
 
+import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
 
 import org.eclipse.emf.common.util.EList;
@@ -16,6 +17,8 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getExpr <em>Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getOperator <em>Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getSubExpressions <em>Sub Expressions</em>}</li>
  * </ul>
@@ -26,6 +29,40 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface LTLExpression extends Expression
 {
+  /**
+   * Returns the value of the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Expr</em>' containment reference.
+   * @see #setExpr(Expression)
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.LTLFormulaPackage#getLTLExpression_Expr()
+   * @model containment="true"
+   * @generated
+   */
+  Expression getExpr();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getExpr <em>Expr</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Expr</em>' containment reference.
+   * @see #getExpr()
+   * @generated
+   */
+  void setExpr(Expression value);
+
+  /**
+   * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Declaration}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Declarations</em>' containment reference list.
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.LTLFormulaPackage#getLTLExpression_Declarations()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Declaration> getDeclarations();
+
   /**
    * Returns the value of the '<em><b>Operator</b></em>' attribute.
    * The literals are from the enumeration {@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLOperatorType}.

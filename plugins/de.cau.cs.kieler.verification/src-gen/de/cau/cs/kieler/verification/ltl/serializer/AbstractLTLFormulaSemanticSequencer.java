@@ -12,8 +12,11 @@ import de.cau.cs.kieler.annotations.StringPragma;
 import de.cau.cs.kieler.annotations.TagAnnotation;
 import de.cau.cs.kieler.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.kexpressions.BoolValue;
+import de.cau.cs.kieler.kexpressions.ExternString;
 import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
+import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration;
+import de.cau.cs.kieler.kexpressions.GenericTypeReference;
 import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.JsonAnnotation;
@@ -22,20 +25,40 @@ import de.cau.cs.kieler.kexpressions.JsonObjectMember;
 import de.cau.cs.kieler.kexpressions.JsonObjectValue;
 import de.cau.cs.kieler.kexpressions.JsonPragma;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.MethodDeclaration;
 import de.cau.cs.kieler.kexpressions.NullValue;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.PrintCall;
 import de.cau.cs.kieler.kexpressions.RandomCall;
 import de.cau.cs.kieler.kexpressions.RandomizeCall;
 import de.cau.cs.kieler.kexpressions.ReferenceCall;
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.SpecialAccessExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ThisExpression;
+import de.cau.cs.kieler.kexpressions.ValueTypeReference;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
+import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.kexpressions.VectorValue;
-import de.cau.cs.kieler.kexpressions.serializer.KExpressionsSemanticSequencer;
+import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Emission;
+import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect;
+import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect;
+import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect;
+import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect;
+import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration;
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
+import de.cau.cs.kieler.kexpressions.kext.KExtScope;
+import de.cau.cs.kieler.kexpressions.kext.Kext;
+import de.cau.cs.kieler.kexpressions.kext.TestEntity;
+import de.cau.cs.kieler.kexpressions.kext.serializer.KExtSemanticSequencer;
 import de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression;
 import de.cau.cs.kieler.verification.ltl.lTLFormula.LTLFormulaPackage;
 import de.cau.cs.kieler.verification.ltl.services.LTLFormulaGrammarAccess;
@@ -48,7 +71,7 @@ import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
 
 @SuppressWarnings("all")
-public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSemanticSequencer {
+public abstract class AbstractLTLFormulaSemanticSequencer extends KExtSemanticSequencer {
 
 	@Inject
 	private LTLFormulaGrammarAccess grammarAccess;
@@ -130,6 +153,53 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 				}
 				else break;
 			}
+		else if (epackage == KEffectsPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case KEffectsPackage.ASSIGNMENT:
+				if (rule == grammarAccess.getAssignmentRule()) {
+					sequence_Assignment(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEffectRule()) {
+					sequence_Assignment_PostfixEffect(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getPostfixEffectRule()) {
+					sequence_PostfixEffect(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else break;
+			case KEffectsPackage.EMISSION:
+				if (rule == grammarAccess.getPureEmissionRule()) {
+					sequence_PureEmission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEffectRule()
+						|| rule == grammarAccess.getPureOrValuedEmissionRule()) {
+					sequence_PureEmission_ValuedEmission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getValuedEmissionRule()) {
+					sequence_ValuedEmission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else break;
+			case KEffectsPackage.FUNCTION_CALL_EFFECT:
+				sequence_FunctionCallEffect(context, (FunctionCallEffect) semanticObject); 
+				return; 
+			case KEffectsPackage.HOSTCODE_EFFECT:
+				sequence_HostcodeEffect(context, (HostcodeEffect) semanticObject); 
+				return; 
+			case KEffectsPackage.PRINT_CALL_EFFECT:
+				sequence_PrintCallEffect(context, (PrintCallEffect) semanticObject); 
+				return; 
+			case KEffectsPackage.RANDOMIZE_CALL_EFFECT:
+				sequence_RandomizeCallEffect(context, (RandomizeCallEffect) semanticObject); 
+				return; 
+			case KEffectsPackage.REFERENCE_CALL_EFFECT:
+				sequence_ReferenceCallEffect(context, (ReferenceCallEffect) semanticObject); 
+				return; 
+			}
 		else if (epackage == KExpressionsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case KExpressionsPackage.BOOL_VALUE:
@@ -137,8 +207,7 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 					sequence_BoolScheduleExpression_BoolValue(context, (BoolValue) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLTLFormulaRule()
-						|| rule == grammarAccess.getLTLExpressionRule()
+				else if (rule == grammarAccess.getLTLExpressionRule()
 						|| action == grammarAccess.getLTLExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getRootRule()
@@ -204,13 +273,15 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.EXTERN_STRING:
+				sequence_ExternString(context, (ExternString) semanticObject); 
+				return; 
 			case KExpressionsPackage.FLOAT_VALUE:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
 					sequence_BoolScheduleExpression_FloatValue(context, (FloatValue) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLTLFormulaRule()
-						|| rule == grammarAccess.getLTLExpressionRule()
+				else if (rule == grammarAccess.getLTLExpressionRule()
 						|| action == grammarAccess.getLTLExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getRootRule()
@@ -281,8 +352,7 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 					sequence_BoolScheduleExpression_FunctionCall(context, (FunctionCall) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLTLFormulaRule()
-						|| rule == grammarAccess.getLTLExpressionRule()
+				else if (rule == grammarAccess.getLTLExpressionRule()
 						|| action == grammarAccess.getLTLExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getRootRule()
@@ -346,6 +416,19 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.GENERIC_PARAMETER_DECLARATION:
+				sequence_GenericParameterDeclaration(context, (GenericParameterDeclaration) semanticObject); 
+				return; 
+			case KExpressionsPackage.GENERIC_TYPE_REFERENCE:
+				if (rule == grammarAccess.getGenericParameter_GenericTypeReference_ParameterizedRule()) {
+					sequence_GenericParameter_GenericTypeReference_Parameterized(context, (GenericTypeReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getGenericTypeReferenceRule()) {
+					sequence_GenericTypeReference(context, (GenericTypeReference) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.IGNORE_VALUE:
 				sequence_IgnoreValue(context, (IgnoreValue) semanticObject); 
 				return; 
@@ -354,8 +437,7 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 					sequence_BoolScheduleExpression_IntValue(context, (IntValue) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLTLFormulaRule()
-						|| rule == grammarAccess.getLTLExpressionRule()
+				else if (rule == grammarAccess.getLTLExpressionRule()
 						|| action == grammarAccess.getLTLExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getRootRule()
@@ -436,13 +518,24 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 			case KExpressionsPackage.JSON_PRAGMA:
 				sequence_JsonPragma(context, (JsonPragma) semanticObject); 
 				return; 
+			case KExpressionsPackage.METHOD_DECLARATION:
+				if (rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
+						|| rule == grammarAccess.getMethodDeclarationWOSemicolonRule()) {
+					sequence_MethodDeclarationWOSemicolon(context, (MethodDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationOrMethodRule()
+						|| rule == grammarAccess.getMethodDeclarationRule()) {
+					sequence_MethodDeclaration(context, (MethodDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.NULL_VALUE:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
 					sequence_BoolScheduleExpression_NullValue(context, (NullValue) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLTLFormulaRule()
-						|| rule == grammarAccess.getLTLExpressionRule()
+				else if (rule == grammarAccess.getLTLExpressionRule()
 						|| action == grammarAccess.getLTLExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getRootRule()
@@ -546,8 +639,7 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_SfbyExpression_ShiftExpressions_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLTLFormulaRule()
-						|| rule == grammarAccess.getLTLExpressionRule()
+				else if (rule == grammarAccess.getLTLExpressionRule()
 						|| action == grammarAccess.getLTLExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getRootRule()
@@ -605,8 +697,15 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 				}
 				else break;
 			case KExpressionsPackage.PARAMETER:
-				sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getGenericParameterRule()) {
+					sequence_GenericParameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getParameterRule()) {
+					sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.PRINT_CALL:
 				sequence_PrintCall(context, (PrintCall) semanticObject); 
 				return; 
@@ -615,8 +714,7 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 					sequence_BoolScheduleExpression_RandomCall(context, (RandomCall) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLTLFormulaRule()
-						|| rule == grammarAccess.getLTLExpressionRule()
+				else if (rule == grammarAccess.getLTLExpressionRule()
 						|| action == grammarAccess.getLTLExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getRootRule()
@@ -685,8 +783,7 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 					sequence_BoolScheduleExpression_RandomizeCall(context, (RandomizeCall) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLTLFormulaRule()
-						|| rule == grammarAccess.getLTLExpressionRule()
+				else if (rule == grammarAccess.getLTLExpressionRule()
 						|| action == grammarAccess.getLTLExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getRootRule()
@@ -755,8 +852,7 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 					sequence_BoolScheduleExpression_ReferenceCall(context, (ReferenceCall) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLTLFormulaRule()
-						|| rule == grammarAccess.getLTLExpressionRule()
+				else if (rule == grammarAccess.getLTLExpressionRule()
 						|| action == grammarAccess.getLTLExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getRootRule()
@@ -820,6 +916,34 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.REFERENCE_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
+						|| rule == grammarAccess.getReferenceDeclarationWOSemicolonRule()) {
+					sequence_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()
+						|| rule == grammarAccess.getReferenceDeclarationRule()) {
+					sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.SCHEDULE_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
+						|| rule == grammarAccess.getScheduleDeclarationWOSemicolonRule()) {
+					sequence_ScheduleDeclarationWOSemicolon(context, (ScheduleDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()
+						|| rule == grammarAccess.getScheduleDeclarationRule()) {
+					sequence_ScheduleDeclaration(context, (ScheduleDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE:
 				sequence_ScheduleObjectReference(context, (ScheduleObjectReference) semanticObject); 
 				return; 
@@ -828,8 +952,7 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 					sequence_BoolScheduleExpression_SpecialAccessExpression(context, (SpecialAccessExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLTLFormulaRule()
-						|| rule == grammarAccess.getLTLExpressionRule()
+				else if (rule == grammarAccess.getLTLExpressionRule()
 						|| action == grammarAccess.getLTLExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getRootRule()
@@ -898,8 +1021,7 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 					sequence_BoolScheduleExpression_StringValue(context, (StringValue) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLTLFormulaRule()
-						|| rule == grammarAccess.getLTLExpressionRule()
+				else if (rule == grammarAccess.getLTLExpressionRule()
 						|| action == grammarAccess.getLTLExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getRootRule()
@@ -970,8 +1092,7 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 					sequence_BoolScheduleExpression_TextExpression(context, (TextExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLTLFormulaRule()
-						|| rule == grammarAccess.getLTLExpressionRule()
+				else if (rule == grammarAccess.getLTLExpressionRule()
 						|| action == grammarAccess.getLTLExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getRootRule()
@@ -1038,13 +1159,37 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 			case KExpressionsPackage.THIS_EXPRESSION:
 				sequence_ThisExpression(context, (ThisExpression) semanticObject); 
 				return; 
+			case KExpressionsPackage.VALUE_TYPE_REFERENCE:
+				sequence_ValueTypeReference(context, (ValueTypeReference) semanticObject); 
+				return; 
+			case KExpressionsPackage.VALUED_OBJECT:
+				if (rule == grammarAccess.getReferenceValuedObjectRule()) {
+					sequence_ReferenceValuedObject(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getSimpleValuedObjectRule()) {
+					sequence_SimpleValuedObject(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getValuedObjectRule()) {
+					sequence_ValuedObject(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
 					sequence_BoolScheduleExpression_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLTLFormulaRule()
-						|| rule == grammarAccess.getLTLExpressionRule()
+				else if (rule == grammarAccess.getGenericParameter_ValuedObjectReference_ArrayRule()) {
+					sequence_GenericParameter_ValuedObjectReference_Array(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getGenericParameter_ValuedObjectReference_SubRule()) {
+					sequence_GenericParameter_ValuedObjectReference_Sub(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getLTLExpressionRule()
 						|| action == grammarAccess.getLTLExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getRootRule()
@@ -1109,13 +1254,30 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.VARIABLE_DECLARATION:
+				if (rule == grammarAccess.getEnumMemberDeclarationRule()) {
+					sequence_EnumMemberDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
+					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getVariableDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_VariableDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.VECTOR_VALUE:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
 					sequence_BoolScheduleExpression_VectorValue(context, (VectorValue) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLTLFormulaRule()
-						|| rule == grammarAccess.getLTLExpressionRule()
+				else if (rule == grammarAccess.getLTLExpressionRule()
 						|| action == grammarAccess.getLTLExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getRootRule()
@@ -1180,6 +1342,63 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 				}
 				else break;
 			}
+		else if (epackage == KExtPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case KExtPackage.ANNOTATED_EXPRESSION:
+				if (rule == grammarAccess.getAnnotatedExpressionRule()) {
+					sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getAnnotatedJsonExpressionRule()) {
+					sequence_AnnotatedJsonExpression(context, (AnnotatedExpression) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExtPackage.CLASS_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getClassDeclarationWOSemicolonRule()) {
+					sequence_ClassDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
+					sequence_ClassDeclarationWOSemicolon_EnumDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getClassDeclarationRule()) {
+					sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_ClassDeclaration_EnumDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEnumDeclarationWOSemicolonRule()) {
+					sequence_EnumDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEnumDeclarationRule()) {
+					sequence_EnumDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExtPackage.KEXT_SCOPE:
+				if (rule == grammarAccess.getRootScopeRule()) {
+					sequence_RootScope(context, (KExtScope) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getScopeRule()) {
+					sequence_Scope(context, (KExtScope) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExtPackage.KEXT:
+				sequence_Kext(context, (Kext) semanticObject); 
+				return; 
+			case KExtPackage.TEST_ENTITY:
+				sequence_TestEntity(context, (TestEntity) semanticObject); 
+				return; 
+			}
 		else if (epackage == LTLFormulaPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case LTLFormulaPackage.LTL_EXPRESSION:
@@ -1187,8 +1406,7 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 					sequence_BoolScheduleExpression_LTLExpression(context, (LTLExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLTLFormulaRule()
-						|| rule == grammarAccess.getLTLExpressionRule()
+				else if (rule == grammarAccess.getLTLExpressionRule()
 						|| action == grammarAccess.getLTLExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getRootRule()
@@ -1250,14 +1468,17 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 					sequence_LTLExpression(context, (LTLExpression) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getLTLFormulaRule()) {
+					sequence_LTLFormula(context, (LTLExpression) semanticObject); 
+					return; 
+				}
 				else break;
 			case LTLFormulaPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
 					sequence_BoolScheduleExpression_LTLExpression(context, (de.cau.cs.kieler.verification.ltl.lTLFormula.OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getLTLFormulaRule()
-						|| rule == grammarAccess.getLTLExpressionRule()
+				else if (rule == grammarAccess.getLTLExpressionRule()
 						|| action == grammarAccess.getLTLExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getRootRule()
@@ -1362,7 +1583,6 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 	/**
 	 * <pre>
 	 * Contexts:
-	 *     LTLFormula returns LTLExpression
 	 *     LTLExpression returns LTLExpression
 	 *     LTLExpression.OperatorExpression_1_1_0 returns LTLExpression
 	 *     AtomicExpression returns LTLExpression
@@ -1435,7 +1655,6 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 	/**
 	 * <pre>
 	 * Contexts:
-	 *     LTLFormula returns OperatorExpression
 	 *     LTLExpression returns OperatorExpression
 	 *     LTLExpression.OperatorExpression_1_1_0 returns OperatorExpression
 	 *     AtomicExpression returns OperatorExpression
@@ -1501,6 +1720,20 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExpressionsSe
 	 * </pre>
 	 */
 	protected void sequence_LTLExpression(ISerializationContext context, de.cau.cs.kieler.verification.ltl.lTLFormula.OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * <pre>
+	 * Contexts:
+	 *     LTLFormula returns LTLExpression
+	 *
+	 * Constraint:
+	 *     (expr=LTLExpression declarations+=Declaration*)
+	 * </pre>
+	 */
+	protected void sequence_LTLFormula(ISerializationContext context, LTLExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

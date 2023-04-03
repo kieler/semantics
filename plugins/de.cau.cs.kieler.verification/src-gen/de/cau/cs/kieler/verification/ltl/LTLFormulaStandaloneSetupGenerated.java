@@ -5,7 +5,7 @@ package de.cau.cs.kieler.verification.ltl;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import de.cau.cs.kieler.kexpressions.KExpressionsStandaloneSetup;
+import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneSetup;
 import de.cau.cs.kieler.verification.ltl.lTLFormula.LTLFormulaPackage;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -18,7 +18,7 @@ public class LTLFormulaStandaloneSetupGenerated implements ISetup {
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration() {
-		KExpressionsStandaloneSetup.doSetup();
+		KExtStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);

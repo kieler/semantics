@@ -3,7 +3,7 @@
  */
 package de.cau.cs.kieler.verification.ui.ltl.contentassist;
 
-import de.cau.cs.kieler.kexpressions.ui.contentassist.KExpressionsProposalProvider;
+import de.cau.cs.kieler.kexpressions.ui.kext.contentassist.KExtProposalProvider;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
@@ -12,12 +12,18 @@ import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 
 /**
- * Represents a generated, default implementation of superclass {@link KExpressionsProposalProvider}.
+ * Represents a generated, default implementation of superclass {@link KExtProposalProvider}.
  * Methods are dynamically dispatched on the first parameter, i.e., you can override them 
  * with a more concrete subtype. 
  */
-public abstract class AbstractLTLFormulaProposalProvider extends KExpressionsProposalProvider {
+public abstract class AbstractLTLFormulaProposalProvider extends KExtProposalProvider {
 
+	public void completeLTLFormula_Expr(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
+	}
+	public void completeLTLFormula_Declarations(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
+	}
 	public void completeLTLExpression_Operator(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		if (assignment.getTerminal() instanceof Alternatives) {
 			completeRuleCall(((RuleCall)((Alternatives)assignment.getTerminal()).getElements().get(0)), context, acceptor);

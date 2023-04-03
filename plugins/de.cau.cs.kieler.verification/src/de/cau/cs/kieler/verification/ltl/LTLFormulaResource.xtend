@@ -20,12 +20,11 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.kext.Kext
+import de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.CrossReference
 import org.eclipse.xtext.linking.lazy.LazyLinkingResource
 import org.eclipse.xtext.parser.IParseResult
-import de.cau.cs.kieler.kexpressions.Expression
 
 /**
  * @author jep
@@ -62,24 +61,24 @@ class LTLFormulaResource extends LazyLinkingResource {
                         elem.valuedObject = voMap.get(voName)
                     }
                     default:
-                        throw new IllegalArgumentException("Unsupported referece type " + elem.eClass)
+                        throw new IllegalArgumentException("Unsupported reference type " + elem.eClass)
                 }
             }
 
-//            val root = newParseResult.rootASTElement as Expression
-//            if (root !== null && !root.sub scopes.empty) {
-//                root.scopes.head.declarations += createVariableDeclaration => [
-//                    type = ValueType.UNKNOWN;
-//                    valuedObjects.addAll(voMap.values)
-//                ]
-//            }
+            val root = newParseResult.rootASTElement as LTLExpression
+            if (root !== null) {
+                root.declarations += createVariableDeclaration => [
+                    type = ValueType.UNKNOWN;
+                    valuedObjects.addAll(voMap.values)
+                ]
+            }
         }
 
         super.updateInternalState(newParseResult)
     }
 
     override protected doLinking() {
-        if (!standaloneParse) { // Linking was already done in stadalone mode
+        if (!standaloneParse) { // Linking was already done in standalone mode
             super.doLinking
         }
     }

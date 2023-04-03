@@ -13,6 +13,8 @@
       <genEnumLiterals ecoreEnumLiteral="LTLFormula.ecore#//LTLOperatorType/UNTIL"/>
     </genEnums>
     <genClasses ecoreClass="LTLFormula.ecore#//LTLExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LTLFormula.ecore#//LTLExpression/expr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LTLFormula.ecore#//LTLExpression/declarations"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LTLFormula.ecore#//LTLExpression/operator"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LTLFormula.ecore#//LTLExpression/subExpressions"/>
     </genClasses>
