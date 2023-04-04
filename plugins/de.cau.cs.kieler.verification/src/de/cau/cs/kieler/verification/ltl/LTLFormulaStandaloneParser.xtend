@@ -29,14 +29,14 @@ class LTLFormulaStandaloneParser {
     /**
      * Parses a Expression from the given text.
      */
-    static def Expression parseLTLFormula(String text) {
+    static def LTLExpression parseLTLFormula(String text) {
         return text.parseLTLFormula(StandardCharsets.UTF_8)
     }
 
     /**
      * Parses a LTL formula from the given text with given encoding
      */
-    static def Expression parseLTLFormula(String text, Charset encoding) {
+    static def LTLExpression parseLTLFormula(String text, Charset encoding) {
         var res = createLTLResource(text, encoding)
         if (!res.contents.empty && res.errors.empty) {
             val formula = res.contents.head

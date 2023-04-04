@@ -13,30 +13,43 @@
 package de.cau.cs.kieler.testCases.processors
 
 import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.simulation.DataPoolEntry
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.SimulationHistory
+import de.cau.cs.kieler.verification.ltl.LTLFormulaStandaloneParser
 import java.io.File
 import java.io.FileWriter
 import java.nio.file.Path
-import java.lang.reflect.Array
-import javax.sound.sampled.BooleanControl.Type
-import java.util.List
-import de.cau.cs.kieler.annotations.Annotation
-import de.cau.cs.kieler.verification.ltl.LTLFormulaStandaloneParser
-import de.cau.cs.kieler.kexpressions.Expression
 import java.util.ArrayList
+import java.util.HashMap
 import java.util.HashSet
+import java.util.List
+import java.util.Map
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.BoolValue
 
 /**
  * @author jep
  * 
  */
 class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
+
+    extension KExpressionsFactory kExpressionsFactory = KExpressionsFactory.eINSTANCE
 
     override getId() {
         "de.cau.cs.kieler.testCases.processors.scenarioGeneration"
@@ -63,27 +76,30 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
         var List<StringAnnotation> annotations = scchart.rootStates.get(0).annotations.filter(StringAnnotation).toList
         annotations = annotations.filter [ annotation |
             annotation instanceof StringAnnotation && annotation.name.equals("LTL")
-        ].toList 
+        ].toList
         val List<Expression> ltlExpressions = new ArrayList<Expression>()
+        val List<ValuedObject> definedVariables = new ArrayList<ValuedObject>()
         // parse strings to LTL formulas
         for (anno : annotations) {
-            val formula = anno.values.get(0)
-            val expr = LTLFormulaStandaloneParser.parseLTLFormula(formula)
-            ltlExpressions.add(expr)
+            val annotatedFormula = anno.values.get(0)
+            val ltlFormula = LTLFormulaStandaloneParser.parseLTLFormula(annotatedFormula)
+            ltlExpressions.add(ltlFormula.expr)
+            definedVariables.addAll(ltlFormula.declarations.flatMap [ decl |
+                decl.valuedObjects
+            ].toList)
         }
 
         // used to check LTL coverage by the test cases
         val checkedLTLOverall = newBooleanArrayOfSize(annotations.length)
-        var allLTLChecked = false
 
-        for (var testNumber = 0; testNumber < testsuites /* && !allLTLChecked */; testNumber++) {
+        for (var testNumber = 0; testNumber < testsuites /* && checkedLTLOverall.contains(false) */ ; testNumber++) {
             // start simulation
             sim.start(false)
             // generate test
             val checkedLTL = new HashSet<Integer>()
             for (var step = 0; step < numberSteps; step++) {
                 sim.controller.performInternalStep
-                updateCheckedLTLs(annotations, checkedLTL, sim.history, ltlExpressions)
+                updateCheckedLTLs(checkedLTL, sim.history, ltlExpressions, definedVariables)
             }
             updateOverallCheckedLTL(checkedLTLOverall, checkedLTL)
             // TODO: save checked LTL (write it in scchart file above LTL?)
@@ -94,24 +110,84 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
             // reset simulation
             sim.stop
             sim.reset
-            // update stop condition
-            allLTLChecked = !checkedLTLOverall.contains(false)
         }
 
         // TODO: load one of the traces?
         return sim
     }
-    
+
     def updateOverallCheckedLTL(boolean[] checkedLTLOverall, HashSet<Integer> checkedLTL) {
         for (i : checkedLTL) {
             checkedLTLOverall.set(i, true);
         }
     }
 
-    def updateCheckedLTLs(List<StringAnnotation> annotations, HashSet<Integer> checkedLTL, SimulationHistory history,
-        List<Expression> ltlExpressions) {
-        val data = history.get(history.size - 1)
+    def updateCheckedLTLs(HashSet<Integer> checkedLTL, SimulationHistory history, List<Expression> ltlExpressions,
+        List<ValuedObject> declaratedVariables) {
+        // create evaluator with current variable values
+        val data = history.get(history.size - 1).entries
+        val map = createVariableValues(data, declaratedVariables)
+        val evaluator = new PartialExpressionEvaluator(map)
+        evaluator.compute = true
 
+        ltlExpressions.forEach [ expr, index |
+            {
+                val impl = getImplication(expr)
+                val evaluation = evaluator.evaluate(impl)
+                if (evaluation instanceof BoolValue && (evaluation as BoolValue).value) {
+                    checkedLTL.add(index)
+                }
+            }
+        ]
+    }
+
+    def Expression getImplication(Expression expression) {
+        if (expression instanceof LTLExpression) {
+            return getImplication((expression as LTLExpression).subExpressions.get(0))
+        } else if (expression instanceof OperatorExpression) {
+            switch ((expression as OperatorExpression).operator) {
+                case OperatorType.INIT: {
+                    return (expression as OperatorExpression).subExpressions.get(0)
+                }
+                default:
+                    return getImplication((expression as OperatorExpression).subExpressions.get(0))
+            }
+        } else {
+            return expression
+        }
+    }
+
+    def createVariableValues(Map<String, DataPoolEntry> data, List<ValuedObject> definedVariables) {
+        var map = new HashMap<ValuedObject, Value>()
+        for (variable : definedVariables) {
+            val object = data.get(variable.name)
+            if (object !== null) {
+                switch (object.variableInformation.get(0).type) {
+                    case ValueType.INT: {
+                        val currentVal = createIntValue
+                        currentVal.value = object.rawValue.asInt
+                        map.put(variable, currentVal)
+                    }
+                    case ValueType.DOUBLE,
+                    case ValueType.FLOAT: {
+                        val currentVal = createFloatValue
+                        currentVal.value = object.rawValue.asDouble
+                        map.put(variable, currentVal)
+                    }
+                    case ValueType.BOOL: {
+                        val currentVal = createBoolValue
+                        currentVal.value = object.rawValue.asBoolean
+                        map.put(variable, currentVal)
+                    }
+                    case ValueType.ENUM: {
+                        // TODO
+                    }
+                    default: {
+                    }
+                }
+            }
+        }
+        return map
     }
 
     /**

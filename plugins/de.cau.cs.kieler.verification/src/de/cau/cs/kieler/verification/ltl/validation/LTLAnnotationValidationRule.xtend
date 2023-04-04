@@ -89,12 +89,12 @@ class LTLAnnotationValidationRule implements ExternalAnnotationValidationRule {
     def ArrayList<String> checkVariables(StringAnnotation annotation, IParseResult parseResult) {
         val wrongVariables = new ArrayList<String>()
         if (annotation.eContainer instanceof State && parseResult.rootASTElement instanceof LTLExpression) {
-            val annotationVariables = (annotation.eContainer as State).declarations.flatMap [ decl |
+            val declaratedVariables = (annotation.eContainer as State).declarations.flatMap [ decl |
                 decl.valuedObjects.map[object|object.name]
             ]
             for (decl : (parseResult.rootASTElement as LTLExpression).declarations) {
                 for (variable : decl.valuedObjects) {
-                    if (!annotationVariables.contains(variable.name)) {
+                    if (!declaratedVariables.contains(variable.name)) {
                         wrongVariables.add(variable.name)
                     }
                 }
