@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getExpr <em>Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getDeclarations <em>Declarations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getVariableNames <em>Variable Names</em>}</li>
  *   <li>{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getOperator <em>Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getSubExpressions <em>Sub Expressions</em>}</li>
  * </ul>
@@ -62,6 +63,18 @@ public interface LTLExpression extends Expression
    * @generated
    */
   EList<Declaration> getDeclarations();
+
+  /**
+   * Returns the value of the '<em><b>Variable Names</b></em>' attribute list.
+   * The list contents are of type {@link java.lang.String}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Variable Names</em>' attribute list.
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.LTLFormulaPackage#getLTLExpression_VariableNames()
+   * @model unique="false"
+   * @generated
+   */
+  EList<String> getVariableNames();
 
   /**
    * Returns the value of the '<em><b>Operator</b></em>' attribute.

@@ -29,6 +29,8 @@ import org.eclipse.xtext.util.CancelIndicator
 import org.eclipse.xtext.validation.CheckMode
 import org.eclipse.xtext.validation.IResourceValidator
 import org.eclipse.xtext.validation.ValidationMessageAcceptor
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * @author als, jep
@@ -67,9 +69,8 @@ class LTLAnnotationValidationRule implements ExternalAnnotationValidationRule {
                     } else {
                         val wrongVars = checkVariables(annotation, res.parseResult)
                         if (wrongVars.length !== 0) {
-                            val msg = wrongVars.length > 1
-                                    ? "Variables " + wrongVars.join(", ") + " do not exist"
-                                    : "Variable " + wrongVars.get(0) + " does not exist"
+                            val msg = wrongVars.length > 1 ? "Variables " + wrongVars.join(", ") +
+                                    " do not exist" : "Variable " + wrongVars.get(0) + " does not exist"
                             acceptor.acceptError(msg, annotation,
                                 AnnotationsPackage.eINSTANCE.stringAnnotation_Values, idx, null, null)
                         }
@@ -89,17 +90,28 @@ class LTLAnnotationValidationRule implements ExternalAnnotationValidationRule {
     def ArrayList<String> checkVariables(StringAnnotation annotation, IParseResult parseResult) {
         val wrongVariables = new ArrayList<String>()
         if (annotation.eContainer instanceof State && parseResult.rootASTElement instanceof LTLExpression) {
+            // collect the names if the declarated variables and enum values
             val declaratedVariables = (annotation.eContainer as State).declarations.flatMap [ decl |
-                decl.valuedObjects.map[object|object.name]
-            ]
-            for (decl : (parseResult.rootASTElement as LTLExpression).declarations) {
-                for (variable : decl.valuedObjects) {
-                    if (!declaratedVariables.contains(variable.name)) {
-                        wrongVariables.add(variable.name)
+                {
+                    if (decl instanceof ClassDeclaration && (decl as ClassDeclaration).type == ValueType.ENUM) {
+                        // declaration is an enum
+                        (decl as ClassDeclaration).declarations.flatMap [ valueDecl |
+                            valueDecl.valuedObjects.map[object|decl.valuedObjects.get(0).name + "." + object.name]
+                        ]
+                    } else {
+                        decl.valuedObjects.map[object|object.name]
                     }
+                }
+
+            ].toList
+            // check whether all variables used in the LTL formula exist
+            for (name : (parseResult.rootASTElement as LTLExpression).variableNames) {
+                if (!declaratedVariables.contains(name)) {
+                    wrongVariables.add(name)
                 }
             }
         }
+        // return variable names that do not exist
         return wrongVariables
     }
 

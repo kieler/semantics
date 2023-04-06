@@ -155,7 +155,7 @@ public class LTLFormulaPackageImpl extends EPackageImpl implements LTLFormulaPac
    * @generated
    */
   @Override
-  public EAttribute getLTLExpression_Operator()
+  public EAttribute getLTLExpression_VariableNames()
   {
     return (EAttribute)ltlExpressionEClass.getEStructuralFeatures().get(2);
   }
@@ -166,9 +166,20 @@ public class LTLFormulaPackageImpl extends EPackageImpl implements LTLFormulaPac
    * @generated
    */
   @Override
+  public EAttribute getLTLExpression_Operator()
+  {
+    return (EAttribute)ltlExpressionEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getLTLExpression_SubExpressions()
   {
-    return (EReference)ltlExpressionEClass.getEStructuralFeatures().get(3);
+    return (EReference)ltlExpressionEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -249,6 +260,7 @@ public class LTLFormulaPackageImpl extends EPackageImpl implements LTLFormulaPac
     ltlExpressionEClass = createEClass(LTL_EXPRESSION);
     createEReference(ltlExpressionEClass, LTL_EXPRESSION__EXPR);
     createEReference(ltlExpressionEClass, LTL_EXPRESSION__DECLARATIONS);
+    createEAttribute(ltlExpressionEClass, LTL_EXPRESSION__VARIABLE_NAMES);
     createEAttribute(ltlExpressionEClass, LTL_EXPRESSION__OPERATOR);
     createEReference(ltlExpressionEClass, LTL_EXPRESSION__SUB_EXPRESSIONS);
 
@@ -299,6 +311,7 @@ public class LTLFormulaPackageImpl extends EPackageImpl implements LTLFormulaPac
     initEClass(ltlExpressionEClass, LTLExpression.class, "LTLExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLTLExpression_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, LTLExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getLTLExpression_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, LTLExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getLTLExpression_VariableNames(), ecorePackage.getEString(), "variableNames", null, 0, -1, LTLExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getLTLExpression_Operator(), this.getLTLOperatorType(), "operator", null, 0, 1, LTLExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getLTLExpression_SubExpressions(), theKExpressionsPackage.getExpression(), null, "subExpressions", null, 0, -1, LTLExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

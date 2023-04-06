@@ -98,13 +98,22 @@ public interface LTLFormulaPackage extends EPackage
   int LTL_EXPRESSION__DECLARATIONS = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Variable Names</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LTL_EXPRESSION__VARIABLE_NAMES = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
    * The feature id for the '<em><b>Operator</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LTL_EXPRESSION__OPERATOR = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 2;
+  int LTL_EXPRESSION__OPERATOR = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
@@ -113,7 +122,7 @@ public interface LTLFormulaPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LTL_EXPRESSION__SUB_EXPRESSIONS = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 3;
+  int LTL_EXPRESSION__SUB_EXPRESSIONS = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>LTL Expression</em>' class.
@@ -122,7 +131,7 @@ public interface LTLFormulaPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LTL_EXPRESSION_FEATURE_COUNT = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 4;
+  int LTL_EXPRESSION_FEATURE_COUNT = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.impl.OperatorExpressionImpl <em>Operator Expression</em>}' class.
@@ -212,6 +221,17 @@ public interface LTLFormulaPackage extends EPackage
    * @generated
    */
   EReference getLTLExpression_Declarations();
+
+  /**
+   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getVariableNames <em>Variable Names</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Variable Names</em>'.
+   * @see de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getVariableNames()
+   * @see #getLTLExpression()
+   * @generated
+   */
+  EAttribute getLTLExpression_VariableNames();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression#getOperator <em>Operator</em>}'.
@@ -325,6 +345,14 @@ public interface LTLFormulaPackage extends EPackage
      * @generated
      */
     EReference LTL_EXPRESSION__DECLARATIONS = eINSTANCE.getLTLExpression_Declarations();
+
+    /**
+     * The meta object literal for the '<em><b>Variable Names</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LTL_EXPRESSION__VARIABLE_NAMES = eINSTANCE.getLTLExpression_VariableNames();
 
     /**
      * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.

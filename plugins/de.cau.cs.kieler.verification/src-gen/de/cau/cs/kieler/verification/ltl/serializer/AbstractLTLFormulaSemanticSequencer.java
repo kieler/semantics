@@ -1730,7 +1730,7 @@ public abstract class AbstractLTLFormulaSemanticSequencer extends KExtSemanticSe
 	 *     LTLFormula returns LTLExpression
 	 *
 	 * Constraint:
-	 *     (expr=LTLExpression declarations+=Declaration*)
+	 *     (expr=LTLExpression declarations+=Declaration* variableNames+=STRING*)
 	 * </pre>
 	 */
 	protected void sequence_LTLFormula(ISerializationContext context, LTLExpression semanticObject) {

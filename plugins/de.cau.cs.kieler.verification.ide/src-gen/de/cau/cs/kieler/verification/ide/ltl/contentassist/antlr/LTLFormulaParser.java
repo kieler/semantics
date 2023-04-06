@@ -382,6 +382,7 @@ public class LTLFormulaParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
 			builder.put(grammarAccess.getLTLFormulaAccess().getExprAssignment_0(), "rule__LTLFormula__ExprAssignment_0");
 			builder.put(grammarAccess.getLTLFormulaAccess().getDeclarationsAssignment_1(), "rule__LTLFormula__DeclarationsAssignment_1");
+			builder.put(grammarAccess.getLTLFormulaAccess().getVariableNamesAssignment_2(), "rule__LTLFormula__VariableNamesAssignment_2");
 			builder.put(grammarAccess.getLTLExpressionAccess().getOperatorAssignment_0_1(), "rule__LTLExpression__OperatorAssignment_0_1");
 			builder.put(grammarAccess.getLTLExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__LTLExpression__SubExpressionsAssignment_0_3");
 			builder.put(grammarAccess.getLTLExpressionAccess().getOperatorAssignment_1_1_1_0(), "rule__LTLExpression__OperatorAssignment_1_1_1_0");

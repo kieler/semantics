@@ -5386,6 +5386,7 @@ rule__LTLFormula__Group__1
 	}
 :
 	rule__LTLFormula__Group__1__Impl
+	rule__LTLFormula__Group__2
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -5400,6 +5401,32 @@ rule__LTLFormula__Group__1__Impl
 	{ before(grammarAccess.getLTLFormulaAccess().getDeclarationsAssignment_1()); }
 	(rule__LTLFormula__DeclarationsAssignment_1)*
 	{ after(grammarAccess.getLTLFormulaAccess().getDeclarationsAssignment_1()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__LTLFormula__Group__2
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__LTLFormula__Group__2__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__LTLFormula__Group__2__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getLTLFormulaAccess().getVariableNamesAssignment_2()); }
+	(rule__LTLFormula__VariableNamesAssignment_2)*
+	{ after(grammarAccess.getLTLFormulaAccess().getVariableNamesAssignment_2()); }
 )
 ;
 finally {
@@ -26392,6 +26419,21 @@ rule__LTLFormula__DeclarationsAssignment_1
 		{ before(grammarAccess.getLTLFormulaAccess().getDeclarationsDeclarationParserRuleCall_1_0()); }
 		ruleDeclaration
 		{ after(grammarAccess.getLTLFormulaAccess().getDeclarationsDeclarationParserRuleCall_1_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__LTLFormula__VariableNamesAssignment_2
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getLTLFormulaAccess().getVariableNamesSTRINGTerminalRuleCall_2_0()); }
+		RULE_STRING
+		{ after(grammarAccess.getLTLFormulaAccess().getVariableNamesSTRINGTerminalRuleCall_2_0()); }
 	)
 ;
 finally {

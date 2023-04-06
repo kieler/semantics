@@ -36,14 +36,18 @@ public class LTLFormulaGrammarAccess extends AbstractElementFinder.AbstractGramm
 		private final RuleCall cExprLTLExpressionParserRuleCall_0_0 = (RuleCall)cExprAssignment_0.eContents().get(0);
 		private final Assignment cDeclarationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cDeclarationsDeclarationParserRuleCall_1_0 = (RuleCall)cDeclarationsAssignment_1.eContents().get(0);
+		private final Assignment cVariableNamesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cVariableNamesSTRINGTerminalRuleCall_2_0 = (RuleCall)cVariableNamesAssignment_2.eContents().get(0);
 		
 		//LTLFormula returns LTLExpression:
 		//    expr = LTLExpression
-		//    declarations+=Declaration*;
+		//    declarations+=Declaration*
+		//    variableNames += STRING*;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//expr = LTLExpression
 		//declarations+=Declaration*
+		//variableNames += STRING*
 		public Group getGroup() { return cGroup; }
 		
 		//expr = LTLExpression
@@ -57,6 +61,12 @@ public class LTLFormulaGrammarAccess extends AbstractElementFinder.AbstractGramm
 		
 		//Declaration
 		public RuleCall getDeclarationsDeclarationParserRuleCall_1_0() { return cDeclarationsDeclarationParserRuleCall_1_0; }
+		
+		//variableNames += STRING*
+		public Assignment getVariableNamesAssignment_2() { return cVariableNamesAssignment_2; }
+		
+		//STRING
+		public RuleCall getVariableNamesSTRINGTerminalRuleCall_2_0() { return cVariableNamesSTRINGTerminalRuleCall_2_0; }
 	}
 	public class LTLExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.verification.ltl.LTLFormula.LTLExpression");
@@ -415,7 +425,8 @@ public class LTLFormulaGrammarAccess extends AbstractElementFinder.AbstractGramm
 	
 	//LTLFormula returns LTLExpression:
 	//    expr = LTLExpression
-	//    declarations+=Declaration*;
+	//    declarations+=Declaration*
+	//    variableNames += STRING*;
 	public LTLFormulaElements getLTLFormulaAccess() {
 		return pLTLFormula;
 	}

@@ -22,7 +22,8 @@ generate lTLFormula "http://www.cau.de/cs/kieler/verification/ltl/LTLFormula"
 
 LTLFormula returns LTLExpression:
     expr = LTLExpression
-    declarations+=Declaration*;
+    declarations+=Declaration*
+    variableNames += STRING*;
 
 LTLExpression returns kexpressions::Expression:
     {LTLExpression} operator=(GlobalOperator | FinalOperator | NextOperator) '(' subExpressions+=LTLExpression ')'

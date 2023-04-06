@@ -25,6 +25,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.CrossReference
 import org.eclipse.xtext.linking.lazy.LazyLinkingResource
 import org.eclipse.xtext.parser.IParseResult
+import java.util.ArrayList
+import java.util.HashSet
 
 /**
  * @author jep
@@ -41,9 +43,19 @@ class LTLFormulaResource extends LazyLinkingResource {
     override updateInternalState(IParseResult newParseResult) {
         if (standaloneParse) {
             val voMap = <String, ValuedObject>newHashMap
+            val names = new HashSet<String>()
+            var enumFlag = ""
             for (node : newParseResult.rootNode.asTreeIterable.filter[grammarElement instanceof CrossReference]) {
                 val elem = node.semanticElement
                 val voName = node.text.trim
+                if (enumFlag !== "") {
+                    names.add(enumFlag + voName)
+                    enumFlag = ""
+                } else if (node.nextSibling !== null && node.nextSibling.text == ".") {
+                    enumFlag = voName + "."
+                } else {
+                    names.add(voName)
+                }
 
                 if (!voMap.containsKey(voName)) {
                     voMap.put(voName, createValuedObject => [name = voName])
@@ -71,6 +83,7 @@ class LTLFormulaResource extends LazyLinkingResource {
                     type = ValueType.UNKNOWN;
                     valuedObjects.addAll(voMap.values)
                 ]
+                root.variableNames.addAll(names.toList)
             }
         }
 

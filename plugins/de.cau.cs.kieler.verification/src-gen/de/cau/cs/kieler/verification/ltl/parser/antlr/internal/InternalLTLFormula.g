@@ -121,6 +121,24 @@ ruleLTLFormula returns [EObject current=null]
 				}
 			)
 		)*
+		(
+			(
+				lv_variableNames_2_0=RULE_STRING
+				{
+					newLeafNode(lv_variableNames_2_0, grammarAccess.getLTLFormulaAccess().getVariableNamesSTRINGTerminalRuleCall_2_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getLTLFormulaRule());
+					}
+					addWithLastConsumed(
+						$current,
+						"variableNames",
+						lv_variableNames_2_0,
+						"de.cau.cs.kieler.annotations.Annotations.STRING");
+				}
+			)
+		)*
 	)
 ;
 
