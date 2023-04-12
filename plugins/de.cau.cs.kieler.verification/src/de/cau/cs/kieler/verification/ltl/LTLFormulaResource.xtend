@@ -49,9 +49,11 @@ class LTLFormulaResource extends LazyLinkingResource {
                 val elem = node.semanticElement
                 val voName = node.text.trim
                 if (enumFlag !== "") {
+                    // this is an enum value
                     names.add(enumFlag + voName)
                     enumFlag = ""
                 } else if (node.nextSibling !== null && node.nextSibling.text == ".") {
+                    // this is an enum name
                     enumFlag = voName + "."
                 } else {
                     names.add(voName)

@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2018 by
+ * Copyright 2018-2023 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -36,7 +36,7 @@ import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
- * @author als ssm
+ * @author als ssm jep
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
@@ -61,6 +61,7 @@ class PartialExpressionEvaluator {
     
     // -- Vars --
     
+    @Accessors var Map<String, String[]> enumDefinitions
     @Accessors var Map<ValuedObject, Value> values
     @Accessors var (ValuedObjectReference) => Value valueCallback
     
@@ -75,6 +76,11 @@ class PartialExpressionEvaluator {
         }
         this.values = values
         this.valueCallback = null
+    }
+    
+    new(Map<ValuedObject, Value> values, Map<String, String[]> enumDefinitions) {
+        this(values)
+        this.enumDefinitions = enumDefinitions
     }
     
     new((ValuedObjectReference) => Value valueCallback) {
@@ -123,7 +129,7 @@ class PartialExpressionEvaluator {
     // ------------------------------------
     
     protected dispatch def Expression eval(ValuedObjectReference vor) {
-        var cp = vor.copy//if(inplace) vor else vor.copy
+        val cp = vor.copy//if(inplace) vor else vor.copy
         for (expr : vor.indices.immutableCopy) {
             cp.indices.set(vor.indices.indexOf(expr), expr.evaluate)
         }
@@ -136,6 +142,16 @@ class PartialExpressionEvaluator {
                 value = valueCallback.apply(cp)
             }
             return value
+        }
+        if (cp.subReference !== null) {
+            // if cp is an enum value the value/subreference is translated to an int
+            val values = enumDefinitions.get(cp.valuedObject.name)
+            if (values !== null) {
+                val index = values.indexOf(cp.subReference.valuedObject.name)
+                if (index !== -1) {
+                    return createIntValue(index)
+                }
+            }
         }
         return cp
     }

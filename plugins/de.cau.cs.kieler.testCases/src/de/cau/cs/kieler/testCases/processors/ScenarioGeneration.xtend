@@ -42,6 +42,7 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.verification.ltl.lTLFormula.LTLExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 
 /**
  * @author jep
@@ -50,6 +51,8 @@ import de.cau.cs.kieler.kexpressions.BoolValue
 class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
 
     extension KExpressionsFactory kExpressionsFactory = KExpressionsFactory.eINSTANCE
+
+    protected Map<String, String[]> enumDefinitions
 
     override getId() {
         "de.cau.cs.kieler.testCases.processors.scenarioGeneration"
@@ -68,7 +71,7 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
         println("scenario processor")
 
         registerProcessors(sim)
-        val numberSteps = 50
+        val numberSteps = 20
         val testsuites = 5
 
         // collect LTLs
@@ -92,11 +95,15 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
         // used to check LTL coverage by the test cases
         val checkedLTLOverall = newBooleanArrayOfSize(annotations.length)
 
-        for (var testNumber = 0; testNumber < testsuites /* && checkedLTLOverall.contains(false) */ ; testNumber++) {
+        for (var testNumber = 0; testNumber < testsuites  || checkedLTLOverall.contains(false); testNumber++) {
             // start simulation
             sim.start(false)
             // generate test
             val checkedLTL = new HashSet<Integer>()
+            // initial steps
+            for (var step = 0; step < 5; step++) {
+                sim.controller.performInternalStep
+            }
             for (var step = 0; step < numberSteps; step++) {
                 sim.controller.performInternalStep
                 updateCheckedLTLs(checkedLTL, sim.history, ltlExpressions, definedVariables)
@@ -116,31 +123,52 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
         return sim
     }
 
+    // collect enum definitions
+    def Map<String, String[]> getEnumDefinitions() {
+        if (this.enumDefinitions === null) {
+            val scchart = this.environments.source.compilationContext.originalModel as SCCharts
+            val enumDecls = scchart.rootStates.get(0).declarations.filter [ decl |
+                decl instanceof ClassDeclaration && (decl as ClassDeclaration).type == ValueType.ENUM
+            ].toList
+            val enumMap = new HashMap<String, String[]>()
+            enumDecls.forEach [ decl |
+                enumMap.put(decl.valuedObjects.get(0).name, (decl as ClassDeclaration).declarations.get(0).
+                    valuedObjects.map[variable|variable.name])
+            ]
+            this.enumDefinitions = enumMap
+        }
+        return this.enumDefinitions
+    }
+
     def updateOverallCheckedLTL(boolean[] checkedLTLOverall, HashSet<Integer> checkedLTL) {
         for (i : checkedLTL) {
             checkedLTLOverall.set(i, true);
         }
     }
 
+    // checks which LTL formulas are fulfilled by the last step in the simulation
     def updateCheckedLTLs(HashSet<Integer> checkedLTL, SimulationHistory history, List<Expression> ltlExpressions,
         List<ValuedObject> declaratedVariables) {
         // create evaluator with current variable values
-        val data = history.get(history.size - 1).entries
-        val map = createVariableValues(data, declaratedVariables)
-        val evaluator = new PartialExpressionEvaluator(map)
+        val data = history.get(0).entries
+        val variableMap = createVariableValues(data, declaratedVariables)
+        val evaluator = new PartialExpressionEvaluator(variableMap, getEnumDefinitions())
         evaluator.compute = true
 
         ltlExpressions.forEach [ expr, index |
             {
-                val impl = getImplication(expr)
-                val evaluation = evaluator.evaluate(impl)
-                if (evaluation instanceof BoolValue && (evaluation as BoolValue).value) {
-                    checkedLTL.add(index)
+                if (!checkedLTL.contains(index)) {
+                    val impl = getImplication(expr)
+                    val evaluation = evaluator.evaluate(impl)
+                    if (evaluation instanceof BoolValue && (evaluation as BoolValue).value) {
+                        checkedLTL.add(index)
+                    }
                 }
             }
         ]
     }
 
+    // returns the left side expression of the first implication in the given expression
     def Expression getImplication(Expression expression) {
         if (expression instanceof LTLExpression) {
             return getImplication((expression as LTLExpression).subExpressions.get(0))
@@ -157,6 +185,7 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
         }
     }
 
+    // returns a map containing the values for each variable in the definedVariables list
     def createVariableValues(Map<String, DataPoolEntry> data, List<ValuedObject> definedVariables) {
         var map = new HashMap<ValuedObject, Value>()
         for (variable : definedVariables) {
@@ -178,9 +207,6 @@ class ScenarioGeneration extends InplaceProcessor<SimulationContext> {
                         val currentVal = createBoolValue
                         currentVal.value = object.rawValue.asBoolean
                         map.put(variable, currentVal)
-                    }
-                    case ValueType.ENUM: {
-                        // TODO
                     }
                     default: {
                     }
