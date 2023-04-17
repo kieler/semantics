@@ -19,12 +19,12 @@ import de.cau.cs.kieler.klighd.lsp.KGraphLanguageClient
 import de.cau.cs.kieler.klighd.lsp.interactive.layered.LayeredInteractiveLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.interactive.rectpacking.RectpackingInteractiveLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.launch.AbstractLsCreator
+import de.cau.cs.kieler.klighd.lsp.structuredProgramming.IStructuredProgrammingLanguageServerContribution
 import java.util.List
 import org.eclipse.xtext.Constants
 import org.eclipse.xtext.IGrammarAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.util.Modules2
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.StructuredProgScchartLanguageServerExtension
 
 /** 
  * Provides methods to create a LS.
@@ -38,7 +38,6 @@ class LSCreator extends AbstractLsCreator {
     
     RectpackingInteractiveLanguageServerExtension rectPack
     
-    StructuredProgScchartLanguageServerExtension structProgScchart
     
     List<ILSDiagramHighlighter> diagramHighlighters
     
@@ -57,10 +56,12 @@ class LSCreator extends AbstractLsCreator {
     override getLanguageServerExtensions() {
         constraints = injector.getInstance(LayeredInteractiveLanguageServerExtension)
         rectPack = injector.getInstance(RectpackingInteractiveLanguageServerExtension)
-        structProgScchart = injector.getInstance(StructuredProgScchartLanguageServerExtension)
                 
-        iLanguageServerExtensions = newArrayList(constraints, rectPack, structProgScchart)
+        iLanguageServerExtensions = newArrayList(constraints, rectPack)
         for (lse : KielerServiceLoader.load(ILanguageServerContribution)) {
+            iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
+        }
+        for (lse : KielerServiceLoader.load(IStructuredProgrammingLanguageServerContribution)){
             iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
         }
         return iLanguageServerExtensions
@@ -80,8 +81,9 @@ class LSCreator extends AbstractLsCreator {
         }
         constraints.client = languageClient as KGraphLanguageClient
         rectPack.client = languageClient as KGraphLanguageClient
-        structProgScchart.client = languageClient as KGraphLanguageClient
-        
+        for (lse : KielerServiceLoader.load(IStructuredProgrammingLanguageServerContribution)){
+            lse.setClient(injector, languageClient)
+        }
         diagramHighlighters = newArrayList
         for (iLSdhc : KielerServiceLoader.load(ILSDiagramHighlighterContribution)) {
             var highlighter = iLSdhc.getHighlighter(injector)

@@ -29,7 +29,7 @@ Require-Bundle: de.cau.cs.kieler.klighd,
  org.eclipse.elk.alg.force,
  org.eclipse.elk.alg.rectpacking;bundle-version="0.6.1",
  de.cau.cs.kieler.klighd.kgraph,
- de.cau.cs.kieler.sccharts.ide,
+ de.cau.cs.kieler.sccharts.ide;bundle-version="1.4.0",
  de.cau.cs.kieler.simulation.ui,
  com.google.gson;bundle-version="2.7.0",
  org.eclipse.ui.ide;bundle-version="3.14.0",
@@ -42,7 +42,11 @@ Require-Bundle: de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.kicool.ide,
  de.cau.cs.kieler.annotations.ide,
  org.eclipse.elk.core.service,
- de.cau.cs.kieler.klighd.lsp;bundle-version="2.2.1"
+ de.cau.cs.kieler.klighd.lsp;bundle-version="2.2.1",
+ de.cau.cs.kieler.scl.ide;bundle-version="1.4.0",
+ org.eclipse.sprotty;bundle-version="0.9.0",
+ org.eclipse.lsp4j;bundle-version="0.14.0",
+ de.cau.cs.kieler.language.server;bundle-version="1.4.0"
 Bundle-Vendor: Kiel University
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sccharts.ui,

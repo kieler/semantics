@@ -18,24 +18,24 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klighd.structuredEditMsg.StructuredEditOptions
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.DeleteAction;
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.RenameStateAction;
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.AddHierarchicalStateAction;
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.AddSuccessorStateAction;
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangeTriggerEffectAction;
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.RenameRegionAction;
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.AddConcurrentRegionAction;
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangeTargetStateAction
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangeSourceStateAction
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangeToAbortingTransitionAction
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangeToTerminatingTransitionAction
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangeToWeakTransitionAction
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ToggleFinalStateAction
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.AddTransitionAction
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.EditSemanticDeclarationAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterTags
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.MakeInitialStateAction
-import de.cau.cs.kieler.klighd.lsp.structuredProgramming.sccharts.ChangePriorityAction
+import de.cau.cs.kieler.sccharts.ui.structuredProgramming.ChangeTargetStateAction
+import de.cau.cs.kieler.sccharts.ui.structuredProgramming.EditSemanticDeclarationAction
+import de.cau.cs.kieler.sccharts.ui.structuredProgramming.RenameStateAction
+import de.cau.cs.kieler.sccharts.ui.structuredProgramming.AddSuccessorStateAction
+import de.cau.cs.kieler.sccharts.ui.structuredProgramming.AddHierarchicalStateAction
+import de.cau.cs.kieler.sccharts.ui.structuredProgramming.AddTransitionAction
+import de.cau.cs.kieler.sccharts.ui.structuredProgramming.ToggleFinalStateAction
+import de.cau.cs.kieler.sccharts.ui.structuredProgramming.DeleteAction
+import de.cau.cs.kieler.sccharts.ui.structuredProgramming.MakeInitialStateAction
+import de.cau.cs.kieler.sccharts.ui.structuredProgramming.ChangeSourceStateAction
+import de.cau.cs.kieler.sccharts.ui.structuredProgramming.ChangeTriggerEffectAction
+import de.cau.cs.kieler.sccharts.ui.structuredProgramming.ChangePriorityAction
+import de.cau.cs.kieler.sccharts.ui.structuredProgramming.ChangeToTerminatingTransitionAction
+import de.cau.cs.kieler.sccharts.ui.structuredProgramming.ChangeToAbortingTransitionAction
+import de.cau.cs.kieler.sccharts.ui.structuredProgramming.ChangeToWeakTransitionAction
+import de.cau.cs.kieler.sccharts.ui.structuredProgramming.RenameRegionAction
+import de.cau.cs.kieler.sccharts.ui.structuredProgramming.AddConcurrentRegionAction
 
 /**
  * Class for adding a property to the root state of a scchart diagram
