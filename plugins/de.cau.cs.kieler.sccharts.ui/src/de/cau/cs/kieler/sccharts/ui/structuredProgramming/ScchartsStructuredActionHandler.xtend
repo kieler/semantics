@@ -49,12 +49,6 @@ class ScchartsStructuredActionHandler extends AbstractActionHandler implements I
     }
     
     override handle(Action action, String clientId, KGraphDiagramServer server) {
-        if(extens ===null){
-            println("extension not injected problems!")
-            return
-        }
-        
-        println(extens)
         
         if (action.kind == DeleteAction.KIND) {
             synchronized (server.modelLock) {

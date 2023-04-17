@@ -81,7 +81,6 @@ class ScchartsStructuredProgrammingServerExtension implements ILanguageServerExt
 
     /*simply sets the range to be the files size. */
     def set_pre(String clientId) {
-        println(diagramState)
         val uri = diagramState.getURIString(clientId)
         val resource = languageServer.getResource(uri);
         val outputStream = new ByteArrayOutputStream
@@ -721,7 +720,6 @@ class ScchartsStructuredProgrammingServerExtension implements ILanguageServerExt
     
     def setKGraphDiagramState(KGraphDiagramState diagramState) {
         this.diagramState = diagramState
-        println(this.diagramState)
     }
     
     def setKGraphLanguageClient(KGraphLanguageClient client) {
