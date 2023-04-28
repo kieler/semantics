@@ -39,8 +39,6 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * SCCharts Pre Transformation.
