@@ -39,6 +39,8 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * SCCharts Pre Transformation.
@@ -313,13 +315,16 @@ class Pre extends SCChartsProcessor implements Traceable {
      * This hacks some verification adaption into this transformation without introducing a dependency to kieler.verification
      */
     private def verificationHack(ValuedObject vo, ValuedObject source) {
+        
         try {
             // Copy range assumptions for verification
-            if(compilationContext.class.simpleName.equals("VerificationContext")) {
-                compilationContext.class.getMethod("copyAssumptions", ValuedObject, ValuedObject).invoke(compilationContext, vo, source)
-            }
+            compilationContext.startEnvironment.allProperties.forEach[p1, p2|
+                if(p1.id.equals("de.cau.cs.kieler.verification.context")) {
+                    p2.class.getMethod("copyAssumptions", ValuedObject, ValuedObject).invoke(p2, vo, source)
+                }
+            ]
         } catch (Exception e) {
-            // Nobody cares
+            environment.errors.add(new Exception("Pre expression range assumption could not be copied"))
         }
     }
     
