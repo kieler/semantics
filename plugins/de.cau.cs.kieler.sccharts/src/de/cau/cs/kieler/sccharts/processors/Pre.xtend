@@ -315,7 +315,6 @@ class Pre extends SCChartsProcessor implements Traceable {
      * This hacks some verification adaption into this transformation without introducing a dependency to kieler.verification
      */
     private def verificationHack(ValuedObject vo, ValuedObject source) {
-        
         try {
             // Copy range assumptions for verification
             compilationContext.startEnvironment.allProperties.forEach[p1, p2|
