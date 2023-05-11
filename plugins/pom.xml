@@ -9,7 +9,7 @@
 
   <parent>
     <groupId>de.cau.cs.kieler</groupId>
-    <artifactId>parent</artifactId>
+    <artifactId>semantics</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../build/pom.xml</relativePath>
   </parent>
@@ -31,6 +31,7 @@
     <module>de.cau.cs.kieler.kexpressions.ui</module>
     <module>de.cau.cs.kieler.kexpressions</module>
     <module>de.cau.cs.kieler.kicool.ide</module>
+    <module>de.cau.cs.kieler.kicool.ls</module>
     <module>de.cau.cs.kieler.kicool.ui</module>
     <module>de.cau.cs.kieler.kicool</module>
     <module>de.cau.cs.kieler.kivis.ui</module>
@@ -45,6 +46,7 @@
     <module>de.cau.cs.kieler.sccharts.legacy</module>
     <module>de.cau.cs.kieler.sccharts.ui</module>
     <module>de.cau.cs.kieler.sccharts.ide</module>
+    <module>de.cau.cs.kieler.sccharts.ls</module>
     <module>de.cau.cs.kieler.sccharts</module>
     <module>de.cau.cs.kieler.scg.klighd</module>
     <module>de.cau.cs.kieler.scg</module>
@@ -53,9 +55,10 @@
     <module>de.cau.cs.kieler.scl</module>
     <module>de.cau.cs.kieler.simulation.ui</module>
     <module>de.cau.cs.kieler.simulation.ide</module>
+    <module>de.cau.cs.kieler.simulation.ls</module>
     <module>de.cau.cs.kieler.simulation</module>
     <module>de.cau.cs.kieler.verification</module>
-    <module>de.cau.cs.kieler.verification.ide</module>
+    <module>de.cau.cs.kieler.verification.ls</module>
     <module>de.cau.cs.kieler.verification.ui</module>
   </modules>
 

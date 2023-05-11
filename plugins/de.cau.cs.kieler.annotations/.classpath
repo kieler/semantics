@@ -6,9 +6,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="src" path="xtend-gen"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="src-gen"/>
-	<classpathentry kind="src" path="model/"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" path="src/"/>
+	<classpathentry kind="src" path="xtend-gen/"/>
+	<classpathentry kind="src" path="src-gen/"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>
