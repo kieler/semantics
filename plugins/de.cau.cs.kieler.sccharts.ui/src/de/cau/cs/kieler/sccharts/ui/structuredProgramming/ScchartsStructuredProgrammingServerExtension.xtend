@@ -95,13 +95,17 @@ class ScchartsStructuredProgrammingServerExtension implements ILanguageServerExt
     /* Called to add a new transition to a state. */
     def addNewTransition(AddTransitionAction action, String clientId, KGraphDiagramServer server) {
         set_pre(clientId)
-
+        
         // get the node corresponding to the selected state on the client. Since the contextmenu was opened for a specific 
         // state we know the id exists and is a state so we can omit a try catch block
         val uri = diagramState.getURIString(clientId)
         val kNode = LSPUtil.getKNode(diagramState, uri, action.id)
         val node = kNode.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) as State
-
+        
+        if (node.parentRegion === null){
+            this.client.sendMessage("The root may not have a successor.", "error")
+            return
+        }
         val new_transition = factory.createTransition()
 
         // Since trigger and effect are given as strings there may be variables that are not inputs / outputs
@@ -134,7 +138,7 @@ class ScchartsStructuredProgrammingServerExtension implements ILanguageServerExt
             }
             new_transition.sourceState = node
             new_transition.targetState = dest
-        } catch (ClassCastException ex) {
+        } catch (ClassCastException|NullPointerException ex) {
             // Catching the moment when not a state is selected as destination
             client.sendMessage("The selected element is not a targetable state.", "error")
             return
@@ -244,7 +248,7 @@ class ScchartsStructuredProgrammingServerExtension implements ILanguageServerExt
             edge.targetState = node
 
             node.incomingTransitions.add(edge)
-        } catch (ClassCastException ex) {
+        } catch (ClassCastException|NullPointerException ex) {
             // catching the cases where the selected element is not a state
             client.sendMessage("The selected element is not a targetable state.", "error")
             return
@@ -275,7 +279,7 @@ class ScchartsStructuredProgrammingServerExtension implements ILanguageServerExt
             edge.sourceState = node
 
             node.outgoingTransitions.add(edge)
-        } catch (ClassCastException ex) {
+        } catch (ClassCastException|NullPointerException ex) {
             // catching all cases where not a state was selected.
             client.sendMessage("The selected element is not a targetable state.", "error")
             return
@@ -446,6 +450,11 @@ class ScchartsStructuredProgrammingServerExtension implements ILanguageServerExt
         val uri = diagramState.getURIString(clientId)
         val kNode = LSPUtil.getKNode(diagramState, uri, action.id)
         val node = kNode.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) as State
+        if (node.parentRegion === null){
+            this.client.sendMessage("The root may not have a successor.", "error")
+            return
+        }
+        
         // we need to make sure a name for the new state is given
         if (action.state_name.equals("")) {
             this.client.sendMessage("You must provide a state id.", "error")
@@ -500,7 +509,10 @@ class ScchartsStructuredProgrammingServerExtension implements ILanguageServerExt
         val uri = diagramState.getURIString(clientId)
         val kNode = LSPUtil.getKNode(diagramState, uri, action.id)
         val node = kNode.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) as State
-
+        if (node.parentRegion === null){
+            this.client.sendMessage("The root may not be final.", "error")
+            return
+        }
         node.final = !node.final
 
         updateDocument(uri)
@@ -522,7 +534,10 @@ class ScchartsStructuredProgrammingServerExtension implements ILanguageServerExt
         val uri = diagramState.getURIString(clientId)
         val kNode = LSPUtil.getKNode(diagramState, uri, action.id)
         val new_init = kNode.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) as State
-
+        if (new_init.parentRegion === null){
+            this.client.sendMessage("The root may not be an initial node.", "error")
+            return
+        }
         // changes the old initial state to be normal
         for (node : new_init.parentRegion.states) {
             if(node.initial) node.initial = false
