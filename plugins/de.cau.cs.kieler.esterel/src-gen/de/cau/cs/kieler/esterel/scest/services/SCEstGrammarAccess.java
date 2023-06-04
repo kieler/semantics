@@ -4526,7 +4526,7 @@ public class SCEstGrammarAccess extends AbstractElementFinder.AbstractGrammarEle
 	//    '{' (
 	//        values+=VectorValueMember (',' values+=VectorValueMember)*
 	//        |
-	//        values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference)
+	//        values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference | SpecialAccessExpression)
 	//    ) '}';
 	public KExpressionsGrammarAccess.VectorValueElements getVectorValueAccess() {
 		return gaKExpressions.getVectorValueAccess();

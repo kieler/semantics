@@ -2374,7 +2374,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *
 	 * Constraint:
 	 *     (
-	 *         ((values+=VectorValueMember values+=VectorValueMember*) | (values+=IntValue range?='to' (values+=IntValue | values+=ValuedObjectReference))) 
+	 *         (
+	 *             (values+=VectorValueMember values+=VectorValueMember*) | 
+	 *             (values+=IntValue range?='to' (values+=IntValue | values+=ValuedObjectReference | values+=SpecialAccessExpression))
+	 *         ) 
 	 *         schedule+=ScheduleObjectReference?
 	 *     )
 	 * </pre>
@@ -3536,7 +3539,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     VectorValueMember returns VectorValue
 	 *
 	 * Constraint:
-	 *     ((values+=VectorValueMember values+=VectorValueMember*) | (values+=IntValue range?='to' (values+=IntValue | values+=ValuedObjectReference)))
+	 *     (
+	 *         (values+=VectorValueMember values+=VectorValueMember*) | 
+	 *         (values+=IntValue range?='to' (values+=IntValue | values+=ValuedObjectReference | values+=SpecialAccessExpression))
+	 *     )
 	 * </pre>
 	 */
 	protected void sequence_VectorValue(ISerializationContext context, VectorValue semanticObject) {

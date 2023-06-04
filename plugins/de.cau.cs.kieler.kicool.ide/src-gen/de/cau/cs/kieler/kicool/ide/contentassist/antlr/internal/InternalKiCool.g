@@ -4766,6 +4766,12 @@ rule__VectorValue__ValuesAlternatives_1_1_2_0
 		ruleValuedObjectReference
 		{ after(grammarAccess.getVectorValueAccess().getValuesValuedObjectReferenceParserRuleCall_1_1_2_0_1()); }
 	)
+	|
+	(
+		{ before(grammarAccess.getVectorValueAccess().getValuesSpecialAccessExpressionParserRuleCall_1_1_2_0_2()); }
+		ruleSpecialAccessExpression
+		{ after(grammarAccess.getVectorValueAccess().getValuesSpecialAccessExpressionParserRuleCall_1_1_2_0_2()); }
+	)
 ;
 finally {
 	restoreStackSize(stackSize);

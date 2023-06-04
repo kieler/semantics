@@ -10065,6 +10065,22 @@ ruleVectorValue returns [EObject current=null]
 									"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
 								afterParserOrEnumRuleCall();
 							}
+							    |
+							{
+								newCompositeNode(grammarAccess.getVectorValueAccess().getValuesSpecialAccessExpressionParserRuleCall_1_1_2_0_2());
+							}
+							lv_values_6_3=ruleSpecialAccessExpression
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getVectorValueRule());
+								}
+								add(
+									$current,
+									"values",
+									lv_values_6_3,
+									"de.cau.cs.kieler.kexpressions.KExpressions.SpecialAccessExpression");
+								afterParserOrEnumRuleCall();
+							}
 						)
 					)
 				)

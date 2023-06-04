@@ -375,11 +375,13 @@ class SCTXScopeProvider extends KExtScopeProvider {
                         && context.eContainer.eContainer.eContainer == declarationScope) {
                         val bsr = context.eContainer.eContainer as BaseStateReference
                         for (base : declarationScope.baseStateReferences.takeWhile[it != bsr]) {
-                            for (decl : Iterables.concat(
-                                base.target.declarations.filter[!it.isPrivate],
-                                base.target.allVisibleInheritedDeclarations)) {
-                                for(VO : decl.valuedObjects) {
-                                    candidates += VO
+                            if (base.target != null) {
+                                for (decl : Iterables.concat(
+                                    base.target.declarations.filter[!it.isPrivate],
+                                    base.target.allVisibleInheritedDeclarations)) {
+                                    for(VO : decl.valuedObjects) {
+                                        candidates += VO
+                                    }
                                 }
                             }
                         }

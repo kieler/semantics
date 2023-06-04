@@ -21367,6 +21367,114 @@ ruleValuedObjectTestExpression returns [EObject current=null]
 	)
 ;
 
+// Entry rule entryRuleSpecialAccessExpression
+entryRuleSpecialAccessExpression returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getSpecialAccessExpressionRule()); }
+	iv_ruleSpecialAccessExpression=ruleSpecialAccessExpression
+	{ $current=$iv_ruleSpecialAccessExpression.current; }
+	EOF;
+
+// Rule SpecialAccessExpression
+ruleSpecialAccessExpression returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_access_0_0='static'
+				{
+					newLeafNode(lv_access_0_0, grammarAccess.getSpecialAccessExpressionAccess().getAccessStaticKeyword_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getSpecialAccessExpressionRule());
+					}
+					setWithLastConsumed($current, "access", lv_access_0_0, "static");
+				}
+			)
+		)
+		otherlv_1='('
+		{
+			newLeafNode(otherlv_1, grammarAccess.getSpecialAccessExpressionAccess().getLeftParenthesisKeyword_1());
+		}
+		(
+			(
+				(
+					{
+						/* */
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getSpecialAccessExpressionRule());
+						}
+					}
+					{
+						newCompositeNode(grammarAccess.getSpecialAccessExpressionAccess().getContainerNamedObjectCrossReference_2_0_0());
+					}
+					rulePrimeID
+					{
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			otherlv_3='.'
+			{
+				newLeafNode(otherlv_3, grammarAccess.getSpecialAccessExpressionAccess().getFullStopKeyword_2_1());
+			}
+		)?
+		(
+			(
+				{
+					/* */
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getSpecialAccessExpressionRule());
+					}
+				}
+				{
+					newCompositeNode(grammarAccess.getSpecialAccessExpressionAccess().getTargetNamedObjectCrossReference_3_0());
+				}
+				rulePrimeID
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		otherlv_5=')'
+		{
+			newLeafNode(otherlv_5, grammarAccess.getSpecialAccessExpressionAccess().getRightParenthesisKeyword_4());
+		}
+		otherlv_6='.'
+		{
+			newLeafNode(otherlv_6, grammarAccess.getSpecialAccessExpressionAccess().getFullStopKeyword_5());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getSpecialAccessExpressionAccess().getSubReferenceValuedObjectReferenceParserRuleCall_6_0());
+				}
+				lv_subReference_7_0=ruleValuedObjectReference
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getSpecialAccessExpressionRule());
+					}
+					set(
+						$current,
+						"subReference",
+						lv_subReference_7_0,
+						"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+	)
+;
+
 // Entry rule entryRulePrimeID
 entryRulePrimeID returns [String current=null]:
 	{ newCompositeNode(grammarAccess.getPrimeIDRule()); }

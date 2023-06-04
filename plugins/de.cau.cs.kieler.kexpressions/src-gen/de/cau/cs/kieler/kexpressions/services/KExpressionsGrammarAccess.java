@@ -2902,20 +2902,21 @@ public class KExpressionsGrammarAccess extends AbstractElementFinder.AbstractGra
 		private final Alternatives cValuesAlternatives_1_1_2_0 = (Alternatives)cValuesAssignment_1_1_2.eContents().get(0);
 		private final RuleCall cValuesIntValueParserRuleCall_1_1_2_0_0 = (RuleCall)cValuesAlternatives_1_1_2_0.eContents().get(0);
 		private final RuleCall cValuesValuedObjectReferenceParserRuleCall_1_1_2_0_1 = (RuleCall)cValuesAlternatives_1_1_2_0.eContents().get(1);
+		private final RuleCall cValuesSpecialAccessExpressionParserRuleCall_1_1_2_0_2 = (RuleCall)cValuesAlternatives_1_1_2_0.eContents().get(2);
 		private final Keyword cRightCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		
 		//VectorValue returns VectorValue:
 		//    '{' (
 		//        values+=VectorValueMember (',' values+=VectorValueMember)*
 		//        |
-		//        values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference)
+		//        values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference | SpecialAccessExpression)
 		//    ) '}';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//'{' (
 		//    values+=VectorValueMember (',' values+=VectorValueMember)*
 		//    |
-		//    values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference)
+		//    values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference | SpecialAccessExpression)
 		//) '}'
 		public Group getGroup() { return cGroup; }
 		
@@ -2925,7 +2926,7 @@ public class KExpressionsGrammarAccess extends AbstractElementFinder.AbstractGra
 		//(
 		//       values+=VectorValueMember (',' values+=VectorValueMember)*
 		//       |
-		//       values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference)
+		//       values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference | SpecialAccessExpression)
 		//   )
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
@@ -2950,7 +2951,7 @@ public class KExpressionsGrammarAccess extends AbstractElementFinder.AbstractGra
 		//VectorValueMember
 		public RuleCall getValuesVectorValueMemberParserRuleCall_1_0_1_1_0() { return cValuesVectorValueMemberParserRuleCall_1_0_1_1_0; }
 		
-		//values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference)
+		//values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference | SpecialAccessExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
 		//values+=IntValue
@@ -2965,10 +2966,10 @@ public class KExpressionsGrammarAccess extends AbstractElementFinder.AbstractGra
 		//'to'
 		public Keyword getRangeToKeyword_1_1_1_0() { return cRangeToKeyword_1_1_1_0; }
 		
-		//values+=(IntValue | ValuedObjectReference)
+		//values+=(IntValue | ValuedObjectReference | SpecialAccessExpression)
 		public Assignment getValuesAssignment_1_1_2() { return cValuesAssignment_1_1_2; }
 		
-		//(IntValue | ValuedObjectReference)
+		//(IntValue | ValuedObjectReference | SpecialAccessExpression)
 		public Alternatives getValuesAlternatives_1_1_2_0() { return cValuesAlternatives_1_1_2_0; }
 		
 		//IntValue
@@ -2976,6 +2977,9 @@ public class KExpressionsGrammarAccess extends AbstractElementFinder.AbstractGra
 		
 		//ValuedObjectReference
 		public RuleCall getValuesValuedObjectReferenceParserRuleCall_1_1_2_0_1() { return cValuesValuedObjectReferenceParserRuleCall_1_1_2_0_1; }
+		
+		//SpecialAccessExpression
+		public RuleCall getValuesSpecialAccessExpressionParserRuleCall_1_1_2_0_2() { return cValuesSpecialAccessExpressionParserRuleCall_1_1_2_0_2; }
 		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_2() { return cRightCurlyBracketKeyword_2; }
@@ -5162,7 +5166,7 @@ public class KExpressionsGrammarAccess extends AbstractElementFinder.AbstractGra
 	//    '{' (
 	//        values+=VectorValueMember (',' values+=VectorValueMember)*
 	//        |
-	//        values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference)
+	//        values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference | SpecialAccessExpression)
 	//    ) '}';
 	public VectorValueElements getVectorValueAccess() {
 		return pVectorValue;
