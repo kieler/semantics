@@ -404,9 +404,15 @@ class Dataflow extends SCChartsProcessor {
             // FIXME only for unbound variables
             // TODO Add validation for partial binding
             for (declaration : decls.filter(VariableDeclaration).filter[ input || output ]) {
-                val localDeclaration = createVariableDeclaration(declaration.type).trace(declaration)
-                if (declaration.type == ValueType.HOST) {
-                    localDeclaration.hostType = declaration.hostType
+                val localDeclaration = createVariableDeclaration(declaration).trace(declaration)
+                localDeclaration.input = false
+                localDeclaration.output = false
+                if (localDeclaration.signal) {
+                    localDeclaration.signal = false
+                    if (localDeclaration.type != ValueType.PURE) {
+                        environment.errors.add("Access to valued signal inputs/outputs in dataflow SCCharts not yet supported", localDeclaration, true)
+                    }
+                    localDeclaration.type = ValueType.BOOL
                 }
                 
                 for (valuedObject : declaration.valuedObjects) {
