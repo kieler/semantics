@@ -155,7 +155,10 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
 		for (dep : node.outgoingLinks.filter(ControlDependency)) {
 		    val next = dep.targetNode
 		    val nextDeps = next.getSchedulingDependencies.toList
-		    if (nodesToSchedule.contains(next) && (nextDeps.size == 1 || nextDeps.forall[schedule.contains(it.eContainer.asNode)])) {
+		    if (nodesToSchedule.contains(next)
+                && next instanceof de.cau.cs.kieler.scg.Assignment
+		        && (nextDeps.size == 1 || nextDeps.forall[schedule.contains(it.eContainer.asNode)])
+		    ) {
                 topologicalScheduling(next, nodesToSchedule, schedule, unscheduableNodes)
             }
 		}
