@@ -339,6 +339,10 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
     
     // The function to do Topological Sort. It uses recursive topologicalSortUtil() 
     protected def topologicalSort(List<MethodDeclaration> methods, Multimap<MethodDeclaration, MethodDeclaration> blockings) { 
+        if (methods.size <= 1) {
+            return methods
+        }
+        
         val ordering = <MethodDeclaration>newLinkedList
   
         val visited = newHashMap

@@ -184,6 +184,15 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                 }
             }
             
+            // Copy policies
+            val newSPs = newArrayList
+            for (baseSP : allBaseStates.map[policies].flatten) {
+                var newSP = baseSP.copy
+                newSP.name = (baseSP.eContainer as State).name + "_" + newSP.name
+                newSPs += newSP
+            }
+            state.policies.addAll(0, newSPs)
+            
             // Collect all super calls
             val superMethodCalls = HashMultimap.create
             if (!methodReplacements.empty) {
