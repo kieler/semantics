@@ -36,7 +36,6 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.extensions.Binding
 import de.cau.cs.kieler.kexpressions.kext.extensions.BindingType
 import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
@@ -50,6 +49,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.ArrayList
 import java.util.List
+import java.util.Set
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
@@ -91,7 +91,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
         }
     }
     
-    def inheritBaseStates(State state, Replacements rootReplacements) {
+    def Set<State> inheritBaseStates(State state, Replacements rootReplacements) {
         if (!state.baseStateReferences.nullOrEmpty) {
             val allBaseStates = state.allInheritedStates
             
@@ -474,7 +474,10 @@ class Inheritance extends SCChartsProcessor implements Traceable {
             state.baseStateReferences.clear
             
             snapshot
+            
+            return allBaseStates
         }
+        return emptySet
     }
     
     def replaceVOR(EObject object, java.util.Map<ValuedObject, ValuedObject> replacements) {

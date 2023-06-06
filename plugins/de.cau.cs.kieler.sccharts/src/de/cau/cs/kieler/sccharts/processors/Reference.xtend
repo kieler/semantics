@@ -56,6 +56,7 @@ import de.cau.cs.kieler.sccharts.CodeEffect
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
@@ -70,8 +71,6 @@ import de.cau.cs.kieler.scl.Loop
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import de.cau.cs.kieler.scl.Return
 import java.util.Set
-
-import static de.cau.cs.kieler.kexpressions.extensions.KExpressionsOverloadingExtensions.getMethodSignatureID
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
@@ -119,6 +118,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     protected var MethodSignaling methodSignalingProcessor = null
     
     protected val replacedWithLiterals = <ValuedObject> newHashSet
+    protected val processedSCCharts = <State> newHashSet
     
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.reference"
@@ -157,9 +157,17 @@ class Reference extends SCChartsProcessor implements Traceable {
         
         if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
             val firstRoot = model.rootStates.head
+            // Remove other SCCharts
             model.rootStates.removeIf[ it !== firstRoot ]
-            
+            // Remove imported SCCharts
             model.imports.clear
+            
+            // Copy pragmas from removed SCCharts
+            for (scc : processedSCCharts.map[it.root].filter(SCCharts).toSet) {
+                if (scc != model) {
+                    model.pragmas += scc.pragmas.map[it.copy]
+                }
+            }            
         }
     }
     
@@ -167,9 +175,9 @@ class Reference extends SCChartsProcessor implements Traceable {
         // Handle inheritance
         val statesWithInheritance = rootState.allContainedStates.filter[ !baseStateReferences.nullOrEmpty ].toList
         for (state : statesWithInheritance) {
-            inheritanceProcessor?.inheritBaseStates(state, replacements)
+            processedSCCharts += inheritanceProcessor?.inheritBaseStates(state, replacements)
         }
-        inheritanceProcessor?.inheritBaseStates(rootState, replacements)
+        processedSCCharts += inheritanceProcessor?.inheritBaseStates(rootState, replacements)
         
         // Handle method signaling here because it is easier than a standalone transformation
         methodSignalingProcessor?.transform(rootState)
@@ -250,8 +258,9 @@ class Reference extends SCChartsProcessor implements Traceable {
         ]
         
         if (newScope instanceof State) {
+            processedSCCharts += scopeWithReference.reference.scope as State
             // Inherit from base states
-            inheritanceProcessor?.inheritBaseStates(newScope, replacements)
+            processedSCCharts += inheritanceProcessor?.inheritBaseStates(newScope, replacements)
         }
         
         // Push all declarations of the state with the reference onto the replacement stack and search for
@@ -866,6 +875,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                 val noBinidng = ref.hasAnnotation(Dataflow.DF_BINDING)
                 var refTarget = ref.reference
                 if (refTarget instanceof State) {
+                    processedSCCharts += refTarget
                     val tracedCopy = refTarget.tracedCopyAndReturnCopier
                     val newState = tracedCopy.key
                     val copier = tracedCopy.value
