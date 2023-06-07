@@ -46,6 +46,7 @@ import de.cau.cs.kieler.sccharts.BaseStateReference
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.PeriodAction
 import de.cau.cs.kieler.sccharts.PolicyRegion
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.Region
@@ -1192,7 +1193,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     @Check(CheckType.NORMAL) 
     def void checkFloatingPointTriggerComparison(Action action) {
-        if (action.trigger !== null) {
+        if (action.trigger !== null && !(action instanceof PeriodAction)) {
             val trigger = action.trigger
             if (trigger instanceof ValuedObjectReference) {
                 if (trigger.valuedObject.isFloat) {
