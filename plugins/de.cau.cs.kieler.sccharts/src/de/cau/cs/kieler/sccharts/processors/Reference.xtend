@@ -231,7 +231,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         staticAccessProcessor?.handleStaticAccesses(rootState)
         
         if (validate && !rootState.validate) {
-            throw new IllegalStateException("References objects are not contained in the resource!")
+            environment.errors.add("References objects are not contained in the resource!")
         }
     }
     
@@ -589,7 +589,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     protected dispatch def void replaceReferences(ValuedObjectReference valuedObjectReference, Replacements replacements) {
         // Check if there is a replacement on the stack. 
         val newRef = replacements.peek(valuedObjectReference.valuedObject)
-        if (newRef !== null) {
+        if (newRef !== null && !valuedObjectReference.isSubReference) { // Do not replace sub references
             if (newRef instanceof ValuedObjectReference) {
                 // If there is a replacement and it is a valued object reference, re-set the target of the 
                 // valued object reference.
@@ -618,6 +618,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                     subRef.lowermostReference.subReference = valuedObjectReference.subReference
                     valuedObjectReference.subReference = subRef
                 }
+                // Process further sub refs (indices not sub VORs!)
                 if (valuedObjectReference.subReference !== null) {
                     valuedObjectReference.subReference.replaceReferences(replacements)
                 }
@@ -639,6 +640,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                     valuedObjectReference.schedule += sub.schedule
                     
                     valuedObjectReference.subReference = sub.subReference
+                    // Process further sub refs (indices not sub VORs!)
                     if (valuedObjectReference.subReference !== null) {
                         valuedObjectReference.subReference.replaceReferences(replacements)
                     }
@@ -663,7 +665,7 @@ class Reference extends SCChartsProcessor implements Traceable {
             }
             // Try to fix sub reference if no longer contained in parent
             valuedObjectReference.fixMemberAssociationForSubReference(false)
-            // Process further sub refs
+            // Process further sub refs (indices not sub VORs!)
             if (valuedObjectReference.subReference !== null) {
                 valuedObjectReference.subReference.replaceReferences(replacements)
             }
