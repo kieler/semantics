@@ -366,12 +366,20 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
     
     // finds a list of valued objects witch are inputs of the referenced SCChart
     def getInputs(ReferenceDeclaration ref){
-        return (ref.reference as State).getInputValuedObjects.toList
+        if (ref.reference instanceof DeclarationScope) {
+            return (ref.reference as State).getInputValuedObjects.toList
+        } else {
+            return emptyList
+        }
     }
     
     // finds a list of valued objects witch are outputs of the referenced SCChart
     def getOutputs(ReferenceDeclaration ref){
-        return (ref.reference as State).getOutputValuedObjects.toList
+        if (ref.reference instanceof DeclarationScope) {
+            return (ref.reference as State).getOutputValuedObjects.toList
+        } else {
+            return emptyList
+        }
     }
     
     def void separateReferenceDeclarationsWithIndividualBindingsInVOs(List<ReferenceDeclaration> decls) {
