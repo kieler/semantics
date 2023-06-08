@@ -42,6 +42,16 @@ public class Readability implements IZSampleable<Double>{
     }
     
     public Double getZSample(double z) {
+        // new readability is just a threshold of zopt
+//        System.out.println("z: " + z + " zopt: " + zOpt());
+        if (z <= zOpt()) {
+            return 1.0;
+        } else {
+            return 0.0;
+        }
+        
+        // OLD version below
+        /*
         if (z < 0 || z > 1) {
             throw new IllegalArgumentException("z must be between 0 and 1");
         }
@@ -50,6 +60,7 @@ public class Readability implements IZSampleable<Double>{
         double res = -steepness * Math.pow(z - zOpt(),2) + 1;
         //System.out.println("z: " + z + ", zOpt: " + zOpt() + " steepness: " + steepness + " ==> " + res);
         return Math.max(0, res);
+        */
     }
     
     private double zOpt() {

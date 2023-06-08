@@ -89,13 +89,13 @@ class SCChartsSynthesisProcessor extends Processor<SCCharts, KNode> {
                 val key = entry.key
                 var option = options.findFirst[!it.id.nullOrEmpty && it.id.equals(key)]
                 if (option === null) {
-                    //if (environment.getProperty(VERBOSE)) println("Could not find synthesis option with id \"%s\".".format(key))
+                    if (environment.getProperty(VERBOSE)) println("Could not find synthesis option with id \"%s\".".format(key))
                     option = options.findFirst[!it.name.nullOrEmpty && (it.name.startsWith(key) || it.name.equalsIgnoreCase(key))]
                     if (environment.getProperty(VERBOSE)) {
                         if (option === null) {
-                            //println("Could not find synthesis option with name \"%s\" either.".format(key))
+                            println("Could not find synthesis option with name \"%s\" either.".format(key))
                         } else {
-                            //println("Found synthesis option with matching name \"%s\" for \"%s\".".format(option.name, key))
+                            println("Found synthesis option with matching name \"%s\" for \"%s\".".format(option.name, key))
                         }
                     }
                 }

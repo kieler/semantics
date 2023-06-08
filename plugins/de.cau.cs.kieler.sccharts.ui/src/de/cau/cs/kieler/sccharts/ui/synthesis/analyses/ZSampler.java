@@ -43,6 +43,9 @@ public class ZSampler<T extends IZSampleable<U>, S, U> {
         List<T> sampleables = evaluator.getResults();
         List<S> result = new ArrayList<>();
         int sampleCount = (int) (Z_MAX / sampleStepSize);
+        
+        // INSTEAD USE FIXED SAMPLE AMOUNT
+        sampleCount = 100;
         for (int i = (int) Z_MIN; i <= sampleCount; i++) {
             double z = (float) i / sampleCount;
             result.add(aggregator.aggregate(sampleables, z));

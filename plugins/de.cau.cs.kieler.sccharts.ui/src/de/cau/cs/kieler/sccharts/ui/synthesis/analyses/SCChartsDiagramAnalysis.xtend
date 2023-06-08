@@ -19,6 +19,9 @@ import java.util.Map
 import org.eclipse.elk.core.options.CoreOptions
 import java.util.ArrayList
 import java.util.List
+import de.cau.cs.kieler.klighd.kgraph.KGraphData
+import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 
 /**
  * @author als, mka
@@ -46,12 +49,29 @@ class SCChartsDiagramAnalysis extends AbstractModelDataCollector<SCCharts> {
         val diagram = getProperty(SCChartsSynthesisIntermediateProcessor.DIAGRAM)
         val root = diagram.children.head
         if (diagram !== null && root !== null) {
+            val assumedViewportWidth = 600
+            val assumedViewportHeight = 400
+            val vpRatio = assumedViewportWidth / assumedViewportHeight
+            
+            // calculate diagram area so that it fits in the aspect ratio of the viewport
+            val diagramAspectRatio = root.width / root.height
+            var diagramArea = root.width * root.height
+            if (diagramAspectRatio < vpRatio) {
+                diagramArea = root.height * root.height * vpRatio
+            } else if (diagramAspectRatio > vpRatio) {
+                diagramArea = root.width * (root.width / vpRatio)
+            }
+            
             // Synthesis results
-            data.put(KGRAPH_SIZE, root.eAllContents.size)
+            data.put(KGRAPH_SIZE, countNodes(root))
+            data.put(NAMESPACE + "graph.labels", countLabels(root))
             
             // Layout results
             data.put(HEIGHT, root.height)
             data.put(WIDTH, root.width)
+            
+            // local relative scale discrepancy
+            data.put("Relative Local Scale Discrepancies", RelativeScaleDiscrepancyEvaluator.computeDiscrepancies(root))
             
             // Zoom metrics
             var scaleLimit = 0.99999;
@@ -61,7 +81,6 @@ class SCChartsDiagramAnalysis extends AbstractModelDataCollector<SCCharts> {
                 scaleLimit = 1.0 / getMinScale(diagram, 0.99999);
             } else {
                 // use dimensions of graph to determine scaleLimit
-                val assumedViewportWidth = 700;
                 // for graphs smaller than the viewport use a scale nearly 1
                 val zoomOutScale = Math.min(assumedViewportWidth / root.getWidth(), 0.999999);
                 scaleLimit = zoomOutScale;
@@ -71,24 +90,27 @@ class SCChartsDiagramAnalysis extends AbstractModelDataCollector<SCCharts> {
             val sampleStepSize = Math.min( 1.0 / scaleLimit, scaleLimit);
             
             var zSamplers = new ArrayList()
-            val IZLevelAggregator avgAgg = new AverageAggregator();
-            val IZLevelAggregator maxAgg = new MaxAggregator<Double>();
+//            val IZLevelAggregator avgAgg = new AverageAggregator();
+//            val IZLevelAggregator maxAgg = new MaxAggregator<Double>();
             
             val readEval = new ReadabilityEvaluator(diagram, scaleLimit);
-            zSamplers.add(new ZSampler<Readability, Double, Double>(readEval, avgAgg, "Average Readability"));
+//            zSamplers.add(new ZSampler<Readability, Double, Double>(readEval, avgAgg, "Average Readability"));
             
-            val threshold = 0.8;
-            val threshCountAgg = new ReadabilityThresholdCountAggregator(threshold);
+//            val threshold = 0.8;
+//            val threshCountAgg = new ReadabilityThresholdCountAggregator(threshold);
 //            zSamplers.add(new ZSampler(readEval, threshCountAgg, "Readability Threshold " + threshold));
             
-            val globScDiscEval = new GlobalScaleDiscrepancyEvaluator(diagram, scaleLimit);
+//            val globScDiscEval = new GlobalScaleDiscrepancyEvaluator(diagram, scaleLimit);
 //            zSamplers.add(new ZSampler<ScaleDiscrepancy, Double, Double>(globScDiscEval, avgAgg, "Average Global Scale Discrepancy"));
                     
             // TODO: for sccharts it would be more insightful to look at discrepancies up to certain local deth
             //       to capture discrepancies between regions in neighbouring states, essentially skipping the 
             //       unscaled parallel nodes
-            val locScDiscEval = new LocalScaleDiscrepancyEvaluator(diagram, scaleLimit);
-            zSamplers.add(new ZSampler<ScaleDiscrepancy, Double, Double>(locScDiscEval, avgAgg, "Average Local Scale Discrepancy"));
+            val IZLevelAggregator readViewportAgg = new ReadabilityViewportAggregator(assumedViewportWidth * assumedViewportHeight, diagramArea, scaleLimit);
+            zSamplers.add(new ZSampler<Readability, Double, Double>(readEval, readViewportAgg, "Average Readability"));
+            
+            //val locScDiscEval = new LocalScaleDiscrepancyEvaluator(diagram, scaleLimit);
+            //zSamplers.add(new ZSampler<ScaleDiscrepancy, Double, Double>(locScDiscEval, avgAgg, "Average Local Scale Discrepancy"));
             
 //            zSamplers.add(new ZSampler<ScaleDiscrepancy, Double, Double>(locScDiscEval, maxAgg, "Max Local Scale Discrepancy"));
             
@@ -116,5 +138,43 @@ class SCChartsDiagramAnalysis extends AbstractModelDataCollector<SCCharts> {
             }
         }
         return minScale;
+    }
+    
+    def int countLabels(KNode node) {
+        var count = 0
+        for (KGraphData datum : node.getData()) {
+            if (datum instanceof KText) {
+                count++
+            }
+            if (datum instanceof KContainerRendering) {
+                count += traverseKGraphData(datum as KContainerRendering);
+            }
+        }
+        
+        for (KNode child : node.getChildren()) {
+            count += countLabels(child);
+        }
+        return count
+    }
+    
+    def int traverseKGraphData(KContainerRendering container) {
+        var count = 0
+        for (KGraphData datum : container.getChildren()) {
+            if (datum instanceof KText) {
+                count++
+            }
+            if (datum instanceof KContainerRendering) {
+                count += traverseKGraphData(datum as KContainerRendering);
+            }
+        }
+        return count
+    }
+    
+    def int countNodes(KNode node) {
+        var count = 1
+        for (KNode child : node.getChildren()) {
+            count += countNodes(child)
+        }
+        return count
     }
 }

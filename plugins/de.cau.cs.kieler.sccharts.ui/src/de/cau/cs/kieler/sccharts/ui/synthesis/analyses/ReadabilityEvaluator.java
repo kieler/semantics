@@ -53,6 +53,7 @@ public class ReadabilityEvaluator implements IKGraphLayoutEvaluator<Readability,
     
     private void traverseGraph(KNode node, double scale, List<Readability> resultList) {
         double topdownScaleFactor = node.getProperty(CoreOptions.TOPDOWN_SCALE_FACTOR);
+        
         for (KGraphData datum : node.getData()) {
             if (datum instanceof KText) {
                 Readability readability = new Readability((KText) datum, scale, scaleLimit);
@@ -64,7 +65,8 @@ public class ReadabilityEvaluator implements IKGraphLayoutEvaluator<Readability,
                 traverseKGraphData((KContainerRendering) datum, scale, resultList);
             }
         }
-        
+        // Readability readability = new Readability(null, scale, scaleLimit);
+        // resultList.add(readability);
         for (KNode child : node.getChildren()) {
             traverseGraph(child, scale * topdownScaleFactor, resultList);
         }
