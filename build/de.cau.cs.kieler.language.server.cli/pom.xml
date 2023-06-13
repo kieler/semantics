@@ -94,23 +94,45 @@
       <artifactId>de.cau.cs.kieler.simulation.ls</artifactId>
       <version>${project.version}</version>
     </dependency>
-
-    <!-- Additional dependencies that the Eclipse bundles do not list as Maven dependencies. -->
-
-    <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
     <dependency>
-      <groupId>org.freemarker</groupId>
-      <artifactId>freemarker</artifactId>
-      <version>2.3.32</version>
+      <groupId>de.cau.cs.kieler</groupId>
+      <artifactId>de.cau.cs.kieler.verification</artifactId>
+      <version>${project.version}</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.eclipse.jdt/org.eclipse.jdt.core -->
     <dependency>
-      <groupId>org.eclipse.jdt</groupId>
-      <artifactId>org.eclipse.jdt.core</artifactId>
-      <version>3.30.0</version>
+      <groupId>de.cau.cs.kieler</groupId>
+      <artifactId>de.cau.cs.kieler.verification.ls</artifactId>
+      <version>${project.version}</version>
     </dependency>
-
   </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- Exclude simulation.ui pulled by some dependencies. TODO: remove after full deeclipsification. -->
+      <dependency>
+        <groupId>de.cau.cs.kieler</groupId>
+        <artifactId>de.cau.cs.kieler.sccharts.ui</artifactId>
+        <version>${project.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>de.cau.cs.kieler</groupId>
+            <artifactId>de.cau.cs.kieler.simulation.ui</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>de.cau.cs.kieler</groupId>
+        <artifactId>de.cau.cs.kieler.scg.klighd</artifactId>
+        <version>${project.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>de.cau.cs.kieler</groupId>
+            <artifactId>de.cau.cs.kieler.simulation.ui</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <plugins>

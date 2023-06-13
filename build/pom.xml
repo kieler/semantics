@@ -10,9 +10,9 @@
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
     <elk-version>0.8.1</elk-version>
-    <klighd-version>2.2.1-SNAPSHOT</klighd-version> <!-- FIXME: use release version. -->
+    <klighd-version>2.3.0.v20230606</klighd-version>
     <lsp4j-version>0.15.0</lsp4j-version>
-    <pragmatics-version>0.50.0-SNAPSHOT</pragmatics-version> <!-- FIXME: use release version. -->
+    <pragmatics-version>0.50.0.v20230607</pragmatics-version>
     <tycho-version>2.7.3</tycho-version>
     <xtend-version>2.28.0</xtend-version>
     <xtext-version>2.28.0</xtext-version>
@@ -136,16 +136,15 @@
     </pluginRepository>
   </pluginRepositories>
 
-  <repositories>
-    <!-- FIXME: remove this again when artifacts have found a place on the internet. Temporary Maven repository hosting our artifacts. -->
-    <!-- <repository>
-      <id>rtsys</id>
-      <url>https://rtsys.informatik.uni-kiel.de/~kieler/files/repo/</url>
-    </repository> -->
-  </repositories>
-
-
   <build>
+    <resources>
+      <resource>
+        <directory>.</directory>
+         <includes>
+           <include>META-INF/services/**</include>
+         </includes>
+      </resource>
+    </resources>
     <plugins>
       <!-- we need tycho plugin to build eclipse plugins -->
       <plugin>
