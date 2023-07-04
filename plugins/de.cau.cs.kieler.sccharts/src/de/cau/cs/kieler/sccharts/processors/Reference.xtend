@@ -721,46 +721,11 @@ class Reference extends SCChartsProcessor implements Traceable {
             "\" is unknown to the reference transformation. It is ignored.", expression, true)
     }
 
-    /** Replace valuzed object references in assignments. */
+    /** Replace valued object references in assignments. */
     protected dispatch def void replaceReferences(Assignment assignment, Replacements replacements) {
-        // Delegate the expression replacement.
+        // Delegate the replacement.
         assignment.expression?.replaceReferences(replacements)
-        
-        if (assignment.reference !== null) { // Assignments in SCL may not have VOs
-            // Check if there is a replacement.
-            val newRef = replacements.peek(assignment.valuedObject)
-            if (newRef !== null) {
-                if (newRef instanceof ValuedObjectReference) { 
-                    assignment.valuedObject = newRef.valuedObject
-                    if (assignment.indices.empty && !newRef.indices.empty) {
-                        // Array indices were bound to a scalar. Add the right indices.
-                        for (index : newRef.indices) {
-                            if (index instanceof Value) {
-                                assignment.indices += index.copy  
-                            } else {
-                                val vor = index.copy
-                                vor.replaceReferences(replacements)
-                                assignment.indices += vor
-                            } 
-                        }
-                    } else {
-                        // The assign already assigned to an array. Just fix the references.
-                        for (index : assignment.indices) {
-                            index.replaceReferences(replacements)
-                        }     
-                    }
-                } else {
-                    environment.errors.add("A binding for the valued object \"" + assignment.valuedObject.name + 
-                        "\" in an assignment exists, but is not another valued object.\n" + 
-                        "The type \"" + newRef.class.getName + "\" is not supported.", assignment, true)
-                }
-            } else {
-                // The valued object itself is not bound. However, the indices could be; transform.
-                for (index : assignment.indices) {
-                    index.replaceReferences(replacements)
-                }     
-            }
-        }
+        assignment.reference?.replaceReferences(replacements)
     }
     
     /** Replace valued object references in emissions. */

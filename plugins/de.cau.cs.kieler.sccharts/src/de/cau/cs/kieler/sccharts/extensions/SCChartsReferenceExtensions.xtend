@@ -400,16 +400,15 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
         decls += separated
     }
     
-    def boolean fixMemberAssociation(ValuedObjectReference ref, boolean recursive) {
+    def void fixMemberAssociation(ValuedObjectReference ref, boolean recursive) {
         if (ref !== null && ref.subReference !== null) {
             if (ref.valuedObject?.declaration instanceof ClassDeclaration) {
-                return ref.subReference.fixMemberAssociationForSubReference(recursive)
+                ref.subReference.fixMemberAssociationForSubReference(recursive)
             }
         }
-        return false
     }
     
-    def boolean fixMemberAssociationForSubReference(ValuedObjectReference ref, boolean recursive) {
+    def void fixMemberAssociationForSubReference(ValuedObjectReference ref, boolean recursive) {
         if (ref !== null) {
             val parent = ref.eContainer
             if (parent instanceof ValuedObjectReference) {
@@ -438,7 +437,6 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
                 }
             }
         }
-        return false
     }
     
     def isModuleCall(ScopeCall sc) {
