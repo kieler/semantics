@@ -323,10 +323,10 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                                 
                                 for (scope : state.allScopes.toIterable) {
                                     for (access : scope.allContainedActions.map[eAllContents.filter(ValuedObjectReference).filter[valuedObject == clock]].flatten.toIterable) {
-                                        if (access.eContainer instanceof Assignment) {
-                                            val asm = access.eContainer as Assignment
-                                            if (asm.reference == access) {// write
-                                                if ((access.eContainer as Assignment).operator == AssignOperator.ASSIGN) { // absolute
+                                        if (access.topmostReference.eContainer instanceof Assignment) {
+                                            val asm = access.topmostReference.eContainer as Assignment
+                                            if (asm.reference == access || asm.reference.eAllContents.contains(access)) {// write
+                                                if (asm.operator == AssignOperator.ASSIGN) { // absolute
                                                     asm.schedule += createScheduleReference(sd, 1)
                                                 } else { // relative
                                                     asm.schedule += createScheduleReference(sd, 2)
@@ -346,25 +346,22 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                                 
                                 // increment                      
                                 state.createDuringAction => [
+                                    val asm = createAssignment
+                                    it.effects += asm
+                                    asm.operator = AssignOperator.ASSIGNADD
+                                    asm.schedule += createScheduleReference(sd, 0)
+                                    asm.reference = clock.fullReference
                                     if (clock.declaration.hasAnnotation(LOGICAL_NAME)) {
-                                        it.createAssignment(clock,
-                                            createAddExpression(
-                                                createPreExpression(deviation.reference),
-                                                createSubExpression(deltaT.reference, deviation.reference)
-                                            )
-                                        ) => [
-                                            operator = AssignOperator.ASSIGNADD
-                                            schedule += createScheduleReference(sd, 0)
-                                        ]
+                                        asm.expression = createAddExpression(
+                                            createPreExpression(deviation.reference),
+                                            createSubExpression(deltaT.reference, deviation.reference)
+                                        )
                                     } else {
-                                        it.createAssignment(clock, deltaT.reference) => [
-                                            operator = AssignOperator.ASSIGNADD
-                                            schedule += createScheduleReference(sd, 0)
-                                        ]
+                                        asm.expression = deltaT.reference
                                     }
                                 ]
                             } else {
-                                // Increment clocks in each state -> no support of hierachy or concurrency
+                                // Increment clocks in each state -> no support of hierarchy or concurrency
                                 var region = state.controlflowRegions.head
                                 if (state.controlflowRegions.size > 1) {
                                     val regionsUsingClock = newLinkedList
@@ -399,15 +396,17 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                                         
                                         // time progress
                                         subState.createDuringAction => [
+                                            val asm = createAssignment
+                                            it.effects += asm
+                                            asm.operator = AssignOperator.ASSIGNADD
+                                            asm.reference = clock.fullReference
                                             if (clock.declaration.hasAnnotation(LOGICAL_NAME)) {
-                                                it.createAssignment(clock, 
-                                                    createAddExpression(
-                                                        createPreExpression(deviation.reference),
-                                                        createSubExpression(deltaT.reference, deviation.reference)
-                                                    )
-                                                ) => [operator = AssignOperator.ASSIGNADD]
+                                                asm.expression = createAddExpression(
+                                                    createPreExpression(deviation.reference),
+                                                    createSubExpression(deltaT.reference, deviation.reference)
+                                                )
                                             } else {
-                                                it.createAssignment(clock, deltaT.reference) => [operator = AssignOperator.ASSIGNADD]
+                                                asm.expression = deltaT.reference
                                             }
                                         ]
                                         
@@ -430,10 +429,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
         val complexConstraints = <OperatorExpression>newArrayList
         for (trans : state.outgoingTransitions.filter[trigger !== null]) {
             for (vor : trans.trigger.eAllContents.filter(ValuedObjectReference).filter[valuedObject == clock].toIterable) {
-                var EObject exp = vor
-                while (exp instanceof ValuedObjectReference) {
-                    exp = exp.eContainer
-                }
+                var EObject exp = vor.topmostReference.eContainer
                 if (exp instanceof OperatorExpression) {
                     if (exp.subExpressions.size == 2) {
                         if (exp.subExpressions.filter(ValuedObjectReference).size == 1 &&
@@ -473,14 +469,14 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     environment.errors.add("Malformed timing constraint. Operator "+constraint.operator+" not supported in clock comparison.", constraint)
                 } else {
                     val during = state.createImmediateDuringAction
-                    during.trigger = createLEExpression(clock.reference, exp.copy)
+                    during.trigger = createLEExpression(clock.fullReference, exp.copy)
                     if (clock.declaration.hasAnnotation(LOGICAL_NAME)) {
                         during.createAssignment(sleepT, 
-                            createSubExpression(exp.copy, createAddExpression(clock.reference, deviation.reference))
+                            createSubExpression(exp.copy, createAddExpression(clock.fullReference, deviation.reference))
                         ).operator = AssignOperator.ASSIGNMIN
                     } else {
                         during.createAssignment(sleepT, 
-                            createSubExpression(exp.copy, clock.reference)
+                            createSubExpression(exp.copy, clock.fullReference)
                         ).operator = AssignOperator.ASSIGNMIN
                     }
                     if (state.hasAnnotation(NO_SLEEP_SD_COPY)) {
@@ -558,14 +554,14 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             thresholds.sortInplace
             for (threshold : thresholds.indexed) {
                 val during = state.createImmediateDuringAction
-                during.trigger = createLEExpression(clock.reference, createClockValue(threshold.value))
+                during.trigger = createLEExpression(clock.fullReference, createClockValue(threshold.value))
                 if (clock.declaration.hasAnnotation(LOGICAL_NAME)) {
                     during.createAssignment(sleepT, 
-                        createSubExpression(createClockValue(threshold.value), createAddExpression(clock.reference, deviation.reference))
+                        createSubExpression(createClockValue(threshold.value), createAddExpression(clock.fullReference, deviation.reference))
                     ).operator = AssignOperator.ASSIGNMIN
                 } else {
                     during.createAssignment(sleepT, 
-                        createSubExpression(createClockValue(threshold.value), clock.reference)
+                        createSubExpression(createClockValue(threshold.value), clock.fullReference)
                     ).operator = AssignOperator.ASSIGNMIN
                 }
             }
@@ -645,6 +641,27 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     
     def dispatch createClockValue(String s) {
         createTextExpression(s)
+    }
+    
+    def ValuedObjectReference fullReference(ValuedObject vo) {
+        var ref = vo.reference
+        if (!vo.cardinalities.empty) {
+            environment.errors.add("Cannot yet handle array of clocks.", vo)
+        }
+        while (ref.valuedObject.declaration.isClass) {
+            val clazz = ref.valuedObject.declaration as ClassDeclaration
+            val subRef = ref
+            ref = clazz.valuedObjects.head.reference
+            ref.subReference = subRef
+            
+            if (clazz.valuedObjects.size() > 1) {
+                environment.errors.add("Cannot yet handle clocks in class with multiple instantiations.", vo)
+            }
+            if (!clazz.valuedObjects.head.cardinalities.empty) {
+                environment.errors.add("Cannot yet handle clocks in arrays of class.", vo)
+            }
+        }
+        return ref
     }
     
     static def findDeltaT(State rootState) {
