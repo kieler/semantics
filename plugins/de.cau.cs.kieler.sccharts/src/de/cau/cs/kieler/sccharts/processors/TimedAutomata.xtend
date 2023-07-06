@@ -648,8 +648,8 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
         if (!vo.cardinalities.empty) {
             environment.errors.add("Cannot yet handle array of clocks.", vo)
         }
-        while (ref.valuedObject.declaration.isClass) {
-            val clazz = ref.valuedObject.declaration as ClassDeclaration
+        while (ref.valuedObject.declaration.enclosingClass !== null) {
+            val clazz = ref.valuedObject.declaration.enclosingClass
             val subRef = ref
             ref = clazz.valuedObjects.head.reference
             ref.subReference = subRef
