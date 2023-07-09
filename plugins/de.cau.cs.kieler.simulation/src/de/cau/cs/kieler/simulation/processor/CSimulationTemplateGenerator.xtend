@@ -297,7 +297,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
         val store = VariableStore.getVariableStore(environment)
         val members = store.orderedVariables.filter[variable.value.containerName.equals(value.encapsulatedIn)]
         return '''
-            «FOR member : members»
+            «FOR member : members.dropHostTypes.dropBlacklisted»
                 // Add member «member.key.simpleName»
                 «member.serialize(accessPrefix, item, null, null, depth + 1)»
             «ENDFOR»
