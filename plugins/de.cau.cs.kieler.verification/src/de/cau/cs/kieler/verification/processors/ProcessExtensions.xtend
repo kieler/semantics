@@ -60,6 +60,34 @@ class ProcessExtensions {
         return stringBuffer.toString
     }
     
+    
+    /**
+     * Read from the inputStream (i.e. output) of proc, until proc is finished OR until it is canceled. 
+     * When finished or canceled, returns with the output that was read so far. 
+     */
+    public static def String readUntilFinishedOrCanceled(Process proc, Function<Void, Boolean> processCanceled){
+        var boolean finished = !proc.isAlive
+        var boolean canceled = processCanceled.apply(null)
+        val stringBuffer = new StringBuffer
+        val inputStream = proc.inputStream
+        while(!canceled && !finished && proc.isAlive) {
+            //Check if reading shall stop or not
+            canceled = processCanceled.apply(null)
+            finished = proc.waitFor(5, TimeUnit.MILLISECONDS)
+            //Read available data (the stream can still contain valid data if the process is finished) 
+            while(inputStream.available > 0) {
+                val int b = inputStream.read
+                if(b != -1){
+                    stringBuffer.append( b as char )
+                }
+            }
+        }
+        if(canceled) {
+            proc.kill
+        }
+        return stringBuffer.toString
+    }
+    
     /**
      * Kills the given process. On Linux / Unix also all child processes are killed.
      * This differs from destroyForcibly(), where child processes will remain as orphans

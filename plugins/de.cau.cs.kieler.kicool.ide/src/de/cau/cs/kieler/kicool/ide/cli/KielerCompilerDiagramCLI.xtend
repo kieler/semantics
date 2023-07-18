@@ -74,12 +74,6 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
         cl.caseInsensitiveEnumValuesAllowed = true // case insensitive format
         System.exit(cl.execute(args))
     }
-    
-    val KlighdDataManager kdm = KlighdDataManager.getInstance()
-
-    new() {
-        KlighdStandaloneSetup.initialize
-    }
 
     override protected saveModel(Object model, File dest, File source, CompilationContext cc) {
         if (diagram || onlyDiagram) {
@@ -88,7 +82,6 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
                 if(!success) return false
             }
             try {
-                // Find synthesis
                 if (model instanceof CodeContainer
                     || model instanceof ExecutableContainer || model instanceof ExecutableContainerWrapper
                     || model instanceof String || model instanceof CharSequence
@@ -97,7 +90,10 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
                     return true
                 }
                 
+                val kdm = initializeKlighd()
                 var ISynthesis synthesis = null
+                
+                // Find synthesis
                 if (!requestedSynthesisId.nullOrEmpty) {
                     synthesis = kdm.getDiagramSynthesisById(requestedSynthesisId)
                     if (synthesis === null) {
@@ -217,6 +213,7 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
         if (listAllSyntheses) {
             println("All available diagram syntheses (<id> [<input-type>]):")
             try {
+                val kdm = initializeKlighd()
                 // FIXME Klighd should have API to access registered syntheses 
                 val field = kdm.class.getDeclaredField("idSynthesisMapping") => [accessible = true]
                 val syntheses = field.get(kdm) as Map<String, ISynthesis>
@@ -269,6 +266,16 @@ class KielerCompilerDiagramCLI extends KielerCompilerCLI {
             if (verbose) println("Could not parse value \"%s\" for synthesis option \"%s\"".format(value, option.name))
         }
         return null;
+    }
+    
+    private var KlighdDataManager _kdm;
+    protected def KlighdDataManager initializeKlighd() {
+        // Lazy loading of KlighdDataManager ensures that syntheses are loaded after external jars were put on the class path  
+        if (_kdm === null) {
+            KlighdStandaloneSetup.initialize();
+            _kdm = KlighdDataManager.getInstance();
+        }
+        return _kdm;
     }
 
 }

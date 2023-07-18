@@ -19,13 +19,12 @@ import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
 import de.cau.cs.kieler.verification.processors.RunModelCheckerProcessorBase
 import java.io.File
+import java.nio.file.Path
 import java.util.List
-import org.eclipse.core.resources.IFile
-import org.eclipse.core.runtime.IPath
 
-import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 import static extension de.cau.cs.kieler.verification.codegen.CodeGeneratorExtensions.*
 import static extension de.cau.cs.kieler.verification.codegen.SmvCodeGeneratorExtensions.*
+import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 import static extension de.cau.cs.kieler.verification.processors.ProcessExtensions.*
 
 /**
@@ -43,14 +42,14 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
      * @param smvFile File containing the smv code
      * @param property The property to be checked
      */
-    abstract protected def List<String> getProcessBuilderCommandList(IFile smvFile, VerificationProperty property)
+    abstract protected def List<String> getProcessBuilderCommandList(File smvFile, VerificationProperty property)
     
     override getType() {
         return ProcessorType.DEVELOPER
     }
     
     override process() {
-        if(!compilationContext.isVerificationContext) {
+        if(!compilationContext.hasVerificationContext || !compilationContext.verificationContext.verify) {
             return
         }
         
@@ -86,7 +85,7 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
      * @param smvFile File containing the smv code
      * @param property The property to be checked
      */
-    protected def getInteractiveCommands(IFile smvFile, VerificationProperty property) {
+    protected def getInteractiveCommands(File smvFile, VerificationProperty property) {
         var List<String> interactiveCommands = DEFAULT_INTERACTIVE_COMMANDS
         
         // Get custom commands
@@ -128,13 +127,13 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
         return interactiveCommandsWithoutPlaceholders
     }
     
-    private def String runModelChecker(IFile smvFile, VerificationProperty property) {
+    private def String runModelChecker(File smvFile, VerificationProperty property) {
         // Get commands to start a new process and the commands to be sent to the new process
         val List<String> processCommand = getProcessBuilderCommandList(smvFile, property)
         val interactiveCommands = getInteractiveCommands(smvFile, property)
         // Create process
         val processBuilder = new ProcessBuilder()
-        processBuilder.directory(new File(smvFile.parent.location.toOSString))
+        processBuilder.directory(smvFile.parentFile)
         processBuilder.command(timeCommand + processCommand)
         processBuilder.redirectErrorStream(true)
         val process = processBuilder.startVerificationProcess
@@ -151,7 +150,8 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
             process.outputStream.flush
             // Update the property so the user sees, which command is executed now
             updateTaskDescriptionAndNotify(property, '''Running Model Checker... «command»...''')
-            // Add the sent command to the outputBuffer, so one can understand what happened when viewing the log
+            // Add the sent command to the outputBuffer, 
+            // so one can understand what happened when viewing the log
             // TODO: The position in the ouput is sometimes not correct (race condition) 
             outputBuffer.append(commandWithNewline)
             // Wait for new output from the process
@@ -159,16 +159,15 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
             throwIfCanceled
             outputBuffer.append(process.readInputStream)
         }
-        // Wait until the process is done with all commands
-        process.waitForTermination([ return isCanceled() ])
-        outputBuffer.append(process.readInputStream)
-        // Get combined process output
+        // Read until process is finished or a cancel request has been made.
+        outputBuffer.append(process.readUntilFinishedOrCanceled([ return isCanceled() ]))
         val processOutput = outputBuffer.toString
+        
         throwIfCanceled
         return processBuilder.command.toString.replace("\n", "\\n") + "\n" + processOutput
     }
     
-    private def void updateVerificationResult(IFile processOutputFile, String processOutput, VerificationProperty property) {
+    private def void updateVerificationResult(File processOutputFile, String processOutput, VerificationProperty property) {
         property.processOutputFile = processOutputFile
         property.updateTaskDescriptionAndNotify("Parsing model checker output...")
         val interpreter = new NuxmvOutputInterpreter(processOutput, verificationContext.createCounterexamples)
@@ -205,11 +204,11 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
         return smvFormulaSimplified == propertyFormulaSimplified
     }
     
-    private def IPath getSmvFilePath() {
+    private def Path getSmvFilePath() {
         return getOutputFile(verificationContext.verificationModelFile.nameWithoutExtension+".smv")
     }
   
-    private def IPath getProcessOutputFilePath(VerificationProperty property) {
+    private def Path getProcessOutputFilePath(VerificationProperty property) {
         return getOutputFile(property, ".smv.log")
     }
     

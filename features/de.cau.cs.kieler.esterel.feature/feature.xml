@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature id="de.cau.cs.kieler.esterel.feature" label="KIELER Esterel/Lustre" version="1.3.0.qualifier" provider-name="Kiel University" plugin="de.cau.cs.kieler.esterel.ui">
+<feature id="de.cau.cs.kieler.esterel.feature" label="KIELER Esterel/Lustre" version="1.4.0.qualifier" provider-name="Kiel University" plugin="de.cau.cs.kieler.esterel.ui">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
       KIELER Esterel feature contains an Xtext based full featured textual Esterel and Lustre editor.

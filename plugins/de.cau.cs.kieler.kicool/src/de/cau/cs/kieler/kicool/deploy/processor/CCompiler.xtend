@@ -119,7 +119,6 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
         
         val gcc = newArrayList(environment.getProperty(CC_PATH)?:CC_PATH.^default)
         gcc += "-std=c99"
-        gcc += "-lm"
         if (environment.getProperty(VERBOSE)) {
             gcc += "-v"
         }
@@ -141,6 +140,7 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
             }
         }
         gcc += sourcePaths
+        gcc += "-lm"
         
         // Run c compiler
         var success = gcc.invoke(infra.generatedCodeFolder)?:-1 == 0

@@ -75,11 +75,9 @@ class RegionActionsAndDeclarations extends SCChartsProcessor implements Traceabl
                 region.parentState.declarations.addAll(region.declarations)
                 
             } else {
-                val newState = createInitialState(region.name)
-                newState.label = ""
+                val newState = createInitialState(GENERATED_PREFIX + "region" + GENERATED_PREFIX + (region.name?:"unnamed"))
                 val newRegion = newState.createControlflowRegion(region.name)
                 newRegion.label = region.label
-                region.label = ""
                 
                 // move content     
                 newRegion.states.addAll(region.states)

@@ -8,7 +8,7 @@
   </parent>
   <groupId>de.cau.cs.kieler</groupId>
   <artifactId>de.cau.cs.kieler.lustre.test</artifactId>
-  <version>1.3.0-SNAPSHOT</version>
+  <version>1.4.0-SNAPSHOT</version>
   <packaging>eclipse-test-plugin</packaging>
   <build>
     <sourceDirectory>src</sourceDirectory>
