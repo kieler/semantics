@@ -15,6 +15,7 @@ package de.cau.cs.kieler.language.server
 import de.cau.cs.kieler.core.ls.ILSSetup
 import de.cau.cs.kieler.core.services.KielerServiceLoader
 import de.cau.cs.kieler.pragmatics.language.server.PragmaticsLanguageRegistration
+import org.xtext.example.balloontrees.ide.BalloonTreesIdeSetup
 
 /**
  * Binds and registers all {@link ILSSetupContribution}s.
@@ -29,5 +30,7 @@ class LanguageRegistration extends PragmaticsLanguageRegistration {
         for (ideSetup: KielerServiceLoader.load(ILSSetup)) {
             ideSetup.doLSSetup()
         }
+        
+        BalloonTreesIdeSetup.doSetup()
     }
 }
