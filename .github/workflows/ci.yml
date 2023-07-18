@@ -5,9 +5,12 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: 
+      - master
+      - 'release-*'
   pull_request:
-    branches: [ master ]
+    branches: 
+      - master
   workflow_dispatch: # manual triggering, for debugging purposes
 
 jobs:
@@ -33,10 +36,10 @@ jobs:
             ${{ runner.os }}-maven-
 
       # Maven build update site
-      - name: Build update site
-        run: MAVEN_OPTS="-Xmx2048M" mvn --update-snapshots clean verify -P semantics --file build/pom.xml
-      
-      # Maven build products
+      #- name: Build update site
+      #  run: MAVEN_OPTS="-Xmx2048M" mvn --update-snapshots clean verify -P semantics --file build/pom.xml
+
+      # Maven build products (including update site)
       - name: Build products
         run: MAVEN_OPTS="-Xmx2048M" mvn --update-snapshots clean package -P semantics.product --file build/pom.xml
 
@@ -44,10 +47,31 @@ jobs:
 
       # Archive Repository
       - name: Archive Semantics Repository Artifact
+        if: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/release-') }}
         uses: actions/upload-artifact@v2
         with:
           name: Semantics Repository Artifact
           path: build/de.cau.cs.kieler.semantics.repository/target/repository/
+          if-no-files-found: error
+
+      # Collect and Archive all Products
+      - name: Collect All Products
+        if: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/release-') }}
+        run: |
+          mkdir products
+          cp -r build/de.cau.cs.kieler.semantics.product.repository/target/products/sccharts_rca_* products/
+          mkdir products/cli
+          cp -r build/de.cau.cs.kieler.kicool.cli/target/exe/* products/cli
+          cp -r build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/* products/cli
+          cp -r build/de.cau.cs.kieler.sccharts.cli/target/exe/* products/cli
+          mkdir products/ls
+          cp -r build/de.cau.cs.kieler.language.server.cli/target/exe/* products/ls
+      - name: Archive All Products
+        if: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/release-') }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: All Semantics Products
+          path: products
           if-no-files-found: error
 
       # Archive Eclipse RCA
@@ -55,21 +79,21 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: KIELER RCA Windows
-          path: build/de.cau.cs.kieler.semantics.product.repository/target/products/sccharts_rca_nightly_*-linux.gtk.x86_64.tar.gz
+          path: build/de.cau.cs.kieler.semantics.product.repository/target/products/sccharts_rca_*-win32.win32.x86_64.zip
           if-no-files-found: error
 
       - name: Archive KIELER Semantics RCA Linux
         uses: actions/upload-artifact@v2
         with:
           name: KIELER RCA Linux
-          path: build/de.cau.cs.kieler.semantics.product.repository/target/products/sccharts_rca_nightly_*-win32.win32.x86_64.zip
+          path: build/de.cau.cs.kieler.semantics.product.repository/target/products/sccharts_rca_*-linux.gtk.x86_64.tar.gz
           if-no-files-found: error
 
       - name: Archive KIELER Semantics RCA MacOS
         uses: actions/upload-artifact@v2
         with:
           name: KIELER RCA MacOS
-          path: build/de.cau.cs.kieler.semantics.product.repository/target/products/sccharts_rca_nightly_*-macosx.cocoa.x86_64.tar.gz
+          path: build/de.cau.cs.kieler.semantics.product.repository/target/products/sccharts_rca_*-macosx.cocoa.x86_64.tar.gz
           if-no-files-found: error
 
       # Kieler Compiler CLI
@@ -80,26 +104,26 @@ jobs:
           path: build/de.cau.cs.kieler.kicool.cli/target/exe/kico.jar
           if-no-files-found: error
 
-      - name: Archive KIELER Compiler CLI Windows
-        uses: actions/upload-artifact@v2
-        with:
-          name: KIELER Compiler CLI Windows
-          path: build/de.cau.cs.kieler.kicool.cli/target/exe/kico-win.bat
-          if-no-files-found: error
+      # - name: Archive KIELER Compiler CLI Windows
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: KIELER Compiler CLI Windows
+      #     path: build/de.cau.cs.kieler.kicool.cli/target/exe/kico-win.bat
+      #     if-no-files-found: error
 
-      - name: Archive KIELER Compiler CLI Linux
-        uses: actions/upload-artifact@v2
-        with:
-          name: KIELER Compiler CLI Linux
-          path: build/de.cau.cs.kieler.kicool.cli/target/exe/kico-linux
-          if-no-files-found: error
+      # - name: Archive KIELER Compiler CLI Linux
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: KIELER Compiler CLI Linux
+      #     path: build/de.cau.cs.kieler.kicool.cli/target/exe/kico-linux
+      #     if-no-files-found: error
 
-      - name: Archive KIELER Compiler CLI MacOS
-        uses: actions/upload-artifact@v2
-        with:
-          name: KIELER Compiler CLI MacOS
-          path: build/de.cau.cs.kieler.kicool.cli/target/exe/kico-osx
-          if-no-files-found: error
+      # - name: Archive KIELER Compiler CLI MacOS
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: KIELER Compiler CLI MacOS
+      #     path: build/de.cau.cs.kieler.kicool.cli/target/exe/kico-osx
+      #     if-no-files-found: error
 
       # Kieler Compiler Diagrams CLI
       - name: Archive KIELER Compiler Diagrams CLI Windows Jar
@@ -123,26 +147,26 @@ jobs:
           path: build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/kicodia.osx.jar
           if-no-files-found: error
 
-      - name: Archive KIELER Compiler Diagrams CLI Windows
-        uses: actions/upload-artifact@v2
-        with:
-          name: KIELER Compiler Diagrams CLI Windows
-          path: build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/kicodia-win.bat
-          if-no-files-found: error
+      # - name: Archive KIELER Compiler Diagrams CLI Windows
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: KIELER Compiler Diagrams CLI Windows
+      #     path: build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/kicodia-win.bat
+      #     if-no-files-found: error
 
-      - name: Archive KIELER Compiler Diagrams CLI Linux
-        uses: actions/upload-artifact@v2
-        with:
-          name: KIELER Compiler Diagrams CLI Linux
-          path: build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/kicodia-linux
-          if-no-files-found: error
+      # - name: Archive KIELER Compiler Diagrams CLI Linux
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: KIELER Compiler Diagrams CLI Linux
+      #     path: build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/kicodia-linux
+      #     if-no-files-found: error
 
-      - name: Archive KIELER Compiler Diagrams CLI MacOS
-        uses: actions/upload-artifact@v2
-        with:
-          name: KIELER Compiler Diagrams CLI MacOS
-          path: build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/kicodia-osx
-          if-no-files-found: error
+      # - name: Archive KIELER Compiler Diagrams CLI MacOS
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: KIELER Compiler Diagrams CLI MacOS
+      #     path: build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/kicodia-osx
+      #     if-no-files-found: error
 
       # SCCharts Compiler CLI
       - name: Archive SCCharts Compiler CLI Jar
@@ -152,26 +176,26 @@ jobs:
           path: build/de.cau.cs.kieler.sccharts.cli/target/exe/scc.jar
           if-no-files-found: error
 
-      - name: Archive SCCharts Compiler CLI Windows
-        uses: actions/upload-artifact@v2
-        with:
-          name: SCCharts Compiler CLI Windows
-          path: build/de.cau.cs.kieler.sccharts.cli/target/exe/scc-win.bat
-          if-no-files-found: error
+      # - name: Archive SCCharts Compiler CLI Windows
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: SCCharts Compiler CLI Windows
+      #     path: build/de.cau.cs.kieler.sccharts.cli/target/exe/scc-win.bat
+      #     if-no-files-found: error
 
-      - name: Archive SCCharts Compiler CLI Linux
-        uses: actions/upload-artifact@v2
-        with:
-          name: SCCharts Compiler CLI Linux
-          path: build/de.cau.cs.kieler.sccharts.cli/target/exe/scc-linux
-          if-no-files-found: error
+      # - name: Archive SCCharts Compiler CLI Linux
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: SCCharts Compiler CLI Linux
+      #     path: build/de.cau.cs.kieler.sccharts.cli/target/exe/scc-linux
+      #     if-no-files-found: error
 
-      - name: Archive SCCharts Compiler CLI MacOS
-        uses: actions/upload-artifact@v2
-        with:
-          name: SCCharts Compiler CLI MacOS
-          path: build/de.cau.cs.kieler.sccharts.cli/target/exe/scc-osx
-          if-no-files-found: error
+      # - name: Archive SCCharts Compiler CLI MacOS
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: SCCharts Compiler CLI MacOS
+      #     path: build/de.cau.cs.kieler.sccharts.cli/target/exe/scc-osx
+      #     if-no-files-found: error
 
       # Kieler Language Server
       - name: Archive KIELER Language Server Windows

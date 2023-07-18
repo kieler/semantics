@@ -12,13 +12,18 @@
  */
 package de.cau.cs.kieler.language.server
 
+import com.google.inject.name.Names
 import de.cau.cs.kieler.core.services.KielerServiceLoader
+import de.cau.cs.kieler.kgraph.text.services.KGraphGrammarAccess
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageClient
 import de.cau.cs.kieler.klighd.lsp.interactive.layered.LayeredInteractiveLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.interactive.rectpacking.RectpackingInteractiveLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.launch.AbstractLsCreator
 import java.util.List
+import org.eclipse.xtext.Constants
+import org.eclipse.xtext.IGrammarAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
+import org.eclipse.xtext.util.Modules2
 
 /** 
  * Provides methods to create a LS.
@@ -35,6 +40,16 @@ class LSCreator extends AbstractLsCreator {
     List<ILSDiagramHighlighter> diagramHighlighters
     
     List<ILanguageServerExtension> iLanguageServerExtensions
+    
+    override createLSModules(boolean socket) {
+        return Modules2.mixin(
+            super.createLSModules(socket),
+            [
+                bind(IGrammarAccess).to(KGraphGrammarAccess)
+                bind(String).annotatedWith(Names.named(Constants.LANGUAGE_NAME)).toInstance("de.cau.cs.kieler.kgraph.text.KGraph");    
+            ]    
+        )
+    }
     
     override getLanguageServerExtensions() {
         constraints = injector.getInstance(LayeredInteractiveLanguageServerExtension)

@@ -68,4 +68,17 @@ interface KeithLanguageClient extends KGraphLanguageClient, LanguageClient {
      */
     @JsonNotification("simulation/started")
     def void startedSimulation(Object message)
+    
+    /**
+     * Send to client if verification properties were requested.
+     * The send object should be {@code VerificationPropertiesMessage}.
+     */
+    @JsonNotification("verification/properties")
+    def void sendVerificationProperties(Object props)   
+        
+    /**
+     * Send to client if verification properties are updated due to running the model checker.
+     */
+    @JsonNotification("verification/update-property-status")
+    def void sendPropertyStatus(Object id, Object status, Object counterexampleUri)
 }
