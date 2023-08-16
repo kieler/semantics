@@ -9,13 +9,18 @@
 
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
+    <!-- Language server dependency versions -->
     <elk-version>0.8.1</elk-version>
     <klighd-version>2.3.0.v20230606</klighd-version>
     <lsp4j-version>0.15.0</lsp4j-version>
     <pragmatics-version>0.50.0.v20230607</pragmatics-version>
-    <tycho-version>2.7.3</tycho-version>
+
+    <!-- Xtext compile dependency versions -->
     <xtend-version>2.28.0</xtend-version>
     <xtext-version>2.28.0</xtext-version>
+
+    <!-- Tycho version -->
+    <tycho-version>2.7.5</tycho-version>
 
     <targetJdk>11</targetJdk>
     <maven.compiler.source>11</maven.compiler.source>
