@@ -70,6 +70,7 @@
         <module>de.cau.cs.kieler.kicool.cli</module>
         <module>de.cau.cs.kieler.kicool.klighd.cli</module>
         <module>de.cau.cs.kieler.language.server.cli</module>
+        <module>../language-server</module>
         <module>../test/de.cau.cs.kieler.cli.test</module>
       </modules>
     </profile>
@@ -96,6 +97,7 @@
         <module>de.cau.cs.kieler.kicool.cli</module>
         <module>de.cau.cs.kieler.kicool.klighd.cli</module>
         <module>de.cau.cs.kieler.language.server.cli</module>
+        <module>../language-server</module>
       </modules>
     </profile>
 
@@ -112,6 +114,7 @@
         <module>de.cau.cs.kieler.kicool.cli</module>
         <module>de.cau.cs.kieler.kicool.klighd.cli</module>
         <module>de.cau.cs.kieler.language.server.cli</module>
+        <module>../language-server</module>
       </modules>
     </profile>
 
@@ -121,6 +124,7 @@
         <module>../plugins</module>
         <module>de.cau.cs.kieler.semantics.targetplatform</module>
         <module>de.cau.cs.kieler.language.server.cli</module>
+        <module>../language-server</module>
       </modules>
     </profile>  
   

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry including="**/*.java" kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="xtend-gen"/>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.annotations"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.annotations.ide"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.esterel"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.esterel.compiler"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.esterel.ide"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.kexpressions"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.kexpressions.ide"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.kicool"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.kicool.ide"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.kicool.ui"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.kivis"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.kivis.ide"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.lustre"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.lustre.compiler"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.lustre.ide"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.sccharts"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.sccharts.ide"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.sccharts.ui"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.scg"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.scg.klighd"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.scl"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.scl.ide"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.simulation"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.simulation.ide"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.cau.cs.kieler.verification"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
