@@ -463,14 +463,14 @@
             versionRange="2.7.0"/>
         <requirement
             name="org.eclipse.xtext.sdk.feature.group"
-            versionRange="[2.28.0,2.29.0)"/>
+            versionRange="[2.31.0,2.32.0)"/>
         <requirement
             name="org.eclipse.emf.mwe2.launcher.feature.group"/>
         <requirement
             name="org.eclipse.emf.compare.feature.group"/>
         <requirement
             name="org.eclipse.lsp4j.sdk.feature.group"
-            versionRange="[0.15.0,0.16.0)"/>
+            versionRange="[0.21.0,0.22.0)"/>
         <requirement
             name="org.eclipse.elk.sdk.feature.feature.group"/>
         <requirement
@@ -530,13 +530,13 @@
         <repositoryList
             name="FixedTarget">
           <repository
-              url="https://download.eclipse.org/releases/2022-09"/>
+              url="https://download.eclipse.org/releases/2023-06"/>
           <repository
-              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20220830213456/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20230531010532/repository/"/>
           <repository
-              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.28.0/"/>
+              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.31.0/"/>
           <repository
-              url="https://download.eclipse.org/lsp4j/updates/releases/0.15.0"/>
+              url="https://download.eclipse.org/lsp4j/updates/releases/0.21.0"/>
           <repository
               url="https://download.eclipse.org/elk/updates/releases/0.8.1/"/>
           <repository
@@ -544,7 +544,7 @@
           <repository
               url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2023-06/"/>
           <repository
-              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/10.0.11/"/>
+              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/10.0.15/"/>
         </repositoryList>
       </targlet>
     </setupTask>
@@ -552,7 +552,7 @@
         xsi:type="setup.p2:P2Task">
       <requirement
           name="org.eclipse.xtext.sdk.feature.group"
-          versionRange="[2.28.0,2.29.0)"/>
+          versionRange="[2.31.0,2.32.0)"/>
       <repository
           url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
     </setupTask>

@@ -12,12 +12,12 @@
     <!-- Language server dependency versions -->
     <elk-version>0.8.1</elk-version>
     <klighd-version>2.3.0.v20230606</klighd-version>
-    <lsp4j-version>0.15.0</lsp4j-version>
+    <lsp4j-version>0.21.0</lsp4j-version>
     <pragmatics-version>0.50.0.v20230607</pragmatics-version>
 
     <!-- Xtext compile dependency versions -->
-    <xtend-version>2.28.0</xtend-version>
-    <xtext-version>2.28.0</xtext-version>
+    <xtend-version>2.31.0</xtend-version>
+    <xtext-version>2.31.0</xtext-version>
 
     <!-- Tycho version -->
     <tycho-version>2.7.5</tycho-version>
@@ -70,8 +70,8 @@
         <module>de.cau.cs.kieler.kicool.cli</module>
         <module>de.cau.cs.kieler.kicool.klighd.cli</module>
         <module>de.cau.cs.kieler.language.server.cli</module>
-        <module>../language-server</module>
         <module>../test/de.cau.cs.kieler.cli.test</module>
+        <module>../language-server</module>
       </modules>
     </profile>
   
