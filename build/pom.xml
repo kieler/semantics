@@ -174,18 +174,6 @@
   </repositories>
 
   <pluginRepositories>
-    <!-- maven plugin repositories -->
-    <pluginRepository>
-      <id>central</id>
-      <name>Maven Plugin Repository</name>
-      <url>https://repo1.maven.org/maven2</url>
-    </pluginRepository>
-    <pluginRepository>
-      <id>xtend</id>
-      <layout>default</layout>
-      <url>https://build.eclipse.org/common/xtend/maven</url>
-    </pluginRepository>
-
     <!-- This configuration is based on the Xtext example project (https://github.com/xtext/maven-xtext-example) and prevents weird build errors -->
     <pluginRepository>
       <id>codehaus-snapshots</id>
