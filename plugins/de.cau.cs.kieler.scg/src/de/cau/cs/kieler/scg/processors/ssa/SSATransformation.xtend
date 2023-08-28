@@ -24,6 +24,10 @@ import de.cau.cs.kieler.scg.processors.SCGAnnotations
 
 import static de.cau.cs.kieler.scg.processors.ssa.SSAFunction.*
 import static de.cau.cs.kieler.scg.processors.ssa.SSAParameterProperty.*
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtEnumExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * The SSA transformation for SCGs
@@ -59,6 +63,8 @@ class SSATransformation extends InplaceProcessor<SCGraphs> implements Traceable 
     @Inject extension AnnotationsExtensions
     @Inject extension SSATransformationExtensions
     @Inject extension SSACoreExtensions
+    @Inject extension KExtEnumExtensions
+    @Inject extension KExpressionsDeclarationExtensions
 
     // -------------------------------------------------------------------------
     def SCGraph transform(SCGraph scg) {
@@ -73,8 +79,24 @@ class SSATransformation extends InplaceProcessor<SCGraphs> implements Traceable 
         
         val entryBB = scg.basicBlocks.head
         
+        // Temporarily replace enum refs with variable decls
+        val enumRefs = newHashMap
+        for (d : scg.declarations.filter(ReferenceDeclaration).filter[isEnumRef]) {
+            val decl = createDeclaration() => [
+                input = d.input
+                output = d.output
+                type = ValueType.ENUM
+                valuedObjects += d.valuedObjects
+            ]
+            enumRefs.put(d, decl)
+        }
+        for (kv : enumRefs.entrySet) {
+            scg.declarations.add(scg.declarations.indexOf(kv.key), kv.value)
+            scg.declarations.remove(kv.key)
+        }
+        
         // Create new declarations for SSA versions
-        val ssaDecl = scg.createSSADeclarations
+        val ssaDecls = scg.createSSADeclarations
         val dt = new DominatorTree(scg)
         
         // ---------------
@@ -86,7 +108,7 @@ class SSATransformation extends InplaceProcessor<SCGraphs> implements Traceable 
         // ---------------
         // 2. Renaming
         // ---------------
-        val parameters = dt.rename(entryBB, ssaDecl)[isSSA(PHI)]
+        val parameters = dt.rename(entryBB, ssaDecls)[isSSA(PHI)]
         environment.setProperty(SSA_PARAMETER_PROPERTY, new SSAParameterProperty(parameters))
         scg.annotations += createStringAnnotation(SCGAnnotations.ANNOTATION_SSA, id)
         scg.snapshot
@@ -100,6 +122,18 @@ class SSATransformation extends InplaceProcessor<SCGraphs> implements Traceable 
         // 4. Update SSA VO version numbering
         // ---------------   
         scg.updateSSAVersions
+        
+        // Restore enums
+        for (kv : enumRefs.entrySet) {
+            scg.declarations.add(scg.declarations.indexOf(kv.value), kv.key)
+            kv.key.valuedObjects += kv.value.valuedObjects
+            scg.declarations.remove(kv.value)
+//            for (vo : kv.key.valuedObjects) {
+//                for (ssaDecl : ssaDecls.get(vo)) {
+//                    
+//                }
+//            }
+        }
         
         return scg
     }

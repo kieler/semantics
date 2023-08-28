@@ -48,7 +48,8 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
 
     override generate() {
         assumptions = verificationContext?.verificationAssumptions
-        useIVARinSmvModels = verificationContext?.smvUseIVAR
+        useIVARinSmvModels = verificationContext.smvUseIVAR
+        
         
         incIndentationLevel
         if(useIVARinSmvModels) {
@@ -69,17 +70,21 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
             }
         }
         
-        // Add pre guards
+        // if we use IVARs the "VAR" declaration was ready added
         if(useIVARinSmvModels) {
             appendIndentedLine("VAR")
-        } else {
-            // The VAR keyword was already added for the input variables
         }
+                
+        
         
         appendIndentedLine("_GO : boolean;");
         val store = VariableStore.get(processorInstance.environment)
         for(entry : store.variables.entries) {
             val variableInformation = entry.value
+            if(variableInformation.properties.contains(VariableStore.ENUM)){
+                println("found enum")
+            }
+            
             if(variableInformation.properties.contains(SmvCodeGeneratorModule.PROPERTY_PREGUARD)) {
                 val preGuardName = entry.key
                 val predValuedObject = variableInformation.valuedObject

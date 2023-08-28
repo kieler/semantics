@@ -265,7 +265,9 @@ class SSATransformationExtensions {
             for (n : sb.nodes) {
                 if (!n.isSSA && (n instanceof Assignment || n instanceof Conditional) && !n.isInputPreserver) {
                     val expr = if (n instanceof Assignment) n.asAssignment.expression else n.asConditional.condition
-                    for (ref : expr.allReferences.filter[(!valuedObject.variableDeclaration.input || !SSATransformationExtensions_IGNORE_INPUTS_IN_RENAMING) && !valuedObject.declaration.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME ignored input
+                    for (ref : expr.allReferences.filter[
+                        (!valuedObject.declaration.input || !SSATransformationExtensions_IGNORE_INPUTS_IN_RENAMING) 
+                        && !valuedObject.declaration.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME ignored input
                         val vo = ref.valuedObject
                         ref.valuedObject = ssaDecl.get(vo).valuedObjects.get(stack.get(vo).peek)
                     }

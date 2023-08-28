@@ -44,7 +44,7 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
     protected static val SMV_EXTENSION = ".smv"
         
     private var List<SCGCodeGeneratorModule> codeGeneratorModules
-    private val preVariableToOriginalVariable = <String,String>newHashMap    
+    private val preVariableToOriginalVariable = <String,String>newHashMap
     
     override configure() {
         val declarations = createAndConfigureModule(SmvCodeGeneratorDeclarationsModule)

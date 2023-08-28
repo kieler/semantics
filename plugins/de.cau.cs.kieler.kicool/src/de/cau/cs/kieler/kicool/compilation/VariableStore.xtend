@@ -387,6 +387,10 @@ class VariableInformation {
     @Accessors
     var String containerName
     
+    /** original name of the associated enum */
+    //@Accessors
+    //var String enumName
+    
     override VariableInformation clone() {
         val clone = new VariableInformation
         clone.valuedObject = valuedObject

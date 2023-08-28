@@ -45,7 +45,7 @@ class VerificationContext implements IKiCoolCloneable {
     @Accessors private boolean createCounterexamples = true
     
     // Options for SMV code generation
-    @Accessors private boolean smvUseIVAR = false
+    @Accessors private boolean smvUseIVAR = false // TODO: Add as an option true
     @Accessors private boolean smvIgnoreRangeAssumptions = false
     
     // Options for verification using NuSMV / nuXmv

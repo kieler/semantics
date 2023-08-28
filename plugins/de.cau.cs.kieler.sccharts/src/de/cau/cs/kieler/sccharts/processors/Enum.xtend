@@ -19,6 +19,7 @@ import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.annotations.ReferenceAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -46,13 +47,15 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  */
 class Enum extends SCChartsProcessor implements Traceable {
 
+    public static val TRANSFORM_ENUMS = new Property<Boolean>("de.cau.cs.kieler.sccharts.abort.transformEnums", false) // for testing on false (should be true later)
+
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     public static val ID = "de.cau.cs.kieler.sccharts.processors.enum"
-    
+
     static val CONSOLIDATION_ANNOTATION = "de.cau.cs.kieler.sccharts.processors.enum.consolidation"
-    
+
     override getId() {
         ID
     }
@@ -62,11 +65,14 @@ class Enum extends SCChartsProcessor implements Traceable {
     }
 
     override process() {
+        if (!getProperty(TRANSFORM_ENUMS)) {
+            return
+        }
         setModel(model.transform)
     }
-    
+
     def SCCharts transform(SCCharts sccharts) {
-        sccharts => [ rootStates.forEach[ transform ] ]
+        sccharts => [rootStates.forEach[transform]]
     }
 
     // -------------------------------------------------------------------------
@@ -78,11 +84,13 @@ class Enum extends SCChartsProcessor implements Traceable {
     @Inject extension KExtEnumExtensions
 
     def State transform(State rootState) {
+
+        
         val targetRootState = rootState
 
         val enums = newArrayList
         val enumRefs = newHashMap
-        
+
         // Collect enums
         for (scope : targetRootState.getAllScopes.toIterable) {
             for (decl : scope.declarations) {
@@ -93,16 +101,16 @@ class Enum extends SCChartsProcessor implements Traceable {
                 }
             }
         }
-        
+
         transformEnumAccess(targetRootState)
         transformEnumVars(targetRootState, enumRefs)
-        
+
         // clear enums
-        for(e : enums.filter[!host]) {
+        for (e : enums.filter[!host]) {
             voStore.remove(e.valuedObjects.head)
             e.delete
         }
-        
+
         targetRootState;
     }
 
@@ -113,47 +121,47 @@ class Enum extends SCChartsProcessor implements Traceable {
             val enumVO = enumVOR.valuedObject
             val enumVODecl = enumVO.declaration
             val enumDecl = enumVODecl.enclosingClass
-            
+
             if (!enumDecl.host) {
-                val replacement = enumVO.initialValue !== null ? enumVO.initialValue.copy
-                                                               : createIntValue(enumVODecl.valuedObjects.indexOf(enumVO))
+                val replacement = enumVO.initialValue !== null ? enumVO.initialValue.copy : createIntValue(
+                        enumVODecl.valuedObjects.indexOf(enumVO))
                 replacement.trace(enumVOR)
-    
+
                 var actualVOR = enumVOR
                 while (actualVOR.isSubReference) {
                     actualVOR = actualVOR.eContainer as ValuedObjectReference
                     replacement.trace(actualVOR)
                 }
-    
+
                 actualVOR.replace(replacement)
             }
         }
     }
-    
+
     def void transformEnumVars(Scope scope, java.util.Map<ReferenceDeclaration, ClassDeclaration> enumRefs) {
         for (enumRef : enumRefs.entrySet) {
             val ref = enumRef.key
             val enumDecl = enumRef.value
-            
+
             val newDecl = if (enumDecl.host) {
-                createDeclaration => [
-                    access = ref.access
-                    valuedObjects += ref.valuedObjects
-                    type = ValueType.HOST
-                    hostType = enumDecl.hostType.nullOrEmpty ? enumDecl.valuedObjects.head.name : enumDecl.hostType
-                    addTagAnnotation(VariableStore.ENUM)
-                ]
-            } else {
-                createIntDeclaration => [
-                    access = ref.access
-                    valuedObjects += ref.valuedObjects
-                ]
-            }
+                    createDeclaration => [
+                        access = ref.access
+                        valuedObjects += ref.valuedObjects
+                        type = ValueType.HOST
+                        hostType = enumDecl.hostType.nullOrEmpty ? enumDecl.valuedObjects.head.name : enumDecl.hostType
+                        addTagAnnotation(VariableStore.ENUM)
+                    ]
+                } else {
+                    createIntDeclaration => [
+                        access = ref.access
+                        valuedObjects += ref.valuedObjects
+                    ]
+                }
             newDecl.valuedObjects.forEach[voStore.update(it, VariableStore.ENUM)]
             ref.replace(newDecl)
         }
     }
-    
+
     def consolidateEnumDeclarations(State root) {
         val enums = newHashMap
         val consolidate = newHashMap
@@ -172,18 +180,18 @@ class Enum extends SCChartsProcessor implements Traceable {
             for (e : consolidate.entrySet) {
                 enumsByOrig.put((e.value.getAnnotation(CONSOLIDATION_ANNOTATION) as ReferenceAnnotation).object, e.key)
             }
-            
+
             // copy into root
             for (orig : enumsByOrig.keySet) {
                 if (orig instanceof Declaration) {
                     if (!enums.containsKey(orig)) { // if not already in root
                         val newDecl = orig.copy
                         root.declarations += newDecl
-                        
+
                         val enumVO = newDecl.valuedObjects.head
                         enumVO.name = orig.nextScope.name + "_" + enumVO.name
                         voStore.update(enumVO)
-                        
+
                         for (e : enumsByOrig.get(orig)) {
                             consolidated.put(e, enumVO)
                         }
@@ -194,31 +202,34 @@ class Enum extends SCChartsProcessor implements Traceable {
                     }
                 }
             }
-                       
+
             // fix references
-            for (vor : root.eAllContents.filter(ValuedObjectReference).filter[consolidate.containsKey(valuedObject)].toIterable) {
+            for (vor : root.eAllContents.filter(ValuedObjectReference).filter[consolidate.containsKey(valuedObject)].
+                toIterable) {
                 val newVO = consolidated.get(vor.valuedObject)
                 vor.valuedObject = newVO
-                
+
                 val valueRef = vor.subReference
-                valueRef.valuedObject = newVO.declaration.enumValues.findFirst[it.name.equals(valueRef.valuedObject.name)]
-                
+                valueRef.valuedObject = newVO.declaration.enumValues.findFirst [
+                    it.name.equals(valueRef.valuedObject.name)
+                ]
+
                 if (vor.isSubReference) {
                     var topVOR = vor.eContainer as ValuedObjectReference
-                    while(vor.isSubReference) {
+                    while (vor.isSubReference) {
                         topVOR = topVOR.eContainer as ValuedObjectReference
                     }
                     topVOR.replace(vor)
                 }
             }
-            
+
             // remove consolidated
             for (e : consolidate.values) {
                 voStore.remove(e.enumVO)
                 e.remove
             }
         }
-        
+
         // Fix ref decls
         val copyForRefDecls = <ValuedObject, ValuedObject>newHashMap
         for (ref : root.allScopes.map[declarations.filter(ReferenceDeclaration).iterator].flatten.toIterable) {
@@ -236,14 +247,14 @@ class Enum extends SCChartsProcessor implements Traceable {
                         ref.referenceContainer = null
                     } else {
                         val newDecl = ref.referencedEnum.copy
-                        
+
                         val enumVO = newDecl.enumVO
                         enumVO.name = (ref.referenceContainer as NamedObject).name + "_" + enumVO.name
                         voStore.update(enumVO)
-                        
+
                         ref.reference = enumVO
                         ref.referenceContainer = null
-                        
+
                         copyForRefDecls.put(ref.reference as ValuedObject, enumVO)
                     }
                 }
@@ -252,7 +263,7 @@ class Enum extends SCChartsProcessor implements Traceable {
         // add new decls
         copyForRefDecls.values.forEach[root.declarations += it.declaration]
     }
-    
+
     static def markCopyForConsolidation(Declaration copy, Declaration original) {
         copy.annotations += AnnotationsFactory::eINSTANCE.createReferenceAnnotation => [
             it.name = CONSOLIDATION_ANNOTATION
