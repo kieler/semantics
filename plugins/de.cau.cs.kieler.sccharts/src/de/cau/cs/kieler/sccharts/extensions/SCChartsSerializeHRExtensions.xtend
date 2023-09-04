@@ -406,11 +406,11 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         
         if (method.override) {
             components.addKeyword("override")
-        } else if (method.access != AccessModifier.PUBLIC) {
+        } else if (method.access != AccessModifier.UNDEF) {
             components.addKeyword(switch(method.access) {
-                case PRIVATE: "public"
+                case PUBLIC: "public"
                 case PROTECTED: "protected"
-                case PUBLIC: "private"
+                case PRIVATE: "private"
                 default: ""
             })
         }
