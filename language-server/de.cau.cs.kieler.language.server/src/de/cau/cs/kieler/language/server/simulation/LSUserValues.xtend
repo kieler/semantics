@@ -15,6 +15,8 @@ package de.cau.cs.kieler.language.server.simulation
 import de.cau.cs.kieler.language.server.simulation.data.ClientInputs
 import de.cau.cs.kieler.simulation.internal.processor.SimulationProcessor
 
+import static de.cau.cs.kieler.language.server.simulation.data.ClientInputs.*
+
 /**
  * User values processor to be used in a LS setup. Allows to set user values by the client.
  * 

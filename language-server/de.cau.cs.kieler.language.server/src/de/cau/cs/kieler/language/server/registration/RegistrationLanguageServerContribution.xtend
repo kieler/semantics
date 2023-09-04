@@ -12,8 +12,8 @@
  */
 package de.cau.cs.kieler.language.server.registration
 
-import de.cau.cs.kieler.language.server.ILanguageServerContribution
 import com.google.inject.Injector
+import de.cau.cs.kieler.language.server.ILanguageServerContribution
 
 /**
  * @author sdo

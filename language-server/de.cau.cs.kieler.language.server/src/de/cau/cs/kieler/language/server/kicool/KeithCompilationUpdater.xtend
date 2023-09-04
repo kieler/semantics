@@ -38,7 +38,7 @@ class KeithCompilationUpdater implements Observer {
         }
     }
     
-    val de.cau.cs.kieler.language.server.kicool.KiCoolLanguageServerExtension kicoolExt
+    val KiCoolLanguageServerExtension kicoolExt
     val CompilationContext context
     val String uri
     val String clientId
@@ -49,7 +49,7 @@ class KeithCompilationUpdater implements Observer {
     var int maxIndex = 0
     var int currentIndex = 0
     
-    new(de.cau.cs.kieler.language.server.kicool.KiCoolLanguageServerExtension kicoolExt, CompilationContext context, String uri, String clientId,
+    new(KiCoolLanguageServerExtension kicoolExt, CompilationContext context, String uri, String clientId,
         String command, boolean inplace, boolean showResultingModel
     ) {
         this.kicoolExt = kicoolExt

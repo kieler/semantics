@@ -20,9 +20,9 @@ import java.util.List
  * @author sdo
  */
 class CompilationResults {
-    public List<List<de.cau.cs.kieler.language.server.kicool.data.SnapshotDescription>> files = new LinkedList
+    public List<List<SnapshotDescription>> files = new LinkedList
     
-    new(List<List<de.cau.cs.kieler.language.server.kicool.data.SnapshotDescription>> descriptions) {
+    new(List<List<SnapshotDescription>> descriptions) {
         this.files = descriptions
     }
     

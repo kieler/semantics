@@ -13,13 +13,13 @@
 package de.cau.cs.kieler.language.server.kicool.data
 
 import de.cau.cs.kieler.kicool.environments.Errors
-import de.cau.cs.kieler.kicool.environments.Warnings
 import de.cau.cs.kieler.kicool.environments.Infos
-import java.util.List
-import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 import de.cau.cs.kieler.kicool.environments.MessageObjectLink
 import de.cau.cs.kieler.kicool.environments.MessageObjectList
+import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
+import de.cau.cs.kieler.kicool.environments.Warnings
 import java.util.LinkedList
+import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**

@@ -15,11 +15,12 @@ package de.cau.cs.kieler.language.server.verification
 
 import com.google.inject.Inject
 import com.google.inject.Injector
-import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.language.server.ILanguageClientProvider
 import de.cau.cs.kieler.language.server.KeithLanguageClient
+import de.cau.cs.kieler.language.server.kicool.KiCoolLanguageServerExtension
 import de.cau.cs.kieler.verification.SmallVerificationProperty
+import de.cau.cs.kieler.verification.VerificationManager
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
@@ -31,8 +32,6 @@ import java.util.Observable
 import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
-import de.cau.cs.kieler.verification.VerificationManager
-import de.cau.cs.kieler.language.server.kicool.KiCoolLanguageServerExtension
 
 /**
  * LS extension to verify models. Supports loading of verification properties and running the model checker.

@@ -58,6 +58,7 @@ import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 
+import static de.cau.cs.kieler.language.server.simulation.data.ClientInputs.*
 import static de.cau.cs.kieler.simulation.ide.CentralSimulation.*
 
 /**
