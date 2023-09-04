@@ -39,7 +39,6 @@ import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
-import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
@@ -161,8 +160,8 @@ class ControlflowRegionStyles {
             background = container.foreground.color.copy
             selectionBackground = SELECTION.color
             addKPosition(LEFT, 0.5f, 0, TOP, 0.5f, 0)
-            addKPosition(LEFT, 0.5f, 0, TOP, 19, 0)
-            addKPosition(LEFT, 18, 0, TOP, 0.5f, 0)
+            addKPosition(LEFT, 0.5f, 0, TOP, 20, 0)
+            addKPosition(LEFT, 20, 0, TOP, 0.5f, 0)
         ]
         if (text !== null) {
             button.addText(text) => [
@@ -171,8 +170,7 @@ class ControlflowRegionStyles {
                 selectionForeground = REGION_BUTTON_FOREGROUND.color
                 fontSize = 8;
                 fontBold = true
-                val size = estimateTextSize;
-                setPointPlacementData(LEFT, if (text.equals("-")) 3f else 2f, 0, TOP, 0, 0, H_LEFT, V_TOP, 0, 0, size.width, size.height);
+                setPointPlacementData(LEFT, if (text.equals("-")) 1f else 1f, 0, TOP, 0, 0, H_LEFT, V_TOP, 0, 0, 10, 10);
             ]
         } else {
             // Disabled appearance
@@ -185,15 +183,14 @@ class ControlflowRegionStyles {
                     foreground = REGION_LABEL.color;
                     fontSize = 10;
                     selectionTextUnderline = Underline.NONE // prevents default selection style
-                    val size = estimateTextSize;
-                    setPointPlacementData(LEFT, 14, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, size.width + 5, size.height)
+                    setPointPlacementData(LEFT, 16.5f, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
                     setProperty(KlighdProperties.IS_NODE_TITLE, true)
                 ]
             } else {
                 container.addKeywordLabel(label, 0) => [
                     foreground = REGION_LABEL.color
                     fontSize = 10
-                    setPointPlacementData(LEFT, 14, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
+                    setPointPlacementData(LEFT, 16.5f, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
                     setProperty(KlighdProperties.IS_NODE_TITLE, true)
                     (children.last as KContainerRendering) => [ // Just for spacing at the end
                         val grid = it?.getChildPlacement()
