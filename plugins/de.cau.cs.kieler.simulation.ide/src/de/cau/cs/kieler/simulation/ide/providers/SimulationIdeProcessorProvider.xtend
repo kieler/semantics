@@ -23,8 +23,7 @@ class SimulationIdeProcessorProvider implements IProcessorProvider {
     
     override getProcessors() {
         #[
-            de.cau.cs.kieler.simulation.ide.processor.RemoteSimulationValues,
-            de.cau.cs.kieler.simulation.ide.language.server.LSUserValues
+            de.cau.cs.kieler.simulation.ide.processor.RemoteSimulationValues
         ]
     }
     
