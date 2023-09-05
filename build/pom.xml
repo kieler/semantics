@@ -117,6 +117,7 @@
       <modules>
         <module>de.cau.cs.kieler.semantics.targetplatform</module> 
         <module>../plugins</module>
+        <module>../test</module>
         <module>../features</module>
         <module>de.cau.cs.kieler.semantics.repository</module>
         <module>de.cau.cs.kieler.semantics.product.repository</module>
@@ -125,7 +126,6 @@
         <module>de.cau.cs.kieler.kicool.klighd.cli</module>
         <module>../language-server</module>
         <module>de.cau.cs.kieler.language.server.cli</module>
-        <module>../test</module>
         <module>../test/de.cau.cs.kieler.cli.test</module>
       </modules>
     </profile>
