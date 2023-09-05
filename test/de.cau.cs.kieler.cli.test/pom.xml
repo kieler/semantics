@@ -28,6 +28,7 @@
     </plugins>
   </build> 
   <dependencies>
+    <!-- Ensure CLIs are build beforehand -->
     <dependency>
       <groupId>de.cau.cs.kieler</groupId>
       <artifactId>de.cau.cs.kieler.sccharts.cli</artifactId>

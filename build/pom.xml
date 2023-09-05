@@ -35,100 +35,100 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
     <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-    
-    <!-- Updatesite for product build -->
-    <kieler.semantics.updatesite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/</kieler.semantics.updatesite>
   </properties>
 
 
   <!-- Define one profile for each output target we have. -->
   <profiles>
-    <!-- The Semantics updatesite. -->
     <profile>
       <id>semantics</id>
 
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-
       <modules>
-        <module>../plugins</module>
         <module>de.cau.cs.kieler.semantics.targetplatform</module>
+        <module>../plugins</module>
         <module>../features</module>
-        <module>de.cau.cs.kieler.semantics.repository</module>
       </modules>
     </profile>
 
-
-    <!-- Test profile including cli tests. -->
     <profile>
       <id>semantics.test</id>
 
       <modules>
-        <module>../plugins</module>
         <module>de.cau.cs.kieler.semantics.targetplatform</module>
+        <module>../plugins</module>
         <module>../test</module>
         <module>de.cau.cs.kieler.sccharts.cli</module>
         <module>de.cau.cs.kieler.kicool.cli</module>
         <module>de.cau.cs.kieler.kicool.klighd.cli</module>
-        <module>de.cau.cs.kieler.language.server.cli</module>
         <module>../test/de.cau.cs.kieler.cli.test</module>
         <module>../language-server</module>
+        <module>de.cau.cs.kieler.language.server.cli</module>
       </modules>
     </profile>
-  
 
-    <!-- The Semantics product. -->
     <profile>
-      <id>semantics.nightly.product</id>
-    
-      <repositories>
-        <repository>
-          <id>p2.kieler-semantics</id>
-          <layout>p2</layout>
-          <url>${kieler.semantics.updatesite}</url>
-        </repository>
-      </repositories>
-      
+      <id>semantics.cli.test</id>
+
       <modules>
-        <module>de.cau.cs.kieler.semantics.targetplatform</module>    
-        <module>../plugins/de.cau.cs.kieler.core.product</module>
-        <module>../features/de.cau.cs.kieler.product.feature</module>
-        <module>de.cau.cs.kieler.semantics.product.repository</module>
+        <module>de.cau.cs.kieler.semantics.targetplatform</module>
+        <module>../plugins</module>
         <module>de.cau.cs.kieler.sccharts.cli</module>
         <module>de.cau.cs.kieler.kicool.cli</module>
         <module>de.cau.cs.kieler.kicool.klighd.cli</module>
-        <module>de.cau.cs.kieler.language.server.cli</module>
-        <module>../language-server</module>
+        <module>../test/de.cau.cs.kieler.cli.test</module>
       </modules>
     </profile>
 
     <profile>
       <id>semantics.product</id>
-      
+
       <modules>
-        <module>../plugins</module>
         <module>de.cau.cs.kieler.semantics.targetplatform</module> 
+        <module>../plugins</module>
         <module>../features</module>
         <module>de.cau.cs.kieler.semantics.repository</module>
         <module>de.cau.cs.kieler.semantics.product.repository</module>
         <module>de.cau.cs.kieler.sccharts.cli</module>
         <module>de.cau.cs.kieler.kicool.cli</module>
         <module>de.cau.cs.kieler.kicool.klighd.cli</module>
-        <module>de.cau.cs.kieler.language.server.cli</module>
         <module>../language-server</module>
+        <module>de.cau.cs.kieler.language.server.cli</module>
       </modules>
     </profile>
 
     <profile>
       <id>semantics.ls</id>
       <modules>
-        <module>../plugins</module>
         <module>de.cau.cs.kieler.semantics.targetplatform</module>
-        <module>de.cau.cs.kieler.language.server.cli</module>
+        <module>../plugins</module>
         <module>../language-server</module>
+        <module>de.cau.cs.kieler.language.server.cli</module>
       </modules>
-    </profile>  
+    </profile>
+
+
+    <profile>
+      <id>semantics.all</id>
+      
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+
+      <modules>
+        <module>de.cau.cs.kieler.semantics.targetplatform</module> 
+        <module>../plugins</module>
+        <module>../features</module>
+        <module>de.cau.cs.kieler.semantics.repository</module>
+        <module>de.cau.cs.kieler.semantics.product.repository</module>
+        <module>de.cau.cs.kieler.sccharts.cli</module>
+        <module>de.cau.cs.kieler.kicool.cli</module>
+        <module>de.cau.cs.kieler.kicool.klighd.cli</module>
+        <module>../language-server</module>
+        <module>de.cau.cs.kieler.language.server.cli</module>
+        <module>../test</module>
+        <module>../test/de.cau.cs.kieler.cli.test</module>
+      </modules>
+    </profile>
   
   </profiles>
 
