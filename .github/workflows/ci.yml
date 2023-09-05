@@ -37,7 +37,7 @@ jobs:
 
       # Maven build products
       - name: Build Products and Run Tests
-        run: MAVEN_OPTS="-Xmx2048M" mvn --update-snapshots clean package -P semantics.all --file build/pom.xml
+        run: MAVEN_OPTS="-Xmx2048M" mvn --update-snapshots clean verify -P semantics.all --file build/pom.xml
 
       ##################################### ALL THE ARTIFACTS #####################################
 
@@ -225,7 +225,7 @@ jobs:
 
       # Maven test CLI
       - name: Tests CLI
-        run: MAVEN_OPTS="-Xmx2048M" mvn --update-snapshots clean test -P semantics.cli.test --file build/pom.xml
+        run: MAVEN_OPTS="-Xmx2048M" mvn --update-snapshots clean verify -P semantics.cli.test --file build/pom.xml
 
   testWin:
     name: Test CLI (Windows)
@@ -251,4 +251,4 @@ jobs:
 
       # Maven test CLI
       - name: Tests CLI
-        run: MAVEN_OPTS="-Xmx2048M" mvn --update-snapshots clean test -P semantics.cli.test --file build/pom.xml
+        run: MAVEN_OPTS="-Xmx2048M" mvn --update-snapshots clean verify -P semantics.cli.test --file build/pom.xml
