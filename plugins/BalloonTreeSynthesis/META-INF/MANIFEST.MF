@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: BalloonTreeSynthesis
+Bundle-SymbolicName: BalloonTreeSynthesis
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: BalloonTreeSynthesis
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Require-Bundle: de.cau.cs.kieler.klighd,
+ org.xtext.example.balloontrees,
+ org.eclipse.elk.core,
+ de.cau.cs.kieler.klighd.krendering.extensions,
+ com.google.inject,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ org.eclipse.elk.alg.radial;bundle-version="0.9.0"

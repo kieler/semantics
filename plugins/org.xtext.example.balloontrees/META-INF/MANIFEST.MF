@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: org.xtext.example.balloontrees
+Bundle-ManifestVersion: 2
+Bundle-Name: org.xtext.example.balloontrees
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.xtext.example.balloontrees; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.eclipse.emf.common,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: org.xtext.example.balloontrees.parser.antlr,
+ org.xtext.example.balloontrees.services,
+ org.xtext.example.balloontrees.scoping,
+ org.xtext.example.balloontrees.parser.antlr.internal,
+ org.xtext.example.balloontrees.balloonTrees.impl,
+ org.xtext.example.balloontrees.validation,
+ org.xtext.example.balloontrees.balloonTrees.util,
+ org.xtext.example.balloontrees,
+ org.xtext.example.balloontrees.serializer,
+ org.xtext.example.balloontrees.generator,
+ org.xtext.example.balloontrees.balloonTrees
+Import-Package: org.apache.log4j

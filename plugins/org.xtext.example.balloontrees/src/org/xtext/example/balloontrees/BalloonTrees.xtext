@@ -1,0 +1,15 @@
+grammar org.xtext.example.balloontrees.BalloonTrees with org.eclipse.xtext.common.Terminals
+
+generate balloonTrees "http://www.xtext.org/example/balloontrees/BalloonTrees"
+
+BalloonTree returns BalloonTree:
+    {BalloonTree}
+    'BalloonTree' identifier=ID ('{'
+        (children+=BalloonTreeNode)*
+    '}')?;
+
+BalloonTreeNode returns BalloonTreeNode:
+    {BalloonTreeNode}
+    'node' identifier=ID ('{'
+        (children+=BalloonTreeNode)*
+    '}')?;
