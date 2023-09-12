@@ -47,7 +47,7 @@ jobs:
 
       # Maven build products
       - name: Build Products and Run Tests
-        run: MAVEN_OPTS="-Xmx2048M" mvn --update-snapshots clean verify -P semantics.all --file build/pom.xml
+        run: MAVEN_OPTS="-Xmx2048M" mvn --update-snapshots --fail-at-end clean verify -P semantics.all --file build/pom.xml
         env:
           models_repository: '[${{github.workspace}}/models]'
 
