@@ -51,6 +51,17 @@ jobs:
         env:
           models_repository: '[${{github.workspace}}/models]'
 
+      # Produce test report
+      - name: Produce test report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Test Report
+          path: test/*/target/surefire-reports/*.xml
+          reporter: java-junit
+          fail-on-error: true
+          max-annotations: '10'
+
       ##################################### ALL THE ARTIFACTS #####################################
 
       # Archive Repository
