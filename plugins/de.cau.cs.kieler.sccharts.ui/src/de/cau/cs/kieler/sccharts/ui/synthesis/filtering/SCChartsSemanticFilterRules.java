@@ -73,11 +73,9 @@ public abstract class SCChartsSemanticFilterRules {
             SCChartsSemanticFilterTags.DATAFLOW_REGION, "Dataflow Regions");
 
     /** Rule to exclude elements that are initial states. */
-    public static final SemanticFilterRule NO_INITIAL_STATE = new AndConnective(
-            SCChartsSemanticFilterTags.STATE,
-            new NegationConnective(SCChartsSemanticFilterTags.INITIAL), "Initial States");
+    public static final SemanticFilterRule NO_INITIAL_STATE = new NegationConnective(
+            SCChartsSemanticFilterTags.INITIAL, "Initial States");
     /** Rule to exclude elements that are final states. */
-    public static final SemanticFilterRule NO_FINAL_STATE = new AndConnective(
-            SCChartsSemanticFilterTags.STATE,
-            new NegationConnective(SCChartsSemanticFilterTags.FINAL), "Final States");
+    public static final SemanticFilterRule NO_FINAL_STATE = new NegationConnective(
+            SCChartsSemanticFilterTags.FINAL, "Final States");
 }
