@@ -44,40 +44,37 @@ public abstract class SCChartsSemanticFilterRules {
         return filters;
     }
 
-    // Naming conventions:
-    // The class variables' names should start with NO_ or ONLY_,
-    // indicating which elements are kept out or left in
     // The descriptions should utilize the checkbox as the verb
-    // If turning on the checkbox results in hiding something use the explicit word "Hide" otherwise the function 
-    // of the checkbox is confusing
+    // The filters exclude element types, but on the UI of the client the checkbox will be inverted i.e. indicating
+    // that the user excludes these elements by unchecking the box
 
     /** Rule to exclude elements that are states. */
-    public static final SemanticFilterRule NO_STATES =
-            new NegationConnective(SCChartsSemanticFilterTags.STATE, false, "Hide States");
+    public static final SemanticFilterRule SHOW_STATES =
+            new NegationConnective(SCChartsSemanticFilterTags.STATE, true, "All States");
     /** Rule to exclude elements that are regions. */
-    public static final SemanticFilterRule NO_REGIONS =
-            new NegationConnective(SCChartsSemanticFilterTags.REGION, false, "Hide Regions");
+    public static final SemanticFilterRule SHOW_REGIONS =
+            new NegationConnective(SCChartsSemanticFilterTags.REGION, true, "All Regions");
 
     /** Rule to exclude elements that are simple states. */
-    public static final SemanticFilterRule NO_SIMPLE_STATE =
-            new NegationConnective(SCChartsSemanticFilterTags.SIMPLE_STATE, false, "Hide Simple States");
+    public static final SemanticFilterRule SHOW_SIMPLE_STATE =
+            new NegationConnective(SCChartsSemanticFilterTags.SIMPLE_STATE, true, "Simple States");
     /** Rule to exclude elements that are hierarchical states. */
-    public static final SemanticFilterRule NO_HIERARCHICAL_STATE = new NegationConnective(
-            SCChartsSemanticFilterTags.HIERARCHICAL_STATE, false, "Hide Hierarchical States");
+    public static final SemanticFilterRule SHOW_HIERARCHICAL_STATE = new NegationConnective(
+            SCChartsSemanticFilterTags.HIERARCHICAL_STATE, true, "Hierarchical States");
     /** Rule to exclude elements that are connector states. */
-    public static final SemanticFilterRule NO_CONNECTOR_STATE = new NegationConnective(
-            SCChartsSemanticFilterTags.CONNECTOR_STATE, true, "Hide Connector States");
+    public static final SemanticFilterRule SHOW_CONNECTOR_STATE = new NegationConnective(
+            SCChartsSemanticFilterTags.CONNECTOR_STATE, false, "Connector States");
     /** Rule to exclude elements that are controlflow regions. */
-    public static final SemanticFilterRule NO_CONTROLFLOW_REGION = new NegationConnective(
-            SCChartsSemanticFilterTags.CONTROLFLOW_REGION, false, "Hide Controlflow Regions");
+    public static final SemanticFilterRule SHOW_CONTROLFLOW_REGION = new NegationConnective(
+            SCChartsSemanticFilterTags.CONTROLFLOW_REGION, true, "Controlflow Regions");
     /** Rule to exclude elements that are dataflow regions. */
-    public static final SemanticFilterRule NO_DATAFLOW_REGION = new NegationConnective(
-            SCChartsSemanticFilterTags.DATAFLOW_REGION, false, "Hide Dataflow Regions");
+    public static final SemanticFilterRule SHOW_DATAFLOW_REGION = new NegationConnective(
+            SCChartsSemanticFilterTags.DATAFLOW_REGION, true, "Dataflow Regions");
 
     /** Rule to exclude elements that are initial states. */
-    public static final SemanticFilterRule NO_INITIAL_STATE = new NegationConnective(
-            SCChartsSemanticFilterTags.INITIAL, false, "Hide Initial States");
+    public static final SemanticFilterRule SHOW_INITIAL_STATE = new NegationConnective(
+            SCChartsSemanticFilterTags.INITIAL, true, "Initial States");
     /** Rule to exclude elements that are final states. */
-    public static final SemanticFilterRule NO_FINAL_STATE = new NegationConnective(
-            SCChartsSemanticFilterTags.FINAL, false, "Hide Final States");
+    public static final SemanticFilterRule SHOW_FINAL_STATE = new NegationConnective(
+            SCChartsSemanticFilterTags.FINAL, true, "Final States");
 }
