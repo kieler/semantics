@@ -224,14 +224,16 @@ class VariableStore implements IKiCoolCloneable {
         if (classDecl !== null) {
             var superClass = classDecl.eContainer
             while (superClass instanceof ClassDeclaration) {
-                superClassPrefix = superClass.name + "." + superClassPrefix
+                val parentName = superClass.type == ValueType.ENUM ? superClass.valuedObjects.head.name : superClass.name
+                superClassPrefix = parentName + "." + superClassPrefix
                 superClass = superClass.eContainer
             }
-            superClassPrefix += classDecl.name
+            superClassPrefix += classDecl.type == ValueType.ENUM ? classDecl.valuedObjects.head.name : classDecl.name
             info.encapsulatedIn = superClassPrefix
         }
         if (decl instanceof ClassDeclaration) {
-            info.containerName = !superClassPrefix.nullOrEmpty ? superClassPrefix + "." + decl.name : decl.name
+            val declName = decl.type == ValueType.ENUM ? decl.valuedObjects.head.name : decl.name
+            info.containerName = !superClassPrefix.nullOrEmpty ? superClassPrefix + "." + declName : declName
         }
         
         var name = vo.name

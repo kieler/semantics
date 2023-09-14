@@ -16,7 +16,9 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
 import de.cau.cs.kieler.verification.VerificationAssumption
@@ -33,6 +35,7 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
 
     @Inject extension VerificationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension SSACoreExtensions
     @Inject extension SmvCodeSerializeHRExtensions serializer
     
@@ -67,6 +70,14 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
                         appendIndentedLine('''«valuedObject.name» : «declType»;''')
                     }
                 }
+            }
+        }
+        
+        // TODO improve
+        appendIndentedLine("ENUM")
+        for (decl : scg.declarations.filter(ClassDeclaration)) {
+            if (decl.isEnum) {
+                appendIndentedLine('''enum «decl.valuedObjects.head.name» { «decl.declarations.map[it.valuedObjects].flatten.map[it.name].join(", ")» }''')
             }
         }
         

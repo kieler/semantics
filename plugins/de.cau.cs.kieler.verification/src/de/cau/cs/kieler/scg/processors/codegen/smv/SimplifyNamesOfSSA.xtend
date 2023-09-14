@@ -12,16 +12,16 @@
  */
 package de.cau.cs.kieler.scg.processors.codegen.smv
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.processors.ssa.IOPreserverExtensions
 import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
-import java.util.List
-import com.google.inject.Inject
 
 /**
  * @author aas
@@ -90,7 +90,7 @@ class SimplifyNamesOfSSA extends InplaceProcessor<SCGraphs> implements Traceable
         }
         
         // Remove original declarations
-        for (decl : (origDeclarations as List<VariableDeclaration>).clone) {
+        for (decl : origDeclarations.filter(VariableDeclaration).filter[!(it instanceof ClassDeclaration)]) {
             scg.declarations.remove(decl)
         }
         // Remove empty declarations
