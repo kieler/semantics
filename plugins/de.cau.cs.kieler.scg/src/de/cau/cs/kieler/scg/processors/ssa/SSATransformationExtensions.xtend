@@ -31,6 +31,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
@@ -266,10 +267,13 @@ class SSATransformationExtensions {
                 if (!n.isSSA && (n instanceof Assignment || n instanceof Conditional) && !n.isInputPreserver) {
                     val expr = if (n instanceof Assignment) n.asAssignment.expression else n.asConditional.condition
                     for (ref : expr.allReferences.filter[
-                        (!valuedObject.declaration.input || !SSATransformationExtensions_IGNORE_INPUTS_IN_RENAMING) 
-                        && !valuedObject.declaration.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME ignored input
+                            (!valuedObject.declaration.input || !SSATransformationExtensions_IGNORE_INPUTS_IN_RENAMING) 
+                                && !it.isSubReference
+                                && !valuedObject.declaration.hasAnnotation(SSACoreExtensions.ANNOTATION_IGNORE_DECLARATION)]) {//FIXME ignored input
                         val vo = ref.valuedObject
-                        ref.valuedObject = ssaDecl.get(vo).valuedObjects.get(stack.get(vo).peek)
+                        if (!(vo.declaration instanceof ClassDeclaration)) {
+                            ref.valuedObject = ssaDecl.get(vo).valuedObjects.get(stack.get(vo).peek)
+                        }
                     }
                 }
                 if (n instanceof Assignment) {

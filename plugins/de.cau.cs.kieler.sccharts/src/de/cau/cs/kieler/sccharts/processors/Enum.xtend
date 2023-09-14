@@ -47,7 +47,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  */
 class Enum extends SCChartsProcessor implements Traceable {
 
-    public static val TRANSFORM_ENUMS = new Property<Boolean>("de.cau.cs.kieler.sccharts.abort.transformEnums", false) // for testing on false (should be true later)
+    public static val TRANSFORM_ENUMS = new Property<Boolean>("de.cau.cs.kieler.sccharts.abort.transformEnums", true) 
+    public static val TRANSFORM_ENUMS_FAKE_REF = new Property<Boolean>("de.cau.cs.kieler.sccharts.abort.transformEnums.fakeRefs", true) // default should be false 
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -84,8 +85,6 @@ class Enum extends SCChartsProcessor implements Traceable {
     @Inject extension KExtEnumExtensions
 
     def State transform(State rootState) {
-
-        
         val targetRootState = rootState
 
         val enums = newArrayList
@@ -102,13 +101,19 @@ class Enum extends SCChartsProcessor implements Traceable {
             }
         }
 
-        transformEnumAccess(targetRootState)
-        transformEnumVars(targetRootState, enumRefs)
-
-        // clear enums
-        for (e : enums.filter[!host]) {
-            voStore.remove(e.valuedObjects.head)
-            e.delete
+        if (getProperty(TRANSFORM_ENUMS_FAKE_REF)) {
+            // Treat all enums as host enums
+            transformEnumVars(targetRootState, enumRefs)
+        } else {
+            // Transformation into integer variables
+            transformEnumAccess(targetRootState)
+            transformEnumVars(targetRootState, enumRefs)
+    
+            // clear enums
+            for (e : enums.filter[!host]) {
+                voStore.remove(e.valuedObjects.head)
+                e.delete
+            }
         }
 
         targetRootState;
@@ -143,7 +148,7 @@ class Enum extends SCChartsProcessor implements Traceable {
             val ref = enumRef.key
             val enumDecl = enumRef.value
 
-            val newDecl = if (enumDecl.host) {
+            val newDecl = if (enumDecl.host || getProperty(TRANSFORM_ENUMS_FAKE_REF)) {
                     createDeclaration => [
                         access = ref.access
                         valuedObjects += ref.valuedObjects

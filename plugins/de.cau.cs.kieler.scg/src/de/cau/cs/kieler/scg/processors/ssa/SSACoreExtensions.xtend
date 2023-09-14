@@ -21,28 +21,29 @@ import de.cau.cs.kieler.annotations.ReferenceAnnotation
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.processors.SCGAnnotations
 
 import static de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static de.cau.cs.kieler.scg.processors.ssa.SSAFunction.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension java.lang.Character.*
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.scg.processors.SCGAnnotations
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author als
@@ -154,7 +155,10 @@ class SSACoreExtensions {
         
     def createSSADeclarations(SCGraph scg) {
         val ssaDecl = HashBiMap.create(scg.declarations.size)
-        for (decl : scg.declarations.filter(VariableDeclaration).filter[!hasAnnotation(ANNOTATION_IGNORE_DECLARATION)].toList) {
+        for (decl : scg.declarations.filter(VariableDeclaration).filter[
+            !hasAnnotation(ANNOTATION_IGNORE_DECLARATION) 
+            && !(it instanceof ClassDeclaration)
+        ].toList) {
             for (vo : decl.valuedObjects) {
                 ssaDecl.put(vo, createDeclaration => [
                     // Same interface modifiers

@@ -79,22 +79,6 @@ class SSATransformation extends InplaceProcessor<SCGraphs> implements Traceable 
         
         val entryBB = scg.basicBlocks.head
         
-        // Temporarily replace enum refs with variable decls
-        val enumRefs = newHashMap
-        for (d : scg.declarations.filter(ReferenceDeclaration).filter[isEnumRef]) {
-            val decl = createDeclaration() => [
-                input = d.input
-                output = d.output
-                type = ValueType.ENUM
-                valuedObjects += d.valuedObjects
-            ]
-            enumRefs.put(d, decl)
-        }
-        for (kv : enumRefs.entrySet) {
-            scg.declarations.add(scg.declarations.indexOf(kv.key), kv.value)
-            scg.declarations.remove(kv.key)
-        }
-        
         // Create new declarations for SSA versions
         val ssaDecls = scg.createSSADeclarations
         val dt = new DominatorTree(scg)
@@ -122,18 +106,6 @@ class SSATransformation extends InplaceProcessor<SCGraphs> implements Traceable 
         // 4. Update SSA VO version numbering
         // ---------------   
         scg.updateSSAVersions
-        
-        // Restore enums
-        for (kv : enumRefs.entrySet) {
-            scg.declarations.add(scg.declarations.indexOf(kv.value), kv.key)
-            kv.key.valuedObjects += kv.value.valuedObjects
-            scg.declarations.remove(kv.value)
-//            for (vo : kv.key.valuedObjects) {
-//                for (ssaDecl : ssaDecls.get(vo)) {
-//                    
-//                }
-//            }
-        }
         
         return scg
     }

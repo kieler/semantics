@@ -80,11 +80,7 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
         appendIndentedLine("_GO : boolean;");
         val store = VariableStore.get(processorInstance.environment)
         for(entry : store.variables.entries) {
-            val variableInformation = entry.value
-            if(variableInformation.properties.contains(VariableStore.ENUM)){
-                println("found enum")
-            }
-            
+            val variableInformation = entry.value            
             if(variableInformation.properties.contains(SmvCodeGeneratorModule.PROPERTY_PREGUARD)) {
                 val preGuardName = entry.key
                 val predValuedObject = variableInformation.valuedObject
