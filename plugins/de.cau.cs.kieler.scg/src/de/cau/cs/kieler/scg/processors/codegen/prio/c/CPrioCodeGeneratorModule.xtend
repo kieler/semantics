@@ -17,6 +17,7 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.deploy.processor.CCompiler
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGeneratorModule
 import org.eclipse.emf.common.util.URI
 
@@ -80,6 +81,14 @@ class CPrioCodeGeneratorModule extends CCodeGeneratorModule {
             codeContainer.addProxyCCodeFile(URI.createPlatformPluginURI(uri, true)) => [
                 library = true
             ]
+        }
+        
+        // The SC macros contain tentative definitions and need to be compiled with -fcommon in GCC 10+
+        val env = processorInstance.environment
+        if (env.getProperty(CCompiler.ADDITIONAL_OPTIONS).nullOrEmpty) {
+            env.setProperty(CCompiler.ADDITIONAL_OPTIONS, "-fcommon")
+        } else {
+            env.setProperty(CCompiler.ADDITIONAL_OPTIONS, env.getProperty(CCompiler.ADDITIONAL_OPTIONS) + " -fcommon")
         }
     }
     
