@@ -60,7 +60,7 @@ jobs:
           path: test/*/target/surefire-reports/*.xml
           reporter: java-junit
           fail-on-error: true
-          max-annotations: '10'
+          max-annotations: '50'
 
       ##################################### ALL THE ARTIFACTS #####################################
 
