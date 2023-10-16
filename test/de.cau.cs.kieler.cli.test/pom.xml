@@ -34,18 +34,21 @@
       <artifactId>de.cau.cs.kieler.sccharts.cli</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
+      <type>pom</type>
     </dependency>
     <dependency>
       <groupId>de.cau.cs.kieler</groupId>
       <artifactId>de.cau.cs.kieler.kicool.cli</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
+      <type>pom</type>
     </dependency>
     <dependency>
       <groupId>de.cau.cs.kieler</groupId>
       <artifactId>de.cau.cs.kieler.kicool.klighd.cli</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
+      <type>pom</type>
     </dependency>
   </dependencies>
 </project>
