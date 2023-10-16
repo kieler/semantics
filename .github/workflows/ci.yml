@@ -47,7 +47,7 @@ jobs:
 
       # Maven build products
       - name: Build Products and Run Tests
-        run: 
+        run: |
           # Memory for maven
           export MAVEN_OPTS="-Xmx2048M" 
           # No display
