@@ -47,16 +47,13 @@ jobs:
 
       # Maven build products
       - name: Build Products and Run Tests
-        run: |
-          # Memory for maven
-          export MAVEN_OPTS="-Xmx2048M" 
-          # No display
-          export DISPLAY=:0
-          # Start xvfb for testing diagram generation with piccolo (see Klighd test config)
-          Xvfb -ac > /dev/null 2>&1 &
-          mvn --update-snapshots --fail-at-end clean verify -P semantics.all --file build/pom.xml
+        # Start with xvfb for testing diagram generation with piccolo (see Klighd test config)
+        run:
+          Xvfb -ac > /dev/null 2>&1 & mvn --update-snapshots --fail-at-end clean verify -P semantics.all --file build/pom.xml
         env:
           models_repository: '[${{github.workspace}}/models]'
+          MAVEN_OPTS: '-Xmx2048M'
+          DISPLAY: ':0'
 
       # Produce test report
       - name: Produce test report
@@ -255,7 +252,9 @@ jobs:
 
       # Maven test CLI
       - name: Tests CLI
-        run: MAVEN_OPTS="-Xmx2048M" mvn --update-snapshots clean verify -P semantics.cli.test --file build/pom.xml
+        run: mvn --update-snapshots clean verify -P semantics.cli.test --file build/pom.xml
+        env:
+          MAVEN_OPTS: '-Xmx2048M'
 
   testWin:
     name: Test CLI (Windows)
@@ -281,4 +280,6 @@ jobs:
 
       # Maven test CLI
       - name: Tests CLI
-        run: MAVEN_OPTS="-Xmx2048M" mvn --update-snapshots clean verify -P semantics.cli.test --file build/pom.xml
+        run: mvn --update-snapshots clean verify -P semantics.cli.test --file build/pom.xml
+        env:
+          MAVEN_OPTS: '-Xmx2048M'
