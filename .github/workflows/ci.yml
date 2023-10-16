@@ -47,7 +47,14 @@ jobs:
 
       # Maven build products
       - name: Build Products and Run Tests
-        run: MAVEN_OPTS="-Xmx2048M" mvn --update-snapshots --fail-at-end clean verify -P semantics.all --file build/pom.xml
+        run: 
+          # Memory for maven
+          export MAVEN_OPTS="-Xmx2048M" 
+          # No display
+          export DISPLAY=:0
+          # Start xvfb for testing diagram generation with piccolo (see Klighd test config)
+          Xvfb -ac > /dev/null 2>&1 &
+          mvn --update-snapshots --fail-at-end clean verify -P semantics.all --file build/pom.xml
         env:
           models_repository: '[${{github.workspace}}/models]'
 
