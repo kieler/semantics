@@ -185,7 +185,7 @@ class SCChartsCLITest extends AbstractCLITest {
         Files.copy(compiler.toPath, local_compiler, StandardCopyOption.REPLACE_EXISTING)
         
         // compiler
-        val command = #[wd.toPath.relativize(local_compiler).toString, "-v", "-s", "de.cau.cs.kieler.sccharts.netlist", "-o", "code", "-ig", "kieler-gen", "abo.sctx"]
+        val command = #[new File("./" + compiler.name).path, "-v", "-s", "de.cau.cs.kieler.sccharts.netlist", "-o", "code", "-ig", "kieler-gen", "abo.sctx"]
         assertEquals("Exit value not zero", 0, command.invoke(wd))
         
         // check results
