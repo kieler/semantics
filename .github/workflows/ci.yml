@@ -116,7 +116,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: KIELER RCA MacOS
-          path: build/de.cau.cs.kieler.semantics.product.repository/target/products/sccharts_rca_*-macosx.cocoa.x86_64.tar.gz
+          path: build/de.cau.cs.kieler.semantics.product.repository/target/products/sccharts_rca_*-macosx.cocoa.*.tar.gz
           if-no-files-found: error
 
       # Kieler Compiler CLI
@@ -167,7 +167,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: KIELER Compiler Diagrams CLI MacOS Jar
-          path: build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/kicodia.osx.jar
+          path: |
+            build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/kicodia.osx.jar
+            build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/kicodia.osx.aarch64.jar
           if-no-files-found: error
 
       # - name: Archive KIELER Compiler Diagrams CLI Windows
