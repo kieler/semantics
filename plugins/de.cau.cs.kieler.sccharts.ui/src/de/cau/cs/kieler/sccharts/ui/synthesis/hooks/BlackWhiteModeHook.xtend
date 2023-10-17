@@ -66,7 +66,7 @@ class BlackWhiteModeHook extends SynthesisHook {
             configureColor(TRANSITION_ABORT_DECORATOR, Colors.GRAY);
             configureColor(TRANSITION_TERMINATION_DECORATOR, Colors.GRAY);
             
-            configureColor(STATE_FOREGROND, Colors.BLACK);
+            configureColor(STATE_FOREGROUND, Colors.BLACK);
             configureColor(STATE_BACKGROUND_GRADIENT_1, Colors.GRAY_95);
             configureColor(STATE_BACKGROUND_GRADIENT_2, Colors.GRAY_95);
             configureColor(STATE_REFERENCED_BACKGROUND_GRADIENT_1, Colors.GRAY_97);

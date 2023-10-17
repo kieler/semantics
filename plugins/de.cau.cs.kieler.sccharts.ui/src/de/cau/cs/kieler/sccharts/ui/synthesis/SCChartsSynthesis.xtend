@@ -26,6 +26,7 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
@@ -39,6 +40,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import java.util.HashMap
 import java.util.LinkedHashSet
@@ -75,6 +77,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     @Inject extension PragmaExtensions
     @Inject extension TransitionStyles
     @Inject extension KPolylineExtensions
+    @Inject extension ColorStore
     @Inject StateSynthesis stateSynthesis
     @Inject ControlflowRegionSynthesis controlflowSynthesis    
     @Inject DataflowRegionSynthesis dataflowSynthesis  
@@ -147,7 +150,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         
         return options.toList
     }
-
+    
     override transform(SCCharts sccharts) {
         val startTime = System.currentTimeMillis
         
@@ -171,7 +174,10 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue)
         
-        clearSymbols
+        // Configure color theme
+        configureAllColors(usedContext)
+        
+        clearSymbols()
         for(symbolTable : scc.getStringPragmas(PRAGMA_SYMBOLS)) {  
             var prefix = ""
             if (symbolTable.values.size > 1) prefix = symbolTable.values.get(1)
@@ -180,7 +186,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_SCRIPT)) { defineMathScriptSymbols(prefix) }
             if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_FRAKTUR)) { defineMathFrakturSymbols(prefix) }
             if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK)) { defineMathDoubleStruckSymbols(prefix) }
-        }             
+        }
         for(symbol : scc.getStringPragmas(PRAGMA_SYMBOL)) {
             symbol.values.head.defineSymbol(symbol.values.get(1))
         }

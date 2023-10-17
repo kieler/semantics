@@ -334,7 +334,7 @@ class EquationStyles {
             // Mark this figure as container for further content
             setProperty(IS_CONTENT_CONTAINER, true);
             setBackgroundGradient(STATE_BACKGROUND_GRADIENT_1.color, STATE_BACKGROUND_GRADIENT_2.color, 90);
-            foreground = STATE_FOREGROND.color;
+            foreground = STATE_FOREGROUND.color;
         ]
     }
 
@@ -347,7 +347,7 @@ class EquationStyles {
             // Mark this figure as container for further content
             setProperty(IS_CONTENT_CONTAINER, true);
             setBackgroundGradient(STATE_BACKGROUND_GRADIENT_1.color, STATE_BACKGROUND_GRADIENT_2.color, 90);
-            foreground = STATE_FOREGROND.color;
+            foreground = STATE_FOREGROUND.color;
             setGridPlacement(1);
         ]
     }
