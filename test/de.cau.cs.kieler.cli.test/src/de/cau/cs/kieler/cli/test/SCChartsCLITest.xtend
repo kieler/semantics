@@ -14,11 +14,12 @@ package de.cau.cs.kieler.cli.test
 
 import de.cau.cs.kieler.core.Platform
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
 import org.junit.BeforeClass
 import org.junit.Test
 
 import static org.junit.Assert.*
-import java.nio.file.Files
 
 /** 
  * @author als
@@ -180,10 +181,11 @@ class SCChartsCLITest extends AbstractCLITest {
         val dir = setupTest("complex-compile")
         
         val wd = new File(dir, "sctx/abo")
-        val rel_compiler = new File("../../../../" + compiler.path)
+        val local_compiler = wd.toPath.resolve(compiler.name)
+        Files.copy(compiler.toPath, local_compiler, StandardCopyOption.REPLACE_EXISTING);
         
         // compiler
-        val command = #[rel_compiler.path, "-v", "-s", "de.cau.cs.kieler.sccharts.netlist", "-o", "code", "-ig", "kieler-gen", "abo.sctx"]
+        val command = #[local_compiler.relativize(wd.toPath).toString, "-v", "-s", "de.cau.cs.kieler.sccharts.netlist", "-o", "code", "-ig", "kieler-gen", "abo.sctx"]
         assertEquals("Exit value not zero", 0, command.invoke(wd))
         
         // check results
