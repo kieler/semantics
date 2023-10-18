@@ -20,13 +20,11 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.LightDiagramServices
-import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
@@ -40,6 +38,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ActorSkins
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import java.util.HashMap
@@ -53,8 +52,6 @@ import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.service.util.CompoundGraphElementVisitor
 import org.eclipse.elk.core.util.IGraphElementVisitor
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
@@ -78,6 +75,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     @Inject extension TransitionStyles
     @Inject extension KPolylineExtensions
     @Inject extension ColorStore
+    @Inject extension ActorSkins
     @Inject StateSynthesis stateSynthesis
     @Inject ControlflowRegionSynthesis controlflowSynthesis    
     @Inject DataflowRegionSynthesis dataflowSynthesis  
@@ -87,9 +85,6 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     @Inject PolicySynthesis policySynthesis
         
     @Inject package SynthesisHooks hooks  
-    
-    public static final IProperty<String> SKINPATH = new Property<String>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.skinPath", "");
 
     static val PRAGMA_SYMBOLS = "symbols"       
     static val PRAGMA_SYMBOL = "symbol"       
@@ -98,7 +93,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     static val PRAGMA_SYMBOLS_MATH_SCRIPT = "math script"       
     static val PRAGMA_SYMBOLS_MATH_FRAKTUR = "math fraktur"       
     static val PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK = "math doublestruck"
-    static val PRAGMA_FONT = "font"        
+    static val PRAGMA_FONT = "font"
     static val PRAGMA_SKINPATH = "skinpath"
     
     static val PRAGMA_HIDE_IMPORTED_SCCHARTS = "HideImportedSCCharts"
@@ -174,7 +169,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue)
         
-        // Configure color theme
+        // Configure color theme (before start to allow for changes by hooks)
         configureAllColors(usedContext)
         
         clearSymbols()
@@ -335,23 +330,6 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
                 }                 
             }
         }
-    }
-    
-    def String getSkinPath(ViewContext context) {
-        val rootNode = context.viewModel
-        var sp = rootNode.getProperty(SKINPATH)
-        if (sp.nullOrEmpty) {
-            sp = context.getProperty(SKINPATH)
-            if (!sp.nullOrEmpty) {
-                sp.setSkinPath(context)
-            }
-        } 
-        return sp 
-    }
-    
-    def void setSkinPath(String sp, ViewContext context) {
-        val rootNode = context.viewModel
-        rootNode.setProperty(SKINPATH, sp) 
     }
     
     override List<? extends IGraphElementVisitor> getAdditionalLayoutConfigs(KNode viewModel) {

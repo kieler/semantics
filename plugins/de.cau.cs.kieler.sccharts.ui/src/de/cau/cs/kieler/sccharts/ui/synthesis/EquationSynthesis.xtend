@@ -59,6 +59,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.SCChartsUiModule
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ActorSkins
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import java.util.EnumSet
@@ -131,7 +132,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsSerializeHRExtensions
-    @Inject extension SCChartsSynthesis
     @Inject extension EquationStyles
     @Inject extension KExtDeclarationExtensions
     @Inject extension AnnotationsExtensions
@@ -141,6 +141,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension EquationSynthesisHelper
     @Inject extension EquationSimplification
     @Inject extension TransitionStyles
+    @Inject extension ActorSkins
     @Inject StateSynthesis stateSynthesis
 
     val HashMap<ReferenceDeclaration, KNode> referenceNodes = newHashMap
@@ -901,7 +902,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         val referenceDeclaration = voRef.valuedObject.declaration as ReferenceDeclaration
         if (referenceDeclaration.hasAnnotation(ANNOTATION_FIGURE)) {
             newNode = referenceDeclaration.createKGTNode("OPERATOR", label)
-            newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
+            newNode.setProperty(ActorSkins.SKINPATH, getSkinPath(usedContext))
             newNode.addNodeLabelWithPadding(label, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
             newNode.setProperty(REFERENCE_NODE, true)
             val rendering = newNode.data.filter(KContainerRendering).head
@@ -918,7 +919,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         if (referenceDeclaration.reference !== null &&
             referenceDeclaration.reference.asAnnotatable.hasAnnotation(ANNOTATION_FIGURE)) {
             newNode = referenceDeclaration.reference.createKGTNode("OPERATOR", label)
-            newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
+            newNode.setProperty(ActorSkins.SKINPATH, getSkinPath(usedContext))
             newNode.addNodeLabelWithPadding(label, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
             newNode.setProperty(REFERENCE_NODE, true)
             val rendering = newNode.data.filter(KContainerRendering).head
@@ -967,7 +968,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             EnumSet.of(SizeConstraint.PORTS, SizeConstraint.PORT_LABELS, SizeConstraint.MINIMUM_SIZE, 
                 SizeConstraint.NODE_LABELS
             ))
-        newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
+        newNode.setProperty(ActorSkins.SKINPATH, getSkinPath(usedContext))
         newNode.setProperty(REFERENCE_NODE, true)
         return newNode
     }
