@@ -34,6 +34,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.ui.synthesis.KGTLoader
+import de.cau.cs.kieler.kicool.ui.synthesis.colors.AbstractColorStore.GeneralColor
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KNode
@@ -1229,10 +1230,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     );
                 } else {
                     if (!rendering.styles.exists[it instanceof KForeground]) {
-                        rendering.foreground = STATE_FOREGROUND.color // Fixme
+                        rendering.foreground = GeneralColor.FOREGROUND.color
                     }
                     if (!rendering.styles.exists[it instanceof KBackground]) {
-                        rendering.background = REGION_BACKGROUND.color // Fixme
+                        rendering.background = GeneralColor.BACKGROUND.color
                     }
                 }
             }

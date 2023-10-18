@@ -12,30 +12,24 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis.styles;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.eclipse.emf.ecore.util.EcoreUtil;
-
-import de.cau.cs.kieler.klighd.ViewContext;
+import de.cau.cs.kieler.kicool.ui.synthesis.colors.AbstractColorStore;
 import de.cau.cs.kieler.klighd.krendering.Colors;
 import de.cau.cs.kieler.klighd.krendering.KColor;
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.klighd.util.ColorPreferences;
-import de.cau.cs.kieler.klighd.util.KlighdProperties;
+
+import static de.cau.cs.kieler.kicool.ui.synthesis.colors.ColorUtil.*; 
 
 /**
  * The SCCharts colors.
  * 
  * @author als
- * @kieler.design 2015-10-27 proposed
- * @kieler.rating 2015-10-27 proposed yellow
  */
 @ViewSynthesisShared
-public class ColorStore {
-
-    public enum Color {
+public class ColorStore extends AbstractColorStore {
+ 
+    public enum Color implements IColor {
         STATE_FOREGROUND(Colors.GRAY),
         STATE_TEXT_FOREGROUND(Colors.BLACK),
         STATE_INITIAL_FOREGROND(Colors.BLACK),
@@ -135,32 +129,15 @@ public class ColorStore {
         /**
          * @return the default color
          */
-        private KColor getDefaultColor() {
+        public KColor getDefaultColor() {
             return defaultColor;
         }
     };
     
-    
-    private final static KRenderingFactory FACTORY = KRenderingFactory.eINSTANCE;
-    
-    /** the configuration */
-    private Map<Color, KColor> configuration = new HashMap<ColorStore.Color, KColor>();
-
-    /**
-     * Configures the entire color store based on the configuration in the view context.
-     * 
-     * @param context
-     *            the ViewContext
-     */
-    public void configureAllColors(final ViewContext context) {
-        var fg = FACTORY.createKColor().setColor(Colors.BLACK);
-        var bg = FACTORY.createKColor().setColor(Colors.WHITE);
-        
-        ColorPreferences preferences = context.getProperty(KlighdProperties.COLOR_PREFERENCES);
-        if (preferences != null) {
-            fg = preferences.getForeground();
-            bg = preferences.getBackground();
-        }
+    @Override
+    public void configureOwnColors(final ColorPreferences preferences) {
+        var fg = preferences.getForeground();
+        var bg = preferences.getBackground();
         
         // check if it can be considered dark mode
         var bgHSB = java.awt.Color.RGBtoHSB(bg.getRed(), bg.getGreen(), bg.getBlue(), null);
@@ -231,82 +208,5 @@ public class ColorStore {
             
             configureColor(Color.KEYWORD, 0xC5, 0x86, 0xC0);
         }
-    }
-    
-    /**
-     * Configures the given color with RGB values.
-     * 
-     * @param color
-     *            the color to configure
-     * @param red
-     *            the red component of the desired color in range of 0 to 255
-     * @param green
-     *            the green component of the desired color in range of 0 to 255
-     * @param blue
-     *            the blue component of the desired color in range of 0 to 255
-     */
-    public void configureColor(final Color color, final int red, final int green, final int blue) {
-        KColor kColor = FACTORY.createKColor();
-        kColor.setRed(red);
-        kColor.setGreen(green);
-        kColor.setBlue(blue);
-        configuration.put(color, kColor);
-    }
-
-    /**
-     * Configures the given color with a {@link Colors} color.
-     * 
-     * @param color
-     *            the color to configure
-     * @param color
-     *            the {@link Colors} color
-     */
-    public void configureColor(final Color color, final Colors cColor) {
-        KColor kColor = FACTORY.createKColor();
-        kColor.setColor(cColor);
-        configuration.put(color, kColor);
-    }
-    
-    /**
-     * Configures the given color with a {@link Colors} color.
-     * 
-     * @param color
-     *            the color to configure
-     * @param color
-     *            the {@link KColor} color
-     */
-    public void configureColor(final Color color, final KColor kColor) {
-        configuration.put(color, kColor);
-    }
-
-    /**
-     * @param color
-     *            the color
-     * @return a new {@link KColor} for the given color respecting all configurations.
-     */
-    public KColor getColor(Color color) {
-        if (configuration.containsKey(color)) {
-            return EcoreUtil.copy(configuration.get(color));
-        } else if (color != null) {
-            return EcoreUtil.copy(color.getDefaultColor());
-        }
-        return null;
-    }
-    
-    /**
-     * Adjusts the brightness of the given color.
-     */
-    private KColor adjustBrightness(KColor color, float adjustment) {
-        var HSB = java.awt.Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
-        HSB[2] += adjustment;
-        HSB[2] = Math.max(0, Math.min(1, HSB[2]));
-        var RGB = java.awt.Color.getHSBColor(HSB[0],HSB[1],HSB[2]);
-        
-        KColor newColor = FACTORY.createKColor();
-        newColor.setRed(RGB.getRed());
-        newColor.setGreen(RGB.getGreen());
-        newColor.setBlue(RGB.getBlue());
-        
-        return newColor;
     }
 }
