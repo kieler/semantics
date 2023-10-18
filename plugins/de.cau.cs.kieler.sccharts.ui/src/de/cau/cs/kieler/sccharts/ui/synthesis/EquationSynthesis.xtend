@@ -39,10 +39,16 @@ import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.klighd.krendering.KArc
+import de.cau.cs.kieler.klighd.krendering.KBackground
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KEllipse
+import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.krendering.KPolyline
+import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
@@ -60,6 +66,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.SCChartsUiModule
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ActorSkins
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import java.util.EnumSet
@@ -80,6 +87,7 @@ import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
+import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
@@ -142,6 +150,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension EquationSimplification
     @Inject extension TransitionStyles
     @Inject extension ActorSkins
+    @Inject extension ColorStore
     @Inject StateSynthesis stateSynthesis
 
     val HashMap<ReferenceDeclaration, KNode> referenceNodes = newHashMap
@@ -309,7 +318,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             n.addLayoutParam(CoreOptions.NODE_SIZE_MINIMUM, new KVector(0, 0))
             n.addLayoutParam(CoreOptions.PADDING, new ElkPadding(0, 0, 0, 0))
         }
-        return nodes.reWireInlining.addMissingReferenceInputs
+        val finalNodes = nodes.reWireInlining.addMissingReferenceInputs
+        finalNodes.applyColors()
+        return finalNodes
     }
 
     /**
@@ -1173,6 +1184,64 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 port.createLabel.configureInsidePortLabel(label, PORT_LABEL_FONT_SIZE)
             } else {
                 portLabel.text = label
+            }
+        }
+    }
+    
+    private def void applyColors(List<KNode> nodes) {
+        val allNodes = newArrayList()
+        allNodes += nodes
+        for (n : nodes) {
+            allNodes += n.eAllContents.filter(KNode).toIterable
+        }
+        
+        for (node : allNodes) {
+            for (rendering : node.data.filter(KRendering)) {
+                rendering.applyColors()
+            }
+            for (edge : node.outgoingEdges) {
+                for (rendering : edge.data.filter(KRendering)) {
+                    rendering.applyColors()
+                }
+            }
+        }
+    }
+    
+    private def void applyColors(KRendering rendering) {
+        switch (rendering) {
+            KText: {
+                if (!rendering.styles.exists[it instanceof KForeground]) {
+                    rendering.foreground = STATE_TEXT_FOREGROUND.color
+                }
+            }
+            KArc,
+            KEllipse,
+            KPolyline,
+            KRectangle,
+            KRoundedRectangle: {
+                if (rendering.hasProperty(ActorSkins.SKIN_STYLE_KEY_SCCHARTS)) {
+                     // Apply SCCharts state style
+                    rendering.foreground = STATE_FOREGROUND.color
+                    rendering.setBackgroundGradient(
+                        STATE_BACKGROUND_GRADIENT_1.color,
+                        STATE_BACKGROUND_GRADIENT_2.color,
+                        90
+                    );
+                } else {
+                    if (!rendering.styles.exists[it instanceof KForeground]) {
+                        rendering.foreground = STATE_FOREGROUND.color // Fixme
+                    }
+                    if (!rendering.styles.exists[it instanceof KBackground]) {
+                        rendering.background = REGION_BACKGROUND.color // Fixme
+                    }
+                }
+            }
+        }
+
+        // continue recursive
+        if (rendering instanceof KContainerRendering) {
+            for (child : rendering.children) {
+                child.applyColors()
             }
         }
     }

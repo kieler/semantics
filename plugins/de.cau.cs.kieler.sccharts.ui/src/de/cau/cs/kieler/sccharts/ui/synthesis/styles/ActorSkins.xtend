@@ -25,6 +25,9 @@ class ActorSkins {
         
     public static final IProperty<String> SKINPATH = new Property<String>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.skinPath", "");
+
+    public static final IProperty<Boolean> SKIN_STYLE_KEY_SCCHARTS = new Property<Boolean>(
+        "de.cau.cs.kieler.sccharts.ui.synthesis.style.sccharts", false);
         
     def String getSkinPath(ViewContext context) {
         val rootNode = context.viewModel
