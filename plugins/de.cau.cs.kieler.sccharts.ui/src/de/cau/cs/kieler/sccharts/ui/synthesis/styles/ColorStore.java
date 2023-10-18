@@ -153,10 +153,14 @@ public class ColorStore {
      *            the ViewContext
      */
     public void configureAllColors(final ViewContext context) {
-        ColorPreferences preferences = context.getProperty(KlighdProperties.COLOR_PREFERENCES);
+        var fg = FACTORY.createKColor().setColor(Colors.BLACK);
+        var bg = FACTORY.createKColor().setColor(Colors.WHITE);
         
-        var fg = preferences.getForeground();
-        var bg = preferences.getBackground();
+        ColorPreferences preferences = context.getProperty(KlighdProperties.COLOR_PREFERENCES);
+        if (preferences != null) {
+            fg = preferences.getForeground();
+            bg = preferences.getBackground();
+        }
         
         // check if it can be considered dark mode
         var bgHSB = java.awt.Color.RGBtoHSB(bg.getRed(), bg.getGreen(), bg.getBlue(), null);

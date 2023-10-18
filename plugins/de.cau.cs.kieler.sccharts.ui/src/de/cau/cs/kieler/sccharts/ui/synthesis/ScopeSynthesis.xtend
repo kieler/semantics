@@ -71,10 +71,10 @@ class ScopeSynthesis extends AbstractDiagramSynthesis<Scope> {
         
         val rootNode = createNode
         
-        hooks.invokeStart(root, rootNode)
-        
-        // Configure color theme
+        // Configure color theme (before start to allow for changes by hooks)
         configureAllColors(usedContext)
+                
+        hooks.invokeStart(root, rootNode)
         
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue)
         
