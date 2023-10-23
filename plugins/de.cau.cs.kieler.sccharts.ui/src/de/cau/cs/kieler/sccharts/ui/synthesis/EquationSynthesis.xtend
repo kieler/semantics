@@ -93,6 +93,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension com.google.common.collect.Iterables.concat
 
 /**
  * @author ssm
@@ -1172,17 +1173,26 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     if (portLabel !== null) {
                         port.labels.remove(0)
                     }
-                    port.createLabel().configureOutsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+                    port.createLabel() => [
+                        it.configureOutsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+                        it.KRendering.foreground = TRANSITION_LABEL_FOREGROND.color
+                    ]
                 } else {
                     if (portLabel !== null) {
                         port.labels.remove(0)
                     }
-                    port.createLabel().configureInsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+                    port.createLabel() => [
+                        it.configureInsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+                        it.KRendering.foreground = TRANSITION_LABEL_FOREGROND.color
+                    ]
                 }
             }
         } else {
             if (portLabel === null) {
-                port.createLabel.configureInsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+                port.createLabel() => [
+                        it.configureInsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+                        it.KRendering.foreground = TRANSITION_LABEL_FOREGROND.color
+                    ]
             } else {
                 portLabel.text = label
             }
@@ -1203,6 +1213,16 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             for (edge : node.outgoingEdges) {
                 for (rendering : edge.data.filter(KRendering)) {
                     rendering.applyColors()
+                }
+                for (label : edge.labels) {
+                    if (label.KRendering !== null) {
+                        label.KRendering.applyColors()
+                    }
+                }
+            }
+            for (label : node.labels.concat(node.ports.map[labels].flatten)) {
+                if (label.KRendering !== null) {
+                    label.KRendering.applyColors()
                 }
             }
         }
