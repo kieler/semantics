@@ -27,6 +27,8 @@ import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import javax.inject.Inject
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.kicool.ui.synthesis.colors.DefaultColorStore
+import de.cau.cs.kieler.kicool.ui.synthesis.colors.AbstractColorStore.GeneralColor
 
 /**
  * Diagram synthesis for a {@link CodePlaceHolder}.
@@ -49,6 +51,9 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
 
     @Inject
     extension KColorExtensions
+    
+    @Inject
+    extension DefaultColorStore
 
     // -------------------------------------------------------------------------
     // Constants
@@ -63,6 +68,8 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
     // Synthesis
     override KNode transform(CodePlaceHolder placeholder) {
         val startTime = System.currentTimeMillis
+        configureAllColors(usedContext)
+        
         val rootNode = createNode();
         rootNode.children += createNode(placeholder) => [
             it.associateWith(placeholder);
@@ -70,12 +77,14 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
             it.addRoundedRectangle(8, 8) => [
                 it.addDoubleClickAction(OpenCodeInEditorAction.ID);
                 it.setGridPlacement(1);
+                it.foreground = GeneralColor.FOREGROUND.color;
 
                 // title
                 val titleText = if (placeholder.name.nullOrEmpty) placeholder.typeLabel else placeholder.typeLabel + " - " + placeholder.name
                 it.addText(titleText) => [
                     it.fontSize = 11;
                     it.fontBold = true;
+                    it.foreground = GeneralColor.FOREGROUND.color;
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
                     it.suppressSelectability;
                 ]
@@ -90,12 +99,15 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
                 ]
 
                 // separator
-                it.addHorizontalSeperatorLine(1, 0);
+                it.addHorizontalSeperatorLine(1, 0) => [
+                    it.foreground = GeneralColor.FOREGROUND.color;
+                ]
 
                 // code preview
                 it.addText(placeholder.code.generatePreview) => [
                     it.fontSize = 8;
                     it.fontName = KlighdConstants.DEFAULT_MONOSPACE_FONT_NAME;
+                    it.foreground = GeneralColor.FOREGROUND.color;
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
                     it.suppressSelectability;
                     it.addDoubleClickAction(OpenCodeInEditorAction.ID);
