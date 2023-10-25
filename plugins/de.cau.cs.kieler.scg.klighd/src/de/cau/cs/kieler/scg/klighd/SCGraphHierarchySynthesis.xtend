@@ -130,13 +130,13 @@ class SCGraphHierarchySynthesis {
                     } else {
                         label = entry.getStringAnnotationValue(ANNOTATION_REGIONNAME)
                     }
-                    val REGION_LABEL = label
+                    val threadLabel = label
                     entry.getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY, null) => [
                         var text = ""
-                        if(!REGION_LABEL.nullOrEmpty) text = REGION_LABEL
+                        if(!threadLabel.nullOrEmpty) text = threadLabel
                         val threadPathType = threadTypes.get(entry)
                         if (threadPathType !== null) {
-                            if(!REGION_LABEL.nullOrEmpty) text = text + " - "
+                            if(!threadLabel.nullOrEmpty) text = text + " - "
                             text = text + threadPathType.toString2 + 
                                 (entry.hasAnnotation(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE_PREEMPTION) ? " " + entry.getStringAnnotationValue(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE_PREEMPTION) : "" )
                         }
@@ -146,9 +146,8 @@ class SCGraphHierarchySynthesis {
                             threadSegmentIDText = "ThreadID: " +
                                 (entry.getAnnotation(
                                     PriorityAuxiliaryData.THREAD_SEGMENT_ANNOTATION) as IntAnnotation).value.toString
-                            val labelTR = addOutsideTopLeftNodeLabel(threadSegmentIDText, 10,
-                                KlighdConstants::DEFAULT_FONT_NAME) => [
-                                it.KRendering.setForeground(REGION_LABEL.color)
+                            val labelTR = addOutsideTopLeftNodeLabel(threadSegmentIDText, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
+                                it.KRendering.setForeground(THREAD_LABEL.color)
                             ]
                             labelTR.KRendering.setProperty(SCGraphDiagramSynthesis.THREAD_PRIO_PROPERTY, true)
                         }
@@ -156,7 +155,7 @@ class SCGraphHierarchySynthesis {
                         if (SHOW_POTENTIALPROBLEMS.booleanValue) {
                             // Workaround for fixing the massive whitespace: using centered labels
                             addInsideTopCenteredNodeLabel(text, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
-                                it.KRendering.setForeground(REGION_LABEL.color);
+                                it.KRendering.setForeground(THREAD_LABEL.color);
                             ]
                         }
 
@@ -230,7 +229,7 @@ class SCGraphHierarchySynthesis {
 
                 bbName = bbName.replaceAll("_g", "g")
                 bbName.createLabel(bbContainer).configureOutsideTopLeftNodeLabel(bbName, 9,
-                    KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = BASICBLOCKBORDER.color
+                    KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = BASICBLOCK_BORDER.color
             }
             if (SHOW_SCHEDULINGBLOCKS.booleanValue) {
                 for (schedulingBlock : basicBlock.schedulingBlocks) {
@@ -260,7 +259,7 @@ class SCGraphHierarchySynthesis {
                         sbName = sbName.replaceAll("_g", "g")
                         sbName.createLabel(sbContainer).associateWith(schedulingBlock).
                             configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).
-                            KRendering.foreground = SCHEDULINGBLOCKBORDER.color
+                            KRendering.foreground = SCHEDULINGBLOCK_BORDER.color
                     }
 
                     if (basicBlock.deadBlock) {
@@ -390,10 +389,10 @@ class SCGraphHierarchySynthesis {
 
         if (nodeGrouping == NODEGROUPING_HIERARCHY) {
             kContainer.addRoundedRectangle(5, 5, 0)
-            kContainer.KRendering.foreground = SCCHARTSBLUE.color;
+            kContainer.KRendering.foreground = THREAD_BACKGROUND.color;
             kContainer.KRendering.foreground.alpha = Math.round(
                 HIERARCHY_TRANSPARENCY.objectValue as Float)
-            kContainer.KRendering.background = SCCHARTSBLUE.color;
+            kContainer.KRendering.background = THREAD_BACKGROUND.color;
             kContainer.KRendering.background.alpha = Math.round(
                 HIERARCHY_TRANSPARENCY.objectValue as Float)
         }
@@ -402,9 +401,9 @@ class SCGraphHierarchySynthesis {
                 lineStyle = LineStyle::SOLID
                 associateWith(contextObject)
             ]
-            kContainer.KRendering.foreground = BASICBLOCKBORDER.color;
+            kContainer.KRendering.foreground = BASICBLOCK_BORDER.color;
             kContainer.KRendering.foreground.alpha = Math.round(255f)
-            kContainer.KRendering.background = SCCHARTSBLUE.color;
+            kContainer.KRendering.background = THREAD_BACKGROUND.color;
             kContainer.KRendering.background.alpha = Math.round(0f)
         }
         if (nodeGrouping == NODEGROUPING_SCHEDULINGBLOCK) {
@@ -412,9 +411,9 @@ class SCGraphHierarchySynthesis {
                 lineStyle = LineStyle::SOLID
                 associateWith(contextObject)
             ]
-            kContainer.KRendering.foreground = SCHEDULINGBLOCKBORDER.color;
+            kContainer.KRendering.foreground = SCHEDULINGBLOCK_BORDER.color;
             kContainer.KRendering.foreground.alpha = Math.round(255f)
-            kContainer.KRendering.background = SCCHARTSBLUE.color;
+            kContainer.KRendering.background = THREAD_BACKGROUND.color;
             kContainer.KRendering.background.alpha = Math.round(0f)
         }
         if (nodeGrouping == NODEGROUPING_GUARDBLOCK) {
@@ -432,9 +431,9 @@ class SCGraphHierarchySynthesis {
                 lineStyle = LineStyle::SOLID
                 associateWith(contextObject)
             ]
-            kContainer.KRendering.foreground = SCHEDULEBORDER.color;
+            kContainer.KRendering.foreground = SCHEDULE_BORDER.color;
             kContainer.KRendering.foreground.alpha = Math.round(196f)
-            kContainer.KRendering.background = SCCHARTSBLUE.color;
+            kContainer.KRendering.background = THREAD_BACKGROUND.color;
             kContainer.KRendering.background.alpha = Math.round(0f)
         }
         if (nodeGrouping == NODEGROUPING_SCC) {
@@ -442,9 +441,9 @@ class SCGraphHierarchySynthesis {
                 lineStyle = LineStyle::SOLID
                 associateWith(contextObject)
             ]
-            kContainer.KRendering.foreground = SCHEDULINGBLOCKBORDER.color;
+            kContainer.KRendering.foreground = SCHEDULINGBLOCK_BORDER.color;
             kContainer.KRendering.foreground.alpha = Math.round(196f)
-            kContainer.KRendering.background = SCCHARTSBLUE.color;
+            kContainer.KRendering.background = THREAD_BACKGROUND.color;
             kContainer.KRendering.background.alpha = Math.round(0f)
         }
 

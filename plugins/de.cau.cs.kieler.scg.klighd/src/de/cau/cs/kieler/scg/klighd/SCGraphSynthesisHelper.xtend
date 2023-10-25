@@ -155,7 +155,9 @@ class SCGraphSynthesisHelper {
     def initialiseFigure(KNode node, Object object) {
         node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
         val figure = node.data.filter(KContainerRendering).last
-        if(SHOW_SHADOW.booleanValue) figure.shadow = "black".color
+        figure.foreground = NODE_FOREGROUND.color
+        figure.background = NODE_BACKGROUND.color
+        if(SHOW_SHADOW.booleanValue) figure.shadow = NODE_SHADOW.color
         var label = ""
         if (object instanceof Annotatable) {
             if (object.hasAnnotation(ANNOTATION_LABEL)) {
@@ -168,7 +170,8 @@ class SCGraphSynthesisHelper {
         } else if (object instanceof String) {
             label = object
         }
-        figure.children.filter(KText).head.text = label
+        val ktext = figure.children.filter(KText).head
+        ktext.text = label
     }
 
     /**
@@ -187,6 +190,7 @@ class SCGraphSynthesisHelper {
             edge.setProperty(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.floatValue) => [
                 it.lineStyle = LineStyle::DOT;
+                it.foreground = CONTROLFLOW_EDGE.color
             ]
             if (USE_ADAPTIVEZOOM.booleanValue)
                 edge.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);

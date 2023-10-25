@@ -16,9 +16,11 @@ import de.cau.cs.kieler.annotations.CommentAnnotation
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
@@ -26,7 +28,6 @@ import de.cau.cs.kieler.sccharts.Transition
 import javax.inject.Inject
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.klighd.kgraph.KLabel
 
 /**
  * @author als
@@ -41,8 +42,7 @@ class AdaptiveZoom {
     static val TUNNEL_EFFECT = 0.85
     static val DEFAULT_LOWER_SCALE_BOUND = 0.15
             
-    @Inject
-    SCChartsSynthesis synthesis
+    @Inject AbstractDiagramSynthesis<?> synthesis
     
     dispatch def configureNodeLOD(KNode node, Region region) {
         // Create a tunnel effect with regions to benifit from adaptive zoom

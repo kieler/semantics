@@ -80,7 +80,7 @@ class StateStyles {
     /** This property is set a rendering and indicates the content container */
     public static final IProperty<Boolean> IS_CONTENT_CONTAINER = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.style.state.content", false);
-    /** This property is set a rendering and indicates the redering is not visible and only present for layout purpose */
+    /** This property is set a rendering and indicates the rendering is not visible and only present for layout purpose */
     public static final IProperty<Boolean> IS_LAYOUT_ELEMENT = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.style.layout", false);
     /** This property is set on the content container rendering and points to the container holding the action labels */
@@ -112,7 +112,7 @@ class StateStyles {
             // Mark this figure as container for further content
             setProperty(IS_CONTENT_CONTAINER, true);
             setBackgroundGradient(STATE_BACKGROUND_GRADIENT_1.color, STATE_BACKGROUND_GRADIENT_2.color, 90);
-            foreground = STATE_FOREGROND.color;
+            foreground = STATE_FOREGROUND.color;
         ]
     }
 
@@ -125,7 +125,7 @@ class StateStyles {
             // Mark this figure as container for further content
             setProperty(IS_CONTENT_CONTAINER, true);
             setBackgroundGradient(STATE_BACKGROUND_GRADIENT_1.color, STATE_BACKGROUND_GRADIENT_2.color, 90);
-            foreground = STATE_FOREGROND.color;
+            foreground = STATE_FOREGROUND.color;
             setGridPlacement(1);
         ]
     }
@@ -231,6 +231,7 @@ class StateStyles {
             
             fontBold = true
             fontSize = stateLabelTextSize
+            foreground = STATE_TEXT_FOREGROUND.color
             suppressSelectability
             selectionTextUnderline = Underline.NONE // prevents default selection style
 //            setProperty(KlighdProperties.IS_NODE_TITLE, true)
@@ -315,6 +316,7 @@ class StateStyles {
 		                ktext = it.addText(builder.append(" ").toString) => [
                             horizontalAlignment = H_LEFT
                             selectionTextUnderline = Underline.SINGLE
+                            foreground = STATE_TEXT_FOREGROUND.color
                         ]
 		                if (keyword == TextFormat.KEYWORD) {
 		                	ktext.highlightKeyword
@@ -335,6 +337,7 @@ class StateStyles {
                 ktext = addText(builder.toString) => [
                     horizontalAlignment = H_LEFT
                     selectionTextUnderline = Underline.SINGLE
+                    foreground = STATE_TEXT_FOREGROUND.color
                 ]
                 if (keyword == TextFormat.KEYWORD) {
                 	ktext.highlightKeyword
