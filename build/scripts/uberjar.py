@@ -354,9 +354,10 @@ def write_script(file, command, code):
     print('Creating script', basename(file.name))
     file.write(command.encode('ascii'))
     file.write(code)
-    flags = os.fstat(file.fileno()).st_mode
-    flags |= stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH
-    os.fchmod(file.fileno(), stat.S_IMODE(flags))
+    if os.name != 'nt':
+        flags = os.fstat(file.fileno()).st_mode
+        flags |= stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH
+        os.fchmod(file.fileno(), stat.S_IMODE(flags))
 
 def stop(msg):
     errPrint('[ERROR] ' + msg)
