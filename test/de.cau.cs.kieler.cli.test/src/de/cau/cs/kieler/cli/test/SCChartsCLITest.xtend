@@ -181,15 +181,17 @@ class SCChartsCLITest extends AbstractCLITest {
         val dir = setupTest("complex-compile")
         
         val wd = new File(dir, "sctx/abo")
-        val local_compiler = wd.toPath.resolve(compiler.name)
+        val local_compiler = wd.toPath.toAbsolutePath.relativize(compiler.toPath.toAbsolutePath)
         
-        // copy to local
-        Files.copy(compiler.toPath, local_compiler, StandardCopyOption.REPLACE_EXISTING)
-        assertTrue("Failed to copy compiler from " + compiler.toPath.toString + " to local test folder " + local_compiler.toString, local_compiler.toFile.isFile)
-        assertTrue("Cannot set executable flag of compiler", local_compiler.toFile.setExecutable(true))
+//        val local_compiler = wd.toPath.resolve(compiler.name)
+//        // copy to local
+//        Files.copy(compiler.toPath, local_compiler, StandardCopyOption.REPLACE_EXISTING)
+//        assertTrue("Failed to copy compiler from " + compiler.toPath.toString + " to local test folder " + local_compiler.toString, local_compiler.toFile.isFile)
+//        assertTrue("Cannot set executable flag of compiler", local_compiler.toFile.setExecutable(true))
         
         // compiler
-        val command = #[new File("./" + compiler.name).path, "-v", "-s", "de.cau.cs.kieler.sccharts.netlist", "-o", "code", "-ig", "kieler-gen", "abo.sctx"]
+//        val command = #[new File("./" + compiler.name).path, "-v", "-s", "de.cau.cs.kieler.sccharts.netlist", "-o", "code", "-ig", "kieler-gen", "abo.sctx"]
+        val command = #[local_compiler.toString, "-v", "-s", "de.cau.cs.kieler.sccharts.netlist", "-o", "code", "-ig", "kieler-gen", "abo.sctx"]
         assertEquals("Exit value not zero", 0, command.invoke(wd))
         
         // check results
