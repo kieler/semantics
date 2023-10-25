@@ -194,6 +194,8 @@ def extract(args, extracted, merged, klighd):
                     klighd_swt['win'] = target
                 elif 'cocoa.macosx.x86_64' in jar:
                     klighd_swt['osx'] = target
+                elif 'cocoa.macosx.aarch64' in jar:
+                    klighd_swt['osx.aarch64'] = target
                 else:
                     stop('Unknown platform-specific SWT fragment: ', jar)
                 # Remove unwanted files from fragment directory
@@ -298,8 +300,10 @@ def create_standalone_scripts(args, jar, target_dir, klighd):
         jar_linux = jar['linux']
         jar_win = jar['win']
         jar_osx = jar['osx']
+        jar_osx_arm = jar['osx.aarch64']
     else:
         jar_linux = jar_win = jar_osx = jar
+        jar_osx_arm = None
     
     # linux
     if jar_linux:
@@ -336,6 +340,15 @@ def create_standalone_scripts(args, jar, target_dir, klighd):
             if args.java8:
                 with open(join(target_dir, args.name + '-osxJava8'), 'wb') as file:
                     write_script(file, osx_cmd % default_options, code)
+                    
+    # osx ARM 64
+    if jar_osx_arm:
+        with open(jar_osx_arm, 'rb') as jar_file:
+            code = jar_file.read()
+            osx_cmd = '#!/usr/bin/env bash\nexec java -XstartOnFirstThread %s -jar $0 "$@" \n'
+            
+            with open(join(target_dir, args.name + '-osx-aarch64'), 'wb') as file:
+                write_script(file, osx_cmd % (default_options + java9_options), code)
 
 def write_script(file, command, code):
     print('Creating script', basename(file.name))
