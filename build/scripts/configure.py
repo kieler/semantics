@@ -79,15 +79,6 @@ def main(args):
     else:
         setArtifactName(product, args)
 
-    print '\n- Setting product build updatesite -'
-    # check main pom file
-    pom = join(args.path, 'build/pom.xml')
-    if not isfile(pom):
-        print 'pom.xml does not exist: ' + pom
-        pause(args)
-    else:
-        setProductUpdateSite(pom, args)
-
     print '\n- Setting product updatesites -'
     # check main pom file
     p2inf = join(args.path, 'build/de.cau.cs.kieler.semantics.product.repository/kieler.p2.inf')
@@ -200,29 +191,6 @@ def setArtifactName(product, args):
     else:
         print 'Cannot find archiveFileName element in %s' % product
         pause(args)
-
-
-def setProductUpdateSite(pom, args):
-    """Set source updatesite for product build"""
-    xml = etree.parse(pom, parser = etree.XMLParser(remove_comments=False))
-    updatesite = xml.find('./p:properties/p:kieler.semantics.updatesite', namespaces={'p':'http://maven.apache.org/POM/4.0.0'})
-    if updatesite is not None:
-        if args.release:
-            updatesite.text = releaseUpdatesite % args.release
-        else:
-            updatesite.text = nightlyUpdatesite
-        print 'Product Updatesite: %s' % updatesite.text
-    else:
-        print 'Cannot find kieler.semantics.updatesite element in %s' % pom
-        pause(args)
-
-    # retain html entities
-    trimspace = xml.find('./p:properties/p:sourceFeatureLabelSuffix', namespaces={'p':'http://maven.apache.org/POM/4.0.0'})
-    if updatesite is not None:
-        trimspace.text = u'&#xA0;(Sources)'
-
-    writeXML(xml, pom, htmlentities=True)
-
 
 def setProductUpdateSites(p2inf, targetplatform, args):
     """Create p2.inf for product configuring all updatesites registered in the product"""

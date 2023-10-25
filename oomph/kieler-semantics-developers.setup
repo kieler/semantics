@@ -253,10 +253,10 @@
             pattern="${git.clone.semantics.location}/features/.*"/>
         <operand
             xsi:type="predicates:LocationPredicate"
-            pattern=".*/oomph/.*"/>
+            pattern=".*/oomph"/>
         <operand
             xsi:type="predicates:LocationPredicate"
-            pattern="${git.clone.semantics.location}/oomph/.*"/>
+            pattern="${git.clone.semantics.location}/oomph"/>
         <operand
             xsi:type="predicates:LocationPredicate"
             pattern=".*/language-server/.*"/>
