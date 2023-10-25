@@ -24,6 +24,8 @@ import javax.inject.Inject
 import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 
+import static de.cau.cs.kieler.scg.klighd.ColorStore.Color.*
+
 /**
  * KRendering Utility class for KLighD visualization.
  * 
@@ -38,52 +40,7 @@ class SCGraphShapes {
     @Inject extension KColorExtensions
     @Inject extension KNodeExtensions
     @Inject extension KContainerRenderingExtensions
-	
-
-	def KNode createRoundedRectangulareNode(Object o) {
-		val node = o.node;
-		val rect = KRenderingFactory::eINSTANCE.createKRoundedRectangle;
-		rect.setCornerHeight(10);
-		rect.setCornerWidth(10);
-		node.data.add(rect);
-		node.KRendering.background = "white".color
-		return node;
-	}
-	
-	def KNode createRoundedRectangulareNode(Object o, int height, int width) {
-		val node = o.createRoundedRectangulareNode;
-		node.height = height;
-		node.width = width;
-		return node;
-	}
-	
-    def KNode createRectangulareNode(Object o) {
-        val node = o.node;
-        val rect = KRenderingFactory::eINSTANCE.createKRectangle;
-        node.data.add(rect);
-        return node;
-    }
-    
-    def KNode createRectangulareNode(Object o, int height, int width) {
-        val node = o.createRectangulareNode;
-        node.height = height;
-        node.width = width;
-        return node;
-    }
-
-    def KNode createEllipseNode(Object o) {
-        val node = o.node;
-        val rect = KRenderingFactory::eINSTANCE.createKEllipse;
-        node.data.add(rect);
-        return node;
-    }
-    
-    def KNode createEllipseNode(Object o, int height, int width) {
-        val node = o.createEllipseNode;
-        node.height = height;
-        node.width = width;
-        return node;
-    }
+    @Inject extension ColorStore
     
     def KPolygon createTriangleShape(KPolygon poly) {
         poly => [
@@ -91,8 +48,12 @@ class SCGraphShapes {
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0);
-            it.background = "white".color
-            addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 4, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0)
+            
+            it.foreground = NODE_FOREGROUND.color
+            it.background = NODE_BACKGROUND.color
+            addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 4, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0) => [
+                it.foreground = NODE_TEXT.color
+            ]
          ];
     }	
 
@@ -102,8 +63,12 @@ class SCGraphShapes {
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.0f);
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.5f);
-            it.background = "white".color
-            addText("").setAreaPlacementData.from(LEFT, 2, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 2, 0)
+            
+            it.foreground = NODE_FOREGROUND.color
+            it.background = NODE_BACKGROUND.color
+            addText("").setAreaPlacementData.from(LEFT, 2, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 2, 0) => [
+                it.foreground = NODE_TEXT.color
+            ]
          ];
     }   
 
@@ -113,8 +78,12 @@ class SCGraphShapes {
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0f);
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
-            it.background = "white".color
-            addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 10, 0)
+            
+            it.foreground = NODE_FOREGROUND.color
+            it.background = NODE_BACKGROUND.color
+            addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 10, 0) => [
+                it.foreground = NODE_TEXT.color
+            ]
         ];
     }   
 
@@ -124,8 +93,12 @@ class SCGraphShapes {
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.5f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.0f);
-            it.background = "white".color
-            addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 4, 0)
+            
+            it.foreground = NODE_FOREGROUND.color
+            it.background = NODE_BACKGROUND.color
+            it.addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 4, 0) => [
+                it.foreground = NODE_TEXT.color
+            ]
         ];
     }   
 
@@ -136,10 +109,11 @@ class SCGraphShapes {
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0f, TOP,  0, 0.5f);
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0f);
-            it.background = "white".color
-            it.addText("").setAreaPlacementData.
-            from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0) => [
-                it.background = "white".color
+            
+            it.foreground = NODE_FOREGROUND.color
+            it.background = NODE_BACKGROUND.color
+            it.addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0) => [
+                it.foreground = NODE_TEXT.color
                 it.background.alpha = 196
             ]
         ];
@@ -153,8 +127,12 @@ class SCGraphShapes {
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.33f);
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0);
-            it.background = "white".color
-            addText("")
+            
+            it.foreground = NODE_FOREGROUND.color
+            it.background = NODE_BACKGROUND.color
+            addText("") => [
+                it.foreground = NODE_TEXT.color
+            ]
         ];
     }   
 
@@ -166,8 +144,12 @@ class SCGraphShapes {
             it.points += createKPosition(LEFT,  0, 0.25f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.5f);
             it.points += createKPosition(LEFT,  0, 0.25f, TOP,  0, 0);
-            it.background = "white".color
-            addText("").setAreaPlacementData.from(LEFT, 10, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 3, 0)
+            
+            it.foreground = NODE_FOREGROUND.color
+            it.background = NODE_BACKGROUND.color
+            addText("").setAreaPlacementData.from(LEFT, 10, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 3, 0) => [
+                it.foreground = NODE_TEXT.color
+            ]
         ];
     }   
 
@@ -179,8 +161,12 @@ class SCGraphShapes {
             it.points += createKPosition(LEFT, 0, 0.0f, TOP, 0, 0.0f);
             it.points += createKPosition(LEFT, 0, 0.0f, TOP, 0, 0.66f);
             it.points += createKPosition(LEFT, 0, 0.5f, TOP, 0, 1.0f);
-            it.background = "white".color
-            addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 4, 0)
+            
+            it.foreground = NODE_FOREGROUND.color
+            it.background = NODE_BACKGROUND.color
+            addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 4, 0) => [
+                it.foreground = NODE_TEXT.color
+            ]
         ];
     }   
 
@@ -192,8 +178,12 @@ class SCGraphShapes {
             it.points += createKPosition(LEFT, 0, 0.75f, TOP, 0, 1.0f);
             it.points += createKPosition(LEFT, 0, 0.0f, TOP, 0, 1.0f);
             it.points += createKPosition(LEFT, 0, 0.0f, TOP, 0, 0.0f);
-            it.background = "white".color
-            addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 10, 0, BOTTOM, 2, 0)
+            
+            it.foreground = NODE_FOREGROUND.color
+            it.background = NODE_BACKGROUND.color
+            addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 10, 0, BOTTOM, 2, 0) => [
+                it.foreground = NODE_TEXT.color
+            ]
         ];
     }   
 

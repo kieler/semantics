@@ -88,7 +88,10 @@ class SCGraphComponentSynthesis {
         // Straightforward rectangle drawing
         val figure = node.addRoundedRectangle(SCGraphSynthesisHelper.CORNERRADIUS, SCGraphSynthesisHelper.CORNERRADIUS,
             SCGraphSynthesisHelper.LINEWIDTH)
-        figure.addText("").setSurroundingSpace(6, 0, 2, 0)
+        figure.addText("") => [
+            it.setSurroundingSpace(6, 0, 2, 0)
+            it.foreground = NODE_TEXT.color
+        ]
         var isSCGRef = false
         if (assignment.expression instanceof ReferenceCall) {
             val call = assignment.expression as ReferenceCall
@@ -97,12 +100,11 @@ class SCGraphComponentSynthesis {
                 isSCGRef = decl.reference instanceof SCGraph
             }
         }
-        if (isSCGRef) {
-            figure.setBackgroundGradient("#fcf7fc".color, "#e6cbf2".color, 90.0f)
-        } else {
-            figure.background = "white".color;
-        }
+        
         node.initialiseFigure(assignment)
+        if (isSCGRef) {
+            figure.setBackgroundGradient(NODE_REFERENCED_BACKGROUND_GRADIENT_1.color, NODE_REFERENCED_BACKGROUND_GRADIENT_2.color, 90.0f)
+        }
 
         // Add ports for control-flow and dependency routing.
         if (isGuardSCG) {
@@ -148,10 +150,12 @@ class SCGraphComponentSynthesis {
             }
         } else {
             if (assignment.hasAnnotation(SCGAnnotations.ANNOTATION_HEADNODE)) {
-                var sbHeadNodeName = assignment.getStringAnnotationValue(SCGAnnotations.ANNOTATION_HEADNODE)
-                sbHeadNodeName.createLabel(node).associateWith(assignment).
-                    configureOutsideTopLeftNodeLabel(sbHeadNodeName, 9, KlighdConstants::DEFAULT_FONT_NAME).
-                    KRendering.foreground = "black".color
+                val sbHeadNodeName = assignment.getStringAnnotationValue(SCGAnnotations.ANNOTATION_HEADNODE)
+                sbHeadNodeName.createLabel(node) => [
+                    it.associateWith(assignment)
+                    it.configureOutsideTopLeftNodeLabel(sbHeadNodeName, 9, KlighdConstants::DEFAULT_FONT_NAME)
+                    it.KRendering.foreground = NODE_TEXT.color
+                ]
             }
         }
 
@@ -343,8 +347,11 @@ class SCGraphComponentSynthesis {
         if (ALIGN_ENTRYEXIT_NODES.booleanValue)
             node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
         // Draw an ellipse figure for exit nodes...
-        val figure = node.addEllipse().background = "white".color;
-        figure.addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 1, 0)
+        val figure = node.addEllipse()
+        figure.addText("") => [
+            it.setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 1, 0)
+            it.foreground = NODE_TEXT.color
+        ]
         val text = if(entry.hasAnnotation("label")) entry.getStringAnnotationValue("label") else "entry"
         node.initialiseFigure(SHOW_CAPTION.booleanValue ? text : "")
         if (scg.method) {
@@ -414,8 +421,11 @@ class SCGraphComponentSynthesis {
         if (ALIGN_ENTRYEXIT_NODES.booleanValue)
             node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::LAST)
         // Draw an ellipse for an exit node...
-        val figure = node.addEllipse().background = "white".color;
-        figure.addText("").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 1, 0)
+        val figure = node.addEllipse()
+        figure.addText("") => [
+            it.setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 1, 0)
+            it.foreground = NODE_TEXT.color
+        ]
         node.initialiseFigure(SHOW_CAPTION.booleanValue ? "exit" : "")
 
         if (exit.final) {
