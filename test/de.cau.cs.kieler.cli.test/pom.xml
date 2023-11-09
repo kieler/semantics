@@ -3,8 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>de.cau.cs.kieler</groupId>
-    <artifactId>test</artifactId>
+    <artifactId>semantics</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../../build/pom.xml</relativePath>
   </parent>
   <groupId>de.cau.cs.kieler</groupId>
   <artifactId>de.cau.cs.kieler.cli.test</artifactId>
@@ -27,23 +28,27 @@
     </plugins>
   </build> 
   <dependencies>
+    <!-- Ensure CLIs are build beforehand -->
     <dependency>
       <groupId>de.cau.cs.kieler</groupId>
       <artifactId>de.cau.cs.kieler.sccharts.cli</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
+      <type>pom</type>
     </dependency>
     <dependency>
       <groupId>de.cau.cs.kieler</groupId>
       <artifactId>de.cau.cs.kieler.kicool.cli</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
+      <type>pom</type>
     </dependency>
     <dependency>
       <groupId>de.cau.cs.kieler</groupId>
       <artifactId>de.cau.cs.kieler.kicool.klighd.cli</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
+      <type>pom</type>
     </dependency>
   </dependencies>
 </project>

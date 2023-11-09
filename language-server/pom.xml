@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>de.cau.cs.kieler</groupId>
+  <artifactId>language.server</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <parent>
+    <groupId>de.cau.cs.kieler</groupId>
+    <artifactId>semantics</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../build/pom.xml</relativePath>
+  </parent>
+
+  <!-- DO NOT list de.cau.cs.kieler.language.server.components.fake here! It is only used for building in Eclipse -->
+
+  <modules> 
+    <module>de.cau.cs.kieler.language.server</module>
+    <module>de.cau.cs.kieler.language.server.components</module>
+  </modules>
+
+</project>

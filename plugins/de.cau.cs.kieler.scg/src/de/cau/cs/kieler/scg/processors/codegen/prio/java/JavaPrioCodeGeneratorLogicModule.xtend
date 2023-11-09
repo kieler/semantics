@@ -218,12 +218,24 @@ class JavaPrioCodeGeneratorLogicModule extends CPrioCodeGeneratorLogicModule {
         
         code.appendInd("if(" + conditional.condition.serializeHR + "){\n")
         
+        // If the priority is raised in then branch, insert use prio-statement instead of goto.
+        // This fixed the behavior of abro-vars
+        val prio = (conditional.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)
+                                                                                as IntAnnotation).value
+        val targetPrio = (conditional.then.target.asNode.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)
+                                                                                as IntAnnotation).value
+        val jump = if (targetPrio != prio) {
+           "  prioB(" + targetPrio + ", "
+        } else {
+           "  gotoB("
+        }
+        
         if(labeledNodes.containsKey(conditional.then.target)) {
-            code.appendInd("  gotoB(State." + labeledNodes.get(conditional.then.target) + ");\n")
+            code.appendInd(jump + "State." + labeledNodes.get(conditional.then.target) + ");\n")
         } else {
             // Create goto and label
             ifLabel = "_L_" + labelNr++
-            code.appendInd("  gotoB(State." + ifLabel + ");\n")
+            code.appendInd(jump + "State." + ifLabel + ");\n")
             val targetNode = conditional.then.target.asNode
             labeledNodes.put(targetNode, ifLabel)  
 //            if (targetNode instanceof Exit) {
