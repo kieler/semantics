@@ -96,7 +96,7 @@ import java.util.LinkedList
 import java.util.List
 import java.util.Map
 import java.util.Set
-import javax.inject.Inject
+import jakarta.inject.Inject
 import org.eclipse.elk.alg.layered.options.LayerConstraint
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.options.LayeringStrategy

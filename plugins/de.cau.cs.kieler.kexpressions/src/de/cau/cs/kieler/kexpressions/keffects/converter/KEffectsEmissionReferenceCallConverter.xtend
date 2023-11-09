@@ -22,7 +22,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
-import javax.inject.Inject
+import jakarta.inject.Inject
 import org.eclipse.xtext.RuleCall
 import org.eclipse.xtext.linking.LinkingScopeProviderBinding
 import org.eclipse.xtext.linking.impl.LinkingHelper
