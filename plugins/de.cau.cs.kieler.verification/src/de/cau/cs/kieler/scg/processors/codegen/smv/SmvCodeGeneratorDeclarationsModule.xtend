@@ -26,6 +26,7 @@ import de.cau.cs.kieler.verification.extensions.VerificationExtensions
 import java.util.List
 
 import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
+import java.util.HashMap
 
 /**
  * @author aas
@@ -53,6 +54,14 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
         assumptions = verificationContext?.verificationAssumptions
         useIVARinSmvModels = verificationContext.smvUseIVAR
         
+        val enumBodies = new HashMap<String, String>();
+        
+        for (decl : scg.declarations.filter(ClassDeclaration)) {
+            if (decl.isEnum) {
+                // appendIndentedLine('''enum «decl.valuedObjects.head.name» { «decl.declarations.map[it.valuedObjects].flatten.map[it.name].join(", ")» }''')
+                enumBodies.put(decl.valuedObjects.head.name, decl.declarations.map[it.valuedObjects].flatten.map[it.name].join(", "))
+            }
+        }
         
         incIndentationLevel
         if(useIVARinSmvModels) {
@@ -73,13 +82,7 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
             }
         }
         
-        // TODO improve
-        appendIndentedLine("ENUM")
-        for (decl : scg.declarations.filter(ClassDeclaration)) {
-            if (decl.isEnum) {
-                appendIndentedLine('''enum «decl.valuedObjects.head.name» { «decl.declarations.map[it.valuedObjects].flatten.map[it.name].join(", ")» }''')
-            }
-        }
+
         
         // if we use IVARs the "VAR" declaration was ready added
         if(useIVARinSmvModels) {
@@ -96,7 +99,11 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
                 val preGuardName = entry.key
                 val predValuedObject = variableInformation.valuedObject
                 val declType = predValuedObject.variableDeclaration.getSmvType(predValuedObject)
-                appendIndentedLine('''«preGuardName» : «declType»;''')
+                if (enumBodies.containsKey(declType.toString)){
+                   appendIndentedLine('''«preGuardName» : {«enumBodies.get(declType.toString())»};''')
+                } else {
+                    appendIndentedLine('''«preGuardName» : «declType»;''')
+                }
             }
         }
     }
@@ -112,6 +119,9 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
         if(rangeAssumption !== null && !verificationContext.isSmvIgnoreRangeAssumptions) {
             return rangeAssumption.minValue+".."+rangeAssumption.maxValue
         }
+        if (decl.type.literal == "int"){
+            return Integer.MIN_VALUE+".."+Integer.MAX_VALUE
+        } 
         if (decl.type == ValueType.HOST && !decl.hostType.isNullOrEmpty) {
             return decl.hostType
         }

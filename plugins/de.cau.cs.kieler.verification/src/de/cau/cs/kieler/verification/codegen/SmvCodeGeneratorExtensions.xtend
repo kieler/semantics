@@ -18,9 +18,11 @@ package de.cau.cs.kieler.verification.codegen
 class SmvCodeGeneratorExtensions {
     
     public def static String toSmvExpression(CharSequence kexpression) {
-        return kexpression.toString.replace("==", "=").replace("&&", "&").replace("||", "|")
+        val test = kexpression.toString.replace("==", "=").replace("&&", "&").replace("||", "|").replaceAll('''[A-Za-z]+\.''',"")
                                    .replaceAll('''\bfalse\b''', " FALSE ").replaceAll('''\btrue\b''', " TRUE ")
                                    .replaceAll('''%''', " mod ").replaceAll("  ", " ").trim
+        
+        return test;
     }
     
     public static def String toKExpression(CharSequence smvExpression) {
