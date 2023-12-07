@@ -17,7 +17,7 @@ import de.cau.cs.kieler.kexpressions.GenericTypeReference
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import jakarta.inject.Inject
+import com.google.inject.Inject
 import org.eclipse.xtext.CrossReference
 import org.eclipse.xtext.linking.LinkingScopeProviderBinding
 import org.eclipse.xtext.linking.impl.LinkingHelper

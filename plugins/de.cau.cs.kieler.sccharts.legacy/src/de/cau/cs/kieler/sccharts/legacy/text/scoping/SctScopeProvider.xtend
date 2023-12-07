@@ -26,7 +26,7 @@ import de.cau.cs.kieler.sccharts.legacy.sccharts.State
 import de.cau.cs.kieler.sccharts.legacy.sccharts.Transition
 import java.util.Collections
 import java.util.HashSet
-import jakarta.inject.Inject
+import com.google.inject.Inject
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.naming.QualifiedName

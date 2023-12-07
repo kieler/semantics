@@ -28,7 +28,7 @@ import de.cau.cs.kieler.simulation.DataPoolEntry
 import de.cau.cs.kieler.simulation.trace.ktrace.Tick
 import de.cau.cs.kieler.simulation.trace.ktrace.Trace
 import de.cau.cs.kieler.simulation.trace.ktrace.TraceFile
-import jakarta.inject.Inject
+import com.google.inject.Inject
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static com.google.common.base.Preconditions.*

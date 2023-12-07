@@ -2,7 +2,7 @@ package de.cau.cs.kieler.sccharts.legacy.text.serializer;
 
 import java.util.List;
 
-import jakarta.inject.Inject;
+import com.google.inject.Inject;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.nodemodel.INode;
