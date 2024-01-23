@@ -30,6 +30,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.scg.Assignment
@@ -85,10 +86,15 @@ class SCGraphComponentSynthesis {
      */
     def dispatch createComponentNode(Assignment assignment) {
         val node = assignment.createNode().associateWith(assignment)
+        val proxy = createNode().associateWith(assignment)
+        
         // Straightforward rectangle drawing
         val figure = node.addRoundedRectangle(SCGraphSynthesisHelper.CORNERRADIUS, SCGraphSynthesisHelper.CORNERRADIUS,
             SCGraphSynthesisHelper.LINEWIDTH)
         figure.addText("").setSurroundingSpace(6, 0, 2, 0)
+        val proxyFigure = proxy.addRoundedRectangle(SCGraphSynthesisHelper.CORNERRADIUS, SCGraphSynthesisHelper.CORNERRADIUS,
+            SCGraphSynthesisHelper.LINEWIDTH)
+        proxyFigure.addText("").setSurroundingSpace(6, 0, 2, 0)
         var isSCGRef = false
         if (assignment.expression instanceof ReferenceCall) {
             val call = assignment.expression as ReferenceCall
@@ -99,10 +105,13 @@ class SCGraphComponentSynthesis {
         }
         if (isSCGRef) {
             figure.setBackgroundGradient("#fcf7fc".color, "#e6cbf2".color, 90.0f)
+            proxyFigure.setBackgroundGradient("#fcf7fc".color, "#e6cbf2".color, 90.0f)
         } else {
             figure.background = "white".color;
+            proxyFigure.background = "white".color;
         }
         node.initialiseFigure(assignment)
+        proxy.initialiseAssignmentProxyFigure()
 
         // Add ports for control-flow and dependency routing.
         if (isGuardSCG) {
@@ -164,6 +173,14 @@ class SCGraphComponentSynthesis {
         if (assignment.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
             node.createOptimizedPriorityLabel(assignment).setAreaPlacementData.from(LEFT, 0, 0.9f, TOP, 0, 0.3f).to(RIGHT, 0, 0.9f, BOTTOM, 0, 0)
         }
+        
+        // Estimate proxy size
+        val proxyBounds = PlacementUtil.estimateSize(proxy)
+        proxy.width = proxyBounds.width
+        proxy.height = proxyBounds.height
+        
+        node.setProperty(KlighdProperties.PROXY_VIEW_PROXY_RENDERING, proxy.data)
+        
         return node
     }
     
@@ -176,9 +193,14 @@ class SCGraphComponentSynthesis {
      */
     def dispatch createComponentNode(Conditional conditional) {
         val node = conditional.createNode().associateWith(conditional)
+        val proxy = createNode().associateWith(conditional)
+        
         // Draw a diamond figure for conditionals.
         node.addPolygon.createDiamondShape
         node.initialiseFigure(conditional)
+        proxy.addPolygon.createDiamondShape
+        proxy.initialiseConditionalProxyFigure
+        
         // Add ports for control-flow and dependency routing.
         var switchBranch = false
         val branchAnnotation = conditional.getAnnotation(ANNOTATION_BRANCH)
@@ -244,6 +266,16 @@ class SCGraphComponentSynthesis {
         if (conditional.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
             node.createOptimizedPriorityLabel(conditional).setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0.6f).to(RIGHT, 0, 0, BOTTOM, 0, 0)
         }
+        
+        // Estimate proxy size
+        val proxyBounds = PlacementUtil.estimateSize(proxy)
+        // Use additionalWidth since the estimation doesn't consider the diamond shape
+        val additionalWidth = 5
+        proxy.width = proxyBounds.width + additionalWidth
+        proxy.height = proxyBounds.height
+        
+        node.setProperty(KlighdProperties.PROXY_VIEW_PROXY_RENDERING, proxy.data)
+        
         return node
     }
 
@@ -338,6 +370,7 @@ class SCGraphComponentSynthesis {
      */
     def dispatch createComponentNode(Entry entry) {
         val node = entry.createNode().associateWith(entry)
+        
         val scg = entry.eContainer as SCGraph
         // If the corresponding option is set to true, exit nodes are placed in the first layer;
         if (ALIGN_ENTRYEXIT_NODES.booleanValue)
@@ -396,6 +429,7 @@ class SCGraphComponentSynthesis {
         if (entry.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
             node.createOptimizedPriorityLabel(entry).setAreaPlacementData.from(LEFT, 0, 0.8f, TOP, 0, 0.1f)
         }
+        
         return node
     }
 
