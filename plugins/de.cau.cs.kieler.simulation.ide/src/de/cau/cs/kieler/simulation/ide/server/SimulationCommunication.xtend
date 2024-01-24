@@ -36,7 +36,7 @@ import static de.cau.cs.kieler.simulation.SimulationCommunicationAPI.*
 class SimulationCommunication {
     
     @Accessors
-    static val clients = <SimulationSocket>newArrayList
+//    static val clients = <SimulationSocket>newArrayList
     static val serializer = new Gson
     
     static def broadcastControlEvent(SimulationControlEvent event, SimulationContext context) {
@@ -58,9 +58,9 @@ class SimulationCommunication {
         }
         
         val msg = serializer.toJson(msgObj)
-        for (client : clients) {
-            client.remote.sendString(msg)
-        }
+//        for (client : clients) {
+//            client.remote.sendString(msg)
+//        }
     }
     
     static def handleMessage(String msg) {

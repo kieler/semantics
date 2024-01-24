@@ -19,7 +19,7 @@ import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.servlet.ServletContextHandler
 import org.eclipse.jetty.servlet.ServletHolder
-import org.eclipse.jetty.websocket.server.config.JettyWebSocketServletContainerInitializer
+//import org.eclipse.jetty.websocket.server.config.JettyWebSocketServletContainerInitializer
 
 /**
  * @author als
@@ -39,7 +39,7 @@ class SimulationServer {
             val ctx = new ServletContextHandler()
             ctx.setContextPath("/");
             
-            ctx.addServlet(new ServletHolder(new SimulationServlet()), "/simulation");
+//            ctx.addServlet(new ServletHolder(new SimulationServlet()), "/simulation");
             
             for (contribution : KielerServiceLoader.load(ISimulationServerContribution)) {
                 val entry = contribution.getServletWithMapping()
@@ -48,7 +48,7 @@ class SimulationServer {
                 }
             }
             
-            JettyWebSocketServletContainerInitializer.configure(ctx, null); // init websocket
+//            JettyWebSocketServletContainerInitializer.configure(ctx, null); // init websocket
             server.setHandler(ctx);
             server.start()
 
