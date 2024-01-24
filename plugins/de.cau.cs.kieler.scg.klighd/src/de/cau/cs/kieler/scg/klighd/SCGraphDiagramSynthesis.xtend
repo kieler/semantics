@@ -68,7 +68,7 @@ import de.cau.cs.kieler.scg.processors.priority.PriorityAuxiliaryData
 import de.cau.cs.kieler.scg.processors.priority.PriorityProcessor
 import java.util.LinkedList
 import java.util.Set
-import javax.inject.Inject
+import com.google.inject.Inject
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.options.LayeringStrategy
 import org.eclipse.elk.alg.layered.options.NodePlacementStrategy

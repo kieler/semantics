@@ -38,7 +38,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
 import java.util.HashMap
-import javax.inject.Inject
+import com.google.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
