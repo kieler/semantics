@@ -24,6 +24,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.verification.codegen.SmvCodeGeneratorExtensions.*
 import com.google.inject.Injector
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /**
  * @author aas
@@ -66,6 +67,7 @@ class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
     }
 
     private def void generateAssignment(ValuedObject valuedObject) {
+        val store = VariableStore.get(processorInstance.environment)
         val assignments = scgConditionalAssignmentAnalyzer.getAssignments(valuedObject)
         if(assignments !== null) {
             if(assignments.size == 1) {
@@ -81,10 +83,14 @@ class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
                 valuedObject.generateConditionalAssignments(assignments)
             }
         } else {
-            if(!valuedObject.variableDeclaration.isInput && !(valuedObject.name == "_GO")) {
+            
+                if(!valuedObject.variableDeclaration.isInput && !(valuedObject.name == "_GO")) {
+                var valuedObjectType = store.getInfo(valuedObject)?.type
                 // TODO: This valued object should not exist in the first place.
                 // It is probably a guard that is never set. (See also the comment in DefineUnboundVariablesOfSSA.
-                appendIndentedLine('''«valuedObject.name» := FALSE; -- WARNING: This variable is undefined in the SCG''')
+                if(valuedObjectType === null || valuedObjectType != ValueType.ENUM){
+                    appendIndentedLine('''«valuedObject.name» := FALSE; -- WARNING: This variable is undefined in the SCG''')
+                }
             }
         }
     }
