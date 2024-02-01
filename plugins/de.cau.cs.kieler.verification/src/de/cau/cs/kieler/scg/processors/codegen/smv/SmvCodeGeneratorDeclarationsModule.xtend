@@ -59,7 +59,7 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
         for (decl : scg.declarations.filter(ClassDeclaration)) {
             if (decl.isEnum) {
                 // appendIndentedLine('''enum «decl.valuedObjects.head.name» { «decl.declarations.map[it.valuedObjects].flatten.map[it.name].join(", ")» }''')
-                enumBodies.put(decl.valuedObjects.head.name, decl.declarations.map[it.valuedObjects].flatten.map[it.name].join(", "))
+                enumBodies.put(decl.valuedObjects.head.name, "undefined, " + decl.declarations.map[it.valuedObjects].flatten.map[it.name].join(", "))
             }
         }
         
@@ -120,7 +120,8 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
             return rangeAssumption.minValue+".."+rangeAssumption.maxValue
         }
         if (decl.type.literal == "int"){
-            return Integer.MIN_VALUE+".."+Integer.MAX_VALUE
+            // this could be an option in case we want interactive mode with integer
+            return (Integer.MIN_VALUE+1)+".."+(Integer.MAX_VALUE-1)
         } 
         if (decl.type == ValueType.HOST && !decl.hostType.isNullOrEmpty) {
             return decl.hostType

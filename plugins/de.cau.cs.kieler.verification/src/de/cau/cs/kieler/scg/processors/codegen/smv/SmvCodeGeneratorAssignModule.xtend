@@ -40,7 +40,13 @@ class SmvCodeGeneratorAssignModule extends SmvCodeGeneratorModuleBase {
             if(variableInformation.properties.contains(SmvCodeGeneratorModule.PROPERTY_PREGUARD)) {
                 val preVariableName = entry.key
                 val origVariableName = smvCodeGeneratorModule.getOriginalVariableName(preVariableName)
-                val initValue = if(variableInformation.type == ValueType.INT) "0" else "FALSE"
+                val initValue = if (variableInformation.properties.contains(VariableStore.ENUM)){
+                    "undefined"
+                } else if (variableInformation.type == ValueType.INT) {
+                    "0"
+                } else {
+                    "FALSE"
+                }
                 appendIndentedLine('''init(«preVariableName») := «initValue»;''')
                 appendIndentedLine('''next(«preVariableName») := «origVariableName»;''')
                 code.append("\n")

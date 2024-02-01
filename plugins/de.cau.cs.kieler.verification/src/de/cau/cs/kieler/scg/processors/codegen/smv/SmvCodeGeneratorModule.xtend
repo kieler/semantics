@@ -114,6 +114,10 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
                         variableInformation.valuedObject = predValuedObject
                         variableInformation.type = predValuedObject.variableDeclaration.type
                         val originalVariableName = predValuedObject.serializeHR
+                        var oldVarInfo = store.variables.get(originalVariableName.toString)
+                        if (oldVarInfo !== null && oldVarInfo.size() > 0){
+                           variableInformation.properties.addAll(oldVarInfo.head.properties) 
+                        }
                         preVariableToOriginalVariable.put(preVariableName.toString, originalVariableName.toString)    
                     } else {
                         System.err.println('''variableDeclaration is null of «predValuedObject»''')
