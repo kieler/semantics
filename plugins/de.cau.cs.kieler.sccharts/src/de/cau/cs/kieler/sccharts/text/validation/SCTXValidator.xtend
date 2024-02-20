@@ -16,6 +16,7 @@ import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.kexpressions.Call
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.OperatorExpression
@@ -30,6 +31,8 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsOverloadingExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
@@ -43,6 +46,7 @@ import de.cau.cs.kieler.sccharts.BaseStateReference
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.PeriodAction
 import de.cau.cs.kieler.sccharts.PolicyRegion
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.Region
@@ -60,6 +64,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.For
+import de.cau.cs.kieler.sccharts.processors.MethodSignaling
 import de.cau.cs.kieler.sccharts.text.SCTXResource
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.Map
@@ -71,7 +76,6 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
 
 import static extension java.lang.String.*
-import de.cau.cs.kieler.sccharts.processors.MethodSignaling
 
 /**
  * This class contains custom validation rules. 
@@ -92,8 +96,10 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsAccessVisibilityExtensions
+    @Inject extension KExpressionsOverloadingExtensions
     @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions
+    @Inject extension OOClassAnnotations
     
     /** Service class for accessing layout options by name */
     private static final LayoutMetaDataService LAYOUT_OPTIONS_SERVICE = LayoutMetaDataService.getInstance();
@@ -160,6 +166,8 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String NO_METHOD_REFERENCE = "Methods must be used with call syntax using parenthesis."
     static val String NO_STATE_ACCESS_OUTSIDE_METHOD = "State access expressions are only permissible in methods bodies."
     static val String AMBIGOUS_STATE_ACCESS = "This state access is ambiguous as there are multiple anonymous regions with states with this ID. Use region IDs access the state via RegionID.StateID."
+
+    static val String PRIMITIVE_REF = "Declarations with a primitive type must refer to a primitive generic type."
 
 
     @Check
@@ -324,15 +332,12 @@ class SCTXValidator extends AbstractSCTXValidator {
     def void checkMethodCall(ValuedObjectReference vor) {
         val decl = vor.valuedObject?.declaration
         if (decl instanceof MethodDeclaration) {
-            var parentExp = vor
-            while(parentExp.isSubReference) {
-                parentExp = parentExp.eContainer as ValuedObjectReference
-            }
+            var parentRef = vor.topmostReference
             if (!vor.isSubReference) {
-                // If method is used directly an not with an specific object
-                // And is used as trigger in an transition, no parenthesis are fine,
+                // If method is used directly and not with an specific object
+                // and is used as trigger in an transition, no parenthesis are fine,
                 // because it is a method observer or policy regions in general.
-                var EObject container = parentExp
+                var EObject container = parentRef
                 while(container !== null) {
                     val nextContainer = container.eContainer
                     if (nextContainer instanceof Transition) {
@@ -345,7 +350,12 @@ class SCTXValidator extends AbstractSCTXValidator {
                     container = nextContainer
                 }
             }
-            if (!(parentExp instanceof Call)) {
+            if (parentRef instanceof Call) {
+                var errorMsg = decl.getMethodSignatureError(parentRef, false)
+                if (errorMsg !== null) {
+                    error(errorMsg, vor, null)
+                }
+            } else {
                 error(NO_METHOD_REFERENCE, vor, null)
             }
         }
@@ -375,6 +385,25 @@ class SCTXValidator extends AbstractSCTXValidator {
                 container = container.eContainer
             }
             error(NO_STATE_ACCESS_OUTSIDE_METHOD, acc, null)
+        }
+    }
+    
+    /**
+     * OO Class annotations
+     */
+    @Check
+    def void checkOOClassAnnotationInSCChart(de.cau.cs.kieler.sccharts.State state) {
+        if (state.isRootState) {
+            validateOOClassAnnotationInSCChart(state, getMessageAcceptor())
+        }
+    }
+    /**
+     * OO Class annotations
+     */
+    @Check
+    def void checkOOClassAnnotationInReference(ReferenceDeclaration decl) {
+        if (decl.reference !== null) {
+            validateOOClassAnnotationInReference(decl, getMessageAcceptor())
         }
     }
     
@@ -721,7 +750,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Check
     public def void checkDuplicateVariable(Scope scope) {
         val Set<String> variableNames = newHashSet()
-        for(decl : scope.declarations) { 
+        for(decl : scope.declarations.excludeMethods) { 
             for(valuedObject : decl.valuedObjects) {
                 val name = valuedObject.name
                 if(variableNames.contains(name)) {
@@ -986,7 +1015,26 @@ class SCTXValidator extends AbstractSCTXValidator {
                 SCChartsPackage.eINSTANCE.scopeCall_Target);
         }            
     }
-    
+
+    @Check
+    def void checkPrimitiveReferenceDeclaration(ReferenceDeclaration decl) {
+        if (decl.simple && decl.reference !== null) {
+            val vo = decl.reference
+            if (vo instanceof ValuedObject) {
+                val generic = vo.declaration
+                if (generic instanceof GenericParameterDeclaration) {
+                    if (!(generic.valueType === ValueType.PRIMITIVE 
+                        || KExpressionsTypeExtensions.PRIMITIVES.contains(generic.valueType))) {
+                        error(PRIMITIVE_REF, decl, KExpressionsPackage.eINSTANCE.referenceDeclaration_Reference, -1)
+                    }
+                } else {
+                    error(PRIMITIVE_REF, decl, KExpressionsPackage.eINSTANCE.referenceDeclaration_Reference, -1) 
+                }
+            } else {
+                error(PRIMITIVE_REF, decl, null) 
+            }
+        }
+    }
     
     @Check
     def void checkReferenceDeclarationBindings(ReferenceDeclaration decl) {
@@ -1145,7 +1193,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     @Check(CheckType.NORMAL) 
     def void checkFloatingPointTriggerComparison(Action action) {
-        if (action.trigger !== null) {
+        if (action.trigger !== null && !(action instanceof PeriodAction)) {
             val trigger = action.trigger
             if (trigger instanceof ValuedObjectReference) {
                 if (trigger.valuedObject.isFloat) {

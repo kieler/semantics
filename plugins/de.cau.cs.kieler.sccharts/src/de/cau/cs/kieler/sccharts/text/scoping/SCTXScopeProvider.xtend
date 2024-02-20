@@ -12,6 +12,7 @@ import de.cau.cs.kieler.kexpressions.GenericTypeReference
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
@@ -47,6 +48,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.xbase.lib.Functions.Function1
+import com.google.common.collect.Iterables
 
 /**
  * This class contains custom scoping description.
@@ -116,7 +118,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
                 val candidates = <NamedObject>newLinkedList
                 var rootState = scopeCall.eContainer?.asScope.rootState
                 if (rootState instanceof State && !(rootState as State).genericParameterDeclarations.nullOrEmpty) {
-                    candidates += (rootState as State).genericTypeParameters
+                    candidates += (rootState as State).genericComplexTypeParameters
                 }
                 candidates += scopeCall.eResource.allAvailableRootStates
                 return SCTXScopes.scopeFor(candidates)
@@ -147,14 +149,14 @@ class SCTXScopeProvider extends KExtScopeProvider {
             
             if (target !== null) {
                 if (target instanceof Scope) {
-                    for (declaration : target.variableDeclarations.filter[ input || output ]) {
+                    for (declaration : target.IODeclarations.filter[ input || output ]) {
                         voCandidates += declaration.valuedObjects
                     }
                 } else if (target instanceof ValuedObject) {
                     if (target.isGenericParamter) {
                         val type = target.genericParameterDeclaration?.type
                         if (type instanceof Scope) {
-                            for (declaration : type.variableDeclarations.filter[ input || output ]) {
+                            for (declaration : type.IODeclarations.filter[ input || output ]) {
                                 voCandidates += declaration.valuedObjects
                             }
                         }
@@ -195,7 +197,11 @@ class SCTXScopeProvider extends KExtScopeProvider {
                             candidates += rootState.getAllVisibleInheritedDeclarations.filter(ClassDeclaration).map[(it.isEnum ? valuedObjects.head : it) as NamedObject]
                         }
                         if (rootState !== null && !rootState.genericParameterDeclarations.nullOrEmpty) {
-                            candidates += (rootState as State).genericTypeParameters
+                            if (declaration.simple) {
+                                candidates += (rootState as State).genericPrimitiveTypeParameters
+                            } else {
+                                candidates += (rootState as State).genericComplexTypeParameters
+                            }
                         }
                     }
                 } else if (reference == KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE_CONTAINER) {
@@ -228,7 +234,8 @@ class SCTXScopeProvider extends KExtScopeProvider {
         if (context.genericParameters.nullOrEmpty) {
             var rootState = context.nextScope?.rootState
             if (rootState !== null && !rootState.genericParameterDeclarations.nullOrEmpty) {
-                candidates += (rootState as State).genericTypeParameters
+                candidates += (rootState as State).genericComplexTypeParameters
+                candidates += (rootState as State).genericPrimitiveTypeParameters
             }
             return SCTXScopes.scopeFor(candidates, context.getScopeForValuedObjectReference(reference))
         }
@@ -286,6 +293,46 @@ class SCTXScopeProvider extends KExtScopeProvider {
             } else {
                 return IScope.NULLSCOPE
             }
+        } else if (context instanceof ReferenceCall && (context as ReferenceCall).subReference === null) { // is call and has no sub-reference
+            val call = context as ReferenceCall
+            val candidates = <ValuedObject> newArrayList
+            var declarationScope = context.nextDeclarationScope
+            while (declarationScope !== null) {
+                if (call.isSuper) {
+                    if (declarationScope instanceof State) {
+                        // Only inherited Methods
+                        if (!declarationScope.baseStateReferences.nullOrEmpty) {
+                            for (decl : declarationScope.allVisibleInheritedDeclarations.filter[isMethod]) {
+                                for(VO : decl.valuedObjects) {
+                                    candidates += VO
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    for(declaration : declarationScope.declarations.filter[isCallable]) {
+                        for(VO : declaration.valuedObjects) {
+                            candidates += VO
+                        }
+                    }
+                    if (declarationScope instanceof State) {
+                        // Inherited VOs
+                        if (!declarationScope.baseStateReferences.nullOrEmpty) {
+                            for (decl : declarationScope.allVisibleInheritedDeclarations.filter[isCallable]) {
+                                for(VO : decl.valuedObjects) {
+                                    candidates += VO
+                                }
+                            }
+                        }
+                        // Generic Parameters
+                        candidates += declarationScope.genericValuedObjectParameters.filter[declaration.isCallable]
+                    }
+                }
+                
+                // This also gives nested classes access to variable of surrounding scopes (only partially supported in code gen)
+                declarationScope = declarationScope.nextDeclarationScope
+            }
+            return Scopes.scopeFor(candidates)
         } else {
             return super.getScopeForValuedObjectReference(context, reference)
         }
@@ -323,9 +370,26 @@ class SCTXScopeProvider extends KExtScopeProvider {
             if (declarationScope instanceof State) {
                 // Inherited VOs
                 if (!declarationScope.baseStateReferences.nullOrEmpty) {
-                    for (decl : declarationScope.allVisibleInheritedDeclarations) {
-                        for(VO : decl.valuedObjects) {
-                            candidates += VO
+                    if (context.eContainer instanceof Parameter
+                        && context.eContainer.eContainer instanceof BaseStateReference
+                        && context.eContainer.eContainer.eContainer == declarationScope) {
+                        val bsr = context.eContainer.eContainer as BaseStateReference
+                        for (base : declarationScope.baseStateReferences.takeWhile[it != bsr]) {
+                            if (base.target != null) {
+                                for (decl : Iterables.concat(
+                                    base.target.declarations.filter[!it.isPrivate],
+                                    base.target.allVisibleInheritedDeclarations)) {
+                                    for(VO : decl.valuedObjects) {
+                                        candidates += VO
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        for (decl : declarationScope.allVisibleInheritedDeclarations) {
+                            for(VO : decl.valuedObjects) {
+                                candidates += VO
+                            }
                         }
                     }
                 }
@@ -336,6 +400,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
             // This also give nested classes access to variable of surrounding scopes (only partially supported in code gen)
             declarationScope = declarationScope.nextDeclarationScope
         }
+        
         return Scopes.scopeFor(candidates)
     }
     
@@ -386,7 +451,19 @@ class SCTXScopeProvider extends KExtScopeProvider {
                 }
             }
         }
+        if (decl instanceof MethodDeclaration) {
+            return decl.isStatic
+        }
         return false
     }
-
+    
+    private def boolean isCallable(Declaration decl) {
+        if (decl instanceof MethodDeclaration) {
+            return true
+        }
+        if (decl instanceof ReferenceDeclaration) {
+            return !decl.extern.empty
+        }
+        return false
+    }
 }

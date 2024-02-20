@@ -21,8 +21,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl#isInput <em>Input</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl#isOutput <em>Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl#isStatic <em>Static</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl#isSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl#isConst <em>Const</em>}</li>
@@ -34,7 +32,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class VariableDeclarationImpl extends DeclarationImpl implements VariableDeclaration {
+public class VariableDeclarationImpl extends IODeclarationImpl implements VariableDeclaration {
     /**
      * The default value of the '{@link #getType() <em>Type</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -54,46 +52,6 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * @ordered
      */
     protected ValueType type = TYPE_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #isInput() <em>Input</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isInput()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean INPUT_EDEFAULT = false;
-
-    /**
-     * The cached value of the '{@link #isInput() <em>Input</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isInput()
-     * @generated
-     * @ordered
-     */
-    protected boolean input = INPUT_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #isOutput() <em>Output</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isOutput()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean OUTPUT_EDEFAULT = false;
-
-    /**
-     * The cached value of the '{@link #isOutput() <em>Output</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isOutput()
-     * @generated
-     * @ordered
-     */
-    protected boolean output = OUTPUT_EDEFAULT;
 
     /**
      * The default value of the '{@link #isStatic() <em>Static</em>}' attribute.
@@ -283,52 +241,6 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * @generated
      */
     @Override
-    public boolean isInput() {
-        return input;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void setInput(boolean newInput) {
-        boolean oldInput = input;
-        input = newInput;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VARIABLE_DECLARATION__INPUT, oldInput, input));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public boolean isOutput() {
-        return output;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void setOutput(boolean newOutput) {
-        boolean oldOutput = output;
-        output = newOutput;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VARIABLE_DECLARATION__OUTPUT, oldOutput, output));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public boolean isStatic() {
         return static_;
     }
@@ -494,10 +406,6 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
         switch (featureID) {
             case KExpressionsPackage.VARIABLE_DECLARATION__TYPE:
                 return getType();
-            case KExpressionsPackage.VARIABLE_DECLARATION__INPUT:
-                return isInput();
-            case KExpressionsPackage.VARIABLE_DECLARATION__OUTPUT:
-                return isOutput();
             case KExpressionsPackage.VARIABLE_DECLARATION__STATIC:
                 return isStatic();
             case KExpressionsPackage.VARIABLE_DECLARATION__SIGNAL:
@@ -526,12 +434,6 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
         switch (featureID) {
             case KExpressionsPackage.VARIABLE_DECLARATION__TYPE:
                 setType((ValueType)newValue);
-                return;
-            case KExpressionsPackage.VARIABLE_DECLARATION__INPUT:
-                setInput((Boolean)newValue);
-                return;
-            case KExpressionsPackage.VARIABLE_DECLARATION__OUTPUT:
-                setOutput((Boolean)newValue);
                 return;
             case KExpressionsPackage.VARIABLE_DECLARATION__STATIC:
                 setStatic((Boolean)newValue);
@@ -569,12 +471,6 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
             case KExpressionsPackage.VARIABLE_DECLARATION__TYPE:
                 setType(TYPE_EDEFAULT);
                 return;
-            case KExpressionsPackage.VARIABLE_DECLARATION__INPUT:
-                setInput(INPUT_EDEFAULT);
-                return;
-            case KExpressionsPackage.VARIABLE_DECLARATION__OUTPUT:
-                setOutput(OUTPUT_EDEFAULT);
-                return;
             case KExpressionsPackage.VARIABLE_DECLARATION__STATIC:
                 setStatic(STATIC_EDEFAULT);
                 return;
@@ -610,10 +506,6 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
         switch (featureID) {
             case KExpressionsPackage.VARIABLE_DECLARATION__TYPE:
                 return type != TYPE_EDEFAULT;
-            case KExpressionsPackage.VARIABLE_DECLARATION__INPUT:
-                return input != INPUT_EDEFAULT;
-            case KExpressionsPackage.VARIABLE_DECLARATION__OUTPUT:
-                return output != OUTPUT_EDEFAULT;
             case KExpressionsPackage.VARIABLE_DECLARATION__STATIC:
                 return static_ != STATIC_EDEFAULT;
             case KExpressionsPackage.VARIABLE_DECLARATION__SIGNAL:
@@ -644,10 +536,6 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
         StringBuilder result = new StringBuilder(super.toString());
         result.append(" (type: ");
         result.append(type);
-        result.append(", input: ");
-        result.append(input);
-        result.append(", output: ");
-        result.append(output);
         result.append(", static: ");
         result.append(static_);
         result.append(", signal: ");

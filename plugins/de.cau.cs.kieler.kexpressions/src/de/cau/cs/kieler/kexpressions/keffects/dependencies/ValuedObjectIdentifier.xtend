@@ -12,18 +12,20 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.dependencies
 
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kexpressions.Expression
-import java.util.List
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
-import com.google.inject.Injector
 import com.google.inject.Guice
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
+import com.google.inject.Injector
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
+import java.util.ArrayList
+import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * The ValuedObjectIdentifier is used to distinguish accesses to a valued object that are decidable at compile time from
@@ -40,6 +42,7 @@ class ValuedObjectIdentifier {
     @Accessors ValuedObject valuedObject
     @Accessors List<Expression> indices
     @Accessors ValuedObjectIdentifier parentVOI
+    @Accessors List<ScheduleObjectReference> schedule = new ArrayList(0)
     
     static val KExpressionsCompareExtensions compare = new KExpressionsCompareExtensions
     static val KExpressionsValuedObjectExtensions vos = new KExpressionsValuedObjectExtensions
@@ -52,6 +55,7 @@ class ValuedObjectIdentifier {
         if (vos.isSubReference(ref)) {
             parentVOI = new ValuedObjectIdentifier(ref.eContainer as ValuedObjectReference)
         }
+        this.schedule = assignment.schedule
     }
     
     new(ValuedObjectReference valuedObjectReference) {
@@ -61,6 +65,7 @@ class ValuedObjectIdentifier {
         if (vos.isSubReference(valuedObjectReference)) {
             parentVOI = new ValuedObjectIdentifier(valuedObjectReference.eContainer as ValuedObjectReference)
         }
+        this.schedule = valuedObjectReference.schedule
     }
     
     new(ValuedObject valuedObjecT) {

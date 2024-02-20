@@ -368,6 +368,7 @@ ScheduleObjectReference returns ScheduleObjectReference:
 // Reference Call Rule
 // Calls to references. They may include a parameter list. 
 ReferenceCall returns ReferenceCall:
+    super?='super.'?
     valuedObject=[ValuedObject|PrimeID] 
     ('[' indices+=Expression ']')*
     ('.' subReference=ValuedObjectReference)?
@@ -444,7 +445,7 @@ VectorValue returns VectorValue:
     '{' (
         values+=VectorValueMember (',' values+=VectorValueMember)*
         |
-        values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference)
+        values+=IntValue range?='to' values+=(IntValue | ValuedObjectReference | SpecialAccessExpression)
     ) '}';
     
 VectorValueMember returns Expression:

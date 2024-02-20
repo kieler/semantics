@@ -174,13 +174,15 @@ class Initialization extends SCChartsProcessor implements Traceable {
             // additional initialization-entry actions are added matters for the semantics.
             // Initializations before part of the declaration. Entry actions afterwards. 
             // So the initialization-entry-actions should be ordered also before the other
-            // entry actions to keep the original order. 
-            if (scope instanceof State) {
-                val entryAction = scope.createEntryAction(0)
-                entryAction.effects += effects
-            } else if (scope instanceof ControlflowRegion) {
-                val entryAction = scope.states.findFirst[initial].createEntryAction(0)
-                entryAction.effects += effects
+            // entry actions to keep the original order.
+            if (!effects.empty) {
+                if (scope instanceof State) {
+                    val entryAction = scope.createEntryAction(0)
+                    entryAction.effects += effects
+                } else if (scope instanceof ControlflowRegion) {
+                    val entryAction = scope.states.findFirst[initial].createEntryAction(0)
+                    entryAction.effects += effects
+                }
             }
         }
         // Clear initial values AFTER all assignments are created because some nested VOs might need them
@@ -242,21 +244,23 @@ class Initialization extends SCChartsProcessor implements Traceable {
     	if (members === null) {
     	    if (vo.declaration.isClass && !(vo.declaration as ClassDeclaration).host) {
     	        val classDecl = vo.declaration as ClassDeclaration
-    	        val init = classDecl.getOrCreateInitMethod
-    	        if (vo.cardinalities.empty) {
-    	            inits += createReferenceCallEffect => [
-    	                it.valuedObject = vo
-    	                it.subReference = init.reference
-    	            ]
-    	        } else {
-    	            val indices = vo.createAllIndices
-    	            for (index : indices) {
-    	                inits += createReferenceCallEffect => [
-                            it.valuedObject = vo
-                            it.indices += index.map[createIntValue(it)]
-                            it.subReference = init.reference
-                        ]
-    	            }
+    	        if (classDecl.allNestedValuedObjects.exists[it.declaration instanceof VariableDeclaration]) {
+        	        val init = classDecl.getOrCreateInitMethod
+        	        if (vo.cardinalities.empty) {
+        	            inits += createReferenceCallEffect => [
+        	                it.valuedObject = vo
+        	                it.subReference = init.reference
+        	            ]
+        	        } else {
+        	            val indices = vo.createAllIndices
+        	            for (index : indices) {
+        	                inits += createReferenceCallEffect => [
+                                it.valuedObject = vo
+                                it.indices += index.map[createIntValue(it)]
+                                it.subReference = init.reference
+                            ]
+        	            }
+        	        }
     	        }
     	    } else {
     	        // Normal case

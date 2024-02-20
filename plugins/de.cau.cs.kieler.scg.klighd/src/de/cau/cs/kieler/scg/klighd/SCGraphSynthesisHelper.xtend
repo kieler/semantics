@@ -163,7 +163,7 @@ class SCGraphSynthesisHelper {
             } else if (object.hasAnnotation(ANNOTATION_RETURN_NODE)) {
                 label = "return " + serializeHR((object as Assignment).expression)
             } else {
-                label = serializeHR(object) as String
+                label = serializeHR(object).toString
             }
         } else if (object instanceof String) {
             label = object

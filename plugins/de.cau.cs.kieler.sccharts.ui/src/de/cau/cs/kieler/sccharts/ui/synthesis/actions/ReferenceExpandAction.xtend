@@ -20,12 +20,15 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.actions.CollapseExpandAction
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis
 import org.eclipse.elk.graph.properties.MapPropertyHolder
+import org.eclipse.elk.graph.properties.Property
 
 /**
  * This Action provides the normal collapse expand behavior for a reference {@link State} and
@@ -42,6 +45,11 @@ class ReferenceExpandAction extends CollapseExpandAction {
     
     /** The action id */
     public static val String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction"
+    
+    public static val Property<Boolean> VISIBLE_ONLY_EXPANDED = 
+        new Property<Boolean>("de.cau.cs.kieler.sccharts.ui.synthesis.actions.reference.expand.visible.only.expanded", false);
+    public static val Property<Boolean> VISIBLE_ONLY_COLLAPSED = 
+        new Property<Boolean>("de.cau.cs.kieler.sccharts.ui.synthesis.actions.reference.expand.visible.only.expanded", false);
     
     new() {
         Guice.createInjector().injectMembers(this)
@@ -95,8 +103,44 @@ class ReferenceExpandAction extends CollapseExpandAction {
                         context.getKNode.children += extractedDataflow
                     }
                 } 
+            } else if (modelElement instanceof ReferenceDeclaration) {
+                val ref = modelElement as ReferenceDeclaration
+                if (ref.reference instanceof Scope) {
+                    val diagram = LightDiagramServices.translateModel(
+                        ref.reference as Scope,
+                        context.viewContext,
+                        new MapPropertyHolder => [ 
+                            setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.sccharts.ui.synthesis.ScopeSynthesis") 
+                        ]
+                    );
+                    context.getKNode.children += diagram.children;
+                }
             }
         }
-        super.execute(context)
+        val result = super.execute(context)
+        
+        val visibilityChange = context.KNode.eContents.filter(KGraphElement).filter[
+            it.getProperty(VISIBLE_ONLY_EXPANDED) || it.getProperty(VISIBLE_ONLY_COLLAPSED)
+        ]
+        for (elem : visibilityChange) {
+            val v = context.getViewContext().getViewer();
+            if (v.isExpanded(context.KNode)) {
+                if (elem.getProperty(VISIBLE_ONLY_EXPANDED)) {
+                    v.show(elem)
+                }
+                if (elem.getProperty(VISIBLE_ONLY_COLLAPSED)) {
+                    v.hide(elem)
+                }
+            } else {
+                if (elem.getProperty(VISIBLE_ONLY_EXPANDED)) {
+                    v.hide(elem)
+                }
+                if (elem.getProperty(VISIBLE_ONLY_COLLAPSED)) {
+                    v.show(elem)
+                }
+            }
+        }
+        
+        return result
     }
 }

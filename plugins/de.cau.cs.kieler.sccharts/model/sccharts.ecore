@@ -19,10 +19,12 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="genericParameterDeclarations"
         upperBound="-1" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//GenericParameterDeclaration"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="policies" upperBound="-1"
+        eType="#//PolicyRegion" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ScopeCall" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Call">
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="super" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="super" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="genericParameters" upperBound="-1"
         eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Parameter"
         containment="true"/>
@@ -192,12 +194,16 @@
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PolicyClassDeclaration" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kext.ecore#//ClassDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="policy" eType="#//PolicyRegion"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="policies" upperBound="-1"
+        eType="#//PolicyRegion" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PolicyRegion" eSuperTypes="#//ControlflowRegion"/>
   <eClassifiers xsi:type="ecore:EClass" name="CodeEffect" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Effect ../../de.cau.cs.kieler.scl/model/scl.ecore#//Scope"/>
   <eClassifiers xsi:type="ecore:EClass" name="DataflowAssignment" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Assignment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sequential" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataflowReferenceCall" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ReferenceCall ../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Assignment">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="sequential" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="false"/>
   </eClassifiers>

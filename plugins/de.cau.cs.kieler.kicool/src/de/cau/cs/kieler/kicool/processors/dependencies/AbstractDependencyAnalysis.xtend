@@ -170,8 +170,8 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                 }
                 // Respect user-defined schedules.
                 for(sched : assignment.schedule) {
-                    val schedule = sched.valuedObject.declaration as ScheduleDeclaration
-                    val scheduleObject = sched.valuedObject        
+                    val schedule = sched.lowermostReference.valuedObject.declaration as ScheduleDeclaration
+                    val scheduleObject = sched.lowermostReference.valuedObject        
                     val priority = sched.priority
                     
                     for (w : artificialWriters) {
@@ -234,8 +234,8 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                  }
                 
                 if (sched instanceof ScheduleObjectReference) {
-                    schedule = sched.valuedObject.declaration as ScheduleDeclaration
-                    scheduleObject = sched.valuedObject 
+                    schedule = sched.lowermostReference.valuedObject.declaration as ScheduleDeclaration
+                    scheduleObject = sched.lowermostReference.valuedObject 
                     priority = sched.priority    
                 }
                 
@@ -266,8 +266,8 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                 if (parameter.isPureOutput) priority = GLOBAL_WRITE
                 else if (parameter.isReferenceOutput) priority = GLOBAL_RELATIVE_WRITE
                 if (sched instanceof ScheduleObjectReference) {
-                    schedule = sched.valuedObject.declaration as ScheduleDeclaration
-                    scheduleObject = sched.valuedObject 
+                    schedule = sched.lowermostReference.valuedObject.declaration as ScheduleDeclaration
+                    scheduleObject = sched.lowermostReference.valuedObject 
                     priority = sched.priority    
                 }                
                                 
@@ -305,8 +305,8 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
             sub = sub.subReference
         } while (sub !== null)
         for(sched : schedules) {
-            val schedule = sched.valuedObject.declaration as ScheduleDeclaration
-            val scheduleObject = sched.valuedObject        
+            val schedule = sched.lowermostReference.valuedObject.declaration as ScheduleDeclaration
+            val scheduleObject = sched.lowermostReference.valuedObject        
             val priority = sched.priority
             
             if (writeVOI !== null) {
@@ -322,22 +322,27 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     
     /** Finds all readers inside an expression of and stores them together with their associated node. */
     protected def processExpressionReader(Linkable node, Expression expression, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
-        val readVOIs = <ValuedObjectIdentifier> newArrayList => [ readVOIs | 
-            expression.allReferences.forEach [ readVOIs += new ValuedObjectIdentifier(it) ]
-        ]
+        val readVOIs = <ValuedObjectIdentifier> newArrayList
+        for (ref : expression.allReferences) {
+            if (!(ref instanceof ScheduleObjectReference) &&
+                !(ref.topmostReference instanceof ScheduleObjectReference)) {
+                readVOIs += new ValuedObjectIdentifier(ref)
+            }
+        }
         for(readVOI : readVOIs) {
-            val schedules = newLinkedList(GLOBAL_SCHEDULE)
+            val schedules = newLinkedHashSet(GLOBAL_SCHEDULE)
             schedules += expression.schedule
-            // In the SCG there are all schedules on the assignment
+            schedules += readVOI.schedule
+            // In the SCG there are some schedules on the assignment
             if (expression.eContainer instanceof Schedulable) schedules += (expression.eContainer as Schedulable).schedule
             for(sched : schedules) {
                 var schedule = GLOBAL_SCHEDULE
-                var ValuedObject scheduleObject = null            
+                var ValuedObject scheduleObject = null
                 var priority = GLOBAL_READ
                 
                 if (sched instanceof ScheduleObjectReference) {
-                    schedule = sched.valuedObject.declaration as ScheduleDeclaration
-                    scheduleObject = sched.valuedObject
+                    schedule = sched.lowermostReference.valuedObject.declaration as ScheduleDeclaration
+                    scheduleObject = sched.lowermostReference.valuedObject
                     priority = sched.priority    
                 }
                 

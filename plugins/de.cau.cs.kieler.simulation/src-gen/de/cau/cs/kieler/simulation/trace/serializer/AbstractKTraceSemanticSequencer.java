@@ -1419,11 +1419,13 @@ public abstract class AbstractKTraceSemanticSequencer extends KExtSemanticSequen
 	}
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsoTick returns Tick
 	 *
 	 * Constraint:
 	 *     (inputs+=PureOrValuedEmission* outputs+=PureOrValuedEmission* annotations+=KVPair* annotations+=KVPair*)
+	 * </pre>
 	 */
 	protected void sequence_EsoTick(ISerializationContext context, Tick semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1431,11 +1433,13 @@ public abstract class AbstractKTraceSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsoTrace returns Trace
 	 *
 	 * Constraint:
 	 *     ticks+=EsoTick+
+	 * </pre>
 	 */
 	protected void sequence_EsoTrace(ISerializationContext context, Trace semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1443,11 +1447,13 @@ public abstract class AbstractKTraceSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TraceFile returns TraceFile
 	 *
 	 * Constraint:
 	 *     (traces+=EsoTrace+ | (pragmas+=Pragma* traces+=KTrace traces+=KTrace*))
+	 * </pre>
 	 */
 	protected void sequence_EsoTraces_KTraces(ISerializationContext context, TraceFile semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1455,11 +1461,13 @@ public abstract class AbstractKTraceSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsoTraces returns TraceFile
 	 *
 	 * Constraint:
 	 *     traces+=EsoTrace+
+	 * </pre>
 	 */
 	protected void sequence_EsoTraces(ISerializationContext context, TraceFile semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1467,11 +1475,13 @@ public abstract class AbstractKTraceSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     KTick returns Tick
 	 *
 	 * Constraint:
 	 *     (name=ID? inputs+=Assignment* outputs+=Assignment* goto=[Tick|ID]?)
+	 * </pre>
 	 */
 	protected void sequence_KTick(ISerializationContext context, Tick semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1479,11 +1489,13 @@ public abstract class AbstractKTraceSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     KTrace returns Trace
 	 *
 	 * Constraint:
 	 *     (pragmas+=Pragma* ticks+=KTick+)
+	 * </pre>
 	 */
 	protected void sequence_KTrace(ISerializationContext context, Trace semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1491,11 +1503,13 @@ public abstract class AbstractKTraceSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     KTraces returns TraceFile
 	 *
 	 * Constraint:
 	 *     (pragmas+=Pragma* traces+=KTrace traces+=KTrace*)
+	 * </pre>
 	 */
 	protected void sequence_KTraces(ISerializationContext context, TraceFile semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1503,11 +1517,13 @@ public abstract class AbstractKTraceSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     KVPair returns StringAnnotation
 	 *
 	 * Constraint:
 	 *     (name=ID values+=EStringAllTypes)
+	 * </pre>
 	 */
 	protected void sequence_KVPair(ISerializationContext context, StringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

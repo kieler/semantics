@@ -1,22 +1,22 @@
 package de.cau.cs.kieler.kexpressions.extensions
 
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeExtensions
+import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.FunctionCall
-import java.util.Iterator
-import java.util.List
 import de.cau.cs.kieler.kexpressions.Parameter
-import de.cau.cs.kieler.kexpressions.ReferenceCall
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.VectorValue
-import de.cau.cs.kieler.kexpressions.IgnoreValue
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
 import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
-import de.cau.cs.kieler.annotations.NamedObject
-import de.cau.cs.kieler.kexpressions.ParameterAccessType
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ValueTypeReference
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VectorValue
+import java.util.Iterator
+import java.util.List
 
 /**
  * Serialization of KExpressions in human readable form.
@@ -72,6 +72,9 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             return "<BROKEN_REFERENCE>"
         }
         var vo = valuedObjectReference.valuedObject.name
+        if (vo.startsWith("^")) {
+            vo = vo.substring(1)
+        }
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serializeHR + "]"
         }
@@ -83,8 +86,18 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         vo
     }
     
+    def dispatch CharSequence serializeHR(ValueTypeReference vtr) {
+        return vtr.valueType.serializeHR
+    }
+    
     def dispatch CharSequence serializeHR(ReferenceCall referenceCall) {
-        return referenceCall.serializeVOR.toString + referenceCall.parameters.serializeHRParameters
+        var text = new StringBuilder()
+        if (referenceCall.super) {
+            text.append("super.")
+        }
+        text.append(referenceCall.serializeVOR)
+        text.append(referenceCall.parameters.serializeHRParameters)
+        return text
     }    
 
     def dispatch CharSequence serializeHR(FunctionCall functionCall) {

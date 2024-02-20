@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.kexpressions;
 
+import de.cau.cs.kieler.annotations.NamedObject;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -13,8 +14,12 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#isStatic <em>Static</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#isOverride <em>Override</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getReturnType <em>Return Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getReturnHostType <em>Return Host Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getReturnReference <em>Return Reference</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getReturnReferenceContainer <em>Return Reference Container</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getParameterDeclarations <em>Parameter Declarations</em>}</li>
  * </ul>
  *
@@ -24,13 +29,35 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface MethodDeclaration extends Declaration, Schedulable {
     /**
+     * Returns the value of the '<em><b>Static</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Static</em>' attribute.
+     * @see #setStatic(boolean)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getMethodDeclaration_Static()
+     * @model required="true"
+     * @generated
+     */
+    boolean isStatic();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#isStatic <em>Static</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Static</em>' attribute.
+     * @see #isStatic()
+     * @generated
+     */
+    void setStatic(boolean value);
+
+    /**
      * Returns the value of the '<em><b>Override</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the value of the '<em>Override</em>' attribute.
      * @see #setOverride(boolean)
      * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getMethodDeclaration_Override()
-     * @model
+     * @model required="true"
      * @generated
      */
     boolean isOverride();
@@ -69,6 +96,72 @@ public interface MethodDeclaration extends Declaration, Schedulable {
      * @generated
      */
     void setReturnType(ValueType value);
+
+    /**
+     * Returns the value of the '<em><b>Return Host Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Return Host Type</em>' attribute.
+     * @see #setReturnHostType(String)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getMethodDeclaration_ReturnHostType()
+     * @model
+     * @generated
+     */
+    String getReturnHostType();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getReturnHostType <em>Return Host Type</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Return Host Type</em>' attribute.
+     * @see #getReturnHostType()
+     * @generated
+     */
+    void setReturnHostType(String value);
+
+    /**
+     * Returns the value of the '<em><b>Return Reference</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Return Reference</em>' reference.
+     * @see #setReturnReference(NamedObject)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getMethodDeclaration_ReturnReference()
+     * @model
+     * @generated
+     */
+    NamedObject getReturnReference();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getReturnReference <em>Return Reference</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Return Reference</em>' reference.
+     * @see #getReturnReference()
+     * @generated
+     */
+    void setReturnReference(NamedObject value);
+
+    /**
+     * Returns the value of the '<em><b>Return Reference Container</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Return Reference Container</em>' reference.
+     * @see #setReturnReferenceContainer(NamedObject)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getMethodDeclaration_ReturnReferenceContainer()
+     * @model
+     * @generated
+     */
+    NamedObject getReturnReferenceContainer();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getReturnReferenceContainer <em>Return Reference Container</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Return Reference Container</em>' reference.
+     * @see #getReturnReferenceContainer()
+     * @generated
+     */
+    void setReturnReferenceContainer(NamedObject value);
 
     /**
      * Returns the value of the '<em><b>Parameter Declarations</b></em>' containment reference list.

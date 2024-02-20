@@ -151,6 +151,8 @@ class Enum extends SCChartsProcessor implements Traceable {
             val newDecl = if (enumDecl.host || getProperty(TRANSFORM_ENUMS_FAKE_REF)) {
                     createDeclaration => [
                         access = ref.access
+                        input = ref.input
+                        output = ref.output
                         valuedObjects += ref.valuedObjects
                         type = ValueType.HOST
                         hostType = enumDecl.hostType.nullOrEmpty ? enumDecl.valuedObjects.head.name : enumDecl.hostType
@@ -159,6 +161,8 @@ class Enum extends SCChartsProcessor implements Traceable {
                 } else {
                     createIntDeclaration => [
                         access = ref.access
+                        input = ref.input
+                        output = ref.output
                         valuedObjects += ref.valuedObjects
                     ]
                 }
