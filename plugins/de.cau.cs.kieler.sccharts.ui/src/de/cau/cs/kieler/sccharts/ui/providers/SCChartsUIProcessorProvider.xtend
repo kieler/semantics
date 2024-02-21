@@ -25,7 +25,8 @@ class SCChartsUIProcessorProvider implements IProcessorProvider {
         #[
             de.cau.cs.kieler.sccharts.ui.synthesis.processors.SCChartsSynthesisProcessor,
             de.cau.cs.kieler.sccharts.ui.synthesis.analyses.SCChartsSynthesisIntermediateProcessor,
-            de.cau.cs.kieler.sccharts.ui.synthesis.analyses.SCChartsDiagramAnalysis
+            de.cau.cs.kieler.sccharts.ui.synthesis.analyses.SCChartsDiagramAnalysis,
+            de.cau.cs.kieler.sccharts.ui.synthesis.analyses.SmartZoomAnalysis
         ]
     }
     
