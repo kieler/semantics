@@ -32,7 +32,7 @@ import java.util.HashMap
 import java.util.HashSet
 import java.util.List
 import java.util.Set
-import jakarta.inject.Inject
+import com.google.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 

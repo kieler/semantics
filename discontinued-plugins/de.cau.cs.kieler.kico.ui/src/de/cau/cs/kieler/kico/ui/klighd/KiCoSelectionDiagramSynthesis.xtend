@@ -31,7 +31,7 @@ import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.ArrayList
 import java.util.HashSet
 import java.util.Set
-import jakarta.inject.Inject
+import com.google.inject.Inject
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
