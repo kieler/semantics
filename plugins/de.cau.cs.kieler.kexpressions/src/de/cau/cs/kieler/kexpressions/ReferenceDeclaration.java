@@ -15,7 +15,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#isInput <em>Input</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#isSimple <em>Simple</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#isConst <em>Const</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getReferenceContainer <em>Reference Container</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#getParameters <em>Parameters</em>}</li>
@@ -27,29 +28,51 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface ReferenceDeclaration extends Declaration {
+public interface ReferenceDeclaration extends IODeclaration {
     /**
-     * Returns the value of the '<em><b>Input</b></em>' attribute.
+     * Returns the value of the '<em><b>Simple</b></em>' attribute.
      * The default value is <code>"false"</code>.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Input</em>' attribute.
-     * @see #setInput(boolean)
-     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getReferenceDeclaration_Input()
+     * @return the value of the '<em>Simple</em>' attribute.
+     * @see #setSimple(boolean)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getReferenceDeclaration_Simple()
      * @model default="false" required="true"
      * @generated
      */
-    boolean isInput();
+    boolean isSimple();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#isInput <em>Input</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#isSimple <em>Simple</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Input</em>' attribute.
-     * @see #isInput()
+     * @param value the new value of the '<em>Simple</em>' attribute.
+     * @see #isSimple()
      * @generated
      */
-    void setInput(boolean value);
+    void setSimple(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Const</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Const</em>' attribute.
+     * @see #setConst(boolean)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getReferenceDeclaration_Const()
+     * @model required="true"
+     * @generated
+     */
+    boolean isConst();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.ReferenceDeclaration#isConst <em>Const</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Const</em>' attribute.
+     * @see #isConst()
+     * @generated
+     */
+    void setConst(boolean value);
 
     /**
      * Returns the value of the '<em><b>Reference</b></em>' reference.

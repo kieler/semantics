@@ -26,6 +26,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ExpandCollapseHook
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import de.cau.cs.kieler.scl.SCLFactory
@@ -33,6 +34,7 @@ import de.cau.cs.kieler.scl.processors.transformators.SCLToSCGTransformation
 import java.lang.reflect.Method
 import java.util.EnumSet
 import java.util.List
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.ContentAlignment
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.SizeConstraint
@@ -70,52 +72,66 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
             node.KID = method.valuedObjects.head.name
         }
         
-        node.initiallyCollapse
+        if (method.annotations.exists[ExpandCollapseHook.EXPAND_ANNOTATION.equalsIgnoreCase(name)]) {
+            node.initiallyExpand
+        } else {
+            node.initiallyCollapse
+        }
 
         val label = method.serializeHighlighted(true)
 
-        // Expanded
-        node.addMethodFigure => [
-            setAsExpandedView
-            associateWith(method)
-            addDoubleClickAction(CollapseExpandAction.ID)
-            if (method.declarations.empty) {
-                addStatesArea(!label.nullOrEmpty);
-            } else {
-                addStatesAndDeclarationsAndActionsArea(!label.nullOrEmpty, method.declarations.size > 3);
-                // Add declarations
-                for (declaration : method.declarations) {
-                    val declCopy = declaration.copy
-                    declCopy.valuedObjects.forEach[initialValue = null] // Prevent dublicate initialization
-                    addDeclarationLabel(declCopy.serializeHighlighted(true)) => [
-                        setProperty(TracingVisualizationProperties.TRACING_NODE, true);
-                        associateWith(declaration)
-                        eAllContentsOfType2(KRendering).forEach[
-                            associateWith(declaration)
-                            if (it instanceof KText) configureTextLOD(declaration)
-                        ]
-                    ]
-                }
-            }
-            if (method.schedule.size > 0) it.setUserScheduleStyle
-            // Add Button after area to assure correct overlapping
-            addCollapseButton(label) => [
-                addSingleClickAction(CollapseExpandAction.ID)
+        if (method.implemented) {
+            // Expanded
+            node.addMethodFigure => [
+                setAsExpandedView
+                associateWith(method)
                 addDoubleClickAction(CollapseExpandAction.ID)
-            ] 
-//            if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
-        ]
+                if (method.override) addOverrideMethodStyle()
+                if (method.declarations.empty) {
+                    addStatesArea(!label.nullOrEmpty);
+                } else {
+                    addStatesAndDeclarationsAndActionsArea(!label.nullOrEmpty, method.declarations.size > 3);
+                    // Add declarations
+                    for (declaration : method.declarations) {
+                        val declCopy = declaration.copy
+                        declCopy.valuedObjects.forEach[initialValue = null] // Prevent dublicate initialization
+                        addDeclarationLabel(declCopy.serializeHighlighted(true)) => [
+                            setProperty(TracingVisualizationProperties.TRACING_NODE, true);
+                            associateWith(declaration)
+                            eAllContentsOfType2(KRendering).forEach[
+                                associateWith(declaration)
+                                if (it instanceof KText) configureTextLOD(declaration)
+                            ]
+                        ]
+                    }
+                }
+                if (method.schedule.size > 0) it.setUserScheduleStyle
+                // Add Button after area to assure correct overlapping
+                addCollapseButton(label) => [
+                    addSingleClickAction(CollapseExpandAction.ID)
+                    addDoubleClickAction(CollapseExpandAction.ID)
+                ] 
+    //            if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
+            ]
+        }
 
         // Collapsed
         node.addMethodFigure => [
-            setAsCollapsedView
+            if (method.implemented) {
+                setAsCollapsedView
+                addDoubleClickAction(CollapseExpandAction.ID)
+                addExpandButton(label) => [
+                    addSingleClickAction(CollapseExpandAction.ID)
+                    addDoubleClickAction(CollapseExpandAction.ID)
+                ]
+            } else {
+                addRegionButton(null, label)
+                addAbstractMethodStyle()
+            }
+            
             associateWith(method)
             if (method.schedule.size > 0) it.setUserScheduleStyle
-            addDoubleClickAction(CollapseExpandAction.ID)
-            addExpandButton(label) => [
-                addSingleClickAction(CollapseExpandAction.ID)
-                addDoubleClickAction(CollapseExpandAction.ID)
-            ]
+            if (method.override) addOverrideMethodStyle()
 //            if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
         ]
         node.setSelectionStyle
@@ -139,6 +155,9 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
 
         node.setLayoutOption(CoreOptions::CONTENT_ALIGNMENT, ContentAlignment.topCenter())
         node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
+        node.setLayoutOption(LayeredOptions.SPACING_NODE_NODE, 15.0)
+        node.setLayoutOption(LayeredOptions.SPACING_NODE_NODE_BETWEEN_LAYERS, 15.0)
+        node.setLayoutOption(LayeredOptions.SPACING_EDGE_NODE, 15.0)
         
         return newArrayList(node)
     }

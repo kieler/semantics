@@ -236,9 +236,18 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case KExpressionsPackage.IO_DECLARATION: {
+                IODeclaration ioDeclaration = (IODeclaration)theEObject;
+                T result = caseIODeclaration(ioDeclaration);
+                if (result == null) result = caseDeclaration(ioDeclaration);
+                if (result == null) result = caseAnnotatable(ioDeclaration);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case KExpressionsPackage.VARIABLE_DECLARATION: {
                 VariableDeclaration variableDeclaration = (VariableDeclaration)theEObject;
                 T result = caseVariableDeclaration(variableDeclaration);
+                if (result == null) result = caseIODeclaration(variableDeclaration);
                 if (result == null) result = caseDeclaration(variableDeclaration);
                 if (result == null) result = caseAnnotatable(variableDeclaration);
                 if (result == null) result = defaultCase(theEObject);
@@ -247,6 +256,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
             case KExpressionsPackage.REFERENCE_DECLARATION: {
                 ReferenceDeclaration referenceDeclaration = (ReferenceDeclaration)theEObject;
                 T result = caseReferenceDeclaration(referenceDeclaration);
+                if (result == null) result = caseIODeclaration(referenceDeclaration);
                 if (result == null) result = caseDeclaration(referenceDeclaration);
                 if (result == null) result = caseAnnotatable(referenceDeclaration);
                 if (result == null) result = defaultCase(theEObject);
@@ -548,6 +558,21 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseDeclaration(Declaration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>IO Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>IO Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIODeclaration(IODeclaration object) {
         return null;
     }
 

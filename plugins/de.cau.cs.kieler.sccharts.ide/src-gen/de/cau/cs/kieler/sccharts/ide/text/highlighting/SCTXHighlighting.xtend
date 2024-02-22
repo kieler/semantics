@@ -77,6 +77,7 @@ class SCTXHighlighting implements IHighlighting {
         "period",
         "policy",
         "pre",
+        "primitive",
         "print",
         "private",
         "protected",

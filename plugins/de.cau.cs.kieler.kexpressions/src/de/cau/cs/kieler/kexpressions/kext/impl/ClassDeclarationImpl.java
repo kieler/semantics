@@ -10,6 +10,7 @@ import de.cau.cs.kieler.annotations.NamedObject;
 
 import de.cau.cs.kieler.kexpressions.AccessModifier;
 import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.IODeclaration;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.ValueType;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
@@ -44,9 +45,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#getValuedObjects <em>Valued Objects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#getAccess <em>Access</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#isInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#isOutput <em>Output</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#isStatic <em>Static</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#isSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#isConst <em>Const</em>}</li>
@@ -102,26 +103,6 @@ public class ClassDeclarationImpl extends DeclarationScopeImpl implements ClassD
     protected AccessModifier access = ACCESS_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getType()
-     * @generated
-     * @ordered
-     */
-    protected static final ValueType TYPE_EDEFAULT = ValueType.PURE;
-
-    /**
-     * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getType()
-     * @generated
-     * @ordered
-     */
-    protected ValueType type = TYPE_EDEFAULT;
-
-    /**
      * The default value of the '{@link #isInput() <em>Input</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -160,6 +141,26 @@ public class ClassDeclarationImpl extends DeclarationScopeImpl implements ClassD
      * @ordered
      */
     protected boolean output = OUTPUT_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getType()
+     * @generated
+     * @ordered
+     */
+    protected static final ValueType TYPE_EDEFAULT = ValueType.PURE;
+
+    /**
+     * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getType()
+     * @generated
+     * @ordered
+     */
+    protected ValueType type = TYPE_EDEFAULT;
 
     /**
      * The default value of the '{@link #isStatic() <em>Static</em>}' attribute.
@@ -715,12 +716,12 @@ public class ClassDeclarationImpl extends DeclarationScopeImpl implements ClassD
                 return getValuedObjects();
             case KExtPackage.CLASS_DECLARATION__ACCESS:
                 return getAccess();
-            case KExtPackage.CLASS_DECLARATION__TYPE:
-                return getType();
             case KExtPackage.CLASS_DECLARATION__INPUT:
                 return isInput();
             case KExtPackage.CLASS_DECLARATION__OUTPUT:
                 return isOutput();
+            case KExtPackage.CLASS_DECLARATION__TYPE:
+                return getType();
             case KExtPackage.CLASS_DECLARATION__STATIC:
                 return isStatic();
             case KExtPackage.CLASS_DECLARATION__SIGNAL:
@@ -763,14 +764,14 @@ public class ClassDeclarationImpl extends DeclarationScopeImpl implements ClassD
             case KExtPackage.CLASS_DECLARATION__ACCESS:
                 setAccess((AccessModifier)newValue);
                 return;
-            case KExtPackage.CLASS_DECLARATION__TYPE:
-                setType((ValueType)newValue);
-                return;
             case KExtPackage.CLASS_DECLARATION__INPUT:
                 setInput((Boolean)newValue);
                 return;
             case KExtPackage.CLASS_DECLARATION__OUTPUT:
                 setOutput((Boolean)newValue);
+                return;
+            case KExtPackage.CLASS_DECLARATION__TYPE:
+                setType((ValueType)newValue);
                 return;
             case KExtPackage.CLASS_DECLARATION__STATIC:
                 setStatic((Boolean)newValue);
@@ -820,14 +821,14 @@ public class ClassDeclarationImpl extends DeclarationScopeImpl implements ClassD
             case KExtPackage.CLASS_DECLARATION__ACCESS:
                 setAccess(ACCESS_EDEFAULT);
                 return;
-            case KExtPackage.CLASS_DECLARATION__TYPE:
-                setType(TYPE_EDEFAULT);
-                return;
             case KExtPackage.CLASS_DECLARATION__INPUT:
                 setInput(INPUT_EDEFAULT);
                 return;
             case KExtPackage.CLASS_DECLARATION__OUTPUT:
                 setOutput(OUTPUT_EDEFAULT);
+                return;
+            case KExtPackage.CLASS_DECLARATION__TYPE:
+                setType(TYPE_EDEFAULT);
                 return;
             case KExtPackage.CLASS_DECLARATION__STATIC:
                 setStatic(STATIC_EDEFAULT);
@@ -874,12 +875,12 @@ public class ClassDeclarationImpl extends DeclarationScopeImpl implements ClassD
                 return valuedObjects != null && !valuedObjects.isEmpty();
             case KExtPackage.CLASS_DECLARATION__ACCESS:
                 return access != ACCESS_EDEFAULT;
-            case KExtPackage.CLASS_DECLARATION__TYPE:
-                return type != TYPE_EDEFAULT;
             case KExtPackage.CLASS_DECLARATION__INPUT:
                 return input != INPUT_EDEFAULT;
             case KExtPackage.CLASS_DECLARATION__OUTPUT:
                 return output != OUTPUT_EDEFAULT;
+            case KExtPackage.CLASS_DECLARATION__TYPE:
+                return type != TYPE_EDEFAULT;
             case KExtPackage.CLASS_DECLARATION__STATIC:
                 return static_ != STATIC_EDEFAULT;
             case KExtPackage.CLASS_DECLARATION__SIGNAL:
@@ -922,11 +923,16 @@ public class ClassDeclarationImpl extends DeclarationScopeImpl implements ClassD
                 default: return -1;
             }
         }
+        if (baseClass == IODeclaration.class) {
+            switch (derivedFeatureID) {
+                case KExtPackage.CLASS_DECLARATION__INPUT: return KExpressionsPackage.IO_DECLARATION__INPUT;
+                case KExtPackage.CLASS_DECLARATION__OUTPUT: return KExpressionsPackage.IO_DECLARATION__OUTPUT;
+                default: return -1;
+            }
+        }
         if (baseClass == VariableDeclaration.class) {
             switch (derivedFeatureID) {
                 case KExtPackage.CLASS_DECLARATION__TYPE: return KExpressionsPackage.VARIABLE_DECLARATION__TYPE;
-                case KExtPackage.CLASS_DECLARATION__INPUT: return KExpressionsPackage.VARIABLE_DECLARATION__INPUT;
-                case KExtPackage.CLASS_DECLARATION__OUTPUT: return KExpressionsPackage.VARIABLE_DECLARATION__OUTPUT;
                 case KExtPackage.CLASS_DECLARATION__STATIC: return KExpressionsPackage.VARIABLE_DECLARATION__STATIC;
                 case KExtPackage.CLASS_DECLARATION__SIGNAL: return KExpressionsPackage.VARIABLE_DECLARATION__SIGNAL;
                 case KExtPackage.CLASS_DECLARATION__CONST: return KExpressionsPackage.VARIABLE_DECLARATION__CONST;
@@ -971,11 +977,16 @@ public class ClassDeclarationImpl extends DeclarationScopeImpl implements ClassD
                 default: return -1;
             }
         }
+        if (baseClass == IODeclaration.class) {
+            switch (baseFeatureID) {
+                case KExpressionsPackage.IO_DECLARATION__INPUT: return KExtPackage.CLASS_DECLARATION__INPUT;
+                case KExpressionsPackage.IO_DECLARATION__OUTPUT: return KExtPackage.CLASS_DECLARATION__OUTPUT;
+                default: return -1;
+            }
+        }
         if (baseClass == VariableDeclaration.class) {
             switch (baseFeatureID) {
                 case KExpressionsPackage.VARIABLE_DECLARATION__TYPE: return KExtPackage.CLASS_DECLARATION__TYPE;
-                case KExpressionsPackage.VARIABLE_DECLARATION__INPUT: return KExtPackage.CLASS_DECLARATION__INPUT;
-                case KExpressionsPackage.VARIABLE_DECLARATION__OUTPUT: return KExtPackage.CLASS_DECLARATION__OUTPUT;
                 case KExpressionsPackage.VARIABLE_DECLARATION__STATIC: return KExtPackage.CLASS_DECLARATION__STATIC;
                 case KExpressionsPackage.VARIABLE_DECLARATION__SIGNAL: return KExtPackage.CLASS_DECLARATION__SIGNAL;
                 case KExpressionsPackage.VARIABLE_DECLARATION__CONST: return KExtPackage.CLASS_DECLARATION__CONST;
@@ -1012,12 +1023,12 @@ public class ClassDeclarationImpl extends DeclarationScopeImpl implements ClassD
         StringBuilder result = new StringBuilder(super.toString());
         result.append(" (access: ");
         result.append(access);
-        result.append(", type: ");
-        result.append(type);
         result.append(", input: ");
         result.append(input);
         result.append(", output: ");
         result.append(output);
+        result.append(", type: ");
+        result.append(type);
         result.append(", static: ");
         result.append(static_);
         result.append(", signal: ");

@@ -37,6 +37,7 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import de.cau.cs.kieler.scg.extensions.SCGSequentialForkExtensions
 import java.util.Deque
 import java.util.Set
 
@@ -65,10 +66,12 @@ class DependencyTransformationV2 extends AbstractDependencyAnalysis<SCGraphs, SC
     
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGMethodExtensions
+    @Inject extension SCGSequentialForkExtensions
     @Inject extension AnnotationsExtensions
     
     val methodSCGs = <MethodDeclaration, SCGraph>newHashMap
     val methodDependencyCache = <SCGraph, ValuedObjectAccessors>newHashMap
+    var hasSeqFork = false
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.dependency"
@@ -83,6 +86,9 @@ class DependencyTransformationV2 extends AbstractDependencyAnalysis<SCGraphs, SC
         methodDependencyCache.clear
         for (scg : model.scgs.filter[isMethod]) {
             methodSCGs.put(scg.methodDeclaration, scg)
+        }
+        if (model.scgs.exists[it.hasAnnotation(SCGAnnotations.ANNOTATION_HAS_SEQUENTIAL_FORK)]) {
+            hasSeqFork = true
         }
         super.process()
     } 
@@ -233,6 +239,25 @@ class DependencyTransformationV2 extends AbstractDependencyAnalysis<SCGraphs, SC
         if (visited.contains(node)) return;
         visited += node
         nodes.push(node)
+    }
+    
+    override boolean isConcurrentTo(ValuedObjectAccess source, ValuedObjectAccess target) {
+        val entries = getLeastCommonAncestorEntries(source, target)
+        if (entries !== null) {
+            val concurrent = entries.key != entries.value
+            
+            // Handle sequential fork
+            if (concurrent && hasSeqFork) {
+                val sourceEntry = entries.key as Entry
+                val sourceFork = sourceEntry.allPreviousHeadNode as Fork
+                if (sourceFork.isNonParallel) {
+                    return false // sequentially ordered by fork
+                }
+            }
+            
+            return concurrent
+        }
+        return false
     }
         
     

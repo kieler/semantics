@@ -21,6 +21,7 @@ import de.cau.cs.kieler.klighd.krendering.KGridPlacement
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.Underline
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
@@ -38,7 +39,6 @@ import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
-import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
@@ -112,11 +112,32 @@ class ControlflowRegionStyles {
         ]
     }
     
+    def KRectangle addReferenceRegionStyle(KRectangle rect) {
+        return rect => [
+            background = REGION_REFERENCE_BACKGROUND.color
+            foreground = REGION_REFERENCE_FOREGROUND.color
+            lineWidth = 1.3f;
+        ]
+    }
+    
     def KRectangle addMethodFigure(KNode node) {
         return node.addRegionFigure => [
             background = METHOD_BACKGROUND.color
             foreground = METHOD_FOREGROUND.color
-            //lineStyle = LineStyle.DASH
+        ]
+    }
+    
+    def KRectangle addOverrideMethodStyle(KRectangle rect) {
+        return rect => [
+            background = METHOD_BACKGROUND.color
+            foreground = REGION_OVERRIDE_FOREGROUND.color
+            lineWidth = 1.3f;
+        ]
+    }
+    
+    def KRectangle addAbstractMethodStyle(KRectangle rect) {
+        return rect => [
+            lineStyle = LineStyle.DASH
         ]
     }
     
@@ -133,24 +154,28 @@ class ControlflowRegionStyles {
     /**
      * Adds a button with text.
      */
-    private def KRendering addRegionButton(KContainerRendering container, String text, List<Pair<? extends CharSequence, TextFormat>> label) {
+    def KRendering addRegionButton(KContainerRendering container, String text, List<Pair<? extends CharSequence, TextFormat>> label) {
         val button = container.addPolygon => [
             lineWidth = 0
             background = container.foreground.color.copy
             selectionBackground = SELECTION.color
             addKPosition(LEFT, 0.5f, 0, TOP, 0.5f, 0)
-            addKPosition(LEFT, 0.5f, 0, TOP, 19, 0)
-            addKPosition(LEFT, 18, 0, TOP, 0.5f, 0)
+            addKPosition(LEFT, 0.5f, 0, TOP, 20, 0)
+            addKPosition(LEFT, 20, 0, TOP, 0.5f, 0)
         ]
-        button.addText(text) => [
-            suppressSelectability
-            foreground = REGION_BUTTON_FOREGROUND.color
-            selectionForeground = REGION_BUTTON_FOREGROUND.color
-            fontSize = 8;
-            fontBold = true
-            val size = estimateTextSize;
-            setPointPlacementData(LEFT, if (text.equals("-")) 3f else 2f, 0, TOP, 0, 0, H_LEFT, V_TOP, 0, 0, size.width, size.height);
-        ]
+        if (text !== null) {
+            button.addText(text) => [
+                suppressSelectability
+                foreground = REGION_BUTTON_FOREGROUND.color
+                selectionForeground = REGION_BUTTON_FOREGROUND.color
+                fontSize = 8;
+                fontBold = true
+                setPointPlacementData(LEFT, if (text.equals("-")) 1f else 1f, 0, TOP, 0, 0, H_LEFT, V_TOP, 0, 0, 10, 10);
+            ]
+        } else {
+            // Disabled appearance
+            button.foreground = REGION_FOREGROUND.color
+        }
         if (!label.nullOrEmpty) {
             if (label.size == 1 && label.head.value == TextFormat.TEXT) {
                 container.addText(label.head.key.toString) => [
@@ -158,15 +183,14 @@ class ControlflowRegionStyles {
                     foreground = REGION_LABEL.color;
                     fontSize = 10;
                     selectionTextUnderline = Underline.NONE // prevents default selection style
-                    val size = estimateTextSize;
-                    setPointPlacementData(LEFT, 14, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, size.width + 5, size.height)
+                    setPointPlacementData(LEFT, 16.5f, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
                     setProperty(KlighdProperties.IS_NODE_TITLE, true)
                 ]
             } else {
                 container.addKeywordLabel(label, 0) => [
                     foreground = REGION_LABEL.color
                     fontSize = 10
-                    setPointPlacementData(LEFT, 14, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
+                    setPointPlacementData(LEFT, 16.5f, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
                     setProperty(KlighdProperties.IS_NODE_TITLE, true)
                     (children.last as KContainerRendering) => [ // Just for spacing at the end
                         val grid = it?.getChildPlacement()

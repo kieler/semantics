@@ -90,8 +90,20 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         node.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::NETWORK_SIMPLEX)
         node.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, true)
         node.setLayoutOption(LayeredOptions::HIGH_DEGREE_NODES_TREATMENT, true)
-        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d)
-        node.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 10d)
+        
+        // Spacing
+        node.setLayoutOption(LayeredOptions.SPACING_COMPONENT_COMPONENT, LayeredOptions.SPACING_COMPONENT_COMPONENT.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_NODE_NODE, LayeredOptions.SPACING_NODE_NODE.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_NODE_NODE_BETWEEN_LAYERS, LayeredOptions.SPACING_NODE_NODE_BETWEEN_LAYERS.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_PORT_PORT, LayeredOptions.SPACING_PORT_PORT.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_EDGE_NODE, LayeredOptions.SPACING_EDGE_NODE.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_EDGE_NODE_BETWEEN_LAYERS, LayeredOptions.SPACING_EDGE_NODE_BETWEEN_LAYERS.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_EDGE_EDGE, LayeredOptions.SPACING_EDGE_EDGE.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_EDGE_EDGE_BETWEEN_LAYERS, LayeredOptions.SPACING_EDGE_EDGE_BETWEEN_LAYERS.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_EDGE_EDGE, LayeredOptions.SPACING_EDGE_EDGE.getDefault() * 0.5f);
+        node.setLayoutOption(LayeredOptions.SPACING_EDGE_EDGE_BETWEEN_LAYERS, LayeredOptions.SPACING_EDGE_EDGE_BETWEEN_LAYERS.getDefault() * 0.5f);
+        //node.setLayoutOption(LayeredOptions.SPACING_EDGE_LABEL, LayeredOptions.SPACING_EDGE_LABEL.getDefault() * 0.5f);
+            
         
         if (CIRCUIT.booleanValue) {
             node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_SEMI_INTERACTIVE, true)
@@ -138,7 +150,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             setAsExpandedView
             addDoubleClickAction(MemorizingExpandCollapseAction::ID)
             if (region.override) addOverrideRegionStyle
-            if (region.declarations.empty) {
+            if (region.variableDeclarations.empty) {
                 addStatesArea(!label.nullOrEmpty);
             } else {
                 addStatesAndDeclarationsAndActionsArea(false, false);
@@ -179,7 +191,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             region.getCommentAnnotations.forEach[
                 node.children += it.transform                
             ]
-        }           
+        } 
 
         // translate all direct dataflow equations
         node.children += region.equations.performTranformation(node)
@@ -199,16 +211,9 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
      */
     def KNode createReferenceDataflowRegion(ValuedObject valuedObject) {
         val node = createNode().associateWith(valuedObject); // This association is important for the ReferenceExpandAction
-//        if (USE_KLAY.booleanValue) {
-            node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
-            node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
-            node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
-//        } else {
-//            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
-//            node.setLayoutOption(LayoutOptions::SPACING, 40f);
-//        }
-//        node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-//        node.setLayoutOption(LayoutOptions::SPACING, 40f);
+        node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
+        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
+        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
 
         // Set initially collapsed
         node.setLayoutOption(KlighdProperties::EXPAND, false);
