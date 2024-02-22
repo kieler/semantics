@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature id="de.cau.cs.kieler.framework.feature" label="KIELER Semantics Framework" version="1.3.0.qualifier" provider-name="Kiel University" plugin="de.cau.cs.kieler.framework">
+<feature id="de.cau.cs.kieler.framework.feature" label="KIELER Semantics Framework" version="1.4.0.qualifier" provider-name="Kiel University" plugin="de.cau.cs.kieler.framework">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
       KIELER Semantics Framework feature contains the KIELER Compiler and various tools and grammars for the KIELER SCCharts.
@@ -229,8 +229,6 @@ litigation.
    </requires>
 
    <plugin id="de.cau.cs.kieler.core" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   
-   <plugin id="de.cau.cs.kieler.language.server" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
    <plugin id="de.cau.cs.kieler.annotations" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 

@@ -106,6 +106,10 @@ class NXJCompiler extends AbstractSystemCompilerProcessor<Object, GenericCompila
         }
         
         val nxjc = newArrayList(environment.getProperty(NXJ_PATH_NXJC)?:NXJ_PATH_NXJC.^default)
+        nxjc += "-target"
+        nxjc += "1.8"
+        nxjc += "-source"
+        nxjc += "1.8"
 //        if (environment.getProperty(NXJ_RUN_ON_UPLOAD)) nxj += "-r"
         nxjc += sourcePaths
         

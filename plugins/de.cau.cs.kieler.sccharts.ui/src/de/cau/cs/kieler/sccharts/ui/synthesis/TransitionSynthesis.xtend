@@ -177,8 +177,9 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         };
         
         if (SHOW_COMMENTS.booleanValue) {
-            transition.getCommentAnnotations.forEach[
-                edge.addLabel(it.values.head, COMMENT_BACKGROUND_GRADIENT_2.color) => [
+            transition.getCommentAnnotations.forEach[ comment |
+                edge.addLabel(comment.values.head, COMMENT_BACKGROUND_GRADIENT_2.color) => [
+                    associateWith(comment)
                     configureLabelLOD(transition)
                 ]
             ]

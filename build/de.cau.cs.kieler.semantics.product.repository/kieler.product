@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
-<product name="KIELER" uid="de.cau.cs.kieler.product" id="de.cau.cs.kieler.core.product.product" application="org.eclipse.ui.ide.workbench" version="1.3.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="KIELER" uid="de.cau.cs.kieler.product" id="de.cau.cs.kieler.core.product.product" application="org.eclipse.ui.ide.workbench" version="1.4.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/de.cau.cs.kieler.core.product/images/about.png"/>
@@ -20,11 +20,6 @@ Copyright 2014 by Kiel University, Department of Computer Science, Real-Time and
    </configIni>
 
    <launcherArgs>
-      <programArgs>--launcher.XXPermSize
-128m
---launcher.XXMaxPermSize
-256m
-      </programArgs>
       <programArgsMac>-showsplash
 org.eclipse.platform
 --launcher.defaultAction
@@ -33,9 +28,7 @@ openFile
       <vmArgs>-Xss4m
 -Xms512m
 -Xmn256m
--Xmx1024m 
--XX:PermSize=128m
--XX:MaxPermSize=256m
+-Xmx1024m
 --add-modules=ALL-SYSTEM
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread

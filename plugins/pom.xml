@@ -9,7 +9,7 @@
 
   <parent>
     <groupId>de.cau.cs.kieler</groupId>
-    <artifactId>parent</artifactId>
+    <artifactId>semantics</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../build/pom.xml</relativePath>
   </parent>
@@ -36,7 +36,6 @@
     <module>de.cau.cs.kieler.kivis.ui</module>
     <module>de.cau.cs.kieler.kivis.ide</module>
     <module>de.cau.cs.kieler.kivis</module>
-    <module>de.cau.cs.kieler.language.server</module>
     <module>de.cau.cs.kieler.lustre.compiler</module>
     <module>de.cau.cs.kieler.lustre.ide</module>
     <module>de.cau.cs.kieler.lustre.ui</module>

@@ -11,7 +11,7 @@
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
     xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0"
     xmlns:setup.workingsets="http://www.eclipse.org/oomph/setup/workingsets/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/JDT.ecore http://www.eclipse.org/oomph/predicates/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/projects/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/SetupWorkingSets.ecore"
     name="kieler-semantics"
     label="KIELER Semantics">
   <setupTask
@@ -46,6 +46,14 @@
           xsi:type="setup:PreferenceTask"
           key="/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.source"
           value="11"/>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        name="org.eclipse.m2e.core">
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.m2e.core/eclipse.m2.problem.notCoveredMojoExecution"
+          value="warning"/>
     </setupTask>
     <setupTask
         xsi:type="setup:CompoundTask"
@@ -153,8 +161,8 @@
   </setupTask>
   <setupTask
       xsi:type="jdt:JRETask"
-      version="JavaSE-11"
-      location="${jre.location-11}">
+      version="JavaSE-17"
+      location="${jre.location-17}">
     <description>Define the JRE needed to compile and run the Java projects of ${scope.project.label}</description>
   </setupTask>
   <setupTask
@@ -189,6 +197,10 @@
         name="org.eclipse.oomph.workingsets.feature.group"/>
     <requirement
         name="org.eclipse.epp.mpc.feature.group"/>
+    <requirement
+        name="org.eclipse.m2e.feature.feature.group"/>
+    <requirement
+        name="org.eclipse.m2e.pde.feature.feature.group"/>
     <description>Install the tools needed in the IDE to work with the source code for ${scope.project.label}</description>
   </setupTask>
   <setupTask
@@ -241,10 +253,16 @@
             pattern="${git.clone.semantics.location}/features/.*"/>
         <operand
             xsi:type="predicates:LocationPredicate"
-            pattern=".*/oomph/.*"/>
+            pattern=".*/oomph"/>
         <operand
             xsi:type="predicates:LocationPredicate"
-            pattern="${git.clone.semantics.location}/oomph/.*"/>
+            pattern="${git.clone.semantics.location}/oomph"/>
+        <operand
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/language-server/.*"/>
+        <operand
+            xsi:type="predicates:LocationPredicate"
+            pattern="${git.clone.semantics.location}/language-server/.*"/>
       </predicate>
     </sourceLocator>
   </setupTask>
@@ -339,6 +357,18 @@
       </predicate>
     </workingSet>
     <workingSet
+        name="Semantics Language Server">
+      <predicate
+          xsi:type="predicates:OrPredicate">
+        <operand
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/semantics/language-server/.*"/>
+        <operand
+            xsi:type="predicates:LocationPredicate"
+            pattern="${git.clone.semantics.location}/language-server/.*"/>
+      </predicate>
+    </workingSet>
+    <workingSet
         name="Semantics Tests">
       <predicate
           xsi:type="predicates:OrPredicate">
@@ -372,18 +402,6 @@
         <operand
             xsi:type="predicates:LocationPredicate"
             pattern=".*/semantics/features/.*"/>
-        <operand
-            xsi:type="predicates:NotPredicate">
-          <operand
-              xsi:type="predicates:OrPredicate">
-            <operand
-                xsi:type="predicates:LocationPredicate"
-                pattern="${git.clone.semantics.location}/.*"/>
-            <operand
-                xsi:type="predicates:LocationPredicate"
-                pattern=".*/semantics/.*"/>
-          </operand>
-        </operand>
       </predicate>
     </workingSet>
   </setupTask>
@@ -445,14 +463,14 @@
             versionRange="2.7.0"/>
         <requirement
             name="org.eclipse.xtext.sdk.feature.group"
-            versionRange="[2.27.0,2.28.0)"/>
+            versionRange="[2.31.0,2.32.0)"/>
         <requirement
             name="org.eclipse.emf.mwe2.launcher.feature.group"/>
         <requirement
             name="org.eclipse.emf.compare.feature.group"/>
         <requirement
             name="org.eclipse.lsp4j.sdk.feature.group"
-            versionRange="[0.14.0,0.15.0)"/>
+            versionRange="[0.21.0,0.22.0)"/>
         <requirement
             name="org.eclipse.elk.sdk.feature.feature.group"/>
         <requirement
@@ -482,6 +500,8 @@
         <requirement
             name="de.cau.cs.kieler.klighd.ui.contrib3x"/>
         <requirement
+            name="de.cau.cs.kieler.klighd.standalone"/>
+        <requirement
             name="de.cau.cs.kieler.kgraph.text"/>
         <requirement
             name="de.cau.cs.kieler.kgraph.text.source"/>
@@ -493,12 +513,6 @@
             name="de.cau.cs.kieler.graphs.klighd"/>
         <requirement
             name="de.cau.cs.kieler.graphs.klighd.source"/>
-        <requirement
-            name="de.cau.cs.kieler.klighd.lsp"/>
-        <requirement
-            name="de.cau.cs.kieler.pragmatics.language.server"/>
-        <requirement
-            name="org.eclipse.sprotty"/>
         <requirement
             name="org.freemarker"/>
         <requirement
@@ -516,23 +530,21 @@
         <repositoryList
             name="FixedTarget">
           <repository
-              url="http://download.eclipse.org/releases/2022-06"/>
+              url="https://download.eclipse.org/releases/2023-06"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20220531185310/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20230531010532/repository/"/>
           <repository
-              url="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.27.0/"/>
+              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.31.0/"/>
           <repository
-              url="http://download.eclipse.org/lsp4j/updates/releases/0.14.0"/>
+              url="https://download.eclipse.org/lsp4j/updates/releases/0.21.0"/>
           <repository
-              url="http://download.eclipse.org/elk/updates/releases/0.8.1/"/>
+              url="https://download.eclipse.org/elk/updates/releases/0.8.1/"/>
           <repository
-              url="https://kieler.github.io/KLighD/v2.2.0/"/>
+              url="https://kieler.github.io/KLighD/v2.3.0/"/>
           <repository
-              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2022-07/"/>
+              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2023-06/"/>
           <repository
-              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/sprotty/0.9.0/"/>
-          <repository
-              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/"/>
+              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/10.0.15/"/>
         </repositoryList>
       </targlet>
     </setupTask>
@@ -540,7 +552,7 @@
         xsi:type="setup.p2:P2Task">
       <requirement
           name="org.eclipse.xtext.sdk.feature.group"
-          versionRange="[2.27.0,2.28.0)"/>
+          versionRange="[2.31.0,2.32.0)"/>
       <repository
           url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
     </setupTask>
@@ -685,6 +697,164 @@
       <requirement
           name="org.eclipse.xtext.sdk.feature.group"
           versionRange="2.25.0"/>
+      <repository
+          url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+    </setupTask>
+  </stream>
+  <stream name="release1.3"
+      label="Release 1.3">
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="git.clone.semantics.branch"
+        value="release-1.3"
+        defaultValue=""
+        storageURI="scope://Workspace"
+        label="">
+      <description></description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup.targlets:TargletTask"
+        targetName="Master">
+      <targlet
+          name="${scope.project.label}"
+          activeRepositoryList="FixedTarget">
+        <annotation
+            source="http:/www.eclipse.org/oomph/targlets/TargetDefinitionGenerator_DISABLED">
+          <detail
+              key="preferredRepositories">
+            <value>http://download.eclipse.org/eclipse/updates/</value>
+          </detail>
+          <detail
+              key="includeAllPlatforms">
+            <value>false</value>
+          </detail>
+          <detail
+              key="includeSource">
+            <value>false</value>
+          </detail>
+          <detail
+              key="location">
+            <value>${git.clone.semantics.location}/build/de.cau.cs.kieler.semantics.targetplatform/de.cau.cs.kieler.semantics.targetplatform.target</value>
+          </detail>
+        </annotation>
+        <requirement
+            name="org.eclipse.equinox.executable.feature.group"/>
+        <requirement
+            name="org.eclipse.epp.mpc.feature.group"/>
+        <requirement
+            name="org.eclipse.egit.feature.group"/>
+        <requirement
+            name="org.eclipse.cdt.feature.group"/>
+        <requirement
+            name="org.eclipse.jdt.feature.group"/>
+        <requirement
+            name="org.junit"/>
+        <requirement
+            name="com.google.inject"/>
+        <requirement
+            name="com.google.guava"
+            versionRange="27.0.0"/>
+        <requirement
+            name="com.google.gson"
+            versionRange="2.7.0"/>
+        <requirement
+            name="org.eclipse.xtext.sdk.feature.group"
+            versionRange="[2.28.0,2.29.0)"/>
+        <requirement
+            name="org.eclipse.emf.mwe2.launcher.feature.group"/>
+        <requirement
+            name="org.eclipse.emf.compare.feature.group"/>
+        <requirement
+            name="org.eclipse.lsp4j.sdk.feature.group"
+            versionRange="[0.15.0,0.16.0)"/>
+        <requirement
+            name="org.eclipse.elk.sdk.feature.feature.group"/>
+        <requirement
+            name="org.eclipse.elk.sdk.feature.source.feature.group"/>
+        <requirement
+            name="org.eclipse.elk.feature.feature.group"/>
+        <requirement
+            name="org.eclipse.elk.feature.source.feature.group"/>
+        <requirement
+            name="org.eclipse.elk.ui.feature.feature.group"/>
+        <requirement
+            name="org.eclipse.elk.ui.feature.source.feature.group"/>
+        <requirement
+            name="org.eclipse.elk.graphviz.feature.feature.group"/>
+        <requirement
+            name="de.cau.cs.kieler.klighd.feature.feature.group"/>
+        <requirement
+            name="de.cau.cs.kieler.klighd.feature.source.feature.group"/>
+        <requirement
+            name="de.cau.cs.kieler.klighd.freehep.feature.feature.group"/>
+        <requirement
+            name="de.cau.cs.kieler.klighd.freehep.feature.source.feature.group"/>
+        <requirement
+            name="de.cau.cs.kieler.klighd.view.feature.feature.group"/>
+        <requirement
+            name="de.cau.cs.kieler.klighd.view.feature.source.feature.group"/>
+        <requirement
+            name="de.cau.cs.kieler.klighd.ui.contrib3x"/>
+        <requirement
+            name="de.cau.cs.kieler.kgraph.text"/>
+        <requirement
+            name="de.cau.cs.kieler.kgraph.text.source"/>
+        <requirement
+            name="de.cau.cs.kieler.kgraph.text.ui"/>
+        <requirement
+            name="de.cau.cs.kieler.kgraph.text.ui.source"/>
+        <requirement
+            name="de.cau.cs.kieler.graphs.klighd"/>
+        <requirement
+            name="de.cau.cs.kieler.graphs.klighd.source"/>
+        <requirement
+            name="de.cau.cs.kieler.klighd.lsp"/>
+        <requirement
+            name="de.cau.cs.kieler.pragmatics.language.server"/>
+        <requirement
+            name="org.eclipse.sprotty"/>
+        <requirement
+            name="org.freemarker"/>
+        <requirement
+            name="org.freemarker.source"/>
+        <requirement
+            name="org.eclipse.jetty.server"
+            versionRange="10.0.0"/>
+        <requirement
+            name="org.eclipse.jetty.servlet"
+            versionRange="10.0.0"/>
+        <requirement
+            name="de.cau.cs.kieler.websocket.mirror"/>
+        <requirement
+            name="jakarta.servlet"/>
+        <repositoryList
+            name="FixedTarget">
+          <repository
+              url="http://download.eclipse.org/releases/2022-09"/>
+          <repository
+              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20220830213456/repository/"/>
+          <repository
+              url="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.28.0/"/>
+          <repository
+              url="http://download.eclipse.org/lsp4j/updates/releases/0.15.0"/>
+          <repository
+              url="http://download.eclipse.org/elk/updates/releases/0.8.1/"/>
+          <repository
+              url="https://kieler.github.io/KLighD/v2.2.0/"/>
+          <repository
+              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2022-07/"/>
+          <repository
+              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/sprotty/0.9.0/"/>
+          <repository
+              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/10.0.11/"/>
+        </repositoryList>
+      </targlet>
+    </setupTask>
+    <setupTask
+        xsi:type="setup.p2:P2Task">
+      <requirement
+          name="org.eclipse.xtext.sdk.feature.group"
+          versionRange="[2.28.0,2.29.0)"/>
       <repository
           url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
     </setupTask>
@@ -2400,14 +2570,14 @@
             name="edu.umd.cs.piccolo"/>
         <requirement
             name="org.eclipse.xtext.sdk.feature.group"
-            versionRange="[2.27.0,2.28.0)"/>
+            versionRange="[2.31.0,2.32.0)"/>
         <requirement
             name="org.eclipse.emf.mwe2.launcher.feature.group"/>
         <requirement
             name="org.eclipse.emf.compare.feature.group"/>
         <requirement
             name="org.eclipse.lsp4j.sdk.feature.group"
-            versionRange="[0.14.0,0.15.0)"/>
+            versionRange="[0.21.0,0.22.0)"/>
         <requirement
             name="org.eclipse.elk.sdk.feature.feature.group"/>
         <requirement
@@ -2449,13 +2619,13 @@
         <repositoryList
             name="FixedTarget">
           <repository
-              url="http://download.eclipse.org/releases/2022-06"/>
+              url="https://download.eclipse.org/releases/2023-06"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20220531185310/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20230531010532/repository/"/>
           <repository
-              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.27.0/"/>
+              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.31.0/"/>
           <repository
-              url="http://download.eclipse.org/lsp4j/updates/releases/0.14.0"/>
+              url="https://download.eclipse.org/lsp4j/updates/releases/0.21.0"/>
           <repository
               url="https://download.eclipse.org/elk/updates/releases/0.8.1/"/>
           <repository
@@ -2463,7 +2633,7 @@
           <repository
               url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/sprotty/0.9.0/"/>
           <repository
-              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/"/>
+              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/10.0.15/"/>
         </repositoryList>
       </targlet>
     </setupTask>
@@ -2471,9 +2641,349 @@
         xsi:type="setup.p2:P2Task">
       <requirement
           name="org.eclipse.xtext.sdk.feature.group"
-          versionRange="[2.27.0,2.28.0)"/>
+          versionRange="[2.31.0,2.32.0)"/>
       <repository
-          url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.27.0/"/>
+          url="https://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+    </setupTask>
+  </stream>
+  <stream name="elk"
+      label="Elk">
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="git.clone.semantics.branch"
+        value="master"
+        defaultValue=""
+        storageURI="scope://Workspace"
+        label="">
+      <description></description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        name="Additional Git Repositories">
+      <setupTask
+          xsi:type="git:GitCloneTask"
+          id="git.clone.pragmatics.elk"
+          remoteURI="git@github.com:kieler/pragmatics.git"
+          pushURI=""
+          checkoutBranch="master">
+        <description>Clone Pragmatics repository</description>
+      </setupTask>
+      <setupTask
+          xsi:type="git:GitCloneTask"
+          id="git.clone.klighd.elk"
+          remoteURI="git@github.com:kieler/KLighD.git"
+          pushURI=""
+          checkoutBranch="master">
+        <description>Clone KLighD repository</description>
+      </setupTask>
+      <setupTask
+          xsi:type="git:GitCloneTask"
+          id="git.clone.elk"
+          remoteURI="git@github.com:eclipse/elk.git"
+          checkoutBranch="master">
+        <description>Clone ELK repository</description>
+      </setupTask>
+      <setupTask
+          xsi:type="git:GitCloneTask"
+          id="git.clone.elk.models"
+          remoteURI="git@github.com:eclipse/elk-models.git"
+          checkoutBranch="master">
+        <description>Clone ELK models repository</description>
+      </setupTask>
+      <description></description>
+    </setupTask>
+    <setupTask
+        xsi:type="projects:ProjectsImportTask"
+        filter="">
+      <sourceLocator
+          rootFolder="${git.clone.klighd.elk.location}">
+        <predicate
+            xsi:type="predicates:OrPredicate">
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern=".*/plugins/.*"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern=".*/test/.*"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern=".*/features/.*"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern=".*/build/.*"/>
+        </predicate>
+      </sourceLocator>
+      <sourceLocator
+          rootFolder="${git.clone.pragmatics.elk.location}">
+        <predicate
+            xsi:type="predicates:OrPredicate">
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern=".*/plugins/de.cau.cs.kieler.formats"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern=".*/plugins/de.cau.cs.kieler.formats.gml"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern=".*/plugins/de.cau.cs.kieler.formats.kgraph"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern=".*/plugins/de.cau.cs.kieler.graphs.klighd"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern=".*/plugins/de.cau.cs.kieler.pragmatics.language.server"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern=".*/test/.*"/>
+        </predicate>
+      </sourceLocator>
+      <sourceLocator
+          rootFolder="${git.clone.elk.location}"
+          locateNestedProjects="true"/>
+      <sourceLocator
+          rootFolder="${git.clone.elk.models.location}"/>
+    </setupTask>
+    <setupTask
+        xsi:type="setup.workingsets:WorkingSetTask">
+      <workingSet
+          name="Features">
+        <predicate
+            xsi:type="predicates:OrPredicate">
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern="${git.clone.klighd.elk.location|trimTrailingSlashes}/features/.*"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern="${git.clone.klighd.elk.location|trimTrailingSlashes}\\features\\.*"/>
+        </predicate>
+      </workingSet>
+      <workingSet
+          name="Plug-ins">
+        <predicate
+            xsi:type="predicates:OrPredicate">
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern="${git.clone.klighd.elk.location|trimTrailingSlashes}/plugins/.*"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern="${git.clone.klighd.elk.location|trimTrailingSlashes}\\plugins\\.*"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern="${git.clone.pragmatics.elk.location|trimTrailingSlashes}/plugins/.*"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern="${git.clone.pragmatics.elk.location|trimTrailingSlashes}\\plugins\\.*"/>
+        </predicate>
+      </workingSet>
+      <workingSet
+          name="Repositories">
+        <predicate
+            xsi:type="predicates:OrPredicate">
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern="${git.clone.klighd.elk.location|trimTrailingSlashes}/build/.*"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern="${git.clone.klighd.elk.location|trimTrailingSlashes}\\build\\.*"/>
+        </predicate>
+      </workingSet>
+      <workingSet
+          name="Tests">
+        <predicate
+            xsi:type="predicates:OrPredicate">
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern="${git.clone.klighd.elk.location}/test/.*"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern="${git.clone.klighd.elk.location}\\test\\.*"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern="${git.clone.pragmatics.elk.location}/test/.*"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern="${git.clone.pragmatics.elk.location}\\test\\.*"/>
+        </predicate>
+      </workingSet>
+      <workingSet
+          name="ELK Core">
+        <predicate
+            xsi:type="predicates:AndPredicate">
+          <operand
+              xsi:type="predicates:OrPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="org\.eclipse\.elk\.core.*"/>
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="org\.eclipse\.elk\.graph.*"/>
+          </operand>
+        </predicate>
+      </workingSet>
+      <workingSet
+          name="ELK Features">
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="org\.eclipse\.elk.*\.feature"/>
+      </workingSet>
+      <workingSet
+          name="ELK Algorithms">
+        <predicate
+            xsi:type="predicates:AndPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org\.eclipse\.elk\.alg\..*"/>
+        </predicate>
+      </workingSet>
+      <workingSet
+          name="ELK Connectors">
+        <predicate
+            xsi:type="predicates:AndPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org\.eclipse\.elk\.conn\..*"/>
+        </predicate>
+      </workingSet>
+      <workingSet
+          name="ELK Tests">
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="org\.eclipse\.elk\..*test"/>
+      </workingSet>
+      <workingSet
+          name="ELK Stuff">
+        <predicate
+            xsi:type="predicates:AndPredicate">
+          <operand
+              xsi:type="predicates:OrPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="org\.eclipse\.elk\..*"/>
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="ELK .* Folder"/>
+          </operand>
+        </predicate>
+      </workingSet>
+      <description>The dynamic working sets for ${scope.project.label}</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup.targlets:TargletTask"
+        targetName="Elk">
+      <targlet
+          name="${scope.project.label}"
+          activeRepositoryList="FixedTarget">
+        <annotation
+            source="http:/www.eclipse.org/oomph/targlets/TargetDefinitionGenerator_DISABLED">
+          <detail
+              key="preferredRepositories">
+            <value>http://download.eclipse.org/eclipse/updates/</value>
+          </detail>
+          <detail
+              key="includeAllPlatforms">
+            <value>false</value>
+          </detail>
+          <detail
+              key="includeSource">
+            <value>false</value>
+          </detail>
+          <detail
+              key="location">
+            <value>${git.clone.semantics.location}/build/de.cau.cs.kieler.semantics.targetplatform/de.cau.cs.kieler.semantics.targetplatform.target</value>
+          </detail>
+        </annotation>
+        <requirement
+            name="org.eclipse.equinox.executable.feature.group"/>
+        <requirement
+            name="org.eclipse.epp.mpc.feature.group"/>
+        <requirement
+            name="org.eclipse.egit.feature.group"/>
+        <requirement
+            name="org.eclipse.cdt.feature.group"/>
+        <requirement
+            name="org.eclipse.sdk.feature.group"/>
+        <requirement
+            name="org.eclipse.emf.sdk.feature.group"/>
+        <requirement
+            name="org.eclipse.gmf.feature.group"/>
+        <requirement
+            name="org.eclipse.graphiti.sdk.feature.feature.group"/>
+        <requirement
+            name="org.eclipse.uml2.sdk.feature.group"/>
+        <requirement
+            name="org.eclipse.jst.ws.jaxws.feature.feature.group"/>
+        <requirement
+            name="com.google.inject"/>
+        <requirement
+            name="com.google.guava"
+            versionRange="27.0.0"/>
+        <requirement
+            name="com.google.gson"
+            versionRange="2.7.0"/>
+        <requirement
+            name="edu.umd.cs.piccolo"/>
+        <requirement
+            name="org.eclipse.xtext.sdk.feature.group"
+            versionRange="[2.31.0,2.32.0)"/>
+        <requirement
+            name="org.eclipse.emf.mwe2.launcher.feature.group"/>
+        <requirement
+            name="org.eclipse.emf.compare.feature.group"/>
+        <requirement
+            name="org.eclipse.lsp4j.sdk.feature.group"
+            versionRange="[0.21.0,0.22.0)"/>
+        <requirement
+            name="org.hamcrest.library"/>
+        <requirement
+            name="org.freemarker"/>
+        <requirement
+            name="org.freemarker.source"/>
+        <requirement
+            name="org.eclipse.jetty.server"
+            versionRange="10.0.0"/>
+        <requirement
+            name="org.eclipse.jetty.servlet"
+            versionRange="10.0.0"/>
+        <requirement
+            name="de.cau.cs.kieler.websocket.mirror"/>
+        <requirement
+            name="jakarta.servlet"/>
+        <requirement
+            name="org.eclipse.sprotty"/>
+        <repositoryList
+            name="FixedTarget">
+          <repository
+              url="https://download.eclipse.org/releases/2023-06"/>
+          <repository
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20230531010532/repository/"/>
+          <repository
+              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.31.0/"/>
+          <repository
+              url="https://download.eclipse.org/lsp4j/updates/releases/0.21.0"/>
+          <repository
+              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/klighd/"/>
+          <repository
+              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/sprotty/0.9.0/"/>
+          <repository
+              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/10.0.15/"/>
+          <repository
+              url="https://download.eclipse.org/elk/updates/releases/0.8.1/"/>
+        </repositoryList>
+      </targlet>
+    </setupTask>
+    <setupTask
+        xsi:type="setup.p2:P2Task">
+      <requirement
+          name="org.eclipse.elk.sdk.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.xtext.sdk.feature.group"
+          versionRange="[2.31.0,2.32.0)"/>
+      <repository
+          url="https://download.eclipse.org/elk/updates/nightly/"/>
+      <repository
+          url="https://download.eclipse.org/mylyn/releases/3.25/"/>
+      <repository
+          url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.31.0/"/>
     </setupTask>
   </stream>
   <logicalProjectContainer
