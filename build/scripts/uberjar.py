@@ -69,6 +69,7 @@ IGNORED_FILES = [
     'META-INF/MANIFEST.MF', # not sure if we have to merge the content somehow?
     'META-INF/maven/*',
     'META-INF/NOTICE.txt',
+    'META-INF/NOTICE.md',
     'META-INF/NOTICE',
     'META-INF/p2.inf',
     'META-INF/versions/*/module-info.class',
@@ -87,6 +88,7 @@ APPEND_MERGE = [
     'plugin.properties',
     'META-INF/services/*',
     'META-INF/LICENSE.txt',
+    'META-INF/LICENSE.md',
     'META-INF/LICENSE',
 ]
 IGNORE_MERGE = [

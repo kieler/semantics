@@ -19,7 +19,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.scg.SCGraphs
-import javax.inject.Inject
+import com.google.inject.Inject
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of

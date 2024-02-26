@@ -32,12 +32,12 @@
     <category name="kieler-sources"/>
   </feature>
   <!-- Repository references to associated sites -->
-  <repository-reference location="https://download.eclipse.org/releases/2023-06" enabled="true"/>
-  <repository-reference location="https://download.eclipse.org/tools/orbit/downloads/drops/R20230531010532/repository/" enabled="true"/>
-  <repository-reference location="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.31.0/" enabled="true"/>
-  <repository-reference location="https://download.eclipse.org/lsp4j/updates/releases/0.21.0/" enabled="true"/>
+  <repository-reference location="https://download.eclipse.org/releases/2023-12" enabled="true"/>
+  <repository-reference location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.30.0" enabled="true"/>
+  <repository-reference location="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.33.0/" enabled="true"/>
+  <repository-reference location="https://download.eclipse.org/lsp4j/updates/releases/0.21.1/" enabled="true"/>
   <repository-reference location="https://kieler.github.io/KLighD/v2.3.0/" enabled="true"/>
   <repository-reference location="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2023-06" enabled="true"/>
-  <repository-reference location="https://download.eclipse.org/elk/updates/releases/0.8.1/" enabled="true"/>
-  <repository-reference location="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/10.0.15/" enabled="true"/>
+  <repository-reference location="https://download.eclipse.org/elk/updates/releases/0.9.0/" enabled="true"/>
+  <repository-reference location="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/10.0.20/" enabled="true"/>
 </site>

@@ -5,49 +5,23 @@ Bundle-Vendor: Kiel University
 Bundle-Version: 1.4.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.simulation.ide;singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.core.runtime,
- org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
- com.google.guava,
- org.eclipse.xtext.xbase.lib,
- org.eclipse.xtend.lib,
- org.eclipse.xtend.lib.macro,
- com.google.inject;bundle-version="3.0.0",
- org.eclipse.xtext.util;bundle-version="2.12.0",
+Require-Bundle: org.eclipse.xtend.lib,
  org.eclipse.xtext.ide,
  de.cau.cs.kieler.simulation,
- de.cau.cs.kieler.kexpressions,
- org.eclipse.lsp4j;bundle-version="0.6.0",
- org.eclipse.lsp4j.generator;bundle-version="0.6.0",
- org.eclipse.lsp4j.jsonrpc;bundle-version="0.6.0",
- org.apache.log4j;bundle-version="1.2.15",
- de.cau.cs.kieler.core;bundle-version="1.0.0",
- de.cau.cs.kieler.kicool.ide;bundle-version="1.0.0",
  de.cau.cs.kieler.kicool;bundle-version="1.0.0",
- org.eclipse.jetty.server;bundle-version="10.0.0",
- org.eclipse.jetty.util;bundle-version="10.0.0",
- org.eclipse.jetty.servlet;bundle-version="10.0.0",
- de.cau.cs.kieler.websocket.mirror;bundle-version="10.0.5",
- org.eclipse.jface;bundle-version="3.14.0",
+ de.cau.cs.kieler.websocket.mirror;bundle-version="10.0.20",
  com.google.gson;bundle-version="2.7.0",
- de.cau.cs.kieler.klighd.krendering,
- de.cau.cs.kieler.klighd,
  org.eclipse.elk.core,
  de.cau.cs.kieler.klighd.krendering.extensions;bundle-version="2.0.0",
- de.cau.cs.kieler.klighd.ide;bundle-version="2.0.0",
- org.eclipse.jetty.http;bundle-version="10.0.5",
- org.slf4j.api;bundle-version="1.7.30",
- org.eclipse.jetty.io;bundle-version="10.0.5",
- org.eclipse.jetty.security;bundle-version="10.0.5",
- org.eclipse.jetty.util.ajax;bundle-version="10.0.5"
+ de.cau.cs.kieler.klighd.ide;bundle-version="2.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.cau.cs.kieler.simulation.ide,
  de.cau.cs.kieler.simulation.ide.preferences,
  de.cau.cs.kieler.simulation.ide.processor,
  de.cau.cs.kieler.simulation.ide.providers,
  de.cau.cs.kieler.simulation.ide.server,
+ de.cau.cs.kieler.simulation.ide.synthesis,
  de.cau.cs.kieler.simulation.ide.trace.contentassist.antlr,
  de.cau.cs.kieler.simulation.ide.trace.contentassist.antlr.internal,
  de.cau.cs.kieler.simulation.ide.visualization
-Import-Package: javax.servlet;version="3.1.0",
- javax.servlet.http;version="3.1.0"
 Automatic-Module-Name: de.cau.cs.kieler.simulation.ide

@@ -23,7 +23,7 @@ import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import javax.inject.Inject
+import com.google.inject.Inject
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.klighd.kgraph.KLabel

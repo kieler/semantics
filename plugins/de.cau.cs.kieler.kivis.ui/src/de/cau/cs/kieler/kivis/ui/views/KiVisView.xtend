@@ -55,6 +55,7 @@ import org.eclipse.ui.internal.browser.WebBrowserUtil
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.core.runtime.jobs.Job
 
 /**
  * The KiVis View.
@@ -173,9 +174,16 @@ class KiVisView extends ViewPart implements ISimulationListener {
         getViewSite().getActionBars().getToolBarManager() => [
             add(new Action("Open in external Browser", IAction.AS_PUSH_BUTTON) {
                 override run() {
-                    SimulationServer.start
-                    val browserSupport = WebBrowserUIPlugin.getInstance().getWorkbench().getBrowserSupport()
-                    browserSupport.externalBrowser?.openURL(new URL("http://localhost:" + SimulationServer.PORT + "/visualization"))
+                    SimulationServer.start()
+                    new Job("Open browser") {
+                        override protected run(IProgressMonitor monitor) {
+                            val browserSupport = WebBrowserUIPlugin.getInstance().getWorkbench().getBrowserSupport()
+                            browserSupport.externalBrowser?.openURL(
+                                new URL("http://localhost:" + SimulationServer.PORT + "/visualization")
+                            )
+                            return Status.OK_STATUS
+                        }
+                    }.schedule(500) // Start with delay to give server time to start
                 }
             })
             add(new Separator)
