@@ -44,10 +44,6 @@ class SCTXConstraintSerializer implements IConstraintSerializer {
 
     override serializeConstraints(List<ConstraintProperty<Object>> changedNodes, Object graph, String uri,
         KGraphLanguageServerExtension ls, KGraphLanguageClient client) {
-        changedNodes.forEach[c|
-            val Annotatable anno = c.KNode.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) as Annotatable
-            copyConstraintAnnotations(anno, c.KNode, c.property.id, c.property)
-        ]
         // Serialize model into given uri.
         val resource = ls.getResource(uri)
             
@@ -56,6 +52,10 @@ class SCTXConstraintSerializer implements IConstraintSerializer {
         resource.save(outputStream, emptyMap)
         val codeBefore = outputStream.toString
         val Map<String, List<TextEdit>> changes = newHashMap 
+        changedNodes.forEach[c|
+            val Annotatable anno = c.KNode.getProperty(KlighdInternalProperties.MODEL_ELEMENT) as Annotatable
+            copyConstraintAnnotations(anno, c.KNode, c.property.id, c.property)
+        ]
         // Get changed file as String
         outputStream = new ByteArrayOutputStream
         resource.save(outputStream, emptyMap)
