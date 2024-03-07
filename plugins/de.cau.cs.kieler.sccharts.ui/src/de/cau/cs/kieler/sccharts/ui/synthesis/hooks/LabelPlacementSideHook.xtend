@@ -51,11 +51,11 @@ class LabelPlacementSideHook extends SynthesisHook {
     /** The sub category for label placement side selection. */
     public static final SynthesisOption LABEL_SIDE_CATEGORY = GeneralSynthesisOptions::LAYOUT
     
-    private static final String STRATEGY_CONSISTENT = "Consistent side";
-    private static final String STRATEGY_SMART = "Smart side";
-    private static final String STRATEGY_DIRECTIONAL = "Direction-dependent side";
+    private static final String STRATEGY_CONSISTENT = "Always above";
+    private static final String STRATEGY_SMART = "Smart";
+    private static final String STRATEGY_DIRECTIONAL = "Direction-dependent";
     private static final String STRATEGY_ON_EDGE = "On edge";
-    private static final String STRATEGY_ON_EDGE_DIRECTIONAL = "On edge (with arrows)"
+    private static final boolean ON_EDGE_ARROWS = true;
     
     /** The synthesis option to switch between different side selection strategies. */
     public static final SynthesisOption LABEL_SIDE_SELECTION_STRATEGY = SynthesisOption.createChoiceOption(
@@ -64,10 +64,9 @@ class LabelPlacementSideHook extends SynthesisHook {
         newLinkedList(
             STRATEGY_CONSISTENT,
             STRATEGY_SMART,
-            STRATEGY_DIRECTIONAL,
-            STRATEGY_ON_EDGE,
-            STRATEGY_ON_EDGE_DIRECTIONAL),
-        STRATEGY_CONSISTENT).setCategory(LABEL_SIDE_CATEGORY);
+//            STRATEGY_DIRECTIONAL,
+            STRATEGY_ON_EDGE),
+        STRATEGY_ON_EDGE).setCategory(LABEL_SIDE_CATEGORY);
     
     @Inject
     extension TransitionStyles;
@@ -82,7 +81,7 @@ class LabelPlacementSideHook extends SynthesisHook {
     override finish(Scope scope, KNode node) {
         // If inline labels are enabled, we need to style them appropriately
         val strategy = LABEL_SIDE_SELECTION_STRATEGY.objectValue;
-        if (strategy != STRATEGY_ON_EDGE && strategy != STRATEGY_ON_EDGE_DIRECTIONAL) {
+        if (strategy != STRATEGY_ON_EDGE) {
             // Next-to-edge strategies don't need any further processing
             return;
         }
@@ -102,7 +101,7 @@ class LabelPlacementSideHook extends SynthesisHook {
                 LinesDecorator.create()
                     .withColor(foreground))
         
-        if (strategy == STRATEGY_ON_EDGE_DIRECTIONAL) {
+        if (ON_EDGE_ARROWS) {
             inlineLabelConfigurator.addDecoratorRenderingProvider(
                 DirectionalArrowsDecoratorHotFixed.create()
                     .withColor(foreground))

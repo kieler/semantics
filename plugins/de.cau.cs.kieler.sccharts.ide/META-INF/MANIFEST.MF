@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SCCharts IDE
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.ide
-Bundle-Version: 1.3.0.qualifier
+Bundle-Version: 1.4.0.qualifier
 Automatic-Module-Name: de.cau.cs.kieler.sccharts.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
@@ -14,12 +14,10 @@ Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  de.cau.cs.kieler.sccharts,
  de.cau.cs.kieler.core,
  de.cau.cs.kieler.klighd,
- de.cau.cs.kieler.language.server,
  de.cau.cs.kieler.simulation,
  de.cau.cs.kieler.kicool,
  de.cau.cs.kieler.simulation.ide,
  de.cau.cs.kieler.scl.ide,
- de.cau.cs.kieler.klighd.lsp,
  com.google.gson,
  de.cau.cs.kieler.kicool.ide,
  org.eclipse.lsp4j

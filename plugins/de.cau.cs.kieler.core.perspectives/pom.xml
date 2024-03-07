@@ -3,11 +3,12 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>de.cau.cs.kieler</groupId>
-    <artifactId>plugins</artifactId>
+    <artifactId>semantics</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../../build/pom.xml</relativePath>
   </parent>
   <groupId>de.cau.cs.kieler</groupId>
   <artifactId>de.cau.cs.kieler.core.perspectives</artifactId>
-  <version>1.3.0-SNAPSHOT</version>
+  <version>1.4.0-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 </project>

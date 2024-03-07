@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>de.cau.cs.kieler</groupId>
+    <artifactId>semantics</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../../build/pom.xml</relativePath>
+  </parent>
+
+  <artifactId>de.cau.cs.kieler.language.server.components</artifactId>
+  <version>1.4.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <dependencies>
+
+    <!-- IMPORTANT -->
+    <!-- ONLY add semantics PLUGINS that should be contained in the language server! -->
+    <!-- OTHER dependencies for the language server (e.g. Xtext) should be defined in its pom. -->
+
+    <dependency>
+      <groupId>de.cau.cs.kieler</groupId>
+      <artifactId>de.cau.cs.kieler.esterel.ide</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.cau.cs.kieler</groupId>
+      <artifactId>de.cau.cs.kieler.kicool</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.cau.cs.kieler</groupId>
+      <artifactId>de.cau.cs.kieler.kicool.ide</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.cau.cs.kieler</groupId>
+      <artifactId>de.cau.cs.kieler.kicool.ui</artifactId> <!-- REMOVE after full deeclipsefication -->
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.cau.cs.kieler</groupId>
+      <artifactId>de.cau.cs.kieler.kivis.ide</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.cau.cs.kieler</groupId>
+      <artifactId>de.cau.cs.kieler.lustre.ide</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.cau.cs.kieler</groupId>
+      <artifactId>de.cau.cs.kieler.sccharts</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.cau.cs.kieler</groupId>
+      <artifactId>de.cau.cs.kieler.sccharts.ide</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.cau.cs.kieler</groupId>
+      <artifactId>de.cau.cs.kieler.sccharts.ui</artifactId> <!-- REMOVE after full deeclipsefication -->
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.cau.cs.kieler</groupId>
+      <artifactId>de.cau.cs.kieler.scg</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.cau.cs.kieler</groupId>
+      <artifactId>de.cau.cs.kieler.scg.klighd</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.cau.cs.kieler</groupId>
+      <artifactId>de.cau.cs.kieler.simulation.ide</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.cau.cs.kieler</groupId>
+      <artifactId>de.cau.cs.kieler.verification</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- Exclude simulation.ui pulled by some dependencies. TODO: remove after full deeclipsification. -->
+      <dependency>
+        <groupId>de.cau.cs.kieler</groupId>
+        <artifactId>de.cau.cs.kieler.sccharts.ui</artifactId>
+        <version>${project.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>de.cau.cs.kieler</groupId>
+            <artifactId>de.cau.cs.kieler.simulation.ui</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>de.cau.cs.kieler</groupId>
+        <artifactId>de.cau.cs.kieler.scg.klighd</artifactId>
+        <version>${project.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>de.cau.cs.kieler</groupId>
+            <artifactId>de.cau.cs.kieler.simulation.ui</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+</project>
