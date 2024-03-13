@@ -351,13 +351,23 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     override List<? extends IGraphElementVisitor> getAdditionalLayoutConfigs(KNode viewModel) {
         val List<IGraphElementVisitor> additionalLayoutRuns = newArrayList
         // Add interactive Layout run.
-        if ((!viewModel.getChildren().isEmpty() && viewModel.getChildren().get(0)
-                        .getProperty(CoreOptions.INTERACTIVE_LAYOUT))) {
+        if (!viewModel.getChildren().isEmpty() && (viewModel.getChildren().get(0)
+                        .getProperty(CoreOptions.INTERACTIVE_LAYOUT) || isChildInteractive(viewModel))) {
             additionalLayoutRuns.add(new CompoundGraphElementVisitor(
                     new InteractiveRectPackingGraphVisitor(),
                     new InteractiveLayeredGraphVisitor()));
         }
         return additionalLayoutRuns;
+    }
+    
+    private def isChildInteractive(KNode node) {
+        val children = node.getChildren.get(0).getChildren()
+        for (n : children) {
+            if (n.getProperty(CoreOptions.INTERACTIVE_LAYOUT)) {
+                return true
+            }
+        }
+        return false
     }
    
 }

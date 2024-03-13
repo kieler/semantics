@@ -21,7 +21,8 @@ Require-Bundle: org.eclipse.elk.core;bundle-version="0.7.1",
  de.cau.cs.kieler.kicool.ui,
  de.cau.cs.kieler.simulation.ide,
  de.cau.cs.kieler.simulation.ui,
- de.cau.cs.kieler.annotations.ide
+ de.cau.cs.kieler.annotations.ide,
+ org.eclipse.elk.alg.mrtree
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.cau.cs.kieler.scg.klighd
 Bundle-ActivationPolicy: lazy
