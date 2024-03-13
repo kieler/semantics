@@ -17,18 +17,13 @@ import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.lsp.KGraphLanguageClient
-import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.interactive.ConstraintProperty
 import de.cau.cs.kieler.klighd.lsp.interactive.IConstraintSerializer
+import de.cau.cs.kieler.klighd.lsp.interactive.InteractiveUtil
 import de.cau.cs.kieler.sccharts.impl.StateImpl
-import java.io.ByteArrayOutputStream
 import java.util.List
-import java.util.Map
 import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.lsp4j.Position
-import org.eclipse.lsp4j.Range
-import org.eclipse.lsp4j.TextEdit
+import org.eclipse.emf.ecore.resource.Resource
 
 /**
  * Serialize a constraint for an SCChart node (region or state) as a layout annotation.
@@ -42,31 +37,18 @@ class SCTXConstraintSerializer implements IConstraintSerializer {
         return graph instanceof StateImpl
     }
 
-    override serializeConstraints(List<ConstraintProperty<Object>> changedNodes, Object graph, String uri,
-        KGraphLanguageServerExtension ls, KGraphLanguageClient client) {
-        // Serialize model into given uri.
-        val resource = ls.getResource(uri)
-            
+    override serializeConstraints(List<ConstraintProperty<Object>> changedNodes, Object graph, Resource resource) {            
         // Get previous file content as String
-        var outputStream = new ByteArrayOutputStream
-        resource.save(outputStream, emptyMap)
-        val codeBefore = outputStream.toString
-        val Map<String, List<TextEdit>> changes = newHashMap 
+        
+        val codeBefore = InteractiveUtil.serializeResource(resource)
         changedNodes.forEach[c|
             val Annotatable anno = c.KNode.getProperty(KlighdInternalProperties.MODEL_ELEMENT) as Annotatable
             copyConstraintAnnotations(anno, c.KNode, c.property.id, c.property)
         ]
         // Get changed file as String
-        outputStream = new ByteArrayOutputStream
-        resource.save(outputStream, emptyMap)
-        val String codeAfter = outputStream.toString().trim
+        val String codeAfter = InteractiveUtil.serializeResource(resource)
         
-        // The range is the length of the previous file.
-        // Just make sure the range is big enough
-        val Range range = new Range(new Position(0, 0), new Position(codeBefore.split("\r\n|\r|\n").length * 2, 0))
-        val TextEdit textEdit = new TextEdit(range, codeAfter)
-        changes.put(uri, #[textEdit]);
-        client.replaceContentInFile(uri, codeAfter, range)
+        return InteractiveUtil.calculateTextEdit(codeBefore, codeAfter)
     }
     
     /**
