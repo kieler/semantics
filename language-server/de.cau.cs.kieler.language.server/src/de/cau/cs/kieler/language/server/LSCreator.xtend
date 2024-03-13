@@ -15,6 +15,7 @@ package de.cau.cs.kieler.language.server
 import de.cau.cs.kieler.core.services.KielerServiceLoader
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageClient
 import de.cau.cs.kieler.klighd.lsp.interactive.layered.LayeredInteractiveLanguageServerExtension
+import de.cau.cs.kieler.klighd.lsp.interactive.mrtree.MrTreeInteractiveLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.interactive.rectpacking.RectpackingInteractiveLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.launch.AbstractLsCreator
 import java.util.List
@@ -32,6 +33,8 @@ class LSCreator extends AbstractLsCreator {
     
     RectpackingInteractiveLanguageServerExtension rectPack
     
+    MrTreeInteractiveLanguageServerExtension mrTree
+    
     List<ILSDiagramHighlighter> diagramHighlighters
     
     List<ILanguageServerExtension> iLanguageServerExtensions
@@ -39,7 +42,8 @@ class LSCreator extends AbstractLsCreator {
     override getLanguageServerExtensions() {
         constraints = injector.getInstance(LayeredInteractiveLanguageServerExtension)
         rectPack = injector.getInstance(RectpackingInteractiveLanguageServerExtension)
-        iLanguageServerExtensions = newArrayList(constraints, rectPack)
+        mrTree = injector.getInstance(MrTreeInteractiveLanguageServerExtension)
+        iLanguageServerExtensions = newArrayList(constraints, rectPack, mrTree)
         for (lse : KielerServiceLoader.load(ILanguageServerContribution)) {
             iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
         }
@@ -60,6 +64,7 @@ class LSCreator extends AbstractLsCreator {
         }
         constraints.client = languageClient as KGraphLanguageClient
         rectPack.client = languageClient as KGraphLanguageClient
+        mrTree.client = languageClient as KGraphLanguageClient
         diagramHighlighters = newArrayList
         for (iLSdhc : KielerServiceLoader.load(ILSDiagramHighlighterContribution)) {
             var highlighter = iLSdhc.getHighlighter(injector)

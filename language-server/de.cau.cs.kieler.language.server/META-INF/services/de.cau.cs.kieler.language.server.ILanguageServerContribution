@@ -2,3 +2,4 @@ de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerContribu
 de.cau.cs.kieler.language.server.kicool.KiCoolLanguageServerContribution
 de.cau.cs.kieler.language.server.simulation.SimulationLanguageServerContribution
 de.cau.cs.kieler.language.server.verification.VerificationLanguageServerContribution
+de.cau.cs.kieler.language.server.sccharts.structurebasedediting.SCChartsStructeBasedEditingLanguageServerContribution
