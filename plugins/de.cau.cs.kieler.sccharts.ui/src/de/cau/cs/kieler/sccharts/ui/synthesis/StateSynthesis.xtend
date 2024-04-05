@@ -156,7 +156,6 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             configureLayoutRegionDependencies(node)
         } else {
             configureLayout(node)
-            // non statically change layout algorithm for regions
         }
         
         node.configureNodeLOD(state)
@@ -402,11 +401,11 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     /** Configures the default layout of children (regions in the state) */
     def static void configureLayout(KNode node) {
         node.setLayoutOption(CoreOptions::ALGORITHM, RectPackingOptions.ALGORITHM_ID)
+        node.setLayoutOption(CoreOptions::EXPAND_NODES, true)
         node.setLayoutOption(RectPackingOptions::WHITE_SPACE_ELIMINATION_STRATEGY, WhiteSpaceEliminationStrategy.EQUAL_BETWEEN_STRUCTURES)
 //        node.setLayoutOption(CoreOptions::OMIT_NODE_MICRO_LAYOUT, true)
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0))
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
-        node.setLayoutOption(RectPackingOptions.OMIT_NODE_MICRO_LAYOUT, true)
     }
     
     def static void configureLayoutRegionDependencies(KNode node) {
