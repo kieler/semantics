@@ -20,16 +20,19 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
 import java.util.EnumSet
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.rectpacking.options.RectPackingOptions
 import org.eclipse.elk.alg.rectpacking.p3whitespaceelimination.WhiteSpaceEliminationStrategy
 import org.eclipse.elk.alg.topdownpacking.options.TopdownpackingOptions
+import org.eclipse.elk.core.options.ContentAlignment
 import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.core.options.TopdownNodeTypes
 import org.eclipse.elk.core.options.TopdownSizeApproximator
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import org.eclipse.elk.core.options.SizeConstraint
-import org.eclipse.elk.core.options.ContentAlignment
+import org.eclipse.elk.alg.layered.options.SplineRoutingMode
 
 /**
  * @author mka
@@ -50,21 +53,35 @@ class TopdownLayoutHook extends SynthesisHook {
             .setCategory(GeneralSynthesisOptions::LAYOUT)
             
     public static final SynthesisOption TOPDOWN_HIERARCHICAL_NODE_WIDTH = 
-        SynthesisOption.createRangeOption("Topdown Hierarchical Node Width", 50.0f, 300.0f, 1.0f, 150.0f)
+        SynthesisOption.createRangeOption("Topdown Hierarchical Node Width", 50.0f, 5000.0f, 1.0f, 150.0f)
             .setCategory(GeneralSynthesisOptions::LAYOUT)
             
     public static final SynthesisOption TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO = 
-        SynthesisOption.createRangeOption("Topdown Hierarchical Node Aspect Ratio", 0.5f, 2.0f, 0.01f, 1.41f)
+        SynthesisOption.createRangeOption("Topdown Hierarchical Node Aspect Ratio", 0.2f, 5.0f, 0.01f, 1.41f)
+            .setCategory(GeneralSynthesisOptions::LAYOUT)
+            
+    public static final SynthesisOption CONSERVATIVE_SPLINES = 
+        SynthesisOption.createCheckOption(TopdownLayoutHook, "Conservative Splines", false)
+            .setCategory(GeneralSynthesisOptions::LAYOUT)
+            
+    public static final SynthesisOption SCALE_CAP = 
+        SynthesisOption.createCheckOption(TopdownLayoutHook, "Enable Scale Cap", true)
             .setCategory(GeneralSynthesisOptions::LAYOUT)
     
     override getDisplayedSynthesisOptions() {
-        return #[USE_TOPDOWN_LAYOUT, TOPDOWN_LAYOUT_CHOICE, TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO]
+        return #[CONSERVATIVE_SPLINES, USE_TOPDOWN_LAYOUT, SCALE_CAP, TOPDOWN_LAYOUT_CHOICE, TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO]
     }
     
     override processState(State state, KNode node) {
         node.setProperty(CoreOptions::TOPDOWN_LAYOUT, USE_TOPDOWN_LAYOUT.booleanValue)
-        if(USE_TOPDOWN_LAYOUT.booleanValue) {
+        if (USE_TOPDOWN_LAYOUT.booleanValue) {
             node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.noneOf(SizeConstraint))
+        }
+        
+        if (SCALE_CAP.booleanValue) {
+            node.setLayoutOption(CoreOptions::TOPDOWN_SCALE_CAP, 1.0)
+        } else {
+            node.setLayoutOption(CoreOptions::TOPDOWN_SCALE_CAP, Double.MAX_VALUE)
         }
         
         if (USE_TOPDOWN_LAYOUT.booleanValue && TOPDOWN_LAYOUT_CHOICE.objectValue.equals("Variant 1")) {
@@ -84,7 +101,7 @@ class TopdownLayoutHook extends SynthesisHook {
             node.setLayoutOption(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
             node.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.HIERARCHICAL_NODE)
             node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.COUNT_CHILDREN);
-//                node.setLayoutOption(CoreOptions::TOPDOWN_SCALE_CAP, Double.MAX_VALUE)
+                node.setLayoutOption(CoreOptions::TOPDOWN_SCALE_CAP, Double.MAX_VALUE)
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
             node.setLayoutOption(RectPackingOptions::WHITE_SPACE_ELIMINATION_STRATEGY, WhiteSpaceEliminationStrategy.TO_ASPECT_RATIO)
@@ -108,12 +125,15 @@ class TopdownLayoutHook extends SynthesisHook {
         } else if (USE_TOPDOWN_LAYOUT.booleanValue && TOPDOWN_LAYOUT_CHOICE.objectValue.equals("Variant 3")) {
             node.setLayoutOption(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
             node.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.HIERARCHICAL_NODE)
-            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.LOOKAHEAD_LAYOUT)
-//            node.setLayoutOption(CoreOptions::TOPDOWN_SCALE_CAP, Double.MAX_VALUE)
+            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.DYNAMIC)
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
             node.setLayoutOption(CoreOptions::CONTENT_ALIGNMENT, EnumSet.of(ContentAlignment.V_CENTER, ContentAlignment.H_CENTER))
-        }
+            
+            if (CONSERVATIVE_SPLINES.booleanValue) {
+                node.setLayoutOption(LayeredOptions::EDGE_ROUTING_SPLINES_MODE, SplineRoutingMode.CONSERVATIVE_SOFT) 
+            }
+      }
     }
     
     override start(Scope scope, KNode node) {
