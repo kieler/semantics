@@ -18,9 +18,9 @@ Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.apache.log4j;bundle-version="1.2.15",
  de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.klighd.ide,
- de.cau.cs.kieler.klighd.standalone,
  org.eclipse.elk.alg.common;bundle-version="0.7.0",
- org.eclipse.elk.core;bundle-version="0.7.0"
+ org.eclipse.elk.core;bundle-version="0.7.0",
+ de.cau.cs.kieler.klighd.setup
 Export-Package: de.cau.cs.kieler.kicool.ide,
  de.cau.cs.kieler.kicool.ide.contentassist.antlr,
  de.cau.cs.kieler.kicool.ide.contentassist.antlr.internal,
