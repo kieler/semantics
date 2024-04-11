@@ -327,7 +327,8 @@
       </plugin>
 
       <!-- Produces a list of all direct and transient dependencies for each module -->
-      <plugin>
+      <!-- NO LONGER NEEDED: We do not make dependency sanity checks anymore -->
+      <!-- <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <version>3.1.1</version>
@@ -343,7 +344,7 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
+      </plugin> -->
     </plugins>
   
     <pluginManagement>
