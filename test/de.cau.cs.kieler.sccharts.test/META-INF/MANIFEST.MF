@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SCCharts Transformation Tests
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.test
-Bundle-Version: 1.4.0.qualifier
+Bundle-Version: 1.5.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sccharts.test.SCChartsTestActivator
 Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
