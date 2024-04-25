@@ -71,7 +71,7 @@ jobs:
       # Archive Repository
       - name: Archive Semantics Repository Artifact
         if: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/release-') }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Semantics Repository Artifact
           path: build/de.cau.cs.kieler.semantics.repository/target/repository/
@@ -91,7 +91,7 @@ jobs:
           cp build/de.cau.cs.kieler.language.server.cli/target/de.cau.cs.kieler.language.server.cli-*-app.jar products/ls
       - name: Archive All Products
         if: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/release-') }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: All Semantics Products
           path: products
@@ -99,21 +99,21 @@ jobs:
 
       # Archive Eclipse RCA
       - name: Archive KIELER Semantics RCA Windows
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: KIELER RCA Windows
           path: build/de.cau.cs.kieler.semantics.product.repository/target/products/sccharts_rca_*-win32.win32.x86_64.zip
           if-no-files-found: error
 
       - name: Archive KIELER Semantics RCA Linux
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: KIELER RCA Linux
           path: build/de.cau.cs.kieler.semantics.product.repository/target/products/sccharts_rca_*-linux.gtk.x86_64.tar.gz
           if-no-files-found: error
 
       - name: Archive KIELER Semantics RCA MacOS
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: KIELER RCA MacOS
           path: build/de.cau.cs.kieler.semantics.product.repository/target/products/sccharts_rca_*-macosx.cocoa.*.tar.gz
@@ -121,7 +121,7 @@ jobs:
 
       # Kieler Compiler CLI
       - name: Archive KIELER Compiler CLI Jar
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: KIELER Compiler CLI Jar
           path: build/de.cau.cs.kieler.kicool.cli/target/exe/kico.jar
@@ -150,21 +150,21 @@ jobs:
 
       # Kieler Compiler Diagrams CLI
       - name: Archive KIELER Compiler Diagrams CLI Windows Jar
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: KIELER Compiler Diagrams CLI Windows Jar
           path: build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/kicodia.win.jar
           if-no-files-found: error
 
       - name: Archive KIELER Compiler Diagrams CLI Linux Jar
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: KIELER Compiler Diagrams CLI Linux Jar
           path: build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/kicodia.linux.jar
           if-no-files-found: error
 
       - name: Archive KIELER Compiler Diagrams CLI MacOS Jar
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: KIELER Compiler Diagrams CLI MacOS Jar
           path: |
@@ -195,7 +195,7 @@ jobs:
 
       # SCCharts Compiler CLI
       - name: Archive SCCharts Compiler CLI Jar
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: SCCharts Compiler CLI Jar
           path: build/de.cau.cs.kieler.sccharts.cli/target/exe/scc.jar
@@ -224,7 +224,7 @@ jobs:
 
       # Kieler Language Server
       - name: Archive KIELER Language Server
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: KIELER Language Server
           path: build/de.cau.cs.kieler.language.server.cli/target/de.cau.cs.kieler.language.server.cli-*-app.jar
