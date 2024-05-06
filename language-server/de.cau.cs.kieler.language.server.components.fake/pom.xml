@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>de.cau.cs.kieler</groupId>
+    <artifactId>semantics</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../../build/pom.xml</relativePath>
+  </parent>
+
+  <artifactId>de.cau.cs.kieler.language.server.components</artifactId>
+  <version>1.5.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <!-- IMPORTANT -->
+  <!-- This module MUST NOT be included in ANY Maven build. -->
+  <!-- Its only purpose is to replace the real de.cau.cs.kieler.language.server.components in the Eclipse build process. -->
+
+  <!-- DO NOT define any depencencies here, as they will HAVE NO EFFECT on the final language server. -->
+  <!-- ONLY add dependencies to the de.cau.cs.kieler.language.server or the de.cau.cs.kieler.language.server.components project -->
+
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.xtext</groupId>
+      <artifactId>org.eclipse.xtext</artifactId>
+      <version>${xtext-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.xtext</groupId>
+      <artifactId>org.eclipse.xtext.ide</artifactId>
+      <version>${xtext-version}</version>
+    </dependency>
+     <dependency>
+      <groupId>org.eclipse.xtext</groupId>
+      <artifactId>org.eclipse.xtext.xbase.lib</artifactId>
+      <version>${xtext-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.xtend</groupId>
+      <artifactId>org.eclipse.xtend.lib</artifactId>
+      <version>${xtend-version}</version>
+    </dependency>
+  </dependencies>
+
+</project>

@@ -2,15 +2,31 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.cau.cs.kieler</groupId>
-  <artifactId>parent</artifactId>
+  <artifactId>semantics</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
 
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
-    <tycho-version>2.7.3</tycho-version>
-    <xtend-version>2.27.0</xtend-version>
+    <!-- Language server dependency versions -->
+    <elk-version>0.9.1</elk-version>
+    <klighd-version>3.0.1.v20240410</klighd-version>
+    <lsp4j-version>0.22.0</lsp4j-version>
+    <pragmatics-version>0.51.0.v20240410</pragmatics-version>
+
+    <!-- Xtext compile dependency versions -->
+    <xtend-version>2.34.0</xtend-version>
+    <xtext-version>2.34.0</xtext-version>
+
+    <!-- Tycho -->
+    <tycho-version>2.7.5</tycho-version>
+    <tycho.disableP2Mirrors>true</tycho.disableP2Mirrors>
+
+    <!-- Java -->
+    <targetJdk>11</targetJdk>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
   
     <!-- Non-breakable space, as normal spaces are trimmed. -->
     <sourceFeatureLabelSuffix>&#xA0;(Sources)</sourceFeatureLabelSuffix>
@@ -19,84 +35,63 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
     <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-    
-    <!-- Updatesite for product build -->
-    <kieler.semantics.updatesite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/</kieler.semantics.updatesite>
   </properties>
 
 
   <!-- Define one profile for each output target we have. -->
   <profiles>
-    <!-- The Semantics updatesite. -->
     <profile>
       <id>semantics</id>
 
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-
       <modules>
-        <module>../plugins</module>
         <module>de.cau.cs.kieler.semantics.targetplatform</module>
+        <module>../plugins</module>
         <module>../features</module>
-        <module>de.cau.cs.kieler.semantics.repository</module>
       </modules>
     </profile>
 
-
-    <!-- Test profile including cli tests. -->
     <profile>
       <id>semantics.test</id>
 
       <modules>
-        <module>../plugins</module>
         <module>de.cau.cs.kieler.semantics.targetplatform</module>
+        <module>../plugins</module>
         <module>../test</module>
         <module>de.cau.cs.kieler.sccharts.cli</module>
         <module>de.cau.cs.kieler.kicool.cli</module>
         <module>de.cau.cs.kieler.kicool.klighd.cli</module>
-        <module>de.cau.cs.kieler.language.server.cli</module>
         <module>../test/de.cau.cs.kieler.cli.test</module>
+        <module>../language-server</module>
+        <module>de.cau.cs.kieler.language.server.cli</module>
       </modules>
     </profile>
-  
 
-    <!-- The Semantics product. -->
     <profile>
-      <id>semantics.nightly.product</id>
-    
-      <repositories>
-        <repository>
-          <id>p2.kieler-semantics</id>
-          <layout>p2</layout>
-          <url>${kieler.semantics.updatesite}</url>
-        </repository>
-      </repositories>
-      
+      <id>semantics.cli.test</id>
+
       <modules>
-        <module>de.cau.cs.kieler.semantics.targetplatform</module>    
-        <module>../plugins/de.cau.cs.kieler.core.product</module>
-        <module>../features/de.cau.cs.kieler.product.feature</module>
-        <module>de.cau.cs.kieler.semantics.product.repository</module>
+        <module>de.cau.cs.kieler.semantics.targetplatform</module>
+        <module>../plugins</module>
         <module>de.cau.cs.kieler.sccharts.cli</module>
         <module>de.cau.cs.kieler.kicool.cli</module>
         <module>de.cau.cs.kieler.kicool.klighd.cli</module>
-        <module>de.cau.cs.kieler.language.server.cli</module>
+        <module>../test/de.cau.cs.kieler.cli.test</module>
       </modules>
     </profile>
 
     <profile>
       <id>semantics.product</id>
-      
+
       <modules>
-        <module>../plugins</module>
         <module>de.cau.cs.kieler.semantics.targetplatform</module> 
+        <module>../plugins</module>
         <module>../features</module>
         <module>de.cau.cs.kieler.semantics.repository</module>
         <module>de.cau.cs.kieler.semantics.product.repository</module>
         <module>de.cau.cs.kieler.sccharts.cli</module>
         <module>de.cau.cs.kieler.kicool.cli</module>
         <module>de.cau.cs.kieler.kicool.klighd.cli</module>
+        <module>../language-server</module>
         <module>de.cau.cs.kieler.language.server.cli</module>
       </modules>
     </profile>
@@ -104,31 +99,139 @@
     <profile>
       <id>semantics.ls</id>
       <modules>
-        <module>../plugins</module>
         <module>de.cau.cs.kieler.semantics.targetplatform</module>
+        <module>../plugins</module>
+        <module>../language-server</module>
         <module>de.cau.cs.kieler.language.server.cli</module>
       </modules>
-    </profile>  
+    </profile>
+
+
+    <profile>
+      <id>semantics.all</id>
+      
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+
+      <modules>
+        <module>de.cau.cs.kieler.semantics.targetplatform</module> 
+        <module>../plugins</module>
+        <module>../test</module>
+        <module>../features</module>
+        <module>de.cau.cs.kieler.semantics.repository</module>
+        <module>de.cau.cs.kieler.semantics.product.repository</module>
+        <module>de.cau.cs.kieler.sccharts.cli</module>
+        <module>de.cau.cs.kieler.kicool.cli</module>
+        <module>de.cau.cs.kieler.kicool.klighd.cli</module>
+        <module>../language-server</module>
+        <module>de.cau.cs.kieler.language.server.cli</module>
+        <module>../test/de.cau.cs.kieler.cli.test</module>
+      </modules>
+    </profile>
   
   </profiles>
 
+  <!-- This configuration is based on the Xtext example project (https://github.com/xtext/maven-xtext-example) and prevents weird build errors -->
+  <repositories>
+    <repository>
+      <id>codehaus-snapshots</id>
+      <name>disable dead 'Codehaus Snapshots' repository, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=481478</name>
+      <url>http://nexus.codehaus.org/snapshots/</url>
+      <releases>
+          <enabled>false</enabled>
+      </releases>
+      <snapshots>
+          <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <!-- This must be disabled explicitly, otherwise it is enabled by https://github.com/mojohaus/mojo-parent 
+        which is taken from exec-maven-plugin from at least version 1.6.0 -->
+    <repository>
+      <id>ossrh-snapshots</id>
+      <name>ossrh-snapshots</name>
+      <releases>
+          <enabled>false</enabled>
+      </releases>
+      <snapshots>
+          <enabled>false</enabled>
+      </snapshots>
+      <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+    </repository>
+    <!-- This is enabled by /org/sonatype/oss/oss-parent/7 used as parent by 
+        org/xtext/antlr-generator/3.2.1 -->
+    <repository>
+      <id>sonatype-nexus-snapshots</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <releases>
+          <enabled>false</enabled>
+      </releases>
+      <snapshots>
+          <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
 
-  <!-- maven plugin repositories -->
   <pluginRepositories>
+    <!-- This configuration is based on the Xtext example project (https://github.com/xtext/maven-xtext-example) and prevents weird build errors -->
     <pluginRepository>
-      <id>central</id>
-      <name>Maven Plugin Repository</name>
-      <url>https://repo1.maven.org/maven2</url>
+      <id>codehaus-snapshots</id>
+      <name>disable dead 'Codehaus Snapshots' repository, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=481478</name>
+      <url>http://nexus.codehaus.org/snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </pluginRepository>
     <pluginRepository>
-      <id>xtend</id>
-      <layout>default</layout>
-      <url>https://build.eclipse.org/common/xtend/maven</url>
+      <id>ossrh-snapshots</id>
+      <name>ossrh-snapshots</name>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>sonatype-nexus-snapshots</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </pluginRepository>
   </pluginRepositories>
 
 
+  <dependencyManagement>
+    <dependencies>
+      <!-- A dependency that Maven artifacts of Eclipse bundles tries to pull the (non-existent) version 1.0.0 from. This version exists and will be used instead. -->
+      <dependency>
+        <groupId>xml-apis</groupId>
+        <artifactId>xml-apis-ext</artifactId>
+        <version>1.3.04</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <build>
+    <resources>
+      <resource>
+        <directory>.</directory>
+         <includes>
+           <include>META-INF/services/**</include>
+         </includes>
+      </resource>
+    </resources>
+
     <plugins>
       <!-- we need tycho plugin to build eclipse plugins -->
       <plugin>
@@ -172,35 +275,6 @@
         </configuration>
       </plugin>      
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.8.1</version>
-        <configuration>
-          <doclet>de.cau.cs.kieler.doclets.rating.RatingDoclet</doclet>
-          <docletArtifact>
-            <groupId>de.cau.cs.kieler</groupId>
-            <artifactId>de.cau.cs.kieler.doclets</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-          </docletArtifact>
-          <useStandardDocletOptions>false</useStandardDocletOptions>
-          <additionalJOption>-p semantics -d ./rating</additionalJOption>
-          <excludedocfilessubdir>xtend-gen</excludedocfilessubdir>
-        </configuration>
-        <!--
-        <executions>
-          <execution>
-            <id>aggregate</id>
-            <goals>
-              <goal>aggregate</goal>
-            </goals>
-            <phase>integration-test</phase>
-          </execution>
-        </executions>
-        -->
-      </plugin>
-
-
       <!-- as we have platform specific fragments we need to tell tycho about target platforms -->
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
@@ -242,18 +316,19 @@
               <ws>cocoa</ws>
               <arch>x86_64</arch>
             </environment>
-            <!-- TODO Future Apple M1/M2 chip support? -->
-            <!-- <environment>
+            <!-- Apple M1/M2 chip support -->
+            <environment>
               <os>macosx</os>
               <ws>cocoa</ws>
-              <arch>arm64</arch>
-            </environment> -->
+              <arch>aarch64</arch>
+            </environment>
           </environments>
         </configuration>
       </plugin>
 
       <!-- Produces a list of all direct and transient dependencies for each module -->
-      <plugin>
+      <!-- NO LONGER NEEDED: We do not make dependency sanity checks anymore -->
+      <!-- <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <version>3.1.1</version>
@@ -269,7 +344,7 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
+      </plugin> -->
     </plugins>
   
     <pluginManagement>
@@ -292,7 +367,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
-          <version>1.3</version>
+          <version>3.5.0</version>
           <executions>
             <execution>
               <id>add-source</id>

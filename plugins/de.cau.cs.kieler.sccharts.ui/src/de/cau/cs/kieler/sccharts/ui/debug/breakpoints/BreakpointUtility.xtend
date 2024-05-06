@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.core.resources.IResource
+import org.eclipse.debug.core.DebugException
 
 /**
  * Wrapper for legacy functionality from SCCharts Debug Plugin by lgr.
@@ -92,8 +93,13 @@ class BreakpointUtility {
         if (dirtyBreakpointList) {
             breakpointLines.clear()
 
-            val bps = DebugPlugin.getDefault().getBreakpointManager()
-                    .getBreakpoints(SCChartsDebugModelPresentation.ID)
+            val bps = newArrayList
+            try {
+                val bpm = DebugPlugin.getDefault().getBreakpointManager()
+                bps.addAll(bpm.getBreakpoints(SCChartsDebugModelPresentation.ID))
+            } catch (DebugException de) {
+                // FIXME fails silently
+            }
             // Add each breakpoint and its line number to the list of all breakpoints.
             for (IBreakpoint b : bps) {
                 try {

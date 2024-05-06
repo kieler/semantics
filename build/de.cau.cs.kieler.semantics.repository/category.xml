@@ -13,33 +13,31 @@
       </description>
   </category-def>
   <!-- KIELER SEMANTICS -->
-  <feature url="features/de.cau.cs.kieler.framework.feature_1.4.0.qualifier.jar" id="de.cau.cs.kieler.framework.feature" version="1.4.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.framework.feature_1.5.0.qualifier.jar" id="de.cau.cs.kieler.framework.feature" version="1.5.0.qualifier">
     <category name="kieler-sem"/>
   </feature>
-  <feature url="features/de.cau.cs.kieler.framework.feature.source_1.4.0.qualifier.jar" id="de.cau.cs.kieler.framework.feature.source" version="1.4.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.framework.feature.source_1.5.0.qualifier.jar" id="de.cau.cs.kieler.framework.feature.source" version="1.5.0.qualifier">
     <category name="kieler-sources"/>
   </feature>
-  <feature url="features/de.cau.cs.kieler.esterel.feature_1.4.0.qualifier.jar" id="de.cau.cs.kieler.esterel.feature" version="1.4.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.esterel.feature_1.5.0.qualifier.jar" id="de.cau.cs.kieler.esterel.feature" version="1.5.0.qualifier">
     <category name="kieler-sem"/>
   </feature>
-  <feature url="features/de.cau.cs.kieler.esterel.feature.source_1.4.0.qualifier.jar" id="de.cau.cs.kieler.esterel.feature.source" version="1.4.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.esterel.feature.source_1.5.0.qualifier.jar" id="de.cau.cs.kieler.esterel.feature.source" version="1.5.0.qualifier">
     <category name="kieler-sources"/>
   </feature>
-  <feature url="features/de.cau.cs.kieler.sccharts.feature_1.4.0.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature" version="1.4.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.sccharts.feature_1.5.0.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature" version="1.5.0.qualifier">
     <category name="kieler-sem"/>
   </feature>
-  <feature url="features/de.cau.cs.kieler.sccharts.feature.source_1.4.0.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature.source" version="1.4.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.sccharts.feature.source_1.5.0.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature.source" version="1.5.0.qualifier">
     <category name="kieler-sources"/>
   </feature>
   <!-- Repository references to associated sites -->
-  <repository-reference location="http://download.eclipse.org/releases/2022-09" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20220830213456/repository/" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.28.0/" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/lsp4j/updates/releases/0.15.0/" enabled="true"/>
-  <repository-reference location="http://kieler.github.io/KLighD/v2.2.0/" enabled="true"/>
-  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2022-07" enabled="true"/>
-  <repository-reference location="https://download.eclipse.org/elk/updates/releases/0.8.1/" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/egit/updates" enabled="true"/>
-  <repository-reference location="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/10.0.11/" enabled="true"/>
-  <repository-reference location="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/sprotty/0.9.0/" enabled="true"/>
+  <repository-reference location="https://download.eclipse.org/releases/2024-03" enabled="true"/>
+  <repository-reference location="https://download.eclipse.org/releases/2023-06" enabled="true"/>
+  <repository-reference location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.31.0" enabled="true"/>
+  <repository-reference location="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.34.0/" enabled="true"/>
+  <repository-reference location="https://kieler.github.io/KLighD/v3.0.1/" enabled="true"/>
+  <repository-reference location="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2024-04" enabled="true"/>
+  <repository-reference location="https://download.eclipse.org/elk/updates/releases/0.9.1/" enabled="true"/>
+  <repository-reference location="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/10.0.20/" enabled="true"/>
 </site>

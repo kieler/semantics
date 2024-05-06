@@ -3,12 +3,13 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>de.cau.cs.kieler</groupId>
-    <artifactId>features</artifactId>
+    <artifactId>semantics</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../../build/pom.xml</relativePath>
   </parent>
   <groupId>de.cau.cs.kieler</groupId>
   <artifactId>de.cau.cs.kieler.esterel.feature</artifactId>
-  <version>1.4.0-SNAPSHOT</version>
+  <version>1.5.0-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 
   <build>
