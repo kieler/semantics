@@ -19,8 +19,7 @@ Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  de.cau.cs.kieler.simulation.ide,
  de.cau.cs.kieler.scl.ide,
  com.google.gson,
- de.cau.cs.kieler.kicool.ide,
- org.eclipse.lsp4j
+ de.cau.cs.kieler.kicool.ide
 Export-Package: de.cau.cs.kieler.sccharts.ide.simulation,
  de.cau.cs.kieler.sccharts.ide.synthesis,
  de.cau.cs.kieler.sccharts.ide.text.contentassist.antlr,
