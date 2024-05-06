@@ -95,7 +95,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         
         if (CIRCUIT.booleanValue) {
             node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_SEMI_INTERACTIVE, true)
-          node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_GREEDY_SWITCH_TYPE, GreedySwitchType::TWO_SIDED)
+            node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_GREEDY_SWITCH_TYPE, GreedySwitchType::TWO_SIDED)
             
             node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
             node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));

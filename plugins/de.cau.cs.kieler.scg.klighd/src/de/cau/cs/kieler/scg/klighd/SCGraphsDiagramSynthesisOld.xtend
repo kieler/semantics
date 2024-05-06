@@ -1594,8 +1594,8 @@ class SCGraphsDiagramSynthesisOld extends AbstractDiagramSynthesis<SCGraphs> {
     
         aNode.setMinimalNodeSize(16, 16)
         aNode.addRoundedRectangle(1, 1, 1) => [
-            setBackgroundGradient(COMMENT_BACKGROUND_GRADIENT_1.color2, COMMENT_BACKGROUND_GRADIENT_2.color2, 90);
-            foreground = COMMENT_FOREGROND.color2;
+            setBackgroundGradient(COMMENT_BACKGROUND_GRADIENT_1.color, COMMENT_BACKGROUND_GRADIENT_2.color, 90);
+            foreground = COMMENT_FOREGROND.color;
         ]
         aNode.getKContainerRendering.addText(commentText) => [
             fontSize = 8;

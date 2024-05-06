@@ -107,7 +107,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     @Inject extension KPortExtensions
     @Inject extension KContainerRenderingExtensions
     @Inject extension KPolylineExtensions
-    @Inject extension KColorExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
@@ -250,6 +249,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 scc = prioAuxData.stronglyConnectedComponents
             }
         }
+        
+        // Apply color theme
+        configureAllColors(usedContext)
 
         // Invoke the synthesis.
         SCGraph = model
@@ -498,12 +500,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
         aNode.setMinimalNodeSize(16, 16)
         aNode.addRoundedRectangle(1, 1, 1) => [
-            setBackgroundGradient(COMMENT_BACKGROUND_GRADIENT_1.color2, COMMENT_BACKGROUND_GRADIENT_2.color2, 90);
-            foreground = COMMENT_FOREGROND.color2;
+            setBackgroundGradient(COMMENT_BACKGROUND_GRADIENT_1.color, COMMENT_BACKGROUND_GRADIENT_2.color, 90);
+            foreground = COMMENT_FOREGROND.color;
         ]
         aNode.getKContainerRendering.addText(commentText) => [
             fontSize = 8;
             setGridPlacementData().from(LEFT, 4, 0, TOP, 4, 0).to(RIGHT, 4, 0, BOTTOM, 4, 0);
+            foreground = COMMENT_TEXT.color;
         ]
 
         val edge = createEdge()
@@ -599,12 +602,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.floatValue) => [
                 it.lineStyle = LineStyle::SOLID
                 it.addHeadArrowDecorator
-                it.foreground = STANDARD_CONTROLFLOWEDGE.color
+                it.foreground = CONTROLFLOW_EDGE.color
                 it.foreground.propagateToChildren = true
             ]
             // If the outgoing identifier indicates a 'then branch', add a 'then label'.
             if (outgoingPortId == SCGraphSynthesisHelper.SCGPORTID_OUTGOING_THEN) {
-                edge.createLabel.configureTailEdgeLabel('true', 9, KlighdConstants::DEFAULT_FONT_NAME)
+                edge.createLabel.configureTailEdgeLabel('true', 9, KlighdConstants::DEFAULT_FONT_NAME) => [
+                    it.KRendering.foreground = NODE_TEXT.color
+                ]
             }
 
             if (controlFlow.targetNode.schizophrenic) {
@@ -626,12 +631,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                             it.setPortSize(50, 20)
                             it.KContainerRendering.setProperty(PRIO_STATEMENTS_PROPERTY, true)
                             var rec = it.KContainerRendering.addRoundedRectangle(SCGraphSynthesisHelper.CORNERRADIUS,
-                                SCGraphSynthesisHelper.CORNERRADIUS, SCGraphSynthesisHelper.LINEWIDTH)
-                            rec.background = "white".color
-                            var txt = rec.addText("prio(" + tgtPrio.value + ")")
-                            txt.fontSize = 7
-                            var x = txt.setAreaPlacementData
-                            x.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0)
+                                SCGraphSynthesisHelper.CORNERRADIUS, SCGraphSynthesisHelper.LINEWIDTH) => [
+                                    background = NODE_BACKGROUND.color
+                            ]
+                            rec.addText("prio(" + tgtPrio.value + ")") => [
+                                fontSize = 7
+                                foreground = NODE_TEXT.color
+                                setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0)
+                            ]
                         ]
                     }
                 }
@@ -791,7 +798,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
                 if (!nonScheduleDependencies.empty) {
                     nonScheduleDependencies.forEach [
-                        colorDependency(SCHEDULING_SCHEDULINGEDGE.color)
+                        colorDependency(SCHEDULING_SCHEDULING_EDGE.color)
                         thickenDependency(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)
                         dependencyAlpha(SCHEDULING_SCHEDULINGEDGE_ALPHA)
                     ]
@@ -800,7 +807,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         it.source = sourceKNode
                         it.target = targetKNode
                         it.addRoundedBendsPolyline(8, CONTROLFLOW_SCHEDULINGEDGE_WIDTH) => [
-                            it.foreground = SCHEDULING_SCHEDULINGEDGE.color
+                            it.foreground = SCHEDULING_SCHEDULING_EDGE.color
                             it.foreground.alpha = SCHEDULING_SCHEDULINGEDGE_ALPHA
                             it.addHeadArrowDecorator
                         ]

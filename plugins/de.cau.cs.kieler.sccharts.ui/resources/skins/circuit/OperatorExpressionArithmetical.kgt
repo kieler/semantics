@@ -6,7 +6,6 @@ knode operator {
 
   krectangle {
         styles: lineStyle = solid
-              foreground = 190r, 190g, 190b
   }
 
   kport in1 {
