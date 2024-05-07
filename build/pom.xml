@@ -11,7 +11,7 @@
   <properties>
     <!-- Language server dependency versions -->
     <elk-version>0.9.1</elk-version>
-    <klighd-version>3.0.1.v20240410</klighd-version>
+    <klighd-version>3.0.2.v20240507</klighd-version>
     <lsp4j-version>0.22.0</lsp4j-version>
     <pragmatics-version>0.51.0.v20240410</pragmatics-version>
 
