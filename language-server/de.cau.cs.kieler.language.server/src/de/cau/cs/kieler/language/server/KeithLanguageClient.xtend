@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2019 by
+ * Copyright 2019-2024 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -14,6 +14,8 @@ package de.cau.cs.kieler.language.server
 
 import com.google.gson.JsonObject
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageClient
+import de.cau.cs.kieler.language.server.kicool.data.DidCompileParam
+import de.cau.cs.kieler.language.server.kicool.data.SendCompilationSystemsParam
 import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
 import org.eclipse.lsp4j.services.LanguageClient
@@ -30,8 +32,8 @@ interface KeithLanguageClient extends KGraphLanguageClient, LanguageClient {
     /**
      * The result object should have the type de.cau.cs.kieler.language.server.kicool.CompilationResults
      */
-    @JsonNotification("kicool/compile")
-    def void compile(Object results, String uri, boolean finished, int currentIndex, int maxIndex);
+    @JsonNotification("kicool/didCompile")
+    def void didCompile(DidCompileParam param);
     
     @JsonNotification("kicool/cancel-compilation")
     def void cancelCompilation(boolean success);
@@ -40,7 +42,7 @@ interface KeithLanguageClient extends KGraphLanguageClient, LanguageClient {
      * Both objects should be List<de.cau.cs.kieler.language.server.kicool.SystemDescription>
      */
     @JsonNotification("kicool/compilation-systems")
-    def void sendCompilationSystems(Object systems, Object snapshotSystems)
+    def void sendCompilationSystems(SendCompilationSystemsParam param)
     
     /**
      * Send to client if not the client itself invoked the simulation step.
