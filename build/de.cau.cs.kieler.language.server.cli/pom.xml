@@ -94,6 +94,7 @@
               </filter>
           </filters>
           <shadedArtifactAttached>true</shadedArtifactAttached>
+          <finalName>kieler-language-server</finalName>
           <shadedClassifierName>app</shadedClassifierName>
           <minimizeJar>false</minimizeJar>
         </configuration>
