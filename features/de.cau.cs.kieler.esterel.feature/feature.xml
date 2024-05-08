@@ -215,7 +215,7 @@ litigation.
    </license>
 
    <url>
-      <update label="KIELER Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/"/>
+      <update label="KIELER Release 1.5.0" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-1.5.0/"/>
    </url>
 
    <requires>
