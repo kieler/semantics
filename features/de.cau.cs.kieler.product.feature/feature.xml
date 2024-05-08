@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature id="de.cau.cs.kieler.product.feature" label="Product Dependencies" version="1.5.0.qualifier" provider-name="Kiel University">
+<feature id="de.cau.cs.kieler.product.feature" label="Product Dependencies" version="1.6.0.qualifier" provider-name="Kiel University">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler/">
       Dependencies of the KIELER project used for building a Rich Client Application.
