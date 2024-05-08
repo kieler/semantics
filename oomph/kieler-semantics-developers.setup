@@ -545,7 +545,7 @@
     </setupTask>
   </stream>
   <stream name="release1.4"
-      label="Release 1.4">
+      label="Release 1.4 &amp; 1.5">
     <setupTask
         xsi:type="setup:VariableTask"
         name="git.clone.semantics.branch"
