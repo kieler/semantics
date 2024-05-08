@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Model Annotations Text UI
 Bundle-SymbolicName: de.cau.cs.kieler.annotations.ui;singleton:=true
-Bundle-Version: 1.5.0.qualifier
+Bundle-Version: 1.6.0.qualifier
 Bundle-Vendor: Kiel University
 Eclipse-UI: True
 Require-Bundle: org.eclipse.ui,
