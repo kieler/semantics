@@ -18,6 +18,7 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.klighd.krendering.KGridPlacement
+import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KText
@@ -152,45 +153,57 @@ class ControlflowRegionStyles {
     }
     
     /**
-     * Adds a button with text.
+     * Adds a button with text and a label.
      */
     def KRendering addRegionButton(KContainerRendering container, String text, List<Pair<? extends CharSequence, TextFormat>> label) {
-        val button = container.addPolygon => [
-            lineWidth = 0
-            background = container.foreground.color.copy
-            selectionBackground = SELECTION.color
-            addKPosition(LEFT, 0.5f, 0, TOP, 0.5f, 0)
-            addKPosition(LEFT, 0.5f, 0, TOP, 20, 0)
-            addKPosition(LEFT, 20, 0, TOP, 0.5f, 0)
-        ]
-        if (text !== null) {
-            button.addText(text) => [
-                suppressSelectability
-                foreground = REGION_BUTTON_FOREGROUND.color
-                selectionForeground = REGION_BUTTON_FOREGROUND.color
-                fontSize = 8;
-                fontBold = true
-                setPointPlacementData(LEFT, if (text.equals("-")) 1f else 1f, 0, TOP, 0, 0, H_LEFT, V_TOP, 0, 0, 10, 10);
+        return addRegionButton(container, text, label, false)
+    }
+    
+    /**
+     * Adds a button with text and a label.
+     * For a proxy, only adds the label and no button.
+     */
+    def KRendering addRegionButton(KContainerRendering container, String text, List<Pair<? extends CharSequence, TextFormat>> label, boolean proxy) {
+        var KPolygon button = null
+        if (!proxy) { 
+            button = container.addPolygon => [
+                lineWidth = 0
+                background = container.foreground.color.copy
+                selectionBackground = SELECTION.color
+                addKPosition(LEFT, 0.5f, 0, TOP, 0.5f, 0)
+                addKPosition(LEFT, 0.5f, 0, TOP, 20, 0)
+                addKPosition(LEFT, 20, 0, TOP, 0.5f, 0)
             ]
-        } else {
-            // Disabled appearance
-            button.foreground = REGION_FOREGROUND.color
+            if (text !== null) {
+                button.addText(text) => [
+                    suppressSelectability
+                    foreground = REGION_BUTTON_FOREGROUND.color
+                    selectionForeground = REGION_BUTTON_FOREGROUND.color
+                    fontSize = 8;
+                    fontBold = true
+                    setPointPlacementData(LEFT, if (text.equals("-")) 1f else 1f, 0, TOP, 0, 0, H_LEFT, V_TOP, 0, 0, 10, 10);
+                ]
+            } else {
+                // Disabled appearance
+                button.foreground = REGION_FOREGROUND.color
+            }
         }
         if (!label.nullOrEmpty) {
+            val absLeftOffset = if(proxy) 1 else 16.5f;
             if (label.size == 1 && label.head.value == TextFormat.TEXT) {
                 container.addText(label.head.key.toString) => [
                     suppressSelectability
                     foreground = REGION_LABEL.color;
                     fontSize = 10;
                     selectionTextUnderline = Underline.NONE // prevents default selection style
-                    setPointPlacementData(LEFT, 16.5f, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
+                    setPointPlacementData(LEFT, absLeftOffset, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
                     setProperty(KlighdProperties.IS_NODE_TITLE, true)
                 ]
             } else {
                 container.addKeywordLabel(label, 0) => [
                     foreground = REGION_LABEL.color
                     fontSize = 10
-                    setPointPlacementData(LEFT, 16.5f, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
+                    setPointPlacementData(LEFT, absLeftOffset, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
                     setProperty(KlighdProperties.IS_NODE_TITLE, true)
                     (children.last as KContainerRendering) => [ // Just for spacing at the end
                         val grid = it?.getChildPlacement()
@@ -213,6 +226,16 @@ class ControlflowRegionStyles {
             }
         }
         return button
+    }
+    
+    /**
+     * Adds the corresponding region figure to the node,
+     * taking its supposed style into account.
+     */
+    def void addCorrespondingRegionFigure(KRectangle rect, ControlflowRegion region) {
+        if (region.override) rect.addOverrideRegionStyle
+        if (region.abort) rect.addAbortRegionStyle
+        if (region.final) rect.addFinalRegionStyle
     }
     
     /**
@@ -239,6 +262,13 @@ class ControlflowRegionStyles {
     }
     def KRendering addCollapseButton(KContainerRendering container, String label) {
         return container.addRegionButton("-", newArrayList(new Pair(label, TextFormat.TEXT)))
+    }
+    
+    /**
+     * Adds a region with a label and no button.
+     */
+    def KRendering addRegionLabel(KContainerRendering container, List<Pair<? extends CharSequence, TextFormat>> label) {
+        return container.addRegionButton(null, label, true)
     }
 
     /**

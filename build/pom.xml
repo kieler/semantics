@@ -10,14 +10,14 @@
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
     <!-- Language server dependency versions -->
-    <elk-version>0.8.1</elk-version>
-    <klighd-version>2.3.0.v20230606</klighd-version>
-    <lsp4j-version>0.21.0</lsp4j-version>
-    <pragmatics-version>0.50.0.v20230607</pragmatics-version>
+    <elk-version>0.9.1</elk-version>
+    <klighd-version>3.0.2.v20240507</klighd-version>
+    <lsp4j-version>0.22.0</lsp4j-version>
+    <pragmatics-version>0.51.0.v20240410</pragmatics-version>
 
     <!-- Xtext compile dependency versions -->
-    <xtend-version>2.31.0</xtend-version>
-    <xtext-version>2.31.0</xtext-version>
+    <xtend-version>2.34.0</xtend-version>
+    <xtext-version>2.34.0</xtext-version>
 
     <!-- Tycho -->
     <tycho-version>2.7.5</tycho-version>
@@ -210,6 +210,18 @@
     </pluginRepository>
   </pluginRepositories>
 
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- A dependency that Maven artifacts of Eclipse bundles tries to pull the (non-existent) version 1.0.0 from. This version exists and will be used instead. -->
+      <dependency>
+        <groupId>xml-apis</groupId>
+        <artifactId>xml-apis-ext</artifactId>
+        <version>1.3.04</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <build>
     <resources>
       <resource>
@@ -315,7 +327,8 @@
       </plugin>
 
       <!-- Produces a list of all direct and transient dependencies for each module -->
-      <plugin>
+      <!-- NO LONGER NEEDED: We do not make dependency sanity checks anymore -->
+      <!-- <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <version>3.1.1</version>
@@ -331,7 +344,7 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
+      </plugin> -->
     </plugins>
   
     <pluginManagement>
@@ -354,7 +367,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
-          <version>1.3</version>
+          <version>3.5.0</version>
           <executions>
             <execution>
               <id>add-source</id>

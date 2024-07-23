@@ -19,7 +19,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsOverloadingExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import javax.inject.Inject
+import com.google.inject.Inject
 import org.eclipse.xtext.linking.LinkingScopeProviderBinding
 import org.eclipse.xtext.linking.impl.LinkingHelper
 import org.eclipse.xtext.naming.IQualifiedNameConverter
