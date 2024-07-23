@@ -7,7 +7,9 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.DeferredType
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.SCChartsPackage
@@ -15,11 +17,11 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.text.parser.InternalSCTXParser
 import de.cau.cs.kieler.sccharts.text.services.SCTXGrammarAccess
+import de.cau.cs.kieler.scl.Assignment
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import org.eclipse.xtext.serializer.ISerializationContext
 
 import static de.cau.cs.kieler.kexpressions.OperatorType.*
-import de.cau.cs.kieler.sccharts.DeferredType
 
 /**
  * @author als
@@ -212,6 +214,39 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
         }
         
         feeder.finish
+    }
+    
+    
+    /**
+     * Helps backtracking to serialize method calls
+     */
+    override protected sequence_SclAssignment_SclEffectAssignment_SclPostfixAssignment(ISerializationContext context, Assignment asm) {
+        if (asm.expression instanceof ReferenceCall) {
+            sequence_SclEffectAssignment(context, asm);
+        } else {
+            genericSequencer.createSequence(context, asm);
+        }
+    }
+    
+    /**
+     * Helps backtracking to serialize method calls
+     */
+    override protected sequence_SclEffectAssignment(ISerializationContext context, Assignment asm) {
+        if (asm.expression instanceof ReferenceCall) {
+            val feeder = createSequencerFeeder(asm, createNodeProvider(asm))
+            val nodes = nodeProvider.getNodesForSemanticObject(asm, null)
+            val g = sclEffectAssignmentAccess
+            
+            feeder.accept(g.expressionReferenceCallParserRuleCall_1_0_0, asm.expression)
+            if (!asm.schedule.empty) {
+                feeder.accept(g.scheduleScheduleObjectReferenceParserRuleCall_2_1_0, asm.schedule)
+            }
+            if (asm.semicolon) {
+                feeder.accept(g.semicolonSemicolonKeyword_3_0)
+            }        
+        } else {
+            super.sequence_SclEffectAssignment(context, asm)
+        }
     }
     
     private static val prefixOperators = newHashSet(NOT, PRE, VAL)
