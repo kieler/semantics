@@ -487,15 +487,20 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
             if (source.schedule instanceof ScheduleDeclaration) {
                 val scheduleDeclaration = source.schedule.asScheduleDeclaration
                 if (source.priority == target.priority) {
+                    // Ignore confluent
                     if (scheduleDeclaration.priorities.size > source.priority) {
                         val classification = scheduleDeclaration.priorities.get(source.priority)
                         if (classification == PriorityProtocol.CONFLUENT) {
                             return IGNORE
                         }
-                    }    
+                    }
+                    // Ignore write to read at same prio
+                    if (source.writeAccess && !target.writeAccess) {
+                        return IGNORE
+                    }  
                 } 
             }
-            if (source.priority == target.priority) return WRITE_WRITE
+            if (source.priority == target.priority && source.writeAccess && target.writeAccess) return WRITE_WRITE
             return WRITE_READ 
         }
         return UNKNOWN
