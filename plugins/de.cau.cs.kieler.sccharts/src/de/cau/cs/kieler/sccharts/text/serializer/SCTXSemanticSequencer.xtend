@@ -221,7 +221,7 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
      * Helps backtracking to serialize method calls
      */
     override protected sequence_SclAssignment_SclEffectAssignment_SclPostfixAssignment(ISerializationContext context, Assignment asm) {
-        if (asm.expression instanceof ReferenceCall) {
+        if (asm.expression instanceof ReferenceCall && asm.reference === null) {
             sequence_SclEffectAssignment(context, asm);
         } else {
             genericSequencer.createSequence(context, asm);
