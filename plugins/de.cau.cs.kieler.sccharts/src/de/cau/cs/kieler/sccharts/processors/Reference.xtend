@@ -61,10 +61,13 @@ import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.dataflow.Dataflow
 import de.cau.cs.kieler.scl.Conditional
 import de.cau.cs.kieler.scl.Loop
@@ -98,6 +101,9 @@ class Reference extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsInheritanceExtensions
     @Inject extension KExpressionsCreateExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsTransitionExtensions
     extension SCChartsFactory = SCChartsFactory.eINSTANCE
     
     public static val IProperty<Boolean> EXPAND_REFERENCED_STATES = 
@@ -839,7 +845,7 @@ class Reference extends SCChartsProcessor implements Traceable {
             // TODO Simple bindings should not cause a separation, e.g. initial values can be handled by assignment
             refs.separateReferenceDeclarationsWithIndividualBindingsInVOs
             for (ref : refs) {
-                val noBinidng = ref.hasAnnotation(Dataflow.DF_BINDING)
+                val dataflowBinding = ref.hasAnnotation(Dataflow.DF_BINDING)
                 var refTarget = ref.reference
                 if (refTarget instanceof State) {
                     processedSCCharts += refTarget
@@ -856,28 +862,34 @@ class Reference extends SCChartsProcessor implements Traceable {
                         // FIXME: Subtyping cannot be checked during compilation because some relations are already gone
                         // Assumes that the validator invalidated these models before
                         val ignoreSubtypeErrors = binding.targetValuedObject?.declaration instanceof ReferenceDeclaration
-                        if (binding.errors > 0 && !ignoreSubtypeErrors) {
+                        // In DF not all outputs need to be bound
+                        val ignoreUnboundDataflowIO = dataflowBinding && (binding.targetValuedObject.isInput || binding.targetValuedObject.isOutput) && binding.sourceExpression === null
+                        
+                        if (binding.errors > 0 && !ignoreSubtypeErrors && !ignoreUnboundDataflowIO) {
                             environment.errors.add("There are binding errors in a state with reference declaration of "
                                 + ref.valuedObjects.map[name].join("/") + "!\n"
                                 + binding.errorMessages.join("\n"), 
                                 state, true)
-                        } else if (binding.type === BindingType.GENERIC_TYPE) {
+                        } else if (binding.type == BindingType.GENERIC_TYPE) {
                             // Generics binding
                             replacements.typeReplacements.put(binding.targetValuedObject.name, binding.sourceExpression)
-                        } else if (!noBinidng) {
-                            // Detect parameter spreading
-                            if (refVO.cardinalities.size == 1 // TODO support arrays of arrays
-                                && binding.targetValuedObject.const
-                                && binding.targetValuedObject.input
-                                && binding.targetValuedObject.cardinalities.empty // TODO support arrays of arrays
-                                && binding.sourceExpression instanceof VectorValue // TODO support constant array variables to be spread
-                            ) {
-                                // Special handling later on
-                                spreadBindings += binding
-                            } else {
-                                // TODO: target indices not supported yet
-                                // TODO: Add support for partial binding in DF references
-                                replacements.push(binding.targetValuedObject, binding.sourceExpression)
+                        } else {
+                            // For dataflow only explicit bindings otherwise all
+                            if (!dataflowBinding || binding.type == BindingType.EXPLICIT || binding.type == BindingType.GENERIC_PARAM) {
+                                // Detect parameter spreading
+                                if (refVO.cardinalities.size == 1 // TODO support arrays of arrays
+                                    && binding.targetValuedObject.const
+                                    && binding.targetValuedObject.input
+                                    && binding.targetValuedObject.cardinalities.empty // TODO support arrays of arrays
+                                    && binding.sourceExpression instanceof VectorValue // TODO support constant array variables to be spread
+                                ) {
+                                    // Special handling later on
+                                    spreadBindings += binding
+                                } else {
+                                    // TODO: target indices not supported yet
+                                    // TODO: Add support for partial binding in DF references
+                                    replacements.push(binding.targetValuedObject, binding.sourceExpression)
+                                }
                             }
                         }
                     }
@@ -911,175 +923,182 @@ class Reference extends SCChartsProcessor implements Traceable {
                     classDecl.uniqueName
                     classDecl.addStringAnnotation(REF_CLASS_ORIGIN, Iterables.concat(#[refTarget.name], refTarget.baseStates.map[name]))
                     
+                    // Spread parameter
                     val spreadReplacer = newHashMap
-                    if (noBinidng) {
+                    // TODO This code should be combined with initialization methods!
+                    if (!spreadBindings.empty) {
+                        // Initialize spread VOs based on binding
+                        val entry = scope.createEntryAction(0)
+                        for (spreadBinding : spreadBindings) {
+                            val vo = copier.get(spreadBinding.targetValuedObject) as ValuedObject
+
+                            // Turn spread VO into local variable
+                            val voDecl = vo.variableDeclaration
+                            voDecl.input = false
+                            voDecl.const = false
+                            voDecl.access = AccessModifier.PUBLIC
+                            
+                            // Find usage in method of inner classes
+                            val uses = newHashMap
+                            val mirrors = newArrayList
+                            for (vor : classDecl.eAllContents.filter(ValuedObjectReference).filter[it.valuedObject == vo].toIterable) {
+                                // Surrounding class
+                                var parent = vor.eContainer
+                                while (!(parent instanceof ClassDeclaration)) {
+                                    parent = parent.eContainer
+                                }
+                                val clazz = parent as ClassDeclaration
+                                
+                                if (clazz == classDecl) {
+                                    uses.put(clazz, vo)
+                                } else if (uses.containsKey(clazz)) {
+                                    vor.valuedObject = uses.get(clazz)
+                                } else {
+                                    val mirrorDecl = voDecl.copy
+                                    clazz.declarations.add(mirrorDecl)
+                                    
+                                    val mirrorVO = mirrorDecl.valuedObjects.findFirst[it.name.equals(vo.name)]
+                                    mirrorDecl.valuedObjects.removeIf[it !== mirrorVO]
+                                    mirrorVO.name = classDecl.name + "_" + mirrorVO.name
+                                    vor.valuedObject = mirrorVO
+                                    
+                                    mirrors.add(mirrorVO)
+                                    uses.put(clazz, mirrorVO)
+                                }
+                            }
+                            
+                            // Remove root declaration if not used
+                            if (!uses.containsKey(classDecl)) {
+                                voDecl.valuedObjects.remove(vo)
+                                if (voDecl.valuedObjects.empty) {
+                                    classDecl.declarations.remove(voDecl)
+                                }
+                            }
+                            
+                            // Init via entry
+                            val initArray = spreadBinding.sourceExpression
+                            if (initArray instanceof VectorValue) {
+                                var vector = initArray
+                                
+                                // Handle range
+                                if (initArray.isRange) {
+                                    if (voDecl.type == ValueType.INT) {
+                                        var start = 0
+                                        var end = 0
+                                        
+                                        start = (initArray.values.get(0) as IntValue).value
+                                        var endExp = initArray.values.get(1)
+                                        if (endExp instanceof SpecialAccessExpression) {
+                                            endExp = endExp.subReference.lowermostReference
+                                        }
+                                        if (endExp instanceof IntValue) {
+                                            end = (initArray.values.get(1) as IntValue).value
+                                        } else if (endExp instanceof ValuedObjectReference) {
+                                            val decl = endExp.valuedObject.variableDeclaration
+                                            if (decl.type == ValueType.INT && decl.const && endExp.valuedObject.initialValue instanceof IntValue) {
+                                                end = (endExp.valuedObject.initialValue as IntValue).value
+                                            } else {
+                                                environment.errors.add("End value of spread vector range must be a constant integer variable", vo, true)
+                                            }
+                                        } else {
+                                            environment.errors.add("Unsupported expression type in vector range", vo, true)
+                                        }
+                                        
+                                        vector = createVectorValue
+                                        for (var i = start; i < end; i++) {
+                                            vector.values += createIntValue(i)
+                                        }
+                                    } else {
+                                        environment.errors.add("Cannot spread vector range to non integer variable", vo, true)
+                                    }
+                                }
+                                
+                                // Apply values
+                                val arraySize = if (refVO.cardinalities.head instanceof IntValue) {
+                                    (refVO.cardinalities.head as IntValue).value
+                                } else {
+                                    var exp = refVO.cardinalities.head
+                                    if (exp instanceof SpecialAccessExpression) {
+                                        exp = exp.subReference.lowermostReference
+                                    }
+                                    val vor = exp as ValuedObjectReference
+                                    (vor.valuedObject.initialValue as IntValue).value
+                                }
+                                if (arraySize == vector.values.size) {
+                                    // For later use in regions
+                                    val finalVector = vector
+                                    spreadReplacer.put(vo, [int i | finalVector.values.get(i).copy()]);
+                                    
+                                    // Spread into initializations
+                                    for (var i = 0; i < arraySize; i++) {
+                                        val value = vector.values.get(i)
+                                        if (value instanceof ValuedObjectReference && !(value as ValuedObjectReference).valuedObject.variableDeclaration.const) {
+                                            environment.errors.add("Cannot bind non-constant variable to constant input (via spread vector)", vo, true)
+                                        } else {
+                                            // Create assignment for root variable
+                                            if (uses.containsKey(classDecl)) {
+                                                val refVORef = refVO.reference
+                                                refVORef.indices += createIntValue(i)
+                                                refVORef.subReference = vo.reference
+                                                val asm = createAssignment()
+                                                asm.reference = refVORef
+                                                asm.expression = value.copy
+                                                entry.effects += asm
+                                            }
+                                            
+                                            // Init mirrors
+                                            for (mirrorVO : mirrors) {
+                                                val refVORef = refVO.reference
+                                                refVORef.indices += createIntValue(i)
+                                                val asm = createAssignment()
+                                                asm.reference = refVORef
+                                                asm.expression = value.copy
+                                                entry.effects += asm
+                                                
+                                                val voChain = newArrayList(mirrorVO)
+                                                while (voChain.last != refVO) {
+                                                    val decl = voChain.last.declaration
+                                                    val clazz = decl.eContainer as ClassDeclaration
+                                                    val nextVO = clazz.valuedObjects.head
+                                                    voChain += nextVO
+                                                    if (nextVO != refVO && (clazz.valuedObjects.size > 1 || !nextVO.cardinalities.empty)) {
+                                                        environment.errors.add("NOT YET SUPPORTED", vo, true)
+                                                    }
+                                                }
+                                                var parentVOR = refVORef
+                                                for (subVO : voChain.reverseView.drop(1)) {
+                                                    parentVOR.subReference = subVO.reference
+                                                    parentVOR = parentVOR.subReference
+                                                }
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    environment.errors.add("Cannot spread vector with different size than target array", vo, true)
+                                }
+                            } else {
+                                environment.errors.add("Spreading array bindings currently only works with vector values", vo, true)
+                            }
+                        }
+                    }
+                       
+                    // Handle declarations 
+                    if (dataflowBinding) { // Special handling for dataflow
                         // Turn them into local variables
-                        for (d : classDecl.declarations.filter(IODeclaration).filter[ input || output ]) {
+                        for (d : classDecl.declarations.filter(IODeclaration).filter[ input || output ]) {                            
+                            // Remove those that are bound
+                            d.valuedObjects.removeIf[replacements.containsKey(it)]
+                            
+                            // Convert to public var
                             d.input = false
                             d.output = false
                             d.access = AccessModifier.PUBLIC
                         }
                     } else {
-                        // TODO This code should be combined with initialization methods!
-                        if (!spreadBindings.empty) {
-                            // Initialize spread VOs based on binding
-                            val entry = scope.createEntryAction(0)
-                            for (spreadBinding : spreadBindings) {
-                                val vo = copier.get(spreadBinding.targetValuedObject) as ValuedObject
-
-                                // Turn spread VO into local variable
-                                val voDecl = vo.variableDeclaration
-                                voDecl.input = false
-                                voDecl.const = false
-                                voDecl.access = AccessModifier.PUBLIC
-                                
-                                // Find usage in method of inner classes
-                                val uses = newHashMap
-                                val mirrors = newArrayList
-                                for (vor : classDecl.eAllContents.filter(ValuedObjectReference).filter[it.valuedObject == vo].toIterable) {
-                                    // Surrounding class
-                                    var parent = vor.eContainer
-                                    while (!(parent instanceof ClassDeclaration)) {
-                                        parent = parent.eContainer
-                                    }
-                                    val clazz = parent as ClassDeclaration
-                                    
-                                    if (clazz == classDecl) {
-                                        uses.put(clazz, vo)
-                                    } else if (uses.containsKey(clazz)) {
-                                        vor.valuedObject = uses.get(clazz)
-                                    } else {
-                                        val mirrorDecl = voDecl.copy
-                                        clazz.declarations.add(mirrorDecl)
-                                        
-                                        val mirrorVO = mirrorDecl.valuedObjects.findFirst[it.name.equals(vo.name)]
-                                        mirrorDecl.valuedObjects.removeIf[it !== mirrorVO]
-                                        mirrorVO.name = classDecl.name + "_" + mirrorVO.name
-                                        vor.valuedObject = mirrorVO
-                                        
-                                        mirrors.add(mirrorVO)
-                                        uses.put(clazz, mirrorVO)
-                                    }
-                                }
-                                
-                                // Remove root declaration if not used
-                                if (!uses.containsKey(classDecl)) {
-                                    voDecl.valuedObjects.remove(vo)
-                                    if (voDecl.valuedObjects.empty) {
-                                        classDecl.declarations.remove(voDecl)
-                                    }
-                                }
-                                
-                                // Init via entry
-                                val initArray = spreadBinding.sourceExpression
-                                if (initArray instanceof VectorValue) {
-                                    var vector = initArray
-                                    
-                                    // Handle range
-                                    if (initArray.isRange) {
-                                        if (voDecl.type == ValueType.INT) {
-                                            var start = 0
-                                            var end = 0
-                                            
-                                            start = (initArray.values.get(0) as IntValue).value
-                                            var endExp = initArray.values.get(1)
-                                            if (endExp instanceof SpecialAccessExpression) {
-                                                endExp = endExp.subReference.lowermostReference
-                                            }
-                                            if (endExp instanceof IntValue) {
-                                                end = (initArray.values.get(1) as IntValue).value
-                                            } else if (endExp instanceof ValuedObjectReference) {
-                                                val decl = endExp.valuedObject.variableDeclaration
-                                                if (decl.type == ValueType.INT && decl.const && endExp.valuedObject.initialValue instanceof IntValue) {
-                                                    end = (endExp.valuedObject.initialValue as IntValue).value
-                                                } else {
-                                                    environment.errors.add("End value of spread vector range must be a constant integer variable", vo, true)
-                                                }
-                                            } else {
-                                                environment.errors.add("Unsupported expression type in vector range", vo, true)
-                                            }
-                                            
-                                            vector = createVectorValue
-                                            for (var i = start; i < end; i++) {
-                                                vector.values += createIntValue(i)
-                                            }
-                                        } else {
-                                            environment.errors.add("Cannot spread vector range to non integer variable", vo, true)
-                                        }
-                                    }
-                                    
-                                    // Apply values
-                                    val arraySize = if (refVO.cardinalities.head instanceof IntValue) {
-                                        (refVO.cardinalities.head as IntValue).value
-                                    } else {
-                                        var exp = refVO.cardinalities.head
-                                        if (exp instanceof SpecialAccessExpression) {
-                                            exp = exp.subReference.lowermostReference
-                                        }
-                                        val vor = exp as ValuedObjectReference
-                                        (vor.valuedObject.initialValue as IntValue).value
-                                    }
-                                    if (arraySize == vector.values.size) {
-                                        // For later use in regions
-                                        val finalVector = vector
-                                        spreadReplacer.put(vo, [int i | finalVector.values.get(i).copy()]);
-                                        
-                                        // Spread into initializations
-                                        for (var i = 0; i < arraySize; i++) {
-                                            val value = vector.values.get(i)
-                                            if (value instanceof ValuedObjectReference && !(value as ValuedObjectReference).valuedObject.variableDeclaration.const) {
-                                                environment.errors.add("Cannot bind non-constant variable to constant input (via spread vector)", vo, true)
-                                            } else {
-                                                // Create assignment for root variable
-                                                if (uses.containsKey(classDecl)) {
-                                                    val refVORef = refVO.reference
-                                                    refVORef.indices += createIntValue(i)
-                                                    refVORef.subReference = vo.reference
-                                                    val asm = createAssignment()
-                                                    asm.reference = refVORef
-                                                    asm.expression = value.copy
-                                                    entry.effects += asm
-                                                }
-                                                
-                                                // Init mirrors
-                                                for (mirrorVO : mirrors) {
-                                                    val refVORef = refVO.reference
-                                                    refVORef.indices += createIntValue(i)
-                                                    val asm = createAssignment()
-                                                    asm.reference = refVORef
-                                                    asm.expression = value.copy
-                                                    entry.effects += asm
-                                                    
-                                                    val voChain = newArrayList(mirrorVO)
-                                                    while (voChain.last != refVO) {
-                                                        val decl = voChain.last.declaration
-                                                        val clazz = decl.eContainer as ClassDeclaration
-                                                        val nextVO = clazz.valuedObjects.head
-                                                        voChain += nextVO
-                                                        if (nextVO != refVO && (clazz.valuedObjects.size > 1 || !nextVO.cardinalities.empty)) {
-                                                            environment.errors.add("NOT YET SUPPORTED", vo, true)
-                                                        }
-                                                    }
-                                                    var parentVOR = refVORef
-                                                    for (subVO : voChain.reverseView.drop(1)) {
-                                                        parentVOR.subReference = subVO.reference
-                                                        parentVOR = parentVOR.subReference
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    } else {
-                                        environment.errors.add("Cannot spread vector with different size than target array", vo, true)
-                                    }
-                                } else {
-                                    environment.errors.add("Spreading array bindings currently only works with vector values", vo, true)
-                                }
-                            }
-                        }
-                        
                         // Remove the input/output declarations from the new class. They should be bound beforehand.
                         classDecl.declarations.removeIf[ input || output ]
                     }
+                    
                     // All declarations will be public to enable access by regions that are moved outside the class
                     classDecl.declarations.forEach[ access = AccessModifier.PUBLIC ]
                     // Clear parameters
@@ -1092,10 +1111,19 @@ class Reference extends SCChartsProcessor implements Traceable {
                     }
                                         
                     // Copy inner behavior
-                    val targetContainerState = if (scope instanceof Region) {
+                    var targetContainerState = if (scope instanceof Region) {
                         scope.eContainer as State
                     } else {
                         scope as State
+                    }
+                    // Handle DF restart
+                    if (dataflowBinding && ref.hasAnnotation(Dataflow.DF_RESTART)) {
+                        val r = targetContainerState.createControlflowRegion(Dataflow.GENERATED_PREFIX + classDecl.name).uniqueName
+                        val iS = r.createInitialState("_behavior").trace(ref)
+                        val rS = r.createState("_restart").trace(ref)
+                        iS.createTerminationTo(rS).trace(ref) => [immediate = true]
+                        rS.createTransitionTo(iS).trace(ref)
+                        targetContainerState = iS
                     }
                     for (vo : classDecl.valuedObjects) {
                         var allCardinalities = 1

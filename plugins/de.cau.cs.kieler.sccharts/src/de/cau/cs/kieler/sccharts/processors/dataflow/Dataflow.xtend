@@ -49,7 +49,7 @@ import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * @author ssm
@@ -59,12 +59,13 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 class Dataflow extends SCChartsProcessor {
     
     // TODO consider activating by default
-    // Will affect termination behavior if references are declared out of DF regions!
+    // Will affect termination behavior if references are declared out of DF regions! (no restart)
     public static val IProperty<Boolean> OO_MODE = 
-        new Property<Boolean>("de.cau.cs.kieler.sccharts.processors.dataflow.oo", false)
+        new Property<Boolean>("de.cau.cs.kieler.sccharts.processors.dataflow.oo", true)
     
     public static val IGNORE_ANNOTATION = "DFignore"
     public static val DF_BINDING = "_DF_keep_io_local"
+    public static val DF_RESTART = "_DF_restart_behavior"
     
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsDataflowRegionExtensions
@@ -83,7 +84,7 @@ class Dataflow extends SCChartsProcessor {
     
     extension SCChartsFactory sccFactory = SCChartsFactory.eINSTANCE
     
-    static val GENERATED_PREFIX = "__df_"
+    public static val GENERATED_PREFIX = "__df_"
     
     public static val ID = "de.cau.cs.kieler.sccharts.processors.dataflow"
     
@@ -126,28 +127,10 @@ class Dataflow extends SCChartsProcessor {
             }
             trace(dataflowRegion)
         ]
-        val newMainState = newControlflowRegion.createState(GENERATED_PREFIX + "main") => [
+        val newMainState = newControlflowRegion.createState(GENERATED_PREFIX + dataflowRegion.name) => [
             initial = true
             trace(dataflowRegion)
         ]
-        
-        var canTerminate = dataflowRegion.canTerminate()        
-        if (dataflowRegion.once) {
-            newControlflowRegion.createState(GENERATED_PREFIX + "done") => [
-                final = true
-                newMainState.createTerminationTo(it)
-                trace(dataflowRegion)
-            ]
-            trace(dataflowRegion)
-        } else if (canTerminate) { // Delayed restart
-            newControlflowRegion.createState(GENERATED_PREFIX + "restart").trace(dataflowRegion) => [
-                newMainState.createTransitionTo(it) => [ 
-                    preemption = PreemptionType.TERMINATION
-                    trace(dataflowRegion)
-                ]
-                it.createTransitionTo(newMainState).trace(dataflowRegion)
-            ]
-        }
         
         // Move declarations
         newMainState.declarations += dataflowRegion.declarations
@@ -168,6 +151,20 @@ class Dataflow extends SCChartsProcessor {
         
         // Tag them to issue IO interface to become local variables
         rdInstances.forEach[it.declaration.addTagAnnotation(DF_BINDING)]
+        
+        // Handle termination
+        for (rdInstance : rdInstances) {
+            val ref = rdInstance.referencedScope
+            if (ref instanceof State) {
+                if (ref.canTerminate) {
+                    if (dataflowRegion.declarations.contains(rdInstance.declaration)) {
+                        rdInstance.declaration.addTagAnnotation(DF_RESTART)
+                    } else {
+                        environment.warnings.add("An SCChart that can terminate ("+ref.name+") is used ("+rdInstance.name+") in a dataflow region that assumes continuous IO behavior. If you move the reference declaration into the scope of the dataflow region the behavior will be automatically restarted.")
+                    }
+                }
+            }
+        }
         
         val schedules = dataflowRegion.createScheduleDeclaration(newMainState)
         var scheduleIndex = -1
@@ -235,35 +232,14 @@ class Dataflow extends SCChartsProcessor {
             
             for (equation : processedEquations) {
                 val assignment = equation.value
-                val newEqCfRegion = 
-                    newMainState.createControlflowRegion(GENERATED_PREFIX + "subRegion_" + equation.key).trace(dataflowRegion)
-
-                if (eq.value.isSequential || lastSequential) {
-                    newEqCfRegion.schedule +=
-                        schedules.valuedObjects.get(scheduleIndex).createScheduleReference(schedulePriority)
-                    schedulePriority += 1
-                }
-                val newEqState = newEqCfRegion.createState(GENERATED_PREFIX + "" + equation.key) => [ 
-                    initial = true
-                    trace(dataflowRegion)
-                ]
-                val newEqDelayState = newEqCfRegion.createState(GENERATED_PREFIX + "d" + equation.key).trace(dataflowRegion)
-                val eqTrans = newEqState.createTransitionTo(newEqDelayState) => [ 
-                    delay = DelayType.IMMEDIATE
-                    trace(dataflowRegion)
-                ]
-                
-                if (dataflowRegion.once) {
-                    newEqDelayState.final = true
+                val action = if (dataflowRegion.once) {
+                    newMainState.createImmediateEntryAction.trace(dataflowRegion)
                 } else {
-                    newEqDelayState.createTransitionTo(newEqState).trace(dataflowRegion)
-                    if (canTerminate) {
-                        newEqCfRegion.final = true
-                    }
+                    newMainState.createImmediateDuringAction.trace(dataflowRegion)
                 }
                 
                 if (assignment instanceof DataflowReferenceCall) {
-                    eqTrans.effects += createReferenceCallEffect() => [
+                    action.effects += createReferenceCallEffect() => [
                         it.annotations += assignment.annotations
                         it.schedule += assignment.schedule
                         it.parameters += assignment.parameters
@@ -272,11 +248,11 @@ class Dataflow extends SCChartsProcessor {
                         it.indices += assignment.indices
                     ]
                     if (assignment.expression !== null) {
-                        eqTrans.trigger = assignment.expression
+                        action.trigger = assignment.expression
                     }
                     removeList += assignment
                 } else if (assignment instanceof DataflowAssignment) {
-                    eqTrans.addAssignment(createAssignment() => [
+                    action.addAssignment(createAssignment() => [
                         it.annotations += assignment.annotations
                         it.schedule += assignment.schedule
                         it.reference = assignment.reference
@@ -285,8 +261,16 @@ class Dataflow extends SCChartsProcessor {
                     ])
                     removeList += assignment
                 } else {
-                    eqTrans.addAssignment(assignment)
+                    action.addAssignment(assignment)
                 }
+                
+                if (eq.value.isSequential || lastSequential) {
+                    for(e : action.effects) {
+                        e.schedule +=
+                            schedules.valuedObjects.get(scheduleIndex).createScheduleReference(schedulePriority)
+                        schedulePriority += 1
+                    }
+                }               
             }
             lastSequential = eq.value.isSequential
         }
@@ -297,11 +281,9 @@ class Dataflow extends SCChartsProcessor {
         }
     }
     
-    def boolean canTerminate(DataflowRegion region) {
-        val states = region.declarations.filter(ReferenceDeclaration).map[reference].filter(State).toSet
-        for (s : states.immutableCopy) {
-            states += s.allInheritedStates
-        }
+    def boolean canTerminate(State state) {
+        val states = newArrayList(state)
+        states += state.allInheritedStates
         
         var hasTerminatingRegion = false
         for (s : states) {
