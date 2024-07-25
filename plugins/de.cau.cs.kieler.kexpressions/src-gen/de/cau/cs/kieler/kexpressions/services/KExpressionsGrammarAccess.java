@@ -2362,14 +2362,22 @@ public class KExpressionsGrammarAccess extends AbstractElementFinder.AbstractGra
 		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
 		private final Assignment cPriorityAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cPriorityINTTerminalRuleCall_1_0 = (RuleCall)cPriorityAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cAnnotatedKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cAnnotationsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cAnnotationsQuotedStringAnnotationParserRuleCall_2_1_0 = (RuleCall)cAnnotationsAssignment_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
 		//ScheduleObjectReference returns ScheduleObjectReference:
 		//    valuedObject=[ValuedObject|PrimeID]
-		//    priority=INT;
+		//    priority=INT
+		//    ('annotated(' (annotations += QuotedStringAnnotation)+ ')')?
+		//    ;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//valuedObject=[ValuedObject|PrimeID]
 		//priority=INT
+		//('annotated(' (annotations += QuotedStringAnnotation)+ ')')?
 		public Group getGroup() { return cGroup; }
 		
 		//valuedObject=[ValuedObject|PrimeID]
@@ -2386,6 +2394,21 @@ public class KExpressionsGrammarAccess extends AbstractElementFinder.AbstractGra
 		
 		//INT
 		public RuleCall getPriorityINTTerminalRuleCall_1_0() { return cPriorityINTTerminalRuleCall_1_0; }
+		
+		//('annotated(' (annotations += QuotedStringAnnotation)+ ')')?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'annotated('
+		public Keyword getAnnotatedKeyword_2_0() { return cAnnotatedKeyword_2_0; }
+		
+		//(annotations += QuotedStringAnnotation)+
+		public Assignment getAnnotationsAssignment_2_1() { return cAnnotationsAssignment_2_1; }
+		
+		//QuotedStringAnnotation
+		public RuleCall getAnnotationsQuotedStringAnnotationParserRuleCall_2_1_0() { return cAnnotationsQuotedStringAnnotationParserRuleCall_2_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
 	}
 	public class ReferenceCallElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ReferenceCall");
@@ -5001,7 +5024,9 @@ public class KExpressionsGrammarAccess extends AbstractElementFinder.AbstractGra
 	
 	//ScheduleObjectReference returns ScheduleObjectReference:
 	//    valuedObject=[ValuedObject|PrimeID]
-	//    priority=INT;
+	//    priority=INT
+	//    ('annotated(' (annotations += QuotedStringAnnotation)+ ')')?
+	//    ;
 	public ScheduleObjectReferenceElements getScheduleObjectReferenceAccess() {
 		return pScheduleObjectReference;
 	}

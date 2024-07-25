@@ -1898,7 +1898,9 @@ public class KEffectsGrammarAccess extends AbstractElementFinder.AbstractGrammar
 	
 	//ScheduleObjectReference returns ScheduleObjectReference:
 	//    valuedObject=[ValuedObject|PrimeID]
-	//    priority=INT;
+	//    priority=INT
+	//    ('annotated(' (annotations += QuotedStringAnnotation)+ ')')?
+	//    ;
 	public KExpressionsGrammarAccess.ScheduleObjectReferenceElements getScheduleObjectReferenceAccess() {
 		return gaKExpressions.getScheduleObjectReferenceAccess();
 	}

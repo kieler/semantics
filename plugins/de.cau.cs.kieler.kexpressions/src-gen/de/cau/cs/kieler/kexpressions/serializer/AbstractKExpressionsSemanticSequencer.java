@@ -3138,20 +3138,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ScheduleObjectReference returns ScheduleObjectReference
 	 *
 	 * Constraint:
-	 *     (valuedObject=[ValuedObject|PrimeID] priority=INT)
+	 *     (valuedObject=[ValuedObject|PrimeID] priority=INT annotations+=QuotedStringAnnotation*)
 	 * </pre>
 	 */
 	protected void sequence_ScheduleObjectReference(ISerializationContext context, ScheduleObjectReference semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT));
-			if (transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.SCHEDULE_OBJECT_REFERENCE__PRIORITY) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.SCHEDULE_OBJECT_REFERENCE__PRIORITY));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1(), semanticObject.eGet(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT, false));
-		feeder.accept(grammarAccess.getScheduleObjectReferenceAccess().getPriorityINTTerminalRuleCall_1_0(), semanticObject.getPriority());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

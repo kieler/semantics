@@ -9949,6 +9949,35 @@ ruleScheduleObjectReference returns [EObject current=null]
 				}
 			)
 		)
+		(
+			otherlv_2='annotated('
+			{
+				newLeafNode(otherlv_2, grammarAccess.getScheduleObjectReferenceAccess().getAnnotatedKeyword_2_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getScheduleObjectReferenceAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_2_1_0());
+					}
+					lv_annotations_3_0=ruleQuotedStringAnnotation
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getScheduleObjectReferenceRule());
+						}
+						add(
+							$current,
+							"annotations",
+							lv_annotations_3_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.QuotedStringAnnotation");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)+
+			otherlv_4=')'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getScheduleObjectReferenceAccess().getRightParenthesisKeyword_2_2());
+			}
+		)?
 	)
 ;
 

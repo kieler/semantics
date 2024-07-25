@@ -172,6 +172,7 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getGroup_1(), "rule__ValuedObjectReference__Group_1__0");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getGroup_2(), "rule__ValuedObjectReference__Group_2__0");
 			builder.put(grammarAccess.getScheduleObjectReferenceAccess().getGroup(), "rule__ScheduleObjectReference__Group__0");
+			builder.put(grammarAccess.getScheduleObjectReferenceAccess().getGroup_2(), "rule__ScheduleObjectReference__Group_2__0");
 			builder.put(grammarAccess.getReferenceCallAccess().getGroup(), "rule__ReferenceCall__Group__0");
 			builder.put(grammarAccess.getReferenceCallAccess().getGroup_2(), "rule__ReferenceCall__Group_2__0");
 			builder.put(grammarAccess.getReferenceCallAccess().getGroup_3(), "rule__ReferenceCall__Group_3__0");
@@ -321,6 +322,7 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_2_1(), "rule__ValuedObjectReference__SubReferenceAssignment_2_1");
 			builder.put(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectAssignment_0(), "rule__ScheduleObjectReference__ValuedObjectAssignment_0");
 			builder.put(grammarAccess.getScheduleObjectReferenceAccess().getPriorityAssignment_1(), "rule__ScheduleObjectReference__PriorityAssignment_1");
+			builder.put(grammarAccess.getScheduleObjectReferenceAccess().getAnnotationsAssignment_2_1(), "rule__ScheduleObjectReference__AnnotationsAssignment_2_1");
 			builder.put(grammarAccess.getReferenceCallAccess().getSuperAssignment_0(), "rule__ReferenceCall__SuperAssignment_0");
 			builder.put(grammarAccess.getReferenceCallAccess().getValuedObjectAssignment_1(), "rule__ReferenceCall__ValuedObjectAssignment_1");
 			builder.put(grammarAccess.getReferenceCallAccess().getIndicesAssignment_2_1(), "rule__ReferenceCall__IndicesAssignment_2_1");

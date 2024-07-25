@@ -307,6 +307,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 ScheduleObjectReference scheduleObjectReference = (ScheduleObjectReference)theEObject;
                 T result = caseScheduleObjectReference(scheduleObjectReference);
                 if (result == null) result = caseValuedObjectReference(scheduleObjectReference);
+                if (result == null) result = caseAnnotatable(scheduleObjectReference);
                 if (result == null) result = caseExpression(scheduleObjectReference);
                 if (result == null) result = caseSchedulable(scheduleObjectReference);
                 if (result == null) result = defaultCase(theEObject);

@@ -29,6 +29,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.MethodSpecificSchedulingDirectiveUtil
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Action
@@ -65,6 +66,7 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension AnnotationsExtensions
+    @Inject extension MethodSpecificSchedulingDirectiveUtil
         
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.userSchedule"
@@ -306,6 +308,12 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
             if (method !== null) {
                 // SDs
                 if (!method.schedule.nullOrEmpty) {
+                    // Mark as method SDs
+                    for (s : method.schedule) {
+                        s.markAsMethodSD(method)
+                    }
+                    
+                    // Attach to scheduling unit
                     var EObject attach = call
                     //call.addScheduleCopy(method.schedule)
                     while (!(attach instanceof Effect || attach instanceof Action)) {

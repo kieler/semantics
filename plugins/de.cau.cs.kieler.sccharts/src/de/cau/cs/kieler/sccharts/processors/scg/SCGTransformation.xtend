@@ -792,6 +792,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             sor.trace(expression)
             sor.priority = expression.priority
             sor.handleSubReferences(expression)
+            sor.annotations += expression.annotations.map[copy]
             expression.indices.forEach [
                 sor.indices += it.convertToSCGExpression
             ]

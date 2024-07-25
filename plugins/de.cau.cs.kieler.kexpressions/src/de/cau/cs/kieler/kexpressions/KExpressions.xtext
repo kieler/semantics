@@ -363,7 +363,9 @@ ValuedObjectReference returns ValuedObjectReference:
 	
 ScheduleObjectReference returns ScheduleObjectReference:
     valuedObject=[ValuedObject|PrimeID]
-    priority=INT;	
+    priority=INT
+    ('annotated(' (annotations += QuotedStringAnnotation)+ ')')?
+    ;
 
 // Reference Call Rule
 // Calls to references. They may include a parameter list. 

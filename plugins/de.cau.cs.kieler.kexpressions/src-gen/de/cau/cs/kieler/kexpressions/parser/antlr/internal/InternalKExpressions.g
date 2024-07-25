@@ -3120,6 +3120,35 @@ ruleScheduleObjectReference returns [EObject current=null]
 				}
 			)
 		)
+		(
+			otherlv_2='annotated('
+			{
+				newLeafNode(otherlv_2, grammarAccess.getScheduleObjectReferenceAccess().getAnnotatedKeyword_2_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getScheduleObjectReferenceAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_2_1_0());
+					}
+					lv_annotations_3_0=ruleQuotedStringAnnotation
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getScheduleObjectReferenceRule());
+						}
+						add(
+							$current,
+							"annotations",
+							lv_annotations_3_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.QuotedStringAnnotation");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)+
+			otherlv_4=')'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getScheduleObjectReferenceAccess().getRightParenthesisKeyword_2_2());
+			}
+		)?
 	)
 ;
 
@@ -4542,6 +4571,48 @@ ruleAnnotation returns [EObject current=null]
 		}
 		{
 			newCompositeNode(grammarAccess.getAnnotationAccess().getJsonAnnotationParserRuleCall_1());
+		}
+		this_JsonAnnotation_1=ruleJsonAnnotation
+		{
+			$current = $this_JsonAnnotation_1.current;
+			afterParserOrEnumRuleCall();
+		}
+	)
+;
+
+// Entry rule entryRuleQuotedStringAnnotation
+entryRuleQuotedStringAnnotation returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getQuotedStringAnnotationRule()); }
+	iv_ruleQuotedStringAnnotation=ruleQuotedStringAnnotation
+	{ $current=$iv_ruleQuotedStringAnnotation.current; }
+	EOF;
+
+// Rule QuotedStringAnnotation
+ruleQuotedStringAnnotation returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getQuotedStringAnnotationAccess().getQuotedStringAnnotationParserRuleCall_0());
+		}
+		this_QuotedStringAnnotation_0=superQuotedStringAnnotation
+		{
+			$current = $this_QuotedStringAnnotation_0.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getQuotedStringAnnotationAccess().getJsonAnnotationParserRuleCall_1());
 		}
 		this_JsonAnnotation_1=ruleJsonAnnotation
 		{

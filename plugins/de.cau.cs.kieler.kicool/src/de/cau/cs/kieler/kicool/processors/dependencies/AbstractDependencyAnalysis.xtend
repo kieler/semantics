@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kexpressions.Schedulable
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCallExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
@@ -36,11 +37,12 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.kexpressions.keffects.Effect
+import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.Linkable
 import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
-import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ForkStack
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.LinkableInterfaceEntry
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.MethodSpecificSchedulingDirectiveUtil
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccess
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccessors
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectIdentifier
@@ -58,8 +60,6 @@ import static de.cau.cs.kieler.kexpressions.keffects.DataDependencyType.*
 import static de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccess.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.keffects.Emission
 
 /** 
  * @author ssm
@@ -98,14 +98,15 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         
     public static val IProperty<LinkableInterfaceData> LINKABLE_INTERFACE_DATA = 
         new Property<LinkableInterfaceData>("de.cau.cs.kieler.kexpressions.keffects.dependencies.linkableInterfaceData", null)
-    
+
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsValueExtensions
     @Inject extension KExpressionsCompareExtensions
     @Inject extension KEffectsExtensions
     @Inject extension KEffectsDependencyExtensions
     @Inject extension KExpressionsCallExtensions
-    
+    @Inject extension MethodSpecificSchedulingDirectiveUtil
+        
     @Accessors(PUBLIC_GETTER)
     protected val dependencies = <Dependency> newLinkedList
     
@@ -169,15 +170,22 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                     artificialWriters += ARTIFICIAL_HOSTCODE_WRITER
                 }
                 // Respect user-defined schedules.
-                for(sched : assignment.schedule) {
-                    val schedule = sched.lowermostReference.valuedObject.declaration as ScheduleDeclaration
-                    val scheduleObject = sched.lowermostReference.valuedObject        
-                    val priority = sched.priority
-                    
+                for(sched : assignment.schedule) {                    
                     for (w : artificialWriters) {
-                        val writeAccess = new ValuedObjectAccess(assignment, assignment.association, schedule, scheduleObject, priority, forkStack, false)
+                        val writeAccess = new ValuedObjectAccess(assignment, assignment.association, sched, GLOBAL_WRITE, forkStack, false)
                         writeAccess.isWriteAccess = true
-                        valuedObjectAccessors.addAccess(w, writeAccess)
+                        
+                        if (sched.isMethodSpecific) {
+                            if (sched.isMethodSpecificMatch(w)) {
+                                valuedObjectAccessors.addAccess(w, writeAccess)
+                                // Also register parent
+                                if (w.parentVOI !== null) {
+                                    valuedObjectAccessors.addAccess(w.parentVOI, writeAccess.copy => [isWriteAccess = false])
+                                }
+                            }
+                        } else {
+                            valuedObjectAccessors.addAccess(w, writeAccess)
+                        }
                     }
                 }
             }
@@ -206,8 +214,6 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     
             // Respect user-defined schedules.
             for(sched : newLinkedList(GLOBAL_SCHEDULE) + assignment.schedule) {
-                var schedule = GLOBAL_SCHEDULE
-                var ValuedObject scheduleObject = null       
                 var priority = GLOBAL_WRITE
                 
                 // Detect relative writes.
@@ -231,17 +237,22 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                             priority = GLOBAL_RELATIVE_WRITE    
                         }
                     }
-                 }
-                
-                if (sched instanceof ScheduleObjectReference) {
-                    schedule = sched.lowermostReference.valuedObject.declaration as ScheduleDeclaration
-                    scheduleObject = sched.lowermostReference.valuedObject 
-                    priority = sched.priority    
                 }
                 
-                val writeAccess = new ValuedObjectAccess(assignment, assignment.association, schedule, scheduleObject, priority, forkStack, writeVOI.isArraySpecificIdentifier)
+                val writeAccess = new ValuedObjectAccess(assignment, assignment.association, sched, priority, forkStack, writeVOI.isArraySpecificIdentifier)
                 writeAccess.isWriteAccess = true
-                valuedObjectAccessors.addAccess(writeVOI, writeAccess)
+                
+                if (sched.isMethodSpecific) {
+                    if (sched.isMethodSpecificMatch(writeVOI)) {
+                        valuedObjectAccessors.addAccess(writeVOI, writeAccess)
+                        // Also register parent
+                        if (writeVOI.parentVOI !== null) {
+                            valuedObjectAccessors.addAccess(writeVOI.parentVOI, writeAccess.copy => [isWriteAccess = false])
+                        }
+                    }
+                } else {
+                    valuedObjectAccessors.addAccess(writeVOI, writeAccess)
+                }
             }
         }
         
@@ -259,23 +270,27 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
            if (assignment.schedule !== null) assignment.schedule else #[]
         
         for (parameter : call.parameters) {
-            for (sched : schedules) {
-                var schedule = GLOBAL_SCHEDULE
-                var ValuedObject scheduleObject = null       
+            for (sched : schedules) {      
                 var priority = GLOBAL_READ
                 if (parameter.isPureOutput) priority = GLOBAL_WRITE
-                else if (parameter.isReferenceOutput) priority = GLOBAL_RELATIVE_WRITE
-                if (sched instanceof ScheduleObjectReference) {
-                    schedule = sched.lowermostReference.valuedObject.declaration as ScheduleDeclaration
-                    scheduleObject = sched.lowermostReference.valuedObject 
-                    priority = sched.priority    
-                }                
+                else if (parameter.isReferenceOutput) priority = GLOBAL_RELATIVE_WRITE     
                                 
                 for (vor : parameter.expression.allReferences) { 
                     val VOI = new ValuedObjectIdentifier(vor)
-                    val access = new ValuedObjectAccess(assignment, assignment.association, schedule, scheduleObject, priority, forkStack, false)
+                    val access = new ValuedObjectAccess(assignment, assignment.association, sched, priority, forkStack, false)
                     access.isWriteAccess = parameter.isOutput
-                    valuedObjectAccessors.addAccess(VOI, access)
+                    
+                    if (sched.isMethodSpecific) {
+                        if (sched.isMethodSpecificMatch(VOI)) {
+                            valuedObjectAccessors.addAccess(VOI, access)
+                            // Also register parent
+                            if (VOI.parentVOI !== null) {
+                                valuedObjectAccessors.addAccess(VOI.parentVOI, access.copy => [isWriteAccess = false])
+                            }
+                        }
+                    } else {
+                        valuedObjectAccessors.addAccess(VOI, access)
+                    }
                 }
             }
         }
@@ -304,18 +319,22 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
             }
             sub = sub.subReference
         } while (sub !== null)
-        for(sched : schedules) {
-            val schedule = sched.lowermostReference.valuedObject.declaration as ScheduleDeclaration
-            val scheduleObject = sched.lowermostReference.valuedObject        
-            val priority = sched.priority
-            
+        for(sched : schedules) {            
             if (writeVOI !== null) {
-//                println(effect+ "\n  " + effect.association + "\n  " + schedule + "\n  " + scheduleObject + "\n  " +
-//                    priority + "\n  " + forkStack
-//                )
-                val writeAccess = new ValuedObjectAccess(effect, effect.association, schedule, scheduleObject, priority, forkStack, false)//writeVOI.isSpecificIdentifier)
+                val writeAccess = new ValuedObjectAccess(effect, effect.association, sched, GLOBAL_WRITE, forkStack, false)//writeVOI.isSpecificIdentifier)
                 writeAccess.isWriteAccess = true
-                valuedObjectAccessors.addAccess(writeVOI, writeAccess)
+                
+                if (sched.isMethodSpecific) {
+                    if (sched.isMethodSpecificMatch(writeVOI)) {
+                        valuedObjectAccessors.addAccess(writeVOI, writeAccess)
+                        // Also register parent
+                        if (writeVOI.parentVOI !== null) {
+                            valuedObjectAccessors.addAccess(writeVOI.parentVOI, writeAccess.copy => [isWriteAccess = false])
+                        }
+                    }
+                } else {
+                    valuedObjectAccessors.addAccess(writeVOI, writeAccess)
+                }
             }
         }
     }
@@ -336,19 +355,19 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
             // In the SCG there are some schedules on the assignment
             if (expression.eContainer instanceof Schedulable) schedules += (expression.eContainer as Schedulable).schedule
             for(sched : schedules) {
-                var schedule = GLOBAL_SCHEDULE
-                var ValuedObject scheduleObject = null
-                var priority = GLOBAL_READ
-                
-                if (sched instanceof ScheduleObjectReference) {
-                    schedule = sched.lowermostReference.valuedObject.declaration as ScheduleDeclaration
-                    scheduleObject = sched.lowermostReference.valuedObject
-                    priority = sched.priority    
+                val readAccess = new ValuedObjectAccess(node, node.association, sched, GLOBAL_READ, forkStack, readVOI.isArraySpecificIdentifier)
+                if (sched.isMethodSpecific) {
+                    if (sched.isMethodSpecificMatch(readVOI)) {
+                        valuedObjectAccessors.addAccess(readVOI, readAccess)
+                        // Also register parent
+                        if (readVOI.parentVOI !== null) {
+                            valuedObjectAccessors.addAccess(readVOI.parentVOI, readAccess.copy)
+                        }
+                    }
+                } else {
+                    valuedObjectAccessors.addAccess(readVOI, readAccess)
                 }
-                
-                val readAccess = new ValuedObjectAccess(node, node.association, schedule, scheduleObject, priority, forkStack, readVOI.isArraySpecificIdentifier)
-                valuedObjectAccessors.addAccess(readVOI, readAccess)
-            } 
+            }
         }
         
         return readVOIs
@@ -608,9 +627,6 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         return null
     }
     
-
-
-    
     protected def createInterfaceData(S subModel, ValuedObjectAccessors valuedObjectAccessors) {
         val iData = new LinkableInterfaceData
         val linkables = valuedObjectAccessors.getLinkableAccessMap
@@ -639,7 +655,5 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
             } 
         }
         environment.setProperty(LINKABLE_INTERFACE_DATA, iData)
-    }
-
-    
+    }    
 }

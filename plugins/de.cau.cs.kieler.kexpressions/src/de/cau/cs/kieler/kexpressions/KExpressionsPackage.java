@@ -1582,13 +1582,22 @@ public interface KExpressionsPackage extends EPackage {
     int SCHEDULE_OBJECT_REFERENCE__SUB_REFERENCE = VALUED_OBJECT_REFERENCE__SUB_REFERENCE;
 
     /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_OBJECT_REFERENCE__ANNOTATIONS = VALUED_OBJECT_REFERENCE_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Priority</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCHEDULE_OBJECT_REFERENCE__PRIORITY = VALUED_OBJECT_REFERENCE_FEATURE_COUNT + 0;
+    int SCHEDULE_OBJECT_REFERENCE__PRIORITY = VALUED_OBJECT_REFERENCE_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Schedule Object Reference</em>' class.
@@ -1597,7 +1606,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCHEDULE_OBJECT_REFERENCE_FEATURE_COUNT = VALUED_OBJECT_REFERENCE_FEATURE_COUNT + 1;
+    int SCHEDULE_OBJECT_REFERENCE_FEATURE_COUNT = VALUED_OBJECT_REFERENCE_FEATURE_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ParameterImpl <em>Parameter</em>}' class.

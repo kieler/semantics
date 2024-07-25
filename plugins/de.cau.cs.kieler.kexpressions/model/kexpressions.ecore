@@ -380,7 +380,7 @@
     <eLiterals name="CONFLICT"/>
     <eLiterals name="CONFLUENT" value="1"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ScheduleObjectReference" eSuperTypes="#//ValuedObjectReference">
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleObjectReference" eSuperTypes="#//ValuedObjectReference ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Parameter">

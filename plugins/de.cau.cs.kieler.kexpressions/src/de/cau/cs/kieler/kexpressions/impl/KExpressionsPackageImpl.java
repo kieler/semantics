@@ -1898,6 +1898,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         methodDeclarationEClass.getESuperTypes().add(this.getSchedulable());
         scheduleDeclarationEClass.getESuperTypes().add(this.getDeclaration());
         scheduleObjectReferenceEClass.getESuperTypes().add(this.getValuedObjectReference());
+        scheduleObjectReferenceEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         callEClass.getESuperTypes().add(this.getExpression());
         referenceCallEClass.getESuperTypes().add(this.getValuedObjectReference());
         referenceCallEClass.getESuperTypes().add(this.getCall());

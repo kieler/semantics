@@ -1,7 +1,7 @@
 '!&'=99
 '!'=23
 '!='=92
-'#'=150
+'#'=151
 '%'=27
 '%='=76
 '&&'=31
@@ -38,7 +38,7 @@
 '>>>'=34
 '>>>='=82
 '?'=35
-'@'=151
+'@'=152
 'Pr'=124
 'Pr='=116
 '['=113
@@ -46,8 +46,9 @@
 ']'=114
 '^'=20
 '^='=79
-'_'=148
+'_'=149
 'abort'=54
+'annotated('=147
 'auto'=61
 'bool'=48
 'calls'=109
@@ -57,8 +58,8 @@
 'combine'=143
 'commuting'=70
 'conflicting'=69
-'connector'=156
-'const'=163
+'connector'=157
+'const'=164
 'dataflow'=122
 'deep deferred'=66
 'deferred'=65
@@ -73,7 +74,7 @@
 'extends'=105
 'extern'=141
 'fby'=37
-'final'=154
+'final'=155
 'float'=50
 'for'=120
 'global'=142
@@ -84,8 +85,8 @@
 'if'=115
 'immediate'=60
 'import'=100
-'initial'=153
-'input'=161
+'initial'=154
+'input'=162
 'int'=49
 'is'=107
 'join'=55
@@ -97,13 +98,13 @@
 'min'=95
 'min='=83
 'module'=132
-'nondeterministic'=158
+'nondeterministic'=159
 'none'=93
-'null'=149
+'null'=150
 'ode'=129
-'once'=160
-'output'=162
-'override'=159
+'once'=161
+'output'=163
+'override'=160
 'period'=128
 'policy'=130
 'pre'=18
@@ -113,7 +114,7 @@
 'protected'=97
 'public'=96
 'pure'=67
-'random'=147
+'random'=148
 'randomize'=145
 'ref'=140
 'region'=119
@@ -125,19 +126,19 @@
 'seq'=45
 'sfby'=38
 'shallow history'=63
-'signal'=165
+'signal'=166
 'state'=106
-'static'=164
+'static'=165
 'string'=51
 'strong'=57
 'struct'=40
-'super.'=157
+'super.'=158
 'suspend'=127
-'this'=152
+'this'=153
 'to'=112
 'undefined'=58
 'val'=29
-'violation'=155
+'violation'=156
 'void'=47
 'weak'=56
 'while'=136
@@ -226,6 +227,7 @@ T__162=162
 T__163=163
 T__164=164
 T__165=165
+T__166=166
 T__17=17
 T__18=18
 T__19=19
