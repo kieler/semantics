@@ -60,8 +60,9 @@ class Dataflow extends SCChartsProcessor {
     
     // TODO consider activating by default
     // Will affect termination behavior if references are declared out of DF regions! (no restart)
+    // Not yet fully supported: Signals in classes are not transformed
     public static val IProperty<Boolean> OO_MODE = 
-        new Property<Boolean>("de.cau.cs.kieler.sccharts.processors.dataflow.oo", true)
+        new Property<Boolean>("de.cau.cs.kieler.sccharts.processors.dataflow.oo", false)
     
     public static val IGNORE_ANNOTATION = "DFignore"
     public static val DF_BINDING = "_DF_keep_io_local"
