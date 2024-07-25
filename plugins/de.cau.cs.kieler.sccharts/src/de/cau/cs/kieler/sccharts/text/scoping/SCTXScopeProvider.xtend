@@ -49,6 +49,7 @@ import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 import com.google.common.collect.Iterables
+import de.cau.cs.kieler.kexpressions.IODeclaration
 
 /**
  * This class contains custom scoping description.
@@ -419,13 +420,13 @@ class SCTXScopeProvider extends KExtScopeProvider {
     }
     
     override IScope getScopeForReferencedType(EObject reference, ValuedObjectReference context,
-        Function1<? super VariableDeclaration, Boolean> predicate) {
+        Function1<? super IODeclaration, Boolean> predicate) {
         var EObject region = context
         while (region !== null && !(region instanceof Region)) {
             region = region.eContainer
         }
         
-        val adjustedPredicate = if (region instanceof DataflowRegion) predicate else [VariableDeclaration vd | vd.isPublic]
+        val adjustedPredicate = if (region instanceof DataflowRegion) predicate else [IODeclaration vd | vd.isPublic]
         
         if (reference instanceof State) {
             val additionalCandidates = newArrayList
