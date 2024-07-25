@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VectorValue
@@ -426,50 +427,66 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
         val nodes = <KNode>newLinkedList
         var expr = assignment.expression
-        if (expr === null && assignment instanceof DataflowReferenceCall) {
+        if (expr === null && assignment instanceof DataflowReferenceCall && assignment.reference.isModelReference) {
             expr = TRUE
         }
-        val source = expr.performTransformation(nodes, false)
-        if (expr instanceof VectorValue) {
-            source.associateWith(assignment.reference)
-            source.setProperty(OUTPUT_FLAG, true)
-            source.setProperty(DATA_ACCESS_FLAG, true)
-            for (p : source.ports.filter[edges.size > 0]) {
-                val ref = assignment.reference.copy
-                ref.indices.add(p.sourceElement as IntValue)
-                p.associateWith(ref)
+        var KNode source = null
+        if (expr !== null) {
+            source = expr.performTransformation(nodes, false)
+            if (expr instanceof VectorValue) {
+                source.associateWith(assignment.reference)
+                source.setProperty(OUTPUT_FLAG, true)
+                source.setProperty(DATA_ACCESS_FLAG, true)
+                for (p : source.ports.filter[edges.size > 0]) {
+                    val ref = assignment.reference.copy
+                    ref.indices.add(p.sourceElement as IntValue)
+                    p.associateWith(ref)
+                }
+            } else if (expr instanceof ReferenceCall) {
+                if (expr.lowermostReference.valuedObject.declaration.isMethod) {
+                    source.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint.NONE)
+                    if (expr.isModelReference) {
+                        val mTrigger = TRUE.performTransformation(nodes, false)
+                        val tSourcePort = mTrigger.findPortById(OUT_PORT)
+                        val targetPort = source.findPortById(PORT0_IN_PREFIX)
+                        tSourcePort.connectWith(targetPort, null)
+                    }
+                    
+                    nodes += addMethodParameters(expr.parameters, source, expr.isModelReference)
+                }
             }
-        } else if (expr instanceof ReferenceCall) {
-            if (expr.lowermostReference.valuedObject.declaration.isMethod) {
-                source.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint.NONE)
-                val mTrigger = TRUE.performTransformation(nodes, false)
-                val tSourcePort = mTrigger.findPortById(OUT_PORT)
-                val targetPort = source.findPortById(PORT0_IN_PREFIX)
-                tSourcePort.connectWith(targetPort, null)
-                
-                nodes += addMethodParameters(expr.parameters, source)
+                        
+        }
+        
+        var output = true
+        if (assignment instanceof DataflowReferenceCall) {
+            if (assignment.lowermostReference.valuedObject.declaration.isMethod) {
+                val rType = (assignment.lowermostReference.valuedObject.declaration as MethodDeclaration).returnType
+                output = rType === ValueType.VOID
             }
         }
-                    
-        val sourcePort = source.findPortById(OUT_PORT)
-        val target = assignment.reference.performTransformation(nodes, true)
-        val targetPort = target.findPortById(PORT0_IN_PREFIX)
-        sourcePort.connectWith(targetPort, expr.serializeHR.toString)
+        val target = assignment.reference.performTransformation(nodes, output)
+        
+        if (source !== null) {
+            val sourcePort = source.findPortById(OUT_PORT)
+            val targetPort = target.findPortById(PORT0_IN_PREFIX)
+            sourcePort.connectWith(targetPort, expr.serializeHR.toString)
+        }
         
         if (assignment instanceof DataflowReferenceCall) {
-            nodes += addMethodParameters(assignment.parameters, target)
+            nodes += addMethodParameters(assignment.parameters, target, source !== null)
         }
         
         return nodes
     }
     
-    def addMethodParameters(List<Parameter> parameters, KNode target) {
+    def addMethodParameters(List<Parameter> parameters, KNode target, boolean hasTrigger) {
         val nodes = newArrayList
         for (entry : parameters.indexed) {
             val p = entry.value
             val pSource = p.expression.performTransformation(nodes, false)
             val pSourcePort = pSource.findPortById(OUT_PORT)
-            val pTargetPort = target.getInputPortWithNumber(entry.key + 1)
+            val pTargetPort = target.getInputPortWithNumber(entry.key + (hasTrigger ? 1 : 0))
             pSourcePort.connectWith(pTargetPort, p.expression.serializeHR.toString)
         }
         return nodes
@@ -494,10 +511,16 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
      * @param output Should be true if output nodes should be generated
      */
     private def dispatch KNode performTransformation(ValuedObjectReference reference, List<KNode> nodes, boolean output) {
-        if (!reference.isModelReference &&
-            ((reference.isClassReference && 
-                reference.subReference !== null
-            ) || reference.isArrayReference)) {
+        if (!reference.isModelReference 
+            && (
+                (
+                    reference.isClassReference 
+                    && reference.subReference !== null
+                    && !reference.lowermostReference.valuedObject.declaration.isMethod
+                )
+                || reference.isArrayReference
+                )
+            ) {
             // go through the sub references and indices and create a data access node for each index of sub reference
             var ref = reference
             var KNode firstNode = null
@@ -552,8 +575,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             }
             return firstNode
         }
+        
         var node = reference.valuedObject.createKGTNode(output ? "OUTPUT" : "INPUT", "")
-        var text = reference.valuedObject.reference.serializeHR.toString
+        var text = if (reference.isClassReference || reference.valuedObject.declaration.isMethod) {
+                reference.serializeHR.toString.replaceAll("\\([^)]+\\)", "()")
+            } else {
+                reference.valuedObject.reference.serializeHR.toString
+            }
         node.setProperty(output ? OUTPUT_FLAG : INPUT_FLAG, true)
         
         if (reference.isModelReference) {
@@ -772,7 +800,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     val mTargetPort = source.findPortById(PORT0_IN_PREFIX)
                     tSourcePort.connectWith(mTargetPort, null)
                     
-                    nodes += addMethodParameters(subExpr.parameters, source)
+                    nodes += addMethodParameters(subExpr.parameters, source, true)
                 }
             }
         }
