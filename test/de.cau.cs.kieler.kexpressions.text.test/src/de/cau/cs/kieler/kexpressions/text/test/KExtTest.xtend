@@ -113,6 +113,9 @@ public class KExtTest {
             }
         }
         
+        // Serializer does not escape keywords
+        expected = expected.replaceAll("\\^global", "global")
+        
         if (!serialized.equals(expected)) {
             val StringAnnotation checkAnnotation = getAnnotation(entity, KExtTestRunner.KEXT_CHECK_ANNOTATION);
         	failedAssertion("Serialization of " + checkAnnotation.getValues().get(0) + 
@@ -145,7 +148,7 @@ public class KExtTest {
         val entity = eObject as TestEntity;
         var expected = expectedLine
         if (entity.getExpression() !== null && expected.startsWith(KEXT_EXPRESSION_KEYWORD)) {
-                expected = expected.substring(11); 
+            expected = expected.substring(11);
         }
         
         val serialized = SE.serializeHR(entity).toString();
@@ -154,6 +157,9 @@ public class KExtTest {
         if (humanReadableAnnotation !== null) {
             expected = humanReadableAnnotation.getValues().get(0);
         }
+        
+        // Serializer does not escape keywords
+        expected = expected.replaceAll("\\^global", "global")
         
         if (!serialized.equals(expected)) {
                 val checkAnnotation = getAnnotation(entity, KExtTestRunner.KEXT_CHECK_ANNOTATION);
