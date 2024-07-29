@@ -38,6 +38,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension com.google.common.collect.Iterators.concat
 
 /**
  * SCCharts Enum Transformation.
@@ -85,7 +86,10 @@ class Enum extends SCChartsProcessor implements Traceable {
         
         // Collect enums
         for (scope : targetRootState.getAllScopes.toIterable) {
-            for (decl : scope.declarations) {
+            for (decl : scope.declarations.iterator
+                .concat(scope.declarations.filter(ClassDeclaration).map[it.allNestedValuedObjects].flatten.map[it.declaration].iterator)
+                .toIterable
+            ) {
                 if (decl.isEnum) {
                     enums += decl as ClassDeclaration
                 } else if (decl.isEnumRef) {
@@ -161,11 +165,18 @@ class Enum extends SCChartsProcessor implements Traceable {
     def consolidateEnumDeclarations(State root) {
         val enums = newHashMap
         val consolidate = newHashMap
-        for (decl : root.allScopes.map[declarations.iterator].flatten.toIterable) {
+        for (decl : root.allScopes.map[declarations.iterator].flatten.filter(ClassDeclaration).toIterable) {
             if (decl.isEnum) {
                 enums.put(decl.valuedObjects.head, decl)
                 if (decl.hasAnnotation(CONSOLIDATION_ANNOTATION)) {
                     consolidate.put(decl.valuedObjects.head, decl)
+                }
+            } else if (decl.allNestedValuedObjects.exists[it.declaration.isEnum]) {
+                for (classEnum : decl.allNestedValuedObjects.map[it.declaration].toSet.filter[isEnum]) {
+                    enums.put(classEnum.valuedObjects.head, classEnum)
+                    if (classEnum.hasAnnotation(CONSOLIDATION_ANNOTATION)) {
+                        consolidate.put(classEnum.valuedObjects.head, classEnum)
+                    }
                 }
             }
         }
@@ -209,37 +220,39 @@ class Enum extends SCChartsProcessor implements Traceable {
                 
                 if (vor.isSubReference) {
                     var topVOR = vor.eContainer as ValuedObjectReference
-                    while(vor.isSubReference) {
+                    while(topVOR.isSubReference) {
                         topVOR = topVOR.eContainer as ValuedObjectReference
                     }
                     topVOR.replace(vor)
                 }
             }
-            
-            // remove consolidated
-            for (e : consolidate.values) {
-                voStore.remove(e.enumVO)
-                e.remove
-            }
         }
         
         // Fix ref decls
         val copyForRefDecls = <ValuedObject, ValuedObject>newHashMap
-        for (ref : root.allScopes.map[declarations.filter(ReferenceDeclaration).iterator].flatten.toIterable) {
+        for (ref : root.allScopes.map[
+            it.declarations.filter(ReferenceDeclaration).iterator
+            .concat(it.declarations.filter(ClassDeclaration).map[allNestedValuedObjects].flatten.map[it.declaration].filter(ReferenceDeclaration).toSet.iterator)
+        ].flatten.toIterable) {
             if (ref.isEnumRef) {
-                val anyCopy = enumsByOrig.get(ref.referencedEnum).head
-                if (anyCopy !== null) { // there is already a consolidated copy
-                    val newVO = consolidated.get(anyCopy)
-                    if (newVO !== null) {
-                        ref.reference = newVO
-                        ref.referenceContainer = null
+                val refEnum = ref.referencedEnum
+                val refEnumVO = refEnum.valuedObjects.head
+                var newVO = consolidated.get(refEnumVO) // there is already a consolidated copy
+                if (newVO === null) { // Can happen without binding
+                    val copies = enumsByOrig.get(refEnum)
+                    if (copies !== null) {
+                        newVO = consolidated.get(copies.head)
                     }
+                }
+                if (newVO !== null) { 
+                    ref.reference = newVO
+                    ref.referenceContainer = null
                 } else if (ref.referenceContainer !== null) { // referenced enum was not referenced otherwise
                     if (copyForRefDecls.containsKey(ref.reference)) {
                         ref.reference = copyForRefDecls.get(ref.reference)
                         ref.referenceContainer = null
                     } else {
-                        val newDecl = ref.referencedEnum.copy
+                        val newDecl = refEnum.copy
                         
                         val enumVO = newDecl.enumVO
                         enumVO.name = (ref.referenceContainer as NamedObject).name + "_" + enumVO.name
@@ -253,8 +266,14 @@ class Enum extends SCChartsProcessor implements Traceable {
                 }
             }
         }
-        // add new decls
+        // Add new decls
         copyForRefDecls.values.forEach[root.declarations += it.declaration]
+        
+        // Remove consolidated
+        for (e : consolidate.values) {
+            voStore.remove(e.enumVO)
+            e.remove
+        }
     }
     
     static def markCopyForConsolidation(Declaration copy, Declaration original) {
