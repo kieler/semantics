@@ -103,8 +103,8 @@ class BlackWhiteModeHook extends SynthesisHook {
                 for (color : node.eAllContents.filter(KColoring).toIterable) {
                     color.color.convertToGray
                     if (color.targetColor !== null) {
-                        color.targetColor.convertToGray
-                        color.targetColor2 = color.targetColor.copy
+                        color.targetColor = color.color.copy
+                        color.targetColor2 = color.color.copy
                     }
                 }
             }
