@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.Schedulable
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
@@ -316,13 +317,15 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
                     // Attach to scheduling unit
                     var EObject attach = call
                     //call.addScheduleCopy(method.schedule)
-                    while (!(attach instanceof Effect || attach instanceof Action)) {
+                    while (!(attach instanceof Effect || attach instanceof Action || attach instanceof ValuedObject) && attach !== null) {
                         attach = attach.eContainer
                     }
                     if (attach instanceof Effect) {
                         attach.addScheduleCopy(method.schedule)
                     } else if(attach instanceof Action) {
                         attach.trigger.addScheduleCopy(method.schedule)
+                    } else if(attach instanceof ValuedObject) {
+                        attach.initialValue.addScheduleCopy(method.schedule)
                     }
                     handledMethods += method
                 }
