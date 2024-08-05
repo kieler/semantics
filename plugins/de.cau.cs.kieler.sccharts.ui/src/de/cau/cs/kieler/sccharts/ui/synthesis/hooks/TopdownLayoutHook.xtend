@@ -20,19 +20,25 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
 import java.util.EnumSet
+import java.util.HashMap
+import java.util.LinkedHashMap
+import org.eclipse.elk.alg.layered.options.LayerUnzippingStrategy
 import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.LayeredSizeApproximator
+import org.eclipse.elk.alg.layered.options.SplineRoutingMode
+import org.eclipse.elk.alg.layered.options.WrappingStrategy
 import org.eclipse.elk.alg.rectpacking.options.RectPackingOptions
+import org.eclipse.elk.alg.rectpacking.options.RectpackingSizeApproximator
 import org.eclipse.elk.alg.rectpacking.p3whitespaceelimination.WhiteSpaceEliminationStrategy
 import org.eclipse.elk.alg.topdownpacking.options.TopdownpackingOptions
 import org.eclipse.elk.core.options.ContentAlignment
 import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.core.options.TopdownNodeTypes
 import org.eclipse.elk.core.options.TopdownSizeApproximator
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import org.eclipse.elk.alg.layered.options.SplineRoutingMode
 
 /**
  * @author mka
@@ -67,15 +73,39 @@ class TopdownLayoutHook extends SynthesisHook {
     public static final SynthesisOption SCALE_CAP = 
         SynthesisOption.createCheckOption(TopdownLayoutHook, "Enable Scale Cap", true)
             .setCategory(GeneralSynthesisOptions::LAYOUT)
+            
+    public static final SynthesisOption WHITESPACE_ELIMINATION_STRATEGY = 
+        SynthesisOption.createChoiceOption("Whitespace Elimination", #["Equal Between Structures", "Aspect Ratio"], "Equal Between Structures")
+            .setCategory(GeneralSynthesisOptions::LAYOUT)
+            
+    public static final SynthesisOption REGION_SIZE_APPROXIMATOR = 
+        SynthesisOption.createChoiceOption("Region Size Approximator", #["Count Children", "Lookahead Layout", "Dynamic", "Expand to Aspect Ratio"], "Dynamic")
+            .setCategory(GeneralSynthesisOptions::LAYOUT)
+            
+    public static final SynthesisOption STATE_SIZE_APPROXIMATOR = 
+        SynthesisOption.createChoiceOption("State Size Approximator", #["Lookahead Layout", "Dynamic", "Layered Heuristic"], "Layered Heuristic")
+            .setCategory(GeneralSynthesisOptions::LAYOUT)
+            
+//    public static final SynthesisOption
     
     override getDisplayedSynthesisOptions() {
-        return #[CONSERVATIVE_SPLINES, USE_TOPDOWN_LAYOUT, SCALE_CAP, TOPDOWN_LAYOUT_CHOICE, TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO]
+        return #[CONSERVATIVE_SPLINES, USE_TOPDOWN_LAYOUT, SCALE_CAP, WHITESPACE_ELIMINATION_STRATEGY, TOPDOWN_LAYOUT_CHOICE, TOPDOWN_HIERARCHICAL_NODE_WIDTH,
+            TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, REGION_SIZE_APPROXIMATOR, STATE_SIZE_APPROXIMATOR
+        ]
     }
     
     override processState(State state, KNode node) {
+        
+        val optionValueMap = new LinkedHashMap();
+        optionValueMap.put(CoreOptions.DIRECTION, #[Direction.DOWN, Direction.RIGHT]);
+//        optionValueMap.put(CoreOptions.LABEL_MANAGER, #[SemanticSoftWrappingLabelManager, TruncatingLabelManager])
+        node.setLayoutOption(CoreOptions::TOPDOWN_OPTION_VALUE_MAP, optionValueMap)
+        
         node.setProperty(CoreOptions::TOPDOWN_LAYOUT, USE_TOPDOWN_LAYOUT.booleanValue)
         if (USE_TOPDOWN_LAYOUT.booleanValue) {
             node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.noneOf(SizeConstraint))
+//            node.setProperty(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
+//            node.setProperty(CoreOptions::ALGORITHM, BoxLayouterOptions.ALGORITHM_ID)
         }
         
         if (SCALE_CAP.booleanValue) {
@@ -100,17 +130,40 @@ class TopdownLayoutHook extends SynthesisHook {
         } else if (USE_TOPDOWN_LAYOUT.booleanValue && TOPDOWN_LAYOUT_CHOICE.objectValue.equals("Variant 3")) {
             node.setLayoutOption(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
             node.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.HIERARCHICAL_NODE)
-            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.COUNT_CHILDREN);
-                node.setLayoutOption(CoreOptions::TOPDOWN_SCALE_CAP, Double.MAX_VALUE)
+//            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.COUNT_CHILDREN);
+            switch (STATE_SIZE_APPROXIMATOR.objectValue) {
+                case "Lookahead Layout": node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.LOOKAHEAD_LAYOUT)
+                case "Dynamic": node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.DYNAMIC)
+                case "Layered Heuristic": node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, LayeredSizeApproximator.LAYERED_ASPECT_RATIO_LOOKAHEAD)
+            }
+            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, null); // TESTING
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
-            node.setLayoutOption(RectPackingOptions::WHITE_SPACE_ELIMINATION_STRATEGY, WhiteSpaceEliminationStrategy.TO_ASPECT_RATIO)
+            if (WHITESPACE_ELIMINATION_STRATEGY.objectValue.equals("Aspect Ratio")) {
+                node.setLayoutOption(RectPackingOptions::WHITE_SPACE_ELIMINATION_STRATEGY, WhiteSpaceEliminationStrategy.TO_ASPECT_RATIO) 
+                // to use I need to set RectPacking.ASPECT_RATIO dynamically, so make a Rectpacking Size Approximator as well?
+            }
+//            node.setLayoutOption(RectPackingOptions::WHITE_SPACE_ELIMINATION_STRATEGY, null)
             node.setLayoutOption(CoreOptions::CONTENT_ALIGNMENT, EnumSet.of(ContentAlignment.V_CENTER, ContentAlignment.H_CENTER))
         } 
     }
     
     override processRegion(Region region, KNode node) {
         node.setProperty(CoreOptions::TOPDOWN_LAYOUT, USE_TOPDOWN_LAYOUT.booleanValue)
+        
+        val optionValueMap = new HashMap();
+        optionValueMap.put(CoreOptions.DIRECTION, #[Direction.DOWN, Direction.RIGHT]);
+//        optionValueMap.put(CoreOptions.LABEL_MANAGER, #[SemanticSoftWrappingLabelManager, TruncatingLabelManager])
+//        optionValueMap.put(LayeredOptions.WRAPPING_STRATEGY, #[WrappingStrategy.OFF, WrappingStrategy.SINGLE_EDGE])
+
+//        optionValueMap.put(LayeredOptions::LAYERING_NODE_PROMOTION_STRATEGY, #[NodePromotionStrategy.NONE, NodePromotionStrategy.MODEL_ORDER_LEFT_TO_RIGHT, NodePromotionStrategy.MODEL_ORDER_RIGHT_TO_LEFT, NodePromotionStrategy.NIKOLOV_IMPROVED])
+//        optionValueMap.put(LayeredOptions::LAYERING_STRATEGY, #[LayeringStrategy.MIN_WIDTH, LayeringStrategy.STRETCH_WIDTH])
+
+        optionValueMap.put(LayeredOptions::LAYER_UNZIPPING_STRATEGY, #[LayerUnzippingStrategy.N_LAYERS, LayerUnzippingStrategy.NONE])
+        node.setLayoutOption(CoreOptions::TOPDOWN_OPTION_VALUE_MAP, optionValueMap)
+        
+//        node.setLayoutOption(LayeredOptions.WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
+        
         if (USE_TOPDOWN_LAYOUT.booleanValue && TOPDOWN_LAYOUT_CHOICE.objectValue.equals("Variant 1")) {
             node.setLayoutOption(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
             node.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.HIERARCHICAL_NODE)
@@ -125,7 +178,13 @@ class TopdownLayoutHook extends SynthesisHook {
         } else if (USE_TOPDOWN_LAYOUT.booleanValue && TOPDOWN_LAYOUT_CHOICE.objectValue.equals("Variant 3")) {
             node.setLayoutOption(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
             node.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.HIERARCHICAL_NODE)
-            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.DYNAMIC)
+            switch (REGION_SIZE_APPROXIMATOR.objectValue) {
+                case "Count Children": node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.COUNT_CHILDREN)
+                case "Lookahead Layout": node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.LOOKAHEAD_LAYOUT)
+                case "Dynamic": node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.DYNAMIC)
+                case "Expand to Aspect Ratio": node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, RectpackingSizeApproximator.RECTPACKING_EXPAND_TO_ASPECT_RATIO_LOOKAHEAD)
+            }
+            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, null); // TESTING
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
             node.setLayoutOption(CoreOptions::CONTENT_ALIGNMENT, EnumSet.of(ContentAlignment.V_CENTER, ContentAlignment.H_CENTER))
@@ -133,10 +192,17 @@ class TopdownLayoutHook extends SynthesisHook {
             if (CONSERVATIVE_SPLINES.booleanValue) {
                 node.setLayoutOption(LayeredOptions::EDGE_ROUTING_SPLINES_MODE, SplineRoutingMode.CONSERVATIVE_SOFT) 
             }
-      }
+        }
     }
     
     override start(Scope scope, KNode node) {
+        
+        val optionValueMap = new HashMap();
+        optionValueMap.put(CoreOptions.DIRECTION, #[Direction.DOWN, Direction.RIGHT]);
+//        optionValueMap.put(CoreOptions.LABEL_MANAGER, #[SemanticSoftWrappingLabelManager, TruncatingLabelManager])
+        node.setLayoutOption(CoreOptions::TOPDOWN_OPTION_VALUE_MAP, optionValueMap)
+        
+        
         node.setProperty(CoreOptions::TOPDOWN_LAYOUT, USE_TOPDOWN_LAYOUT.booleanValue)
         if (USE_TOPDOWN_LAYOUT.booleanValue && TOPDOWN_LAYOUT_CHOICE.objectValue.equals("Variant 1")) {
             node.setProperty(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
