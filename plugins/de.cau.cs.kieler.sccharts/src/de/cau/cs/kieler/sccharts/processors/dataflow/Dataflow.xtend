@@ -46,10 +46,11 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.sccharts.processors.Signal
 import org.eclipse.emf.ecore.EObject
 
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 
 /**
  * @author ssm
@@ -391,11 +392,9 @@ class Dataflow extends SCChartsProcessor {
                 localDeclaration.input = false
                 localDeclaration.output = false
                 if (localDeclaration.signal) {
-                    localDeclaration.signal = false
                     if (localDeclaration.type != ValueType.PURE) {
                         environment.errors.add("Access to valued signal inputs/outputs in dataflow SCCharts not yet supported", localDeclaration, true)
                     }
-                    localDeclaration.type = ValueType.BOOL
                 }
                 
                 for (valuedObject : declaration.valuedObjects) {
@@ -520,6 +519,10 @@ class Dataflow extends SCChartsProcessor {
                             reference.subReference = null
                         }
                     }
+                }
+                
+                if (assignment.reference !== null && assignment.reference.valuedObject !== null && assignment.reference.valuedObject.signal) {
+                    assignment.reference.valuedObject.addTagAnnotation(Signal.NO_RESET_ANNOTATION)
                 }
             }
             lastSequential = eq.value.isSequential

@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
@@ -90,6 +91,10 @@ class Signal extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension KExpressionsArrayExtensions
+    @Inject extension AnnotationsExtensions
+    
+    // Prevents reset from being generated
+    static public final String NO_RESET_ANNOTATION = "NoReset"
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -300,7 +305,7 @@ class Signal extends SCChartsProcessor implements Traceable {
 
             // Add a during reset action for the presentVariable if it is an output or local variable.
             // Do not do this for only-input-variables.
-            if (!presentVariable.isInput) {
+            if (!presentVariable.isInput && !presentVariable.hasAnnotation(NO_RESET_ANNOTATION)) {
 
                 if (absentDuringAction === null) {
                     absentDuringAction = state.createDuringAction
