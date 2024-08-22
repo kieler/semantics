@@ -549,6 +549,16 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * @generated
      */
     @Override
+    public EAttribute getMethodImplementationDeclaration_Implemented() {
+        return (EAttribute)methodImplementationDeclarationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getLoop() {
         return loopEClass;
     }
@@ -678,6 +688,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         createEReference(returnEClass, RETURN__EXPRESSION);
 
         methodImplementationDeclarationEClass = createEClass(METHOD_IMPLEMENTATION_DECLARATION);
+        createEAttribute(methodImplementationDeclarationEClass, METHOD_IMPLEMENTATION_DECLARATION__IMPLEMENTED);
 
         loopEClass = createEClass(LOOP);
         createEReference(loopEClass, LOOP__INITIALIZATION);
@@ -802,6 +813,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         initEReference(getReturn_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 1, 1, Return.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(methodImplementationDeclarationEClass, MethodImplementationDeclaration.class, "MethodImplementationDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getMethodImplementationDeclaration_Implemented(), ecorePackage.getEBoolean(), "implemented", null, 1, 1, MethodImplementationDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(loopEClass, Loop.class, "Loop", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getLoop_Initialization(), theKEffectsPackage.getAssignment(), null, "initialization", null, 0, 1, Loop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

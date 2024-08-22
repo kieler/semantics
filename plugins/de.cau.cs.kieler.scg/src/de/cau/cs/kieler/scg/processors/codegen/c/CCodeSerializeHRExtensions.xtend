@@ -349,12 +349,14 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     
     override dispatch CharSequence serializeHR(ReferenceCall referenceCall) {
         var code = ""
-        if (referenceCall.subReference !== null && !referenceCall.valuedObject.isLocalVariable) {
-            code = valuedObjectPrefix
-        }
         val rcVOR = referenceCall.lowermostReference
         val declaration = rcVOR.valuedObject.declaration
-        if (declaration instanceof ReferenceDeclaration) { // no support for extern in class
+        if (referenceCall.subReference !== null 
+                && !referenceCall.valuedObject.isLocalVariable
+                && !rcVOR.isExternalReference) {
+            code = valuedObjectPrefix
+        }
+        if (declaration instanceof ReferenceDeclaration) {
             if (declaration.extern.nullOrEmpty) { 
                 return code + referenceCall.serializeVOR.toString + referenceCall.parameters.serializeHRParameters
             } else {
@@ -362,12 +364,7 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
                 if (declaration.extern.exists[ hasAnnotation(codeAnnotation) ]) {
                     call = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
                 }
-                if (referenceCall.subReference !== null) {
-                    val parent = referenceCall.serializeVOR.toString
-                    code += parent.substring(0, parent.lastIndexOf('.') + 1) + call
-                } else {
-                    code += call
-                }
+                code += call
                 return code + referenceCall.parameters.serializeHRParameters
             }
         } else if (declaration instanceof MethodDeclaration) {

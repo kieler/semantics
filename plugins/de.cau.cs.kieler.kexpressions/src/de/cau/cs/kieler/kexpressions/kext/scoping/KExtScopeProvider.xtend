@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.xbase.lib.Functions.Function1
+import de.cau.cs.kieler.kexpressions.IODeclaration
 
 /**
  * @author ssm
@@ -66,16 +67,8 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 	}
 	
 	protected def IScope getScopeForValuedObjectReference(EObject context, EReference reference) {
-	    val contextContainer = context.eContainer
-        if (reference.eContainer instanceof ValuedObjectReference) {
-			val parentVOR = reference.eContainer as ValuedObjectReference
-			val declaration = parentVOR.valuedObject.eContainer as Declaration
-			if (declaration instanceof ReferenceDeclaration) {
-				return Scopes.scopeFor(<ValuedObject> newArrayList(declaration.valuedObjects))
-			}
-		} else if (contextContainer instanceof ValuedObjectReference && (contextContainer as ValuedObjectReference).subReference === context) {
-		    // The context is a subreference!
-		    return contextContainer.getScopeForReferencedDeclarationFromSubReference(reference)
+        if (context instanceof ValuedObjectReference && (context as ValuedObjectReference).isSubReference) {// The context is a subreference!
+		    return context.eContainer.getScopeForReferencedDeclarationFromSubReference(reference)
 		}
 		return context.getScopeHierarchical(reference)
 	}
@@ -110,7 +103,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 	}
 	
 	protected def IScope getScopeForReferencedType(EObject reference, ValuedObjectReference context,
-	    Function1<? super VariableDeclaration, Boolean> predicate) {
+	    Function1<? super IODeclaration, Boolean> predicate) {
 	    if (reference === null) {
 	        // IMPORTANT: This can happen if the resource that should be imported does not exist. 
 	        // In this case, the scope given to the linker was null previously. This causes a NPE. 
@@ -120,7 +113,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 	    
         if (reference instanceof DeclarationScope) {
             val declarations = (reference as DeclarationScope).declarations
-            val relevantDeclarations = declarations.filter(VariableDeclaration).filter(predicate).toList
+            val relevantDeclarations = declarations.filter(IODeclaration).filter(predicate).toList
             val candidates = <ValuedObject> newArrayList
             relevantDeclarations.forEach [ candidates += it.valuedObjects ]
             return Scopes.scopeFor(candidates)

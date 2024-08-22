@@ -15,11 +15,11 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager
 import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
@@ -31,6 +31,7 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.extensions.TextFormat
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterTags
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
@@ -38,6 +39,7 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ProxyStyles
 import java.util.EnumSet
+import java.util.List
 import org.eclipse.elk.alg.layered.options.CenterEdgeLabelPlacementStrategy
 import org.eclipse.elk.alg.layered.options.FixedAlignment
 import org.eclipse.elk.alg.layered.options.LayeredOptions
@@ -187,7 +189,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             val newName = if(region.label.nullOrEmpty) "" else region.serializeHR.toString
             val refRegion = region.reference.scope !== null ? (region.reference.scope as Region).serializeHR : "UnresolvedReference"
             val refSCC = region.reference.scope !== null ? (region.reference.scope as Region).eContainer.serializeHR : "UnresolvedReference"
-            var label = refSCC + "::" + refRegion
+            var label = refSCC + "." + refRegion
             if (!newName.equals(refRegion)) {
                 label = newName + "@" + label
             }
@@ -195,12 +197,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 label += region.reference.parameters.serializeHRParameters
             }
             
-            node.createReferenceRegionFigures(label, region) => [
-                node.data.filter(KRectangle).forEach[
-                    it.foreground = ColorStore.Color.STATE_REFERENCED_BACKGROUND_GRADIENT_2.color
-                    it.lineWidth = it.lineWidth.lineWidth + 1
-                ]
-            ]
+            node.createReferenceRegionFigures(newArrayList(new Pair(label, TextFormat.TEXT)), region, true)
         } else {
             node.addRegionFigure => [
                 addCorrespondingRegionFigure(region)
@@ -254,12 +251,37 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         }
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
 
-        node.createReferenceRegionFigures(null, null)
+        node.createReferenceRegionFigures(null, null, false)
+        
+        node.setSelectionStyle
 
         return node;
     }
     
-    protected def KNode createReferenceRegionFigures(KNode node, String label, Region region) {
+    /**
+     * Create region area for reference declaration
+     * 
+     * @param ref the declaration
+     */
+    def KNode createReferenceDeclarationRegion(ReferenceDeclaration ref) {
+        val node = createNode().associateWith(ref); // This association is important for the ReferenceExpandAction
+        if (USE_KLAY.booleanValue) {
+            node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID);
+            node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER_STRATEGY, OrderingStrategy.PREFER_EDGES)
+        } else {
+            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
+            node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 40.0);
+        }
+        node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+
+        node.createReferenceRegionFigures(ref.serializeHighlighted(true), null, true)
+        
+        node.setSelectionStyle
+
+        return node;
+    }
+    
+    protected def KNode createReferenceRegionFigures(KNode node, List<Pair<? extends CharSequence, TextFormat>> label, Region region, boolean color) {
         // Set initially collapsed
         node.setLayoutOption(KlighdProperties::EXPAND, false);
 
@@ -267,10 +289,11 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         node.addRegionFigure => [
             setAsExpandedView
             addStatesArea(label !== null)
+            if (color) addReferenceRegionStyle
             addDoubleClickAction(ReferenceExpandAction::ID)
             // Add Button after area to assure correct overlapping
             // Use special expand action to resolve references
-            addCollapseButton(label?:"") => [
+            addCollapseButton(label) => [
                 addSingleClickAction(ReferenceExpandAction.ID)
                 addDoubleClickAction(ReferenceExpandAction.ID)
             ]
@@ -280,8 +303,9 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         // Collapsed
         node.addRegionFigure => [
             setAsCollapsedView
+            if (color) addReferenceRegionStyle
             addDoubleClickAction(ReferenceExpandAction::ID)
-            addExpandButton(label?:"") => [
+            addExpandButton(label) => [
                 addSingleClickAction(ReferenceExpandAction.ID)
                 addDoubleClickAction(ReferenceExpandAction.ID)
             ]

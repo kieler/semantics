@@ -335,22 +335,13 @@ public interface KExtPackage extends EPackage {
     int CLASS_DECLARATION__ACCESS = DECLARATION_SCOPE_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Type</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CLASS_DECLARATION__TYPE = DECLARATION_SCOPE_FEATURE_COUNT + 3;
-
-    /**
      * The feature id for the '<em><b>Input</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__INPUT = DECLARATION_SCOPE_FEATURE_COUNT + 4;
+    int CLASS_DECLARATION__INPUT = DECLARATION_SCOPE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Output</b></em>' attribute.
@@ -359,7 +350,16 @@ public interface KExtPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__OUTPUT = DECLARATION_SCOPE_FEATURE_COUNT + 5;
+    int CLASS_DECLARATION__OUTPUT = DECLARATION_SCOPE_FEATURE_COUNT + 4;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__TYPE = DECLARATION_SCOPE_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Static</b></em>' attribute.

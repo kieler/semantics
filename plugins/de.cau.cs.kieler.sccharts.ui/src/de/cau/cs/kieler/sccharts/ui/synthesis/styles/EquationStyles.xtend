@@ -15,11 +15,17 @@ package de.cau.cs.kieler.sccharts.ui.synthesis.styles
 
 import com.google.common.base.Joiner
 import com.google.inject.Inject
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KFontSize
 import de.cau.cs.kieler.klighd.krendering.KPointPlacementData
+import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.krendering.KRoundedBendsPolyline
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.LineStyle
@@ -29,7 +35,9 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import java.util.EnumSet
 import java.util.List
+import org.eclipse.elk.core.math.ElkMargin
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.graph.properties.IProperty
@@ -38,12 +46,6 @@ import org.eclipse.elk.graph.properties.Property
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.klighd.krendering.KRoundedBendsPolyline
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.kgraph.KEdge
-import org.eclipse.elk.core.math.ElkMargin
-import java.util.EnumSet
-import de.cau.cs.kieler.klighd.krendering.KFontSize
 
 /**
  * Styles for {@link Equations}.
@@ -142,24 +144,21 @@ class EquationStyles {
             foreground = OPERATORNODE_FOREGROUND.color;
         ]
     }
-    
-    /**
-     * Adds a title label to a simple state figure.
-     */
-    def KText addNodeLabel(KNode node, String text) {
-        var cc = node.contentContainer
-        if (cc === null) {
-            cc = node.data.filter(KContainerRendering).head
-            if (cc === null) {
-                return null
-            }
-        }
-        return cc.addText(text) => [
-            fontSize = 8
-            // Add surrounding space
-            setGridPlacementData().from(LEFT, 1, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 0, 0);
-        ]
-    }
+
+//    def KText addNodeLabel(KNode node, String text) {
+//        var cc = node.contentContainer
+//        if (cc === null) {
+//            cc = node.data.filter(KContainerRendering).head
+//            if (cc === null) {
+//                return null
+//            }
+//        }
+//        return cc.addText(text) => [
+//            fontSize = EquationSynthesis.NODE_LABEL_FONT_SIZE
+//            // Add surrounding space
+//            setGridPlacementData().from(LEFT, 2, 0, TOP, 0, 0).to(RIGHT, 2, 0, BOTTOM, 0, 0);
+//        ]
+//    }
     
     def KText addNodeLabel(KNode node, String text, int fontsize) {
         var cc = node.contentContainer
@@ -217,27 +216,21 @@ class EquationStyles {
     }       
  
 
-    /**
-     * Adds a title label to a macro state figure.
-     */
-    def KText addMacroNodeLabel(KNode node, String text) {
-        node.contentContainer.addText(text) => [
-            fontSize = 11;
-            // Add surrounding space
-            setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0);
-        ]
-    }
+//    def KText addMacroNodeLabel(KNode node, String text) {
+//        node.contentContainer.addText(text) => [
+//            fontSize = 11;
+//            // Add surrounding space
+//            setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0);
+//        ]
+//    }
     
-    /**
-     * Adds a title label to a simple state figure.
-     */
-    def KText addOperatorNodeLabel(KNode node, String text) {
-        node.contentContainer.addText(text) => [
-            fontSize = 8;
-            // Add surrounding space
-            setGridPlacementData().from(LEFT, 1.5f, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
-        ]
-    }        
+//    def KText addOperatorNodeLabel(KNode node, String text) {
+//        node.contentContainer.addText(text) => [
+//            fontSize = 8;
+//            // Add surrounding space
+//            setGridPlacementData().from(LEFT, 1.5f, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
+//        ]
+//    }        
     
 
     def KEdge addWireFigure(KEdge edge) {
@@ -278,6 +271,27 @@ class EquationStyles {
         ]
         return edge
     }
+    
+    def KPolygon addMethodPortFigure(KPort port) {
+        port.setSize(8, 8);
+        port.setProperty(CoreOptions.PORT_BORDER_OFFSET, -4d);
+        
+        // Create triangle port
+        val trianglePort = port.addPolygon();
+        
+        // Set line width and background color according to multiport or not
+        trianglePort.setLineWidth(1);
+        trianglePort.background = Colors.BLACK;
+        
+        val points =List.of(
+            createKPosition(LEFT, 0, 0, TOP, 0, 0),
+            createKPosition(RIGHT, 0, 0, TOP, 0, 0.5f),
+            createKPosition(LEFT, 0, 0, BOTTOM, 0, 0)
+        );
+        trianglePort.getPoints().addAll(points);
+        return trianglePort;
+    }
+    
     
     /**
      * Adds a macro state figure.

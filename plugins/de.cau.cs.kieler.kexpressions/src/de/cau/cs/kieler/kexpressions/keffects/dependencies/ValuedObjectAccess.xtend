@@ -12,13 +12,16 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.dependencies
 
-import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kexpressions.ValuedObject
 import com.google.inject.Guice
 import com.google.inject.Injector
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.keffects.Linkable
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * A ValuedObjectAccess is a storage class for a particular access to an valued object.
@@ -32,51 +35,60 @@ import de.cau.cs.kieler.kexpressions.keffects.Linkable
 class ValuedObjectAccess {
     
     // Hard-coded IUR protocol
-    public static val EObject GLOBAL_SCHEDULE = null
+    public static val ScheduleObjectReference GLOBAL_SCHEDULE = null
     public static val GLOBAL_WRITE = 0
     public static val GLOBAL_RELATIVE_WRITE = 1
     public static val GLOBAL_READ = 2
     
     @Accessors Linkable node
     @Accessors Linkable associatedNode
-    @Accessors EObject schedule
-    @Accessors ValuedObject scheduleObject
-    @Accessors int priority 
+    @Accessors(PUBLIC_GETTER) EObject schedule
+    @Accessors(PUBLIC_GETTER) ValuedObject scheduleObject
+    @Accessors(PUBLIC_GETTER) int priority 
     @Accessors ForkStack forkStack
     @Accessors boolean isSpecific
     @Accessors boolean isWriteAccess = false
     
-    new(Linkable node, EObject schedule, ValuedObject scheduleObject, int priority, ForkStack forkStack, boolean isSpecific) {
-        this.node = node
-        this.associatedNode = node
-        this.schedule = schedule
-        this.scheduleObject = scheduleObject
-        this.priority = priority
-        this.forkStack = new ForkStack(forkStack)
-        this.isSpecific = isSpecific
+    new(Linkable node, ScheduleObjectReference sor, int fallbackPriority, ForkStack forkStack, boolean isSpecific) {
+        this(node, node, sor, fallbackPriority, forkStack, isSpecific)
     }
     
-    new(Linkable node, Linkable associatedNode, EObject schedule, ValuedObject scheduleObject, int priority, ForkStack forkStack, boolean isSpecific) {
+    new(Linkable node, Linkable associatedNode, ScheduleObjectReference sor, int fallbackPriority, ForkStack forkStack, boolean isSpecific) {
         this.node = node
         this.associatedNode = associatedNode
-        this.schedule = schedule
-        this.scheduleObject = scheduleObject
-        this.priority = priority
+        this.schedule = GLOBAL_SCHEDULE
+        this.scheduleObject = null
+        this.priority = GLOBAL_WRITE
         this.forkStack = new ForkStack(forkStack)
         this.isSpecific = isSpecific
+        
+        if (sor !== null) {
+            var ValuedObjectReference ref = sor
+            while (ref.subReference !== null) {
+                ref = ref.subReference
+            }
+            schedule = ref.valuedObject.eContainer as ScheduleDeclaration
+            scheduleObject = ref.valuedObject 
+            priority = sor.priority
+        } else {
+            priority = fallbackPriority
+        }
     }
     
     new(ValuedObjectAccess VOA) {
         this.node = VOA.node
         this.associatedNode = VOA.associatedNode
         this.schedule = VOA.schedule
-        this.scheduleObject = scheduleObject
+        this.scheduleObject = VOA.scheduleObject
         this.priority = VOA.priority
         this.forkStack = new ForkStack(VOA.forkStack)
         this.isSpecific = VOA.isSpecific
         this.isWriteAccess = VOA.isWriteAccess
     }
     
+    def copy() {
+        return new ValuedObjectAccess(this)
+    }
     
     override String toString() {
         val result = new StringBuffer("VOA");
@@ -90,5 +102,6 @@ class ValuedObjectAccess {
     }
     
     private static Injector injector = Guice.createInjector();
-    private static KEffectsSerializeHRExtensions serializer =  injector.getInstance(KEffectsSerializeHRExtensions);    
+    private static KEffectsSerializeHRExtensions serializer =  injector.getInstance(KEffectsSerializeHRExtensions);
+    
 }

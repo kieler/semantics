@@ -23,13 +23,16 @@ import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.PriorityProtocol
+import de.cau.cs.kieler.kexpressions.Schedulable
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
@@ -37,6 +40,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.OdeAction
@@ -46,6 +50,7 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
@@ -90,7 +95,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     // Global var names
     public static val DELTA_T_NAME = DynamicTicks.DELTA_T
     public static val SLEEP_T_NAME = DynamicTicks.SLEEP_T
-    public static val DEVIATION_NAME = "deviation"
+    public static val DEVIATION_NAME = "lag"
 
     // Experimental Switches
     public static val NO_SLEEP_NAME = "NoSleep"
@@ -105,6 +110,9 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     public static val INT_CLOCK_NAME = "IntegralClockType"
     public static val INT_CLOCK_NAME_2 = "IntegerClockType"
     public static val USE_SD_NAME = "ClocksUseSD"
+    public static val PASSIVE_NAME = "Passive"
+    public static val LOGICAL_NAME = "Logical"
+    public static val NO_SLEEP_SD_COPY = "DoNotCopySDForSleep"
     
     var isIntClockType = false
 
@@ -154,7 +162,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
         
         val useSD = allAnnotations.exists[USE_SD_NAME.equalsIgnoreCase(name)]
         
-        val hasClocks = rootState.allStates.exists[variableDeclarations.exists[type == ValueType.CLOCK]]
+        val hasClocks = rootState.allStates.exists[hasClocks]
         val hasODEs = rootState.allStates.exists[actions.exists[it instanceof OdeAction]]
         
         if (hasClocks || hasODEs) {
@@ -164,16 +172,16 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                 if (vo.initialValue === null) {
                     vo.initialValue = createClockValue(0)
                 }
-                if (!vo.input || vo.type !== clockType) {
-                    environment.errors.add("A variable with name " + DELTA_T_NAME + " already exists and is is not and input variable of type " + clockType.literal)
+                if (!vo.input || (vo.type !== clockType && vo.type !== ValueType.TIME)) {
+                    environment.errors.add("A variable with name " + DELTA_T_NAME + " already exists and is not an input variable of type " + clockType.literal)
                 } else {
-                    environment.warnings.add("A variable with name " + DELTA_T_NAME + " already exists and is used.", rootState, true)
+                    environment.infos.add("A variable with name " + DELTA_T_NAME + " already exists and is used.", rootState, true)
                 }
                 if (!vo.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION) && !vo.declaration.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION)) {
                     vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
                 }
                 voStore.update(vo, DynamicTicks.TAG)
-                vo
+                vo // return
             } else {
                 val vo = createValuedObject(DELTA_T_NAME)
                 vo.initialValue = createClockValue(0)
@@ -185,7 +193,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                 ]
                 vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
                 voStore.update(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
-                vo
+                vo // return
             }
             
             if (hasClocks) {
@@ -195,16 +203,16 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     if (vo.initialValue === null) {
                         vo.initialValue = createClockValue(0)
                     }
-                    if (!vo.input || vo.type !== clockType) {
-                        environment.errors.add("A variable with name " + SLEEP_T_NAME + " already exists and is is not and input variable of type " + clockType.literal)
+                    if (!vo.output || (vo.type !== clockType && vo.type !== ValueType.TIME)) {
+                        environment.errors.add("A variable with name " + SLEEP_T_NAME + " already exists and is not an output variable of type " + clockType.literal)
                     } else {
-                        environment.warnings.add("A variable with name " + SLEEP_T_NAME + " already exists and is used.", rootState, true)
+                        environment.infos.add("A variable with name " + SLEEP_T_NAME + " already exists and is used.", rootState, true)
                     }
                     if (!vo.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION) && !vo.declaration.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION)) {
                         vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
                     }
                     voStore.update(vo, DynamicTicks.TAG)
-                    vo
+                    vo // return
                 } else {
                     val vo = createValuedObject(SLEEP_T_NAME)
                     if (!noSleep) {
@@ -218,26 +226,36 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                         vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
                         voStore.update(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
                     }
-                    vo
+                    vo // return
                 }
                 
                 // DeviationOutput
-                if(deviationOutput && !noSleep) {
+                val deviation = if((deviationOutput || rootState.allStates.exists[it.hasClocks && it.clocks.exists[it.declaration.hasAnnotation(LOGICAL_NAME)]]) && !noSleep) {
                     val vo = createValuedObject(DEVIATION_NAME).uniqueName
                     vo.initialValue = createClockValue(0)
                     rootState.declarations += createDeclaration => [
                         type = clockType
                         hostType = intHostClockType
-                        output = true
                         valuedObjects += vo
+                        if (deviationOutput) {
+                            output = true
+                        }
                     ]
                     vo.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
                     voStore.update(vo, SCCHARTS_GENERATED, DynamicTicks.TAG)
                     
                     rootState.createDuringAction => [
                         // calculate deviation
-                        effects += createAssignment(vo, createSubExpression(deltaT.reference, createPreExpression(sleepT.reference)))
+                        effects += createAssignment(vo, createConditionalExpression(
+                            createGTExpression(deltaT.reference, createPreExpression(sleepT.reference)),
+                            createSubExpression(deltaT.reference, createPreExpression(sleepT.reference)),
+                            createIntValue(0)
+                        ))
                     ]
+                    
+                    vo // return
+                } else {
+                    null
                 }
                 
                 // Global sleep time handling
@@ -256,11 +274,27 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                         ]
                     }
                 }
+                        
+                // Transform time type
+                for (d : rootState.eAllContents.filter(Declaration).toList) {
+                    if (d instanceof MethodDeclaration) {
+                        if (d.returnType == ValueType.TIME) {
+                            d.returnType = clockType
+                            d.returnHostType = intHostClockType
+                        }
+                    } else if (d instanceof VariableDeclaration) {
+                        if (d.type == ValueType.TIME) {
+                            d.type = clockType
+                            d.hostType = intHostClockType
+                            d.valuedObjects.forEach[voStore.update(it)]
+                        }
+                    }
+                }
     
                 // Handle clock
-                for (state : rootState.allStates.filter[variableDeclarations.exists[type == ValueType.CLOCK]].toList) {
+                for (state : rootState.allStates.filter[it.hasClocks].toList) {
                     var sdDecls = <Declaration, Declaration>newHashMap
-                    for (clock : state.variableDeclarations.filter[type == ValueType.CLOCK].map[valuedObjects].flatten.toList) {
+                    for (clock : state.clocks) {
                         clock.declaration.asVariableDeclaration.type = clockType
                         clock.declaration.asVariableDeclaration.hostType = intHostClockType
                         if (!clock.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION) && !clock.declaration.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION)) {
@@ -269,93 +303,117 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                         voStore.update(clock, SCCHARTS_GENERATED)
                         if (clock.initialValue === null) clock.initialValue = createClockValue(0)
                         
-                        if (useSD) {
-                            // Increment clock globally -> SD for UIUR protocoll
-                            if (!sdDecls.containsKey(clock.declaration)) {
-                                val sdDecl = createScheduleDeclaration => [
-                                    name = "ClockIUR"
-                                    priorities += newArrayList(
-                                        PriorityProtocol.CONFLICT,  // Clock increment
-                                        PriorityProtocol.CONFLICT,  // Init (clock reset)
-                                        PriorityProtocol.CONFLUENT  // Update
-    //                                    PriorityProtocol.CONFLUENT  // Read
-                                    )
-                                ]
-                                state.declarations.add(state.declarations.indexOf(clock.declaration) + 1, sdDecl)
-                                sdDecls.put(clock.declaration, sdDecl)
-                            }
-                            val sd = createValuedObject(sdDecls.get(clock.declaration), clock.name + "SD")
-                            
-                            for (scope : state.allScopes.toIterable) {
-                                for (access : scope.allContainedActions.map[eAllContents.filter(ValuedObjectReference).filter[valuedObject == clock]].flatten.toIterable) {
-                                    if (access.eContainer instanceof Assignment) {
-                                        val asm = access.eContainer as Assignment
-                                        if (asm.reference == access) {// write
-                                            if ((access.eContainer as Assignment).operator == AssignOperator.ASSIGN) { // absolute
-                                                asm.schedule += createScheduleReference(sd, 1)
-                                            } else { // relative
-                                                asm.schedule += createScheduleReference(sd, 2)
+                        if (!clock.declaration.hasAnnotation(PASSIVE_NAME)) {
+                            if (useSD) {
+                                // Increment clock globally -> SD for UIUR protocoll
+                                if (!sdDecls.containsKey(clock.declaration)) {
+                                    val sdDecl = createScheduleDeclaration => [
+                                        name = "ClockIUR"
+                                        priorities += newArrayList(
+                                            PriorityProtocol.CONFLICT,  // Clock increment
+                                            PriorityProtocol.CONFLICT,  // Init (clock reset)
+                                            PriorityProtocol.CONFLUENT  // Update
+        //                                    PriorityProtocol.CONFLUENT  // Read
+                                        )
+                                    ]
+                                    state.declarations.add(state.declarations.indexOf(clock.declaration) + 1, sdDecl)
+                                    sdDecls.put(clock.declaration, sdDecl)
+                                }
+                                val sd = createValuedObject(sdDecls.get(clock.declaration), clock.name + "SD")
+                                
+                                for (scope : state.allScopes.toIterable) {
+                                    for (access : scope.allContainedActions.map[eAllContents.filter(ValuedObjectReference).filter[valuedObject == clock]].flatten.toIterable) {
+                                        if (access.topmostReference.eContainer instanceof Assignment) {
+                                            val asm = access.topmostReference.eContainer as Assignment
+                                            if (asm.reference == access || asm.reference.eAllContents.contains(access)) {// write
+                                                if (asm.operator == AssignOperator.ASSIGN) { // absolute
+                                                    asm.schedule += createScheduleReference(sd, 1)
+                                                } else { // relative
+                                                    asm.schedule += createScheduleReference(sd, 2)
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (scope instanceof State) {
+                                        if (!scope.connector) {
+                                            // sleep time
+                                            if (!noSleep) {
+                                                scope.handleSleep(clock, sleepT, deviation)
                                             }
                                         }
                                     }
                                 }
-                                if (scope instanceof State) {
-                                    // sleep time
-                                    if (!noSleep) {
-                                        scope.handleSleep(clock, sleepT)
+                                
+                                // increment                      
+                                state.createDuringAction => [
+                                    val asm = createAssignment
+                                    it.effects += asm
+                                    asm.operator = AssignOperator.ASSIGNADD
+                                    asm.schedule += createScheduleReference(sd, 0)
+                                    asm.reference = clock.fullReference
+                                    if (clock.declaration.hasAnnotation(LOGICAL_NAME)) {
+                                        asm.expression = createAddExpression(
+                                            createPreExpression(deviation.reference),
+                                            createSubExpression(deltaT.reference, deviation.reference)
+                                        )
+                                    } else {
+                                        asm.expression = deltaT.reference
                                     }
-                                }
-                            }
-                            
-                            // increment                      
-                            state.createDuringAction => [
-                                it.createAssignment(clock, deltaT.reference) => [
-                                    operator = AssignOperator.ASSIGNADD
-                                    schedule += createScheduleReference(sd, 0)
                                 ]
-                            ]
-                        } else {
-                            // Increment clocks in each state -> no support of hierachy or concurrency
-                            var region = state.controlflowRegions.head
-                            if (state.controlflowRegions.size > 1) {
-                                val regionsUsingClock = newLinkedList
-                                for (r : state.controlflowRegions) {
-                                    var testRegion = r
-                                    while (testRegion.states.size == 1 && testRegion.states.head.outgoingTransitions.empty && testRegion.states.head.controlflowRegions.size == 1) {
-                                        testRegion = testRegion.states.head.controlflowRegions.head
-                                    }
-                                    if (testRegion.states.exists[
-                                        outgoingTransitions.filter[trigger !== null].exists[
-                                            eAllContents.filter(ValuedObjectReference).exists[valuedObject == clock]
-                                        ]
-                                    ]) {regionsUsingClock += testRegion}
-                                }
-                                region = regionsUsingClock.head
-                                if (regionsUsingClock.size > 1) {
-                                    environment.errors.add("Cannot handle concurrent timed automata using the same clock. Add @" + USE_SD_NAME + " annotation for experimental support based on schduling directives.", state)
-                                }
-                            }
-                            
-                            if (region === null) {
-                                environment.errors.add("Cannot handle concurrent or hierarchical timed automata using the same clock. Add @" + USE_SD_NAME + " annotation for experimental support based on schduling directives.", state)
                             } else {
-                                for (subState : region.states.toList) {
-                                    // error case
-                                    if (subState.containsInnerActions || !subState.regions.nullOrEmpty) {
-                                        if (subState.actions.exists[trigger?.eAllContents?.filter(ValuedObjectReference)?.exists[valuedObject == clock]] ||
-                                            subState.controlflowRegions.exists[eAllContents?.filter(ValuedObjectReference)?.exists[valuedObject == clock]]) {
-                                                environment.errors.add("Cannot handle hierarchical timed automata. Add @" + USE_SD_NAME + " annotation for experimental support based on SDs.", subState)
+                                // Increment clocks in each state -> no support of hierarchy or concurrency
+                                var region = state.controlflowRegions.head
+                                if (state.controlflowRegions.size > 1) {
+                                    val regionsUsingClock = newLinkedList
+                                    for (r : state.controlflowRegions) {
+                                        var testRegion = r
+                                        while (testRegion.states.size == 1 && testRegion.states.head.outgoingTransitions.empty && testRegion.states.head.controlflowRegions.size == 1) {
+                                            testRegion = testRegion.states.head.controlflowRegions.head
                                         }
+                                        if (testRegion.states.exists[
+                                            outgoingTransitions.filter[trigger !== null].exists[
+                                                eAllContents.filter(ValuedObjectReference).exists[valuedObject == clock]
+                                            ]
+                                        ]) {regionsUsingClock += testRegion}
                                     }
-                                    
-                                    // time progress
-                                    subState.createDuringAction => [
-                                        it.createAssignment(clock, deltaT.reference) => [operator = AssignOperator.ASSIGNADD]
-                                    ]
-                                    
-                                    // sleep time
-                                    if (!noSleep) {
-                                        subState.handleSleep(clock, sleepT)
+                                    region = regionsUsingClock.head
+                                    if (regionsUsingClock.size > 1) {
+                                        environment.errors.add("Cannot handle concurrent timed automata using the same clock. Add @" + USE_SD_NAME + " annotation for experimental support based on schduling directives.", state)
+                                    }
+                                }
+                                
+                                if (region === null) {
+                                    environment.errors.add("Cannot handle concurrent or hierarchical timed automata using the same clock. Add @" + USE_SD_NAME + " annotation for experimental support based on schduling directives.", state)
+                                } else {
+                                    for (subState : region.states.filter[!it.connector].toList) {
+                                        // error case
+                                        if (subState.containsInnerActions || !subState.regions.nullOrEmpty) {
+                                            if (subState.actions.exists[trigger?.eAllContents?.filter(ValuedObjectReference)?.exists[valuedObject == clock]] ||
+                                                subState.controlflowRegions.exists[eAllContents?.filter(ValuedObjectReference)?.exists[valuedObject == clock]]) {
+                                                    environment.errors.add("Cannot handle hierarchical timed automata. Add @" + USE_SD_NAME + " annotation for experimental support based on SDs.", subState)
+                                            }
+                                        }
+                                        
+                                        // time progress
+                                        subState.createDuringAction => [
+                                            val asm = createAssignment
+                                            it.effects += asm
+                                            asm.operator = AssignOperator.ASSIGNADD
+                                            asm.reference = clock.fullReference
+                                            if (clock.declaration.hasAnnotation(LOGICAL_NAME)) {
+                                                asm.expression = createAddExpression(
+                                                    createPreExpression(deviation.reference),
+                                                    createSubExpression(deltaT.reference, deviation.reference)
+                                                )
+                                            } else {
+                                                asm.expression = deltaT.reference
+                                            }
+                                        ]
+                                        
+                                        // sleep time
+                                        if (!noSleep && !subState.connector) {
+                                            subState.handleSleep(clock, sleepT, deviation)
+                                        }
                                     }
                                 }
                             }
@@ -366,12 +424,12 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
         }
     }
     
-    def void handleSleep(State state, ValuedObject clock, ValuedObject sleepT) {
+    def void handleSleep(State state, ValuedObject clock, ValuedObject sleepT, ValuedObject deviation) {
         val constraints = HashMultimap.<Transition, OperatorExpression>create
         val complexConstraints = <OperatorExpression>newArrayList
         for (trans : state.outgoingTransitions.filter[trigger !== null]) {
             for (vor : trans.trigger.eAllContents.filter(ValuedObjectReference).filter[valuedObject == clock].toIterable) {
-                val exp = vor.eContainer
+                var EObject exp = vor.topmostReference.eContainer
                 if (exp instanceof OperatorExpression) {
                     if (exp.subExpressions.size == 2) {
                         if (exp.subExpressions.filter(ValuedObjectReference).size == 1 &&
@@ -395,12 +453,12 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             val op2 = constraint.subExpressions.last
             var Expression exp = null
             if (op1 instanceof ValuedObjectReference) {
-                if (op1.valuedObject === clock) {
+                if (op1.lowermostReference.valuedObject === clock) {
                     exp = op2
                 }
             }
             if (op2 instanceof ValuedObjectReference) {
-                if (op2.valuedObject === clock) {
+                if (op2.lowermostReference.valuedObject === clock) {
                     exp = op1
                 }
             }
@@ -411,8 +469,22 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     environment.errors.add("Malformed timing constraint. Operator "+constraint.operator+" not supported in clock comparison.", constraint)
                 } else {
                     val during = state.createImmediateDuringAction
-                    during.trigger = createLEExpression(clock.reference, exp.copy)
-                    during.createAssignment(sleepT, createSubExpression(exp.copy, clock.reference)).operator = AssignOperator.ASSIGNMIN
+                    during.trigger = createLEExpression(clock.fullReference, exp.copy)
+                    if (clock.declaration.hasAnnotation(LOGICAL_NAME)) {
+                        during.createAssignment(sleepT, 
+                            createSubExpression(exp.copy, createAddExpression(clock.fullReference, deviation.reference))
+                        ).operator = AssignOperator.ASSIGNMIN
+                    } else {
+                        during.createAssignment(sleepT, 
+                            createSubExpression(exp.copy, clock.fullReference)
+                        ).operator = AssignOperator.ASSIGNMIN
+                    }
+                    if (state.hasAnnotation(NO_SLEEP_SD_COPY)) {
+                        during.eAllContents.filter(Schedulable).forEach[schedule.clear]
+                    } else if (!constraint.schedule.empty) {
+                        during.trigger.schedule += constraint.schedule.map[it.copy]
+                        during.effects.head.schedule += constraint.schedule.map[it.copy]
+                    }
                 }
             }
             
@@ -482,10 +554,40 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             thresholds.sortInplace
             for (threshold : thresholds.indexed) {
                 val during = state.createImmediateDuringAction
-                during.trigger = createLEExpression(clock.reference, createClockValue(threshold.value))
-                during.createAssignment(sleepT, createSubExpression(createClockValue(threshold.value), clock.reference)).operator = AssignOperator.ASSIGNMIN
+                during.trigger = createLEExpression(clock.fullReference, createClockValue(threshold.value))
+                if (clock.declaration.hasAnnotation(LOGICAL_NAME)) {
+                    during.createAssignment(sleepT, 
+                        createSubExpression(createClockValue(threshold.value), createAddExpression(clock.fullReference, deviation.reference))
+                    ).operator = AssignOperator.ASSIGNMIN
+                } else {
+                    during.createAssignment(sleepT, 
+                        createSubExpression(createClockValue(threshold.value), clock.fullReference)
+                    ).operator = AssignOperator.ASSIGNMIN
+                }
             }
         }
+    }
+
+    def hasClocks(State state) {
+        return state.declarations.exists[
+            if (it instanceof ClassDeclaration) {
+                return it.allNestedValuedObjects.exists[it.declaration instanceof VariableDeclaration && it.variableDeclaration.type == ValueType.CLOCK]
+            } else if (it instanceof VariableDeclaration) {
+                return type == ValueType.CLOCK
+            } else {
+                return false
+            }
+        ]
+    }
+
+    def getClocks(State state) {
+        val clocks = newArrayList
+        // in state
+        clocks += state.variableDeclarations.filter[type == ValueType.CLOCK].map[valuedObjects].flatten
+        // in class
+        clocks += state.declarations.filter(ClassDeclaration).map[getAllNestedValuedObjects].flatten.filter[it.declaration instanceof VariableDeclaration && it.variableDeclaration.type == ValueType.CLOCK]
+        
+        return clocks       
     }
     
     def boolean isInsignificant(HashMultimap<Transition, OperatorExpression> constraints) {
@@ -539,6 +641,27 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     
     def dispatch createClockValue(String s) {
         createTextExpression(s)
+    }
+    
+    def ValuedObjectReference fullReference(ValuedObject vo) {
+        var ref = vo.reference
+        if (!vo.cardinalities.empty) {
+            environment.errors.add("Cannot yet handle array of clocks.", vo)
+        }
+        while (ref.valuedObject.declaration.enclosingClass !== null) {
+            val clazz = ref.valuedObject.declaration.enclosingClass
+            val subRef = ref
+            ref = clazz.valuedObjects.head.reference
+            ref.subReference = subRef
+            
+            if (clazz.valuedObjects.size() > 1) {
+                environment.errors.add("Cannot yet handle clocks in class with multiple instantiations.", vo)
+            }
+            if (!clazz.valuedObjects.head.cardinalities.empty) {
+                environment.errors.add("Cannot yet handle clocks in arrays of class.", vo)
+            }
+        }
+        return ref
     }
     
     static def findDeltaT(State rootState) {

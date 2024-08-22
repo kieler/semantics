@@ -54,7 +54,10 @@
         eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MethodImplementationDeclaration" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//MethodDeclaration #//Scope"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MethodImplementationDeclaration" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//MethodDeclaration #//Scope">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="implemented" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Loop" eSuperTypes="#//Statement #//Scope">
     <eStructuralFeatures xsi:type="ecore:EReference" name="initialization" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Assignment"
         containment="true"/>

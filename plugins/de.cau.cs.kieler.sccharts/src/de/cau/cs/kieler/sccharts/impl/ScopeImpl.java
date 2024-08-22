@@ -33,6 +33,7 @@ import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 
 import de.cau.cs.kieler.sccharts.LocalAction;
+import de.cau.cs.kieler.sccharts.PolicyRegion;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.ScopeCall;
@@ -70,6 +71,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getActions <em>Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getGenericParameterDeclarations <em>Generic Parameter Declarations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getPolicies <em>Policies</em>}</li>
  * </ul>
  *
  * @generated
@@ -191,6 +193,16 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * @ordered
      */
     protected EList<GenericParameterDeclaration> genericParameterDeclarations;
+
+    /**
+     * The cached value of the '{@link #getPolicies() <em>Policies</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getPolicies()
+     * @generated
+     * @ordered
+     */
+    protected EList<PolicyRegion> policies;
 
     /**
      * <!-- begin-user-doc -->
@@ -389,6 +401,19 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public EList<PolicyRegion> getPolicies() {
+        if (policies == null) {
+            policies = new EObjectContainmentEList<PolicyRegion>(PolicyRegion.class, this, SCChartsPackage.SCOPE__POLICIES);
+        }
+        return policies;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -421,6 +446,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return basicSetReference(null, msgs);
             case SCChartsPackage.SCOPE__GENERIC_PARAMETER_DECLARATIONS:
                 return ((InternalEList<?>)getGenericParameterDeclarations()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.SCOPE__POLICIES:
+                return ((InternalEList<?>)getPolicies()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -451,6 +478,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return getReference();
             case SCChartsPackage.SCOPE__GENERIC_PARAMETER_DECLARATIONS:
                 return getGenericParameterDeclarations();
+            case SCChartsPackage.SCOPE__POLICIES:
+                return getPolicies();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -497,6 +526,10 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 getGenericParameterDeclarations().clear();
                 getGenericParameterDeclarations().addAll((Collection<? extends GenericParameterDeclaration>)newValue);
                 return;
+            case SCChartsPackage.SCOPE__POLICIES:
+                getPolicies().clear();
+                getPolicies().addAll((Collection<? extends PolicyRegion>)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -536,6 +569,9 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             case SCChartsPackage.SCOPE__GENERIC_PARAMETER_DECLARATIONS:
                 getGenericParameterDeclarations().clear();
                 return;
+            case SCChartsPackage.SCOPE__POLICIES:
+                getPolicies().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -566,6 +602,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return reference != null;
             case SCChartsPackage.SCOPE__GENERIC_PARAMETER_DECLARATIONS:
                 return genericParameterDeclarations != null && !genericParameterDeclarations.isEmpty();
+            case SCChartsPackage.SCOPE__POLICIES:
+                return policies != null && !policies.isEmpty();
         }
         return super.eIsSet(featureID);
     }

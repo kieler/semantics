@@ -27,7 +27,8 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#isInput <em>Input</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#isSimple <em>Simple</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#isConst <em>Const</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#getReferenceContainer <em>Reference Container</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceDeclarationImpl#getParameters <em>Parameters</em>}</li>
@@ -37,26 +38,46 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
  *
  * @generated
  */
-public class ReferenceDeclarationImpl extends DeclarationImpl implements ReferenceDeclaration {
+public class ReferenceDeclarationImpl extends IODeclarationImpl implements ReferenceDeclaration {
     /**
-     * The default value of the '{@link #isInput() <em>Input</em>}' attribute.
+     * The default value of the '{@link #isSimple() <em>Simple</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isInput()
+     * @see #isSimple()
      * @generated
      * @ordered
      */
-    protected static final boolean INPUT_EDEFAULT = false;
+    protected static final boolean SIMPLE_EDEFAULT = false;
 
     /**
-     * The cached value of the '{@link #isInput() <em>Input</em>}' attribute.
+     * The cached value of the '{@link #isSimple() <em>Simple</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isInput()
+     * @see #isSimple()
      * @generated
      * @ordered
      */
-    protected boolean input = INPUT_EDEFAULT;
+    protected boolean simple = SIMPLE_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isConst() <em>Const</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isConst()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean CONST_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isConst() <em>Const</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isConst()
+     * @generated
+     * @ordered
+     */
+    protected boolean const_ = CONST_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getReference() <em>Reference</em>}' reference.
@@ -133,8 +154,8 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
      * @generated
      */
     @Override
-    public boolean isInput() {
-        return input;
+    public boolean isSimple() {
+        return simple;
     }
 
     /**
@@ -143,11 +164,34 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
      * @generated
      */
     @Override
-    public void setInput(boolean newInput) {
-        boolean oldInput = input;
-        input = newInput;
+    public void setSimple(boolean newSimple) {
+        boolean oldSimple = simple;
+        simple = newSimple;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.REFERENCE_DECLARATION__INPUT, oldInput, input));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.REFERENCE_DECLARATION__SIMPLE, oldSimple, simple));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean isConst() {
+        return const_;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setConst(boolean newConst) {
+        boolean oldConst = const_;
+        const_ = newConst;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.REFERENCE_DECLARATION__CONST, oldConst, const_));
     }
 
     /**
@@ -295,8 +339,10 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KExpressionsPackage.REFERENCE_DECLARATION__INPUT:
-                return isInput();
+            case KExpressionsPackage.REFERENCE_DECLARATION__SIMPLE:
+                return isSimple();
+            case KExpressionsPackage.REFERENCE_DECLARATION__CONST:
+                return isConst();
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 if (resolve) return getReference();
                 return basicGetReference();
@@ -322,8 +368,11 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KExpressionsPackage.REFERENCE_DECLARATION__INPUT:
-                setInput((Boolean)newValue);
+            case KExpressionsPackage.REFERENCE_DECLARATION__SIMPLE:
+                setSimple((Boolean)newValue);
+                return;
+            case KExpressionsPackage.REFERENCE_DECLARATION__CONST:
+                setConst((Boolean)newValue);
                 return;
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 setReference((EObject)newValue);
@@ -355,8 +404,11 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KExpressionsPackage.REFERENCE_DECLARATION__INPUT:
-                setInput(INPUT_EDEFAULT);
+            case KExpressionsPackage.REFERENCE_DECLARATION__SIMPLE:
+                setSimple(SIMPLE_EDEFAULT);
+                return;
+            case KExpressionsPackage.REFERENCE_DECLARATION__CONST:
+                setConst(CONST_EDEFAULT);
                 return;
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 setReference((EObject)null);
@@ -385,8 +437,10 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KExpressionsPackage.REFERENCE_DECLARATION__INPUT:
-                return input != INPUT_EDEFAULT;
+            case KExpressionsPackage.REFERENCE_DECLARATION__SIMPLE:
+                return simple != SIMPLE_EDEFAULT;
+            case KExpressionsPackage.REFERENCE_DECLARATION__CONST:
+                return const_ != CONST_EDEFAULT;
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 return reference != null;
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE_CONTAINER:
@@ -411,8 +465,10 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
         if (eIsProxy()) return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (input: ");
-        result.append(input);
+        result.append(" (simple: ");
+        result.append(simple);
+        result.append(", const: ");
+        result.append(const_);
         result.append(')');
         return result.toString();
     }
