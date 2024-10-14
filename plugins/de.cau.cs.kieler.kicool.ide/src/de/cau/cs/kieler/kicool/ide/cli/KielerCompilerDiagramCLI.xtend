@@ -22,7 +22,7 @@ import de.cau.cs.kieler.klighd.KlighdDataManager
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.ISynthesis
-import de.cau.cs.kieler.klighd.standalone.KlighdStandaloneSetup
+import de.cau.cs.kieler.klighd.setup.KlighdStandaloneSetup
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import java.io.File
 import java.util.Map

@@ -3,7 +3,7 @@
  * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2018 by
+ * Copyright 2018-2024 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -13,6 +13,8 @@
 package de.cau.cs.kieler.language.server.kicool
 
 import de.cau.cs.kieler.language.server.kicool.data.CodeOfModel
+import de.cau.cs.kieler.language.server.kicool.data.CompileParam
+import de.cau.cs.kieler.language.server.kicool.data.ShowParam
 import java.util.concurrent.CompletableFuture
 import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
 import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
@@ -31,8 +33,7 @@ interface KiCoolCommandExtension {
      * Compiles file given by uri with compilationsystem given by command.
      */
     @JsonNotification('compile')
-    def void compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel,
-        boolean snapshot);
+    def void compile(CompileParam param);
 
     /**
      * Cancels the current compilation by stopping the current compilation thread.
@@ -44,7 +45,7 @@ interface KiCoolCommandExtension {
      * Build diagram for snapshot with id index for file given by uri. Only works, if the file was already compiled.
      */
     @JsonRequest('show')
-    def CompletableFuture<String> show(String uri, String clientId, int index)
+    def CompletableFuture<String> show(ShowParam param)
 
     /**
      * Returns all compilation systems which are applicable for the file at given uri.
@@ -55,9 +56,10 @@ interface KiCoolCommandExtension {
     @JsonNotification('get-systems')
     def void getSystems(String uri);
 
-    /**
-     * Request the contents of a CodeContainer as string together with its file name
-     */
-    @JsonRequest("get-code-of-model")
-    def CompletableFuture<CodeOfModel> getCodeOfModel(String kgraphElemntId, String clientId);
+    // Currently unused, needs to be converted to use a single parameter.
+//    /**
+//     * Request the contents of a CodeContainer as string together with its file name
+//     */
+//    @JsonRequest("get-code-of-model")
+//    def CompletableFuture<CodeOfModel> getCodeOfModel(String kgraphElemntId, String clientId);
 }
