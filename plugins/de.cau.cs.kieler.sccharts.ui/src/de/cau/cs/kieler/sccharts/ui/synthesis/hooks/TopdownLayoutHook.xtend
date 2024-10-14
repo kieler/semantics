@@ -86,11 +86,15 @@ class TopdownLayoutHook extends SynthesisHook {
         SynthesisOption.createChoiceOption("State Size Approximator", #["Lookahead Layout", "Dynamic", "Layered Heuristic"], "Layered Heuristic")
             .setCategory(GeneralSynthesisOptions::LAYOUT)
             
+    public static final SynthesisOption DISABLE_RECTPACKING_EXPANSION =
+        SynthesisOption.createCheckOption("Disable Rectpacking Expansion", false)
+            .setCategory(GeneralSynthesisOptions::LAYOUT)
+            
 //    public static final SynthesisOption
     
     override getDisplayedSynthesisOptions() {
         return #[CONSERVATIVE_SPLINES, USE_TOPDOWN_LAYOUT, SCALE_CAP, WHITESPACE_ELIMINATION_STRATEGY, TOPDOWN_LAYOUT_CHOICE, TOPDOWN_HIERARCHICAL_NODE_WIDTH,
-            TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, REGION_SIZE_APPROXIMATOR, STATE_SIZE_APPROXIMATOR
+            TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, REGION_SIZE_APPROXIMATOR, STATE_SIZE_APPROXIMATOR, DISABLE_RECTPACKING_EXPANSION
         ]
     }
     
@@ -146,6 +150,10 @@ class TopdownLayoutHook extends SynthesisHook {
 //            node.setLayoutOption(RectPackingOptions::WHITE_SPACE_ELIMINATION_STRATEGY, null)
             node.setLayoutOption(CoreOptions::CONTENT_ALIGNMENT, EnumSet.of(ContentAlignment.V_CENTER, ContentAlignment.H_CENTER))
         } 
+        if (!DISABLE_RECTPACKING_EXPANSION.booleanValue) {
+            node.setLayoutOption(RectPackingOptions::WHITE_SPACE_ELIMINATION_STRATEGY, null)
+        
+        }
     }
     
     override processRegion(Region region, KNode node) {
@@ -219,6 +227,10 @@ class TopdownLayoutHook extends SynthesisHook {
             node.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.ROOT_NODE)
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
+            
+            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, 1500.0)
+            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, 2.5)
+            
         }
     }
 }
