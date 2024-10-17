@@ -12,15 +12,15 @@
     <!-- Language server dependency versions -->
     <elk-version>0.9.1</elk-version>
     <klighd-version>3.0.2.v20240507</klighd-version>
-    <lsp4j-version>0.22.0</lsp4j-version>
+    <lsp4j-version>0.23.0</lsp4j-version>
     <pragmatics-version>0.51.0.v20240410</pragmatics-version>
 
     <!-- Xtext compile dependency versions -->
-    <xtend-version>2.34.0</xtend-version>
-    <xtext-version>2.34.0</xtext-version>
+    <xtend-version>2.36.0</xtend-version>
+    <xtext-version>2.36.0</xtext-version>
 
     <!-- Tycho -->
-    <tycho-version>2.7.5</tycho-version>
+    <tycho-version>4.0.8</tycho-version>
     <tycho.disableP2Mirrors>true</tycho.disableP2Mirrors>
 
     <!-- Java -->
