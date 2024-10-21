@@ -20,7 +20,7 @@
     <xtext-version>2.36.0</xtext-version>
 
     <!-- Tycho -->
-    <tycho-version>4.0.8</tycho-version>
+    <tycho-version>2.7.5</tycho-version>
     <tycho.disableP2Mirrors>true</tycho.disableP2Mirrors>
 
     <!-- Java -->
