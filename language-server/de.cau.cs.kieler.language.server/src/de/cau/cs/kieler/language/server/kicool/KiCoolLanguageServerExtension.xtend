@@ -52,6 +52,7 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
+import de.cau.cs.kieler.core.services.KielerLanguage
 
 /**
  * Implements methods to extend the LSP to allow compilation. Moreover, getting compilation systems and showing
@@ -63,6 +64,8 @@ import org.eclipse.xtext.util.CancelIndicator
 class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolCommandExtension, ILanguageClientProvider {
 
     protected static val LOG = Logger.getLogger(KiCoolLanguageServerExtension)
+    
+    protected static val LANGUAGES = KielerLanguage.getAllRegisteredLanguages()
 
     @Inject @Accessors(PUBLIC_GETTER) RequestManager requestManager
 
@@ -305,16 +308,29 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
      * @return CS specified by the above parameters.
      */
     def getCompilationSystems(String uri, int index, boolean filterForSimulation, boolean snapshotModel) {
-        var Object model
+        var Class<?> modelClass
         if (snapshotModel && diagramState !== null && diagramState.getKGraphContext(uri) !== null) {
-           model = diagramState.getKGraphContext(uri).inputModel
+           modelClass = diagramState.getKGraphContext(uri).inputModel?.class
         } else if (index != -1) {
-            model = this.objectMap.get(uri).get(index)
+            modelClass = this.objectMap.get(uri).get(index)?.class
         } else {
-            // get model of model specified by uri   
-            model = getModelFromUri(uri)
+            for(l : LANGUAGES) {
+                for(ext: l.supportedResourceExtensions) {
+                    if (uri.endsWith(ext)) {
+                        if (l.supportedModels.size == 1) {
+                           modelClass = l.supportedModels.head
+                        } else {
+                           modelClass = l.supportedModels.get(l.supportedResourceExtensions.indexOf(ext))
+                        }
+                    }
+                }
+            }
+            if (modelClass === null) {
+                // get model of model specified by uri (reparsing)
+               modelClass = getModelFromUri(uri)?.class
+            }
         }
-        return getCompilationSystems(model, filterForSimulation, snapshotModel)
+        return getCompilationSystems(modelClass, filterForSimulation, snapshotModel)
     }
     
     /**
@@ -324,10 +340,10 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
      * @param filterForSimulation true if only simulation cs should be returned
      * @return CS specified by the above parameters.
      */
-    def getCompilationSystems(Object model, boolean filterForSimulation, boolean snapshotModel) {
+    def getCompilationSystems(Class<?> modelClass, boolean filterForSimulation, boolean snapshotModel) {
         this.getSystemsThread = new GetSystemsThread([
-            if (model !== null && model.class !== modelClassFilter) {
-                modelClassFilter = model.class
+            if (modelClass !== null && modelClass !== modelClassFilter) {
+                modelClassFilter = modelClass
             }
             var systems = getSystemModels(true, modelClassFilter)
             var systemDescriptions = getSystemDescription(systems, snapshotModel)
