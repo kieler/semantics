@@ -135,6 +135,19 @@
       <version>${lsp4j-version}</version>
     </dependency>
     
+    
+    <!-- Somehow important -->
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.core.runtime</artifactId>
+      <version>3.31.100</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.equinox.common</artifactId>
+      <version>3.19.100</version>
+    </dependency>
+    
     <!-- Additional dependencies that the downstream Eclipse bundles do not list as Maven dependencies. -->
     
     <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
@@ -147,7 +160,7 @@
     <dependency>
       <groupId>org.eclipse.jdt</groupId>
       <artifactId>org.eclipse.jdt.core</artifactId>
-      <version>3.30.0</version>
+      <version>3.39.0</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
     <!-- <dependency>

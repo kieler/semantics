@@ -463,7 +463,7 @@
             versionRange="2.7.0"/>
         <requirement
             name="org.eclipse.xtext.sdk.feature.group"
-            versionRange="[2.34.0,2.35.0)"/>
+            versionRange="[2.36.0,2.37.0)"/>
         <requirement
             name="org.eclipse.emf.mwe2.launcher.feature.group"/>
         <requirement
@@ -519,11 +519,11 @@
         <repositoryList
             name="FixedTarget">
           <repository
-              url="https://download.eclipse.org/releases/2024-03"/>
+              url="https://download.eclipse.org/releases/2024-09"/>
           <repository
-              url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.31.0"/>
+              url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.32.0"/>
           <repository
-              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.34.0/"/>
+              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.36.0/"/>
           <repository
               url="https://download.eclipse.org/elk/updates/releases/0.9.1/"/>
           <repository
@@ -539,7 +539,7 @@
         xsi:type="setup.p2:P2Task">
       <requirement
           name="org.eclipse.xtext.sdk.feature.group"
-          versionRange="[2.34.0,2.35.0)"/>
+          versionRange="[2.36.0,2.37.0)"/>
       <repository
           url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
     </setupTask>
