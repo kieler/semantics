@@ -13,11 +13,13 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis.hooks
 
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
 import java.util.EnumSet
 import java.util.HashMap
@@ -26,7 +28,6 @@ import org.eclipse.elk.alg.layered.options.LayerUnzippingStrategy
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.options.LayeredSizeApproximator
 import org.eclipse.elk.alg.layered.options.SplineRoutingMode
-import org.eclipse.elk.alg.layered.options.WrappingStrategy
 import org.eclipse.elk.alg.rectpacking.options.RectPackingOptions
 import org.eclipse.elk.alg.rectpacking.options.RectpackingSizeApproximator
 import org.eclipse.elk.alg.rectpacking.p3whitespaceelimination.WhiteSpaceEliminationStrategy
@@ -39,6 +40,7 @@ import org.eclipse.elk.core.options.TopdownNodeTypes
 import org.eclipse.elk.core.options.TopdownSizeApproximator
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 
 /**
  * @author mka
@@ -90,11 +92,15 @@ class TopdownLayoutHook extends SynthesisHook {
         SynthesisOption.createCheckOption("Disable Rectpacking Expansion", false)
             .setCategory(GeneralSynthesisOptions::LAYOUT)
             
+    public static final SynthesisOption WRAPPING_FUZZINESS = 
+        SynthesisOption.createRangeOption("Wrapping Fuzziness (permitted overhang in %)", 0, 100, 1, 20)
+            .setCategory(GeneralSynthesisOptions::LAYOUT)
+            
 //    public static final SynthesisOption
     
     override getDisplayedSynthesisOptions() {
         return #[CONSERVATIVE_SPLINES, USE_TOPDOWN_LAYOUT, SCALE_CAP, WHITESPACE_ELIMINATION_STRATEGY, TOPDOWN_LAYOUT_CHOICE, TOPDOWN_HIERARCHICAL_NODE_WIDTH,
-            TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, REGION_SIZE_APPROXIMATOR, STATE_SIZE_APPROXIMATOR, DISABLE_RECTPACKING_EXPANSION
+            TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, REGION_SIZE_APPROXIMATOR, STATE_SIZE_APPROXIMATOR, DISABLE_RECTPACKING_EXPANSION, WRAPPING_FUZZINESS
         ]
     }
     
@@ -203,6 +209,12 @@ class TopdownLayoutHook extends SynthesisHook {
         }
     }
     
+    override processTransition(Transition transition, KEdge edge) {
+        edge.labels.forEach[
+            it.setProperty(CoreOptions::SOFTWRAPPING_FUZZINESS, WRAPPING_FUZZINESS.intValue / 100.0)
+        ]
+    }
+    
     override start(Scope scope, KNode node) {
         
         val optionValueMap = new HashMap();
@@ -228,8 +240,13 @@ class TopdownLayoutHook extends SynthesisHook {
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
             
-            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, 1500.0)
-            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, 2.5)
+//            // HARD-CODED FOR POSTERWALL
+//            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, 1500.0)
+//            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, 2.5)
+
+            // HARD-CODED FOR PAPER POSTER "DRIVE"
+            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, 800.0)
+            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, 0.9)
             
         }
     }
