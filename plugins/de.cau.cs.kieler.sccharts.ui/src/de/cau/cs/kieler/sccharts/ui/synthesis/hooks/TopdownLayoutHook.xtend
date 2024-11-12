@@ -42,21 +42,24 @@ class TopdownLayoutHook extends SynthesisHook {
     public static final SynthesisOption USE_TOPDOWN_LAYOUT = 
         SynthesisOption.createCheckOption(TopdownLayoutHook, "Topdown Layout", false)
             .setCategory(GeneralSynthesisOptions::LAYOUT)
-            
-    public static final SynthesisOption TOPDOWN_HIERARCHICAL_NODE_WIDTH = 
-        SynthesisOption.createRangeOption("Topdown Hierarchical Node Width", 50.0f, 5000.0f, 1.0f, 150.0f)
-            .setCategory(GeneralSynthesisOptions::LAYOUT)
-            
-    public static final SynthesisOption TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO = 
-        SynthesisOption.createRangeOption("Topdown Hierarchical Node Aspect Ratio", 0.2f, 5.0f, 0.01f, 1.41f)
-            .setCategory(GeneralSynthesisOptions::LAYOUT)
+            .description = "Use top-down layout instead of bottom-up layout to generate the diagram."
             
     public static final SynthesisOption SCALE_CAP = 
         SynthesisOption.createCheckOption(TopdownLayoutHook, "Enable Scale Cap", true)
             .setCategory(GeneralSynthesisOptions::LAYOUT)
+            .description = "If the scale cap is enabled, elements will only be scaled down. Otherwise they will be 
+                            scaled up to fill all the available space."
             
+    public static final SynthesisOption TOPDOWN_HIERARCHICAL_NODE_WIDTH = 
+        SynthesisOption.createRangeOption(TopdownLayoutHook, "Topdown Hierarchical Node Width", 50.0f, 5000.0f, 1.0f, 150.0f)
+            .setCategory(GeneralSynthesisOptions::LAYOUT)
+            .description = "The fixed width to assign to all hierarchical nodes."
             
-//    public static final SynthesisOption
+    public static final SynthesisOption TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO = 
+        SynthesisOption.createRangeOption(TopdownLayoutHook, "Topdown Hierarchical Node Aspect Ratio", 0.2f, 5.0f, 0.01f, 1.41f)
+            .setCategory(GeneralSynthesisOptions::LAYOUT)
+            .description = "The aspect ratio all hierarchical nodes should have. Determines the height of the nodes."
+            
     
     override getDisplayedSynthesisOptions() {
         return #[
