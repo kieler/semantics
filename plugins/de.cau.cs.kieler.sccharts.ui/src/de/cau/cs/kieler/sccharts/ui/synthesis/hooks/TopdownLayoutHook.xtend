@@ -40,7 +40,6 @@ import org.eclipse.elk.core.options.TopdownNodeTypes
 import org.eclipse.elk.core.options.TopdownSizeApproximator
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.klighd.util.KlighdProperties
 
 /**
  * @author mka
@@ -178,6 +177,12 @@ class TopdownLayoutHook extends SynthesisHook {
         
 //        node.setLayoutOption(LayeredOptions.WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
         
+        if (SCALE_CAP.booleanValue) {
+            node.setLayoutOption(CoreOptions::TOPDOWN_SCALE_CAP, 1.0)
+        } else {
+            node.setLayoutOption(CoreOptions::TOPDOWN_SCALE_CAP, Double.MAX_VALUE)
+        }
+        
         if (USE_TOPDOWN_LAYOUT.booleanValue && TOPDOWN_LAYOUT_CHOICE.objectValue.equals("Variant 1")) {
             node.setLayoutOption(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
             node.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.HIERARCHICAL_NODE)
@@ -222,6 +227,11 @@ class TopdownLayoutHook extends SynthesisHook {
 //        optionValueMap.put(CoreOptions.LABEL_MANAGER, #[SemanticSoftWrappingLabelManager, TruncatingLabelManager])
         node.setLayoutOption(CoreOptions::TOPDOWN_OPTION_VALUE_MAP, optionValueMap)
         
+        if (SCALE_CAP.booleanValue) {
+            node.setLayoutOption(CoreOptions::TOPDOWN_SCALE_CAP, 1.0)
+        } else {
+            node.setLayoutOption(CoreOptions::TOPDOWN_SCALE_CAP, Double.MAX_VALUE)
+        }
         
         node.setProperty(CoreOptions::TOPDOWN_LAYOUT, USE_TOPDOWN_LAYOUT.booleanValue)
         if (USE_TOPDOWN_LAYOUT.booleanValue && TOPDOWN_LAYOUT_CHOICE.objectValue.equals("Variant 1")) {
