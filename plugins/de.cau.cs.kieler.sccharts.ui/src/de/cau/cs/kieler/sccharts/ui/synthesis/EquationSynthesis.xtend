@@ -35,15 +35,14 @@ import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.ui.synthesis.KGTLoader
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
-import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.klighd.krendering.KRendering
-import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
@@ -986,17 +985,25 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
                 val inputNames = <String, KNode>newHashMap
                 for (inputNode : child.children.filter(KNode).filter[getProperty(INPUT_FLAG)]) {
-                    val name = inputNode.data.filter(KPolygon).head.children.filter(KText).head.text
-                    inputNames.put(name, inputNode)
+                    val valuedObjectRef = inputNode.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                    // only care for inputs that have a valued object as a reference, ignore others such as constants.
+                    if (valuedObjectRef instanceof ValuedObjectReference) {
+                        val name = valuedObjectRef.valuedObject.name
+                        inputNames.put(name, inputNode)
+                    }
                 }
                 val outputNames = <String, KNode>newHashMap
                 for (outputNode : child.children.filter(KNode).filter[getProperty(OUTPUT_FLAG)]) {
-                    val name = outputNode.data.filter(KPolygon).head.children.filter(KText).head.text
-                    outputNames.put(name, outputNode)
+                    val valuedObjectRef = outputNode.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                    if (valuedObjectRef instanceof ValuedObjectReference) {
+                        val name = valuedObjectRef.valuedObject.name
+                        outputNames.put(name, outputNode)
+                    }
                 }
 
                 for (port : node.ports.immutableCopy.reverseView) {
-                    val portName = port.labels.head?.text
+                    val reference = port.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                    val portName = if(reference instanceof ValuedObjectReference) reference.valuedObject.name else ""
                     val portSide = port.portSide
                     val newPort = port.copy
 
