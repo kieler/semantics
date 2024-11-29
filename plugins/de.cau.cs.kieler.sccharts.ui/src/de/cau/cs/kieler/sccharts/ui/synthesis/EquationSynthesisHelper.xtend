@@ -339,7 +339,6 @@ class EquationSynthesisHelper {
             return
         }
         val edge = createEdge
-        DiagramSyntheses.setLayoutOption(edge, LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
         edge.source = source.node
         edge.sourcePort = source
         edge.target = target.node

@@ -26,6 +26,7 @@ import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -763,7 +764,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                         ]
                         target.ports.add(targetPort)
                     }
-                    edge.setLayoutOption(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
                     edge.source = source
                     edge.sourcePort = sourcePort
                     edge.target = target
@@ -860,7 +860,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             ]
             after.ports.add(targetPort)
         }
-        edge.setLayoutOption(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
         edge.source = before
         edge.sourcePort = sourcePort
         edge.target = after
@@ -1049,6 +1048,30 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         for (node : inlinedNodes) {
             nodes.betterRemove(node, null)
         }
+        
+        
+        // activate inside self loops on inlined reference nodes that directly connect an input to an output.
+        for (refNode : nodes.filter [properties.get(KlighdInternalProperties.MODEL_ELEMENT) instanceof DataflowRegion]) {
+            // inside self loops go directly from an input to an output.
+            val insideSelfLoops = refNode.outgoingEdges.filter[ 
+                val sourceElement = it.sourcePort.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                val targetElement = it.targetPort.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                return refNode.incomingEdges.contains(it) 
+                    && sourceElement instanceof ValuedObjectReference
+                    && targetElement instanceof ValuedObjectReference
+                    && (sourceElement as ValuedObjectReference).valuedObject.eContainer instanceof VariableDeclaration
+                    && (targetElement as ValuedObjectReference).valuedObject.eContainer instanceof VariableDeclaration
+                    && ((sourceElement as ValuedObjectReference).valuedObject.eContainer as VariableDeclaration).isInput
+                    && ((targetElement as ValuedObjectReference).valuedObject.eContainer as VariableDeclaration).isOutput
+            ]
+            insideSelfLoops.forEach [
+                addLayoutParam(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
+            ]
+            if (!insideSelfLoops.empty) {
+                refNode.addLayoutParam(LayeredOptions.INSIDE_SELF_LOOPS_ACTIVATE, true)
+            }
+        }
+        
         return nodes
     }
     
