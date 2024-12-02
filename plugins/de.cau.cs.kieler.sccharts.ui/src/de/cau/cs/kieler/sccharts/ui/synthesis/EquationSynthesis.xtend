@@ -1002,16 +1002,17 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     }
                 }
 
+                // go through all ports, but the non-east ones in reverse. Avoids accitental Swastika in many examples.
                 for (port : node.ports.immutableCopy.reverseView) {
-                    val reference = port.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
-                    val portName = if(reference instanceof ValuedObjectReference) reference.valuedObject.name else ""
                     val portSide = port.portSide
-                    val newPort = port.copy
-
-                    newPort.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0d)
-                    child.ports += newPort
-
                     if (portSide != PortSide.EAST) {
+                        val reference = port.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                        val portName = if(reference instanceof ValuedObjectReference) reference.valuedObject.name else ""
+                        val newPort = port.copy
+    
+                        newPort.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0d)
+                        child.ports += newPort
+
                         for (edge : node.incomingEdges.immutableCopy.filter[targetPort == port]) {
                             edge.target = child
                             edge.targetPort = newPort
@@ -1026,7 +1027,17 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                                 inputNode.remove
                             }
                         }
-                    } else if (portSide == PortSide.EAST) {
+                    }
+                }
+                for (port : node.ports.immutableCopy) {
+                    val portSide = port.portSide
+                    if (portSide == PortSide.EAST) {
+                        val reference = port.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                        val portName = if(reference instanceof ValuedObjectReference) reference.valuedObject.name else ""
+                        val newPort = port.copy
+    
+                        newPort.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0d)
+                        child.ports += newPort
                         for (edge : node.outgoingEdges.immutableCopy.filter[sourcePort == port]) {
                             edge.source = child
                             edge.sourcePort = newPort
