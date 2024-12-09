@@ -76,7 +76,6 @@ class ControlflowRegionStyles {
             background = REGION_BACKGROUND.color;
             foreground = REGION_FOREGROUND.color;
             lineWidth = 1;
-//            setSurroundingSpace(2, 0);
         ]
     }
     
