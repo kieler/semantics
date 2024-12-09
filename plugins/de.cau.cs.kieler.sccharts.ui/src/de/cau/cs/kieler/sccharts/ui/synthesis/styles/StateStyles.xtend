@@ -377,9 +377,10 @@ class StateStyles {
     /**
      * Add a child area to a macro state
      */
-    def addRegionsArea(KNode node) {
+    def addRegionsArea(KNode node, State state) {
         node.contentContainer.addChildArea().setGridPlacementData() => [
-            from(LEFT, 5, 0, TOP, -4, 0).to(RIGHT, 5, 0, BOTTOM, 5, 0)
+            val spacing = state.isInitial ? 9 : 7;
+            from(LEFT, spacing, 0, TOP, -4, 0).to(RIGHT, spacing, 0, BOTTOM, spacing, 0)
             minCellHeight = 5;
             minCellWidth = 5;
         ]
