@@ -491,7 +491,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         node.setLayoutOption(RectPackingOptions.WHITE_SPACE_ELIMINATION_STRATEGY, WhiteSpaceEliminationStrategy.EQUAL_BETWEEN_STRUCTURES)
         node.setLayoutOption(RectPackingOptions.OMIT_NODE_MICRO_LAYOUT, true)
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0))
-        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
+        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 5.0)
     }
     
     def static void configureLayoutRegionDependencies(KNode node) {
