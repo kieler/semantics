@@ -95,7 +95,6 @@ class TopdownLayoutHook extends SynthesisHook {
         SynthesisOption.createRangeOption("Wrapping Fuzziness (permitted overhang in %)", 0, 100, 1, 20)
             .setCategory(GeneralSynthesisOptions::LAYOUT)
             
-//    public static final SynthesisOption
     
     override getDisplayedSynthesisOptions() {
         return #[CONSERVATIVE_SPLINES, USE_TOPDOWN_LAYOUT, SCALE_CAP, WHITESPACE_ELIMINATION_STRATEGY, TOPDOWN_LAYOUT_CHOICE, TOPDOWN_HIERARCHICAL_NODE_WIDTH,
@@ -146,18 +145,17 @@ class TopdownLayoutHook extends SynthesisHook {
                 case "Layered Heuristic": node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, LayeredSizeApproximator.LAYERED_ASPECT_RATIO_LOOKAHEAD)
             }
             node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, null); // TESTING
+            
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
             if (WHITESPACE_ELIMINATION_STRATEGY.objectValue.equals("Aspect Ratio")) {
                 node.setLayoutOption(RectPackingOptions::WHITE_SPACE_ELIMINATION_STRATEGY, WhiteSpaceEliminationStrategy.TO_ASPECT_RATIO) 
                 // to use I need to set RectPacking.ASPECT_RATIO dynamically, so make a Rectpacking Size Approximator as well?
             }
-//            node.setLayoutOption(RectPackingOptions::WHITE_SPACE_ELIMINATION_STRATEGY, null)
             node.setLayoutOption(CoreOptions::CONTENT_ALIGNMENT, EnumSet.of(ContentAlignment.V_CENTER, ContentAlignment.H_CENTER))
         } 
-        if (!DISABLE_RECTPACKING_EXPANSION.booleanValue) {
+        if (DISABLE_RECTPACKING_EXPANSION.booleanValue) {
             node.setLayoutOption(RectPackingOptions::WHITE_SPACE_ELIMINATION_STRATEGY, null)
-        
         }
     }
     
@@ -172,7 +170,7 @@ class TopdownLayoutHook extends SynthesisHook {
 //        optionValueMap.put(LayeredOptions::LAYERING_NODE_PROMOTION_STRATEGY, #[NodePromotionStrategy.NONE, NodePromotionStrategy.MODEL_ORDER_LEFT_TO_RIGHT, NodePromotionStrategy.MODEL_ORDER_RIGHT_TO_LEFT, NodePromotionStrategy.NIKOLOV_IMPROVED])
 //        optionValueMap.put(LayeredOptions::LAYERING_STRATEGY, #[LayeringStrategy.MIN_WIDTH, LayeringStrategy.STRETCH_WIDTH])
 
-        optionValueMap.put(LayeredOptions::LAYER_UNZIPPING_STRATEGY, #[LayerUnzippingStrategy.N_LAYERS, LayerUnzippingStrategy.NONE])
+        optionValueMap.put(LayeredOptions::LAYER_UNZIPPING_STRATEGY, #[LayerUnzippingStrategy.ALTERNATING, LayerUnzippingStrategy.NONE])
         node.setLayoutOption(CoreOptions::TOPDOWN_OPTION_VALUE_MAP, optionValueMap)
         
 //        node.setLayoutOption(LayeredOptions.WRAPPING_STRATEGY, WrappingStrategy.SINGLE_EDGE)
@@ -204,6 +202,9 @@ class TopdownLayoutHook extends SynthesisHook {
                 case "Expand to Aspect Ratio": node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, RectpackingSizeApproximator.RECTPACKING_EXPAND_TO_ASPECT_RATIO_LOOKAHEAD)
             }
             node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, null); // TESTING
+            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, LayeredSizeApproximator.FIXED_INTEGER_RATIO_BOXES);
+            
+            
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
             node.setLayoutOption(CoreOptions::CONTENT_ALIGNMENT, EnumSet.of(ContentAlignment.V_CENTER, ContentAlignment.H_CENTER))
@@ -251,12 +252,12 @@ class TopdownLayoutHook extends SynthesisHook {
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
             
 //            // HARD-CODED FOR POSTERWALL
-//            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, 1500.0)
-//            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, 2.5)
+            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, 1500.0)
+            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, 2.5)
 
             // HARD-CODED FOR PAPER POSTER "DRIVE"
-            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, 800.0)
-            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, 0.9)
+//            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, 800.0)
+//            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, 0.9)
             
         }
     }
