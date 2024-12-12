@@ -412,7 +412,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 || !state.declarations.filter(MethodImplementationDeclaration).empty
                 || (SHOW_INSTANCES.booleanValue && !state.declarations.filter(ReferenceDeclaration).empty)
             ) {
-                node.addRegionsArea
+                node.addRegionsArea(state)
                 node.setLayoutOption(CoreOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
             }
         }
@@ -540,7 +540,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         node.setLayoutOption(RectPackingOptions.WHITE_SPACE_ELIMINATION_STRATEGY, WhiteSpaceEliminationStrategy.EQUAL_BETWEEN_STRUCTURES)
         node.setLayoutOption(RectPackingOptions.OMIT_NODE_MICRO_LAYOUT, true)
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0))
-        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
+        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 5.0)
     }
     
     def static void configureLayoutRegionDependencies(KNode node) {

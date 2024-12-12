@@ -34,7 +34,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'
-          distribution: 'adopt'
+          distribution: 'temurin'
       
       # Configure maven artifact caching
       - name: Cache local Maven repository

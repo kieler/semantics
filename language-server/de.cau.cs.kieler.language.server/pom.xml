@@ -40,6 +40,56 @@
     <!-- Other depencencies -->
 
     <dependency>
+      <groupId>org.eclipse.elk</groupId>
+      <artifactId>org.eclipse.elk.alg.disco</artifactId>
+      <version>${elk-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.elk</groupId>
+      <artifactId>org.eclipse.elk.alg.force</artifactId>
+      <version>${elk-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.elk</groupId>
+      <artifactId>org.eclipse.elk.alg.graphviz.dot</artifactId>
+      <version>${elk-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.elk</groupId>
+      <artifactId>org.eclipse.elk.alg.graphviz.layouter</artifactId>
+      <version>${elk-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.elk</groupId>
+      <artifactId>org.eclipse.elk.alg.layered</artifactId>
+      <version>${elk-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.elk</groupId>
+      <artifactId>org.eclipse.elk.alg.mrtree</artifactId>
+      <version>${elk-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.elk</groupId>
+      <artifactId>org.eclipse.elk.alg.radial</artifactId>
+      <version>${elk-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.elk</groupId>
+      <artifactId>org.eclipse.elk.alg.rectpacking</artifactId>
+      <version>${elk-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.elk</groupId>
+      <artifactId>org.eclipse.elk.alg.spore</artifactId>
+      <version>${elk-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.elk</groupId>
+      <artifactId>org.eclipse.elk.alg.topdownpacking</artifactId>
+      <version>${elk-version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.eclipse.xtext</groupId>
       <artifactId>org.eclipse.xtext</artifactId>
       <version>${xtext-version}</version>
@@ -85,6 +135,19 @@
       <version>${lsp4j-version}</version>
     </dependency>
     
+    
+    <!-- Somehow important -->
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.core.runtime</artifactId>
+      <version>3.31.100</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.equinox.common</artifactId>
+      <version>3.19.100</version>
+    </dependency>
+    
     <!-- Additional dependencies that the downstream Eclipse bundles do not list as Maven dependencies. -->
     
     <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
@@ -97,7 +160,7 @@
     <dependency>
       <groupId>org.eclipse.jdt</groupId>
       <artifactId>org.eclipse.jdt.core</artifactId>
-      <version>3.30.0</version>
+      <version>3.39.0</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
     <!-- <dependency>
