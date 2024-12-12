@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Action
@@ -129,7 +130,13 @@ class Signal extends SCChartsProcessor implements Traceable {
         val allSignals = state.signals.toList
         allSignals.setDefaultTrace
 
-        // !!!CHANGED
+        if (state.declarations.exists[it instanceof ClassDeclaration]) {
+            for (classDecl : state.declarations.filter(ClassDeclaration)) {
+                if (classDecl.allNestedValuedObjects.exists[it.isSignal]) {
+                    environment.errors.add("Signals in class declarations not yet supported", classDecl)
+                }
+            }
+        }
         if (allSignals.nullOrEmpty) {
             return
         }
