@@ -360,6 +360,7 @@ class Initialization extends SCChartsProcessor implements Traceable {
             
     	    init = SCLFactory.eINSTANCE.createMethodImplementationDeclaration => [
     	        access = AccessModifier.PUBLIC
+    	        implemented = true
     	        returnType = ValueType.VOID
     	        valuedObjects += createValuedObject(INIT_METHOD)
     	        statements += initStatements
