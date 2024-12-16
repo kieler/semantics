@@ -145,6 +145,10 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
         // Handle Policies
         // ---------------
         val policiesClasses = rootState.allScopes.map[declarations.iterator].flatten.filter(PolicyClassDeclaration).filter[!policies.empty].toList
+        
+        // Not yet implemented
+        rootState.allStates.filter[!it.policies.empty].forEach[environment.errors.add("Policies in SCCharts for general scheduling not yet supported. Please instantiate the SCChart as a class using 'ref'")]
+        
         for (policyClass : policiesClasses) {
             for (policy : policyClass.policies) {
                 val methods = policyClass.declarations.filter(MethodDeclaration).toList
