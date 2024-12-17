@@ -442,7 +442,28 @@ class Inheritance extends SCChartsProcessor implements Traceable {
             }
             // Replace bound types
             // TODO support inheriting from generic type
-            val referencesDecls = newDecls.filter(ReferenceDeclaration).filter[reference !== null]
+            val referencesDecls = newArrayList()
+            val referencesReturnMethods = newArrayList()
+            for (decl : newDecls) {
+                if (decl instanceof ReferenceDeclaration) {
+                    if (decl.reference !== null) {
+                        referencesDecls += decl
+                    }
+                } else if (decl instanceof MethodDeclaration) {
+                    // Parameters with generic types
+                    for (pDecl : decl.parameterDeclarations) {
+                        if (pDecl instanceof ReferenceDeclaration) {
+                            if (pDecl.reference !== null) {
+                                referencesDecls += pDecl
+                            }
+                        }
+                    }
+                    // Return types
+                    if (decl.returnReference !== null) {
+                        referencesReturnMethods += decl
+                    }
+                }
+            }
             for (refDecl : referencesDecls) {
                 if (refDecl.reference.isGenericParamter) {
                     val typeExpr = typeReplacements.get((refDecl.reference as ValuedObject))
@@ -463,6 +484,19 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                         vDecl.valuedObjects += refDecl.valuedObjects
                         vDecl.access = refDecl.access
                         refDecl.replace(vDecl)
+                    }
+                }
+            }
+            for (method : referencesReturnMethods) {
+                if (method.returnReference.isGenericParamter) {
+                    val typeExpr = typeReplacements.get((method.returnReference as ValuedObject))
+                    if (typeExpr instanceof GenericTypeReference) {
+                        if (typeExpr.type instanceof Scope) {
+                            method.returnReference = typeExpr.type
+                        }
+                    } else if (typeExpr instanceof ValueTypeReference) {
+                        method.returnType = typeExpr.valueType
+                        method.returnReference = null
                     }
                 }
             }
