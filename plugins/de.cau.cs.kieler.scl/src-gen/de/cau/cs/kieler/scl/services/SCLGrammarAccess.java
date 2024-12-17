@@ -4140,6 +4140,7 @@ public class SCLGrammarAccess extends AbstractElementFinder.AbstractGrammarEleme
 	
 	//ScheduleObjectReference returns ScheduleObjectReference:
 	//    valuedObject=[ValuedObject|PrimeID]
+	//    ('.' subReference=ValuedObjectReference)?
 	//    priority=INT
 	//    ('annotated(' (annotations += QuotedStringAnnotation)+ ')')?
 	//    ;

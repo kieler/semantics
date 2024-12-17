@@ -12234,10 +12234,35 @@ ruleScheduleObjectReference returns [EObject current=null]
 			)
 		)
 		(
+			otherlv_1='.'
+			{
+				newLeafNode(otherlv_1, grammarAccess.getScheduleObjectReferenceAccess().getFullStopKeyword_1_0());
+			}
 			(
-				lv_priority_1_0=RULE_INT
+				(
+					{
+						newCompositeNode(grammarAccess.getScheduleObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_1_1_0());
+					}
+					lv_subReference_2_0=ruleValuedObjectReference
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getScheduleObjectReferenceRule());
+						}
+						set(
+							$current,
+							"subReference",
+							lv_subReference_2_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)?
+		(
+			(
+				lv_priority_3_0=RULE_INT
 				{
-					newLeafNode(lv_priority_1_0, grammarAccess.getScheduleObjectReferenceAccess().getPriorityINTTerminalRuleCall_1_0());
+					newLeafNode(lv_priority_3_0, grammarAccess.getScheduleObjectReferenceAccess().getPriorityINTTerminalRuleCall_2_0());
 				}
 				{
 					if ($current==null) {
@@ -12246,22 +12271,22 @@ ruleScheduleObjectReference returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"priority",
-						lv_priority_1_0,
+						lv_priority_3_0,
 						"de.cau.cs.kieler.annotations.Annotations.INT");
 				}
 			)
 		)
 		(
-			otherlv_2='annotated('
+			otherlv_4='annotated('
 			{
-				newLeafNode(otherlv_2, grammarAccess.getScheduleObjectReferenceAccess().getAnnotatedKeyword_2_0());
+				newLeafNode(otherlv_4, grammarAccess.getScheduleObjectReferenceAccess().getAnnotatedKeyword_3_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getScheduleObjectReferenceAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_2_1_0());
+						newCompositeNode(grammarAccess.getScheduleObjectReferenceAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_3_1_0());
 					}
-					lv_annotations_3_0=ruleQuotedStringAnnotation
+					lv_annotations_5_0=ruleQuotedStringAnnotation
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getScheduleObjectReferenceRule());
@@ -12269,15 +12294,15 @@ ruleScheduleObjectReference returns [EObject current=null]
 						add(
 							$current,
 							"annotations",
-							lv_annotations_3_0,
+							lv_annotations_5_0,
 							"de.cau.cs.kieler.kexpressions.KExpressions.QuotedStringAnnotation");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)+
-			otherlv_4=')'
+			otherlv_6=')'
 			{
-				newLeafNode(otherlv_4, grammarAccess.getScheduleObjectReferenceAccess().getRightParenthesisKeyword_2_2());
+				newLeafNode(otherlv_6, grammarAccess.getScheduleObjectReferenceAccess().getRightParenthesisKeyword_3_2());
 			}
 		)?
 	)

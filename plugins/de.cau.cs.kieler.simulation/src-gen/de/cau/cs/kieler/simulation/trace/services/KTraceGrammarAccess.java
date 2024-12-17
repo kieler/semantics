@@ -2086,6 +2086,7 @@ public class KTraceGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	
 	//ScheduleObjectReference returns ScheduleObjectReference:
 	//    valuedObject=[ValuedObject|PrimeID]
+	//    ('.' subReference=ValuedObjectReference)?
 	//    priority=INT
 	//    ('annotated(' (annotations += QuotedStringAnnotation)+ ')')?
 	//    ;

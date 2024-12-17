@@ -11535,6 +11535,7 @@ public class EsterelGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	
 	//ScheduleObjectReference returns ScheduleObjectReference:
 	//    valuedObject=[ValuedObject|PrimeID]
+	//    ('.' subReference=ValuedObjectReference)?
 	//    priority=INT
 	//    ('annotated(' (annotations += QuotedStringAnnotation)+ ')')?
 	//    ;

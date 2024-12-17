@@ -2574,6 +2574,7 @@ public class ScadeEquationsGrammarAccess extends AbstractElementFinder.AbstractG
 	
 	//ScheduleObjectReference returns ScheduleObjectReference:
 	//    valuedObject=[ValuedObject|PrimeID]
+	//    ('.' subReference=ValuedObjectReference)?
 	//    priority=INT
 	//    ('annotated(' (annotations += QuotedStringAnnotation)+ ')')?
 	//    ;

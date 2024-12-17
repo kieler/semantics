@@ -48678,9 +48678,9 @@ rule__ScheduleObjectReference__Group__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getScheduleObjectReferenceAccess().getPriorityAssignment_1()); }
-	(rule__ScheduleObjectReference__PriorityAssignment_1)
-	{ after(grammarAccess.getScheduleObjectReferenceAccess().getPriorityAssignment_1()); }
+	{ before(grammarAccess.getScheduleObjectReferenceAccess().getGroup_1()); }
+	(rule__ScheduleObjectReference__Group_1__0)?
+	{ after(grammarAccess.getScheduleObjectReferenceAccess().getGroup_1()); }
 )
 ;
 finally {
@@ -48693,6 +48693,7 @@ rule__ScheduleObjectReference__Group__2
 	}
 :
 	rule__ScheduleObjectReference__Group__2__Impl
+	rule__ScheduleObjectReference__Group__3
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -48704,9 +48705,35 @@ rule__ScheduleObjectReference__Group__2__Impl
 	}
 :
 (
-	{ before(grammarAccess.getScheduleObjectReferenceAccess().getGroup_2()); }
-	(rule__ScheduleObjectReference__Group_2__0)?
-	{ after(grammarAccess.getScheduleObjectReferenceAccess().getGroup_2()); }
+	{ before(grammarAccess.getScheduleObjectReferenceAccess().getPriorityAssignment_2()); }
+	(rule__ScheduleObjectReference__PriorityAssignment_2)
+	{ after(grammarAccess.getScheduleObjectReferenceAccess().getPriorityAssignment_2()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ScheduleObjectReference__Group__3
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__ScheduleObjectReference__Group__3__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ScheduleObjectReference__Group__3__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getScheduleObjectReferenceAccess().getGroup_3()); }
+	(rule__ScheduleObjectReference__Group_3__0)?
+	{ after(grammarAccess.getScheduleObjectReferenceAccess().getGroup_3()); }
 )
 ;
 finally {
@@ -48714,60 +48741,114 @@ finally {
 }
 
 
-rule__ScheduleObjectReference__Group_2__0
+rule__ScheduleObjectReference__Group_1__0
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__ScheduleObjectReference__Group_2__0__Impl
-	rule__ScheduleObjectReference__Group_2__1
+	rule__ScheduleObjectReference__Group_1__0__Impl
+	rule__ScheduleObjectReference__Group_1__1
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ScheduleObjectReference__Group_2__0__Impl
+rule__ScheduleObjectReference__Group_1__0__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getScheduleObjectReferenceAccess().getAnnotatedKeyword_2_0()); }
+	{ before(grammarAccess.getScheduleObjectReferenceAccess().getFullStopKeyword_1_0()); }
+	'.'
+	{ after(grammarAccess.getScheduleObjectReferenceAccess().getFullStopKeyword_1_0()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ScheduleObjectReference__Group_1__1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__ScheduleObjectReference__Group_1__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ScheduleObjectReference__Group_1__1__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getScheduleObjectReferenceAccess().getSubReferenceAssignment_1_1()); }
+	(rule__ScheduleObjectReference__SubReferenceAssignment_1_1)
+	{ after(grammarAccess.getScheduleObjectReferenceAccess().getSubReferenceAssignment_1_1()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__ScheduleObjectReference__Group_3__0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__ScheduleObjectReference__Group_3__0__Impl
+	rule__ScheduleObjectReference__Group_3__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ScheduleObjectReference__Group_3__0__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getScheduleObjectReferenceAccess().getAnnotatedKeyword_3_0()); }
 	'annotated('
-	{ after(grammarAccess.getScheduleObjectReferenceAccess().getAnnotatedKeyword_2_0()); }
+	{ after(grammarAccess.getScheduleObjectReferenceAccess().getAnnotatedKeyword_3_0()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ScheduleObjectReference__Group_2__1
+rule__ScheduleObjectReference__Group_3__1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__ScheduleObjectReference__Group_2__1__Impl
-	rule__ScheduleObjectReference__Group_2__2
+	rule__ScheduleObjectReference__Group_3__1__Impl
+	rule__ScheduleObjectReference__Group_3__2
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ScheduleObjectReference__Group_2__1__Impl
+rule__ScheduleObjectReference__Group_3__1__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
 	(
-		{ before(grammarAccess.getScheduleObjectReferenceAccess().getAnnotationsAssignment_2_1()); }
-		(rule__ScheduleObjectReference__AnnotationsAssignment_2_1)
-		{ after(grammarAccess.getScheduleObjectReferenceAccess().getAnnotationsAssignment_2_1()); }
+		{ before(grammarAccess.getScheduleObjectReferenceAccess().getAnnotationsAssignment_3_1()); }
+		(rule__ScheduleObjectReference__AnnotationsAssignment_3_1)
+		{ after(grammarAccess.getScheduleObjectReferenceAccess().getAnnotationsAssignment_3_1()); }
 	)
 	(
-		{ before(grammarAccess.getScheduleObjectReferenceAccess().getAnnotationsAssignment_2_1()); }
-		(rule__ScheduleObjectReference__AnnotationsAssignment_2_1)*
-		{ after(grammarAccess.getScheduleObjectReferenceAccess().getAnnotationsAssignment_2_1()); }
+		{ before(grammarAccess.getScheduleObjectReferenceAccess().getAnnotationsAssignment_3_1()); }
+		(rule__ScheduleObjectReference__AnnotationsAssignment_3_1)*
+		{ after(grammarAccess.getScheduleObjectReferenceAccess().getAnnotationsAssignment_3_1()); }
 	)
 )
 ;
@@ -48775,26 +48856,26 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ScheduleObjectReference__Group_2__2
+rule__ScheduleObjectReference__Group_3__2
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__ScheduleObjectReference__Group_2__2__Impl
+	rule__ScheduleObjectReference__Group_3__2__Impl
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ScheduleObjectReference__Group_2__2__Impl
+rule__ScheduleObjectReference__Group_3__2__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getScheduleObjectReferenceAccess().getRightParenthesisKeyword_2_2()); }
+	{ before(grammarAccess.getScheduleObjectReferenceAccess().getRightParenthesisKeyword_3_2()); }
 	')'
-	{ after(grammarAccess.getScheduleObjectReferenceAccess().getRightParenthesisKeyword_2_2()); }
+	{ after(grammarAccess.getScheduleObjectReferenceAccess().getRightParenthesisKeyword_3_2()); }
 )
 ;
 finally {
@@ -62988,30 +63069,45 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ScheduleObjectReference__PriorityAssignment_1
+rule__ScheduleObjectReference__SubReferenceAssignment_1_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getScheduleObjectReferenceAccess().getPriorityINTTerminalRuleCall_1_0()); }
-		RULE_INT
-		{ after(grammarAccess.getScheduleObjectReferenceAccess().getPriorityINTTerminalRuleCall_1_0()); }
+		{ before(grammarAccess.getScheduleObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_1_1_0()); }
+		ruleValuedObjectReference
+		{ after(grammarAccess.getScheduleObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_1_1_0()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ScheduleObjectReference__AnnotationsAssignment_2_1
+rule__ScheduleObjectReference__PriorityAssignment_2
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getScheduleObjectReferenceAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_2_1_0()); }
+		{ before(grammarAccess.getScheduleObjectReferenceAccess().getPriorityINTTerminalRuleCall_2_0()); }
+		RULE_INT
+		{ after(grammarAccess.getScheduleObjectReferenceAccess().getPriorityINTTerminalRuleCall_2_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ScheduleObjectReference__AnnotationsAssignment_3_1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getScheduleObjectReferenceAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_3_1_0()); }
 		ruleQuotedStringAnnotation
-		{ after(grammarAccess.getScheduleObjectReferenceAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_2_1_0()); }
+		{ after(grammarAccess.getScheduleObjectReferenceAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_3_1_0()); }
 	)
 ;
 finally {

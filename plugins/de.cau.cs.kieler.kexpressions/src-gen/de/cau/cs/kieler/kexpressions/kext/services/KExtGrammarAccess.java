@@ -5039,6 +5039,7 @@ public class KExtGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	
 	//ScheduleObjectReference returns ScheduleObjectReference:
 	//    valuedObject=[ValuedObject|PrimeID]
+	//    ('.' subReference=ValuedObjectReference)?
 	//    priority=INT
 	//    ('annotated(' (annotations += QuotedStringAnnotation)+ ')')?
 	//    ;

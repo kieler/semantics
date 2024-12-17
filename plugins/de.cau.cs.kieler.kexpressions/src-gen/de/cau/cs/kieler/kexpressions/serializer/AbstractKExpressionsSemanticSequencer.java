@@ -3138,7 +3138,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ScheduleObjectReference returns ScheduleObjectReference
 	 *
 	 * Constraint:
-	 *     (valuedObject=[ValuedObject|PrimeID] priority=INT annotations+=QuotedStringAnnotation*)
+	 *     (valuedObject=[ValuedObject|PrimeID] subReference=ValuedObjectReference? priority=INT annotations+=QuotedStringAnnotation*)
 	 * </pre>
 	 */
 	protected void sequence_ScheduleObjectReference(ISerializationContext context, ScheduleObjectReference semanticObject) {
