@@ -325,7 +325,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                         }
                     }
                 }
-                // generic paramters
+                // generic parameters
                 if (!baseRef.genericParameters.nullOrEmpty) {
                     val gBindings = baseRef.createGenericParameterBindings()
                     for (binding : gBindings) {
@@ -334,7 +334,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                             var replacement = binding.sourceExpression.copy
                             replacement.replaceVOR(replacements)
                             if (binding.type === BindingType.GENERIC_TYPE) {
-                                // relsolve
+                                // resolve
                                 while (replacement instanceof ValuedObjectReference
                                     && (replacement as ValuedObjectReference).valuedObject !== null
                                     && typeReplacements.containsKey((replacement as ValuedObjectReference).valuedObject)) {
@@ -354,7 +354,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                                     typeReplacements.put(target, replacement)
                                 }
                             } else {
-                                // relsolve
+                                // resolve
                                 while (replacement instanceof ValuedObjectReference
                                     && (replacement as ValuedObjectReference).valuedObject !== null
                                     && (bindingReplacements.containsKey((replacement as ValuedObjectReference).valuedObject)
@@ -440,6 +440,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                     if (decl.valuedObjects.empty) decl.remove
                 }
             }
+            
             // Replace bound types
             // TODO support inheriting from generic type
             val referencesDecls = newArrayList()

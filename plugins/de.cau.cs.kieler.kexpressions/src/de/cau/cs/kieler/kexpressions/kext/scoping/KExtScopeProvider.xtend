@@ -14,14 +14,13 @@
 package de.cau.cs.kieler.kexpressions.kext.scoping
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
+import de.cau.cs.kieler.kexpressions.IODeclaration
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.Referenceable
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -30,13 +29,13 @@ import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage
 import de.cau.cs.kieler.kexpressions.keffects.scoping.KEffectsScopeProvider
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
+import de.cau.cs.kieler.kexpressions.scoping.OverloadingAwareSimpleScope
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.xbase.lib.Functions.Function1
-import de.cau.cs.kieler.kexpressions.IODeclaration
 
 /**
  * @author ssm
@@ -99,7 +98,7 @@ import de.cau.cs.kieler.kexpressions.IODeclaration
 	}
 	
 	protected def IScope getScopeForStruct(ClassDeclaration struct) {
-	    return Scopes.scopeFor(struct.declarations.filter[it.isPublic].map[valuedObjects].flatten)
+	    return new OverloadingAwareSimpleScope(struct.declarations.filter[it.isPublic].map[valuedObjects].flatten)
 	}
 	
 	protected def IScope getScopeForReferencedType(EObject reference, ValuedObjectReference context,

@@ -3,12 +3,14 @@
  */
 package de.cau.cs.kieler.sccharts.text.scoping
 
+import com.google.common.collect.Iterables
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
 import de.cau.cs.kieler.kexpressions.GenericTypeReference
+import de.cau.cs.kieler.kexpressions.IODeclaration
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.Parameter
@@ -48,8 +50,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.xbase.lib.Functions.Function1
-import com.google.common.collect.Iterables
-import de.cau.cs.kieler.kexpressions.IODeclaration
+import de.cau.cs.kieler.kexpressions.scoping.OverloadingAwareSimpleScope
 
 /**
  * This class contains custom scoping description.
@@ -333,7 +334,7 @@ class SCTXScopeProvider extends KExtScopeProvider {
                 // This also gives nested classes access to variable of surrounding scopes (only partially supported in code gen)
                 declarationScope = declarationScope.nextDeclarationScope
             }
-            return Scopes.scopeFor(candidates)
+            return new OverloadingAwareSimpleScope(candidates)
         } else {
             return super.getScopeForValuedObjectReference(context, reference)
         }
