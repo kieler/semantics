@@ -33,7 +33,7 @@ public class RelativeScaleDiscrepancyEvaluator {
             double min_scale = Double.POSITIVE_INFINITY;
             double max_scale = Double.NEGATIVE_INFINITY;
             for (KNode child : parentNode.getChildren()) {
-                // if child has own children, skip it
+                // if child has no own children, skip it
                 if (child.getChildren().size() > 0) {
                     double scale = child.getProperty(CoreOptions.TOPDOWN_SCALE_FACTOR);
                     if (scale > max_scale) {

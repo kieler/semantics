@@ -95,10 +95,14 @@ class TopdownLayoutHook extends SynthesisHook {
         SynthesisOption.createRangeOption("Wrapping Fuzziness (permitted overhang in %)", 0, 100, 1, 20)
             .setCategory(GeneralSynthesisOptions::LAYOUT)
             
+    public static final SynthesisOption SIZE_CATEGORIES = 
+        SynthesisOption.createRangeOption(TopdownLayoutHook, "Number of size categories for fixed ratio boxes", 1, 8, 1, 3)
+            .setCategory(GeneralSynthesisOptions::LAYOUT)
+            
     
     override getDisplayedSynthesisOptions() {
         return #[CONSERVATIVE_SPLINES, USE_TOPDOWN_LAYOUT, SCALE_CAP, WHITESPACE_ELIMINATION_STRATEGY, TOPDOWN_LAYOUT_CHOICE, TOPDOWN_HIERARCHICAL_NODE_WIDTH,
-            TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, REGION_SIZE_APPROXIMATOR, STATE_SIZE_APPROXIMATOR, DISABLE_RECTPACKING_EXPANSION, WRAPPING_FUZZINESS
+            TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, REGION_SIZE_APPROXIMATOR, STATE_SIZE_APPROXIMATOR, DISABLE_RECTPACKING_EXPANSION, WRAPPING_FUZZINESS, SIZE_CATEGORIES
         ]
     }
     
@@ -145,6 +149,10 @@ class TopdownLayoutHook extends SynthesisHook {
                 case "Layered Heuristic": node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, LayeredSizeApproximator.LAYERED_ASPECT_RATIO_LOOKAHEAD)
             }
             node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, null); // TESTING
+            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.LAYOUT_NEXT_LEVEL); // or maybe we don't want to do this for states after all
+            
+            
+            node.setLayoutOption(RectPackingOptions::ORDER_BY_SIZE, true); // for combination with FIXED_INTEGER_RATIO_BOXES in rectpacking
             
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
@@ -202,7 +210,9 @@ class TopdownLayoutHook extends SynthesisHook {
                 case "Expand to Aspect Ratio": node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, RectpackingSizeApproximator.RECTPACKING_EXPAND_TO_ASPECT_RATIO_LOOKAHEAD)
             }
             node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, null); // TESTING
-            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, LayeredSizeApproximator.FIXED_INTEGER_RATIO_BOXES);
+            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.FIXED_INTEGER_RATIO_BOXES); 
+            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_CATEGORIES, SIZE_CATEGORIES.intValue);
+            
             
             
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
@@ -251,9 +261,9 @@ class TopdownLayoutHook extends SynthesisHook {
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
             
-//            // HARD-CODED FOR POSTERWALL
-            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, 1500.0)
-            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, 2.5)
+            // HARD-CODED FOR POSTERWALL
+//            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, 1500.0)
+//            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, 2.5)
 
             // HARD-CODED FOR PAPER POSTER "DRIVE"
 //            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, 800.0)

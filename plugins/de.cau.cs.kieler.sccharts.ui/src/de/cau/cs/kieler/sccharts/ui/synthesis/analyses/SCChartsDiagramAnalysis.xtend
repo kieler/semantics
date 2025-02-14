@@ -73,6 +73,9 @@ class SCChartsDiagramAnalysis extends AbstractModelDataCollector<SCCharts> {
             // local relative scale discrepancy
             data.put("Relative Local Scale Discrepancies", RelativeScaleDiscrepancyEvaluator.computeDiscrepancies(root))
             
+            // scale required to make labels in diagram readable i.e. inverse absolute scale per label
+            data.put("Label Readability Distribution", LabelReadabilityDistribution.computeScaleDistribution(root))
+            
             // Zoom metrics
             var scaleLimit = 0.99999;
         
