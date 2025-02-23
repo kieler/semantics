@@ -1125,6 +1125,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                         rS.createTransitionTo(iS).trace(ref)
                         targetContainerState = iS
                     }
+                    // Handle inner behavior for each instance
                     for (vo : classDecl.valuedObjects) {
                         var allCardinalities = 1
                         val maxIndices = newArrayList()

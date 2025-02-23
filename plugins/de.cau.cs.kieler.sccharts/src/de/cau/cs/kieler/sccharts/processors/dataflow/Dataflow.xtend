@@ -60,8 +60,8 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
 class Dataflow extends SCChartsProcessor {
     
     // TODO consider activating by default
-    // Will affect termination behavior if references are declared out of DF regions! (no restart)
-    // Not yet fully supported: Signals in classes are not transformed
+    // Will affect termination behavior if references are declared out of DF regions! (no restart) => currently issues warning
+    // Not yet fully supported: Signals in classes are not transformed => currently issues error
     public static val IProperty<Boolean> OO_MODE = 
         new Property<Boolean>("de.cau.cs.kieler.sccharts.processors.dataflow.oo", false)
     
