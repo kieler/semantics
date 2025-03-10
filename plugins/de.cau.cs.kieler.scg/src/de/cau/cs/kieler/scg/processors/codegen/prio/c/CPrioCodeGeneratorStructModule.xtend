@@ -35,7 +35,7 @@ class CPrioCodeGeneratorStructModule extends CCodeGeneratorStructModule {
         serializer = CPrioserializer
     }     
     
-    override protected separator() {
+    override separator() {
         "->"
     } 
     

@@ -1,0 +1,23 @@
+developer system de.cau.cs.kieler.^simulation.python
+    label "Simulation Python Backend"
+
+de.cau.cs.kieler.kicool.deploy.setup config {
+    "de.cau.cs.kieler.kicool.deploy.setup.copy": {
+        "platform:/plugin/de.cau.cs.kieler.simulation/resources/python/templates/python-main.ftl": "templates/python-main.ftl",
+        "platform:/plugin/de.cau.cs.kieler.kicool/resources/templates/injection.ftl": "templates/injection.ftl"
+    }
+}
+post process silent de.cau.cs.kieler.kivis.gen config {
+    "de.cau.cs.kieler.kivis.autosearch": true
+}
+//pre process de.cau.cs.kieler.^simulation.python.ticktime
+pre process de.cau.cs.kieler.^simulation.python.template
+de.cau.cs.kieler.kicool.deploy.templates config {
+    "de.cau.cs.kieler.kicool.deploy.templates": {
+        "templates/python-main.ftl": "main.py"
+    }
+}
+de.cau.cs.kieler.kicool.deploy.python config {
+    "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["main.py"]
+}
+de.cau.cs.kieler.^simulation.context.build

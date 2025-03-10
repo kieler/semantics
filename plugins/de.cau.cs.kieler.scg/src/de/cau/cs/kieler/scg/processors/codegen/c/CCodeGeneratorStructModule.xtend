@@ -52,7 +52,7 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
         STRUCT_VARIABLE_NAME
     }
     
-    def protected separator() {
+    def separator() {
         "->"
     }    
     

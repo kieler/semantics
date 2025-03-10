@@ -41,7 +41,7 @@ class JavaPrioCodeGeneratorStructModule extends JavaCodeGeneratorStructModule {
         serializer = javaPrioSerializer
     }     
     
-    override protected separator() {
+    override separator() {
         ""
     } 
     

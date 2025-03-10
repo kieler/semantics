@@ -30,6 +30,7 @@ class SimulationSystemProvider implements ISystemProvider {
             "system/de.cau.cs.kieler.internal.simulation.kico",
             "system/de.cau.cs.kieler.simulation.c.kico",
             "system/de.cau.cs.kieler.simulation.java.kico",
+            "system/de.cau.cs.kieler.simulation.python.kico",
             "system/de.cau.cs.kieler.simulation.benchmarks.csv.simple.kico",
             "system/de.cau.cs.kieler.simulation.benchmarks.json.kico"
         ]

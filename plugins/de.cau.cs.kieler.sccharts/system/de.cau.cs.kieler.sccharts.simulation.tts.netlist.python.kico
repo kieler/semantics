@@ -1,0 +1,5 @@
+simulation system de.cau.cs.kieler.sccharts.^simulation.tts.netlist.python
+    label "Netlist-based Simulation (Python)"
+
+de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling
+system de.cau.cs.kieler.sccharts.^simulation.netlist.python

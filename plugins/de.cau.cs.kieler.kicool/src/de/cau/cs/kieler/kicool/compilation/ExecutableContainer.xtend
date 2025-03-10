@@ -61,6 +61,22 @@ class ExecutableJarContainer extends ExecutableContainer {
     }  
 }
 
+class ExecutablePythonContainer extends ExecutableContainer {
+    
+    new(File file) {
+        super(file)
+        isExecutableFile = false
+    }
+    
+    override getProcessBuilder() {
+        var pyPath = file.toString
+        if (pyPath.contains(" ")) pyPath = "\"" + pyPath + "\""
+        val pb = new ProcessBuilder("python", pyPath)
+        pb.environment.putAll(processEnvironment)
+        return pb
+    }  
+}
+
 interface ExecutableContainerWrapper {
     
     def ExecutableContainer getExecutableContainer();

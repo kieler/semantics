@@ -1,0 +1,5 @@
+developer system de.cau.cs.kieler.sccharts.^simulation.netlist.python
+    label "Netlist-based Simulation (Python, No-TTS)"
+
+system de.cau.cs.kieler.sccharts.netlist.python
+system de.cau.cs.kieler.^simulation.python

@@ -74,6 +74,11 @@ class CodeContainer {
         return new JavaCodeFile(fileName, code, fileName.substring(0, fileName.indexOf(".java"))) => [files += it]
     }
     
+    def addPythonCode(String fileName, String code) {
+        checkArgument(fileName.endsWith(".py"), "File name has not the correct pattern for python source files")
+        return new PythonCodeFile(fileName, code, fileName.substring(0, fileName.indexOf(".py"))) => [files += it]
+    }
+    
     def addProxyCCodeFile(File file) {
         return new CCodeFile(file) => [files += it]
     }
@@ -164,6 +169,25 @@ class CCodeFile extends CodeFile {
 }
 
 class JavaCodeFile extends CodeFile {
+    
+    @Accessors var String className
+    
+    new(File underlyingFile) {
+        this(underlyingFile, null)
+    }
+    
+    new(File underlyingFile, String content) {
+        this(underlyingFile.name, content, underlyingFile.name)
+        this.underlyingFile = underlyingFile
+    }
+    
+    new(String fileName, String code, String className) {
+        super(fileName, code)
+        this.className = className
+    }
+}
+
+class PythonCodeFile extends CodeFile {
     
     @Accessors var String className
     

@@ -37,7 +37,8 @@ class SimulationProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.simulation.testing.processor.TraceSimulator,
             de.cau.cs.kieler.simulation.testing.processor.TestSuiteGenerator,
             de.cau.cs.kieler.simulation.testing.processor.SimpleSimulationBenchmarkRunner,
-            de.cau.cs.kieler.simulation.testing.processor.JsonBenchmarkRunner
+            de.cau.cs.kieler.simulation.testing.processor.JsonBenchmarkRunner,
+            de.cau.cs.kieler.simulation.processor.PythonSimulationTemplateGenerator
         ]
     }
     
