@@ -92,7 +92,7 @@ class PythonCodeGeneratorModule extends CCodeGeneratorModule {
     
     override void addHeader(StringBuilder sb) {
         sb.append(
-            "\"\"\"\n" + " Automatically generated Java code by\n" + " KIELER SCCharts - The Key to Efficient Modeling\n" +
+            "\"\"\"\n" + " Automatically generated Python code by\n" + " KIELER SCCharts - The Key to Efficient Modeling\n" +
                 " \n" + " http://rtsys.informatik.uni-kiel.de/kieler\n" + "\"\"\"\n\n")
                 
         if (processorInstance.environment.getProperty(CCodeGenerator.DEBUG_COMMENTS)) {
