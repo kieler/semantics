@@ -148,8 +148,8 @@ class TopdownLayoutHook extends SynthesisHook {
                 case "Dynamic": node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.DYNAMIC)
                 case "Layered Heuristic": node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, LayeredSizeApproximator.LAYERED_ASPECT_RATIO_LOOKAHEAD)
             }
-            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, null); // TESTING
-            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.LAYOUT_NEXT_LEVEL); // or maybe we don't want to do this for states after all
+            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, null); // for posterwall
+            node. setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.LAYOUT_NEXT_LEVEL); // or maybe we don't want to do this for states after all
             
             
             node.setLayoutOption(RectPackingOptions::ORDER_BY_SIZE, true); // for combination with FIXED_INTEGER_RATIO_BOXES in rectpacking
@@ -209,7 +209,7 @@ class TopdownLayoutHook extends SynthesisHook {
                 case "Dynamic": node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.DYNAMIC)
                 case "Expand to Aspect Ratio": node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, RectpackingSizeApproximator.RECTPACKING_EXPAND_TO_ASPECT_RATIO_LOOKAHEAD)
             }
-            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, null); // TESTING
+            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, null); // for poster wall
             node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.FIXED_INTEGER_RATIO_BOXES); 
             node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_CATEGORIES, SIZE_CATEGORIES.intValue);
             
