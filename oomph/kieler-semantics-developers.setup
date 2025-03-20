@@ -2544,7 +2544,7 @@
             name="com.google.inject"/>
         <requirement
             name="com.google.guava"
-            versionRange="27.0.0"/>
+            versionRange="33.0.0"/>
         <requirement
             name="com.google.gson"
             versionRange="2.7.0"/>
@@ -2552,7 +2552,7 @@
             name="edu.umd.cs.piccolo"/>
         <requirement
             name="org.eclipse.xtext.sdk.feature.group"
-            versionRange="[2.33.0,2.34.0)"/>
+            versionRange="[2.34.0,2.35.0)"/>
         <requirement
             name="org.eclipse.emf.mwe2.launcher.feature.group"/>
         <requirement
@@ -2594,13 +2594,13 @@
         <repositoryList
             name="FixedTarget">
           <repository
-              url="https://download.eclipse.org/releases/2023-12"/>
+              url="https://download.eclipse.org/releases/2024-03"/>
           <repository
-              url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.30.0"/>
+              url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.31.0"/>
           <repository
-              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.33.0/"/>
+              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.34.0/"/>
           <repository
-              url="https://download.eclipse.org/elk/updates/releases/0.9.0/"/>
+              url="https://download.eclipse.org/elk/updates/releases/0.9.1/"/>
           <repository
               url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/klighd/"/>
           <repository
@@ -2612,7 +2612,7 @@
         xsi:type="setup.p2:P2Task">
       <requirement
           name="org.eclipse.xtext.sdk.feature.group"
-          versionRange="[2.33.0,2.34.0)"/>
+          versionRange="[2.34.0,2.35.0)"/>
       <repository
           url="https://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
     </setupTask>
@@ -2887,7 +2887,7 @@
             name="com.google.inject"/>
         <requirement
             name="com.google.guava"
-            versionRange="27.0.0"/>
+            versionRange="33.0.0"/>
         <requirement
             name="com.google.gson"
             versionRange="2.7.0"/>
@@ -2895,7 +2895,7 @@
             name="edu.umd.cs.piccolo"/>
         <requirement
             name="org.eclipse.xtext.sdk.feature.group"
-            versionRange="[2.33.0,2.34.0)"/>
+            versionRange="[2.34.0,2.35.0)"/>
         <requirement
             name="org.eclipse.emf.mwe2.launcher.feature.group"/>
         <requirement
@@ -2920,11 +2920,11 @@
         <repositoryList
             name="FixedTarget">
           <repository
-              url="https://download.eclipse.org/releases/2023-12"/>
+              url="https://download.eclipse.org/releases/2024-03"/>
           <repository
-              url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.30.0"/>
+              url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.31.0"/>
           <repository
-              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.33.0/"/>
+              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.34.0/"/>
           <repository
               url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/klighd/"/>
           <repository
@@ -2932,7 +2932,7 @@
           <repository
               url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/10.0.20/"/>
           <repository
-              url="https://download.eclipse.org/elk/updates/releases/0.9.0/"/>
+              url="https://download.eclipse.org/elk/updates/releases/0.9.1/"/>
         </repositoryList>
       </targlet>
     </setupTask>
@@ -2942,13 +2942,13 @@
           name="org.eclipse.elk.sdk.feature.feature.group"/>
       <requirement
           name="org.eclipse.xtext.sdk.feature.group"
-          versionRange="[2.33.0,2.34.0)"/>
+          versionRange="[2.34.0,2.35.0)"/>
       <repository
           url="https://download.eclipse.org/elk/updates/nightly/"/>
       <repository
           url="https://download.eclipse.org/mylyn/releases/3.25/"/>
       <repository
-          url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.33.0/"/>
+          url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.34.0/"/>
     </setupTask>
   </stream>
   <logicalProjectContainer
