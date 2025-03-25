@@ -29,13 +29,14 @@ import org.eclipse.elk.graph.properties.Property
 import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import de.cau.cs.kieler.klighd.actions.SynthesizingAction
 
 /**
  * Action class to display Strongly Connected Components in the SCG.
  * @author lpe
  *
  */
-class SCCActions implements IAction {
+class SCCActions extends SynthesizingAction {
     
     private final static String SCC_ID = "de.cau.cs.kieler.scg.klighd.actions.sccActions"
     

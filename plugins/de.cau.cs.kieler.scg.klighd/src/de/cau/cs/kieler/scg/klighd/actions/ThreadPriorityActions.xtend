@@ -24,13 +24,14 @@ import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
 import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import de.cau.cs.kieler.klighd.actions.SynthesizingAction
 
 /**
  * Action class to display the thread priorities in the SCG
  * @author lpe
  *
  */
-class ThreadPriorityActions implements IAction {
+class ThreadPriorityActions extends SynthesizingAction {
     
     @Inject
     extension KRenderingExtensions
