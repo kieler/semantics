@@ -3,7 +3,7 @@
  * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2019 by
+ * Copyright 2019-2024 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.language.server.simulation
 
-import com.google.gson.JsonObject
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import de.cau.cs.kieler.kicool.KiCoolFactory
@@ -24,11 +23,14 @@ import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.language.server.ILanguageClientProvider
 import de.cau.cs.kieler.language.server.KeithLanguageClient
 import de.cau.cs.kieler.language.server.kicool.KiCoolLanguageServerExtension
+import de.cau.cs.kieler.language.server.simulation.data.AddCoSimulationParam
 import de.cau.cs.kieler.language.server.simulation.data.ClientInputs
 import de.cau.cs.kieler.language.server.simulation.data.LoadedTraceMessage
 import de.cau.cs.kieler.language.server.simulation.data.SavedTraceMessage
+import de.cau.cs.kieler.language.server.simulation.data.SimulationStartParam
 import de.cau.cs.kieler.language.server.simulation.data.SimulationStartedMessage
 import de.cau.cs.kieler.language.server.simulation.data.SimulationStepMessage
+import de.cau.cs.kieler.language.server.simulation.data.SimulationStepParam
 import de.cau.cs.kieler.language.server.simulation.data.SimulationStoppedMessage
 import de.cau.cs.kieler.simulation.CoSimulationExeWrapper
 import de.cau.cs.kieler.simulation.DataPool
@@ -132,16 +134,17 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
     /**
      * Called on client notification and starts a simulation for specified uri and simulation type.
      * 
-     * @param uri uri of model
-     * @param simulationType should be one of Manual, Periodic, and Dynamic
+     * @param param with: <br>
+     *  - uri uri of model <br>
+     *  - simulationType should be one of Manual, Periodic, and Dynamic
      */
-    override start(String uri, String simulationType) {
-        val decodedUri = URLDecoder.decode(uri, "UTF-8")
+    override start(SimulationStartParam param) {
+        val decodedUri = URLDecoder.decode(param.uri, "UTF-8")
         while (listeners.contains(this)) {
             removeListener(this)
         }
         addListener(this)
-        val message = startSimulation(decodedUri, simulationType)
+        val message = startSimulation(decodedUri, param.simulationType)
         // If message is not empty an error occurred. Answer the via the corresponding notification.
         // Otherwise the corresponding simulation event is caught and the client is notified about the correct start.
         if (message !== "") { 
@@ -197,15 +200,16 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
      * Called on client notification if a simulation step should be executed.
      * This method has to be synchronized, since no two steps shall be executed at the same time.
      * 
-     * @param valuesForNextStep input values set by client
-     * @param simulationType should be one of Manual, Periodic, and Dynamic
+     * @param param with: <br>
+     *  - valuesForNextStep input values set by client
+     *  - simulationType should be one of Manual, Periodic, and Dynamic
      */
-    override synchronized step(JsonObject valuesForNextStep, String simulationType) {
+    override synchronized step(SimulationStepParam param) {
         // Set the values used by the UserValues processor de.cau.cs.kieler.simulation.ide.language.server.uservalues
-        ClientInputs.values = valuesForNextStep
+        ClientInputs.values = param.valuesForNextStep
         stepNumber++
         // Set simulation mode, default mode is manual mode
-        setSimulationType(simulationType)
+        setSimulationType(param.simulationType)
         // Execute an asynchronous simulation step
         new Thread([
             try {
@@ -397,14 +401,14 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
         return this.client
     }
     
-    override addCoSimulation(String clientId, String fileUri) {
+    override addCoSimulation(AddCoSimulationParam param) {
         if (this.diagramState.viewer !== null) {
             val vc = diagramState.viewer.viewContext
             val simCtx = vc.inputModel
             if (simCtx instanceof SimulationContext) {
-                if (fileUri !== null && fileUri !== "") {
+                if (param.fileUri !== null && param.fileUri !== "") {
                     try {
-                        val File file = new File(URLDecoder.decode(fileUri, "UTF-8"))
+                        val File file = new File(URLDecoder.decode(param.fileUri, "UTF-8"))
                         val sim = new CoSimulationExeWrapper(file)
                         simCtx.addModel(sim)
                     } catch (Exception e) {

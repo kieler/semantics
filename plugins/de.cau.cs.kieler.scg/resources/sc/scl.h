@@ -1,5 +1,8 @@
 // SCL Macros
 // rvh 30 Nov 2012
+#ifndef SCL_H
+#define SCL_H
+
 
 // Time measurements
 #ifdef _SC_NOTRACE             // Tracing off -> Timing off
@@ -202,3 +205,6 @@ typedef int bool;
   setPC(_cid, __LABEL__);						\
   dispatch_;								\
 __LABEL__:
+
+
+#endif /* !SC_GENERIC_H */

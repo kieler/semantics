@@ -128,7 +128,7 @@ class SynthesisHooks implements ISynthesisHooks {
      * @param node the diagram root node
      */
     override void invokeFinish(Scope scope, KNode node) {
-        for (SynthesisHook hook : hooks) {
+        for (SynthesisHook hook : hooks.reverseView) {
             hook.finish(scope, node) 
         }
     }

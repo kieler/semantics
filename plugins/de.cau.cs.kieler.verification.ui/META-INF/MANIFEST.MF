@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Verification Ui
 Bundle-SymbolicName: de.cau.cs.kieler.verification.ui;singleton:=true
-Bundle-Version: 1.4.0.qualifier
+Bundle-Version: 1.6.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.verification.ui.VerificationUiPlugin
 Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,

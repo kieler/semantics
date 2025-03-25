@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Core Utilities
 Bundle-SymbolicName: de.cau.cs.kieler.core;singleton:=true
-Bundle-Version: 1.4.0.qualifier
+Bundle-Version: 1.6.0.qualifier
 Require-Bundle: org.eclipse.core.resources;bundle-version="3.5.0",
  com.google.guava,
  org.eclipse.xtext.xbase.lib,

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SC Graph KlighD Binding
 Bundle-SymbolicName: de.cau.cs.kieler.scg.klighd;singleton:=true
-Bundle-Version: 1.4.0.qualifier
+Bundle-Version: 1.6.0.qualifier
 Bundle-Vendor: Kiel University
 Eclipse-UI: True
 Require-Bundle: org.eclipse.elk.core;bundle-version="0.7.1",
@@ -21,7 +21,8 @@ Require-Bundle: org.eclipse.elk.core;bundle-version="0.7.1",
  de.cau.cs.kieler.kicool.ui,
  de.cau.cs.kieler.simulation.ide,
  de.cau.cs.kieler.simulation.ui,
- de.cau.cs.kieler.annotations.ide
+ de.cau.cs.kieler.annotations.ide,
+ org.eclipse.elk.alg.mrtree
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.cau.cs.kieler.scg.klighd
 Bundle-ActivationPolicy: lazy

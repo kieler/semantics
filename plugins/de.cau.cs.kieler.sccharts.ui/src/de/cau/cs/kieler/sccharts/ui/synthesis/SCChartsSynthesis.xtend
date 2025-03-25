@@ -54,6 +54,10 @@ import org.eclipse.elk.core.service.util.CompoundGraphElementVisitor
 import org.eclipse.elk.core.util.IGraphElementVisitor
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
+import de.cau.cs.kieler.klighd.filtering.SemanticFilterRule
+import de.cau.cs.kieler.klighd.filtering.SemanticFilterTag
+import de.cau.cs.kieler.klighd.KlighdOptions
+import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterRules
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -165,6 +169,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             } else sccharts
         
         val rootNode = createNode
+        
+        // Set semantic filter rules
+        rootNode.setProperty(KlighdProperties.SEMANTIC_FILTER_RULES, SCChartsSemanticFilterRules.allFilters)
                 
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue)
@@ -335,13 +342,23 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     override List<? extends IGraphElementVisitor> getAdditionalLayoutConfigs(KNode viewModel) {
         val List<IGraphElementVisitor> additionalLayoutRuns = newArrayList
         // Add interactive Layout run.
-        if ((!viewModel.getChildren().isEmpty() && viewModel.getChildren().get(0)
-                        .getProperty(CoreOptions.INTERACTIVE_LAYOUT))) {
+        if (!viewModel.getChildren().isEmpty() && (viewModel.getChildren().get(0)
+                        .getProperty(CoreOptions.INTERACTIVE_LAYOUT) || isChildInteractive(viewModel))) {
             additionalLayoutRuns.add(new CompoundGraphElementVisitor(
                     new InteractiveRectPackingGraphVisitor(),
                     new InteractiveLayeredGraphVisitor()));
         }
         return additionalLayoutRuns;
+    }
+    
+    private def isChildInteractive(KNode node) {
+        val children = node.getChildren.get(0).getChildren()
+        for (n : children) {
+            if (n.getProperty(CoreOptions.INTERACTIVE_LAYOUT)) {
+                return true
+            }
+        }
+        return false
     }
    
 }

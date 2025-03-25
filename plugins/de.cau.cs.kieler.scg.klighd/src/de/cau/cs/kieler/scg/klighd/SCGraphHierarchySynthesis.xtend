@@ -46,6 +46,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
+import de.cau.cs.kieler.scg.processors.SCGAnnotations
 import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
 import de.cau.cs.kieler.scg.processors.analyzer.LoopData
 import de.cau.cs.kieler.scg.processors.priority.PriorityAuxiliaryData
@@ -67,7 +68,6 @@ import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.processors.SCGAnnotations
 
 /**
  * @author kolja
@@ -373,6 +373,7 @@ class SCGraphHierarchySynthesis {
                 kNodeList += annotationNode
             }
         ]
+        val proxy = createNode("hierarchy" + nodeGrouping.toString)
 
         // Set options for the container.
         if (topdown())
@@ -495,6 +496,10 @@ class SCGraphHierarchySynthesis {
             }
 
         }
+        
+        // Don't render container
+        kContainer.setProperty(KlighdProperties.PROXY_VIEW_RENDER_NODE_AS_PROXY, false)
+        
         kContainer
     }
 }

@@ -3,7 +3,7 @@
  * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2018 by
+ * Copyright 2018-2024 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -21,14 +21,16 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.kicool.ide.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.kicool.ide.view.IdeCompilerView
 import de.cau.cs.kieler.klighd.lsp.KGraphDiagramState
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.language.server.ILanguageClientProvider
 import de.cau.cs.kieler.language.server.KeithLanguageClient
-import de.cau.cs.kieler.language.server.kicool.data.CodeOfModel
 import de.cau.cs.kieler.language.server.kicool.data.CompilationResults
+import de.cau.cs.kieler.language.server.kicool.data.CompileParam
+import de.cau.cs.kieler.language.server.kicool.data.DidCompileParam
+import de.cau.cs.kieler.language.server.kicool.data.SendCompilationSystemsParam
+import de.cau.cs.kieler.language.server.kicool.data.ShowParam
 import de.cau.cs.kieler.language.server.kicool.data.SnapshotDescription
 import de.cau.cs.kieler.language.server.kicool.data.SystemDescription
 import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
@@ -50,6 +52,7 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
+import de.cau.cs.kieler.core.services.KielerLanguage
 
 /**
  * Implements methods to extend the LSP to allow compilation. Moreover, getting compilation systems and showing
@@ -61,6 +64,8 @@ import org.eclipse.xtext.util.CancelIndicator
 class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolCommandExtension, ILanguageClientProvider {
 
     protected static val LOG = Logger.getLogger(KiCoolLanguageServerExtension)
+    
+    protected static val LANGUAGES = KielerLanguage.getAllRegisteredLanguages()
 
     @Inject @Accessors(PUBLIC_GETTER) RequestManager requestManager
 
@@ -152,22 +157,23 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
     /**
      * Called by the client to compile a model
      * 
-     * @param uri The uri string of the model to compile (for snapshot compilation this is the uri of the original model.
-     * @param clientId The id of the diagram client.
-     * @param command The compilation system used to compile.
-     * @param inplace Whether in-place compilation should be used.
-     * @param showResultingModel Whether the final model should be shown in the diagram specified by clientId.
-     * @param snapshot Whether the model to compile is a snapshot model.
+     * @param param with: <br>
+     *  - uri The uri string of the model to compile (for snapshot compilation this is the uri of the original model. <br>
+     *  - clientId The id of the diagram client. <br>
+     *  - command The compilation system used to compile. <br>
+     *  - inplace Whether in-place compilation should be used. <br>
+     *  - showResultingModel Whether the final model should be shown in the diagram specified by clientId. <br>
+     *  - snapshot Whether the model to compile is a snapshot model.
      */
-    override compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel, boolean snapshot) {
-        val decodedUri = URLDecoder.decode(uri, "UTF-8")
+    override compile(CompileParam param) {
+        val decodedUri = URLDecoder.decode(param.uri, "UTF-8")
         try {
             var Object model
             // Get input model for compilation.
-            if (snapshot) {
+            if (param.snapshot) {
                 // Abort if no diagram can be found.
                 if (diagramState === null || diagramState.getKGraphContext(decodedUri) === null) {
-                    client.compile(null, decodedUri, true, 0, 1000)
+                    client.didCompile(new DidCompileParam(null, decodedUri, true, 0, 1000))
                     return
                 }
                 model = diagramState.getKGraphContext(decodedUri).inputModel
@@ -176,12 +182,12 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
             }
             // Abort if no model to compile could be found.
             if (model === null) {
-                client.compile(null, decodedUri, true, 0, 1000)
+                client.didCompile(new DidCompileParam(null, decodedUri, true, 0, 1000))
                 return
             }
             
-            this.currentContext = createContextAndStartCompilationThread(model, command, inplace, this.currentContext,
-                decodedUri, clientId, showResultingModel)
+            this.currentContext = createContextAndStartCompilationThread(model, param.command, param.inplace, this.currentContext,
+                decodedUri, param.clientId, param.showResultingModel)
         } catch( Exception e) {
             e.printStackTrace()
             sendError(e.toString())
@@ -250,27 +256,28 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
     /**
      * Display the current snapshot given by uri and index on the diagram widget given by the clientId.
      * 
-     * @param uri uri of model
-     * @param clientId id of diagramServer
-     * @param index index of snapshot. -1 equals the original model.
+     * @param param with: <br>
+     *  - uri uri of model <br>
+     *  - clientId id of diagramServer <br>
+     *  - index index of snapshot. -1 equals the original model.
      * @return completable future with index and id of showed model
      */
-    override show(String uri, String clientId, int index) {
-        val decodedUri = URLDecoder.decode(uri, "UTF-8")
+    override show(ShowParam param) {
+        val decodedUri = URLDecoder.decode(param.uri, "UTF-8")
         var Object model
-        if (index == -1) {
+        if (param.index == -1) {
             // Get model specified by uri
             model = getModelFromUri(decodedUri)
         } else {
             // Get snapshot model from the compilation snapshots
-            model = this.objectMap.get(decodedUri).get(index)
+            model = this.objectMap.get(decodedUri).get(param.index)
         }
         
         // Send model to client.
         val modelToSend = model
         return requestManager.runRead [ cancelIndicator |
-            currentIndex = index
-            showSnapshot(decodedUri, clientId, modelToSend, cancelIndicator, false)
+            currentIndex = param.index
+            showSnapshot(decodedUri, param.clientId, modelToSend, cancelIndicator, false)
         ]
     }
 
@@ -285,7 +292,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
         try {
             val systemDescriptions = getCompilationSystems(decodedUri, -1, false, false)
             val snapshotSystemDescriptions = getCompilationSystems(decodedUri, -1, false, true)
-            client.sendCompilationSystems(systemDescriptions, snapshotSystemDescriptions)
+            client.sendCompilationSystems(new SendCompilationSystemsParam(systemDescriptions, snapshotSystemDescriptions))
         } catch (Exception e) {
             e.printStackTrace()
             sendError("Could not retrieve compilation systems" + e)
@@ -301,16 +308,29 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
      * @return CS specified by the above parameters.
      */
     def getCompilationSystems(String uri, int index, boolean filterForSimulation, boolean snapshotModel) {
-        var Object model
+        var Class<?> modelClass
         if (snapshotModel && diagramState !== null && diagramState.getKGraphContext(uri) !== null) {
-           model = diagramState.getKGraphContext(uri).inputModel
+           modelClass = diagramState.getKGraphContext(uri).inputModel?.class
         } else if (index != -1) {
-            model = this.objectMap.get(uri).get(index)
+            modelClass = this.objectMap.get(uri).get(index)?.class
         } else {
-            // get model of model specified by uri   
-            model = getModelFromUri(uri)
+            for(l : LANGUAGES) {
+                for(ext: l.supportedResourceExtensions) {
+                    if (uri.endsWith(ext)) {
+                        if (l.supportedModels.size == 1) {
+                           modelClass = l.supportedModels.head
+                        } else {
+                           modelClass = l.supportedModels.get(l.supportedResourceExtensions.indexOf(ext))
+                        }
+                    }
+                }
+            }
+            if (modelClass === null) {
+                // get model of model specified by uri (reparsing)
+               modelClass = getModelFromUri(uri)?.class
+            }
         }
-        return getCompilationSystems(model, filterForSimulation, snapshotModel)
+        return getCompilationSystems(modelClass, filterForSimulation, snapshotModel)
     }
     
     /**
@@ -320,10 +340,10 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
      * @param filterForSimulation true if only simulation cs should be returned
      * @return CS specified by the above parameters.
      */
-    def getCompilationSystems(Object model, boolean filterForSimulation, boolean snapshotModel) {
+    def getCompilationSystems(Class<?> modelClass, boolean filterForSimulation, boolean snapshotModel) {
         this.getSystemsThread = new GetSystemsThread([
-            if (model !== null && model.class !== modelClassFilter) {
-                modelClassFilter = model.class
+            if (modelClass !== null && modelClass !== modelClassFilter) {
+                modelClassFilter = modelClass
             }
             var systems = getSystemModels(true, modelClassFilter)
             var systemDescriptions = getSystemDescription(systems, snapshotModel)
@@ -436,7 +456,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
             var future = new CompletableFuture()
             future.complete(void)
             future.thenAccept [
-                client.compile(new CompilationResults(this.snapshotMap.get(uri)), uri, finished, currentIndex, maxIndex)
+                client.didCompile(new DidCompileParam(new CompilationResults(this.snapshotMap.get(uri)), uri, finished, currentIndex, maxIndex))
             ].exceptionally [ throwable |
                 LOG.error('Error while sending compilation results.', throwable)
                 sendError('Error while sending compilation results.' + throwable)
@@ -470,34 +490,34 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, KiCoolC
         
     }
     
-    override getCodeOfModel(String kgraphElementId, String clientId) {
-        if (this.diagramState.viewer !== null) {
-            val Object inputModel = diagramState.viewer.viewContext.inputModel
-            // Get uri of original model file
-            val uri = diagramState.getURIString(clientId)
-            // Get KNode that holds the code that should be displayed
-            val kNode = diagramState.getIdToKGraphMap(uri).get(kgraphElementId);
-            // Get model string
-            val CodePlaceHolder codeModel = if (inputModel instanceof CodePlaceHolder) {
-                inputModel as CodePlaceHolder
-            } else if (kNode !== null) {
-                // if input model is not CodePlaceHolder check if clicked node is associated with it
-                var Object domainElement = diagramState.viewer.viewContext.getSourceElement(kNode)
-                if (domainElement instanceof CodePlaceHolder) {
-                    domainElement as CodePlaceHolder
-                }
-            }
-            // Get name of file
-            val code = new CodeOfModel(codeModel.name, codeModel.code)
-            return requestManager.runRead[ cancelIndicator |
-                code
-            ]
-        } else {
-            return requestManager.runRead[ cancelIndicator |
-                new CodeOfModel("Error", "On error occurred while trying to get the code.")
-            ]
-        }
-    }
+//    override getCodeOfModel(String kgraphElementId, String clientId) {
+//        if (this.diagramState.viewer !== null) {
+//            val Object inputModel = diagramState.viewer.viewContext.inputModel
+//            // Get uri of original model file
+//            val uri = diagramState.getURIString(clientId)
+//            // Get KNode that holds the code that should be displayed
+//            val kNode = diagramState.getIdToKGraphMap(uri).get(kgraphElementId);
+//            // Get model string
+//            val CodePlaceHolder codeModel = if (inputModel instanceof CodePlaceHolder) {
+//                inputModel as CodePlaceHolder
+//            } else if (kNode !== null) {
+//                // if input model is not CodePlaceHolder check if clicked node is associated with it
+//                var Object domainElement = diagramState.viewer.viewContext.getSourceElement(kNode)
+//                if (domainElement instanceof CodePlaceHolder) {
+//                    domainElement as CodePlaceHolder
+//                }
+//            }
+//            // Get name of file
+//            val code = new CodeOfModel(codeModel.name, codeModel.code)
+//            return requestManager.runRead[ cancelIndicator |
+//                code
+//            ]
+//        } else {
+//            return requestManager.runRead[ cancelIndicator |
+//                new CodeOfModel("Error", "On error occurred while trying to get the code.")
+//            ]
+//        }
+//    }
     
     /**
      * Register observer to be included on start of new compilation.

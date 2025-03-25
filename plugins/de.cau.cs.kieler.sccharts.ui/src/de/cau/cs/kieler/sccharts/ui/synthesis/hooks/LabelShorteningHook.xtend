@@ -55,7 +55,7 @@ class LabelShorteningHook extends SynthesisActionHook {
             LabelShorteningStrategies.PRIORITIES,
             LabelShorteningStrategies.SEMANTIC_SOFT_WRAPPING,
             LabelShorteningStrategies.TRUNCATE
-        ), LabelShorteningStrategies.NO).setCategory(LABEL_MANAGEMENT_CATEGORY).
+        ), LabelShorteningStrategies.SEMANTIC_SOFT_WRAPPING).setCategory(LABEL_MANAGEMENT_CATEGORY).
         setUpdateAction(LabelShorteningHook.ID) // Register this action as updater
     /** The synthesis option for fixed shorten labels value */
     public static val SynthesisOption SHORTEN_LABEL_WIDTH = SynthesisOption::createRangeOption(LabelShorteningHook, "Shortening Width",

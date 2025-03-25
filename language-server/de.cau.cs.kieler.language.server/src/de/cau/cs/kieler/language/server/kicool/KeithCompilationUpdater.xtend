@@ -101,6 +101,11 @@ class KeithCompilationUpdater implements Observer {
                 currentSnapshotList.add(new SnapshotDescription(processor.name, currentIndex, currentSnapshotList.length, errors, warnings, infos))
                 kicoolExt.objectMap.get(uri).add(impl)
                 currentIndex++
+                if (!environment.logs.files.isEmpty) {
+                    currentSnapshotList.add(new SnapshotDescription(processor.name + " Log", currentIndex, currentSnapshotList.length, null, null, null))
+                    kicoolExt.objectMap.get(uri).add(environment.logs)
+                    currentIndex++;
+                }
                 maxIndex = context.processorInstances.length
                 kicoolExt.update(uri, context, clientId, command, inplace, false, showResultingModel, currentIndex, maxIndex)
             }
