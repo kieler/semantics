@@ -27,6 +27,7 @@ class DynamicTicks {
     public static val IProperty<Boolean> DYNAMIC_TICK_COMPILATION = 
         new Property<Boolean>("de.cau.cs.kieler.core.dynamic.ticks", false)
     
+    public static val MSEC_SIM_TAG = "dynamic-ticks-msec"
     public static val TAG = "dynamic-ticks"
     public static val SLEEP_T = "sleepT"
     public static val DELTA_T = "deltaT"

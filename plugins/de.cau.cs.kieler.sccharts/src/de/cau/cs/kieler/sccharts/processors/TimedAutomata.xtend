@@ -106,7 +106,8 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     public static val DEVIATION_OUTPUT_NAME = "DeviationOutput"
     public static val DEVIATION_OUTPUT_DEFAULT = false
     public static val TIME_FORMAT_NAME = "TimePrintFormat"
-    public static val TIME_FORMAT_DEFAULT = "%.4f"
+    public static val TIME_FORMAT_FLOAT_DEFAULT = "%.4f"
+    public static val TIME_FORMAT_INT_DEFAULT = "%d"
     public static val INT_CLOCK_NAME = "IntegralClockType"
     public static val INT_CLOCK_NAME_2 = "IntegerClockType"
     public static val USE_SD_NAME = "ClocksUseSD"
@@ -122,27 +123,6 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
 
     def void transform(State rootState) {
         val allAnnotations = rootState.eAllContents.filter(Annotation).toList
-        
-        val noSleep = allAnnotations.exists[NO_SLEEP_NAME.equalsIgnoreCase(name)]
-        val simulateTime = if (allAnnotations.exists[SIMULATE_TIME_NAME.equalsIgnoreCase(name)]) true else SIMULATE_TIME_DEFAULT
-        val deviationOutput = if (allAnnotations.exists[DEVIATION_OUTPUT_NAME.equalsIgnoreCase(name)]) true else DEVIATION_OUTPUT_DEFAULT
-        val timePrintFormat = if (allAnnotations.filter(StringAnnotation).exists[TIME_FORMAT_NAME.equalsIgnoreCase(name)]) allAnnotations.filter(StringAnnotation).findFirst[TIME_FORMAT_NAME.equalsIgnoreCase(name)].values.head else TIME_FORMAT_DEFAULT
-        
-        // Get max sleep
-        val maxSleep = if (allAnnotations.exists[MAX_SLEEP_NAME.equalsIgnoreCase(name)]) {
-            val value = allAnnotations.findFirst[MAX_SLEEP_NAME.equalsIgnoreCase(name)].asStringAnnotation.values.head
-            if (!value.nullOrEmpty) {
-                try {
-                    Double.parseDouble(value)
-                } catch (NumberFormatException e) {
-                    value
-                }
-            } else {
-                MAX_SLEEP_DEFAULT
-            }
-        } else {
-            MAX_SLEEP_DEFAULT
-        }
         
         // Get clock type
         val intAnnoClockType = allAnnotations.findLast[INT_CLOCK_NAME.equalsIgnoreCase(name) || INT_CLOCK_NAME_2.equalsIgnoreCase(name) ]
@@ -160,6 +140,27 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             ValueType.get(DynamicTicks.FLOAT_TYPE)
         }
         
+        val noSleep = allAnnotations.exists[NO_SLEEP_NAME.equalsIgnoreCase(name)]
+        val simulateTime = if (allAnnotations.exists[SIMULATE_TIME_NAME.equalsIgnoreCase(name)]) true else SIMULATE_TIME_DEFAULT
+        val deviationOutput = if (allAnnotations.exists[DEVIATION_OUTPUT_NAME.equalsIgnoreCase(name)]) true else DEVIATION_OUTPUT_DEFAULT
+        val timePrintFormat = if (allAnnotations.filter(StringAnnotation).exists[TIME_FORMAT_NAME.equalsIgnoreCase(name)]) allAnnotations.filter(StringAnnotation).findFirst[TIME_FORMAT_NAME.equalsIgnoreCase(name)].values.head else isIntClockType ? TIME_FORMAT_INT_DEFAULT : TIME_FORMAT_FLOAT_DEFAULT
+        
+        // Get max sleep
+        val maxSleep = if (allAnnotations.exists[MAX_SLEEP_NAME.equalsIgnoreCase(name)]) {
+            val value = allAnnotations.findFirst[MAX_SLEEP_NAME.equalsIgnoreCase(name)].asStringAnnotation.values.head
+            if (!value.nullOrEmpty) {
+                try {
+                    Double.parseDouble(value)
+                } catch (NumberFormatException e) {
+                    value
+                }
+            } else {
+                MAX_SLEEP_DEFAULT
+            }
+        } else {
+            MAX_SLEEP_DEFAULT
+        }
+                
         val useSD = allAnnotations.exists[USE_SD_NAME.equalsIgnoreCase(name)]
         
         val hasClocks = rootState.allStates.exists[hasClocks]
