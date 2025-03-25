@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis.colors;
 
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -103,7 +104,8 @@ public abstract class AbstractColorStore {
             
             if (confirm) {
                 // Complete handshake with Klighd
-                context.setProperty(KlighdProperties.DIAGRAM_BACKGROUND, getColor(GeneralColor.BACKGROUND));
+                KColor kBackgroundColor = getColor(GeneralColor.BACKGROUND);
+                context.setProperty(KlighdProperties.CANVAS_COLOR, new Color(kBackgroundColor.getRed(), kBackgroundColor.getGreen(), kBackgroundColor.getBlue()));
             }
         }
     }
