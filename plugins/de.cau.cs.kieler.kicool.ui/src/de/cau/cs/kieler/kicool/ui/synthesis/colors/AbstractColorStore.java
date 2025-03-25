@@ -99,15 +99,23 @@ public abstract class AbstractColorStore {
             configureColor(GeneralColor.BACKGROUND, preferences.getBackground());
             configureColor(GeneralColor.HIGHLIGHT, preferences.getHighlight());
             
-            configureOwnColors(preferences);
+            boolean confirm = configureOwnColors(preferences);
+            
+            if (confirm) {
+                // Complete handshake with Klighd
+                context.setProperty(KlighdProperties.DIAGRAM_BACKGROUND, getColor(GeneralColor.BACKGROUND));
+            }
         }
     }
     
     /**
      * Handles the color adjustment for the colors of the deriving class.
+     * 
      * @param preferences
+     * @return true if the color theme was accepted (is supported), false if a fallback to a white
+     *         canvas is requested.
      */
-    protected abstract void configureOwnColors(ColorPreferences preferences);
+    protected abstract boolean configureOwnColors(ColorPreferences preferences);
     
     /**
      * Configures the given color with RGB values.

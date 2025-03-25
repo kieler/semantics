@@ -12,12 +12,15 @@
  */
 package de.cau.cs.kieler.scg.klighd;
 
+import static de.cau.cs.kieler.kicool.ui.synthesis.colors.ColorUtil.adjustBrightness;
+
 import de.cau.cs.kieler.kicool.ui.synthesis.colors.AbstractColorStore;
 import de.cau.cs.kieler.klighd.krendering.Colors;
 import de.cau.cs.kieler.klighd.krendering.KColor;
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.klighd.util.ColorPreferences;
+import de.cau.cs.kieler.klighd.util.ColorThemeKind;
 
 /**
  * The SCG colors.
@@ -107,20 +110,23 @@ public class ColorStore extends AbstractColorStore {
     };
 
     @Override
-    public void configureOwnColors(final ColorPreferences preferences) {
+    public boolean configureOwnColors(final ColorPreferences preferences) {
         var fg = preferences.getForeground();
         var bg = preferences.getBackground();
-        
-        // check if it can be considered dark mode
-        var bgHSB = java.awt.Color.RGBtoHSB(bg.getRed(), bg.getGreen(), bg.getBlue(), null);
-        boolean dark = bgHSB[2] < 0.6f;
 
         configureColor(Color.NODE_FOREGROUND, fg);
         configureColor(Color.NODE_BACKGROUND, bg);
         configureColor(Color.NODE_TEXT, fg);
         configureColor(Color.CONTROLFLOW_EDGE, fg);
+        
+        boolean dark = preferences.getKind() == ColorThemeKind.DARK || preferences.getKind() == ColorThemeKind.HIGH_CONTRAST_DARK;
+        
         if (dark) {
-            configureColor(Color.NODE_SHADOW, Colors.LIGHT_GRAY);
+            // Make normal background slightly brighter than canvas
+            bg = adjustBrightness(preferences.getBackground(), 0.06f);
+            configureColor(Color.NODE_BACKGROUND, bg);
+        
+            configureColor(Color.NODE_SHADOW, bg);
             configureColor(Color.NODE_REFERENCED_BACKGROUND_GRADIENT_1, 103, 74, 115);
             configureColor(Color.NODE_REFERENCED_BACKGROUND_GRADIENT_2, 125, 98, 125);
 
@@ -134,5 +140,7 @@ public class ColorStore extends AbstractColorStore {
             configureColor(Color.COMMENT_TEXT, fg);
             configureColor(Color.COMMENT_EDGE, Colors.ANTIQUE_WHITE_3);
         }
+        
+        return true;
     }
 }

@@ -18,6 +18,7 @@ import de.cau.cs.kieler.klighd.krendering.KColor;
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.klighd.util.ColorPreferences;
+import de.cau.cs.kieler.klighd.util.ColorThemeKind;
 
 import static de.cau.cs.kieler.kicool.ui.synthesis.colors.ColorUtil.*; 
 
@@ -135,15 +136,14 @@ public class ColorStore extends AbstractColorStore {
     };
     
     @Override
-    public void configureOwnColors(final ColorPreferences preferences) {
-        var fg = preferences.getForeground();
-        var bg = preferences.getBackground();
-        
-        // check if it can be considered dark mode
-        var bgHSB = java.awt.Color.RGBtoHSB(bg.getRed(), bg.getGreen(), bg.getBlue(), null);
-        boolean dark = bgHSB[2] < 0.6f;
+    public boolean configureOwnColors(final ColorPreferences preferences) {
+        boolean dark = preferences.getKind() == ColorThemeKind.DARK || preferences.getKind() == ColorThemeKind.HIGH_CONTRAST_DARK;
         
         if (dark) {
+            var fg = preferences.getForeground();
+            // Make normal background slightly brighter than canvas
+            var bg = adjustBrightness(preferences.getBackground(), 0.05f);
+            
             configureColor(Color.STATE_FOREGROUND, fg);
             configureColor(Color.STATE_TEXT_FOREGROUND, fg);
             configureColor(Color.STATE_INITIAL_FOREGROND, fg);
@@ -208,5 +208,7 @@ public class ColorStore extends AbstractColorStore {
             
             configureColor(Color.KEYWORD, 0xC5, 0x86, 0xC0);
         }
+        
+        return true;
     }
 }

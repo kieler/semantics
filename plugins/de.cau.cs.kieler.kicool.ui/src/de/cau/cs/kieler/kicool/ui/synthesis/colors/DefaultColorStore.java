@@ -24,7 +24,7 @@ import de.cau.cs.kieler.klighd.util.ColorPreferences;
 public class DefaultColorStore extends AbstractColorStore {
  
     @Override
-    public void configureOwnColors(final ColorPreferences preferences) {
-        // nothing to configure
+    public boolean configureOwnColors(final ColorPreferences preferences) {
+        return true;
     }
 }
