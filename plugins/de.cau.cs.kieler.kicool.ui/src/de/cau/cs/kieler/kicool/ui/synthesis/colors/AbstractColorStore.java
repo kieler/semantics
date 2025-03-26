@@ -178,4 +178,12 @@ public abstract class AbstractColorStore {
         }
         return null;
     }
+    
+    /**
+     * Resets the entire configuration of the color store to default colors.
+     * Use with caution!
+     */
+    public void resetAllColors() {
+        configuration.clear();
+    }
 }

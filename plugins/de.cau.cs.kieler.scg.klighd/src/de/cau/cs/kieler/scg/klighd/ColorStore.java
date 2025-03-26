@@ -139,6 +139,8 @@ public class ColorStore extends AbstractColorStore {
             configureColor(Color.COMMENT_BACKGROUND_GRADIENT_2, Colors.ANTIQUE_WHITE_4);
             configureColor(Color.COMMENT_TEXT, fg);
             configureColor(Color.COMMENT_EDGE, Colors.ANTIQUE_WHITE_3);
+            
+            configureColor(Color.SCHEDULINGBLOCK_BORDER, 161, 71, 243);
         }
         
         return true;
