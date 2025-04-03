@@ -153,6 +153,10 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createDeclarationAdapter();
             }
             @Override
+            public Adapter caseIODeclaration(IODeclaration object) {
+                return createIODeclarationAdapter();
+            }
+            @Override
             public Adapter caseVariableDeclaration(VariableDeclaration object) {
                 return createVariableDeclarationAdapter();
             }
@@ -409,6 +413,20 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDeclarationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.IODeclaration <em>IO Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.IODeclaration
+     * @generated
+     */
+    public Adapter createIODeclarationAdapter() {
         return null;
     }
 

@@ -13,8 +13,6 @@ package de.cau.cs.kieler.kexpressions;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.VariableDeclaration#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.VariableDeclaration#isInput <em>Input</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.VariableDeclaration#isOutput <em>Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.VariableDeclaration#isStatic <em>Static</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.VariableDeclaration#isSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.VariableDeclaration#isConst <em>Const</em>}</li>
@@ -28,7 +26,7 @@ package de.cau.cs.kieler.kexpressions;
  * @model
  * @generated
  */
-public interface VariableDeclaration extends Declaration {
+public interface VariableDeclaration extends IODeclaration {
     /**
      * Returns the value of the '<em><b>Type</b></em>' attribute.
      * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.ValueType}.
@@ -57,58 +55,6 @@ public interface VariableDeclaration extends Declaration {
      * @generated
      */
     void setType(ValueType value);
-
-    /**
-     * Returns the value of the '<em><b>Input</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Input</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Input</em>' attribute.
-     * @see #setInput(boolean)
-     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getVariableDeclaration_Input()
-     * @model required="true"
-     * @generated
-     */
-    boolean isInput();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.VariableDeclaration#isInput <em>Input</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Input</em>' attribute.
-     * @see #isInput()
-     * @generated
-     */
-    void setInput(boolean value);
-
-    /**
-     * Returns the value of the '<em><b>Output</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Output</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Output</em>' attribute.
-     * @see #setOutput(boolean)
-     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getVariableDeclaration_Output()
-     * @model required="true"
-     * @generated
-     */
-    boolean isOutput();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.VariableDeclaration#isOutput <em>Output</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Output</em>' attribute.
-     * @see #isOutput()
-     * @generated
-     */
-    void setOutput(boolean value);
 
     /**
      * Returns the value of the '<em><b>Static</b></em>' attribute.

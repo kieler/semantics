@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.scg.processors.optimizer
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.Expression
@@ -31,6 +32,7 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import de.cau.cs.kieler.scg.processors.SCGAnnotations
 import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
 import java.util.Set
 
@@ -52,6 +54,7 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
     public static val IProperty<Boolean> SMART_REGISTER_ALLLOCATION_CONSIDER_CONDITIONAL_GUARDS = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.considerConditionalGuards", false)     
             
+    @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension SCGControlFlowExtensions
@@ -69,6 +72,12 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
     
     override process() {
         if (!environment.getProperty(SMART_REGISTER_ALLOCATION_ENABLED)) return;
+        
+        // FIXME This optimization breaks the behavior of sequential forks
+        if (model.scgs.exists[it.hasAnnotation(SCGAnnotations.ANNOTATION_HAS_SEQUENTIAL_FORK)]) {
+            environment.infos.add("Smart Register Allocation was disabled due to the presence of sequential forks")
+            return
+        }
         
         val model = getModel
         

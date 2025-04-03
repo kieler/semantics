@@ -12,13 +12,14 @@
  */
 package de.cau.cs.kieler.kexpressions.extensions
 
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kexpressions.ReferenceCall
-import de.cau.cs.kieler.kexpressions.Parameter
-import de.cau.cs.kieler.kexpressions.ParameterAccessType
-import java.util.List
+import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ParameterAccessType
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import java.util.List
 
 /**
  * @author ssm
@@ -27,6 +28,9 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
  *
  */
 class KExpressionsCallExtensions {
+    
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions
     
     def hasReferenceCall(Assignment assignment) {
         assignment.expression instanceof ReferenceCall    
@@ -67,6 +71,10 @@ class KExpressionsCallExtensions {
 
     def setParameterOutputToPureOutput(Parameter parameter) {
         parameter.accessType = ParameterAccessType.PURE_OUTPUT
+    }
+    
+    def isMethodCall(ReferenceCall call) {
+        return call.lowermostReference?.valuedObject?.declaration?.isMethod
     }
 
 }

@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.kexpressions.keffects.impl;
 
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
+
 import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
@@ -49,6 +50,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.ReferenceCallEffectImpl#getIndices <em>Indices</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.ReferenceCallEffectImpl#getSubReference <em>Sub Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.ReferenceCallEffectImpl#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.ReferenceCallEffectImpl#isSuper <em>Super</em>}</li>
  * </ul>
  *
  * @generated
@@ -123,6 +125,26 @@ public class ReferenceCallEffectImpl extends AnnotatableImpl implements Referenc
      * @ordered
      */
     protected EList<Parameter> parameters;
+
+    /**
+     * The default value of the '{@link #isSuper() <em>Super</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSuper()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean SUPER_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isSuper() <em>Super</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSuper()
+     * @generated
+     * @ordered
+     */
+    protected boolean super_ = SUPER_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -298,6 +320,29 @@ public class ReferenceCallEffectImpl extends AnnotatableImpl implements Referenc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public boolean isSuper() {
+        return super_;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setSuper(boolean newSuper) {
+        boolean oldSuper = super_;
+        super_ = newSuper;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.REFERENCE_CALL_EFFECT__SUPER, oldSuper, super_));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -355,6 +400,8 @@ public class ReferenceCallEffectImpl extends AnnotatableImpl implements Referenc
                 return getSubReference();
             case KEffectsPackage.REFERENCE_CALL_EFFECT__PARAMETERS:
                 return getParameters();
+            case KEffectsPackage.REFERENCE_CALL_EFFECT__SUPER:
+                return isSuper();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -394,6 +441,9 @@ public class ReferenceCallEffectImpl extends AnnotatableImpl implements Referenc
                 getParameters().clear();
                 getParameters().addAll((Collection<? extends Parameter>)newValue);
                 return;
+            case KEffectsPackage.REFERENCE_CALL_EFFECT__SUPER:
+                setSuper((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -427,6 +477,9 @@ public class ReferenceCallEffectImpl extends AnnotatableImpl implements Referenc
             case KEffectsPackage.REFERENCE_CALL_EFFECT__PARAMETERS:
                 getParameters().clear();
                 return;
+            case KEffectsPackage.REFERENCE_CALL_EFFECT__SUPER:
+                setSuper(SUPER_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -453,6 +506,8 @@ public class ReferenceCallEffectImpl extends AnnotatableImpl implements Referenc
                 return subReference != null;
             case KEffectsPackage.REFERENCE_CALL_EFFECT__PARAMETERS:
                 return parameters != null && !parameters.isEmpty();
+            case KEffectsPackage.REFERENCE_CALL_EFFECT__SUPER:
+                return super_ != SUPER_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -498,6 +553,7 @@ public class ReferenceCallEffectImpl extends AnnotatableImpl implements Referenc
         }
         if (baseClass == ReferenceCall.class) {
             switch (derivedFeatureID) {
+                case KEffectsPackage.REFERENCE_CALL_EFFECT__SUPER: return KExpressionsPackage.REFERENCE_CALL__SUPER;
                 default: return -1;
             }
         }
@@ -545,10 +601,27 @@ public class ReferenceCallEffectImpl extends AnnotatableImpl implements Referenc
         }
         if (baseClass == ReferenceCall.class) {
             switch (baseFeatureID) {
+                case KExpressionsPackage.REFERENCE_CALL__SUPER: return KEffectsPackage.REFERENCE_CALL_EFFECT__SUPER;
                 default: return -1;
             }
         }
         return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (super: ");
+        result.append(super_);
+        result.append(')');
+        return result.toString();
     }
 
 } //ReferenceCallEffectImpl

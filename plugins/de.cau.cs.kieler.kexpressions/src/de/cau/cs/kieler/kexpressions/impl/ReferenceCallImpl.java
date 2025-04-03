@@ -9,6 +9,7 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -16,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -28,6 +30,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceCallImpl#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ReferenceCallImpl#isSuper <em>Super</em>}</li>
  * </ul>
  *
  * @generated
@@ -42,6 +45,25 @@ public class ReferenceCallImpl extends ValuedObjectReferenceImpl implements Refe
      * @ordered
      */
     protected EList<Parameter> parameters;
+
+    /**
+     * The default value of the '{@link #isSuper() <em>Super</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSuper()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean SUPER_EDEFAULT = false;
+    /**
+     * The cached value of the '{@link #isSuper() <em>Super</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSuper()
+     * @generated
+     * @ordered
+     */
+    protected boolean super_ = SUPER_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -81,6 +103,29 @@ public class ReferenceCallImpl extends ValuedObjectReferenceImpl implements Refe
      * @generated
      */
     @Override
+    public boolean isSuper() {
+        return super_;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setSuper(boolean newSuper) {
+        boolean oldSuper = super_;
+        super_ = newSuper;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.REFERENCE_CALL__SUPER, oldSuper, super_));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case KExpressionsPackage.REFERENCE_CALL__PARAMETERS:
@@ -99,6 +144,8 @@ public class ReferenceCallImpl extends ValuedObjectReferenceImpl implements Refe
         switch (featureID) {
             case KExpressionsPackage.REFERENCE_CALL__PARAMETERS:
                 return getParameters();
+            case KExpressionsPackage.REFERENCE_CALL__SUPER:
+                return isSuper();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -116,6 +163,9 @@ public class ReferenceCallImpl extends ValuedObjectReferenceImpl implements Refe
                 getParameters().clear();
                 getParameters().addAll((Collection<? extends Parameter>)newValue);
                 return;
+            case KExpressionsPackage.REFERENCE_CALL__SUPER:
+                setSuper((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -131,6 +181,9 @@ public class ReferenceCallImpl extends ValuedObjectReferenceImpl implements Refe
             case KExpressionsPackage.REFERENCE_CALL__PARAMETERS:
                 getParameters().clear();
                 return;
+            case KExpressionsPackage.REFERENCE_CALL__SUPER:
+                setSuper(SUPER_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -145,6 +198,8 @@ public class ReferenceCallImpl extends ValuedObjectReferenceImpl implements Refe
         switch (featureID) {
             case KExpressionsPackage.REFERENCE_CALL__PARAMETERS:
                 return parameters != null && !parameters.isEmpty();
+            case KExpressionsPackage.REFERENCE_CALL__SUPER:
+                return super_ != SUPER_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -179,6 +234,22 @@ public class ReferenceCallImpl extends ValuedObjectReferenceImpl implements Refe
             }
         }
         return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (super: ");
+        result.append(super_);
+        result.append(')');
+        return result.toString();
     }
 
 } //ReferenceCallImpl

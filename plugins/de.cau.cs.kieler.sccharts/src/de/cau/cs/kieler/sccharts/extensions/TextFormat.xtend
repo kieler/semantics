@@ -19,5 +19,6 @@ package de.cau.cs.kieler.sccharts.extensions
  *
  */
 enum TextFormat { 
-    KEYWORD, HIGHLIGHT, TEXT, CONTENT_PLACEHOLDER
+    KEYWORD, HIGHLIGHT, TEXT, CONTENT_PLACEHOLDER, SCHEDULE, 
+    BREAK // Special format option to create a new row (will ignore actual text)
 }

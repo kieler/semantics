@@ -1410,11 +1410,13 @@ public abstract class AbstractKiCoolSemanticSequencer extends KExtSemanticSequen
 	}
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     CoProcessor returns ProcessorReference
 	 *
 	 * Constraint:
 	 *     (silent?='silent'? id=QualifiedID (preconfig=JsonObjectValue postconfig=JsonObjectValue?)?)
+	 * </pre>
 	 */
 	protected void sequence_CoProcessor(ISerializationContext context, ProcessorReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1422,11 +1424,13 @@ public abstract class AbstractKiCoolSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     IntermediateReference returns IntermediateReference
 	 *
 	 * Constraint:
 	 *     (id=QualifiedID alias=EString?)
+	 * </pre>
 	 */
 	protected void sequence_IntermediateReference(ISerializationContext context, IntermediateReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1434,11 +1438,13 @@ public abstract class AbstractKiCoolSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ProcessorAlternativeGroup returns ProcessorAlternativeGroup
 	 *
 	 * Constraint:
 	 *     (label=EString? processors+=ProcessorGroup processors+=ProcessorGroup+)
+	 * </pre>
 	 */
 	protected void sequence_ProcessorAlternativeGroup(ISerializationContext context, ProcessorAlternativeGroup semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1446,11 +1452,13 @@ public abstract class AbstractKiCoolSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ProcessorGroup returns ProcessorGroup
 	 *
 	 * Constraint:
 	 *     (label=EString? (processors+=Processor | processors+=ProcessorSystem | processors+=ProcessorAlternativeGroup | processors+=ProcessorGroup)+)
+	 * </pre>
 	 */
 	protected void sequence_ProcessorGroup(ISerializationContext context, ProcessorGroup semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1458,11 +1466,13 @@ public abstract class AbstractKiCoolSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ProcessorSystem returns ProcessorSystem
 	 *
 	 * Constraint:
 	 *     id=QualifiedID
+	 * </pre>
 	 */
 	protected void sequence_ProcessorSystem(ISerializationContext context, ProcessorSystem semanticObject) {
 		if (errorAcceptor != null) {
@@ -1476,6 +1486,7 @@ public abstract class AbstractKiCoolSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Processor returns ProcessorReference
 	 *
@@ -1487,6 +1498,7 @@ public abstract class AbstractKiCoolSemanticSequencer extends KExtSemanticSequen
 	 *         metric=[IntermediateReference|QualifiedID]? 
 	 *         postprocesses+=CoProcessor*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_Processor(ISerializationContext context, ProcessorReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1494,6 +1506,7 @@ public abstract class AbstractKiCoolSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     System returns System
 	 *
@@ -1511,6 +1524,7 @@ public abstract class AbstractKiCoolSemanticSequencer extends KExtSemanticSequen
 	 *         intermediates+=IntermediateReference* 
 	 *         processors=ProcessorGroup
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_System(ISerializationContext context, de.cau.cs.kieler.kicool.System semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

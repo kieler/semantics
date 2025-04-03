@@ -80,7 +80,6 @@ public class ScadePackageImpl extends EPackageImpl implements ScadePackage
   {
     super(eNS_URI, ScadeFactory.eINSTANCE);
   }
-
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

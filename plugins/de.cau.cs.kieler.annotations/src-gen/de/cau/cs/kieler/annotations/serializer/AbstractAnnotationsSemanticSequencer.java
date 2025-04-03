@@ -102,6 +102,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	}
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Annotation returns CommentAnnotation
 	 *     ValuedAnnotation returns CommentAnnotation
@@ -111,6 +112,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	 *
 	 * Constraint:
 	 *     values+=COMMENT_ANNOTATION
+	 * </pre>
 	 */
 	protected void sequence_CommentAnnotation(ISerializationContext context, CommentAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -118,11 +120,13 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     CommentAnnotatonSL returns CommentAnnotation
 	 *
 	 * Constraint:
 	 *     values+=SL_COMMENT_ANNOTATION
+	 * </pre>
 	 */
 	protected void sequence_CommentAnnotatonSL(ISerializationContext context, CommentAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -130,6 +134,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Annotation returns StringAnnotation
 	 *     ValuedAnnotation returns StringAnnotation
@@ -137,6 +142,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	 *
 	 * Constraint:
 	 *     (name=ExtendedID values+=EStringAllTypes values+=EStringAllTypes*)
+	 * </pre>
 	 */
 	protected void sequence_KeyStringValueAnnotation(ISerializationContext context, StringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -144,12 +150,14 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Pragma returns Pragma
 	 *     PragmaTag returns Pragma
 	 *
 	 * Constraint:
 	 *     name=ExtendedID
+	 * </pre>
 	 */
 	protected void sequence_PragmaTag(ISerializationContext context, Pragma semanticObject) {
 		if (errorAcceptor != null) {
@@ -163,12 +171,14 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     QuotedStringAnnotation returns StringAnnotation
 	 *     QuotedKeyStringValueAnnotation returns StringAnnotation
 	 *
 	 * Constraint:
 	 *     (name=ExtendedID values+=STRING values+=STRING*)
+	 * </pre>
 	 */
 	protected void sequence_QuotedKeyStringValueAnnotation(ISerializationContext context, StringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -176,12 +186,14 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     QuotedStringAnnotation returns TypedStringAnnotation
 	 *     QuotedTypedKeyStringValueAnnotation returns TypedStringAnnotation
 	 *
 	 * Constraint:
 	 *     (name=ExtendedID type=ExtendedID values+=STRING values+=STRING*)
+	 * </pre>
 	 */
 	protected void sequence_QuotedTypedKeyStringValueAnnotation(ISerializationContext context, TypedStringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -189,12 +201,14 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     RestrictedTypeAnnotation returns StringAnnotation
 	 *     RestrictedKeyStringValueAnnotation returns StringAnnotation
 	 *
 	 * Constraint:
 	 *     (name=ExtendedID values+=EStringBoolean values+=EStringBoolean*)
+	 * </pre>
 	 */
 	protected void sequence_RestrictedKeyStringValueAnnotation(ISerializationContext context, StringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -202,12 +216,14 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     RestrictedTypeAnnotation returns TypedStringAnnotation
 	 *     RestrictedTypedKeyStringValueAnnotation returns TypedStringAnnotation
 	 *
 	 * Constraint:
 	 *     (name=ExtendedID type=ExtendedID values+=EStringBoolean values+=EStringBoolean*)
+	 * </pre>
 	 */
 	protected void sequence_RestrictedTypedKeyStringValueAnnotation(ISerializationContext context, TypedStringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -215,12 +231,14 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Pragma returns StringPragma
 	 *     StringPragma returns StringPragma
 	 *
 	 * Constraint:
 	 *     (name=ExtendedID values+=EStringAllTypes values+=EStringAllTypes*)
+	 * </pre>
 	 */
 	protected void sequence_StringPragma(ISerializationContext context, StringPragma semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -228,6 +246,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Annotation returns TagAnnotation
 	 *     RestrictedTypeAnnotation returns TagAnnotation
@@ -236,6 +255,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	 *
 	 * Constraint:
 	 *     name=ExtendedID
+	 * </pre>
 	 */
 	protected void sequence_TagAnnotation(ISerializationContext context, TagAnnotation semanticObject) {
 		if (errorAcceptor != null) {
@@ -249,6 +269,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Annotation returns TypedStringAnnotation
 	 *     ValuedAnnotation returns TypedStringAnnotation
@@ -256,6 +277,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	 *
 	 * Constraint:
 	 *     (name=ExtendedID type=ExtendedID values+=EStringAllTypes values+=EStringAllTypes*)
+	 * </pre>
 	 */
 	protected void sequence_TypedKeyStringValueAnnotation(ISerializationContext context, TypedStringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

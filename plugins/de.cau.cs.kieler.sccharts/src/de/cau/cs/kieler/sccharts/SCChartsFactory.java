@@ -175,6 +175,15 @@ public interface SCChartsFactory extends EFactory {
     DataflowAssignment createDataflowAssignment();
 
     /**
+     * Returns a new object of class '<em>Dataflow Reference Call</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Dataflow Reference Call</em>'.
+     * @generated
+     */
+    DataflowReferenceCall createDataflowReferenceCall();
+
+    /**
      * Returns a new object of class '<em>Base State Reference</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

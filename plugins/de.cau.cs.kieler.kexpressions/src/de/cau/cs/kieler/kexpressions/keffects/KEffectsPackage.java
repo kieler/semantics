@@ -415,13 +415,22 @@ public interface KEffectsPackage extends EPackage {
     int REFERENCE_CALL_EFFECT__PARAMETERS = EFFECT_FEATURE_COUNT + 3;
 
     /**
+     * The feature id for the '<em><b>Super</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_CALL_EFFECT__SUPER = EFFECT_FEATURE_COUNT + 4;
+
+    /**
      * The number of structural features of the '<em>Reference Call Effect</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REFERENCE_CALL_EFFECT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 4;
+    int REFERENCE_CALL_EFFECT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 5;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.FunctionCallEffectImpl <em>Function Call Effect</em>}' class.

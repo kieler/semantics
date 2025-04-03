@@ -48,7 +48,9 @@
     <genClasses ecoreClass="scl.ecore#//Return">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scl.ecore#//Return/expression"/>
     </genClasses>
-    <genClasses ecoreClass="scl.ecore#//MethodImplementationDeclaration"/>
+    <genClasses ecoreClass="scl.ecore#//MethodImplementationDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scl.ecore#//MethodImplementationDeclaration/implemented"/>
+    </genClasses>
     <genClasses ecoreClass="scl.ecore#//Loop">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scl.ecore#//Loop/initialization"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scl.ecore#//Loop/initializationDeclaration"/>

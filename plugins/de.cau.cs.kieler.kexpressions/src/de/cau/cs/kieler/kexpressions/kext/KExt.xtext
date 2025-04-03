@@ -106,14 +106,15 @@ VariableDeclaration returns kexpressions::VariableDeclaration:
 VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
     annotations+=Annotation*
     access=AccessModifier?
-	const?='const'?
     input?='input'? 
     output?='output'?
+	const?='const'?
     global?='global'?
     static?='static'?
-    ((signal?='signal'? type = ValueType) | 
-        signal?='signal' |
-        (type = HostType hostType = STRING)
+    (
+        (signal?='signal'? type = ValueType)
+        | signal?='signal'
+        | (type = HostType hostType = STRING)
     ) 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
     annotations+=CommentAnnotatonSL?; 
@@ -211,7 +212,7 @@ MethodDeclaration returns kexpressions::MethodDeclaration:
     {kexpressions::MethodDeclaration}
     annotations+=Annotation*
     access=AccessModifier?
-    returnType=MethodReturnType?
+    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
     valuedObjects+=SimpleValuedObject
     (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
     ('schedule' schedule+=ScheduleObjectReference+)?
@@ -223,7 +224,7 @@ MethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
     {kexpressions::MethodDeclaration}
     annotations+=Annotation*
     access=AccessModifier?
-    returnType=MethodReturnType?
+    (returnType=MethodReturnType | (returnType=HostType returnHostType=STRING))?
     valuedObjects+=SimpleValuedObject
     (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
     ('schedule' schedule+=ScheduleObjectReference+)?
@@ -235,6 +236,8 @@ ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     access=AccessModifier?
     ((
         input?='input'?
+        output?='output'?
+        const?='const'?
         'ref'
         (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
         reference = [annotations::NamedObject|PrimeID]
@@ -252,6 +255,8 @@ ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     access=AccessModifier?
     ((
         input?='input'?
+        output?='output'?
+        const?='const'?
         'ref'
         (referenceContainer = [annotations::NamedObject|PrimeID] '.')?
         reference = [annotations::NamedObject|PrimeID]

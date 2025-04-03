@@ -26,6 +26,7 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 
 /**
  * Removes model elements marked with the annotation hide.
@@ -102,6 +103,19 @@ class HideAnnotationHook extends SynthesisHook {
                             ];
                             if (regionNode !== null) {
                                 regionNode.parent = null;
+                            }
+                        }
+                    }
+                }
+                // Remove methods
+                if (!state.declarations.filter[it instanceof MethodDeclaration].empty) {
+                    for (m : state.declarations.filter[it instanceof MethodDeclaration]) {
+                        if (m.hasHideAnnotation) {
+                            val regionNode = node.children.findFirst [
+                                isAssociatedWith(m)
+                            ];
+                            if (regionNode !== null) {
+                                regionNode.initiallyHide;
                             }
                         }
                     }

@@ -20,12 +20,14 @@ import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import de.cau.cs.kieler.scg.extensions.SCGSequentialForkExtensions
 import java.util.Set
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
@@ -40,6 +42,7 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
 	@Inject extension SCGControlFlowExtensions
 	@Inject extension SCGDependencyExtensions
     @Inject extension SCGMethodExtensions
+    @Inject extension SCGSequentialForkExtensions
 	@Inject extension TarjanSCC
 	
 	public static val IProperty<Boolean> LOOP_ANALYZER_ENABLED = 
@@ -89,12 +92,10 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
 
         if (!environment.getProperty(LOOP_ANALYZER_ENABLED)) return;
         
-        
-
         for (scg : model.scgs.ignoreMethods) {
             scg.findSCCs(loopData, environment.getProperty(LOOP_ANALYZER_CONSIDER_ALL_DEPENDENCIES))
         }
-       
+               
         if (!loopData.criticalNodes.empty) {
             if (environment.getProperty(ERROR_ON_INSTANTANEOUS_LOOP)) {
                 environment.errors.add("Instantaneous loop detected!")
@@ -113,6 +114,15 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
                 val strippedModel = extractLoopModel(loopData)
                 environment.infos.add(strippedModel.key, 
                    "Instantaneous loop detected!", null)
+            }
+            
+            // Sequential fork does not support curing schizophrenia
+            // Depth join might/will disturb special dependencies
+            // TODO Add support!
+            for (fork : loopData.criticalNodes.filter(Fork)) {
+                if (fork.isNonParallel) {
+                    environment.errors.add("Sequential forks must not be schizophrenic!", fork, true)
+                }
             }
         }
     }	

@@ -28,10 +28,12 @@ import org.eclipse.elk.alg.layered.options.LayerConstraint
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.Alignment
 import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.PortSide
+
+import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
 
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
 
 /**
  * @author kolja
@@ -53,9 +55,22 @@ class EquationSimplification {
      */
     def List<KNode> simplify(List<KNode> nodes) {
         inputNodes = nodes.filter[isInput].map[copy].toList
-        return nodes.sequentializeDataAccess.combineDataAccessNodes.sequentialize.connectInputWithOutput.
-            combineInputNodes.combineReferenceNodes.removeDublicates.removeSequentialWrites.hideLocalObjects.
-            resolvePreCicles.removeDoubledLabels.removeSequentialCicles.removeUnneededPorts
+        
+        nodes.sequentializeDataAccess
+        nodes.combineDataAccessNodes
+        nodes.sequentialize
+        nodes.connectInputWithOutput
+        nodes.combineInputNodes
+        nodes.combineReferenceNodes
+        nodes.removeDublicates
+        nodes.removeSequentialWrites
+        nodes.hideLocalObjects
+        nodes.resolvePreCicles
+        nodes.removeDoubledLabels
+        nodes.removeSequentialCicles
+        nodes.removeUnneededPorts
+        
+        return nodes
     }
 
     /**
@@ -493,16 +508,29 @@ class EquationSimplification {
      * redirects all incoming wires of old to target
      */
     private def redirectIncommingWires(KNode old, KNode target) {
+        val methodEdges = newArrayList
         while (old.incomingEdges.size > 0) {
             val e = old.incomingEdges.get(0)
-            if (!e.isSequential && !e.isInstance) {
+            if (e.hasProperty(EquationSynthesis.METHOD_PORT_ID)) {
+                methodEdges += e
+                old.incomingEdges.remove(e)
+            } else if (!e.isSequential && !e.isInstance) {
                 var targetPort = target.getInputPortWithNumber(0)
                 if (target.isDataAccess || target.isReference) {
                     targetPort = target.findPort(e.targetPort)
+                    
+                    if (targetPort !== null && targetPort.hasProperty(EquationSynthesis.METHOD_PORT_ID)) {
+                        targetPort = null // Do not merge method calls
+                    }
+                    
                     if (targetPort === null) {
                         targetPort = e.targetPort.copy
                         targetPort.KID = EquationSynthesis.IN_PORT + "_" + target.ports.size
-                        target.ports.add(targetPort)
+                        if (targetPort.getProperty(CoreOptions.PORT_SIDE) === PortSide.WEST) {
+                            target.ports.add(0, targetPort)
+                        } else {
+                            target.ports.add(targetPort)
+                        }
                     }
                 }
                 if (e.targetPort.edges.size == 1) {
@@ -515,22 +543,58 @@ class EquationSimplification {
                 e.betterRemove
             }
         }
+        
+        for (e : methodEdges) {
+            val id = e.getProperty(EquationSynthesis.METHOD_PORT_ID)
+            e.source = target
+            var p = target.ports.findFirst[
+                id == it.getProperty(EquationSynthesis.METHOD_PORT_ID)
+                && e.sourcePort.labels.head.text.equals(it.labels.head.text)
+                && e.sourcePort.getProperty(CoreOptions.PORT_SIDE) == it.getProperty(CoreOptions.PORT_SIDE)
+            ]
+            if (p !== null) {
+                e.sourcePort = p
+            }
+            
+            e.target = target
+            p = target.ports.findFirst[
+                id == it.getProperty(EquationSynthesis.METHOD_PORT_ID)
+                && e.targetPort.labels.head.text.equals(it.labels.head.text)
+                && e.targetPort.getProperty(CoreOptions.PORT_SIDE) == it.getProperty(CoreOptions.PORT_SIDE)
+            ]
+            if (p !== null) {
+                e.targetPort = p
+            }
+        }
     }
 
     /**
      * redirects all outgoing wires of old to source
      */
     private def redirectOutgoingWires(KNode old, KNode source) {
+        val methodEdges = newArrayList
         while (old.outgoingEdges.size > 0) {
             val e = old.outgoingEdges.get(0)
-            if (!e.isSequential && !e.isInstance) {
+            if (e.hasProperty(EquationSynthesis.METHOD_PORT_ID)) {
+                methodEdges += e
+                old.incomingEdges.remove(e)
+            } else if (!e.isSequential && !e.isInstance) {
                 var sourcePort = source.findPortById(EquationSynthesis.OUT_PORT)
                 if (source.isDataAccess || source.isReference) {
                     sourcePort = source.findPort(e.sourcePort)
+                    
+                    if (sourcePort !== null && sourcePort.hasProperty(EquationSynthesis.METHOD_PORT_ID)) {
+                        sourcePort = null // Do not merge method calls
+                    }
+                    
                     if (sourcePort === null) {
                         sourcePort = e.sourcePort.copy
                         sourcePort.KID = (EquationSynthesis.OUT_PORT + "_" + source.ports.size)
-                        source.ports.add(sourcePort)
+                        if (sourcePort.getProperty(CoreOptions.PORT_SIDE) === PortSide.WEST) {
+                            source.ports.add(0, sourcePort)
+                        } else {
+                            source.ports.add(sourcePort)
+                        }
                     }
                 }
                 if (e.sourcePort.edges.size == 1) {
@@ -541,6 +605,30 @@ class EquationSimplification {
                 old.outgoingEdges.remove(e)
             } else {
                 e.betterRemove
+            }
+        }
+        
+        methodEdges += source.outgoingEdges.filter[hasProperty(EquationSynthesis.METHOD_PORT_ID)]
+        for (e : methodEdges) {
+            val id = e.getProperty(EquationSynthesis.METHOD_PORT_ID)
+            e.source = source
+            var p = source.ports.findFirst[
+                id == it.getProperty(EquationSynthesis.METHOD_PORT_ID)
+                && e.sourcePort.labels.head.text.equals(it.labels.head.text)
+                && e.sourcePort.getProperty(CoreOptions.PORT_SIDE) == it.getProperty(CoreOptions.PORT_SIDE)
+            ]
+            if (p !== null) {
+                e.sourcePort = p
+            }
+            
+            e.target = source
+            p = source.ports.findFirst[
+                id == it.getProperty(EquationSynthesis.METHOD_PORT_ID)
+                && e.targetPort.labels.head.text.equals(it.labels.head.text)
+                && e.targetPort.getProperty(CoreOptions.PORT_SIDE) == it.getProperty(CoreOptions.PORT_SIDE)
+            ]
+            if (p !== null) {
+                e.targetPort = p
             }
         }
     }

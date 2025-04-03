@@ -269,6 +269,9 @@ class ModelsRepositoryTestRunner extends Suite {
             } else {
                 builder.append(modelData.modelPath)
             }
+            builder.append(" - ")
+            builder.append(test.class.simpleName)
+            
             return builder.toString
         }
         

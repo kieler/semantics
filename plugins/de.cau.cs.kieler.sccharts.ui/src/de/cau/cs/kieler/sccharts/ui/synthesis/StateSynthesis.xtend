@@ -18,6 +18,7 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
@@ -228,13 +229,12 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (!isConnector) {
             // Add label
             if (!state.label.nullOrEmpty) {
-                (if (state.isMacroState) {
-                    val label = <Pair<? extends CharSequence, TextFormat>>newArrayList
-                    label += new Pair(state.serializeHR, TextFormat.TEXT)
-                    if (!state.genericParameterDeclarations.nullOrEmpty) {
-                        label += state.genericParameterDeclarations.serializeGenericParametersHighlighted
-                    }
-                    if (state.reference !== null) {
+                var KRendering labelRendering = null
+                val name = state.serializeHR.toString
+                if (state.isMacroState) {
+                    val List<Pair<? extends CharSequence, TextFormat>> label = newArrayList
+                    label += new Pair(name, TextFormat.TEXT)
+                    if (state.reference !== null) { // Reference State
                         label += new Pair("@", TextFormat.KEYWORD)
                         if (state.isReferencing) {
                             label += new Pair(state.reference.target.name, TextFormat.TEXT)
@@ -244,8 +244,22 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                         if (SHOW_BINDINGS.booleanValue) {
                             label += new Pair(state.reference.parameters.serializeHRParameters, TextFormat.TEXT)
                         }
-                    } else if (!state.baseStateReferences.nullOrEmpty) {
+                    }
+                    val stack = BaseStateDisplayOptions.STACK.equals(SHOW_BASE_STATES.objectValue)
+                    if (!state.genericParameterDeclarations.nullOrEmpty && SHOW_GENERICS.booleanValue) { // Generics
+                        if (stack) {
+                            label += new Pair("", TextFormat.BREAK)
+                        }
+                        label += state.genericParameterDeclarations.serializeGenericParametersHighlighted()
+                    }
+                    if (!state.baseStateReferences.nullOrEmpty && !BaseStateDisplayOptions.NONE.equals(SHOW_BASE_STATES.objectValue)) { // 
+                        if (stack) {
+                            label += new Pair("", TextFormat.BREAK)
+                        }
                         label += new Pair("extends", TextFormat.KEYWORD)
+                        if (stack) {
+                            label += new Pair("", TextFormat.BREAK)
+                        }
                         for (baseState : state.baseStateReferences.indexed) {
                             val baseRef = baseState.value
                             if (baseRef.target !== null) {
@@ -262,34 +276,44 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                                 }
                             }
                             if (baseState.key < state.baseStates.length - 1) {
-                                label += new Pair(",", TextFormat.TEXT)
+                                if (stack) {
+                                    label += new Pair("", TextFormat.BREAK)
+                                } else {
+                                    label += new Pair(",", TextFormat.TEXT)
+                                }
                             }
+                            
                         }
                     }
-                    node.addMacroStateLabel(label)
-                    if (label.length > 0) {
-                        val name = label.get(0)
-                        if (name.key.length > ProxyStyles.MAX_PROXY_LABEL_LENGTH) {
-                            label.set(0, new Pair(name.key.subSequence(0, ProxyStyles.MAX_PROXY_LABEL_LENGTH) + "...", name.value))
-                        }
-                    }
-                    proxy.addMacroStateLabel(label)
-                } else {
-                    val label = state.serializeHR.toString
-                    node.addSimpleStateLabel(label)
-                    if (label.length > ProxyStyles.MAX_PROXY_LABEL_LENGTH) {
-                        proxy.addSimpleStateLabel(label.substring(0, ProxyStyles.MAX_PROXY_LABEL_LENGTH) + "...")
+                    labelRendering = node.addMacroStateLabel(label)
+                    if (name.length > ProxyStyles.MAX_PROXY_LABEL_LENGTH) {
+                        proxy.addSimpleStateLabel(name.substring(0, ProxyStyles.MAX_PROXY_LABEL_LENGTH) + "...")
                     } else {
-                        proxy.addSimpleStateLabel(label)
+                        proxy.addSimpleStateLabel(name)
                     }
-                }) => [
-                    associateWith(state)
-                    if (it instanceof KText) configureTextLOD(state)
-                    eAllContents.filter(KRendering).toList.forEach[
-                        associateWith(state)
-                        if (it instanceof KText) configureTextLOD(state)
+                } else {
+                    labelRendering = node.addSimpleStateLabel(name)
+                    if (name.length > ProxyStyles.MAX_PROXY_LABEL_LENGTH) {
+                        proxy.addSimpleStateLabel(name.substring(0, ProxyStyles.MAX_PROXY_LABEL_LENGTH) + "...")
+                    } else {
+                        proxy.addSimpleStateLabel(name)
+                    }
+                }
+                // Configure Ktexts
+                labelRendering.setProperty(TracingVisualizationProperties.TRACING_NODE, true)
+                labelRendering.associateWith(state)
+                if (labelRendering instanceof KText) {
+                    labelRendering.configureTextLOD(state)
+                    labelRendering.setProperty(KlighdProperties.IS_NODE_TITLE, true)
+                } else {
+                    labelRendering.eAllContents.filter(KRendering).toList.forEach[
+                        it.associateWith(state)
+                        it.setProperty(KlighdProperties.IS_NODE_TITLE, true)
+                        if (it instanceof KText) {
+                            it.configureTextLOD(state)
+                        } 
                     ]
-                ]
+                }
             } else {
                 node.addEmptyStateLabel
                 proxy.addEmptyStateLabel
@@ -297,26 +321,38 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             
             // Add declarations
             val declarations = new ArrayList<Declaration>(state.declarations)
-            if (SHOW_INHERITANCE.booleanValue) declarations.addAll(0, state.allVisibleInheritedDeclarations.toList)
-            val filteredDeclarations = declarations.filter[!(it instanceof MethodImplementationDeclaration) || !SHOW_METHOD_BODY.booleanValue]
-            for (declaration : filteredDeclarations) {
+            if (SHOW_INHERITANCE.booleanValue) declarations.addAll(0, state.getAllVisibleInheritedDeclarationsDepthFirst.toList)
+            if (SHOW_INSTANCES.booleanValue) {
+                declarations.removeIf[it instanceof ReferenceDeclaration && (it as ReferenceDeclaration).reference instanceof State]
+            }
+            for (declaration : declarations) {
+                var KRendering declRendering = null
                 if (declaration instanceof ClassDeclaration) {
                     node.addStructDeclarations(declaration, 0)
+                } else if (declaration instanceof MethodImplementationDeclaration) {
+                    if (SHOW_METHODS.objectValue !== MethodDisplayOptions.REGIONS) {
+                        declRendering = node.addDeclarationLabel(
+                            declaration.serializeMethodHighlighted(true, SHOW_METHODS.objectValue === MethodDisplayOptions.PREVIEW)
+                        )
+                    }
+                } else if (declaration instanceof ReferenceDeclaration) {
+                    declRendering = node.addDeclarationLabel(declaration.serializeHighlighted(true, SHOW_BINDINGS.booleanValue))
                 } else {
-                    node.addDeclarationLabel(declaration.serializeHighlighted(true)) => [
-                        setProperty(TracingVisualizationProperties.TRACING_NODE, true)
+                    declRendering = node.addDeclarationLabel(declaration.serializeHighlighted(true))
+                }
+                // Postprocess
+                if (declRendering !== null) {
+                    declRendering.setProperty(TracingVisualizationProperties.TRACING_NODE, true)
+                    declRendering.associateWith(declaration)
+                    declRendering.eAllContents.filter(KRendering).toList.forEach[
                         associateWith(declaration)
-                        eAllContents.filter(KRendering).toList.forEach[
-                            associateWith(declaration)
-                            if (it instanceof KText) configureTextLOD(declaration)
-                        ]
+                        if (it instanceof KText) configureTextLOD(declaration)
                     ]
                 }
             }
             node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(
                 SCChartsSemanticFilterTags.DECLARATIONS(
-                    filteredDeclarations
-                    .size as double
+                    declarations.size as double
                 )
             )
             
@@ -329,7 +365,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             var numExtern = 0
             var numVolatile = 0
             var numGlobal = 0
-            for (declaration : filteredDeclarations) {
+            for (declaration : declarations) {
                 if (declaration instanceof VariableDeclaration) {
                     // Note that a declaration may have an arbitrary combination of these
                     if (declaration.input) numInput++
@@ -374,6 +410,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 || state.isReferencing
                 || (SHOW_INHERITANCE.booleanValue && !state.allVisibleInheritedRegions.empty)
                 || !state.declarations.filter(MethodImplementationDeclaration).empty
+                || (SHOW_INSTANCES.booleanValue && !state.declarations.filter(ReferenceDeclaration).empty)
             ) {
                 node.addRegionsArea(state)
                 node.setLayoutOption(CoreOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
@@ -392,11 +429,30 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 }
             ];
         }
+        
+        // Reference Instantiations
+        if (SHOW_INSTANCES.booleanValue) {
+            for (ref : state.declarations.filter(ReferenceDeclaration).filter[reference instanceof State]) {
+                node.children += ref.createReferenceDeclarationRegion
+            }
+        }
 
         // Transform methods
-        if (SHOW_METHOD_BODY.booleanValue) {
+        if (SHOW_METHODS.objectValue === MethodDisplayOptions.REGIONS) {
             for (method : state.declarations.filter(MethodImplementationDeclaration)) {
                 node.children += method.transform
+            }
+        }
+        
+        if(PolicySynthesis.SHOW_POLICIES.booleanValue) {
+            val classPolicies = newArrayList
+            classPolicies += state.declarations.filter(PolicyClassDeclaration).map[it.policies].flatten.filterNull
+            classPolicies += state.regions.map[declarations].flatten.filter(PolicyClassDeclaration).map[it.policies].flatten.filterNull
+            for (policy : classPolicies.reverseView) {
+                node.children.addAll(0, policy.transform)
+            }
+            for (policy : state.getPolicies()) {
+                node.children.addAll(policy.transform)
             }
         }
 
@@ -407,15 +463,6 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             switch region {
                 ControlflowRegion: node.children += region.transform
                 DataflowRegion: node.children += region.transform
-            }
-        }
-        
-        if(PolicySynthesis.SHOW_POLICIES.booleanValue) {
-            val policies = newArrayList
-            policies += state.declarations.filter(PolicyClassDeclaration).map[policy].filterNull
-            policies += state.regions.map[declarations].flatten.filter(PolicyClassDeclaration).map[policy].filterNull
-            for (policy : policies.reverseView) {
-                node.children.addAll(0, policy.transform)
             }
         }
         
@@ -457,11 +504,13 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             eAllContents.filter(KRendering).forEach[associateWith(struct)]
         ]
         if (struct instanceof PolicyClassDeclaration) {
-            if (struct.policy !== null && !struct.policy.name.nullOrEmpty) {
-                val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
-                components += new Pair("policy", TextFormat.KEYWORD)
-                components += new Pair(if (struct.policy.label.nullOrEmpty) struct.policy.label else struct.policy.name, TextFormat.TEXT)
-                node.addDeclarationLabel(components, indent + 1)
+            for (policy : struct.policies) {
+                if (!policy.name.nullOrEmpty) {
+                    val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
+                    components += new Pair("policy", TextFormat.KEYWORD)
+                    components += new Pair(if (policy.label.nullOrEmpty) policy.label else policy.name, TextFormat.TEXT)
+                    node.addDeclarationLabel(components, indent + 1)
+                }
             }
         }
         for (declaration : struct.declarations) {
@@ -469,7 +518,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 node.addStructDeclarations(declaration, indent + 1)
             } else {
                 val serialized = if (declaration instanceof MethodDeclaration) {
-                    declaration.serializeMethodHighlighted(true, SHOW_METHOD_BODY.booleanValue)
+                    declaration.serializeMethodHighlighted(true, SHOW_METHODS.objectValue !== MethodDisplayOptions.SIGNATURES)
                 } else {
                     declaration.serializeHighlighted(true)
                 }
