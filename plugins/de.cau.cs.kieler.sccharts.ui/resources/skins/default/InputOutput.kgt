@@ -4,7 +4,9 @@ knode source {
 	org.eclipse.elk.portLabels.placement = INSIDE
 	org.eclipse.elk.portConstraints = FIXED_ORDER
 
-  kpolygon {
+  kpolygon [
+    de.cau.cs.kieler.sccharts.ui.synthesis.style.sccharts = true
+  ] {
   	points: 
   					left, top 50%;
   					left 6,top;
@@ -13,8 +15,6 @@ knode source {
   					right 6, bottom;  
   					left 6,bottom	
 		styles: lineStyle = solid
-    	      foreground = 190r, 190g, 190b 
-      	    background = 248r, 249g, 253b, 255a -> 205r, 220g, 243b, 243a (90)
       	    fontSize = 4pt
   }
 

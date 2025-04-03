@@ -20,7 +20,6 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.LightDiagramServices
-import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
@@ -39,6 +38,8 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ActorSkins
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import java.util.HashMap
 import java.util.LinkedHashSet
@@ -51,8 +52,6 @@ import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.service.util.CompoundGraphElementVisitor
 import org.eclipse.elk.core.util.IGraphElementVisitor
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import de.cau.cs.kieler.klighd.filtering.SemanticFilterRule
@@ -79,6 +78,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     @Inject extension PragmaExtensions
     @Inject extension TransitionStyles
     @Inject extension KPolylineExtensions
+    @Inject extension ColorStore
+    @Inject extension ActorSkins
     @Inject StateSynthesis stateSynthesis
     @Inject ControlflowRegionSynthesis controlflowSynthesis    
     @Inject DataflowRegionSynthesis dataflowSynthesis  
@@ -88,9 +89,6 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     @Inject PolicySynthesis policySynthesis
         
     @Inject package SynthesisHooks hooks  
-    
-    public static final IProperty<String> SKINPATH = new Property<String>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.skinPath", "");
 
     static val PRAGMA_SYMBOLS = "symbols"       
     static val PRAGMA_SYMBOL = "symbol"       
@@ -99,7 +97,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     static val PRAGMA_SYMBOLS_MATH_SCRIPT = "math script"       
     static val PRAGMA_SYMBOLS_MATH_FRAKTUR = "math fraktur"       
     static val PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK = "math doublestruck"
-    static val PRAGMA_FONT = "font"        
+    static val PRAGMA_FONT = "font"
     static val PRAGMA_SKINPATH = "skinpath"
     
     static val PRAGMA_HIDE_IMPORTED_SCCHARTS = "HideImportedSCCharts"
@@ -151,7 +149,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         
         return options.toList
     }
-
+    
     override transform(SCCharts sccharts) {
         val startTime = System.currentTimeMillis
         
@@ -178,7 +176,10 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue)
         
-        clearSymbols
+        // Configure color theme (before start to allow for changes by hooks)
+        configureAllColors(usedContext)
+        
+        clearSymbols()
         for(symbolTable : scc.getStringPragmas(PRAGMA_SYMBOLS)) {  
             var prefix = ""
             if (symbolTable.values.size > 1) prefix = symbolTable.values.get(1)
@@ -187,7 +188,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_SCRIPT)) { defineMathScriptSymbols(prefix) }
             if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_FRAKTUR)) { defineMathFrakturSymbols(prefix) }
             if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK)) { defineMathDoubleStruckSymbols(prefix) }
-        }             
+        }
         for(symbol : scc.getStringPragmas(PRAGMA_SYMBOL)) {
             symbol.values.head.defineSymbol(symbol.values.get(1))
         }
@@ -336,23 +337,6 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
                 }                 
             }
         }
-    }
-    
-    def String getSkinPath(ViewContext context) {
-        val rootNode = context.viewModel
-        var sp = rootNode.getProperty(SKINPATH)
-        if (sp.nullOrEmpty) {
-            sp = context.getProperty(SKINPATH)
-            if (!sp.nullOrEmpty) {
-                sp.setSkinPath(context)
-            }
-        } 
-        return sp 
-    }
-    
-    def void setSkinPath(String sp, ViewContext context) {
-        val rootNode = context.viewModel
-        rootNode.setProperty(SKINPATH, sp) 
     }
     
     override List<? extends IGraphElementVisitor> getAdditionalLayoutConfigs(KNode viewModel) {

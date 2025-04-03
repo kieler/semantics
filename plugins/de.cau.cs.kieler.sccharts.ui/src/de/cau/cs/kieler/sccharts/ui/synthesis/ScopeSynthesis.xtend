@@ -22,6 +22,7 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import java.util.LinkedHashSet
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
@@ -38,6 +39,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 class ScopeSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     @Inject extension KNodeExtensions
+    @Inject extension ColorStore
     @Inject StateSynthesis stateSynthesis
     @Inject DataflowRegionSynthesis dataflowSynthesis  
         
@@ -68,6 +70,9 @@ class ScopeSynthesis extends AbstractDiagramSynthesis<Scope> {
     override transform(Scope root) {
         
         val rootNode = createNode
+        
+        // Configure color theme (before start to allow for changes by hooks)
+        configureAllColors(usedContext)
                 
         hooks.invokeStart(root, rootNode)
         
