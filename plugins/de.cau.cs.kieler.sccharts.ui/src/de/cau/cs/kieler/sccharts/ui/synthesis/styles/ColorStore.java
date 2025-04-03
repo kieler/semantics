@@ -139,10 +139,12 @@ public class ColorStore extends AbstractColorStore {
     public boolean configureOwnColors(final ColorPreferences preferences) {
         boolean dark = preferences.getKind() == ColorThemeKind.DARK || preferences.getKind() == ColorThemeKind.HIGH_CONTRAST_DARK;
         
+        var fg = preferences.getForeground();
+        var bg = preferences.getBackground();
+                
         if (dark) {
-            var fg = preferences.getForeground();
             // Make normal background slightly brighter than canvas
-            var bg = adjustBrightness(preferences.getBackground(), 0.05f);
+            bg = adjustBrightness(preferences.getBackground(), 0.05f);
             
             configureColor(Color.STATE_FOREGROUND, fg);
             configureColor(Color.STATE_TEXT_FOREGROUND, fg);
@@ -207,6 +209,12 @@ public class ColorStore extends AbstractColorStore {
             configureColor(Color.SELECTION, adjustBrightness(Color.SELECTION.defaultColor, 0.2f));
             
             configureColor(Color.KEYWORD, 0xC5, 0x86, 0xC0);
+        } else {
+            // Adjust some background colors to light theme
+            configureColor(Color.REGION_BACKGROUND, bg);
+            configureColor(Color.REGION_OVERRIDE_BACKGROUND, bg);
+            configureColor(Color.REGION_ABORT_BACKGROUND, bg);
+            configureColor(Color.REGION_BUTTON_FOREGROUND, bg);
         }
         
         return true;
