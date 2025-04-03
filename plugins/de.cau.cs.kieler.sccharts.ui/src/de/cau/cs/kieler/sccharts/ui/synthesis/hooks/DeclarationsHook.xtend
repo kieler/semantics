@@ -64,10 +64,10 @@ class DeclarationsHook extends SynthesisHook {
             val parent = node.regionExtendedContainer
             val declarations = parent?.getProperty(ControlflowRegionStyles.DECLARATIONS_CONTAINER)
             if (declarations !== null) {
-                val container = declarations.eContainer as KContainerRendering
+                val container = declarations.eContainer.eContainer.eContainer as KContainerRendering
                 // Hide declarations
                 if (declarations !== null && container !== null) {
-                    container.children.remove(declarations)
+                    container.children.removeIf([true])
                 }
             }
         }
