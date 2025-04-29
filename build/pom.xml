@@ -11,9 +11,9 @@
   <properties>
     <!-- Language server dependency versions -->
     <elk-version>0.10.0</elk-version>
-    <klighd-version>3.0.2.v20240507</klighd-version>
+    <klighd-version>3.1.0.v20250428</klighd-version>
     <lsp4j-version>0.23.1</lsp4j-version>
-    <pragmatics-version>0.51.0.v20240410</pragmatics-version>
+    <pragmatics-version>0.52.0.v20250429</pragmatics-version>
 
     <!-- Xtext compile dependency versions -->
     <xtend-version>2.37.0</xtend-version>
