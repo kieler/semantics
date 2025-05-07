@@ -463,7 +463,7 @@
             versionRange="2.7.0"/>
         <requirement
             name="org.eclipse.xtext.sdk.feature.group"
-            versionRange="[2.34.0,2.35.0)"/>
+            versionRange="[2.36.0,2.37.0)"/>
         <requirement
             name="org.eclipse.emf.mwe2.launcher.feature.group"/>
         <requirement
@@ -519,17 +519,17 @@
         <repositoryList
             name="FixedTarget">
           <repository
-              url="https://download.eclipse.org/releases/2024-03"/>
+              url="https://download.eclipse.org/releases/2024-09"/>
           <repository
-              url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.31.0"/>
+              url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.32.0"/>
           <repository
-              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.34.0/"/>
+              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.36.0/"/>
           <repository
-              url="https://download.eclipse.org/elk/updates/releases/0.9.1/"/>
+              url="https://download.eclipse.org/elk/updates/releases/0.10.0/"/>
           <repository
-              url="https://kieler.github.io/KLighD/v3.0.1/"/>
+              url="https://kieler.github.io/KLighD/v3.1.0/"/>
           <repository
-              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2024-04/"/>
+              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2025-04/"/>
           <repository
               url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/10.0.20/"/>
         </repositoryList>
@@ -539,7 +539,7 @@
         xsi:type="setup.p2:P2Task">
       <requirement
           name="org.eclipse.xtext.sdk.feature.group"
-          versionRange="[2.34.0,2.35.0)"/>
+          versionRange="[2.36.0,2.37.0)"/>
       <repository
           url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
     </setupTask>
@@ -2552,7 +2552,7 @@
             name="edu.umd.cs.piccolo"/>
         <requirement
             name="org.eclipse.xtext.sdk.feature.group"
-            versionRange="[2.33.0,2.34.0)"/>
+            versionRange="[2.37.0,2.38.0)"/>
         <requirement
             name="org.eclipse.emf.mwe2.launcher.feature.group"/>
         <requirement
@@ -2594,13 +2594,11 @@
         <repositoryList
             name="FixedTarget">
           <repository
-              url="https://download.eclipse.org/releases/2023-12"/>
+              url="https://download.eclipse.org/releases/2024-12"/>
           <repository
-              url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.30.0"/>
+              url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.34.0"/>
           <repository
-              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.33.0/"/>
-          <repository
-              url="https://download.eclipse.org/elk/updates/releases/0.9.0/"/>
+              url="https://download.eclipse.org/elk/updates/releases/0.10.0/"/>
           <repository
               url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/klighd/"/>
           <repository
@@ -2612,9 +2610,9 @@
         xsi:type="setup.p2:P2Task">
       <requirement
           name="org.eclipse.xtext.sdk.feature.group"
-          versionRange="[2.33.0,2.34.0)"/>
+          versionRange="[2.37.0,2.38.0)"/>
       <repository
-          url="https://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+          url="https://download.eclipse.org/releases/2024-12/"/>
     </setupTask>
   </stream>
   <stream name="elk"

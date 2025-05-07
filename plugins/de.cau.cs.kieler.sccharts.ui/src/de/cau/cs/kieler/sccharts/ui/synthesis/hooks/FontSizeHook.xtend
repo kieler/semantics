@@ -44,7 +44,7 @@ class FontSizeHook extends SynthesisHook {
     
     public static final SynthesisOption ADAPTIVE_FONTS = 
         SynthesisOption.createCheckOption("Adaptive Fonts", false)
-            .setCategory(GeneralSynthesisOptions::LAYOUT)
+            .setCategory(GeneralSynthesisOptions::NAVIGATION)
 
     static final int SIMPLE_STATE_FONT_SIZE = 11
     

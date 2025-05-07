@@ -73,6 +73,7 @@ IGNORED_FILES = [
     'META-INF/NOTICE',
     'META-INF/p2.inf',
     'META-INF/versions/*/module-info.class',
+    'META-INF/versions/*/OSGI-INF/MANIFEST.MF',
     'OSGI-INF/l10n/bundle.properties',
     'OSGI-INF/repositoryManager.xml',
     'docs/*',
