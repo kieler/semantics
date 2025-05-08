@@ -2600,7 +2600,7 @@
           <repository
               url="https://download.eclipse.org/elk/updates/releases/0.10.0/"/>
           <repository
-              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/klighd/"/>
+              url="https://kieler.github.io/KLighD/v3.1.0/"/>
           <repository
               url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/10.0.20/"/>
         </repositoryList>
@@ -2892,8 +2892,7 @@
         <requirement
             name="edu.umd.cs.piccolo"/>
         <requirement
-            name="org.eclipse.xtext.sdk.feature.group"
-            versionRange="[2.33.0,2.34.0)"/>
+            name="org.eclipse.xtext.sdk.feature.group"/>
         <requirement
             name="org.eclipse.emf.mwe2.launcher.feature.group"/>
         <requirement
@@ -2913,24 +2912,18 @@
             versionRange="10.0.20"/>
         <requirement
             name="jakarta.servlet"/>
-        <requirement
-            name="org.eclipse.sprotty"/>
         <repositoryList
             name="FixedTarget">
           <repository
-              url="https://download.eclipse.org/releases/2023-12"/>
+              url="https://download.eclipse.org/releases/2024-12"/>
           <repository
-              url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.30.0"/>
+              url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.34.0"/>
           <repository
-              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.33.0/"/>
-          <repository
-              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/klighd/"/>
-          <repository
-              url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/sprotty/0.9.0/"/>
+              url="https://kieler.github.io/KLighD/v3.1.0/"/>
           <repository
               url="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/10.0.20/"/>
           <repository
-              url="https://download.eclipse.org/elk/updates/releases/0.9.0/"/>
+              url="https://download.eclipse.org/elk/updates/releases/0.10.0/"/>
         </repositoryList>
       </targlet>
     </setupTask>
@@ -2939,14 +2932,11 @@
       <requirement
           name="org.eclipse.elk.sdk.feature.feature.group"/>
       <requirement
-          name="org.eclipse.xtext.sdk.feature.group"
-          versionRange="[2.33.0,2.34.0)"/>
+          name="org.eclipse.xtext.sdk.feature.group"/>
       <repository
           url="https://download.eclipse.org/elk/updates/nightly/"/>
       <repository
-          url="https://download.eclipse.org/mylyn/releases/3.25/"/>
-      <repository
-          url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.33.0/"/>
+              url="https://download.eclipse.org/releases/2024-12"/>
     </setupTask>
   </stream>
   <logicalProjectContainer
