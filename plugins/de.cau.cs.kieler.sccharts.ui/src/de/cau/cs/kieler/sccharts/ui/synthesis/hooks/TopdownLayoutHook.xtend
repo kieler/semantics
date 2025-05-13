@@ -99,19 +99,28 @@ class TopdownLayoutHook extends SynthesisHook {
         SynthesisOption.createRangeOption(TopdownLayoutHook, "Number of size categories for fixed ratio boxes", 1, 8, 1, 3)
             .setCategory(GeneralSynthesisOptions::LAYOUT)
             
+    public static final SynthesisOption SIZE_CATEGORIES_RANGE_MAX = 
+        SynthesisOption.createRangeOption(TopdownLayoutHook, "Size categories range max", 1.0f, 128.0f, 1.0f, 64.0f)
+            .setCategory(GeneralSynthesisOptions::LAYOUT)
+            
+    public static final SynthesisOption SIZE_CATEGORIES_HIERARCHICAL_WEIGHT = 
+        SynthesisOption.createRangeOption(TopdownLayoutHook, "Size categories weight of hierarchical nodes", 1, 10, 1, 4)
+            .setCategory(GeneralSynthesisOptions::LAYOUT)
+            
     
     override getDisplayedSynthesisOptions() {
         return #[CONSERVATIVE_SPLINES, USE_TOPDOWN_LAYOUT, SCALE_CAP, WHITESPACE_ELIMINATION_STRATEGY, TOPDOWN_LAYOUT_CHOICE, TOPDOWN_HIERARCHICAL_NODE_WIDTH,
-            TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, REGION_SIZE_APPROXIMATOR, STATE_SIZE_APPROXIMATOR, DISABLE_RECTPACKING_EXPANSION, WRAPPING_FUZZINESS, SIZE_CATEGORIES
+            TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, REGION_SIZE_APPROXIMATOR, STATE_SIZE_APPROXIMATOR, DISABLE_RECTPACKING_EXPANSION, WRAPPING_FUZZINESS,
+            SIZE_CATEGORIES, SIZE_CATEGORIES_RANGE_MAX, SIZE_CATEGORIES_HIERARCHICAL_WEIGHT
         ]
     }
     
     override processState(State state, KNode node) {
         
         val optionValueMap = new LinkedHashMap();
-        optionValueMap.put(CoreOptions.DIRECTION, #[Direction.DOWN, Direction.RIGHT]);
+//        optionValueMap.put(CoreOptions.DIRECTION, #[Direction.DOWN, Direction.RIGHT]);
 //        optionValueMap.put(CoreOptions.LABEL_MANAGER, #[SemanticSoftWrappingLabelManager, TruncatingLabelManager])
-        node.setLayoutOption(CoreOptions::TOPDOWN_OPTION_VALUE_MAP, optionValueMap)
+        node.setLayoutOption(CoreOptions::TOPDOWN_OPTION_VALUE_MAP, null)
         
         node.setProperty(CoreOptions::TOPDOWN_LAYOUT, USE_TOPDOWN_LAYOUT.booleanValue)
         if (USE_TOPDOWN_LAYOUT.booleanValue) {
@@ -212,6 +221,8 @@ class TopdownLayoutHook extends SynthesisHook {
             node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, null); // for poster wall
             node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.FIXED_INTEGER_RATIO_BOXES); 
             node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_CATEGORIES, SIZE_CATEGORIES.intValue);
+            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_CATEGORIES_RANGE_MAX, SIZE_CATEGORIES_RANGE_MAX.floatValue as double)
+            node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_CATEGORIES_HIERARCHICAL_NODE_WEIGHT, SIZE_CATEGORIES_HIERARCHICAL_WEIGHT.intValue)
             
             
             
