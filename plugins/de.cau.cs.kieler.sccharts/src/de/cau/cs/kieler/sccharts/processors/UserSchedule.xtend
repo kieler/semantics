@@ -288,7 +288,7 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
             }
         }
         
-        // Handle Class SDs
+        // Handle Method SDs
         // ----------------
         val calls = rootState.eAllContents.filter(ReferenceCall).toList
         val handledMethods = newHashSet
@@ -324,12 +324,22 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
                     while (!(attach instanceof Effect || attach instanceof Action || attach instanceof ValuedObject) && attach !== null) {
                         attach = attach.eContainer
                     }
+                    // Add ref to object if not attached to call itself
+                    var List<ScheduleObjectReference> sched = method.schedule
+                    if (attach != call && call.subReference != null) {
+                        sched = method.schedule.map[s |
+                            s.copy => [
+                                valuedObject = call.valuedObject
+                                subReference = s.copy
+                            ]
+                        ].toList
+                    }
                     if (attach instanceof Effect) {
-                        attach.addScheduleCopy(method.schedule)
+                        attach.addScheduleCopy(sched)
                     } else if(attach instanceof Action) {
-                        attach.trigger.addScheduleCopy(method.schedule)
+                        attach.trigger.addScheduleCopy(sched)
                     } else if(attach instanceof ValuedObject) {
-                        attach.initialValue.addScheduleCopy(method.schedule)
+                        attach.initialValue.addScheduleCopy(sched)
                     }
                     handledMethods += method
                 }
@@ -341,14 +351,70 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
             handledScheduleDecl += method.schedule.map[valuedObject.eContainer as ScheduleDeclaration]
             method.schedule.clear
         }
-        // Move schedule decl to top level
-        for (sdDecl : handledScheduleDecl) {
-            if (sdDecl.eContainer instanceof ClassDeclaration) {
-                val classDecl = (sdDecl.eContainer as ClassDeclaration)
-                sdDecl.valuedObjects.forEach[it.name = classDecl.name + it.name; it.uniqueName]
+        
+        
+        // Handle Class SDs
+        // ----------------
+        val classSDecls = <ScheduleDeclaration>newHashSet
+        classSDecls.addAll(handledScheduleDecl)
+        for (classVO : rootState.allScopes.map[declarations.iterator].flatten.filter(ClassDeclaration).flatMap[it.allNestedValuedObjects.iterator].toList) {
+            val decl = classVO.declaration
+            if (decl instanceof ScheduleDeclaration) {
+                // Check unsupported
+                if (decl.enclosingClass.enclosingClass !== null) {
+                    environment.errors.add("Scheduling declarations in nested classes are not yet supported (" + classVO.name + ")")
+                } else {
+                    classSDecls += decl
+                }
             }
-            rootState.declarations += sdDecl
-            sdDecl.access = AccessModifier.PUBLIC
+        }
+        if (!classSDecls.empty) {
+            val sVORs = HashMultimap.<ScheduleDeclaration,ValuedObjectReference>create()
+            for (sVOR : rootState.eAllContents.filter(ValuedObjectReference).filter[vor | classSDecls.exists[it.valuedObjects.contains(vor.valuedObject)]].toList) {
+                sVORs.put(sVOR.valuedObject.declaration as ScheduleDeclaration, sVOR)
+            }
+            // Move schedule decl to top level
+            for (sdDecl : classSDecls) {
+                val classDecl = sdDecl.enclosingClass
+                val classVOs = sdDecl.enclosingClass.valuedObjects.toList
+                for (vo : classVOs) {
+                    if (!vo.cardinalities.empty) {
+                        environment.errors.add("Scheduling declarations in nested classes with cardinalities are not yet supported (" + vo.name + ")")
+                    } else {
+                        val newSDDecl = sdDecl.copy
+                        newSDDecl.valuedObjects.forEach[it.name = classDecl.name + "_" + vo.name + "_" + it.name; it.uniqueName]
+                        rootState.declarations += newSDDecl
+                        newSDDecl.access = AccessModifier.PUBLIC
+                        // Fix references
+                        val processed = newHashSet
+                        for (vor : sVORs.get(sdDecl)) {
+                            val parent = vor.eContainer
+                            if (parent instanceof ValuedObjectReference) {
+                                val classInst = parent.valuedObject
+                                if (classInst == vo) {
+                                    vor.valuedObject = newSDDecl.valuedObjects.get(sdDecl.valuedObjects.indexOf(vor.valuedObject))
+                                    // Replace parent if this VOR is its subRef
+                                    if (vor.isSubReference) {
+                                        if (parent instanceof ScheduleObjectReference) {
+                                            parent.subReference = null
+                                            parent.valuedObject = vor.valuedObject
+                                        } else {
+                                            parent.subReference = null
+                                            parent.replace(vor)
+                                        }
+                                    }
+                                    processed += vor
+                                }
+                            } else {
+                                environment.errors.add("Referring to scheduling directive in classes without reference to instance (" + vo.name + ")")
+                            }
+                        }
+                        // Mark as processed
+                        processed.forEach[sVORs.remove(sdDecl, it)]
+                    }
+                }
+                classDecl.declarations.remove(sdDecl)
+            }
         }
     }
     

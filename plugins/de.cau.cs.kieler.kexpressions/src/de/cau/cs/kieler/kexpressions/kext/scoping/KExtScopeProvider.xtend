@@ -19,6 +19,8 @@ import de.cau.cs.kieler.kexpressions.IODeclaration
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.Referenceable
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
@@ -110,12 +112,16 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 	        return IScope.NULLSCOPE
 	    }
 	    
-        if (reference instanceof DeclarationScope) {
+	    if (reference instanceof DeclarationScope) {
             val declarations = (reference as DeclarationScope).declarations
-            val relevantDeclarations = declarations.filter(IODeclaration).filter(predicate).toList
-            val candidates = <ValuedObject> newArrayList
-            relevantDeclarations.forEach [ candidates += it.valuedObjects ]
-            return Scopes.scopeFor(candidates)
+            if (context.topmostReference instanceof ScheduleObjectReference) {
+                return Scopes.scopeFor(declarations.filter(ScheduleDeclaration).map[valuedObjects].flatten)
+            } else {
+                val relevantDeclarations = declarations.filter(IODeclaration).filter(predicate).toList
+                val candidates = <ValuedObject> newArrayList
+                relevantDeclarations.forEach [ candidates += it.valuedObjects ]
+                return Scopes.scopeFor(candidates)
+            }
         } else if (reference instanceof ValuedObject) {
             if (reference.isGenericParamter) {
                 return reference.genericParameterDeclaration.type.getScopeForReferencedType(context, predicate)

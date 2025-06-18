@@ -1160,7 +1160,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                                 val newRegion = region.copy
                                 newRegion.name = vo.name + (allCardinalities > 1 ? x : "") + "_" + (region.name?:"default")
                                 for (vor : newRegion.eAllContents.filter(ValuedObjectReference).toList) {
-                                    if (!(vor.eContainer instanceof ValuedObjectReference) && classVOs.contains(vor.valuedObject)) {// Not a sub reference and local variable
+                                    if (!vor.isSubReference && classVOs.contains(vor.valuedObject)) {// Not a sub reference and local variable
                                         vor.prependReferenceToReference(vo)
                                         if (vo.array) {
                                             vor.indices += nextIndices.map[createIntValue(it)]
