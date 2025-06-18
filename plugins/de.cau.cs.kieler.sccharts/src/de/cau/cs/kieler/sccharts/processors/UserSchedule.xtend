@@ -339,6 +339,7 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
                     } else if(attach instanceof Action) {
                         attach.trigger.addScheduleCopy(sched)
                     } else if(attach instanceof ValuedObject) {
+                        environment.warnings.add("Cannot serialize model with variable initialization (" + attach.name + ") affected by scheduling directives. If you want to save this model, please move the initialization into a separated assignment.")
                         attach.initialValue.addScheduleCopy(sched)
                     }
                     handledMethods += method
