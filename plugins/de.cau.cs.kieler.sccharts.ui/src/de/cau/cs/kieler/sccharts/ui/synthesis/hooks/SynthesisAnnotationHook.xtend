@@ -164,6 +164,12 @@ class SynthesisAnnotationHook extends SynthesisHook {
                     usedContext.configureOption(option, newValue)
                 }
             }
+            case option.isRangeOption: {
+                val newValue = value.parseNumber(option.range.first.class)
+                if (newValue !== null) {
+                    usedContext.configureOption(option, newValue)
+                }
+            }
         }
     }
 
@@ -182,5 +188,20 @@ class SynthesisAnnotationHook extends SynthesisHook {
         return values.filterNull.findFirst [
             toString.toLowerCase.equals(value);
         ]
+    }
+    
+    /** Parses a numeric value from the value string */
+    private def Number parseNumber(String value, Class<? extends Number> typeOfNumber) {
+        try {            
+            switch (typeOfNumber) {
+                case Integer: return Integer.parseInt(value)
+                case Float: return Float.parseFloat(value)
+                case Double: return Double.parseDouble(value)
+                default: return null
+            }
+        } catch (NumberFormatException e) {
+            // non-parsable numbers are not set.
+            return null
+        }
     }
 }
