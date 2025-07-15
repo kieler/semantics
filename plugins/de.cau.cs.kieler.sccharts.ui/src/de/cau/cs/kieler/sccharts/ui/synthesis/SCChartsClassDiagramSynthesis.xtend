@@ -36,6 +36,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
@@ -210,10 +211,15 @@ class SCChartsClassDiagramSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         node.setSelectionStyle
         
         // name
-        box.addText(state.label.nullOrEmpty ? state.name : state.label) => [
-            fontBold = true
-            fontItalic = state.hasAnnotation("interface")
+        box.addRectangle => [
+            invisible = true
             setGridPlacementData.from(LEFT, 6, 0, TOP, 6, 0).to(RIGHT, 6, 0, BOTTOM, 6, 0)
+            addText(state.label.nullOrEmpty ? state.name : state.label) => [
+                fontBold = true
+                fontItalic = state.hasAnnotation("interface")
+                setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 0, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
+                setProperty(KlighdProperties.IS_NODE_TITLE, true);
+            ]
         ]
         
         // IO Interface
