@@ -54,6 +54,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.klighd.util.KlighdTags
 
 /**
  * Styles for {@link State}.
@@ -240,7 +241,7 @@ class StateStyles {
             fontSize = stateLabelTextSize
             suppressSelectability
             selectionTextUnderline = Underline.NONE // prevents default selection style
-//            setProperty(KlighdProperties.IS_NODE_TITLE, true)
+//            getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(KlighdTags.IS_NODE_TITLE);
         ]
     }
 
@@ -259,7 +260,7 @@ class StateStyles {
             ]
 
             children.head => [
-                setProperty(KlighdProperties.IS_NODE_TITLE, true)
+                getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(KlighdTags.IS_NODE_TITLE);
                 setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 0, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
             ]
         ]

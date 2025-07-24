@@ -29,6 +29,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.klighd.util.KlighdTags
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.extensions.TextFormat
 import java.util.List
@@ -172,14 +173,14 @@ class ControlflowRegionStyles {
                     selectionTextUnderline = Underline.NONE // prevents default selection style
                     val size = estimateTextSize;
                     setPointPlacementData(LEFT, absLeftOffset, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, size.width + 5, size.height)
-                    setProperty(KlighdProperties.IS_NODE_TITLE, true)
+                    getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(KlighdTags.IS_NODE_TITLE);
                 ]
             } else {
                 container.addKeywordLabel(label, 0) => [
                     foreground = REGION_LABEL.color
                     fontSize = 10
                     setPointPlacementData(LEFT, absLeftOffset, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, 0, 0)
-                    setProperty(KlighdProperties.IS_NODE_TITLE, true)
+                    getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(KlighdTags.IS_NODE_TITLE);
                     (children.last as KContainerRendering) => [ // Just for spacing at the end
                         val grid = it?.getChildPlacement()
                         if (grid instanceof KGridPlacement) {
