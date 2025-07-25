@@ -260,7 +260,7 @@ class StateStyles {
             ]
 
             children.head => [
-                getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(KlighdTags.IS_NODE_TITLE);
+                getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(KlighdTags.IS_NODE_TITLE)
                 setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 0, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
             ]
         ]
