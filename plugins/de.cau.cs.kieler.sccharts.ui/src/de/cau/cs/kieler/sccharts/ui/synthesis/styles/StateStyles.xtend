@@ -241,7 +241,7 @@ class StateStyles {
             fontSize = stateLabelTextSize
             suppressSelectability
             selectionTextUnderline = Underline.NONE // prevents default selection style
-//            getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(KlighdTags.IS_NODE_TITLE);
+//            getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(KlighdTags.IS_NODE_TITLE)
         ]
     }
 
