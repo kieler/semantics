@@ -173,7 +173,7 @@ class ControlflowRegionStyles {
                     selectionTextUnderline = Underline.NONE // prevents default selection style
                     val size = estimateTextSize;
                     setPointPlacementData(LEFT, absLeftOffset, 0, TOP, 1, 0, H_LEFT, V_TOP, 0, 0, size.width + 5, size.height)
-                    getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(KlighdTags.IS_NODE_TITLE);
+                    getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(KlighdTags.IS_NODE_TITLE)
                 ]
             } else {
                 container.addKeywordLabel(label, 0) => [
