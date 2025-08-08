@@ -139,7 +139,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Sim
      *  - simulationType should be one of Manual, Periodic, and Dynamic
      */
     override start(SimulationStartParam param) {
-        val decodedUri = URLDecoder.decode(param.uri, "UTF-8")
+        val decodedUri = param.uri
         while (listeners.contains(this)) {
             removeListener(this)
         }
