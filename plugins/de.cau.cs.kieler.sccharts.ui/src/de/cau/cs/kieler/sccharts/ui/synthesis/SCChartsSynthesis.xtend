@@ -209,6 +209,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
                     }
                 }
             }
+            
             for(rootState : rootStates) {
                 hooks.invokeStart(rootState, rootNode)
                 val synthesizedState = if (SHOW_INHERITANCE.booleanValue && rootStates.size > 1) {

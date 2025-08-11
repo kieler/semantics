@@ -93,6 +93,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import org.eclipse.elk.alg.rectpacking.p3whitespaceelimination.WhiteSpaceEliminationStrategy
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -163,6 +164,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             configureLayoutRegionDependencies(node)
         } else {
             configureLayout(node)
+            // non statically change layout algorithm for regions
         }
         
         node.configureNodeLOD(state)
@@ -376,7 +378,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 || !state.declarations.filter(MethodImplementationDeclaration).empty
             ) {
                 node.addRegionsArea(state)
-                node.setLayoutOption(CoreOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
+                node.setLayoutOption(CoreOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.NODE_LABELS, SizeConstraint.MINIMUM_SIZE))
             }
         }
 
@@ -487,9 +489,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     /** Configures the default layout of children (regions in the state) */
     def static void configureLayout(KNode node) {
         node.setLayoutOption(CoreOptions::ALGORITHM, RectPackingOptions.ALGORITHM_ID)
+// <<<<<<< HEAD
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true)
         node.setLayoutOption(RectPackingOptions.WHITE_SPACE_ELIMINATION_STRATEGY, WhiteSpaceEliminationStrategy.EQUAL_BETWEEN_STRUCTURES)
         node.setLayoutOption(RectPackingOptions.OMIT_NODE_MICRO_LAYOUT, true)
+// =======
+//         node.setLayoutOption(RectPackingOptions::WHITE_SPACE_ELIMINATION_STRATEGY, WhiteSpaceEliminationStrategy.EQUAL_BETWEEN_STRUCTURES)
+// //        node.setLayoutOption(CoreOptions::OMIT_NODE_MICRO_LAYOUT, true)
+// >>>>>>> origin/mka/diagrams-evaluation
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0))
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 5.0)
     }

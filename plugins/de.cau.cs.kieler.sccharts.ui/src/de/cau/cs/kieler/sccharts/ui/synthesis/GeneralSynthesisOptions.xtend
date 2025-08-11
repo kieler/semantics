@@ -65,6 +65,13 @@ final class GeneralSynthesisOptions {
     public static final SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "All SCCharts", false).setCategory(APPEARANCE)
     public static final SynthesisOption SHOW_COMMENTS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Comment Nodes", true).setCategory(APPEARANCE)
     public static final SynthesisOption SHOW_USER_LABELS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "User Labels", true).setCategory(APPEARANCE)
+    /**
+     * Options for Topdown layout
+     */
+    public static final SynthesisOption USE_TOPDOWN_LAYOUT = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Topdown Layout", false).setCategory(LAYOUT)
+    public static final SynthesisOption TOPDOWN_LAYOUT_CHOICE = SynthesisOption.createChoiceOption("Topdown Layout Variant", #["Variant 1" ,"Variant 2", "Variant 3"], "Variant 1").setCategory(LAYOUT)
+    public static final SynthesisOption TOPDOWN_HIERARCHICAL_NODE_WIDTH = SynthesisOption.createRangeOption("Topdown Hierarchical Node Width", 50.0f, 300.0f, 1.0f, 150.0f).setCategory(LAYOUT)
+    public static final SynthesisOption TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO = SynthesisOption.createRangeOption("Topdown Hierarchical Node Aspect Ratio", 0.5f, 2.0f, 0.01f, 1.41f).setCategory(LAYOUT)
     /** 
      * Scope call parameters synthesis option 
      */
