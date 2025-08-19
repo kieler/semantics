@@ -57,7 +57,7 @@ jobs:
 
       # Produce test report
       - name: Produce test report
-        uses: dorny/test-reporter@v2
+        uses: dorny/test-reporter@v4
         if: always()
         with:
           name: Test Report
