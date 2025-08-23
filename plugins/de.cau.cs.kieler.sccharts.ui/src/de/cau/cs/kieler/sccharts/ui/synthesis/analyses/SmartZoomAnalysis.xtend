@@ -27,6 +27,7 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
+import java.util.HashMap
 
 /**
  * Analyzes the readability of key renderings with and without smart zoom
@@ -46,12 +47,19 @@ class SmartZoomAnalysis extends AbstractModelDataCollector<SCCharts> {
     // include every child node as its own root for the analysis
     public static val IProperty<Boolean> COMPARE_FROM_CHILDREN =
         new Property<Boolean>("de.cau.cs.kieler.sccharts.ui.synthesis.analyses.smartzoom.compareFromChildren", true)
+    // Overwrites COMPARE_FROM_CHILDREN if false
+    public static val IProperty<Boolean> COMPARE_FROM_PARENTS = 
+        new Property<Boolean>("de.cau.cs.kieler.sccharts.ui.synthesis.analyses.smartzoom.compareFromParents", true)
     // Excludes childless nodes as the root for analysis, i.e., exclude all Level 0 analyses that only analyze their own key rendering
     public static val IProperty<Boolean> EXCLUDE_CHILDLESS_ROOTS =
         new Property<Boolean>("de.cau.cs.kieler.sccharts.ui.synthesis.analyses.smartzoom.excludeChildlessRoots", false)
     // Excludes childless nodes as the target for analysis, i.e., exclude all analyses that analyze the readability of small childless nodes
     public static val IProperty<Boolean> EXCLUDE_CHILDLESS_KEY_RENDERINGS =
         new Property<Boolean>("de.cau.cs.kieler.sccharts.ui.synthesis.analyses.smartzoom.excludeChildlessKeyRenderings", false)
+    // true: use the old sorting, where Level 0 is for top level of hierarchy, 1 for the next, etc.
+    // false: use the new sorting, where Level 0 is for all bottom-most levels of hierarchy, 1 for the ones above with one child hierarchy, etc.
+    public static val IProperty<Boolean> LEVELS_FROM_TOP =
+        new Property<Boolean>("de.cau.cs.kieler.sccharts.ui.synthesis.analyses.smartzoom.levelsFromTop", false)
     
     override getId() {
         "de.cau.cs.kieler.sccharts.ui.synthesis.analyses.smartzoom"
@@ -61,7 +69,10 @@ class SmartZoomAnalysis extends AbstractModelDataCollector<SCCharts> {
         "Smart Zoom Readability Analysis"
     }
     
+    val Map<KNode, Integer> childDepths = new HashMap
+    
     override collect(SCCharts model, Map<String, Object> data, String processorID) {
+        childDepths.clear()
         
         val diagram = getProperty(SCChartsSynthesisIntermediateProcessor.DIAGRAM)
         val root = diagram.children.head
@@ -71,6 +82,9 @@ class SmartZoomAnalysis extends AbstractModelDataCollector<SCCharts> {
         ) {
             // prepare rendering to calculate bounds since this doesn't happen in the eclipse world
             RenderingPreparer.prepareRenderingLayout(root)
+            
+            // Figure out the total depth of the graph
+            val depth = depth(root)
             
             // Calculate the Log Max Diagram Scale (LMDS) for the root node.
             // That is, calculate the scale factor that this node needs to fit into a 1000px x 1000px viewport.
@@ -82,10 +96,14 @@ class SmartZoomAnalysis extends AbstractModelDataCollector<SCCharts> {
             // "Level 0 differences": [5,7,9,...], "Level 1 differences": [1,1,2,3,5,7,...],...
             
             val scaleDifferenceLevels = new ArrayList<List<Map<String, Double>>>()
+            for (var int i = 0; i < depth; i++) {
+                scaleDifferenceLevels.add(new ArrayList<Map<String, Double>>())
+            }
+            
             // Remember all Log Max Node Scales of the ancestry hierarchy to compare against while traversing the graph
             val lmns = new ArrayList<Pair<String, Double>>()
             lmns.add(findId(root) -> lmds)
-            traverseGraph(root, lmns, 0, scaleDifferenceLevels)
+            traverseGraph(root, lmns, scaleDifferenceLevels)
             
             var i = 0
             for (level : scaleDifferenceLevels) {
@@ -118,38 +136,34 @@ class SmartZoomAnalysis extends AbstractModelDataCollector<SCCharts> {
         return Math.log(Math.min(a, b)) / Math.log(environment.getProperty(ZOOM_STEP_FACTOR))
     }
     
-    def void traverseGraph(KNode node, List<Pair<String, Double>> lmnss, int currentLevel, List<List<Map<String, Double>>> resultLevels) {
-        if (resultLevels.size === currentLevel) {
-            resultLevels.add(new ArrayList<Map<String, Double>>())
-        }
-        
+    def void traverseGraph(KNode node, List<Pair<String, Double>> lmnss, List<List<Map<String, Double>>> resultLevels) {
         var done = false
         for (KGraphData datum : node.getData()) {
             if (datum instanceof KRendering && !KlighdPredicates.isCollapsedRendering().apply(datum as KRendering)) {
-                done = done || textHandler(datum, node, lmnss, currentLevel, resultLevels)
+                done = done || textHandler(datum, node, lmnss, resultLevels)
                 if (!done && datum instanceof KContainerRendering) {
-                    traverseKGraphData(datum as KContainerRendering, node, lmnss, currentLevel, resultLevels)
+                    traverseKGraphData(datum as KContainerRendering, node, lmnss, resultLevels)
                 }
             }
         }
         for (KNode child : node.getChildren()) {
             val lmns = lmns(child)
             lmnss.add(findId(child) -> lmns)
-            traverseGraph(child, lmnss, currentLevel + 1, resultLevels)
+            traverseGraph(child, lmnss, resultLevels)
             lmnss.removeLast()
         }
     }
     
-    def boolean traverseKGraphData(KContainerRendering container, KNode node, List<Pair<String, Double>> lmnss, int currentLevel, List<List<Map<String, Double>>> resultLevels) {
+    def boolean traverseKGraphData(KContainerRendering container, KNode node, List<Pair<String, Double>> lmnss, List<List<Map<String, Double>>> resultLevels) {
         for (KGraphData datum : container.getChildren()) {
-            if (textHandler(datum, node, lmnss, currentLevel, resultLevels)) return true
+            if (textHandler(datum, node, lmnss, resultLevels)) return true
             if (datum instanceof KContainerRendering) {
-                if (traverseKGraphData(datum as KContainerRendering, node, lmnss, currentLevel, resultLevels)) return true
+                if (traverseKGraphData(datum as KContainerRendering, node, lmnss, resultLevels)) return true
             }
         }
     }
     
-    def boolean textHandler(KGraphData rendering, KNode node, List<Pair<String, Double>> lmnss, int currentLevel, List<List<Map<String, Double>>> resultLevels) {
+    def boolean textHandler(KGraphData rendering, KNode node, List<Pair<String, Double>> lmnss, List<List<Map<String, Double>>> resultLevels) {
         if (!rendering.getProperty(KlighdProperties.IS_NODE_TITLE) || !(rendering instanceof KRendering)) return false
         if (getProperty(EXCLUDE_CHILDLESS_KEY_RENDERINGS) && node.children.empty) return true
         // if it is a title label compute and store the ratios
@@ -179,19 +193,27 @@ class SmartZoomAnalysis extends AbstractModelDataCollector<SCCharts> {
         // => width limits scale
         // => ratios = 5, 10
         // => take the _MIN_
-        var int i = currentLevel
+        var int i = lmnss.size - 1
         val lmks = if (environment.getProperty(SMART_ZOOM)) logMin(widthRatio, heightRatio) else 0
-        for (lmns : lmnss) {
+        if (environment.getProperty(COMPARE_FROM_PARENTS)) {
+            for (lmns : lmnss) {
+                
+                // list starts at the root
+                val diff = lmks - lmns.value
+                val int resultIndex = environment.getProperty(LEVELS_FROM_TOP) ? i : (childDepths.get(node) - 1)
+                resultLevels.get(resultIndex).add(newHashMap(text + " in " + lmns.key -> diff))
+                i--
+                // skip all but the first iteration if we only want to compare to the root node
+                if (!environment.getProperty(COMPARE_FROM_CHILDREN)) return true
+                // skip last iteration that compares key rendering of childless node if option for that is set
+                if (i == 0 && (environment.getProperty(EXCLUDE_CHILDLESS_ROOTS) && node.children.empty)) return true
+            }
+        } else if (!(environment.getProperty(EXCLUDE_CHILDLESS_ROOTS) && node.children.empty)) {
+            val lmns = lmnss.last
             
-            // list starts at the root
             val diff = lmks - lmns.value
-            
-            resultLevels.get(i).add(newHashMap(text + " in " + lmns.key -> diff))
-            i--
-            // skip all but the first iteration if we only want to compare to the root node
-            if (!environment.getProperty(COMPARE_FROM_CHILDREN)) return true
-            // skip last iteration that compares key rendering of childless node if option for that is set
-            if (i == 0 && (environment.getProperty(EXCLUDE_CHILDLESS_ROOTS) && node.children.empty)) return true
+            val int resultIndex = environment.getProperty(LEVELS_FROM_TOP) ? 0 : (childDepths.get(node) - 1)
+            resultLevels.get(resultIndex).add(newHashMap(text + " in " + lmns.key -> diff))
         }
         return true
     }
@@ -209,6 +231,16 @@ class SmartZoomAnalysis extends AbstractModelDataCollector<SCCharts> {
             }
         }
         return null
+    }
+    
+    def int depth(KNode node) {
+        var childDepth = 0
+        for (child : node.children) {
+            childDepth = Math.max(childDepth, depth(child))
+        }
+        childDepth++
+        childDepths.put(node, childDepth)
+        return childDepth
     }
 }
 
