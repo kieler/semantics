@@ -157,6 +157,8 @@ class SCGraphHierarchySynthesis {
                             // Workaround for fixing the massive whitespace: using centered labels
                             addInsideTopCenteredNodeLabel(text, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
                                 it.KRendering.setForeground(REGION_LABEL.color);
+                                // TODO: this is a label and node titles do not work yet on child labels
+//                                it.setProperty(KlighdProperties.IS_NODE_TITLE, true);
                             ]
                         }
 
