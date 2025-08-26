@@ -23,6 +23,9 @@ import org.eclipse.cdt.core.parser.FileContent
 import org.eclipse.cdt.core.parser.IParserLogService
 import org.eclipse.cdt.core.parser.IncludeFileContentProvider
 import org.eclipse.cdt.core.parser.ScannerInfo
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * @author ssm
@@ -42,9 +45,16 @@ class CParserProcessor extends ExogenousProcessor<CodeContainer, IASTTranslation
     
     override process() {
         
+        val dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")
+        var now = LocalDateTime.now
+        
+        println("Stating CParserProcessor - Time: " + dtf.format(now))
+        
         val infrastructure = ProjectInfrastructure.getProjectInfrastructure(environment)
         
-        val FileContent fileContent = FileContent.createForExternalFileLocation(infrastructure.sourceCodeFiles.head.absolutePath)
+        val cFileName = infrastructure.modelFile.absolutePath
+        
+        val FileContent fileContent = FileContent.createForExternalFileLocation(cFileName)
 
         val definedSymbols = new HashMap
         val String[] includePaths = #[]
@@ -56,7 +66,11 @@ class CParserProcessor extends ExogenousProcessor<CodeContainer, IASTTranslation
         val int opts = 8;
         val IASTTranslationUnit translationUnit = 
             GCCLanguage.getDefault().getASTTranslationUnit(fileContent, info, emptyIncludes, null, opts, log);
-
+        
+        now = LocalDateTime.now
+        println("CParserProcessor finished - Time: " + dtf.format(now))
+        println("")
+        
         setModel(translationUnit)
     }
     

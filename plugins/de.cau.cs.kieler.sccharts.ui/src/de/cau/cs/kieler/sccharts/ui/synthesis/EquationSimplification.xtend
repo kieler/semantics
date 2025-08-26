@@ -618,7 +618,7 @@ class EquationSimplification {
     private def isLocalValuedObject(KNode node) {
         val element = node.sourceElement
         if (element instanceof ValuedObjectReference) {
-            return currentRegion.declarations.contains((element as ValuedObjectReference).valuedObject.declaration)
+            return currentRegions.peek.declarations.contains((element as ValuedObjectReference).valuedObject.declaration)
         }
         return false
     }

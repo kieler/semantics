@@ -14,6 +14,7 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotatable
+import de.cau.cs.kieler.annotations.TagAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.IgnoreValue
@@ -61,6 +62,7 @@ import de.cau.cs.kieler.sccharts.ui.SCChartsUiModule
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
+import java.util.ArrayList
 import java.util.EnumSet
 import java.util.HashMap
 import java.util.List
@@ -143,7 +145,15 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension TransitionStyles
     @Inject StateSynthesis stateSynthesis
 
-    val HashMap<ReferenceDeclaration, KNode> referenceNodes = newHashMap
+    val HashMap<State, KNode> referenceNodes = newHashMap
+    
+    /** Annotation value for the toPort annotation */
+    protected static val PORT_ANNOTATION = "toPort"
+    static final val POS_TAG = "pos"
+    static final val NEG_TAG = "neg"
+    
+    /** Tag annotation value for multiplexers*/
+    static val MULTIPLEXER_TAG = "mult"
 
     /** 
      * Prefix for the resource location when loading KGTs from the bundle 
@@ -283,7 +293,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         showWireLabels = SHOW_WIRE_LABELS.booleanValue
         combineAllDataAccessNodes = COMBINE_ALL_DATA_ACCESS.booleanValue
         showArrows = SHOW_ARROWS.booleanValue
-        currentRegion = rootNode.sourceElement as DataflowRegion
+        currentRegions.push(rootNode.sourceElement as DataflowRegion)
         var nodes = <KNode>newLinkedList
         val List<KNode> lastKNodes = newArrayList
         for (assignment : elements) {
@@ -305,10 +315,60 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }
         nodes.addInstanceEdges.addSequentialEdges.simplifyAndCombine(rootNode)
         for (n : nodes) {
+            if (n.sourceElement instanceof ValuedObjectReference && (n.sourceElement 
+                as ValuedObjectReference).valuedObject.hasAnnotation(MULTIPLEXER_TAG)) {                
+                /*
+                 * Adds more vertical space for the ports of the custom Multiplexer. 
+                 * Each variable that is led into the multiplexer has a positive and a negative variant and one output.
+                 * Hence it's sufficient to examine the input ports since there are always more input ports.
+                 */
+                val nrInputPs = (n.ports.size -1) * (2/3.0)
+                n.height = (nrInputPs * rootNode.getProperty(LayeredOptions.SPACING_PORT_PORT)) as float
+                
+                sortPorts(n)
+            }
             n.addLayoutParam(CoreOptions.NODE_SIZE_MINIMUM, new KVector(0, 0))
             n.addLayoutParam(CoreOptions.PADDING, new ElkPadding(0, 0, 0, 0))
         }
+        currentRegions.pop
         return nodes.reWireInlining.addMissingReferenceInputs
+    }
+    
+    /**
+     * Sorts the ports into two groups based on the {@code POS_TAG} and {@code NEG_TAG}.
+     * This is used for the custom multiplexers for assuring that variables that belong to a certain
+     * branch are grouped together.
+     * 
+     * @param node The {@code KNode} of which the ports should be sorted
+     */
+    private def sortPorts(KNode node) {
+        var grp1 = new ArrayList();
+        var grp2 = new ArrayList();
+        var longestLabel = 0f
+            
+        for (port : node.ports.filter[sourceElement !== null]) {
+            val VO = (port.sourceElement as ValuedObjectReference).valuedObject
+            if (!port.labels.isEmpty) {
+                var labelWidth = port.labels.get(0).text.length
+                if (labelWidth > longestLabel) {
+                    longestLabel = labelWidth
+                }
+            }
+            if (VO.hasAnnotation(POS_TAG)) {
+                grp1.add(port)
+            } else if (VO.hasAnnotation(NEG_TAG)) {
+                grp2.add(port)
+            }
+        }
+        for (port : grp1) {
+            port.ypos = 0
+
+        }
+        for (port : grp2) {
+            port.ypos = 100
+        }
+        
+        node.width = 1.5f * longestLabel * PORT_LABEL_FONT_SIZE
     }
 
     /**
@@ -418,7 +478,12 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }
         val sourcePort = source.findPortById(OUT_PORT)
         val target = assignment.reference.performTransformation(nodes, true)
-        val targetPort = target.findPortById(PORT0_IN_PREFIX)
+        var targetPortID = PORT0_IN_PREFIX
+        val anno = assignment.getAnnotation(PORT_ANNOTATION)
+        if (anno !== null) {
+            targetPortID = anno.asStringAnnotation.values.get(0)
+        }
+        val targetPort = target.findPortById(targetPortID)
         sourcePort.connectWith(targetPort, assignment.expression.serializeHR.toString)
         return nodes
     }
@@ -486,11 +551,35 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 }
                 if (nextRef !== null) {
                     // set the port labels of the new data access node
+                    val lastSubReferenceLabel = ref.lastSubReferenceLabel
+                    val lengthLastSubReferenceLabel = lastSubReferenceLabel.length
+                                        
                     if (output) {
-                        currentNode.findPortById(PORT0_IN_PREFIX).setLabel(ref.lastSubReferenceLabel, false)
-                        currentNode.findPortById(PORT0_IN_PREFIX).associateWith(ref)
+                        val inPort = currentNode.findPortById(PORT0_IN_PREFIX)
+                        
+                        if (ref.valuedObject.hasAnnotation("struct")
+                             && lastSubReferenceLabel.toString.startsWith("[\"") && lastSubReferenceLabel.toString.endsWith("\"]")
+                        ) {
+                            inPort.setLabel(lastSubReferenceLabel.substring(2, lengthLastSubReferenceLabel - 2),
+                                false)
+                        } else {
+                            inPort.setLabel(lastSubReferenceLabel, false)
+                        }
+                        inPort.associateWith(ref)
+                    
                     } else {
-                        currentNode.findPortById(OUT_PORT).setLabel(ref.lastSubReferenceLabel, false)
+                        //currentNode.findPortById(OUT_PORT).setLabel(ref.lastSubReferenceLabel, false)                        
+                        val outPort = currentNode.findPortById(OUT_PORT)
+                        
+                        if (ref.valuedObject.hasAnnotation("struct") && lengthLastSubReferenceLabel > 4 
+                            && lastSubReferenceLabel.toString.startsWith("[\"") && lastSubReferenceLabel.toString.endsWith("\"]")
+                        ) {
+                            outPort.setLabel(lastSubReferenceLabel.substring(2, lengthLastSubReferenceLabel - 2),
+                                false)
+                        } else {
+                            outPort.setLabel(lastSubReferenceLabel, false)
+                        }
+                        
                         currentNode.findPortById(OUT_PORT).associateWith(ref)
                     }
                 }
@@ -582,6 +671,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         val node = e.createKGTNode("INPUT", "")
         val text = e.serializeHR.toString
         node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
+        //println("nodetext: " + text)
         node.setProperty(INPUT_FLAG, true)
 
         if (ALIGN_CONSTANTS.booleanValue) {
@@ -935,12 +1025,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
         val declaration = voRef.valuedObject.referenceDeclaration
         if (AUTOMATIC_INLINE.booleanValue && declaration.reference !== null) {
-            if (referenceNodes.containsKey(declaration)) {
-                newNode = referenceNodes.get(declaration).copy
+            val state = declaration.reference as State
+            if (referenceNodes.containsKey(state)) {
+                newNode = referenceNodes.get(state).copy
             } else {
-                val state = declaration.reference as State
-                newNode = stateSynthesis.transform(state).head
-                referenceNodes.put(declaration, newNode.copy)
+                val referenceNodeSchema = stateSynthesis.transform(state).head
+                referenceNodes.put(state, referenceNodeSchema)
+                newNode = referenceNodeSchema.copy
             }
             if (node.getInputPortWithNumber(0) !== null) {
                 newNode.ports.add(node.getInputPortWithNumber(0).copy)
@@ -986,13 +1077,21 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
                 val inputNames = <String, KNode>newHashMap
                 for (inputNode : child.children.filter(KNode).filter[getProperty(INPUT_FLAG)]) {
-                    val name = inputNode.data.filter(KPolygon).head.children.filter(KText).head.text
-                    inputNames.put(name, inputNode)
+                    val inputFlag = inputNode.data.filter(KPolygon).head
+                    // Some other elements other than the input flag KPolygon itself may have the INPUT_FLAG set,
+                    // check for that here.
+                    if (inputFlag !== null) {
+                        val name = inputFlag.children.filter(KText).head.text
+                        inputNames.put(name, inputNode)
+                    }
                 }
                 val outputNames = <String, KNode>newHashMap
                 for (outputNode : child.children.filter(KNode).filter[getProperty(OUTPUT_FLAG)]) {
-                    val name = outputNode.data.filter(KPolygon).head.children.filter(KText).head.text
-                    outputNames.put(name, outputNode)
+                    val outputFlag = outputNode.data.filter(KPolygon).head
+                    if (outputFlag !== null) {
+                        val name = outputFlag.children.filter(KText).head.text
+                        outputNames.put(name, outputNode)
+                    }
                 }
 
                 for (port : node.ports.immutableCopy.reverseView) {
@@ -1050,9 +1149,17 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 if (!node.ports.exists [
                     sourceElement !== null && (sourceElement as ValuedObjectReference).valuedObject == input
                 ]) {
-                    node.getInputPortWithNumber(node.incomingEdges.filter[!isInstance && !isSequential].size +
-                        node.ports.filter[it.edges.empty].size, true).setLabel(input.serializeHR.toString, true).
-                        associateWith(input)
+                    // TODO: the port "n1" in the multiplexers should already have the "conditional" input as source element
+                    if (node.sourceElement instanceof ValuedObjectReference &&
+                        (node.sourceElement as ValuedObjectReference).valuedObject.hasAnnotation(MULTIPLEXER_TAG) &&
+                        (input.name.startsWith("_conditional")|| input.name.contains("_cond_res"))) {
+                        // condition input should be associated with the port "in1" in all multiplexers
+                        node.getInputPortWithNumber(1).setLabel(input.serializeHR.toString, true).associateWith(input)
+                    } else {
+                        node.getInputPortWithNumber(node.incomingEdges.filter[!isInstance && !isSequential].size +
+                            node.ports.filter[it.edges.empty].size, true).setLabel(input.serializeHR.toString, true).
+                            associateWith(input)
+                    }
                 }
             ]
         ]
@@ -1091,6 +1198,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                                 p.registerExistingPort(node, v)
                             }
                         }
+                        return node
+                    }
+                } else {
+                    // If there is a figure annotation but no model-relavite path can be found, try with a path relative
+                    // to this bundle.
+                    val node = KGTLoader.loadFromBundle(this, SCChartsUiModule.PLUGIN_ID, SKIN_BUNDLE_FOLDER + kgt)
+                    if (node !== null) {
                         return node
                     }
                 }

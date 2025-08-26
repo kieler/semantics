@@ -40,6 +40,7 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import java.util.Comparator
 import java.util.List
+import java.util.Stack
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.PortSide
@@ -72,7 +73,7 @@ class EquationSynthesisHelper {
     protected var showWireLabels = false
     protected var combineAllDataAccessNodes = false
     protected var showArrows = false
-    protected var DataflowRegion currentRegion = null
+    protected var Stack<DataflowRegion> currentRegions = new Stack
 
     /**
      * removes a node from the list and from the graph

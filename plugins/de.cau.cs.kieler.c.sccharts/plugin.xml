@@ -45,8 +45,14 @@
    <extension
          point="de.cau.cs.kieler.klighd.ui.view.editor">
       <editor
-            controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
+            controllerID="de.cau.cs.kieler.c.sccharts.view.CDTModelUpdateController"
             editorID="org.eclipse.cdt.ui.editor.CEditor">
       </editor>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.ui.view.controller">
+      <controller
+            class="de.cau.cs.kieler.c.sccharts.view.CDTModelUpdateController">
+      </controller>
    </extension>
 </plugin>

@@ -1,0 +1,5 @@
+system de.cau.cs.kieler.c.ast
+    label "C/C++ to SCCharts AST"
+
+de.cau.cs.kieler.c.sccharts.cppParser
+de.cau.cs.kieler.c.sccharts.scchartsASTExtractor
