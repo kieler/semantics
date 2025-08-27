@@ -5302,6 +5302,27 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+rule__DataflowAssignment__SequentialAlternatives_5_0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getDataflowAssignmentAccess().getSequentialSemicolonKeyword_5_0_0()); }
+		';'
+		{ after(grammarAccess.getDataflowAssignmentAccess().getSequentialSemicolonKeyword_5_0_0()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getDataflowAssignmentAccess().getSequentialSeqKeyword_5_0_1()); }
+		'seq'
+		{ after(grammarAccess.getDataflowAssignmentAccess().getSequentialSeqKeyword_5_0_1()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__DataflowRegion__Alternatives_9
 	@init {
 		int stackSize = keepStackSize();
@@ -43886,13 +43907,9 @@ rule__DataflowAssignment__SequentialAssignment_5
 	}
 :
 	(
-		{ before(grammarAccess.getDataflowAssignmentAccess().getSequentialSeqKeyword_5_0()); }
-		(
-			{ before(grammarAccess.getDataflowAssignmentAccess().getSequentialSeqKeyword_5_0()); }
-			'seq'
-			{ after(grammarAccess.getDataflowAssignmentAccess().getSequentialSeqKeyword_5_0()); }
-		)
-		{ after(grammarAccess.getDataflowAssignmentAccess().getSequentialSeqKeyword_5_0()); }
+		{ before(grammarAccess.getDataflowAssignmentAccess().getSequentialAlternatives_5_0()); }
+		(rule__DataflowAssignment__SequentialAlternatives_5_0)
+		{ after(grammarAccess.getDataflowAssignmentAccess().getSequentialAlternatives_5_0()); }
 	)
 ;
 finally {

@@ -62,12 +62,9 @@ class GenerateKeywordsFragment extends AbstractStubGeneratingFragment {
                 grammar.genericIdeBasePackage + ".highlighting." + className
             )
         }
-        // add destination package to exported packages, add langauge.server to dependencies
+        // add destination package to exported packages
         if (projectConfig.genericIde.manifest !== null) {
             projectConfig.genericIde.manifest.exportedPackages += grammar.genericIdeBasePackage + '.highlighting'
-            if (generateServiceLoader.get) {
-                projectConfig.genericIde.manifest.requiredBundles += "de.cau.cs.kieler.language.server"
-            }
         }
         // generate and write highlighting file
         var xtendFile = doGetXtendStubFile(className)

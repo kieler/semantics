@@ -8,6 +8,7 @@ de.cau.cs.kieler.sccharts.ui.synthesis.hooks.HideAnnotationHook
 de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LabelPlacementSideHook
 de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LabelShorteningHook
 de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisAnnotationHook
+de.cau.cs.kieler.sccharts.ui.synthesis.hooks.TopdownLayoutHook
 de.cau.cs.kieler.sccharts.ui.synthesis.hooks.LayoutHook
 de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ExpandCollapseHook
 de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ColorAnnotationHook
@@ -15,3 +16,5 @@ de.cau.cs.kieler.sccharts.ui.synthesis.hooks.InducedDataflowHook
 de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ShowStateDependencyHook
 de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ActionsAsDataflowHook
 de.cau.cs.kieler.sccharts.ui.debug.hooks.SetBreakpointActionHook
+de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ModelOrderHook
+de.cau.cs.kieler.sccharts.ui.synthesis.hooks.FontSizeHook

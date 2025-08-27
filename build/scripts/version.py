@@ -45,6 +45,15 @@ def main(args):
         pause(args)
     else:
         setProjectVersion(features, args, [setFeatureVersion, setPomVersion])
+        
+    print '\n- Processing Language Server Modules -'
+    # check LS path
+    ls_modules = join(args.path, 'language-server')
+    if not isdir(features):
+        print 'No language server directory found in ' + args.path
+        pause(args)
+    else:
+        setProjectVersion(ls_modules, args, [setPomVersion])
 
     print '\n- Updating p2 repository -'
     # check category file

@@ -237,11 +237,13 @@ class CountDelay extends SCChartsProcessor implements Traceable {
     private def verificationHack(ValuedObject counter, int triggerDelay) {
         try {
             // Add range assumption for verification
-            if(compilationContext.class.simpleName.equals("VerificationContext")) {
-                compilationContext.class.getMethod("addRangeAssumtion", ValuedObject, int, int).invoke(compilationContext, counter, 0, triggerDelay)
-            }
+            compilationContext.startEnvironment.allProperties.forEach[p1, p2|
+                if(p1.id.equals("de.cau.cs.kieler.verification.context")) {
+                    p2.class.getMethod("addRangeAssumtion", ValuedObject, int, int).invoke(p2, counter, 0, triggerDelay)
+                }
+            ]
         } catch (Exception e) {
-            // Nobody cares
+            environment.errors.add(new Exception("Range assumption could not be copied for CountDelay"))
         }
     }
 

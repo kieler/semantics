@@ -1,0 +1,4 @@
+de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerContribution
+de.cau.cs.kieler.language.server.kicool.KiCoolLanguageServerContribution
+de.cau.cs.kieler.language.server.simulation.SimulationLanguageServerContribution
+de.cau.cs.kieler.language.server.verification.VerificationLanguageServerContribution

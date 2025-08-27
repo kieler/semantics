@@ -25,6 +25,7 @@ import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.SpecialAccessExpression
+import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -607,6 +608,10 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }
             default: return super.serialize(access)
         }
+    }
+    
+    def dispatch CharSequence serializeHR(TextExpression text) {
+        return text.text
     }
     
     def dispatch CharSequence serializeHR(CodeEffect code) {

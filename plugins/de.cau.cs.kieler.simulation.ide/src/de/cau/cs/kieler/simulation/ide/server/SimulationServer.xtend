@@ -77,7 +77,7 @@ class SimulationServer {
         }
     }
     
-    def static isRunning() {
+    static def isRunning() {
         return JOB.state !== Job.NONE
     }
     

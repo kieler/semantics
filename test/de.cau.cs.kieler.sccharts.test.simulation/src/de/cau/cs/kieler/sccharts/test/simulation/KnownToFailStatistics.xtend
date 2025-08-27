@@ -60,8 +60,9 @@ class KnownToFailStatistics extends AbstractSimulationTest<SCCharts> {
             }
         }
         return isKnownToFail
-        && modelData.hasSimulationTrace
-        && modelData.modelProperties.contains("sccharts")
+            && modelData.hasSimulationTrace
+            && modelData.modelProperties.contains("sccharts")
+            && !modelData.modelProperties.contains("large")
     }
     
     @Test

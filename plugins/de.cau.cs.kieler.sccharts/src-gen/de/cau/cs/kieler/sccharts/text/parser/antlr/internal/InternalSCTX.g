@@ -2511,16 +2511,29 @@ ruleDataflowAssignment returns [EObject current=null]
 		)?
 		(
 			(
-				lv_sequential_6_0='seq'
-				{
-					newLeafNode(lv_sequential_6_0, grammarAccess.getDataflowAssignmentAccess().getSequentialSeqKeyword_5_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getDataflowAssignmentRule());
+				(
+					lv_sequential_6_1=';'
+					{
+						newLeafNode(lv_sequential_6_1, grammarAccess.getDataflowAssignmentAccess().getSequentialSemicolonKeyword_5_0_0());
 					}
-					setWithLastConsumed($current, "sequential", lv_sequential_6_0 != null, "seq");
-				}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDataflowAssignmentRule());
+						}
+						setWithLastConsumed($current, "sequential", lv_sequential_6_1 != null, null);
+					}
+					    |
+					lv_sequential_6_2='seq'
+					{
+						newLeafNode(lv_sequential_6_2, grammarAccess.getDataflowAssignmentAccess().getSequentialSeqKeyword_5_0_1());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getDataflowAssignmentRule());
+						}
+						setWithLastConsumed($current, "sequential", lv_sequential_6_2 != null, null);
+					}
+				)
 			)
 		)?
 	)

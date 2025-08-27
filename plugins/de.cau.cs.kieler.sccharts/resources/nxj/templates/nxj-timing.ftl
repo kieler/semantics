@@ -135,7 +135,7 @@
          @macro "TickWakeUp" wakeUpTime
 -->
 <#macro TickWakeUp position>
-<#if position=="output">
+<#if position=="input">
 <#list parameters["TickWakeUp"] as parameters>        
         // Set input of model to new system time. This should be the old wake up time.
         scchart.${parameters.varName} = (int)(System.currentTimeMillis());

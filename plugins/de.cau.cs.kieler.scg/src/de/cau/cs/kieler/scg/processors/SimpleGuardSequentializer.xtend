@@ -64,6 +64,10 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
     @Inject extension PragmaExtensions
 
     static val String ANNOTATION_HOSTCODE = "hostcode"
+    static val ANNOTATION_COPY_BLACKLIST = #[
+        SCGAnnotations.ANNOTATION_GUARDCREATOR,
+        SCGAnnotations.ANNOTATION_GUARDED        
+    ]
     
     val globalVOMap = <ValuedObject, ValuedObject>newHashMap
      
@@ -108,6 +112,7 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
          */
          newSCG => [
             scg.copyAnnotations(it, SCGAnnotations.TRANSFORMATION_INDICATORS)
+            annotations.removeIf[ANNOTATION_COPY_BLACKLIST.contains(it.name)]
         	addTagAnnotation(SCGAnnotations.ANNOTATION_SEQUENTIALIZED)
         	label = scg.label
         	name = scg.name

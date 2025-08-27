@@ -17,9 +17,9 @@
 <#list parameters["LightSensor"] as parameters>
         // Light
         <#if (parameters.parameter2!"false")=="true">
-        scchart.${parameters.varName} = lightSensor${parameters.parameter1}.readNormalizedValue();
-        <#else>
         scchart.${parameters.varName} = lightSensor${parameters.parameter1}.getLightValue();
+        <#else>
+        scchart.${parameters.varName} = lightSensor${parameters.parameter1}.readNormalizedValue();
         </#if>
 </#list>        
 </#if>

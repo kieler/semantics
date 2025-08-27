@@ -15,6 +15,10 @@
  * @author Reinhard v. Hanxleden,
  * rvh@informatik.uni-kiel.de
  */
+#ifndef SC_GENERIC_H
+#define SC_GENERIC_H
+
+
 #include <stdio.h>
 #include <limits.h>
 
@@ -1567,3 +1571,6 @@ void set2names(char *prefix, char* suffix, void *setPtr, int setmax, char *names
 #define _SC_ERROR2(code, f, a, b)    fprintf(stderr, f, a, b); exit(code);
 #define _SC_ERROR3(code, f, a, b, c) fprintf(stderr, f, a, b, c); exit(code);
 #endif
+
+
+#endif /* !SC_GENERIC_H */

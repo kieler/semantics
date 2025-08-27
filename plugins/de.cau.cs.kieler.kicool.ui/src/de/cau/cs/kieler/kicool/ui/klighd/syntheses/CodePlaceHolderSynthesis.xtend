@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kicool.ui.klighd.syntheses
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.kicool.ide.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.kicool.ui.klighd.actions.OpenCodeInEditorAction
@@ -24,7 +25,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensio
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import javax.inject.Inject
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
@@ -73,11 +74,16 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
 
                 // title
                 val titleText = if (placeholder.name.nullOrEmpty) placeholder.typeLabel else placeholder.typeLabel + " - " + placeholder.name
-                it.addText(titleText) => [
-                    it.fontSize = 11;
-                    it.fontBold = true;
+                it.addRectangle => [
+                    it.invisible = true;
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
-                    it.suppressSelectability;
+                    it.addText(titleText) => [
+                        it.fontSize = 11;
+                        it.fontBold = true;
+                        it.suppressSelectability;
+                        it.setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 0, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
+                        setProperty(KlighdProperties.IS_NODE_TITLE, true);
+                    ]
                 ]
 
                 // open in editor button

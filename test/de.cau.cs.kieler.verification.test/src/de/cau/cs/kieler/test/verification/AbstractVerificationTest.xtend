@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.test.verification
 
 import com.google.inject.Injector
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.CompilationSystem
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
@@ -22,13 +23,12 @@ import de.cau.cs.kieler.simulation.testing.TestModelData
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.verification.VerificationAssumption
-import de.cau.cs.kieler.verification.VerificationContext
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
+import java.io.File
 import java.util.List
 import java.util.Observable
-import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.Path
 import org.eclipse.emf.ecore.EObject
 import org.junit.After
@@ -36,6 +36,7 @@ import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
 
+import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 import static extension de.cau.cs.kieler.verification.processors.ProcessExtensions.*
 
 /**
@@ -47,7 +48,7 @@ abstract class AbstractVerificationTest<T extends EObject> extends AbstractXText
 
     public static val MUST_FAIL_PATTERN_KEY = "verification-must-fail-pattern"
     
-    protected var VerificationContext currentVerificationContext
+    protected var CompilationContext currentContext
     
     protected var T verificationModel
     protected var TestModelData verificationModelData
@@ -90,31 +91,31 @@ abstract class AbstractVerificationTest<T extends EObject> extends AbstractXText
         // Get verification properties
         val processorId = getPropertyAnalyzerProcessorId()
         val propertyAnalyzerContext = runPropertyAnalyzer(processorId)
-        verificationProperties = propertyAnalyzerContext.verificationProperties
-        verificationAssumptions = propertyAnalyzerContext.verificationAssumptions
+        verificationProperties = propertyAnalyzerContext.verificationContext.verificationProperties
+        verificationAssumptions = propertyAnalyzerContext.verificationContext.verificationAssumptions
     }
     
     @After
     public def void stopCurrentVerification() {
-        if(currentVerificationContext === null) {
+        if(currentContext === null) {
             return
         }
         // Cancel verification
-        currentVerificationContext.startEnvironment.setProperty(Environment.CANCEL_COMPILATION, true)
+        currentContext.startEnvironment.setProperty(Environment.CANCEL_COMPILATION, true)
         
         // Kill process        
-        val process = currentVerificationContext.verificationProcess
+        val process = currentContext.verificationContext.verificationProcess
         if(process !== null && process.isAlive) {
             System.err.println("Killing verification process after test run")
             process.kill
         }
         
-        currentVerificationContext = null
+        currentContext = null
     }
     
     protected def void startVerification(List<VerificationProperty> properties, List<VerificationAssumption> assumptions) {
         stopCurrentVerification()
-        currentVerificationContext = createVerificationContext(properties, assumptions)
+        currentContext = createVerificationContext(properties, assumptions)
         
         // Update task description of the properties 
         for(property : verificationProperties) {
@@ -122,31 +123,33 @@ abstract class AbstractVerificationTest<T extends EObject> extends AbstractXText
             property.status = VerificationPropertyStatus.RUNNING
         }
         
-        currentVerificationContext.compile
+        currentContext.compile
     }
     
-    protected def VerificationContext createVerificationContext(List<VerificationProperty> properties, List<VerificationAssumption> assumptions) {
+    protected def CompilationContext createVerificationContext(List<VerificationProperty> properties, List<VerificationAssumption> assumptions) {
         // Create new context for verification and compile
         val systemId = getVerificationSystemId()
-        val context = Compile.createCompilationContext(systemId, verificationModel, VerificationContext)
+        val context = Compile.createCompilationContext(systemId, verificationModel)
+        val verificationContext = context.createVerificationContext(true)
         context.startEnvironment.setProperty(Environment.INPLACE, true)
         context.startEnvironment.setProperty(ProjectInfrastructure.TEMPORARY_PROJECT_NAME, this.class.simpleName)
         
-        context.verificationProperties = properties
-        context.verificationAssumptions = assumptions
+        verificationContext.verificationProperties = properties
+        verificationContext.verificationAssumptions = assumptions
         
         val modelFile = getVerificationModelFileHandle()
-        context.verificationModelFile = modelFile
+        verificationContext.verificationModelFile = modelFile
         
         context.configureContext()
         
         return context
     }
     
-    protected def VerificationContext runPropertyAnalyzer(String processorId) {
+    protected def CompilationContext runPropertyAnalyzer(String processorId) {
         val compilationSystem = CompilationSystem.createCompilationSystem(processorId, #[processorId])
-        val context = Compile.createCompilationContext(compilationSystem, verificationModel, VerificationContext)
-        context.compile
+        val context = Compile.createCompilationContext(compilationSystem, verificationModel)
+        context.createVerificationContext(false)
+        context.compile()
         if(context.hasErrors) {
             val exception = context.allErrors.get(0).exception
             throw exception
@@ -154,7 +157,7 @@ abstract class AbstractVerificationTest<T extends EObject> extends AbstractXText
         return context
     }
     
-    protected def void configureContext(VerificationContext verificationContext) {
+    protected def void configureContext(CompilationContext verificationContext) {
         // Add observer for changed properties
         verificationContext.addObserver[ Observable o, Object arg |
             if(arg instanceof VerificationPropertyChanged) {
@@ -165,10 +168,10 @@ abstract class AbstractVerificationTest<T extends EObject> extends AbstractXText
         ]
     }
     
-    protected def IFile getVerificationModelFileHandle() {
-        val path = new Path(verificationModelData.modelPath.toString)
-        val tmpProject = ProjectInfrastructure.getTemporaryProject()
-        val file = tmpProject.getFile(path)
+    protected def File getVerificationModelFileHandle() {
+        val projectInfrastructure = ProjectInfrastructure.getProjectInfrastructure(new Environment())
+        val path = new Path(projectInfrastructure.generatedCodeFolder.path+verificationModelData.modelPath.toString)
+        val file = path.toFile
         return file
     }
     

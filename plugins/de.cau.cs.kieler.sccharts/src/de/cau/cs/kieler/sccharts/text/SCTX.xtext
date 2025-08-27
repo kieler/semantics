@@ -162,7 +162,7 @@ DataflowAssignment returns sccharts::DataflowAssignment:
     reference=ValuedObjectReference
     operator=AssignOperator expression = Expression
     ('schedule' schedule+=ScheduleObjectReference+)?
-    sequential?='seq'?;
+    sequential?=(';'|'seq')?;
     
 DataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}

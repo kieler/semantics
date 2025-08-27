@@ -12,25 +12,62 @@
  */
 package de.cau.cs.kieler.simulation.testing
 
-import com.google.common.collect.HashBasedTable
-import com.google.common.collect.Table
+import com.google.common.collect.LinkedHashMultimap
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import java.util.ArrayList
+import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.xtend.lib.annotations.Delegate
 
 /**
  * @author als
  */
-class TestSuite implements Table<TestModelData, String, CompilationContext> {
+class TestSuite {
+
+    static class Test {
+        @Accessors val TestModelData data
+        @Accessors val String id
+        @Accessors(PUBLIC_GETTER) var CompilationContext context
+        
+        new(TestModelData data, String id, CompilationContext context) {
+            this.data = data
+            this.id = id
+            this.context = context
+        }
+        
+        def free() {
+            this.context = null
+        }
+    }
     
-    @Accessors
-    val TestModelCollection testModels
-    @Delegate
-    val Table<TestModelData, String, CompilationContext> tests
+    val List<Test> tests;
+    @Accessors val TestModelCollection testModels
     
     new (TestModelCollection testModels, int numOfTests) {
         this.testModels = testModels
-        this.tests = HashBasedTable.<TestModelData, String, CompilationContext>create(testModels.size, numOfTests)
+        this.tests = new ArrayList(numOfTests * testModels.models.size)
     }
     
+    def add(TestModelData data, String id, CompilationContext context) {
+        tests.add(new Test(data, id, context))
+    }
+    
+    def getTests() {
+        tests.unmodifiableView
+    }
+    
+    def getTestsByModel() {
+        val mm = LinkedHashMultimap.create()
+        for (t : tests) {
+            mm.put(t.data, t)
+        }
+        return mm
+    }
+    
+    def getTestsByTest() {
+        val mm = LinkedHashMultimap.create()
+        for (t : tests) {
+            mm.put(t.id, t)
+        }
+        return mm
+    }
 }

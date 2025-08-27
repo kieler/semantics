@@ -15,11 +15,15 @@ package de.cau.cs.kieler.sccharts.ui.synthesis.styles
 
 import com.google.common.base.Joiner
 import com.google.inject.Inject
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KFontSize
 import de.cau.cs.kieler.klighd.krendering.KPointPlacementData
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.krendering.KRoundedBendsPolyline
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.LineStyle
@@ -29,7 +33,10 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.util.KlighdProperties
+import java.util.EnumSet
 import java.util.List
+import org.eclipse.elk.core.math.ElkMargin
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.graph.properties.IProperty
@@ -38,12 +45,6 @@ import org.eclipse.elk.graph.properties.Property
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.klighd.krendering.KRoundedBendsPolyline
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.kgraph.KEdge
-import org.eclipse.elk.core.math.ElkMargin
-import java.util.EnumSet
-import de.cau.cs.kieler.klighd.krendering.KFontSize
 
 /**
  * Styles for {@link Equations}.
@@ -146,7 +147,7 @@ class EquationStyles {
     /**
      * Adds a title label to a simple state figure.
      */
-    def KText addNodeLabel(KNode node, String text) {
+    def KRectangle addNodeLabel(KNode node, String text) {
         var cc = node.contentContainer
         if (cc === null) {
             cc = node.data.filter(KContainerRendering).head
@@ -154,10 +155,16 @@ class EquationStyles {
                 return null
             }
         }
-        return cc.addText(text) => [
-            fontSize = 8
+        return cc.addRectangle => [
+            invisible = true
             // Add surrounding space
             setGridPlacementData().from(LEFT, 1, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 0, 0);
+            addText(text) => [
+                // TODO: here.
+                setProperty(KlighdProperties.IS_NODE_TITLE, true)
+                setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 0, 0.5f), H_CENTRAL, V_CENTRAL, 0, 0, 0, 0);
+                fontSize = 8
+            ]
         ]
     }
     

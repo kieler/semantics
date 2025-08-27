@@ -12,17 +12,19 @@
  */
 package de.cau.cs.kieler.verification
 
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import java.util.List
-import org.eclipse.core.resources.IFile
-import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.verification.RangeAssumption
+import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
+import java.io.File
+import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /** 
  * @author aas
  */
-class VerificationContext extends CompilationContext {
+class VerificationContext implements IKiCoolCloneable {
+    
+    // Switch between generic verification code generation and actual verification run
+    @Accessors private boolean verify = false
     
     // General options
     @Accessors private List<VerificationProperty> verificationProperties = newArrayList
@@ -31,7 +33,7 @@ class VerificationContext extends CompilationContext {
     /**
      * File handle used to define where generated files for verification will be saved.
      */
-    @Accessors private IFile verificationModelFile = null
+    @Accessors private File verificationModelFile = null
     
     /**
      * The OS process (or one of its parents) that is running the model checker
@@ -73,4 +75,13 @@ class VerificationContext extends CompilationContext {
     def void addRangeAssumtion(ValuedObject vo, int start, int end) {
         this.verificationAssumptions.add(new RangeAssumption(vo, start, end))
     }
+    
+    override cloneObject() {
+        this
+    }
+    
+    override isMutable() {
+        false
+    }
+    
 }

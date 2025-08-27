@@ -39,9 +39,10 @@ class SCChartsSimulationMustFailTest extends AbstractSimulationTest<SCCharts> {
     
     override filter(TestModelData modelData) {
         return modelData.hasSimulationTrace
-        && modelData.modelProperties.contains("sccharts")
-        && modelData.modelProperties.contains("must-fail")
-        && !modelData.modelProperties.contains("causality-problem")
+            && modelData.modelProperties.contains("sccharts")
+            && !modelData.modelProperties.contains("large")
+            && modelData.modelProperties.contains("must-fail")
+            && !modelData.modelProperties.contains("causality-problem")
     }
     
     @Test

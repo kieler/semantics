@@ -61,8 +61,8 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.srtg.SRTGSynthesis
 
     /** 
      * Returns the priority of this hook. The priority defines the order of invocation between
-     * hooks. A higher value results in a earlier invocation. The recommended priority interval is
-     * [0, 100].
+     * hooks. A higher value results in a earlier invocation of the start and process[State|Transition|Region]
+     * methods and a later invocation of the finish method. The recommended priority interval is [0, 100].
      * @return the priority value
      */
     def int getPriority() {

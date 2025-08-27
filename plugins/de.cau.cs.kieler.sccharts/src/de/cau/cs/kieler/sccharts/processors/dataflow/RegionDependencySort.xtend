@@ -29,11 +29,14 @@ import de.cau.cs.kieler.core.properties.Property
  */
 class RegionDependencySort extends SCChartsProcessor {
     
+    public static val ID = "de.cau.cs.kieler.sccharts.processors.regionDependencySort"
+    public static val ERROR_MSG = "Cannot topologically sort regions due to dependency cycles."
+    
     public static val IProperty<Boolean> ERROR_ON_FAILURE = 
        new Property<Boolean>("de.cau.cs.kieler.sccharts.processors.regionDependencySort.errorOnFailure", true)          
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.regionDependencySort"
+        ID
     }
     
     override getName() {
@@ -69,7 +72,7 @@ class RegionDependencySort extends SCChartsProcessor {
         for (d : dependencies) {
             if (!d.key.top(dependencies, remaining, visited)) {
                 if (environment.getProperty(ERROR_ON_FAILURE)) {
-                    environment.errors.add("Cannot topologically sort regions due to dependency cycles.")
+                    environment.errors.add(ERROR_MSG)
                 }
             }
         }  

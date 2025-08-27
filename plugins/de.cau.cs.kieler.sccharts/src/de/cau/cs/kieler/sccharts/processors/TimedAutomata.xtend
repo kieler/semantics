@@ -114,13 +114,44 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
 
     def void transform(State rootState) {
         val allAnnotations = rootState.eAllContents.filter(Annotation).toList
+        
         val noSleep = allAnnotations.exists[NO_SLEEP_NAME.equalsIgnoreCase(name)]
-        val maxSleep = if (allAnnotations.exists[MAX_SLEEP_NAME.equalsIgnoreCase(name)]) Double.parseDouble(allAnnotations.findFirst[MAX_SLEEP_NAME.equalsIgnoreCase(name)].asStringAnnotation.values.head) else MAX_SLEEP_DEFAULT
         val simulateTime = if (allAnnotations.exists[SIMULATE_TIME_NAME.equalsIgnoreCase(name)]) true else SIMULATE_TIME_DEFAULT
         val deviationOutput = if (allAnnotations.exists[DEVIATION_OUTPUT_NAME.equalsIgnoreCase(name)]) true else DEVIATION_OUTPUT_DEFAULT
         val timePrintFormat = if (allAnnotations.filter(StringAnnotation).exists[TIME_FORMAT_NAME.equalsIgnoreCase(name)]) allAnnotations.filter(StringAnnotation).findFirst[TIME_FORMAT_NAME.equalsIgnoreCase(name)].values.head else TIME_FORMAT_DEFAULT
-        isIntClockType = allAnnotations.exists[INT_CLOCK_NAME.equalsIgnoreCase(name) || INT_CLOCK_NAME_2.equalsIgnoreCase(name) ]
-        val clockType = ValueType.get(isIntClockType ? DynamicTicks.INT_TYPE : DynamicTicks.FLOAT_TYPE)
+        
+        // Get max sleep
+        val maxSleep = if (allAnnotations.exists[MAX_SLEEP_NAME.equalsIgnoreCase(name)]) {
+            val value = allAnnotations.findFirst[MAX_SLEEP_NAME.equalsIgnoreCase(name)].asStringAnnotation.values.head
+            if (!value.nullOrEmpty) {
+                try {
+                    Double.parseDouble(value)
+                } catch (NumberFormatException e) {
+                    value
+                }
+            } else {
+                MAX_SLEEP_DEFAULT
+            }
+        } else {
+            MAX_SLEEP_DEFAULT
+        }
+        
+        // Get clock type
+        val intAnnoClockType = allAnnotations.findLast[INT_CLOCK_NAME.equalsIgnoreCase(name) || INT_CLOCK_NAME_2.equalsIgnoreCase(name) ]
+        isIntClockType = intAnnoClockType !== null
+        val intHostClockType = if (isIntClockType && intAnnoClockType instanceof StringAnnotation && !intAnnoClockType.asStringAnnotation.values.isEmpty) {
+            intAnnoClockType.asStringAnnotation.values.head
+        } else {
+            null
+        }
+        val clockType = if (intHostClockType !== null) {
+            ValueType.HOST
+        } else if (isIntClockType) {
+            ValueType.get(DynamicTicks.INT_TYPE)
+        } else {
+            ValueType.get(DynamicTicks.FLOAT_TYPE)
+        }
+        
         val useSD = allAnnotations.exists[USE_SD_NAME.equalsIgnoreCase(name)]
         
         val hasClocks = rootState.allStates.exists[variableDeclarations.exists[type == ValueType.CLOCK]]
@@ -148,6 +179,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                 vo.initialValue = createClockValue(0)
                 rootState.declarations += createDeclaration => [
                     type = clockType
+                    hostType = intHostClockType
                     input = true
                     valuedObjects += vo
                 ]
@@ -179,6 +211,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                         vo.initialValue = createClockValue(0)
                         rootState.declarations += createDeclaration => [
                             type = clockType
+                            hostType = intHostClockType
                             output = true
                             valuedObjects += vo
                         ]
@@ -194,6 +227,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     vo.initialValue = createClockValue(0)
                     rootState.declarations += createDeclaration => [
                         type = clockType
+                        hostType = intHostClockType
                         output = true
                         valuedObjects += vo
                     ]
@@ -228,6 +262,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     var sdDecls = <Declaration, Declaration>newHashMap
                     for (clock : state.variableDeclarations.filter[type == ValueType.CLOCK].map[valuedObjects].flatten.toList) {
                         clock.declaration.asVariableDeclaration.type = clockType
+                        clock.declaration.asVariableDeclaration.hostType = intHostClockType
                         if (!clock.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION) && !clock.declaration.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION)) {
                             clock.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
                         }
@@ -494,12 +529,16 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
         return false
     }
     
-    def createClockValue(Number n) {
+    def dispatch createClockValue(Number n) {
         if (isIntClockType) {
             createIntValue(n.intValue)
         } else {
             createFloatValue(n.doubleValue)
         }
+    }
+    
+    def dispatch createClockValue(String s) {
+        createTextExpression(s)
     }
     
     static def findDeltaT(State rootState) {

@@ -45,6 +45,8 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
@@ -66,7 +68,9 @@ import de.cau.cs.kieler.sccharts.processors.dataflow.ControlDependencies
 import de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencies
 import de.cau.cs.kieler.sccharts.processors.dataflow.RegionLCAFMap
 import de.cau.cs.kieler.sccharts.processors.dataflow.StateDependencies
+import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterTags
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ToggleDependencyAction
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ProxyStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.ArrayList
@@ -77,6 +81,7 @@ import org.eclipse.elk.alg.layered.options.LayerConstraint
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.options.OrderingStrategy
 import org.eclipse.elk.alg.rectpacking.options.RectPackingOptions
+import org.eclipse.elk.alg.rectpacking.p3whitespaceelimination.WhiteSpaceEliminationStrategy
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
@@ -87,6 +92,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -139,10 +145,13 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
     override List<KNode> performTranformation(State state) {
         val node = state.createNode().associateWith(state)
+        node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(SCChartsSemanticFilterTags.STATE)
+        val proxy = createNode().associateWith(state)
 
         // Set KIdentifier for use with incremental update
         if (!state.name.nullOrEmpty) {
             node.KID = state.name
+            proxy.KID = '''«state.name»-proxy'''
         }
         
         // configure region dependency layout config if an appropriate result is present.
@@ -163,38 +172,56 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
         // Basic state style
         switch state {
-            case isConnector:
+            case isConnector: {
                 node.addConnectorFigure
-            case state.isMacroState:
+                node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(SCChartsSemanticFilterTags.CONNECTOR_STATE)
+                proxy.addConnectorFigure
+            }
+            case state.isMacroState: {
                 node.addMacroFigure
-            default:
+                node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(SCChartsSemanticFilterTags.HIERARCHICAL_STATE)
+                proxy.addMacroFigure
+            }
+            default: {
                 node.addDefaultFigure
+                node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(SCChartsSemanticFilterTags.SIMPLE_STATE)
+                // Proxy should be more square-like
+                proxy.addMacroFigure
+            }
         }
 
         // Styles from modifiers
         if (state.isReferencing) {
             node.setReferencedStyle
+            proxy.setReferencedStyle
         }
         if (state.isInitial) {
             node.setInitialStyle
+            node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(SCChartsSemanticFilterTags.INITIAL)
+            proxy.setInitialStyle
             if (USE_KLAY.booleanValue && state.parentRegion.states.head == state) {
                 node.setLayoutOption(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST);
             }
         }
         if (state.isFinal) {
             node.setFinalStyle
+            node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(SCChartsSemanticFilterTags.FINAL)
+            proxy.setFinalStyle
         }
         if (state.isViolation) {
             val isHaltState = state.outgoingTransitions.size == 0 
                 || !state.outgoingTransitions.exists[ targetState != state ]
             node.setViolationStyle(isHaltState)
+            proxy.setViolationStyle(isHaltState)
         }
         
         node.setSelectionStyle
+        proxy.setSelectionStyle
 
         // Shadow
         if (!isConnector) {
             node.setShadowStyle
+            proxy.setShadowStyle
         }
 
         // Add content
@@ -240,10 +267,22 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                         }
                     }
                     node.addMacroStateLabel(label)
+                    if (label.length > 0) {
+                        val name = label.get(0)
+                        if (name.key.length > ProxyStyles.MAX_PROXY_LABEL_LENGTH) {
+                            label.set(0, new Pair(name.key.subSequence(0, ProxyStyles.MAX_PROXY_LABEL_LENGTH) + "...", name.value))
+                        }
+                    }
+                    proxy.addMacroStateLabel(label)
                 } else {
-                    node.addSimpleStateLabel(state.serializeHR.toString)
+                    val label = state.serializeHR.toString
+                    node.addSimpleStateLabel(label)
+                    if (label.length > ProxyStyles.MAX_PROXY_LABEL_LENGTH) {
+                        proxy.addSimpleStateLabel(label.substring(0, ProxyStyles.MAX_PROXY_LABEL_LENGTH) + "...")
+                    } else {
+                        proxy.addSimpleStateLabel(label)
+                    }
                 }) => [
-                    setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                     associateWith(state)
                     if (it instanceof KText) configureTextLOD(state)
                     eAllContents.filter(KRendering).toList.forEach[
@@ -253,12 +292,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 ]
             } else {
                 node.addEmptyStateLabel
+                proxy.addEmptyStateLabel
             }
             
             // Add declarations
             val declarations = new ArrayList<Declaration>(state.declarations)
             if (SHOW_INHERITANCE.booleanValue) declarations.addAll(0, state.allVisibleInheritedDeclarations.toList)
-            for (declaration : declarations.filter[!(it instanceof MethodImplementationDeclaration) || !SHOW_METHOD_BODY.booleanValue]) {
+            val filteredDeclarations = declarations.filter[!(it instanceof MethodImplementationDeclaration) || !SHOW_METHOD_BODY.booleanValue]
+            for (declaration : filteredDeclarations) {
                 if (declaration instanceof ClassDeclaration) {
                     node.addStructDeclarations(declaration, 0)
                 } else {
@@ -271,7 +312,46 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                         ]
                     ]
                 }
-            }           
+            }
+            node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(
+                SCChartsSemanticFilterTags.DECLARATIONS(
+                    filteredDeclarations
+                    .size as double
+                )
+            )
+            
+            // Set declaration tags
+            var numInput = 0
+            var numOutput = 0
+            var numStatic = 0
+            var numSignal = 0
+            var numConst = 0
+            var numExtern = 0
+            var numVolatile = 0
+            var numGlobal = 0
+            for (declaration : filteredDeclarations) {
+                if (declaration instanceof VariableDeclaration) {
+                    // Note that a declaration may have an arbitrary combination of these
+                    if (declaration.input) numInput++
+                    if (declaration.output) numOutput++
+                    if (declaration.static) numStatic++
+                    if (declaration.signal) numSignal++
+                    if (declaration.const) numConst++
+                    if (declaration.extern) numExtern++
+                    if (declaration.volatile) numVolatile++
+                    if (declaration.global) numGlobal++
+                }
+            }
+            node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).addAll(
+                SCChartsSemanticFilterTags.INPUT_DECLARATIONS(numInput as double),
+                SCChartsSemanticFilterTags.OUTPUT_DECLARATIONS(numOutput as double),
+                SCChartsSemanticFilterTags.STATIC_DECLARATIONS(numStatic as double),
+                SCChartsSemanticFilterTags.SIGNAL_DECLARATIONS(numSignal as double),
+                SCChartsSemanticFilterTags.CONST_DECLARATIONS(numConst as double),
+                SCChartsSemanticFilterTags.EXTERN_DECLARATIONS(numExtern as double),
+                SCChartsSemanticFilterTags.VOLATILE_DECLARATIONS(numVolatile as double),
+                SCChartsSemanticFilterTags.GLOBAL_DECLARATIONS(numGlobal as double)
+            )
 
             // Add actions
             val actions = new ArrayList<Action>(state.actions)
@@ -295,7 +375,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 || (SHOW_INHERITANCE.booleanValue && !state.allVisibleInheritedRegions.empty)
                 || !state.declarations.filter(MethodImplementationDeclaration).empty
             ) {
-                node.addRegionsArea
+                node.addRegionsArea(state)
                 node.setLayoutOption(CoreOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE))
             }
         }
@@ -352,9 +432,17 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         
         if (SHOW_COMMENTS.booleanValue) {
             state.getCommentAnnotations.forEach[
-                returnNodes += it.transform                
-            ] 
-        }                       
+                val comments = it.transform
+                returnNodes += comments
+                // Comments shouldn't be rendered as proxies
+                comments.forEach[
+                    setProperty(KlighdProperties.PROXY_VIEW_RENDER_NODE_AS_PROXY, false)
+                ]
+            ]
+        }
+        
+        node.setProperty(KlighdProperties.PROXY_VIEW_RENDER_NODE_AS_PROXY, true)
+        node.setProperty(KlighdProperties.PROXY_VIEW_PROXY_RENDERING, proxy.data)
 
         return returnNodes
     }
@@ -400,15 +488,17 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     def static void configureLayout(KNode node) {
         node.setLayoutOption(CoreOptions::ALGORITHM, RectPackingOptions.ALGORITHM_ID)
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true)
+        node.setLayoutOption(RectPackingOptions.WHITE_SPACE_ELIMINATION_STRATEGY, WhiteSpaceEliminationStrategy.EQUAL_BETWEEN_STRUCTURES)
+        node.setLayoutOption(RectPackingOptions.OMIT_NODE_MICRO_LAYOUT, true)
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0))
-        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
+        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 5.0)
     }
     
     def static void configureLayoutRegionDependencies(KNode node) {
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(5))
 //        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
         node.setLayoutOption(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
-        node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER, OrderingStrategy.PREFER_EDGES)
+        node.setLayoutOption(LayeredOptions.CONSIDER_MODEL_ORDER_STRATEGY, OrderingStrategy.PREFER_EDGES)
         node.setLayoutOption(CoreOptions::DIRECTION, Direction.RIGHT)
         node.setLayoutOption(LayeredOptions::FEEDBACK_EDGES, true)
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10.0)

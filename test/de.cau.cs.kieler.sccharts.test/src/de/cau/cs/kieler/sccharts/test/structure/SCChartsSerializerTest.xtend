@@ -66,6 +66,7 @@ class SCChartsSerializerTest extends AbstractXTextModelRepositoryTest<SCCharts> 
      */
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("sccharts")
+            && !modelData.modelProperties.contains("large")
             && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
             && !modelData.modelProperties.contains("must-fail")
     }

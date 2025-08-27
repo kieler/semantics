@@ -163,25 +163,6 @@ class KExtReferenceExtensions {
         
         bindings
     }
-    
-    
-    def isInput(Declaration decl) {
-        if (decl instanceof VariableDeclaration) {
-            return decl.input
-        } else if (decl instanceof ReferenceDeclaration) {
-            return decl.input
-        } else {
-            return false
-        }
-    }
-    
-    def isOutput(Declaration decl) {
-        if (decl instanceof VariableDeclaration) {
-            return decl.output
-        } else {
-            return false
-        }
-    }
 
     protected def checkTypeCompability(Binding binding) {
         switch(binding.sourceExpression) {

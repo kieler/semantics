@@ -1,0 +1,4 @@
+public system de.cau.cs.kieler.kicool.ide.diagram.synthesis
+	label "Diagram Synthesis"
+	
+de.cau.cs.kieler.kicool.ide.processors.diagram.synthesis

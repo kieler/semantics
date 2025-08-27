@@ -43,26 +43,28 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * Config format: {
- *   "<ALL_KEY?>": {
- *     "<ENV_KEY?>": {
- *       "property-id": "value",...
+ *   "<ALL_KEY?>": { // configuration for all tests
+ *     "<ENV_KEY?>": { // properties added to the environment of the test
+ *       "property-id": "value",
+ *       ...
  *     }
- *     "<FILTER_KEY?>": {
- *       "<TRACE_KEY?>": "<boolean>",
- *       "<MODEL_KEY?>": "<kexpression that consists of (AND/OR/NOT) operator expressions and strings that represent model property keys>",
- *       "<OTHER_KEY?>": {
+ *     "<FILTER_KEY?>": { // selection of models to test
+ *       "<TRACE_KEY?>": "<boolean>", // requires associated trace
+ *       "<MODEL_KEY?>": "<kexpression that consists of (AND/OR/NOT) operator expressions and strings that represent model property keys>", // filter expression based on model properties
+ *       "<OTHER_KEY?>": { // additional properties required
  *         "property-id": "expected-value",...
  *       }
  *     }
  *   }
- *   "<test-id>": {
- *     "<SYSTEM_KEY>": "<system-id>"
- *     "<SIM_KEY?>": "<boolean (default:true)>"
- *     "<INPLACE_KEY?>": "<boolean (default:false)>"
- *     "<ANALYZER_KEY?>": {
- *        "processor-id": "<INTERMEDIATE_KEY | PRE_KEY<processor-id> | POST_KEY<processor-id>>",...
+ *   "<test-id>": { // individual test configuration
+ *     "<SYSTEM_KEY>": "<system-id>" // compilation system to use during test
+ *     "<SIM_KEY?>": "<boolean (default:true)>" // Whether or not to simulate the result
+ *     "<INPLACE_KEY?>": "<boolean (default:false)>" // Activation of inplace compilation
+ *     "<ANALYZER_KEY?>": { // Additional analyzer processors to hook into the compilation
+ *        "processor-id": "<INTERMEDIATE_KEY | PRE_KEY<processor-id> | POST_KEY<processor-id>>", // e.g.: "post:de.cau.cs.kieler.kicool.processors.identity"
+ *        ...
  *     }
- *     <any-property-of-ALL_KEY>
+ *     <any-property-of-ALL_KEY> // see above
  *   }
  *   "<next-test-id?>": {...
  * }
@@ -84,6 +86,8 @@ class TestSuiteGenerator extends Processor<TestModelCollection, TestSuite> {
     public static val INTERMEDIATE_KEY = "intermediate"
     public static val PRE_KEY = "pre:"
     public static val POST_KEY = "post:"
+    
+    /** Expected structure corresponds to json config format */
     public static val IProperty<Map<String, Map<String, Object>>> CONFIG = 
         new Property<Map<String, Map<String, Object>>>("de.cau.cs.kieler.simulation.testing.suite.config", null)
         
@@ -110,7 +114,7 @@ class TestSuiteGenerator extends Processor<TestModelCollection, TestSuite> {
             if (tests.empty) {
                 environment.errors.add("Incomplete configuration! No tests specified.")
             } else {
-                val suite = new TestSuite(model, conf.size)
+                val suite = new TestSuite(model, tests.size)
                 val gEnv = generalConf?.get(ENV_KEY)
                 for (testId : tests) {
                     val testConf = conf.get(testId)
@@ -197,7 +201,7 @@ class TestSuiteGenerator extends Processor<TestModelCollection, TestSuite> {
                                 }
                             }
                             
-                            suite.put(testModel, testId, ctx)
+                            suite.add(testModel, testId, ctx)
                         }
                     }
                 }

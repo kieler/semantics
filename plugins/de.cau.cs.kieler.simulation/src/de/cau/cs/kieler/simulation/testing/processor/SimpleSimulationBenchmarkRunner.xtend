@@ -43,24 +43,24 @@ class SimpleSimulationBenchmarkRunner extends Processor<TestSuite, CodeContainer
         // Just for testing
         val results = newArrayList("Model,Test,MinTickTime,MaxTickTime,AvgTickTime")
         
-        for (test : model.cellSet) {
+        for (test : model.tests) {
             try {
                 // Run benchmark
                 Thread.sleep(100) // Wait for previous stuff to terminate
-                val result = test.value.compile().model as SimulationResult
+                val result = test.context.compile().model as SimulationResult
                 if (result.results.empty) {
-                    results += "%s,%s,NOTRACE,NOTRACE,NOTRACE".format(test.rowKey.modelFile, test.columnKey)
+                    results += "%s,%s,NOTRACE,NOTRACE,NOTRACE".format(test.data.modelFile, test.id)
                 } else {
                     val ticktimes = result.results.map[history.iterator.toIterable].flatten.filterNull
                                           .map[entries.get("#ticktime")].filterNull.map[(typedValue as Number).intValue].toList
                     results += "%s,%s,%d,%d,%d".format(
-                        test.rowKey.modelPath, test.columnKey,
+                        test.data.modelPath, test.id,
                         ticktimes.min, ticktimes.max, (ticktimes.fold(0)[sum, it | sum + it] / (ticktimes.size > 0 ? ticktimes.size : 1)) as int
                     )
                 }
             } catch (Exception e) {
-                results += "%s,%s,FAILED,FAILED,FAILED".format(test.rowKey.modelFile, test.columnKey)
-                environment.warnings.add("Test %s failed for model %s".format(test.columnKey, test.rowKey.modelFile), e)
+                results += "%s,%s,FAILED,FAILED,FAILED".format(test.data.modelFile, test.id)
+                environment.warnings.add("Test %s failed for model %s".format(test.id, test.data.modelFile), e)
                 e.printStackTrace
             } finally {
                 // clean up

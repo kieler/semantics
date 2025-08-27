@@ -13,7 +13,7 @@
  package de.cau.cs.kieler.verification.processors.nuxmv
 
 import de.cau.cs.kieler.verification.VerificationProperty
-import org.eclipse.core.resources.IFile
+import java.io.File
 
 /**
  * @author aas
@@ -28,7 +28,7 @@ class RunNuxmvProcessor extends RunSmvProcessor {
         return "Run nuXmv"
     }
     
-    override protected getProcessBuilderCommandList(IFile smvFile, VerificationProperty property) {
+    override protected getProcessBuilderCommandList(File smvFile, VerificationProperty property) {
         return #["nuXmv", "-int", smvFile.name]
     }
 }

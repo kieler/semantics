@@ -419,7 +419,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     @Inject TracingIntegration tracingIntegrationInstance
     
     protected def List<IntermediateProcessor<?,?>> getIntermediateProcessors(Environment environment) {
-        val processors = system.intermediates.map[ processorMap.get(it) as IntermediateProcessor<?,?> ]
+        val processors = system.intermediates.map[ processorMap.get(it) as IntermediateProcessor<?,?> ].filterNull.toList
         
         if (environment.isTracingActive) {
             return <IntermediateProcessor<?,?>> newLinkedList => [

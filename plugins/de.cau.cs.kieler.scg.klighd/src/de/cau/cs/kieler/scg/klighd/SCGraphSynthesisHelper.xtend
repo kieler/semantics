@@ -172,6 +172,30 @@ class SCGraphSynthesisHelper {
     }
 
     /**
+     * Assignment proxy figures consist of a "=".
+     */
+    def initialiseAssignmentProxyFigure(KNode node) {
+        node.initialiseProxyFigure("=")
+    }
+
+    /**
+     * Conditional proxy figures consist of a "?".
+     */
+    def initialiseConditionalProxyFigure(KNode node) {
+        node.initialiseProxyFigure("?")
+    }
+
+    /**
+     * Initialises a proxy figure with the given label.
+     */
+    def initialiseProxyFigure(KNode node, String label) {
+        node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
+        val figure = node.data.filter(KContainerRendering).last
+        if(SHOW_SHADOW.booleanValue) figure.shadow = "black".color
+        figure.children.filter(KText).head.text = label
+    }
+
+    /**
      * Draw a dotted line from the corresponding surface node to the given depth node.
      * 
      * @param depth

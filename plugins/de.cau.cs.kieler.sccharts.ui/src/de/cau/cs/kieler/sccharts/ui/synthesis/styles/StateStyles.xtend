@@ -37,6 +37,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.TextFormat
 import java.util.EnumSet
@@ -53,7 +54,6 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.klighd.util.KlighdProperties
 
 /**
  * Styles for {@link State}.
@@ -89,6 +89,13 @@ class StateStyles {
     /** This property is set on the content container rendering and points to the container holding the declaration labels */
     public static final IProperty<KContainerRendering> DECLARATIONS_CONTAINER = new Property<KContainerRendering>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.style.state.declarations", null);
+        
+    /** The default figure's corner radius. */
+    public static final int DEFAULT_FIGURE_CORNER_RADIUS = 17;
+    /** The default figure's minimal node size. */
+    public static final int DEFAULT_FIGURE_MIN_NODE_SIZE = 2 * DEFAULT_FIGURE_CORNER_RADIUS;
+    /** The connector figure's size. */
+    public static final int CONNECTOR_FIGURE_SIZE = 7;
 
     protected var baseLineWidth = 1;
     protected var stateLabelTextSize = 11;
@@ -97,7 +104,7 @@ class StateStyles {
      * Adds a connector figure.
      */
     def KRoundedRectangle addConnectorFigure(KNode node) {
-        node.addRoundedRectangle(7, 7, baseLineWidth) => [
+        node.addRoundedRectangle(CONNECTOR_FIGURE_SIZE, CONNECTOR_FIGURE_SIZE, baseLineWidth) => [
             background = STATE_CONNECTOR.color;
             foreground = STATE_CONNECTOR.color;
         ]
@@ -107,8 +114,8 @@ class StateStyles {
      * Adds a small state figure.
      */
     def KRoundedRectangle addDefaultFigure(KNode node) {
-        node.setMinimalNodeSize(34, 34); // 2 x corner radius
-        node.addRoundedRectangle(17, 17, baseLineWidth) => [
+        node.setMinimalNodeSize(DEFAULT_FIGURE_MIN_NODE_SIZE, DEFAULT_FIGURE_MIN_NODE_SIZE);
+        node.addRoundedRectangle(DEFAULT_FIGURE_CORNER_RADIUS, DEFAULT_FIGURE_CORNER_RADIUS, baseLineWidth) => [
             // Mark this figure as container for further content
             setProperty(IS_CONTENT_CONTAINER, true);
             setBackgroundGradient(STATE_BACKGROUND_GRADIENT_1.color, STATE_BACKGROUND_GRADIENT_2.color, 90);
@@ -120,7 +127,7 @@ class StateStyles {
      * Adds a macro state figure.
      */
     def KRoundedRectangle addMacroFigure(KNode node) {
-        node.setMinimalNodeSize(34, 34); // same as default figure
+        node.setMinimalNodeSize(DEFAULT_FIGURE_MIN_NODE_SIZE, DEFAULT_FIGURE_MIN_NODE_SIZE); // same as default figure
         node.addRoundedRectangle(8, 8, baseLineWidth) => [
             // Mark this figure as container for further content
             setProperty(IS_CONTENT_CONTAINER, true);
@@ -233,7 +240,7 @@ class StateStyles {
             fontSize = stateLabelTextSize
             suppressSelectability
             selectionTextUnderline = Underline.NONE // prevents default selection style
-            setProperty(KlighdProperties.IS_NODE_TITLE, true)
+//            setProperty(KlighdProperties.IS_NODE_TITLE, true)
         ]
     }
 
@@ -244,15 +251,15 @@ class StateStyles {
         node.contentContainer.addKeywordLabel(components, 0) => [
             // Add surrounding space
             setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0)
-                
+            
             eAllContents.filter(KText).forEach[
                 fontSize = stateLabelTextSize
                 suppressSelectability
                 selectionTextUnderline = Underline.NONE // prevents default selection style
-                setProperty(KlighdProperties.IS_NODE_TITLE, true)
             ]
 
             children.head => [
+                setProperty(KlighdProperties.IS_NODE_TITLE, true)
                 setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 0, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
             ]
         ]
@@ -370,9 +377,10 @@ class StateStyles {
     /**
      * Add a child area to a macro state
      */
-    def addRegionsArea(KNode node) {
+    def addRegionsArea(KNode node, State state) {
         node.contentContainer.addChildArea().setGridPlacementData() => [
-            from(LEFT, 5, 0, TOP, -4, 0).to(RIGHT, 5, 0, BOTTOM, 5, 0)
+            val spacing = state.isInitial ? 9 : 7;
+            from(LEFT, spacing, 0, TOP, -4, 0).to(RIGHT, spacing, 0, BOTTOM, spacing, 0)
             minCellHeight = 5;
             minCellWidth = 5;
         ]

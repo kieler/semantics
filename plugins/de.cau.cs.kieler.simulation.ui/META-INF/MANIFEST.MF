@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Simulation UI
 Bundle-SymbolicName: de.cau.cs.kieler.simulation.ui;singleton:=true
-Bundle-Version: 1.3.0.qualifier
+Bundle-Version: 1.6.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 Bundle-Vendor: Kiel University
 Eclipse-UI: True
@@ -36,7 +36,7 @@ Require-Bundle: de.cau.cs.kieler.simulation;visibility:=reexport,
  org.eclipse.elk.core;bundle-version="0.4.0",
  de.cau.cs.kieler.simulation.ide,
  de.cau.cs.kieler.kicool.ide
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.simulation.ui,
  de.cau.cs.kieler.simulation.ui.internal,

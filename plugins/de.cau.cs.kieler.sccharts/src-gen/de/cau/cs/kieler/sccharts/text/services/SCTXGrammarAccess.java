@@ -1721,21 +1721,23 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Assignment cScheduleAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
 		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_4_1_0 = (RuleCall)cScheduleAssignment_4_1.eContents().get(0);
 		private final Assignment cSequentialAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final Keyword cSequentialSeqKeyword_5_0 = (Keyword)cSequentialAssignment_5.eContents().get(0);
+		private final Alternatives cSequentialAlternatives_5_0 = (Alternatives)cSequentialAssignment_5.eContents().get(0);
+		private final Keyword cSequentialSemicolonKeyword_5_0_0 = (Keyword)cSequentialAlternatives_5_0.eContents().get(0);
+		private final Keyword cSequentialSeqKeyword_5_0_1 = (Keyword)cSequentialAlternatives_5_0.eContents().get(1);
 		
 		//DataflowAssignment returns sccharts::DataflowAssignment:
 		//    (annotations+=Annotation)*
 		//    reference=ValuedObjectReference
 		//    operator=AssignOperator expression = Expression
 		//    ('schedule' schedule+=ScheduleObjectReference+)?
-		//    sequential?='seq'?;
+		//    sequential?=(';'|'seq')?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//(annotations+=Annotation)*
 		//reference=ValuedObjectReference
 		//operator=AssignOperator expression = Expression
 		//('schedule' schedule+=ScheduleObjectReference+)?
-		//sequential?='seq'?
+		//sequential?=(';'|'seq')?
 		public Group getGroup() { return cGroup; }
 		
 		//(annotations+=Annotation)*
@@ -1774,11 +1776,17 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//ScheduleObjectReference
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_4_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_4_1_0; }
 		
-		//sequential?='seq'?
+		//sequential?=(';'|'seq')?
 		public Assignment getSequentialAssignment_5() { return cSequentialAssignment_5; }
 		
+		//(';'|'seq')
+		public Alternatives getSequentialAlternatives_5_0() { return cSequentialAlternatives_5_0; }
+		
+		//';'
+		public Keyword getSequentialSemicolonKeyword_5_0_0() { return cSequentialSemicolonKeyword_5_0_0; }
+		
 		//'seq'
-		public Keyword getSequentialSeqKeyword_5_0() { return cSequentialSeqKeyword_5_0; }
+		public Keyword getSequentialSeqKeyword_5_0_1() { return cSequentialSeqKeyword_5_0_1; }
 	}
 	public class DataflowRegionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.DataflowRegion");
@@ -4569,7 +4577,7 @@ public class SCTXGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    reference=ValuedObjectReference
 	//    operator=AssignOperator expression = Expression
 	//    ('schedule' schedule+=ScheduleObjectReference+)?
-	//    sequential?='seq'?;
+	//    sequential?=(';'|'seq')?;
 	public DataflowAssignmentElements getDataflowAssignmentAccess() {
 		return pDataflowAssignment;
 	}

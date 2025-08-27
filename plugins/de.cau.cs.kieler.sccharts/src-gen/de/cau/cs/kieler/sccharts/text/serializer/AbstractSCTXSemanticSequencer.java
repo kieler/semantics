@@ -1757,7 +1757,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         operator=AssignOperator 
 	 *         expression=Expression 
 	 *         schedule+=ScheduleObjectReference* 
-	 *         sequential?='seq'?
+	 *         (sequential?=';' | sequential?='seq')?
 	 *     )
 	 */
 	protected void sequence_DataflowAssignment(ISerializationContext context, DataflowAssignment semanticObject) {

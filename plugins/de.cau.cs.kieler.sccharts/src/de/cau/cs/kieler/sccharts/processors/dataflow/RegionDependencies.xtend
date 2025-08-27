@@ -42,6 +42,8 @@ import org.eclipse.emf.ecore.EObject
  */
 class RegionDependencies extends AbstractDependencyAnalysis<SCCharts, State> {
     
+    public static val ID = "de.cau.cs.kieler.sccharts.processors.regionDependencies"
+    
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension KEffectsDependencyExtensions
@@ -57,7 +59,7 @@ class RegionDependencies extends AbstractDependencyAnalysis<SCCharts, State> {
     static val GENERATED_PREFIX = "__tdf_"
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.regionDependencies"
+        ID
     }
     
     override getName() {
@@ -107,8 +109,9 @@ class RegionDependencies extends AbstractDependencyAnalysis<SCCharts, State> {
 
     
     override protected void searchDependencies(State subModel, ValuedObjectAccessors valuedObjectAccessors) {
-        if (!subModel.isSuperstate)  
-            throw new UnsupportedOperationException("A simple state cannot have any region dependencies.")
+        if (!subModel.isSuperstate)
+            return
+            //throw new UnsupportedOperationException("A simple state cannot have any region dependencies.")
         
         val forkStack = new ForkStack
         val visited = <EObject> newHashSet

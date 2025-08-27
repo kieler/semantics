@@ -10,6 +10,9 @@
  * @author Reinhard v. Hanxleden,
  * rvh@informatik.uni-kiel.de
  */
+#ifndef SC_H
+#define SC_H
+
 
 /* Note: This header file makes use of the following
  * application-specific macros. If the application sets these macros,
@@ -315,3 +318,5 @@ unsigned long _longBit;
   }
 #endif
 
+
+#endif /* !SC_H */

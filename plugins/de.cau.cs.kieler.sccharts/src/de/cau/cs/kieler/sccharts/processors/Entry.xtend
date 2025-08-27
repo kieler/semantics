@@ -108,8 +108,8 @@ class Entry extends SCChartsProcessor implements Traceable {
             firstState = region.createInitialState(GENERATED_PREFIX + "Init")
             lastState = region.createState(GENERATED_PREFIX + "Done")
             if (preemptionType == PreemptionType.STRONG) {
-                lastState.final = state.outgoingTransitions.exists[!isTermination]
-                if (!state.outgoingTransitions.empty) {
+                lastState.final = state.outgoingTransitions.exists[!isTermination] || (state.outgoingTransitions.empty && state.final)
+                if (!state.outgoingTransitions.empty || state.final) {
                     val exitState = state.parentRegion.createState(GENERATED_PREFIX + "Exit").uniqueName
                     exitState.final = state.final // propagate final state
                     for (transition : state.outgoingTransitions.immutableCopy) {

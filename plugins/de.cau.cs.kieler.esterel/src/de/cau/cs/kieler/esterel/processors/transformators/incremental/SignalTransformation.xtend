@@ -136,8 +136,10 @@ class  SignalTransformation extends AbstractSCEstDynamicProcessor<Module> {
             val parallel = createParallel
             val thread2 = createThread
             parallel.threads.add(thread2)
-            thread2.statements.addAll(module.statements)
-            thread2.statements.add(createAssignment(term, createTrue))
+            var scope = createScopeStatement
+            thread2.statements.add(scope)
+            scope.statements.addAll(module.statements)
+            scope.statements.add(createAssignment(term, createTrue))
             module.statements.add(parallel)
             module.declarations.add(decl)
             
