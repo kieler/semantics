@@ -185,7 +185,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         OperatorType.NOT.getName ->
             #["OperatorExpressionNOT.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
         OperatorType.EQ.getName ->
-            #["OperatorExpressionEQ.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+            #["OperatorExpressionEQ.kgt", "OperatorExpressionArithmeticalCommutative.kgt", "OperatorExpression.kgt"],
         OperatorType.LT.getName ->
             #["OperatorExpressionLT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         OperatorType.LEQ.getName ->
@@ -193,11 +193,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         OperatorType.LOGICAL_AND.getName -> #["OperatorExpressionLOGICAL_AND.kgt", "OperatorExpression.kgt"],
         OperatorType.LOGICAL_OR.getName -> #["OperatorExpressionLOGICAL_OR.kgt", "OperatorExpression.kgt"],
         OperatorType.ADD.getName ->
-            #["OperatorExpressionADD.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+            #["OperatorExpressionADD.kgt", "OperatorExpressionArithmeticalCommutative.kgt", "OperatorExpression.kgt"],
         OperatorType.SUB.getName ->
             #["OperatorExpressionSUB.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         OperatorType.MULT.getName ->
-            #["OperatorExpressionMULT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+            #["OperatorExpressionMULT.kgt", "OperatorExpressionArithmeticalCommutative.kgt", "OperatorExpression.kgt"],
         OperatorType.DIV.getName ->
             #["OperatorExpressionDIV.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         OperatorType.GEQ.getName ->
@@ -209,13 +209,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         OperatorType.MOD.getName ->
             #["OperatorExpressionMOD.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         OperatorType.NE.getName ->
-            #["OperatorExpressionNE.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+            #["OperatorExpressionNE.kgt", "OperatorExpressionArithmeticalCommutative.kgt", "OperatorExpression.kgt"],
         OperatorType.VAL.getName ->
             #["OperatorExpressionVAL.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
         OperatorType.BITWISE_AND.getName ->
-            #["OperatorExpressionBITWISE_AND.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+            #["OperatorExpressionBITWISE_AND.kgt", "OperatorExpressionArithmeticalCommutative.kgt", "OperatorExpression.kgt"],
         OperatorType.BITWISE_OR.getName ->
-            #["OperatorExpressionBITWISE_OR.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+            #["OperatorExpressionBITWISE_OR.kgt", "OperatorExpressionArithmeticalCommutative.kgt", "OperatorExpression.kgt"],
         OperatorType.POSTFIX_ADD.getName ->
             #["OperatorExpressionPOSTFIX_ADD.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         OperatorType.POSTFIX_SUB.getName ->
@@ -228,7 +228,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             #["OperatorExpressionSHIFT_RIGHT_UNSIGNED.kgt", "OperatorExpressionArithmetical.kgt",
                 "OperatorExpression.kgt"],
         OperatorType.BITWISE_XOR.getName ->
-            #["OperatorExpressionBITWISE_XOR.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
+            #["OperatorExpressionBITWISE_XOR.kgt", "OperatorExpressionArithmeticalCommutative.kgt", "OperatorExpression.kgt"],
         OperatorType.BITWISE_NOT.getName ->
             #["OperatorExpressionBITWISE_NOT.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         OperatorType.CONDITIONAL.getName -> #["OperatorExpressionCONDITIONAL.kgt", "OperatorExpression.kgt"],
@@ -361,15 +361,18 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 grp2.add(port)
             }
         }
+        var int i = 0
         for (port : grp1) {
-            port.ypos = 0
+            port.ypos = i
+            i++
 
         }
         for (port : grp2) {
-            port.ypos = 100
+            port.ypos = i
+            i++
         }
         
-        node.width = 1.5f * longestLabel * PORT_LABEL_FONT_SIZE
+//        node.width = 1.5f * longestLabel * PORT_LABEL_FONT_SIZE
     }
 
     /**
