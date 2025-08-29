@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -36,15 +37,14 @@ import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.ui.synthesis.KGTLoader
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
-import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.klighd.krendering.KRendering
-import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
@@ -330,8 +330,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             n.addLayoutParam(CoreOptions.NODE_SIZE_MINIMUM, new KVector(0, 0))
             n.addLayoutParam(CoreOptions.PADDING, new ElkPadding(0, 0, 0, 0))
         }
+        val result = nodes.reWireInlining.addMissingReferenceInputs
         currentRegions.pop
-        return nodes.reWireInlining.addMissingReferenceInputs
+        return result
     }
     
     /**
@@ -852,7 +853,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                         ]
                         target.ports.add(targetPort)
                     }
-                    edge.setLayoutOption(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
                     edge.source = source
                     edge.sourcePort = sourcePort
                     edge.target = target
@@ -949,7 +949,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             ]
             after.ports.add(targetPort)
         }
-        edge.setLayoutOption(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
         edge.source = before
         edge.sourcePort = sourcePort
         edge.target = after
@@ -1077,32 +1076,33 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
                 val inputNames = <String, KNode>newHashMap
                 for (inputNode : child.children.filter(KNode).filter[getProperty(INPUT_FLAG)]) {
-                    val inputFlag = inputNode.data.filter(KPolygon).head
-                    // Some other elements other than the input flag KPolygon itself may have the INPUT_FLAG set,
-                    // check for that here.
-                    if (inputFlag !== null) {
-                        val name = inputFlag.children.filter(KText).head.text
+                    val valuedObjectRef = inputNode.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                    // only care for inputs that have a valued object as a reference, ignore others such as constants.
+                    if (valuedObjectRef instanceof ValuedObjectReference) {
+                        val name = valuedObjectRef.valuedObject.name
                         inputNames.put(name, inputNode)
                     }
                 }
                 val outputNames = <String, KNode>newHashMap
                 for (outputNode : child.children.filter(KNode).filter[getProperty(OUTPUT_FLAG)]) {
-                    val outputFlag = outputNode.data.filter(KPolygon).head
-                    if (outputFlag !== null) {
-                        val name = outputFlag.children.filter(KText).head.text
+                    val valuedObjectRef = outputNode.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                    if (valuedObjectRef instanceof ValuedObjectReference) {
+                        val name = valuedObjectRef.valuedObject.name
                         outputNames.put(name, outputNode)
                     }
                 }
 
+                // go through all ports, but the non-east ones in reverse. Avoids accitental Swastika in many examples.
                 for (port : node.ports.immutableCopy.reverseView) {
-                    val portName = port.labels.head?.text
                     val portSide = port.portSide
-                    val newPort = port.copy
-
-                    newPort.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0d)
-                    child.ports += newPort
-
                     if (portSide != PortSide.EAST) {
+                        val reference = port.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                        val portName = if(reference instanceof ValuedObjectReference) reference.valuedObject.name else ""
+                        val newPort = port.copy
+    
+                        newPort.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0d)
+                        child.ports += newPort
+
                         for (edge : node.incomingEdges.immutableCopy.filter[targetPort == port]) {
                             edge.target = child
                             edge.targetPort = newPort
@@ -1117,7 +1117,17 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                                 inputNode.remove
                             }
                         }
-                    } else if (portSide == PortSide.EAST) {
+                    }
+                }
+                for (port : node.ports.immutableCopy) {
+                    val portSide = port.portSide
+                    if (portSide == PortSide.EAST) {
+                        val reference = port.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                        val portName = if(reference instanceof ValuedObjectReference) reference.valuedObject.name else ""
+                        val newPort = port.copy
+    
+                        newPort.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0d)
+                        child.ports += newPort
                         for (edge : node.outgoingEdges.immutableCopy.filter[sourcePort == port]) {
                             edge.source = child
                             edge.sourcePort = newPort
@@ -1139,6 +1149,30 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         for (node : inlinedNodes) {
             nodes.betterRemove(node, null)
         }
+        
+        
+        // activate inside self loops on inlined reference nodes that directly connect an input to an output.
+        for (refNode : nodes.filter [properties.get(KlighdInternalProperties.MODEL_ELEMENT) instanceof DataflowRegion]) {
+            // inside self loops go directly from an input to an output.
+            val insideSelfLoops = refNode.outgoingEdges.filter[ 
+                val sourceElement = it.sourcePort.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                val targetElement = it.targetPort.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                return refNode.incomingEdges.contains(it) 
+                    && sourceElement instanceof ValuedObjectReference
+                    && targetElement instanceof ValuedObjectReference
+                    && (sourceElement as ValuedObjectReference).valuedObject.eContainer instanceof VariableDeclaration
+                    && (targetElement as ValuedObjectReference).valuedObject.eContainer instanceof VariableDeclaration
+                    && ((sourceElement as ValuedObjectReference).valuedObject.eContainer as VariableDeclaration).isInput
+                    && ((targetElement as ValuedObjectReference).valuedObject.eContainer as VariableDeclaration).isOutput
+            ]
+            insideSelfLoops.forEach [
+                addLayoutParam(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
+            ]
+            if (!insideSelfLoops.empty) {
+                refNode.addLayoutParam(LayeredOptions.INSIDE_SELF_LOOPS_ACTIVATE, true)
+            }
+        }
+        
         return nodes
     }
     

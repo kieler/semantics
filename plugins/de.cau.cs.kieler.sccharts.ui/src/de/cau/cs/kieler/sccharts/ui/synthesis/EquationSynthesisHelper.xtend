@@ -73,6 +73,11 @@ class EquationSynthesisHelper {
     protected var showWireLabels = false
     protected var combineAllDataAccessNodes = false
     protected var showArrows = false
+
+    /* 
+     * only contains a single element with the current region during transformation. If automatic inline is on, this
+     * is a stack of the processed regions, with the top region being the current one.
+     */
     protected var Stack<DataflowRegion> currentRegions = new Stack
 
     /**
@@ -335,7 +340,6 @@ class EquationSynthesisHelper {
             return
         }
         val edge = createEdge
-        DiagramSyntheses.setLayoutOption(edge, LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
         edge.source = source.node
         edge.sourcePort = source
         edge.target = target.node
