@@ -245,6 +245,8 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
     var breakCondsCounter = 0;
     var returnCounter = 0;
 
+    val detailedDF = true
+
     // needed to add break/continue states to the correct while state
     /** the recent while region that was created */
     var DataflowRegion lastWhileRegion = null
@@ -1223,8 +1225,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * Translate While statement
      */
     def dispatch void buildStatement(IASTWhileStatement stmt, State rootState, DataflowRegion dRegion) {
-//        buildWhile(stmt, rootState, dRegion)
-        buildWhileDF(stmt, rootState, dRegion)
+        if (detailedDF) {
+            buildWhileDF(stmt, rootState, dRegion)
+        } else {
+            buildWhile(stmt, rootState, dRegion)
+        }
     }
 
     /**
@@ -1291,7 +1296,11 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
      * Extract the body of an if Statement
      */
     def void buildIf(IASTIfStatement ifStmt, State rootState, DataflowRegion dRegion) {
-        buildConditionalDF(ifStmt, ifStmt.conditionExpression, ifStmt.thenClause, ifStmt.elseClause, rootState, dRegion)
+        if (detailedDF) {
+            buildConditionalDF(ifStmt, ifStmt.conditionExpression, ifStmt.thenClause, ifStmt.elseClause, rootState, dRegion)
+        } else {
+            buildConditional(ifStmt, ifStmt.conditionExpression, ifStmt.thenClause, ifStmt.elseClause, rootState, dRegion)
+        }
     }
 
     /**
