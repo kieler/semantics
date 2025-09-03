@@ -1,6 +1,7 @@
 knode BigMult {
 	properties:
 	org.eclipse.elk.portConstraints = FIXED_ORDER
+    org.eclipse.elk.nodeSize.constraints = PORTS
 	size: width = 15 height = 70
 	kpolygon {
     points: right, top 5;
