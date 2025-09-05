@@ -872,6 +872,13 @@ class DataflowExtractor extends ExogenousProcessor<CodeContainer, SCCharts> {
 
         // Fetch the state
         val state = functions.get(uniqueFunctionIdentifier).values.head
+        
+        // set current output
+        val outputDeclSpecifier = func.getDeclSpecifier
+        if (outputDeclSpecifier instanceof IASTSimpleDeclSpecifier) {
+            val type = (outputDeclSpecifier as IASTSimpleDeclSpecifier).type.cdtTypeConversion
+            currentReturnType = type
+        }
 
         // Translate function body
         val body = func.getBody
