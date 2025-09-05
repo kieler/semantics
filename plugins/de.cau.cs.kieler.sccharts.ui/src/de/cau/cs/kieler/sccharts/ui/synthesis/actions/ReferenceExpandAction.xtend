@@ -25,6 +25,12 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis
+import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.TopdownLayoutHook
+import java.util.EnumSet
+import org.eclipse.elk.core.options.ContentAlignment
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.SizeConstraint
+import org.eclipse.elk.core.options.TopdownNodeTypes
 import org.eclipse.elk.graph.properties.MapPropertyHolder
 
 /**
@@ -93,6 +99,22 @@ class ReferenceExpandAction extends CollapseExpandAction {
                         context.getKNode.children += diagram.children.head
                     } else {
                         context.getKNode.children += extractedDataflow
+                        // Hack to configure top-down layout on this reference declaration, just like it is configured for all regions/states in the TopdownLayoutHook.
+                        context.getKNode.setProperty(CoreOptions::TOPDOWN_LAYOUT, (context.viewContext.getOptionValue(TopdownLayoutHook.USE_TOPDOWN_LAYOUT) as Boolean).booleanValue)
+                        if ((context.viewContext.getOptionValue(TopdownLayoutHook.USE_TOPDOWN_LAYOUT) as Boolean).booleanValue) {
+                            context.getKNode.setProperty(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.noneOf(SizeConstraint))
+                            context.getKNode.setProperty(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
+                            context.getKNode.setProperty(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.HIERARCHICAL_NODE)
+                            context.getKNode.setProperty(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, (context.viewContext.getOptionValue(TopdownLayoutHook.TOPDOWN_HIERARCHICAL_NODE_WIDTH) as Float).floatValue as double)
+                            context.getKNode.setProperty(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, (context.viewContext.getOptionValue(TopdownLayoutHook.TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO) as Float).floatValue as double)
+                            context.getKNode.setProperty(CoreOptions::CONTENT_ALIGNMENT, EnumSet.of(ContentAlignment.V_CENTER, ContentAlignment.H_CENTER))
+                            
+                            if ((context.viewContext.getOptionValue(TopdownLayoutHook.SCALE_CAP) as Boolean).booleanValue) {
+                                context.getKNode.setProperty(CoreOptions::TOPDOWN_SCALE_CAP, 1.0)
+                            } else {
+                                context.getKNode.setProperty(CoreOptions::TOPDOWN_SCALE_CAP, Double.MAX_VALUE)
+                            }
+                        }
                     }
                 } 
             }
