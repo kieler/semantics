@@ -104,7 +104,7 @@ class LabelPlacementSideHook extends SynthesisHook {
         
         if (ON_EDGE_ARROWS) {
             inlineLabelConfigurator.addDecoratorRenderingProvider(
-                DirectionalArrowsDecoratorHotFixed.create()
+                DirectionalArrowsDecorator.create()
                     .withColor(foreground))
         }
         

@@ -5,7 +5,7 @@ Bundle-Vendor: Kiel University
 Bundle-Version: 1.6.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.scl;singleton:=true
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Export-Package: de.cau.cs.kieler.scl,
  de.cau.cs.kieler.scl.convert,
  de.cau.cs.kieler.scl.extensions,

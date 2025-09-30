@@ -7,7 +7,7 @@ Bundle-Version: 1.6.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Kiel University
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Export-Package: de.cau.cs.kieler.sccharts,
  de.cau.cs.kieler.sccharts.cli,
  de.cau.cs.kieler.sccharts.enforcer,

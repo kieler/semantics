@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.xtend.lib,
  org.eclipse.elk.core,
  de.cau.cs.kieler.klighd.krendering.extensions;bundle-version="2.0.0",
  de.cau.cs.kieler.klighd.ide;bundle-version="2.0.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Export-Package: de.cau.cs.kieler.simulation.ide,
  de.cau.cs.kieler.simulation.ide.preferences,
  de.cau.cs.kieler.simulation.ide.processor,
