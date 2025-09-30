@@ -19,13 +19,14 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHook
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.ui.synthesis.StateSynthesis
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
+import java.awt.Color
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
@@ -33,8 +34,6 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
  * Applies paper color theme.
  *  
  * @author als
- * @kieler.design 2015-08-13 proposed
- * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
 @ViewSynthesisShared
@@ -62,11 +61,14 @@ class BlackWhiteModeHook extends SynthesisHook {
 
     override start(Scope scope, KNode root) {
         if (PAPER_BW.booleanValue) {
+            // Reset to light theme
+            resetAllColors();
+            
             configureColor(TRANSITION_DEFERRED_DECORATOR, Colors.GRAY);
             configureColor(TRANSITION_ABORT_DECORATOR, Colors.GRAY);
             configureColor(TRANSITION_TERMINATION_DECORATOR, Colors.GRAY);
             
-            configureColor(STATE_FOREGROND, Colors.BLACK);
+            configureColor(STATE_FOREGROUND, Colors.BLACK);
             configureColor(STATE_BACKGROUND_GRADIENT_1, Colors.GRAY_95);
             configureColor(STATE_BACKGROUND_GRADIENT_2, Colors.GRAY_95);
             configureColor(STATE_REFERENCED_BACKGROUND_GRADIENT_1, Colors.GRAY_97);
@@ -75,6 +77,9 @@ class BlackWhiteModeHook extends SynthesisHook {
             configureColor(KEYWORD, Colors.DIM_GRAY);
             
             baseLineWidth = 2;
+            
+            // Set canvas to white
+            usedContext.setProperty(KlighdProperties.CANVAS_COLOR, new Color(255, 255, 255));
         }
     }
 

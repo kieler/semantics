@@ -13,8 +13,8 @@
 package de.cau.cs.kieler.simulation.ide.synthesis
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.ide.model.MessageModel
-import de.cau.cs.kieler.klighd.ide.syntheses.MessageModelSynthesis
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KImage
@@ -39,9 +39,6 @@ class SimulationContextSynthesis extends AbstractDiagramSynthesis<SimulationCont
     @Inject
     extension KRenderingExtensions
 
-    @Inject
-    extension MessageModelSynthesis
-
     // -------------------------------------------------------------------------
     // Constants
     public static val String ID = "de.cau.cs.kieler.simulation.ide.synthesis.SimulationContext";
@@ -54,7 +51,8 @@ class SimulationContextSynthesis extends AbstractDiagramSynthesis<SimulationCont
     override KNode transform(SimulationContext model) {
         // create basic representation with message model synthesis
         val message = "[Co-simulation]"
-        val rootNode = (new MessageModel("Simulation", message, ICON_PLUGIN_ID, "icons/play-button.png", 150)).transform
+        val mModel = new MessageModel("Simulation", message, ICON_PLUGIN_ID, "icons/play-button.png", 150)
+        val rootNode = LightDiagramServices.translateModel(mModel, usedContext)
         // Add action
         if (rootNode !== null && !rootNode.children.empty) {
             rootNode.eAllContents.filter(KNode).forEach[it.suppressSelectability]
