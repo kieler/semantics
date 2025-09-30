@@ -81,7 +81,7 @@ class KEffectsEmissionReferenceCallConverter {
                         }
                         if (voNameNode !== null) {
                             emission.reference.link((voNameNode.getCrossRefNodeAsString(true)?:"").split("\\.").map[
-                                // Name might iclude array or bindinf brackets -> drop
+                                // Name might include array or binding brackets -> drop
                                 it.replaceAll("\\s|\\[.*\\]|<.*>|\\(.*\\)","").trim()
                             ])
                             val vo = emission.reference.lowermostReference.valuedObject

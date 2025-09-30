@@ -20,7 +20,10 @@ import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.IODeclaration;
+import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.Schedulable;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
@@ -263,8 +266,9 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseDeclarationScope(policyClassDeclaration);
                 if (result == null) result = caseVariableDeclaration(policyClassDeclaration);
                 if (result == null) result = caseNamedObject(policyClassDeclaration);
-                if (result == null) result = caseDeclaration(policyClassDeclaration);
+                if (result == null) result = caseIODeclaration(policyClassDeclaration);
                 if (result == null) result = caseNameable(policyClassDeclaration);
+                if (result == null) result = caseDeclaration(policyClassDeclaration);
                 if (result == null) result = caseAnnotatable(policyClassDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -305,6 +309,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseAnnotatable(dataflowAssignment);
                 if (result == null) result = caseSchedulable(dataflowAssignment);
                 if (result == null) result = caseLinkable(dataflowAssignment);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.DATAFLOW_REFERENCE_CALL: {
+                DataflowReferenceCall dataflowReferenceCall = (DataflowReferenceCall)theEObject;
+                T result = caseDataflowReferenceCall(dataflowReferenceCall);
+                if (result == null) result = caseReferenceCall(dataflowReferenceCall);
+                if (result == null) result = caseAssignment(dataflowReferenceCall);
+                if (result == null) result = caseValuedObjectReference(dataflowReferenceCall);
+                if (result == null) result = caseCall(dataflowReferenceCall);
+                if (result == null) result = caseEffect(dataflowReferenceCall);
+                if (result == null) result = caseExpression(dataflowReferenceCall);
+                if (result == null) result = caseAnnotatable(dataflowReferenceCall);
+                if (result == null) result = caseLinkable(dataflowReferenceCall);
+                if (result == null) result = caseSchedulable(dataflowReferenceCall);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -639,6 +658,36 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Valued Object Reference</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Valued Object Reference</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseValuedObjectReference(ValuedObjectReference object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Reference Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Reference Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseReferenceCall(ReferenceCall object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Policy Region</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -680,6 +729,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseDataflowAssignment(DataflowAssignment object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Dataflow Reference Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Dataflow Reference Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDataflowReferenceCall(DataflowReferenceCall object) {
         return null;
     }
 
@@ -890,6 +954,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseDeclaration(Declaration object) {
+        return null;
+    }
+
+                /**
+     * Returns the result of interpreting the object as an instance of '<em>IO Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>IO Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIODeclaration(IODeclaration object) {
         return null;
     }
 

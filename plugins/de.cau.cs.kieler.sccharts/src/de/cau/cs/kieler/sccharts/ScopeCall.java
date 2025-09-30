@@ -74,7 +74,7 @@ public interface ScopeCall extends Call {
      * @return the value of the '<em>Super</em>' attribute.
      * @see #setSuper(boolean)
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScopeCall_Super()
-     * @model
+     * @model required="true"
      * @generated
      */
     boolean isSuper();

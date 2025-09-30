@@ -1240,6 +1240,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	}
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     AState returns AState
 	 *
@@ -1254,6 +1255,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (equations+=Equation | emissions+=Emission | assertions+=Assertion | automatons+=Automaton)* 
 	 *         transitions+=ATransition*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AState(ISerializationContext context, AState semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1261,11 +1263,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ATransition returns ATransition
 	 *
 	 * Constraint:
 	 *     (strong?='unless'? actions+=AnAction*)
+	 * </pre>
 	 */
 	protected void sequence_ATransition(ISerializationContext context, ATransition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1273,6 +1277,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     AddExpression returns OperatorExpression
 	 *     AddExpression.OperatorExpression_1_0 returns OperatorExpression
@@ -1353,6 +1358,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 operator=AddOperator subExpressions+=ProductExpression) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1360,11 +1366,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     AnAction returns AnAction
 	 *
 	 * Constraint:
 	 *     (condition=BoolExpression? (effects+=Equation | effects+=Emission)* history?='resume'? nextState=[StateValuedObject|ID])
+	 * </pre>
 	 */
 	protected void sequence_AnAction(ISerializationContext context, AnAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1372,11 +1380,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Assertion returns Assertion
 	 *
 	 * Constraint:
 	 *     expr=Expression
+	 * </pre>
 	 */
 	protected void sequence_Assertion(ISerializationContext context, Assertion semanticObject) {
 		if (errorAcceptor != null) {
@@ -1390,11 +1400,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Automaton returns Automaton
 	 *
 	 * Constraint:
 	 *     (name=ID states+=AState states+=AState*)
+	 * </pre>
 	 */
 	protected void sequence_Automaton(ISerializationContext context, Automaton semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1402,6 +1414,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BitwiseOrExpression returns OperatorExpression
 	 *
@@ -1498,6 +1511,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BitwiseAndExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1505,6 +1519,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BitwiseOrExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     BitwiseXOrExpression returns OperatorExpression
@@ -1596,6 +1611,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BitwiseAndExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1603,6 +1619,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     BitwiseAndExpression returns OperatorExpression
@@ -1688,6 +1705,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BitwiseAndExpression_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1695,6 +1713,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BitwiseNotExpression returns OperatorExpression
 	 *
@@ -1774,6 +1793,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1781,6 +1801,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns OperatorExpression
 	 *
@@ -1862,6 +1883,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) 
 	 *         schedule+=ScheduleObjectReference?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1869,6 +1891,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     DivExpression returns OperatorExpression
 	 *
@@ -1948,6 +1971,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_DivExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1955,6 +1979,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ModExpression returns OperatorExpression
 	 *
@@ -2034,6 +2059,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_ModExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2041,6 +2067,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MultExpression returns OperatorExpression
 	 *
@@ -2120,6 +2147,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2127,6 +2155,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SfbyExpression returns OperatorExpression
 	 *
@@ -2211,6 +2240,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SfbyExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2218,6 +2248,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftExpressions returns OperatorExpression
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns OperatorExpression
@@ -2317,6 +2348,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2324,6 +2356,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftLeftExpression returns OperatorExpression
 	 *
@@ -2408,6 +2441,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2415,6 +2449,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftRightExpression returns OperatorExpression
 	 *
@@ -2499,6 +2534,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2506,6 +2542,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftRightUnsignedExpression returns OperatorExpression
 	 *
@@ -2590,6 +2627,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2597,6 +2635,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SubExpression returns OperatorExpression
 	 *     SubExpression.OperatorExpression_1_0 returns OperatorExpression
@@ -2677,6 +2716,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 operator=SubOperator subExpressions+=ProductExpression) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2684,6 +2724,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ProductExpression returns OperatorExpression
 	 *     ProductExpression.OperatorExpression_1_0_0 returns OperatorExpression
@@ -2807,6 +2848,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2814,6 +2856,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Equation returns Equation
 	 *
@@ -2827,6 +2870,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         operator=AssignOperator 
 	 *         expression=Expression
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_Equation(ISerializationContext context, Equation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2834,6 +2878,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ExternalNodeDeclaration returns ExternalNodeDeclaration
 	 *
@@ -2845,6 +2890,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (inputs+=VariableDeclarationNoInit inputs+=VariableDeclarationNoInit*)? 
 	 *         (outputs+=VariableDeclarationNoInit outputs+=VariableDeclarationNoInit*)?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ExternalNodeDeclaration(ISerializationContext context, ExternalNodeDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2852,6 +2898,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LustreProgram returns LustreProgram
 	 *
@@ -2868,6 +2915,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             )+
 	 *         )
 	 *     )?
+	 * </pre>
 	 */
 	protected void sequence_LustreProgram(ISerializationContext context, LustreProgram semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2875,12 +2923,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     NodeDeclaration returns NodeDeclaration
 	 *
 	 * Constraint:
 	 *     (
-	 *         <unknown> 
+	 *         &lt;unknown&gt; 
 	 *         isUnsafe?='unsafe'? 
 	 *         hasState?='node'? 
 	 *         valuedObjects+=NodeValuedObject 
@@ -2888,6 +2937,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (outputs+=VariableDeclarationNoInit outputs+=VariableDeclarationNoInit*)? 
 	 *         equations+=Equation?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_NodeDeclaration(ISerializationContext context, NodeDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2895,11 +2945,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     NodeValuedObject returns NodeValuedObject
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_NodeValuedObject(ISerializationContext context, NodeValuedObject semanticObject) {
 		if (errorAcceptor != null) {
@@ -2913,11 +2965,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     NorAtMostOneExpression returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*)
+	 * </pre>
 	 */
 	protected void sequence_NorAtMostOneExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2925,11 +2979,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     StateValuedObject returns StateValuedObject
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_StateValuedObject(ISerializationContext context, StateValuedObject semanticObject) {
 		if (errorAcceptor != null) {
@@ -2943,6 +2999,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeDeclaration returns TypeDeclaration
 	 *
@@ -2960,6 +3017,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             )
 	 *         )?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_TypeDeclaration(ISerializationContext context, TypeDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2967,11 +3025,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ValuedObjectInit returns LustreValuedObject
 	 *
 	 * Constraint:
 	 *     (name=PrimeID cardinalities+=Expression* type=ValueType initialValue=Expression?)
+	 * </pre>
 	 */
 	protected void sequence_ValuedObjectInit(ISerializationContext context, LustreValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2979,11 +3039,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ValuedObjectNoInit returns ValuedObject
 	 *
 	 * Constraint:
 	 *     (name=PrimeID cardinalities+=Expression*)
+	 * </pre>
 	 */
 	protected void sequence_ValuedObjectNoInit(ISerializationContext context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2991,11 +3053,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     VariableDeclarationInit returns LustreVariableDeclaration
 	 *
 	 * Constraint:
 	 *     (valuedObjects+=ValuedObjectInit clockExpr=BoolExpression?)
+	 * </pre>
 	 */
 	protected void sequence_VariableDeclarationInit(ISerializationContext context, LustreVariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3003,11 +3067,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     VariableDeclarationNoInit returns LustreVariableDeclaration
 	 *
 	 * Constraint:
 	 *     (valuedObjects+=ValuedObjectNoInit valuedObjects+=ValuedObjectNoInit* type=ValueType clockExpr=BoolExpression?)
+	 * </pre>
 	 */
 	protected void sequence_VariableDeclarationNoInit(ISerializationContext context, LustreVariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

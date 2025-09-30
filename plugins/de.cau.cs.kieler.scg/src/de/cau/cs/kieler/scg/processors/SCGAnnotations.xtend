@@ -24,6 +24,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import org.eclipse.emf.ecore.EObject
@@ -134,6 +135,10 @@ class SCGAnnotations {
     public static val ANNOTATION_LOOP = 
         register("loop", AnnotationsType.SYSTEM, StringAnnotation, Node, 
             "Marks a node as a result of a for/while loop.")
+            
+    public static val ANNOTATION_HAS_SEQUENTIAL_FORK = 
+        register("usesSeqFork", AnnotationsType.SYSTEM, StringAnnotation, SCGraph, 
+            "Marks an SCG as a user of a sequential fork.")  
             
     public static val TRANSFORMATION_INDICATORS = #[ANNOTATION_GUARDED, ANNOTATION_SEQUENTIALIZED]
 }

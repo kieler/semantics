@@ -85,6 +85,7 @@ public abstract class AbstractKExtSyntacticSequencer extends AbstractSyntacticSe
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('(' '('*)*
 	 *
@@ -96,15 +97,19 @@ public abstract class AbstractKExtSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) annotations+=Annotation
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
+	 *     (rule start) (ambiguity) super?='super.'
 	 *     (rule start) (ambiguity) text=HOSTCODE
 	 *     (rule start) (ambiguity) value=BOOLEAN
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_5_0_a__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('(' '('*)+
 	 *
@@ -118,24 +123,30 @@ public abstract class AbstractKExtSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) value=INT
 	 *     (rule start) (ambiguity) value=STRING
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_5_0_a__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('(' ('('* '(')*)?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__a__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('(' | '(')*
 	 *
@@ -155,6 +166,7 @@ public abstract class AbstractKExtSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
 	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
+	 *     (rule start) (ambiguity) super?='super.'
 	 *     (rule start) (ambiguity) text=HOSTCODE
 	 *     (rule start) (ambiguity) value=BOOLEAN
 	 *     (rule start) (ambiguity) value=FLOAT
@@ -162,12 +174,15 @@ public abstract class AbstractKExtSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) value=STRING
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_5_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('(' | '(')+
 	 *
@@ -175,12 +190,15 @@ public abstract class AbstractKExtSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_5_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('('* '(')*
 	 *
@@ -191,12 +209,15 @@ public abstract class AbstractKExtSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('('* '(')+
 	 *
@@ -204,34 +225,43 @@ public abstract class AbstractKExtSyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
+	 
+	 * </pre>
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_a_LeftParenthesisKeyword_1_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     '()'?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) 'random' (ambiguity) (rule start)
+	 
+	 * </pre>
 	 */
 	protected void emit_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     '()'?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) 'randomize' (ambiguity) (rule start)
+	 
+	 * </pre>
 	 */
 	protected void emit_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     '()'?
 	 *
@@ -239,12 +269,14 @@ public abstract class AbstractKExtSyntacticSequencer extends AbstractSyntacticSe
 	 *     cardinalities+=Expression ']' (ambiguity) '=' initialValue=Expression
 	 *     cardinalities+=Expression ']' (ambiguity) 'label' label=STRING
 	 *     cardinalities+=Expression ']' (ambiguity) (rule end)
-	 *     genericParameters+=GenericParameter '>' (ambiguity) '=' initialValue=Expression
-	 *     genericParameters+=GenericParameter '>' (ambiguity) 'label' label=STRING
-	 *     genericParameters+=GenericParameter '>' (ambiguity) (rule end)
+	 *     genericParameters+=GenericParameter '&gt;' (ambiguity) '=' initialValue=Expression
+	 *     genericParameters+=GenericParameter '&gt;' (ambiguity) 'label' label=STRING
+	 *     genericParameters+=GenericParameter '&gt;' (ambiguity) (rule end)
 	 *     name=PrimeID (ambiguity) '=' initialValue=Expression
 	 *     name=PrimeID (ambiguity) 'label' label=STRING
 	 *     name=PrimeID (ambiguity) (rule end)
+	 
+	 * </pre>
 	 */
 	protected void emit_ReferenceValuedObject_LeftParenthesisRightParenthesisKeyword_5_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

@@ -91,12 +91,9 @@ class SCChartsNetlistTransformationTest extends AbstractXTextModelRepositoryTest
                      }
                 ].join("\n- "))
             }     
-        }                  
-    }
-    
-    @Test(timeout=60000)
-    def void testGuardDefUse(SCCharts scc, TestModelData modelData) {
-        val context = scc.compile
+        }
+        
+        // Check def use for guards
         val seqSCGProcessor = context.processorInstancesSequence.get(context.processorInstancesSequence.size - 2)
         assertTrue("The compilation result of the netlist-based compilation should be a sequentialized SCG.", 
             seqSCGProcessor.targetModel instanceof SCGraphs

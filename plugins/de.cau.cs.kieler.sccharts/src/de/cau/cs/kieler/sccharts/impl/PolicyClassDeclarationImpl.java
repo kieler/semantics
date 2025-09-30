@@ -19,13 +19,14 @@ import de.cau.cs.kieler.sccharts.PolicyClassDeclaration;
 import de.cau.cs.kieler.sccharts.PolicyRegion;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.util.Collection;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,7 +36,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.PolicyClassDeclarationImpl#getPolicy <em>Policy</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.PolicyClassDeclarationImpl#getPolicies <em>Policies</em>}</li>
  * </ul>
  *
  * @generated
@@ -49,14 +50,14 @@ public class PolicyClassDeclarationImpl extends ClassDeclarationImpl implements 
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
     /**
-     * The cached value of the '{@link #getPolicy() <em>Policy</em>}' containment reference.
+     * The cached value of the '{@link #getPolicies() <em>Policies</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getPolicy()
+     * @see #getPolicies()
      * @generated
      * @ordered
      */
-    protected PolicyRegion policy;
+    protected EList<PolicyRegion> policies;
 
     /**
      * <!-- begin-user-doc -->
@@ -83,43 +84,11 @@ public class PolicyClassDeclarationImpl extends ClassDeclarationImpl implements 
      * @generated
      */
     @Override
-    public PolicyRegion getPolicy() {
-        return policy;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetPolicy(PolicyRegion newPolicy, NotificationChain msgs) {
-        PolicyRegion oldPolicy = policy;
-        policy = newPolicy;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.POLICY_CLASS_DECLARATION__POLICY, oldPolicy, newPolicy);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
+    public EList<PolicyRegion> getPolicies() {
+        if (policies == null) {
+            policies = new EObjectContainmentEList<PolicyRegion>(PolicyRegion.class, this, SCChartsPackage.POLICY_CLASS_DECLARATION__POLICIES);
         }
-        return msgs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void setPolicy(PolicyRegion newPolicy) {
-        if (newPolicy != policy) {
-            NotificationChain msgs = null;
-            if (policy != null)
-                msgs = ((InternalEObject)policy).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.POLICY_CLASS_DECLARATION__POLICY, null, msgs);
-            if (newPolicy != null)
-                msgs = ((InternalEObject)newPolicy).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.POLICY_CLASS_DECLARATION__POLICY, null, msgs);
-            msgs = basicSetPolicy(newPolicy, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.POLICY_CLASS_DECLARATION__POLICY, newPolicy, newPolicy));
+        return policies;
     }
 
     /**
@@ -130,8 +99,8 @@ public class PolicyClassDeclarationImpl extends ClassDeclarationImpl implements 
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case SCChartsPackage.POLICY_CLASS_DECLARATION__POLICY:
-                return basicSetPolicy(null, msgs);
+            case SCChartsPackage.POLICY_CLASS_DECLARATION__POLICIES:
+                return ((InternalEList<?>)getPolicies()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -144,8 +113,8 @@ public class PolicyClassDeclarationImpl extends ClassDeclarationImpl implements 
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case SCChartsPackage.POLICY_CLASS_DECLARATION__POLICY:
-                return getPolicy();
+            case SCChartsPackage.POLICY_CLASS_DECLARATION__POLICIES:
+                return getPolicies();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -155,11 +124,13 @@ public class PolicyClassDeclarationImpl extends ClassDeclarationImpl implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case SCChartsPackage.POLICY_CLASS_DECLARATION__POLICY:
-                setPolicy((PolicyRegion)newValue);
+            case SCChartsPackage.POLICY_CLASS_DECLARATION__POLICIES:
+                getPolicies().clear();
+                getPolicies().addAll((Collection<? extends PolicyRegion>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -173,8 +144,8 @@ public class PolicyClassDeclarationImpl extends ClassDeclarationImpl implements 
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.POLICY_CLASS_DECLARATION__POLICY:
-                setPolicy((PolicyRegion)null);
+            case SCChartsPackage.POLICY_CLASS_DECLARATION__POLICIES:
+                getPolicies().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -188,8 +159,8 @@ public class PolicyClassDeclarationImpl extends ClassDeclarationImpl implements 
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.POLICY_CLASS_DECLARATION__POLICY:
-                return policy != null;
+            case SCChartsPackage.POLICY_CLASS_DECLARATION__POLICIES:
+                return policies != null && !policies.isEmpty();
         }
         return super.eIsSet(featureID);
     }

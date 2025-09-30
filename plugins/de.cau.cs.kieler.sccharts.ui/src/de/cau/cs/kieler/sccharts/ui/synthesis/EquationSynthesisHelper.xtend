@@ -29,10 +29,12 @@ import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
+import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
@@ -64,6 +66,7 @@ class EquationSynthesisHelper {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension TransitionStyles
     @Inject extension KPortExtensions
+    @Inject extension KRenderingExtensions
 
     protected val List<Pair<KNode, KNode>> sequentials = newArrayList
     protected var alignInputOutputs = false
@@ -351,6 +354,28 @@ class EquationSynthesisHelper {
         if (showArrows) {
             edge.addDefaultDecorator
         }
+    }
+    
+    protected def KEdge associateMethodPorts(KPort source, KPort target, boolean output) {
+        if (source === null || target === null) {
+            return null
+        }
+        val edge = createEdge
+        DiagramSyntheses.setLayoutOption(edge, LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
+        DiagramSyntheses.setLayoutOption(edge, LayeredOptions.NO_LAYOUT, true)
+        
+        edge.source = source.node
+        edge.sourcePort = source
+        edge.target = target.node
+        edge.targetPort = target
+        
+        val line = edge.addPolyline(output ? 0.5f : 3)
+        
+        if(output) {
+            line.lineStyle = LineStyle.DOT
+        }
+        
+        return edge
     }
 
     protected def isSequential(KNode before, KNode after) {

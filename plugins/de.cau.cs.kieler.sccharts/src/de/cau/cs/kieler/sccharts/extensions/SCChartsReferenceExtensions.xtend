@@ -15,7 +15,9 @@ package de.cau.cs.kieler.sccharts.extensions
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -37,6 +39,8 @@ import de.cau.cs.kieler.sccharts.ScopeCall
 import de.cau.cs.kieler.sccharts.State
 import java.util.List
 import java.util.Map
+
+import static de.cau.cs.kieler.kexpressions.extensions.KExpressionsOverloadingExtensions.getMethodSignatureID
 
 import static extension java.lang.String.format
 
@@ -310,7 +314,7 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
             val param = i < params.size ? params.get(i) : null
             
             val binding = new Binding => [
-                type = decl === null || decl.isTypeDeclaration ? BindingType.GENERIC_TYPE : BindingType.GENERIC_PARAM
+                type = decl === null || (decl.isComplexTypeDeclaration || decl.isPrimitiveTypeDeclaration) ? BindingType.GENERIC_TYPE : BindingType.GENERIC_PARAM
                 targetValuedObject = decl?.valuedObjects?.head
                 sourceExpression = param?.expression
             ]
@@ -362,21 +366,31 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
     
     // finds a list of valued objects witch are inputs of the referenced SCChart
     def getInputs(ReferenceDeclaration ref){
-        return (ref.reference as State).getInputValuedObjects.toList
+        if (ref.reference instanceof DeclarationScope) {
+            return (ref.reference as State).getInputValuedObjects.toList
+        } else {
+            return emptyList
+        }
     }
     
     // finds a list of valued objects witch are outputs of the referenced SCChart
     def getOutputs(ReferenceDeclaration ref){
-        return (ref.reference as State).getOutputValuedObjects.toList
+        if (ref.reference instanceof DeclarationScope) {
+            return (ref.reference as State).getOutputValuedObjects.toList
+        } else {
+            return emptyList
+        }
     }
     
-    def separateGenericTypeDependentReferenceDeclarations(List<ReferenceDeclaration> decls) {
+    def void separateReferenceDeclarationsWithIndividualBindingsInVOs(List<ReferenceDeclaration> decls) {
         val separated = newArrayList
         
         for (decl : decls) {
-            if (decl.valuedObjects.size > 1 && decl.valuedObjects.exists[!genericParameters.nullOrEmpty]) {
-                for (voPair : decl.valuedObjects.indexed.drop(1)) {
+            if (decl.valuedObjects.size > 1 && decl.valuedObjects.exists[!genericParameters.nullOrEmpty || !parameters.nullOrEmpty]) {
+                val container = (decl.eContainer as DeclarationScope).declarations
+                for (voPair : decl.valuedObjects.indexed.drop(1).toList) {
                     val sDecl = createReferenceDeclaration(decl)
+                    container.add(container.indexOf(decl)+1,sDecl)
                     sDecl.valuedObjects += voPair.value
                     separated += sDecl
                 }
@@ -386,23 +400,43 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
         decls += separated
     }
     
-    def boolean fixMemberReferenceIfParentChanged(ValuedObjectReference ref, boolean recursive) {
-        val parent = ref.eContainer
-        if (parent instanceof ValuedObjectReference) {
-            if (parent.subReference === ref) {
-                val decl = parent.valuedObject?.declaration
-                if (decl instanceof ClassDeclaration) {
-                    val match = decl.innerValuedObjects.findFirst[name?.equals(ref.valuedObject?.name)]
-                    if (match !== null && match !== ref.valuedObject) {
-                        ref.valuedObject = match
-                        if (ref.subReference !== null && recursive) {
-                            ref.subReference.fixMemberReferenceIfParentChanged(recursive)
+    def void fixMemberAssociation(ValuedObjectReference ref, boolean recursive) {
+        if (ref !== null && ref.subReference !== null) {
+            if (ref.valuedObject?.declaration instanceof ClassDeclaration) {
+                ref.subReference.fixMemberAssociationForSubReference(recursive)
+            }
+        }
+    }
+    
+    def void fixMemberAssociationForSubReference(ValuedObjectReference ref, boolean recursive) {
+        if (ref !== null) {
+            val parent = ref.eContainer
+            if (parent instanceof ValuedObjectReference) {
+                if (parent.subReference === ref) {
+                    val decl = parent.valuedObject?.declaration
+                    if (decl instanceof ClassDeclaration) {
+                        var ValuedObject match = null
+                        if (ref.topmostReference instanceof ReferenceCall && ref.subReference === null && ref.valuedObject.declaration.isMethod) {
+                            val previousSignature = getMethodSignatureID(ref.valuedObject.declaration as MethodDeclaration)
+                            // Find by signature (overloading)
+                            match = decl.declarations.filter(MethodDeclaration).findFirst[
+                                previousSignature.equals(getMethodSignatureID(it))
+                            ]?.valuedObjects?.head
+                        } else {
+                            // Find by name
+                            match = decl.innerValuedObjects.findFirst[name?.equals(ref.valuedObject?.name)]
+                        }
+                        
+                        if (match !== null) {
+                            ref.valuedObject = match
+                            if (ref.subReference !== null && recursive) {
+                                ref.subReference.fixMemberAssociationForSubReference(recursive)
+                            }
                         }
                     }
                 }
             }
         }
-        return false
     }
     
     def isModuleCall(ScopeCall sc) {

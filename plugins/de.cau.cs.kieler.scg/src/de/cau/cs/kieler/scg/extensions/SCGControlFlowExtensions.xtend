@@ -154,6 +154,10 @@ class SCGControlFlowExtensions {
     def Node getAllPreviousHeadNode(Node node) {
     	node.incomingLinks.filter(ControlFlow)?.head?.eContainer as Node	
     }
+    
+    def Iterable<Node> getAllPreviousNodes(Node node) {
+        return node.getAllPrevious.map[sourceNode]
+    }
    
 	/** 
 	 * Retrieves a list of control flows that have a specific source

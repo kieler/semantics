@@ -432,6 +432,14 @@ class KExpressionsValuedObjectExtensions {
         return ref
     }
     
+    def ValuedObjectReference getTopmostReference(ValuedObjectReference vor) {
+        var ref = vor
+        while (ref.isSubReference) {
+            ref = ref.eContainer as ValuedObjectReference
+        }
+        return ref
+    }
+    
     def asValuedObjectFromReference(Expression expression) {
         expression.asValuedObjectReference.valuedObject
     }

@@ -48,11 +48,15 @@ class KExpressionsGenericParameterExtensions {
         }
     }
     
-    def boolean isTypeDeclaration(GenericParameterDeclaration decl) {
-        return (decl.type !== null && !decl.reference) || (decl.type === null && decl.valueType === ValueType.UNKNOWN)
+    def boolean isComplexTypeDeclaration(GenericParameterDeclaration decl) {
+        return (decl.type !== null && !decl.reference) 
+            || (decl.type === null && decl.valueType === ValueType.UNKNOWN)
+    }
+    def boolean isPrimitiveTypeDeclaration(GenericParameterDeclaration decl) {
+        return decl.type === null && decl.valueType === ValueType.PRIMITIVE
     }
     def boolean isValueDeclaration(GenericParameterDeclaration decl) {
-        return decl.valueType !== ValueType.UNKNOWN
+        return decl.valueType !== ValueType.UNKNOWN && !decl.isPrimitiveTypeDeclaration
     }
     def boolean isReferenceDeclaration(GenericParameterDeclaration decl) {
         return decl.type !== null && decl.reference

@@ -6,6 +6,7 @@ import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.IODeclaration;
 import de.cau.cs.kieler.kexpressions.Referenceable;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.*;
@@ -120,8 +121,9 @@ public class KExtSwitch<T> extends Switch<T> {
                 if (result == null) result = caseDeclarationScope(classDeclaration);
                 if (result == null) result = caseVariableDeclaration(classDeclaration);
                 if (result == null) result = caseNamedObject(classDeclaration);
-                if (result == null) result = caseDeclaration(classDeclaration);
+                if (result == null) result = caseIODeclaration(classDeclaration);
                 if (result == null) result = caseNameable(classDeclaration);
+                if (result == null) result = caseDeclaration(classDeclaration);
                 if (result == null) result = caseAnnotatable(classDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -292,6 +294,21 @@ public class KExtSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseDeclaration(Declaration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>IO Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>IO Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIODeclaration(IODeclaration object) {
         return null;
     }
 

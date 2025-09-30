@@ -12,23 +12,23 @@
  */
 package de.cau.cs.kieler.simulation.mode
 
-import org.eclipse.xtend.lib.annotations.Accessors
 import com.google.common.base.Stopwatch
-import java.util.concurrent.TimeUnit
-import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.annotations.Pragmatable
+import de.cau.cs.kieler.core.definitions.DynamicTicks
 import de.cau.cs.kieler.kicool.KiCoolFactory
-import de.cau.cs.kieler.simulation.internal.processor.DynamicTickInput
+import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.events.SimulationEvent
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent.SimulationOperation
-import de.cau.cs.kieler.core.definitions.DynamicTicks
-import de.cau.cs.kieler.simulation.events.ISimulationListener
+import de.cau.cs.kieler.simulation.events.SimulationEvent
+import de.cau.cs.kieler.simulation.internal.processor.DynamicTickInput
+import java.util.concurrent.TimeUnit
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author als
- * @kieler.design proposed
- * @kieler.rating proposed yellow
  */
 class DynamicTickMode extends TimedSimulationMode implements ISimulationListener {
     
@@ -52,6 +52,9 @@ class DynamicTickMode extends TimedSimulationMode implements ISimulationListener
         root.processors.add(0, KiCoolFactory.eINSTANCE.createProcessorReference => [
             id = DynamicTickInput.ID
         ])
+        if (isMsecMode) {
+            context.startEnvironment.setProperty(DynamicTickInput.MSEC, true)
+        }
         // Async
         this.async = async
         if (async) {
@@ -139,7 +142,8 @@ class DynamicTickMode extends TimedSimulationMode implements ISimulationListener
         // Read SleepT
         val entry = context.dataPool.entries.get(DynamicTicks.SLEEP_T)
         if (entry !== null && entry.rawValue !== null && entry.rawValue.isJsonPrimitive && entry.rawValue.asJsonPrimitive.isNumber) {
-            sleepT = DynamicTicks.sleepTtoMilliseconds(entry.rawValue.asJsonPrimitive.asNumber)
+            val value = entry.rawValue.asJsonPrimitive.asNumber
+            sleepT = isMsecMode() ? value.longValue : DynamicTicks.sleepTtoMilliseconds(value)
         }
         
         val off = offTime.elapsed(TimeUnit.MILLISECONDS)
@@ -157,6 +161,17 @@ class DynamicTickMode extends TimedSimulationMode implements ISimulationListener
     
     def double getSleepT() {
         return sleepT as double / 1000
+    }
+    
+    def boolean isMsecMode() {
+        val pre = context.startEnvironment.getProperty(Environment.PRECEEDING_COMPILATION_CONTEXT)
+        if (pre != null) {
+            val model = pre.originalModel
+            if (model instanceof Pragmatable) {
+                return model.pragmas.exists[DynamicTicks.MSEC_SIM_TAG.equalsIgnoreCase(it.name)]
+            }
+        }
+        return false
     }
     
 }

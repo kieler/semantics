@@ -23,12 +23,15 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.Schedulable
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.MethodSpecificSchedulingDirectiveUtil
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -64,6 +67,7 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension AnnotationsExtensions
+    @Inject extension MethodSpecificSchedulingDirectiveUtil
         
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.userSchedule"
@@ -140,113 +144,151 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
     def void transformContracts(State rootState) {
         // Handle Policies
         // ---------------
-        val policiesClasses = rootState.allScopes.map[declarations.iterator].flatten.filter(PolicyClassDeclaration).filter[policy !== null].toList
+        val policiesClasses = rootState.allScopes.map[declarations.iterator].flatten.filter(PolicyClassDeclaration).filter[!policies.empty].toList
+        
+        // Not yet implemented
+        rootState.allStates.filter[!it.policies.empty].forEach[environment.errors.add("Policies in SCCharts for general scheduling not yet supported. Please instantiate the SCChart as a class using 'ref'")]
+        
         for (policyClass : policiesClasses) {
-            val policy = policyClass.policy
-            val methods = policyClass.declarations.filter(MethodDeclaration).toList
-            val methodVO = methods.toMap[valuedObjects.head]
-            
-            // Add SD
-            val sdVO = createValuedObject(policy.name)
-            val sdDecl = createScheduleDeclaration => [valuedObjects += sdVO]
-            policyClass.declarations.add(0, sdDecl)
-            
-            var collectedMethods = newLinkedHashSet
-            var collectedMethodsInStates = newLinkedHashSet
-            val allBlockings = HashMultimap.create
-            val collectedStrategies = HashMultimap.create
-            
-            val visited = newHashSet
-            val next = newLinkedHashSet
-            next += policy.states.findFirst[initial]
-            while (!next.empty) {
-                val state = next.head
-                next.remove(state)
-                visited += state
+            for (policy : policyClass.policies) {
+                val methods = policyClass.declarations.filter(MethodDeclaration).toList
+                val methodVO = methods.toMap[valuedObjects.head]
                 
-                for (transition : state.outgoingTransitions.filter[trigger !== null]) {
-                    // find blockings
-                    val trig = transition.trigger
-                    if (trig instanceof ValuedObjectReference) {
-                        val method = methodVO.get(trig.valuedObject)
-                        if (method !== null) {
-                            collectedMethods += method
-                            val blockings = transition.effects.filter(Emission).map[methodVO.get(reference.valuedObject)].filterNull.toList
-                            val sequentialBlockings = collectedMethodsInStates.filter[it !== method].toList
-                            collectedStrategies.put(method, if (blockings.contains(method)) PriorityProtocol.CONFLICT else PriorityProtocol.CONFLUENT)
-                            allBlockings.putAll(method, blockings + sequentialBlockings)
+                // Add SD
+                val sdVO = createValuedObject(policy.name)
+                val sdDecl = createScheduleDeclaration => [valuedObjects += sdVO]
+                policyClass.declarations.add(0, sdDecl)
+                
+                var collectedMethods = newLinkedHashSet
+                var collectedMethodsInStates = newLinkedHashSet
+                val allBlockings = HashMultimap.create
+                val collectedStrategies = HashMultimap.create
+                
+                val visited = newHashSet
+                val next = newLinkedHashSet
+                next += policy.states.findFirst[initial]
+                while (!next.empty) {
+                    val state = next.head
+                    next.remove(state)
+                    visited += state
+                    
+                    for (transition : state.outgoingTransitions.filter[trigger !== null]) {
+                        // find blockings
+                        val trig = transition.trigger
+                        if (trig instanceof ValuedObjectReference) {
+                            val method = methodVO.get(trig.valuedObject)
+                            if (method !== null) {
+                                collectedMethods += method
+                                val blockings = transition.effects.filter(Emission).map[methodVO.get(reference.valuedObject)].filterNull.toList
+                                val sequentialBlockings = collectedMethodsInStates.filter[it !== method].toList
+                                collectedStrategies.put(method, if (blockings.contains(method)) PriorityProtocol.CONFLICT else PriorityProtocol.CONFLUENT)
+                                allBlockings.putAll(method, blockings + sequentialBlockings)
+                            }
+                        }
+                        
+                        // next
+                        val target = transition.targetState
+                        if (!visited.contains(target) && !next.contains(target)) {
+                            next += target
                         }
                     }
-                    
-                    // next
-                    val target = transition.targetState
-                    if (!visited.contains(target) && !next.contains(target)) {
-                        next += target
+                    collectedMethodsInStates += collectedMethods
+                }
+                
+                // Order
+                val orderedMethods = collectedMethods.toList.topologicalSort(allBlockings)
+                orderedMethods.reverse
+                
+                //println(orderedMethods.map[valuedObjects.head.name].join(" "))
+                
+                val strategies = newHashMap
+                for (method : collectedStrategies.keySet) {
+                    if (collectedStrategies.get(method).contains(PriorityProtocol.CONFLICT)) {
+                        strategies.put(method, PriorityProtocol.CONFLICT)
+                    } else {
+                        strategies.put(method, PriorityProtocol.CONFLUENT)
                     }
                 }
-                collectedMethodsInStates += collectedMethods
-            }
-            
-            // Order
-            val orderedMethods = collectedMethods.toList.topologicalSort(allBlockings)
-            orderedMethods.reverse
-            
-            //println(orderedMethods.map[valuedObjects.head.name].join(" "))
-            
-            val strategies = newHashMap
-            for (method : collectedStrategies.keySet) {
-                if (collectedStrategies.get(method).contains(PriorityProtocol.CONFLICT)) {
-                    strategies.put(method, PriorityProtocol.CONFLICT)
-                } else {
-                    strategies.put(method, PriorityProtocol.CONFLUENT)
+                
+                // Create groups
+                var index = 1
+                val indices = HashMultimap.create
+                indices.put(0, orderedMethods.head)
+                for (method : orderedMethods.drop(1)) {
+                    val prev = indices.get(index - 1)
+                                    
+                    if (allBlockings.get(method).toSet.equals(prev.map[allBlockings.get(it)].flatten.toSet)
+                        && prev.map[strategies.get(it)].forall[it === strategies.get(method)]) { // Same index
+                        indices.put(index - 1, method)
+                    } else {
+                        indices.put(index, method)
+                        index++
+                    }
                 }
-            }
-            
-            // Create groups
-            var index = 1
-            val indices = HashMultimap.create
-            indices.put(0, orderedMethods.head)
-            for (method : orderedMethods.drop(1)) {
-                val prev = indices.get(index - 1)
-                                
-                if (allBlockings.get(method).toSet.equals(prev.map[allBlockings.get(it)].flatten.toSet)
-                    && prev.map[strategies.get(it)].forall[it === strategies.get(method)]) { // Same index
-                    indices.put(index - 1, method)
-                } else {
-                    indices.put(index, method)
-                    index++
+                
+                // Check validity
+                var valid = true
+                val revIndicies = newHashMap
+                indices.entries.forEach[revIndicies.put(value, key)]
+                for (blocker : allBlockings.entries) {
+                    if (revIndicies.get(blocker.value) >= revIndicies.get(blocker.key)) {
+                        println("Invalid ordering in static policy approximation for: " + blocker.value.valuedObjects.head.name + " with precedence over " + blocker.key.valuedObjects.head.name)
+                        valid = false
+                    }
                 }
-            }
-            
-            // Check validity
-            var valid = true
-            val revIndicies = newHashMap
-            indices.entries.forEach[revIndicies.put(value, key)]
-            for (blocker : allBlockings.entries) {
-                if (revIndicies.get(blocker.value) >= revIndicies.get(blocker.key)) {
-                    println("Invalid ordering in static policy approximation for: " + blocker.value.valuedObjects.head.name + " with precedence over " + blocker.key.valuedObjects.head.name)
-                    valid = false
+                if (!valid) {
+                    environment.errors.add("Cannot find static approximation for policy automaton")
                 }
-            }
-            if (!valid) {
-                environment.errors.add("Cannot find static approximation for policy automaton")
-            }
-            
-            
-            // Apply SDs
-            for (i : 0..index-1) {
-                val indexMethods = indices.get(i)
-                sdDecl.priorities += strategies.get(methods.head)
-                indexMethods.forEach[schedule += createScheduleReference(sdVO) => [priority = i]]
+                
+                
+                // Apply SDs
+                for (i : 0..index-1) {
+                    val indexMethods = indices.get(i)
+                    sdDecl.priorities += strategies.get(methods.head)
+                    indexMethods.forEach[schedule += createScheduleReference(sdVO) => [priority = i]]
+                }
             }
             
             // Remove
-            policyClass.policy = null
+            policyClass.policies.clear
             snapshot
         }
         
+        // Handle default schedule for host classes
+        // ----------------------------------------
+        val hostClasses = rootState.allScopes.map[declarations.iterator].flatten.filter(ClassDeclaration).filter[host].toList
+        for (hostClass : hostClasses) {
+            val noSDMethods = hostClass.methodDeclarations.filter[schedule.empty].toList
+            val sDMethods = hostClass.methodDeclarations.filter[!schedule.empty].toList
+            if (!noSDMethods.empty && (noSDMethods.size > 1 || !sDMethods.empty)) {
+                // Add SD
+                val sdVO = createValuedObject("_defaultSD").uniqueName
+                val sdDecl = createScheduleDeclaration => [
+                    valuedObjects += sdVO
+                    name = "LexicalOrder"
+                ]
+                hostClass.declarations.add(0, sdDecl)
+                
+                var sd = false
+                var sdIdx = 0
+                for (mIdx : hostClass.methodDeclarations.indexed) {
+                    val method = mIdx.value
+                    if (mIdx.key == 0) {
+                        sd = !method.schedule.empty
+                        sdDecl.priorities.add(sd ? PriorityProtocol.CONFLUENT : PriorityProtocol.CONFLICT)
+                    } else if (method.schedule.empty || sd != !method.schedule.empty) {
+                        sd = !method.schedule.empty
+                        sdDecl.priorities.add(sd ? PriorityProtocol.CONFLUENT : PriorityProtocol.CONFLICT)
+                        sdIdx++
+                    }
+                    val sdr = createScheduleReference(sdVO)
+                    sdr.priority = sdIdx
+                    method.schedule += sdr
+                }
+            }
+        }
         
-        // Handle Class SDs
+        // Handle Method SDs
         // ----------------
         val calls = rootState.eAllContents.filter(ReferenceCall).toList
         val handledMethods = newHashSet
@@ -271,15 +313,34 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
             if (method !== null) {
                 // SDs
                 if (!method.schedule.nullOrEmpty) {
+                    // Mark as method SDs
+                    for (s : method.schedule) {
+                        s.markAsMethodSD(method)
+                    }
+                    
+                    // Attach to scheduling unit
                     var EObject attach = call
                     //call.addScheduleCopy(method.schedule)
-                    while (!(attach instanceof Effect || attach instanceof Action)) {
+                    while (!(attach instanceof Effect || attach instanceof Action || attach instanceof ValuedObject) && attach !== null) {
                         attach = attach.eContainer
                     }
+                    // Add ref to object if not attached to call itself
+                    var List<ScheduleObjectReference> sched = method.schedule
+                    if (attach != call && call.subReference != null) {
+                        sched = method.schedule.map[s |
+                            s.copy => [
+                                valuedObject = call.valuedObject
+                                subReference = s.copy
+                            ]
+                        ].toList
+                    }
                     if (attach instanceof Effect) {
-                        attach.addScheduleCopy(method.schedule)
+                        attach.addScheduleCopy(sched)
                     } else if(attach instanceof Action) {
-                        attach.trigger.addScheduleCopy(method.schedule)
+                        attach.trigger.addScheduleCopy(sched)
+                    } else if(attach instanceof ValuedObject) {
+                        environment.warnings.add("Cannot serialize model with variable initialization (" + attach.name + ") affected by scheduling directives. If you want to save this model, please move the initialization into a separated assignment.")
+                        attach.initialValue.addScheduleCopy(sched)
                     }
                     handledMethods += method
                 }
@@ -291,15 +352,79 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
             handledScheduleDecl += method.schedule.map[valuedObject.eContainer as ScheduleDeclaration]
             method.schedule.clear
         }
-        // Move schedule decl to top level
-        for (sdDecl : handledScheduleDecl) {
-            rootState.declarations += sdDecl
-            sdDecl.access = AccessModifier.PUBLIC
+        
+        
+        // Handle Class SDs
+        // ----------------
+        val classSDecls = <ScheduleDeclaration>newHashSet
+        classSDecls.addAll(handledScheduleDecl)
+        for (classVO : rootState.allScopes.map[declarations.iterator].flatten.filter(ClassDeclaration).flatMap[it.allNestedValuedObjects.iterator].toList) {
+            val decl = classVO.declaration
+            if (decl instanceof ScheduleDeclaration) {
+                // Check unsupported
+                if (decl.enclosingClass.enclosingClass !== null) {
+                    environment.errors.add("Scheduling declarations in nested classes are not yet supported (" + classVO.name + ")")
+                } else {
+                    classSDecls += decl
+                }
+            }
+        }
+        if (!classSDecls.empty) {
+            val sVORs = HashMultimap.<ScheduleDeclaration,ValuedObjectReference>create()
+            for (sVOR : rootState.eAllContents.filter(ValuedObjectReference).filter[vor | classSDecls.exists[it.valuedObjects.contains(vor.valuedObject)]].toList) {
+                sVORs.put(sVOR.valuedObject.declaration as ScheduleDeclaration, sVOR)
+            }
+            // Move schedule decl to top level
+            for (sdDecl : classSDecls) {
+                val classDecl = sdDecl.enclosingClass
+                val classVOs = sdDecl.enclosingClass.valuedObjects.toList
+                for (vo : classVOs) {
+                    if (!vo.cardinalities.empty) {
+                        environment.errors.add("Scheduling declarations in nested classes with cardinalities are not yet supported (" + vo.name + ")")
+                    } else {
+                        val newSDDecl = sdDecl.copy
+                        newSDDecl.valuedObjects.forEach[it.name = classDecl.name + "_" + vo.name + "_" + it.name; it.uniqueName]
+                        rootState.declarations += newSDDecl
+                        newSDDecl.access = AccessModifier.PUBLIC
+                        // Fix references
+                        val processed = newHashSet
+                        for (vor : sVORs.get(sdDecl)) {
+                            val parent = vor.eContainer
+                            if (parent instanceof ValuedObjectReference) {
+                                val classInst = parent.valuedObject
+                                if (classInst == vo) {
+                                    vor.valuedObject = newSDDecl.valuedObjects.get(sdDecl.valuedObjects.indexOf(vor.valuedObject))
+                                    // Replace parent if this VOR is its subRef
+                                    if (vor.isSubReference) {
+                                        if (parent instanceof ScheduleObjectReference) {
+                                            parent.subReference = null
+                                            parent.valuedObject = vor.valuedObject
+                                        } else {
+                                            parent.subReference = null
+                                            parent.replace(vor)
+                                        }
+                                    }
+                                    processed += vor
+                                }
+                            } else {
+                                environment.errors.add("Referring to scheduling directive in classes without reference to instance (" + vo.name + ")")
+                            }
+                        }
+                        // Mark as processed
+                        processed.forEach[sVORs.remove(sdDecl, it)]
+                    }
+                }
+                classDecl.declarations.remove(sdDecl)
+            }
         }
     }
     
     // The function to do Topological Sort. It uses recursive topologicalSortUtil() 
     protected def topologicalSort(List<MethodDeclaration> methods, Multimap<MethodDeclaration, MethodDeclaration> blockings) { 
+        if (methods.size <= 1) {
+            return methods
+        }
+        
         val ordering = <MethodDeclaration>newLinkedList
   
         val visited = newHashMap

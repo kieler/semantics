@@ -13,10 +13,16 @@
  */
 package de.cau.cs.kieler.scg.extensions
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
-import de.cau.cs.kieler.scg.Predecessor
+import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.ForkType
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.Predecessor
+import java.util.Set
 
 /**
  * Support for sequential preemtive fork.
@@ -24,6 +30,10 @@ import de.cau.cs.kieler.scg.ForkType
  * @author als
  */
 class SCGSequentialForkExtensions { 
+    
+    @Inject extension AnnotationsExtensions
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGControlFlowExtensions
 
     def isNonParalellFork(Predecessor pred) {
         return pred?.basicBlock?.isNonParalellFork
@@ -42,5 +52,66 @@ class SCGSequentialForkExtensions {
             return fork
         }
         return null
+    }
+    
+    def Set<Node> preceedingDutyNodes(Node start, Node limit) {
+        return findDutyNodes(start, limit, true)
+    }
+    def Set<Node> succeedingDutyNodes(Node start, Node limit) {
+        return findDutyNodes(start, limit, false)
+    }
+    
+    private def Set<Node> findDutyNodes(Node start, Node limit, boolean reverse) {
+        val dutyNodes = newHashSet
+        
+        if (start.isDutyNode) {
+            dutyNodes += start
+        } else {
+            val visited = <Node>newHashSet
+            val nextNodes = <Node>newLinkedHashSet
+            
+            visited += start
+            if (reverse) {
+                nextNodes += start.allPreviousNodes
+            } else {
+                nextNodes += start.allNextNodes
+            }
+            nextNodes.removeIf[it === limit]
+            
+            while (!nextNodes.empty) {
+                var node = nextNodes.head
+                nextNodes -= node
+                visited += node
+                
+                if (node.isDutyNode) {
+                    dutyNodes += node
+                } else {
+                    val cfs = if (reverse) {
+                        node.allPrevious
+                    } else {
+                        node.allNext
+                    }
+                    // visit successors
+                    for (cf : cfs) {
+                        if (!cf.hasAnnotation(SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)) {
+                            val nextNode = if (reverse) {
+                                cf.sourceNode
+                            } else {
+                                cf.targetNode
+                            }
+                            if (!visited.contains(nextNode)) {
+                                nextNodes += nextNode
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return dutyNodes
+    }
+    
+    def boolean isDutyNode(Node node) {
+        return node instanceof Conditional || node instanceof Assignment
     }
 }
