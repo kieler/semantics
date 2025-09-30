@@ -161,8 +161,8 @@
   </setupTask>
   <setupTask
       xsi:type="jdt:JRETask"
-      version="JavaSE-17"
-      location="${jre.location-17}">
+      version="JavaSE-21"
+      location="${jre.location-21}">
     <description>Define the JRE needed to compile and run the Java projects of ${scope.project.label}</description>
   </setupTask>
   <setupTask
@@ -525,7 +525,7 @@
           <repository
               url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.36.0/"/>
           <repository
-              url="https://download.eclipse.org/elk/updates/releases/0.10.0/"/>
+              url="https://download.eclipse.org/elk/updates/releases/0.11.0/"/>
           <repository
               url="https://kieler.github.io/KLighD/v3.1.0/"/>
           <repository
@@ -2936,7 +2936,7 @@
       <repository
           url="https://download.eclipse.org/elk/updates/nightly/"/>
       <repository
-              url="https://download.eclipse.org/releases/2024-12"/>
+          url="https://download.eclipse.org/releases/2024-12"/>
     </setupTask>
   </stream>
   <logicalProjectContainer
