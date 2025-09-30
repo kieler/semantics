@@ -24,13 +24,14 @@ import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
 
 import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import de.cau.cs.kieler.klighd.actions.SynthesizingAction
 
 /**
  * Action class to display the prio statements in the SCG.
  * @author lpe
  *
  */
-class PrioStatementsActions implements IAction {
+class PrioStatementsActions extends SynthesizingAction {
         
     private static final String PRIO_STATEMENTS_ID    = "de.cau.cs.kieler.scg.klighd.actions.priorityStatements"
     
@@ -93,10 +94,5 @@ class PrioStatementsActions implements IAction {
                     + option.getName() + " expecting a Boolean value.");
         }
     }
-    
-    new(){
-        Guice.createInjector.injectMembers(this)
-    }
-    
     
 }

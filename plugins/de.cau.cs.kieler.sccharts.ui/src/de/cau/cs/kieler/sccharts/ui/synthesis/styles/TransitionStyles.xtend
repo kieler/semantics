@@ -77,12 +77,14 @@ class TransitionStyles {
      */
     def KSpline addTransitionSpline(KEdge edge) {
         edge.addSpline => [
+            foreground = TRANSITION_FOREGROND.color;
             lineWidth = TRANSITION_LINE_WIDTH;
         ]
     }
     
     def KPolyline addTransitionPolyline(KEdge edge) {
         edge.addPolyline => [
+            foreground = TRANSITION_FOREGROND.color;
             lineWidth = TRANSITION_LINE_WIDTH;
         ]
     }    
@@ -197,6 +199,7 @@ class TransitionStyles {
         }
         edge.line.addEllipse() => [
             lineWidth = 1;
+            foreground = STATE_FOREGROUND.color;
             background = TRANSITION_DEFERRED.color;
             if (isAdditionalArrowHead) {
                 setDecoratorPlacementData(10, 10, -19, 1, false);
@@ -230,7 +233,8 @@ class TransitionStyles {
         edge.line.addEllipse() => [
             setDecoratorPlacementData(10, 10, 4, 0, false);
             lineWidth = 1;
-            background = TRANSITION_ABORT_DECORATOR.color
+            foreground = STATE_FOREGROUND.color;
+            background = TRANSITION_ABORT_DECORATOR.color;
         ]
     }
     
@@ -242,7 +246,8 @@ class TransitionStyles {
         edge.line.drawTriangle() => [
             setDecoratorPlacementData(11, 11, 5, 0, true);
             lineWidth = 1;
-            background = TRANSITION_TERMINATION_DECORATOR.color
+            foreground = STATE_FOREGROUND.color;
+            background = TRANSITION_TERMINATION_DECORATOR.color;
         ]
     }
 
@@ -257,6 +262,7 @@ class TransitionStyles {
     def configureTransitionLabelRendering(KRendering rendering) {
         rendering.fontSize = 11;
         rendering.fontBold = true;
+        rendering.foreground = TRANSITION_LABEL_FOREGROND.color;
     }
     
     def KLabel addLabel(KEdge edge, String text, KColor backgroundColor) {
@@ -265,7 +271,7 @@ class TransitionStyles {
         label.getKRendering => [ // Configure text
             fontSize = 7;
             
-            foreground = COMMENT_FOREGROND_TRANSITION.color
+            foreground = COMMENT_TEXT.color
             background = backgroundColor
         ]
         return label;
@@ -278,7 +284,7 @@ class TransitionStyles {
         //label.selectionFontBold = true
         //label.selectionForeground = SELECTION.color
         return label
-    }    
+    }
     
     def configureTransitionTailLabelRendering(KRendering rendering) {
         rendering.fontSize = 8

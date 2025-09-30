@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.ui.synthesis.styles
 
 import com.google.common.base.Joiner
 import com.google.inject.Inject
+import de.cau.cs.kieler.kicool.ui.synthesis.colors.AbstractColorStore.GeneralColor
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
@@ -235,7 +236,10 @@ class EquationStyles {
 
     def KEdge addWireFigure(KEdge edge) {
         edge.addRoundedBendsPolyline(4, 1) => [
-            it.addJunctionPointDecorator
+            it.addJunctionPointDecorator => [
+                it.foreground = GeneralColor.FOREGROUND.color
+                it.background = GeneralColor.FOREGROUND.color
+            ]
         ]
         return edge
     }
@@ -348,7 +352,7 @@ class EquationStyles {
             // Mark this figure as container for further content
             setProperty(IS_CONTENT_CONTAINER, true);
             setBackgroundGradient(STATE_BACKGROUND_GRADIENT_1.color, STATE_BACKGROUND_GRADIENT_2.color, 90);
-            foreground = STATE_FOREGROND.color;
+            foreground = STATE_FOREGROUND.color;
         ]
     }
 
@@ -361,7 +365,7 @@ class EquationStyles {
             // Mark this figure as container for further content
             setProperty(IS_CONTENT_CONTAINER, true);
             setBackgroundGradient(STATE_BACKGROUND_GRADIENT_1.color, STATE_BACKGROUND_GRADIENT_2.color, 90);
-            foreground = STATE_FOREGROND.color;
+            foreground = STATE_FOREGROUND.color;
             setGridPlacement(1);
         ]
     }

@@ -39,15 +39,22 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.ui.synthesis.KGTLoader
+import de.cau.cs.kieler.kicool.ui.synthesis.colors.AbstractColorStore.GeneralColor
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.klighd.krendering.KArc
+import de.cau.cs.kieler.klighd.krendering.KBackground
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KEllipse
+import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.krendering.KPolyline
+import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
@@ -65,6 +72,8 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.SCChartsUiModule
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ActorSkins
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import java.util.EnumSet
@@ -86,10 +95,12 @@ import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
+import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension com.google.common.collect.Iterables.concat
 
 /**
  * @author ssm
@@ -138,7 +149,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsSerializeHRExtensions
-    @Inject extension SCChartsSynthesis
     @Inject extension EquationStyles
     @Inject extension KExtDeclarationExtensions
     @Inject extension KExpressionsDeclarationExtensions
@@ -149,6 +159,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension EquationSynthesisHelper
     @Inject extension EquationSimplification
     @Inject extension TransitionStyles
+    @Inject extension ActorSkins
+    @Inject extension ColorStore
     @Inject StateSynthesis stateSynthesis
 
     val HashMap<ReferenceDeclaration, KNode> referenceNodes = newHashMap
@@ -326,10 +338,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             n.addLayoutParam(CoreOptions.PADDING, new ElkPadding(0, 0, 0, 0))
         }
         
-        nodes.reWireInlining
-        nodes.addMissingReferenceInputs
+        var finalNodes = nodes.reWireInlining
+        finalNodes.addMissingReferenceInputs
         
-        return nodes
+        finalNodes.applyColors()
+        return finalNodes
     }
 
     /**
@@ -1041,7 +1054,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         val referenceDeclaration = voRef.valuedObject.declaration as ReferenceDeclaration
         if (referenceDeclaration.hasAnnotation(ANNOTATION_FIGURE)) {
             newNode = referenceDeclaration.createKGTNode("OPERATOR", label)
-            newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
+            newNode.setProperty(ActorSkins.SKINPATH, getSkinPath(usedContext))
             newNode.addNodeLabelWithPadding(label, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
             newNode.setProperty(REFERENCE_NODE, true)
             val rendering = newNode.data.filter(KContainerRendering).head
@@ -1058,7 +1071,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         if (referenceDeclaration.reference !== null &&
             referenceDeclaration.reference.asAnnotatable.hasAnnotation(ANNOTATION_FIGURE)) {
             newNode = referenceDeclaration.reference.createKGTNode("OPERATOR", label)
-            newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
+            newNode.setProperty(ActorSkins.SKINPATH, getSkinPath(usedContext))
             newNode.addNodeLabelWithPadding(label, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
             newNode.setProperty(REFERENCE_NODE, true)
             val rendering = newNode.data.filter(KContainerRendering).head
@@ -1114,7 +1127,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 SizeConstraint.MINIMUM_SIZE, 
                 SizeConstraint.NODE_LABELS
             ))
-        newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
+        newNode.setProperty(ActorSkins.SKINPATH, getSkinPath(usedContext))
         newNode.setProperty(REFERENCE_NODE, true)
         return newNode
     }
@@ -1315,20 +1328,97 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     if (portLabel !== null) {
                         port.labels.remove(0)
                     }
-                    port.createLabel().configureOutsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+                    port.createLabel() => [
+                        it.configureOutsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+                        it.KRendering.foreground = TRANSITION_LABEL_FOREGROND.color
+                    ]
                     port.node.setLayoutOption(CoreOptions::PORT_LABELS_PLACEMENT, EnumSet.of(PortLabelPlacement.OUTSIDE, PortLabelPlacement.ALWAYS_OTHER_SAME_SIDE))
                 } else {
                     if (portLabel !== null) {
                         port.labels.remove(0)
                     }
-                    port.createLabel().configureInsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+                    port.createLabel() => [
+                        it.configureInsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+                        it.KRendering.foreground = TRANSITION_LABEL_FOREGROND.color
+                    ]
                 }
             }
         } else {
             if (portLabel === null) {
-                port.createLabel.configureInsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+                port.createLabel() => [
+                        it.configureInsidePortLabel(label, PORT_LABEL_FONT_SIZE)
+                        it.KRendering.foreground = TRANSITION_LABEL_FOREGROND.color
+                    ]
             } else {
                 portLabel.text = label
+            }
+        }
+    }
+    
+    private def void applyColors(List<KNode> nodes) {
+        val allNodes = newArrayList()
+        allNodes += nodes
+        for (n : nodes) {
+            allNodes += n.eAllContents.filter(KNode).toIterable
+        }
+        
+        for (node : allNodes) {
+            for (rendering : node.data.filter(KRendering)) {
+                rendering.applyColors()
+            }
+            for (edge : node.outgoingEdges) {
+                for (rendering : edge.data.filter(KRendering)) {
+                    rendering.applyColors()
+                }
+                for (label : edge.labels) {
+                    if (label.KRendering !== null) {
+                        label.KRendering.applyColors()
+                    }
+                }
+            }
+            for (label : node.labels.concat(node.ports.map[labels].flatten)) {
+                if (label.KRendering !== null) {
+                    label.KRendering.applyColors()
+                }
+            }
+        }
+    }
+    
+    private def void applyColors(KRendering rendering) {
+        switch (rendering) {
+            KText: {
+                if (!rendering.styles.exists[it instanceof KForeground]) {
+                    rendering.foreground = STATE_TEXT_FOREGROUND.color
+                }
+            }
+            KArc,
+            KEllipse,
+            KPolyline,
+            KRectangle,
+            KRoundedRectangle: {
+                if (rendering.hasProperty(ActorSkins.SKIN_STYLE_KEY_SCCHARTS)) {
+                     // Apply SCCharts state style
+                    rendering.foreground = STATE_FOREGROUND.color
+                    rendering.setBackgroundGradient(
+                        STATE_BACKGROUND_GRADIENT_1.color,
+                        STATE_BACKGROUND_GRADIENT_2.color,
+                        90
+                    );
+                } else {
+                    if (!rendering.styles.exists[it instanceof KForeground]) {
+                        rendering.foreground = GeneralColor.FOREGROUND.color
+                    }
+                    if (!rendering.styles.exists[it instanceof KBackground]) {
+                        rendering.background = GeneralColor.BACKGROUND.color
+                    }
+                }
+            }
+        }
+
+        // continue recursive
+        if (rendering instanceof KContainerRendering) {
+            for (child : rendering.children) {
+                child.applyColors()
             }
         }
     }

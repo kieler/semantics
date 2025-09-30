@@ -26,7 +26,7 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ActorSkins
 import org.eclipse.elk.graph.properties.MapPropertyHolder
 import org.eclipse.elk.graph.properties.Property
 
@@ -84,7 +84,7 @@ class ReferenceExpandAction extends CollapseExpandAction {
                     context.getKNode.data += node.data
                 }
             } else if (modelElement instanceof ValuedObjectReference) {
-                val propagatedSkinPath = context.KNode.getProperty(SCChartsSynthesis.SKINPATH)
+                val propagatedSkinPath = context.KNode.getProperty(ActorSkins.SKINPATH)
                 
                 val declaration = modelElement.valuedObject.eContainer
                 if (declaration instanceof ReferenceDeclaration) {
@@ -93,7 +93,7 @@ class ReferenceExpandAction extends CollapseExpandAction {
                         context.viewContext, 
                         new MapPropertyHolder => [ 
                             setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.sccharts.ui.synthesis.ScopeSynthesis")
-                            setProperty(SCChartsSynthesis.SKINPATH, propagatedSkinPath) 
+                            setProperty(ActorSkins.SKINPATH, propagatedSkinPath) 
                         ]                        
                     )
                     var extractedDataflow = diagram.children.head.children
