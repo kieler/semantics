@@ -141,7 +141,7 @@ abstract class AbstractCLITest {
         } else {
             switch (Platform.getOS) {
                 case WIN: return "win.bat"
-                case MAC: return "osx"
+                case MAC: return "osx-aarch64"
                 default: return "linux"
             }
         }
