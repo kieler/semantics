@@ -10,7 +10,7 @@
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
     <!-- Language server dependency versions -->
-    <elk-version>0.10.0</elk-version>
+    <elk-version>0.11.0</elk-version>
     <klighd-version>3.1.0.v20250428</klighd-version>
     <lsp4j-version>0.23.1</lsp4j-version>
     <pragmatics-version>0.52.0.v20250429</pragmatics-version>
