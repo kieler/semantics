@@ -91,7 +91,11 @@ class SCLValidator extends AbstractSCLValidator {
                 exp.subReference.lowermostReference
             }
             if (enumVal !== null) {
-                if (!enumVal.isEnumValue || enumVal.valuedObject.declaration.enclosingClass !== targetType) {
+                if (enumVal.isEnumRef) {
+                    if (enumVal.valuedObject.declaration.referencedEnum !== targetType) {
+                        error(ENUM_ASSIGN, exp, null, -1) 
+                    }
+                } else if (!enumVal.isEnumValue || enumVal.valuedObject.declaration.enclosingClass !== targetType) {
                     error(ENUM_ASSIGN, exp, null, -1) 
                 }
             } else {

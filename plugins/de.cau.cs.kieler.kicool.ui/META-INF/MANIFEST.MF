@@ -38,7 +38,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt;bundle-version="3.18.200",
  org.eclipse.jdt.core;bundle-version="3.20.0",
  de.cau.cs.kieler.annotations.ide
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kicool.ui,
  de.cau.cs.kieler.kicool.ui.console,
@@ -58,6 +58,7 @@ Export-Package: de.cau.cs.kieler.kicool.ui,
  de.cau.cs.kieler.kicool.ui.quickfix,
  de.cau.cs.kieler.kicool.ui.synthesis,
  de.cau.cs.kieler.kicool.ui.synthesis.actions,
+ de.cau.cs.kieler.kicool.ui.synthesis.colors,
  de.cau.cs.kieler.kicool.ui.synthesis.feedback,
  de.cau.cs.kieler.kicool.ui.synthesis.styles,
  de.cau.cs.kieler.kicool.ui.synthesis.updates,

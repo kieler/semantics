@@ -96,8 +96,11 @@ class TarjanSCC {
         stack.push(currentNode)
         visited.put(currentNode, true)
         
-        val neighbors = if (considerAllDependencies) currentNode.getNeighborsAndAllDependencies
-            else currentNode.neighborsAndDependencies
+        val neighbors = if (considerAllDependencies) {
+            currentNode.getNeighborsAndAllDependencies
+        } else {
+            currentNode.neighborsAndDependencies
+        }
         for (nextNode : neighbors) {
             if (isContained.containsKey(nextNode) && isContained.get(nextNode)) {                
                 // Next node has not yet been visited

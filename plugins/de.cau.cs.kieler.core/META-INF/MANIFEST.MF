@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.core.resources;bundle-version="3.5.0",
  org.eclipse.xtext,
  org.eclipse.xtext.xtext.generator;bundle-version="2.27.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Export-Package: de.cau.cs.kieler.core,
  de.cau.cs.kieler.core.definitions,
  de.cau.cs.kieler.core.ls,

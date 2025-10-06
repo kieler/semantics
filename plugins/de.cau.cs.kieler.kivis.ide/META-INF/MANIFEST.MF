@@ -19,7 +19,7 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.simulation,
  de.cau.cs.kieler.kicool,
  de.cau.cs.kieler.websocket.mirror;bundle-version="10.0.20"
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Export-Package: de.cau.cs.kieler.kivis.ide,
  de.cau.cs.kieler.kivis.ide.contentassist.antlr,
  de.cau.cs.kieler.kivis.ide.contentassist.antlr.internal,

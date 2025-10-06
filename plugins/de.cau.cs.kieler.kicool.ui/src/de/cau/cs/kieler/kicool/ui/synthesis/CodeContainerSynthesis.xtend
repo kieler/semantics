@@ -21,6 +21,7 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 
 /**
  * Generic synthesis for strings.
@@ -62,6 +63,11 @@ class CodeContainerSynthesis extends AbstractDiagramSynthesis<CodeContainer> {
             val cphNode = if (diagramVC.viewModel.children.head.children.nullOrEmpty) 
                 diagramVC.viewModel.children.head else
                 diagramVC.viewModel.children.head.children.head 
+            
+            // transfer canvas color from child context
+            if (diagramVC.hasProperty(KlighdProperties.CANVAS_COLOR)) {
+                myViewContext.setProperty(KlighdProperties.CANVAS_COLOR, diagramVC.getProperty(KlighdProperties.CANVAS_COLOR))
+            }
 
             rootNode.children += cphNode
         }

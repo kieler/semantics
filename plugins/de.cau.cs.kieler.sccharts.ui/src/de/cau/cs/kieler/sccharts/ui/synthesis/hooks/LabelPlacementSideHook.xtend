@@ -89,7 +89,8 @@ class LabelPlacementSideHook extends SynthesisHook {
         // Colors we shall use
         val foregroundKColor = REGION_FOREGROUND.color
         val foreground = new Color(foregroundKColor.red, foregroundKColor.green, foregroundKColor.blue);
-        val background = new Color(255, 255, 255, 220);
+        val backgroundKColor = REGION_BACKGROUND.color
+        val background = new Color(backgroundKColor.red, backgroundKColor.green, backgroundKColor.blue, 220);
         
         // Create and properly configure an inline label configurator that will do most of our work for us
         val inlineLabelConfigurator = LabelDecorationConfigurator.create.withInlineLabels(true)

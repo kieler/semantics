@@ -14,9 +14,9 @@ package de.cau.cs.kieler.scg.klighd.actions
 
 import com.google.inject.Guice
 import com.google.inject.Inject
-import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.ViewContext
+import de.cau.cs.kieler.klighd.actions.SynthesizingAction
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.scg.klighd.SCGraphSynthesisHelper
@@ -30,7 +30,7 @@ import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
  * @author lpe
  * 
  */
-class NodePriorityActions implements IAction {
+class NodePriorityActions extends SynthesizingAction {
 
     private static final String NODE_ID = "de.cau.cs.kieler.scg.klighd.actions.priorityActions"
 
@@ -76,10 +76,6 @@ class NodePriorityActions implements IAction {
                     " attempted to evaluate the non-Boolean valued transformation option " + option.getName() +
                     " expecting a Boolean value.");
         }
-    }
-
-    new() {
-        Guice.createInjector.injectMembers(this)
     }
 
 }

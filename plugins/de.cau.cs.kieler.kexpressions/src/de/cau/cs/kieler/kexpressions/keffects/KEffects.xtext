@@ -111,6 +111,7 @@ HostcodeEffect returns keffects::HostcodeEffect:
 // A reference call effect works similar to the reference call expression. Additionally, it may be
 // preceded by a list of annotations.
 ReferenceCallEffect returns keffects::ReferenceCallEffect:
+    super?='super.'?
     (annotations+=Annotation)*    
     valuedObject=[kexpressions::ValuedObject|PrimeID]
     ('[' indices+=Expression ']')*

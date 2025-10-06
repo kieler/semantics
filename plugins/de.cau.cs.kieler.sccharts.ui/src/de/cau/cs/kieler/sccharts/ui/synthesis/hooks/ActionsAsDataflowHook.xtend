@@ -77,7 +77,7 @@ class ActionsAsDataflowHook extends SynthesisHook {
         
         if (SHOW_ACTIONS_AS_DATAFLOW.booleanValue) {
             container.children.remove(actionContainer)
-            node.addRegionsArea
+            node.addRegionsArea(state)
             
             val actions = <Action> newArrayList(state.actions)
             

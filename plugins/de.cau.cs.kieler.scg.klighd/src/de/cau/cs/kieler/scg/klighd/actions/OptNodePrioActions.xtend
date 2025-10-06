@@ -23,13 +23,14 @@ import de.cau.cs.kieler.scg.klighd.SCGraphSynthesisHelper
 
 import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import de.cau.cs.kieler.klighd.actions.SynthesizingAction
 
 /**
  * Action class to display the optimized node priorities in the scg.
  * @author lpe
  * 
  */
-class OptNodePrioActions implements IAction {
+class OptNodePrioActions extends SynthesizingAction {
 
     @Inject
     extension KRenderingExtensions
@@ -76,10 +77,6 @@ class OptNodePrioActions implements IAction {
                     + " attempted to evaluate the non-Boolean valued transformation option "
                     + option.getName() + " expecting a Boolean value.");
         }
-    }
-
-    new(){
-        Guice.createInjector.injectMembers(this)
     }
 
 }

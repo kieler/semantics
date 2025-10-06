@@ -20,11 +20,11 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisActionHook
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.ui.synthesis.labels.LabelFocusSelectionListener
 import de.cau.cs.kieler.sccharts.ui.synthesis.labels.LabelShorteningStrategies
 import org.eclipse.elk.core.labels.LabelManagementOptions
+import org.eclipse.elk.core.options.CoreOptions
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
@@ -81,6 +81,9 @@ class LabelShorteningHook extends SynthesisActionHook {
         if (HIDE_LABELS.booleanValue) {
             edge.eContents.filter(KLabel).forEach[initiallyHide]
         }
+        edge.labels.forEach[
+            it.setProperty(CoreOptions::SOFTWRAPPING_FUZZINESS, 0.3)
+        ]
     }
 
     override executeAction(KNode rootNode) {

@@ -68,6 +68,7 @@ public class TransitionPriorityLabelManager extends AbstractKlighdLabelManager {
                         return Result.modified(matcher.group(1) + ".");
                     } else {
                         // If no priority available 
+                        label.setProperty(KRenderingOptions.K_RENDERING, null);
                         return Result.modified("");
                     }
                 }

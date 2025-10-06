@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ExternString
 import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.IODeclaration
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
@@ -267,6 +268,12 @@ class KExpressionsDeclarationExtensions {
         return newDecls
     }   
     
+    def List<IODeclaration> getIODeclarations(EObject eObject) {
+        <IODeclaration> newArrayList => [ list |
+            eObject.eContents.filter(IODeclaration).forEach[ list += it ]
+        ]
+    }
+    
     def List<VariableDeclaration> getVariableDeclarations(EObject eObject) {
         <VariableDeclaration> newArrayList => [ list |
             eObject.eContents.filter(VariableDeclaration).forEach[ list += it ]
@@ -342,16 +349,14 @@ class KExpressionsDeclarationExtensions {
     }
     
     def isInput(Declaration decl) {
-        if (decl instanceof VariableDeclaration) {
-            return decl.input
-        } else if (decl instanceof ReferenceDeclaration) {
+        if (decl instanceof IODeclaration) {
             return decl.input
         }
         return false
     }
     
     def isOutput(Declaration decl) {
-        if (decl instanceof VariableDeclaration) {
+        if (decl instanceof IODeclaration) {
             return decl.output
         }
         return false

@@ -215,7 +215,23 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    VOID(16, "VOID", "void");
+    VOID(16, "VOID", "void"), /**
+     * The '<em><b>TIME</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #TIME_VALUE
+     * @generated
+     * @ordered
+     */
+    TIME(17, "TIME", "time"), /**
+     * The '<em><b>PRIMITIVE</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #PRIMITIVE_VALUE
+     * @generated
+     * @ordered
+     */
+    PRIMITIVE(18, "PRIMITIVE", "primitive");
 
     /**
      * The '<em><b>PURE</b></em>' literal value.
@@ -423,6 +439,28 @@ public enum ValueType implements Enumerator {
     public static final int VOID_VALUE = 16;
 
     /**
+     * The '<em><b>TIME</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #TIME
+     * @model literal="time"
+     * @generated
+     * @ordered
+     */
+    public static final int TIME_VALUE = 17;
+
+    /**
+     * The '<em><b>PRIMITIVE</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #PRIMITIVE
+     * @model literal="primitive"
+     * @generated
+     * @ordered
+     */
+    public static final int PRIMITIVE_VALUE = 18;
+
+    /**
      * An array of all the '<em><b>Value Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -447,6 +485,8 @@ public enum ValueType implements Enumerator {
             CLASS,
             ENUM,
             VOID,
+            TIME,
+            PRIMITIVE,
         };
 
     /**
@@ -520,6 +560,8 @@ public enum ValueType implements Enumerator {
             case CLASS_VALUE: return CLASS;
             case ENUM_VALUE: return ENUM;
             case VOID_VALUE: return VOID;
+            case TIME_VALUE: return TIME;
+            case PRIMITIVE_VALUE: return PRIMITIVE;
         }
         return null;
     }

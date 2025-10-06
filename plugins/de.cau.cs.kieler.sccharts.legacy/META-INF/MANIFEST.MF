@@ -6,7 +6,7 @@ Bundle-Version: 1.6.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Kiel University
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Eclipse-UI: True
 Require-Bundle: com.google.guava,
  org.eclipse.xtext.xbase.lib,

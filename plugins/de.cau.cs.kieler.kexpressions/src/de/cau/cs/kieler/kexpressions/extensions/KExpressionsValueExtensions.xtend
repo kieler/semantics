@@ -13,14 +13,14 @@
  */
 package de.cau.cs.kieler.kexpressions.extensions
 
+import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.StringValue
-import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.FloatValue
-import java.util.List
+import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.VectorValue
+import java.util.List
 
 /**
  * @author ssm

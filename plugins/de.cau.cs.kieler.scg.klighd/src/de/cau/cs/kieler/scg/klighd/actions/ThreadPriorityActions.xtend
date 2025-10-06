@@ -12,9 +12,7 @@
  */
 package de.cau.cs.kieler.scg.klighd.actions
 
-import com.google.inject.Guice
 import com.google.inject.Inject
-import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.kgraph.KNode
@@ -24,13 +22,14 @@ import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
 import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import de.cau.cs.kieler.klighd.actions.SynthesizingAction
 
 /**
  * Action class to display the thread priorities in the SCG
  * @author lpe
  *
  */
-class ThreadPriorityActions implements IAction {
+class ThreadPriorityActions extends SynthesizingAction {
     
     @Inject
     extension KRenderingExtensions
@@ -76,9 +75,5 @@ class ThreadPriorityActions implements IAction {
                     + " attempted to evaluate the non-Boolean valued transformation option "
                     + option.getName() + " expecting a Boolean value.");
         }
-    }
-    
-    new(){
-        Guice.createInjector.injectMembers(this)
     }
 }

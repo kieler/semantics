@@ -12,9 +12,7 @@
  */
 package de.cau.cs.kieler.scg.klighd.actions
 
-import com.google.inject.Guice
 import com.google.inject.Inject
-import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.kgraph.KNode
@@ -29,13 +27,14 @@ import org.eclipse.elk.graph.properties.Property
 import static de.cau.cs.kieler.scg.klighd.SCGraphSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import de.cau.cs.kieler.klighd.actions.SynthesizingAction
 
 /**
  * Action class to display Strongly Connected Components in the SCG.
  * @author lpe
  *
  */
-class SCCActions implements IAction {
+class SCCActions extends SynthesizingAction {
     
     private final static String SCC_ID = "de.cau.cs.kieler.scg.klighd.actions.sccActions"
     
@@ -74,11 +73,6 @@ class SCCActions implements IAction {
         }
         
         return ActionResult.createResult(true)
-    }
-    
-    
-    new(){
-        Guice.createInjector.injectMembers(this)
     }
     
     /**

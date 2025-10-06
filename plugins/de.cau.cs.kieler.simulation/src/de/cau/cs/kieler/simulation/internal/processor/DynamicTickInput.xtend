@@ -26,6 +26,9 @@ class DynamicTickInput extends TraceProcessor {
     
     public static val IProperty<Long> DELTA_T = 
         new Property<Long>("de.cau.cs.kieler.simulation.internal.dynamic.ticks.deltat", 0L)
+        
+    public static val IProperty<Boolean> MSEC = 
+        new Property<Boolean>("de.cau.cs.kieler.simulation.internal.dynamic.ticks.deltat.msec", false)
                 
     public static val ID = "de.cau.cs.kieler.simulation.internal.dynamic.ticks.input"
     
@@ -38,7 +41,9 @@ class DynamicTickInput extends TraceProcessor {
     }
     
     override process() {
-        dataPool.setValue(DynamicTicks.DELTA_T, new JsonPrimitive(DynamicTicks.millisecondsToDeltaT(environment.getProperty(DELTA_T))))
+        val deltaT = environment.getProperty(DELTA_T)
+        val converted = environment.getProperty(MSEC) ? deltaT: DynamicTicks.millisecondsToDeltaT(deltaT)
+        dataPool.setValue(DynamicTicks.DELTA_T, new JsonPrimitive(converted))
     }
     
 }

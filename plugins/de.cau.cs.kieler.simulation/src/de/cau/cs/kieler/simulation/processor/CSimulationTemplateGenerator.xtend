@@ -244,7 +244,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                 case CLASS,
                 case STRUCT: '''cJSON_CreateObject()'''
                 default: {
-                    environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + type)
+                    environment.errors.add("Cannot serialize simulation interface. Unsupported type " + type + " for variable " + varName);
                     ""
                 }
             }
@@ -271,7 +271,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                 case CLASS,
                 case STRUCT: '''cJSON_CreateObject()'''
                 default: {
-                    environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + info.type)
+                    environment.errors.add("Cannot serialize simulation interface. Unsupported type " + info.type + " for variable " + varName);
                     ""
                 }
             }
@@ -297,7 +297,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
         val store = VariableStore.getVariableStore(environment)
         val members = store.orderedVariables.filter[variable.value.containerName.equals(value.encapsulatedIn)]
         return '''
-            «FOR member : members»
+            «FOR member : members.dropHostTypes.dropBlacklisted»
                 // Add member «member.key.simpleName»
                 «member.serialize(accessPrefix, item, null, null, depth + 1)»
             «ENDFOR»

@@ -23,9 +23,12 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
@@ -41,6 +44,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -52,6 +56,7 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsDiagramProperties
 import java.util.Collection
 import java.util.Collections
+import java.util.Comparator
 import java.util.EnumSet
 import java.util.Iterator
 import java.util.Map
@@ -62,12 +67,11 @@ import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.Alignment
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.PortLabelPlacement
+import org.eclipse.elk.core.options.PortSide
 import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
-import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import org.eclipse.elk.core.options.PortSide
 
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 
@@ -92,6 +96,7 @@ class InducedDataflowHook extends SynthesisHook {
     @Inject extension KNodeExtensions
     @Inject extension KContainerRenderingExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
 
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.InducedDataflowHook";
@@ -245,8 +250,25 @@ class InducedDataflowHook extends SynthesisHook {
             relevantVOs.addAll(allLocalWrites)
         }
 
+        // Sort for ordering in diagram
+        val sortedRelevantVOs = relevantVOs.sortWith(new Comparator<ValuedObject> {
+            
+            override compare(ValuedObject vo1, ValuedObject vo2) {
+                if (vo1.declaration == vo2.declaration) {
+                    return Integer.compare(vo1.declaration.valuedObjects.indexOf(vo1), vo2.declaration.valuedObjects.indexOf(vo2))
+                } else if (vo1.declaration.eContainer == vo2.declaration.eContainer) {
+                    val s1 = vo1.declaration.eContainer as DeclarationScope
+                    val s2 = vo2.declaration.eContainer as DeclarationScope
+                    return Integer.compare(s1.declarations.indexOf(vo1.declaration), s2.declarations.indexOf(vo2.declaration))
+                } else { // should be further refined
+                    return vo1.name.compareTo(vo2.name)
+                }
+            }
+            
+        })
+        
         // Each valued object will be handled by a hyperedge 
-        for (ValuedObject vo : relevantVOs) {
+        for (ValuedObject vo : sortedRelevantVOs) {
             val Set<KPort> readPorts = Sets.newHashSet
             val Set<KPort> preReadPorts = Sets.newHashSet
             val Set<KPort> writePorts = Sets.newHashSet
@@ -361,8 +383,8 @@ class InducedDataflowHook extends SynthesisHook {
         node.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
         node.addLayoutParam(CoreOptions::DIRECTION, Direction.RIGHT)
         node.addLayoutParam(LayeredOptions::FEEDBACK_EDGES, true);
-        node.addLayoutParam(CoreOptions::SPACING_NODE_NODE, 20.0);
-        node.addLayoutParam(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 20.0);
+        node.addLayoutParam(CoreOptions::SPACING_NODE_NODE, 10.0);
+        node.addLayoutParam(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 10.0);
     }
 
     /** Configure the layout on the attached node */
@@ -388,6 +410,7 @@ class InducedDataflowHook extends SynthesisHook {
                 fontSize = 11;
                 fontBold = true;
             ]
+            kNode.setProperty(CoreOptions::PORT_LABELS_PLACEMENT, EnumSet.of(PortLabelPlacement.OUTSIDE, PortLabelPlacement.ALWAYS_OTHER_SAME_SIDE))
         }
 
         return port;

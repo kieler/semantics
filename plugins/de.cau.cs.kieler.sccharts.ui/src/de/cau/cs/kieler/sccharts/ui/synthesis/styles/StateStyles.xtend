@@ -80,7 +80,7 @@ class StateStyles {
     /** This property is set a rendering and indicates the content container */
     public static final IProperty<Boolean> IS_CONTENT_CONTAINER = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.style.state.content", false);
-    /** This property is set a rendering and indicates the redering is not visible and only present for layout purpose */
+    /** This property is set a rendering and indicates the rendering is not visible and only present for layout purpose */
     public static final IProperty<Boolean> IS_LAYOUT_ELEMENT = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.style.layout", false);
     /** This property is set on the content container rendering and points to the container holding the action labels */
@@ -119,7 +119,7 @@ class StateStyles {
             // Mark this figure as container for further content
             setProperty(IS_CONTENT_CONTAINER, true);
             setBackgroundGradient(STATE_BACKGROUND_GRADIENT_1.color, STATE_BACKGROUND_GRADIENT_2.color, 90);
-            foreground = STATE_FOREGROND.color;
+            foreground = STATE_FOREGROUND.color;
         ]
     }
 
@@ -132,7 +132,7 @@ class StateStyles {
             // Mark this figure as container for further content
             setProperty(IS_CONTENT_CONTAINER, true);
             setBackgroundGradient(STATE_BACKGROUND_GRADIENT_1.color, STATE_BACKGROUND_GRADIENT_2.color, 90);
-            foreground = STATE_FOREGROND.color;
+            foreground = STATE_FOREGROUND.color;
             setGridPlacement(1);
         ]
     }
@@ -238,6 +238,7 @@ class StateStyles {
             
             fontBold = true
             fontSize = stateLabelTextSize
+            foreground = STATE_TEXT_FOREGROUND.color
             suppressSelectability
             selectionTextUnderline = Underline.NONE // prevents default selection style
 //            setProperty(KlighdProperties.IS_NODE_TITLE, true)
@@ -248,7 +249,7 @@ class StateStyles {
      * Adds a title label to a macro state figure.
      */
     def KRectangle addMacroStateLabel(KNode node, List<Pair<? extends CharSequence, TextFormat>> components) {
-        node.contentContainer.addKeywordLabel(components, 0) => [
+        node.contentContainer.addKeywordLabel(components, -1) => [
             // Add surrounding space
             setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0)
             
@@ -256,11 +257,6 @@ class StateStyles {
                 fontSize = stateLabelTextSize
                 suppressSelectability
                 selectionTextUnderline = Underline.NONE // prevents default selection style
-            ]
-
-            children.head => [
-                setProperty(KlighdProperties.IS_NODE_TITLE, true)
-                setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 0, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
             ]
         ]
     }
@@ -303,56 +299,87 @@ class StateStyles {
      * Creates a text with highlighted keywords.
      */
     package def addKeywordLabel(KContainerRendering container, List<Pair<? extends CharSequence, TextFormat>> components, int indent) {
-        return container.addRectangle() => [
+        val labelContainer = container.addRectangle()
+        labelContainer.invisible = true
+        labelContainer.setProperty(IS_LAYOUT_ELEMENT, true)
+        
+        val rows = newArrayList
+        var newRow = newArrayList
+        for (comp : components) {
+            if (comp.value == TextFormat.BREAK) {
+                rows.add(newRow)
+                newRow = newArrayList
+            } else {
+                newRow += comp
+            }
+        }
+        rows.add(newRow)
+        
+        for (row : rows) {
             // This additional rectangle allows left align in grid placement
-            invisible = true
-            setProperty(IS_LAYOUT_ELEMENT, true)
-            addRectangle() => [
-                invisible = true;
-                // Add left alignment
-                setPointPlacementData(createKPosition(LEFT, indent * 10, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
-                var parts = 0
-                val entries = components.iterator
-                val builder = new StringBuilder()
-                var keyword = TextFormat.KEYWORD
-                var KText ktext = null               
-                while (entries.hasNext) {
-                	val entry = entries.next
-                	if (builder.length > 0 && keyword != entry.value) {
-		                ktext = it.addText(builder.append(" ").toString) => [
+            val gridContainer = labelContainer.addRectangle()
+            gridContainer.invisible = true;
+            // Add left alignment
+            if (indent >= 0) {
+                gridContainer.setPointPlacementData(createKPosition(LEFT, indent * 10, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
+            } else { // or center
+                gridContainer.setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 0, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
+            }
+            
+            var parts = 0
+            val entries = row.iterator
+            val builder = new StringBuilder()
+            var keyword = TextFormat.KEYWORD
+            var KText ktext = null
+            while (entries.hasNext) {
+            	val entry = entries.next
+            	if (builder.length > 0 && keyword != entry.value) {
+                    ktext = gridContainer.addText(builder.append(" ").toString) => [
+                        if (indent >= 0) {
                             horizontalAlignment = H_LEFT
-                            selectionTextUnderline = Underline.SINGLE
-                        ]
-		                if (keyword == TextFormat.KEYWORD) {
-		                	ktext.highlightKeyword
-		                }                		
-                        if (keyword == TextFormat.HIGHLIGHT) {
-                            ktext.highlightHighlight
+                        } else {
+                            horizontalAlignment = H_CENTRAL
                         }
-		                builder.length = 0
-                		parts++
-                	}
-                	if (builder.length > 0) {
-                	    val possibleSpace = if (entry.key.equals(",")) "" else " "
-                		builder.append(possibleSpace)
-                	}
-                	builder.append(entry.key)
-                	keyword = entry.value
-                }
-                ktext = addText(builder.toString) => [
+                        selectionTextUnderline = Underline.SINGLE
+			foreground = STATE_TEXT_FOREGROUND.color
+                    ]
+                    switch(keyword) {
+                        case KEYWORD: ktext.highlightKeyword
+                        case HIGHLIGHT: ktext.highlightHighlight
+                        case SCHEDULE: ktext.highlightSD
+                    }
+                    builder.length = 0
+            		parts++
+            	}
+            	if (builder.length > 0) {
+            	    val possibleSpace = if (entry.key.equals(",")) "" else " "
+            		builder.append(possibleSpace)
+            	}
+            	builder.append(entry.key)
+            	keyword = entry.value
+            }
+            ktext = gridContainer.addText(builder.toString) => [
+                if (indent >= 0) {
                     horizontalAlignment = H_LEFT
-                    selectionTextUnderline = Underline.SINGLE
-                ]
-                if (keyword == TextFormat.KEYWORD) {
-                	ktext.highlightKeyword
+                } else {
+                    horizontalAlignment = H_CENTRAL
                 }
-                if (keyword == TextFormat.HIGHLIGHT) {
-                    ktext.highlightHighlight
-                }
-                parts++
-                setGridPlacement(parts)
+                selectionTextUnderline = Underline.SINGLE
+		foreground = STATE_TEXT_FOREGROUND.color
             ]
-        ]
+            switch(keyword) {
+                case KEYWORD: ktext.highlightKeyword
+                case HIGHLIGHT: ktext.highlightHighlight
+                case SCHEDULE: ktext.highlightSD
+            }
+            parts++
+            gridContainer.setGridPlacement(parts)
+        }
+        if (rows.size > 1) {
+            labelContainer.setGridPlacement(1)
+        }
+        
+        return labelContainer
     }
     
     package def highlightKeyword(KText ktext) {
@@ -362,6 +389,10 @@ class StateStyles {
     
     package def highlightHighlight(KText ktext) {
         ktext.foreground = KEYWORD.color;
+    }
+    
+    package def highlightSD(KText ktext) {
+        ktext.foreground = USER_SCHEDULE_COLOR.color
     }
     
     /**
@@ -377,9 +408,10 @@ class StateStyles {
     /**
      * Add a child area to a macro state
      */
-    def addRegionsArea(KNode node) {
+    def addRegionsArea(KNode node, State state) {
         node.contentContainer.addChildArea().setGridPlacementData() => [
-            from(LEFT, 5, 0, TOP, -4, 0).to(RIGHT, 5, 0, BOTTOM, 5, 0)
+            val spacing = state.isInitial ? 9 : 7;
+            from(LEFT, spacing, 0, TOP, -4, 0).to(RIGHT, spacing, 0, BOTTOM, spacing, 0)
             minCellHeight = 5;
             minCellWidth = 5;
         ]
