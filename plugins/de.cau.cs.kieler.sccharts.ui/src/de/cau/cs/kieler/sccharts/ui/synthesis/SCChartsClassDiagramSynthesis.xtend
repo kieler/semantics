@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
+import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
@@ -26,24 +27,38 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KPolyline
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.krendering.LineCap
+import de.cau.cs.kieler.klighd.krendering.LineJoin
+import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceX
+import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceY
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.text.validation.OOClassAnnotations
+import de.cau.cs.kieler.sccharts.text.validation.OOClassAnnotations.ClassType
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
+import java.util.List
+import java.util.Map
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
@@ -60,6 +75,7 @@ class SCChartsClassDiagramSynthesis extends AbstractDiagramSynthesis<SCCharts> {
 
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
+    @Inject extension KLabelExtensions
     @Inject extension KRenderingExtensions
     @Inject extension KContainerRenderingExtensions
     @Inject extension AnnotationsExtensions
@@ -70,10 +86,11 @@ class SCChartsClassDiagramSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     @Inject extension KExpressionsAccessVisibilityExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension PragmaExtensions
-    @Inject extension TransitionStyles
     @Inject extension StateStyles
     @Inject extension KPolylineExtensions
     @Inject extension CommentSynthesis
+    @Inject extension OOClassAnnotations
+    @Inject extension ClassDiagramEdgeSynthesis
     
     static val PRAGMA_FONT = "font"        
     static val PRAGMA_HIDE_IMPORTED_SCCHARTS = "HideImportedSCCharts"
@@ -81,10 +98,14 @@ class SCChartsClassDiagramSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     public static val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsClassDiagramSynthesis"
     
     public static final SynthesisOption SHOW_INHERITANCE = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Generalization Relations", true)
-    public static final SynthesisOption SHOW_AGGREGATION = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Aggregation Relations", true)
+    public static final SynthesisOption SHOW_AGGREGATION = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Association Relations", true)
+    public static final SynthesisOption SHOW_AGGREGATION_MULTI = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Association Multiplicities", false)
+    public static final SynthesisOption SHOW_AGGREGATION_FIELDS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Association Fields", false)
+    public static final SynthesisOption SHOW_AGGREGATION_REVERSE = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Association in Reverse Direction", false)
     public static final SynthesisOption SHOW_IO = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "IO Parameter", true)
     public static final SynthesisOption SHOW_ATTRIBUTES = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Attributes", true)
     public static final SynthesisOption SHOW_METHODS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Methods", true)
+    public static final SynthesisOption SHOW_REGIONS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Regions", true)
     public static final SynthesisOption SHOW_COMMENTS = SynthesisOption.createCheckOption(GeneralSynthesisOptions, "Comments", true)
     
        
@@ -92,9 +113,13 @@ class SCChartsClassDiagramSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         return #[
             SHOW_INHERITANCE,
             SHOW_AGGREGATION,
+            SHOW_AGGREGATION_MULTI,
+            SHOW_AGGREGATION_FIELDS,
+            SHOW_AGGREGATION_REVERSE,
             SHOW_IO,
             SHOW_ATTRIBUTES,
             SHOW_METHODS,
+            SHOW_REGIONS,
             SHOW_COMMENTS
         ]
     }
@@ -126,62 +151,11 @@ class SCChartsClassDiagramSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         rootNode.children.addAll(rootStateNodes.values)
         
         if (SHOW_INHERITANCE.booleanValue) {
-            rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction.UP)
-            rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20.0)
-            rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 28.0)
-            rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 28.0)
-            for(state : rootStates) {
-                for (base : state.baseStates) {
-                    val edge = createEdge
-                    edge.source = rootStateNodes.get(state)
-                    edge.target = rootStateNodes.get(base)
-                    edge.addPolyline => [
-                        lineWidth = 1
-                        addInheritanceTriangleArrowDecorator
-                    ]
-                }
-            }
+            addInheritanceEdges(rootNode, rootStateNodes)
         }
         
         if (SHOW_AGGREGATION.booleanValue) {
-            rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction.UP)
-            rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20.0)
-            rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 28.0)
-            rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 28.0)
-            for(state : rootStates) {
-                val aggregation = newHashSet
-                for (ref : state.declarations.filter(ReferenceDeclaration)) {
-                    if (ref.reference instanceof State) {
-                        aggregation += ref.reference as State
-                    }
-                }
-                for (inner : state.allScopes.toIterable) {
-                    if (inner !== state) {
-                        if (inner instanceof State) {
-                            if (!inner.baseStateReferences.nullOrEmpty) {
-                                aggregation += inner.baseStates
-                            }
-                            if (inner.isReferencing && inner.reference.target instanceof State) {
-                                aggregation += inner.reference.target as State
-                            }
-                        }
-                        for (ref : state.declarations.filter(ReferenceDeclaration)) {
-                            if (ref.reference instanceof State) {
-                                aggregation += ref.reference as State
-                            }
-                        }
-                    }
-                }
-                for (agg : aggregation) {
-                    val edge = createEdge
-                    edge.source = rootStateNodes.get(state)
-                    edge.target = rootStateNodes.get(agg)
-                    edge.addPolyline => [
-                        lineWidth = 1
-                        addAggregationArrowDecorator
-                    ]
-                }
-            }
+            addAssociationEdges(rootNode, rootStateNodes, !SHOW_AGGREGATION_REVERSE.booleanValue, SHOW_AGGREGATION_MULTI.booleanValue, SHOW_AGGREGATION_FIELDS.booleanValue)
         }
         
         val pragmaFont = scc.getStringPragmas(PRAGMA_FONT).last
@@ -271,10 +245,31 @@ class SCChartsClassDiagramSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             }
         }
         
+        // Regions
+        if (SHOW_REGIONS.booleanValue) {
+            var anon = state.actions.filter(DuringAction).size
+            anon += state.regions.filter[it.name.nullOrEmpty].size
+            if (anon > 0 || !state.regions.empty) {
+                box.addHorizontalLine(1) => [
+                    setGridPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 4, 0)
+                ]
+                box.addText("Regions") => [
+                    fontItalic = true
+                    fontSize = 8
+                ]
+                if (anon > 0) {
+                    box.addLeftAlignedText(String.format("\u2212 %d anonymous", anon))
+                }
+                for (r : state.regions.filter[!it.name.nullOrEmpty]) {
+                    box.addLeftAlignedText("# " + r.name)
+                }
+            }
+        }
+        
         if (SHOW_COMMENTS.booleanValue) {
             state.getCommentAnnotations.forEach[
                 returnNodes += it.transform                
-            ] 
+            ]
         }
 
         return returnNodes
@@ -304,11 +299,11 @@ class SCChartsClassDiagramSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             } else if (d.isPublic) {
                 s.append("+ ")
             } else {
-                s.append("- ")
+                s.append("\u2212 ")
             }
         }
         
-        s.append(d.valuedObjects.map[name].join(", "))
+        s.append(d.valuedObjects.map[it.name.applySymbolTable].join(", "))
         
         if (d instanceof MethodDeclaration) {
             s.append("(")

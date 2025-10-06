@@ -13,22 +13,22 @@
  */
 package de.cau.cs.kieler.kexpressions.ui
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.ui.AnnotationsHighlightingConfiguration
 import de.cau.cs.kieler.annotations.ui.AnnotationsSemanticHighlightingCalculator
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.keffects.converter.KEffectsEmissionReferenceCallConverter
+import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess
+import org.eclipse.xtext.CrossReference
+import org.eclipse.xtext.RuleCall
 import org.eclipse.xtext.ide.editor.syntaxcoloring.IHighlightedPositionAcceptor
 import org.eclipse.xtext.nodemodel.INode
+import org.eclipse.xtext.nodemodel.impl.CompositeNodeWithSemanticElement
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.util.CancelIndicator
-import org.eclipse.xtext.nodemodel.impl.CompositeNodeWithSemanticElement
-import de.cau.cs.kieler.kexpressions.ReferenceCall
-import de.cau.cs.kieler.kexpressions.FunctionCall
-import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess
-import com.google.inject.Inject
-import org.eclipse.xtext.RuleCall
-import org.eclipse.xtext.CrossReference
-import de.cau.cs.kieler.kexpressions.keffects.Emission
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.keffects.converter.KEffectsEmissionReferenceCallConverter
-import de.cau.cs.kieler.annotations.ui.AnnotationsHighlightingConfiguration
 
 /** 
  * @author ssm

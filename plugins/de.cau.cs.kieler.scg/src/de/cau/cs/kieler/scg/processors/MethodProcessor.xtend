@@ -95,8 +95,9 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         
         for (scg : model.scgs) {
             if (scg.isMethod) {
-                methodSCGs.put(scg.methodDeclaration, scg)
-                scg.methodDeclaration.preprocess(scg)
+                val method = scg.methodDeclaration
+                methodSCGs.put(method, scg)
+                method.preprocess(scg)
             } else {
                 normalSCGs += scg
             }
@@ -195,6 +196,9 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         if (!SUPPORTED_RETURN_TYPES.contains(method.returnType)) {
             method.returnType = ValueType.VOID
         }
+        // Fix name (escape characters)
+        val vo = method.valuedObjects.head
+        vo.name = vo.name.replace("^","")
     }
     
     def void inlineMethod(MethodDeclaration method, ReferenceCall call, Node callNode, Map<MethodDeclaration, SCGraph> methodSCGs,  Set<MethodDeclaration> callStack, Set<SCGraph> inlined) {
@@ -227,7 +231,11 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         val exit = scg.nodes.filter(Exit).head
         val returnVO = scg.nodes.filter(Assignment).findFirst[isReturn]?.valuedObject
         val selfVO = scg.declarations.findFirst[isSelfVO]?.valuedObjects?.head
-        val params = scg.declarations.map[valuedObjects].flatten.filter[isParameter].toMap([it],[parameterIndex])
+        val params = newHashMap
+        // Old params
+        params.putAll(methodSCG.declarations.map[valuedObjects].flatten.filter[isParameter].toMap([it],[parameterIndex]))
+        // New params (not sure if this is necessary)
+        params.putAll(scg.declarations.map[valuedObjects].flatten.filter[isParameter].toMap([it],[parameterIndex]))
         
         // Replace params
         val methodCalls = HashBasedTable.create
@@ -275,6 +283,19 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
                         }
                         mcall = mcall.subReference
                     } while (mcall !== null)
+                }
+            }
+            // Pass on scheduling directives
+            if (callNode instanceof Assignment && node instanceof Assignment) {
+                for (sOrig : (callNode as Assignment).schedule) {
+                    val s = sOrig.copy
+                    if (!(sOrig.valuedObject.declaration.eContainer instanceof SCGraph)) {
+                        // Is object specific schedule and should be sub reference
+                        for (vo : callVOs.reverseView) {
+                            s.prependReferenceToReference(vo)
+                        }
+                    }
+                    (node as Assignment).schedule += s
                 }
             }
         }

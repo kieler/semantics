@@ -62,7 +62,7 @@ class KEffectsSerializeHRExtensions extends KEffectsSerializeExtensions {
         if (!effects.empty) {
             var String label = "" 
             for(effect : effects) {
-                label = label + effect.serializeHR as String + "; "
+                label = label + effect.serializeHR + "; "
             }
             label = label.substring(0, label.length - 2)
             return label
@@ -77,9 +77,13 @@ class KEffectsSerializeHRExtensions extends KEffectsSerializeExtensions {
     }    
     
     def dispatch CharSequence serializeHR(ReferenceCallEffect referenceCallEffect) {
-        var paramStr = referenceCallEffect.parameters.serializeHRParameters.toString
-        
-        return referenceCallEffect.serializeVOR + paramStr
+        var text = new StringBuilder()
+        if (referenceCallEffect.super) {
+            text.append("super.")
+        }
+        text.append(referenceCallEffect.serializeVOR)
+        text.append(referenceCallEffect.parameters.serializeHRParameters)
+        return text
     }
     
     def dispatch CharSequence serializeHR(RandomizeCallEffect randomizeCallEffect) {

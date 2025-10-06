@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
@@ -97,6 +98,8 @@ class SclCodeEffect extends SCChartsProcessor implements Traceable {
             trace(effect)
             valuedObjects += vo
             returnType = ValueType.VOID
+            access = AccessModifier.PUBLIC
+            implemented = true
             // Move content
             annotations += effect.annotations
             declarations += effect.declarations

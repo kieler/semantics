@@ -32,7 +32,7 @@ RootState returns sccharts::State:
 	'{'
 		declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
 		actions+=LocalAction*
-		(regions+=ImplicitControlflowRegion | regions+=Region*)
+		(regions+=ImplicitControlflowRegion | (regions+=Region | policies+=PolicyRegion)*)
 	'}';
 
 State returns sccharts::State:
@@ -156,11 +156,36 @@ ControlflowRegion returns sccharts::ControlflowRegion:
             states+=State*
         ))
     ));
+    
+Equations returns keffects::Assignment:
+    DataflowAssignment | Assignment | DataflowReferenceCall
+;
 
 DataflowAssignment returns sccharts::DataflowAssignment:
     (annotations+=Annotation)*    
     reference=ValuedObjectReference
+    
     operator=AssignOperator expression = Expression
+    ('schedule' schedule+=ScheduleObjectReference+)?
+    sequential?=(';'|'seq')?;
+    
+DataflowReferenceCall returns sccharts::DataflowReferenceCall:
+    (annotations+=Annotation)*
+    
+    // Ref Call
+    super?='super.'?
+    valuedObject=[kexpressions::ValuedObject|PrimeID] 
+    ('[' indices+=Expression ']')*
+    ('.' subReference=ValuedObjectReference)?
+    (
+        ('(' parameters += Parameter 
+            (',' parameters += Parameter)* ')'
+        ) | '()'
+    )
+    
+    // Assignment
+    // No reference since it is its own ValuedObjectReference
+    ('=' expression = Expression)?
     ('schedule' schedule+=ScheduleObjectReference+)?
     sequential?=(';'|'seq')?;
     
@@ -175,12 +200,12 @@ DataflowRegion returns sccharts::DataflowRegion:
     ((
         '{'
         declarations+=DeclarationWOSemicolon*
-        equations+=(DataflowAssignment|Assignment)*
+        equations+=Equations*
         '}'
     )|(
         ':'
         declarations+=DeclarationWOSemicolon*
-        equations+=(DataflowAssignment|Assignment)*
+        equations+=Equations*
     ));
     
 IntOrReference returns kexpressions::Expression:
@@ -280,8 +305,9 @@ ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
         type = ClassType
         (name = EString)?
         '{'
-            policy=PolicyRegion?
-            declarations+=DeclarationOrMethodWOSemicolon*
+            ( policies+=PolicyRegion
+            | declarations+=DeclarationOrMethodWOSemicolon
+            )*
         '}'
     )|(
         type = StructType
@@ -318,7 +344,11 @@ PolicyTransition returns sccharts::Transition:
     ('label' label=STRING)?;
     
 DeclarationOrMethodWithKeywordWOSemicolon returns kexpressions::Declaration:
-    DeclarationWOSemicolon | KeywordMethodDeclarationWOSemicolon | EnumDeclarationWOSemicolon
+    DeclarationWOSemicolon | KeywordMethodDeclarationWOSemicolon | EnumDeclarationWOSemicolon | PrimitiveDeclarationWOSemicolon
+;
+
+MethodParameterDeclaration returns kexpressions::Declaration:
+    VariableDeclarationWOSemicolon | PrimitiveDeclarationWOSemicolon
 ;
 
 KeywordMethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
@@ -326,11 +356,15 @@ KeywordMethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
     annotations+=Annotation*
     ( access=AccessModifier? | override?='override' )
     'method'
-    returnType=MethodReturnType?
+    (
+        returnType=MethodReturnType 
+        | (returnType=HostType returnHostType=STRING)
+        | (returnType=PrimitiveValueType returnReference=[annotations::NamedObject|PrimeID])
+    )?
     valuedObjects+=SimpleValuedObject
-    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
+    (('(' parameterDeclarations+=MethodParameterDeclaration (',' parameterDeclarations+=MethodParameterDeclaration)* ')') | '()')
     ('schedule' schedule+=ScheduleObjectReference+)?
-    ('{'
+    (implemented?='{'
         annotations+=CommentAnnotatonSL?
         declarations+=Declaration*
         statements+=Statement*
@@ -362,6 +396,35 @@ StateAccessExpression returns kexpressions::SpecialAccessExpression:
     ')'
     ('schedule' schedule += ScheduleObjectReference)?;
 
+@Override
+enum MethodReturnType returns kexpressions::ValueType:
+    VOID="void" |
+    BOOL="bool" | INT="int" | FLOAT="float" |
+    STRING="string" |
+    TIME="clock-time";
+
+@Override 
+GenericParameterDeclaration returns kexpressions::GenericParameterDeclaration:
+    annotations+=QuotedStringAnnotation*
+    valuedObjects+=SimpleValuedObject
+    (
+        ('is' valueType = ValueType)
+        |
+        ('is' (reference?='ref')? type = [annotations::NamedObject|PrimeID])
+        |
+        ('is' valueType = PrimitiveValueType) // Explicit primitive generic
+    )?;
+
+PrimitiveDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
+    annotations+=Annotation*
+    access=AccessModifier?
+    input?='input'?
+    output?='output'?
+    const?='const'?
+    simple?='primitive'
+    reference = [annotations::NamedObject|PrimeID] // should be primitive generic type
+    valuedObjects+=ReferenceValuedObject (',' valuedObjects+=ReferenceValuedObject)*
+    annotations+=CommentAnnotatonSL?;
 
 // ------------ //
 //  Enum Rules  // 
@@ -387,7 +450,10 @@ enum ValueType returns kexpressions::ValueType:
     PURE="pure" | BOOL="bool" | 
     INT="int" | FLOAT="float" |
     STRING="string" |
-    CLOCK="clock"; // als: added clock for timed automata
+    CLOCK="clock" | TIME="clock-time"; // new: clocks for timed automata
+
+enum PrimitiveValueType returns kexpressions::ValueType:
+    PRIMITIVE="primitive";
 	
 // -------------- //
 //  Helper Rules  // 

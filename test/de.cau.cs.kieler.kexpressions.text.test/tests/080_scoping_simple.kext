@@ -35,6 +35,8 @@ B = false
 A = B
 
 @check "scoping.global.reference.operator#001"
+@strict "global = (A & B)"
+@readable "global = A & B"
 @aliasCheck A, globalA
 @aliasCheck B, globalB
 ^global = A & B
@@ -45,6 +47,8 @@ A = B
 ^global = pre(A)
 
 @check "scoping.global.reference.operator#003"
+@strict "global = (A & B & C)"
+@readable "global = A & B & C"
 @aliasCheck A, globalA
 @aliasCheck B, globalB
 @aliasCheck C, globalC

@@ -1578,6 +1578,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	}
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Abort
 	 *     EsterelParallel returns Abort
@@ -1588,6 +1589,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* weak?='weak'? statements+=EsterelParallel ((delay=DelayExpression doStatements+=EsterelParallel?) | cases+=Case+))
+	 * </pre>
 	 */
 	protected void sequence_Abort(ISerializationContext context, Abort semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1595,6 +1597,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns OperatorExpression
 	 *
@@ -1646,6 +1649,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         ) 
 	 *         schedule+=ScheduleObjectReference?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_BitwiseAndExpression_BitwiseOrExpression_BitwiseXOrExpression_BoolScheduleExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1653,6 +1657,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolExpression returns OperatorExpression
 	 *     LogicalOrExpression returns OperatorExpression
@@ -1703,6 +1708,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             subExpressions+=CompareOperation*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_BitwiseAndExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1710,6 +1716,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LogicalOrExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     LogicalAndExpression returns OperatorExpression
@@ -1753,6 +1760,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             subExpressions+=CompareOperation*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_BitwiseAndExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1760,6 +1768,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LogicalAndExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     BitwiseOrExpression returns OperatorExpression
@@ -1797,6 +1806,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             subExpressions+=CompareOperation*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_BitwiseAndExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1804,6 +1814,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BitwiseOrExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     BitwiseXOrExpression returns OperatorExpression
@@ -1835,6 +1846,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             subExpressions+=CompareOperation*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_BitwiseAndExpression_BitwiseXOrExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1842,6 +1854,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     BitwiseAndExpression returns OperatorExpression
@@ -1867,6 +1880,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             subExpressions+=CompareOperation*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_BitwiseAndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1874,6 +1888,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BitwiseNotExpression returns OperatorExpression
 	 *
@@ -1893,6 +1908,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_BitwiseNotExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1900,6 +1916,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TernaryOperation returns OperatorExpression
 	 *
@@ -1932,6 +1949,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SfbyExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1939,6 +1957,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InitExpression returns OperatorExpression
 	 *
@@ -1965,6 +1984,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SfbyExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1972,6 +1992,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InitExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     FbyExpression returns OperatorExpression
@@ -1998,6 +2019,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SfbyExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2005,6 +2027,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftExpressions returns OperatorExpression
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns OperatorExpression
@@ -2059,6 +2082,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftExpressions_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2066,6 +2090,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftLeftExpression returns OperatorExpression
 	 *
@@ -2105,6 +2130,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftLeftExpression_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2112,6 +2138,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftRightExpression returns OperatorExpression
 	 *
@@ -2151,6 +2178,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftRightExpression_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2158,6 +2186,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftRightUnsignedExpression returns OperatorExpression
 	 *
@@ -2197,6 +2226,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftRightUnsignedExpression_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2204,6 +2234,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     ShiftRightExpression.OperatorExpression_1_0 returns OperatorExpression
@@ -2242,6 +2273,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2249,6 +2281,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ProductExpression returns OperatorExpression
 	 *     ProductExpression.OperatorExpression_1_0_0 returns OperatorExpression
@@ -2273,6 +2306,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2280,6 +2314,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     FbyExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     SfbyExpression returns OperatorExpression
@@ -2305,6 +2340,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SfbyExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2312,6 +2348,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     AtomicExpression returns OperatorExpression
 	 *     Expression returns OperatorExpression
@@ -2356,6 +2393,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectPreExpression) | 
 	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2363,6 +2401,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Await
 	 *     EsterelParallel returns Await
@@ -2373,6 +2412,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* ((delay=DelayExpression statements+=EsterelParallel?) | cases+=Case+))
+	 * </pre>
 	 */
 	protected void sequence_Await(ISerializationContext context, Await semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2380,6 +2420,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Block
 	 *     EsterelParallel returns Block
@@ -2390,6 +2431,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* statements+=EsterelParallel)
+	 * </pre>
 	 */
 	protected void sequence_Block(ISerializationContext context, Block semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2397,11 +2439,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns ConstantExpression
 	 *
 	 * Constraint:
 	 *     ((constant=[Constant|ID] | value=AnyValue) schedule+=ScheduleObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_ConstantExpression(ISerializationContext context, ConstantExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2409,11 +2453,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns EsterelFunctionCall
 	 *
 	 * Constraint:
 	 *     (function=[Function|ID] (parameter+=Expression parameter+=Expression*)? schedule+=ScheduleObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_EsterelFunctionCall(ISerializationContext context, EsterelFunctionCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2421,11 +2467,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns TrapExpression
 	 *
 	 * Constraint:
 	 *     (trap=[TrapSignal|ID] schedule+=ScheduleObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_TrapExpression(ISerializationContext context, TrapExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2433,11 +2481,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Case returns Case
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* delay=DelayExpression statements+=EsterelParallel?)
+	 * </pre>
 	 */
 	protected void sequence_Case(ISerializationContext context, Case semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2445,12 +2495,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelDeclaration returns ConstantDeclaration
 	 *     ConstantDeclaration returns ConstantDeclaration
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* valuedObjects+=Constant valuedObjects+=Constant*)
+	 * </pre>
 	 */
 	protected void sequence_ConstantDeclaration(ISerializationContext context, ConstantDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2458,6 +2510,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     AtomicExpression returns ConstantExpression
 	 *     ConstantExpression returns ConstantExpression
@@ -2525,6 +2578,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (constant=[Constant|ID] | value=AnyValue)
+	 * </pre>
 	 */
 	protected void sequence_ConstantExpression(ISerializationContext context, ConstantExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2532,11 +2586,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ConstantRenaming returns ConstantRenaming
 	 *
 	 * Constraint:
 	 *     ((newName=[Constant|ID] | newValue=AnyValue) oldName=[Constant|ID])
+	 * </pre>
 	 */
 	protected void sequence_ConstantRenaming(ISerializationContext context, ConstantRenaming semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2544,11 +2600,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Constant returns Constant
 	 *
 	 * Constraint:
 	 *     (name=ID initialValue=Expression? type=TypeIdentifier)
+	 * </pre>
 	 */
 	protected void sequence_Constant(ISerializationContext context, Constant semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2556,6 +2614,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     DelayExpression returns DelayExpression
 	 *
@@ -2564,6 +2623,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (delay=Expression (expression=SignalOrTickReferenceExpression | expression=SignalPreExpression | expression=SignalExpression)) | 
 	 *         (immediate?='immediate'? (expression=SignalOrTickReferenceExpression | expression=SignalPreExpression | expression=SignalExpression))
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_DelayExpression(ISerializationContext context, DelayExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2571,11 +2631,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ElsIf returns ElsIf
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* expression=Expression statements+=EsterelParallel?)
+	 * </pre>
 	 */
 	protected void sequence_ElsIf(ISerializationContext context, ElsIf semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2583,6 +2645,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Emit
 	 *     EsterelParallel returns Emit
@@ -2593,6 +2656,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* signal=[Signal|ID] expression=Expression?)
+	 * </pre>
 	 */
 	protected void sequence_Emit(ISerializationContext context, Emit semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2600,6 +2664,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Assignment
 	 *     EsterelParallel returns Assignment
@@ -2610,6 +2675,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* reference=VariableReference expression=Expression)
+	 * </pre>
 	 */
 	protected void sequence_EsterelAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2617,6 +2683,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     AtomicExpression returns EsterelFunctionCall
 	 *     EsterelFunctionCall returns EsterelFunctionCall
@@ -2684,6 +2751,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (function=[Function|ID] (parameter+=Expression parameter+=Expression*)?)
+	 * </pre>
 	 */
 	protected void sequence_EsterelFunctionCall(ISerializationContext context, EsterelFunctionCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2691,11 +2759,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelModule returns Module
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* name=ID declarations+=EsterelDeclaration* statements+=EsterelParallel?)
+	 * </pre>
 	 */
 	protected void sequence_EsterelModule(ISerializationContext context, de.cau.cs.kieler.scl.Module semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2703,11 +2773,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelParallel returns EsterelParallel
 	 *
 	 * Constraint:
 	 *     (statements+=EsterelParallel_EsterelParallel_1_0 statements+=EsterelThread+)
+	 * </pre>
 	 */
 	protected void sequence_EsterelParallel(ISerializationContext context, EsterelParallel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2715,6 +2787,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Pause
 	 *     EsterelParallel returns Pause
@@ -2725,6 +2798,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     annotations+=Annotation*
+	 * </pre>
 	 */
 	protected void sequence_EsterelPause(ISerializationContext context, Pause semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2732,11 +2806,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelProgram returns EsterelProgram
 	 *
 	 * Constraint:
 	 *     ((pragmas+=Pragma+ modules+=EsterelModule+) | modules+=EsterelModule+)?
+	 * </pre>
 	 */
 	protected void sequence_EsterelProgram(ISerializationContext context, EsterelProgram semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2744,6 +2820,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelParallel returns EsterelThread
 	 *     EsterelParallel.EsterelParallel_1_0 returns EsterelThread
@@ -2751,6 +2828,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (statements+=EsterelThread_EsterelThread_1_0 statements+=InstructionStatement+)
+	 * </pre>
 	 */
 	protected void sequence_EsterelThread(ISerializationContext context, EsterelThread semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2758,11 +2836,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelVariableDeclaration returns EsterelVariableDeclaration
 	 *
 	 * Constraint:
 	 *     (valuedObjects+=Variable valuedObjects+=Variable* type=TypeIdentifier)
+	 * </pre>
 	 */
 	protected void sequence_EsterelVariableDeclaration(ISerializationContext context, EsterelVariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2770,6 +2850,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns EveryDo
 	 *     EsterelParallel returns EveryDo
@@ -2780,6 +2861,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* delay=DelayExpression statements+=EsterelParallel)
+	 * </pre>
 	 */
 	protected void sequence_EveryDo(ISerializationContext context, EveryDo semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2787,6 +2869,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ExecCase returns ExecCase
 	 *
@@ -2799,6 +2882,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         returnSignal=[Signal|ID] 
 	 *         statements+=EsterelParallel?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ExecCase(ISerializationContext context, ExecCase semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2806,6 +2890,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Exec
 	 *     EsterelParallel returns Exec
@@ -2828,6 +2913,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             execCaseList+=ExecCase+
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_Exec(ISerializationContext context, Exec semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2835,6 +2921,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Exit
 	 *     EsterelParallel returns Exit
@@ -2845,6 +2932,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* trap=[TrapSignal|ID] expression=Expression?)
+	 * </pre>
 	 */
 	protected void sequence_Exit(ISerializationContext context, Exit semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2852,12 +2940,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelDeclaration returns FunctionDeclaration
 	 *     FunctionDeclaration returns FunctionDeclaration
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* valuedObjects+=Function valuedObjects+=Function*)
+	 * </pre>
 	 */
 	protected void sequence_FunctionDeclaration(ISerializationContext context, FunctionDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2865,11 +2955,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     FunctionRenaming returns FunctionRenaming
 	 *
 	 * Constraint:
 	 *     ((newName=[Function|ID] | newFunc=BuildInFunction) oldName=[Function|ID])
+	 * </pre>
 	 */
 	protected void sequence_FunctionRenaming(ISerializationContext context, FunctionRenaming semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2877,11 +2969,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Function returns Function
 	 *
 	 * Constraint:
 	 *     (name=ID (parameterTypes+=TypeIdentifier parameterTypes+=TypeIdentifier*)? returnType=TypeIdentifier)
+	 * </pre>
 	 */
 	protected void sequence_Function(ISerializationContext context, Function semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2889,6 +2983,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Halt
 	 *     EsterelParallel returns Halt
@@ -2899,6 +2994,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     annotations+=Annotation*
+	 * </pre>
 	 */
 	protected void sequence_Halt(ISerializationContext context, Halt semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2906,6 +3002,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns IfTest
 	 *     EsterelParallel returns IfTest
@@ -2922,6 +3019,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         elseif+=ElsIf* 
 	 *         elseStatements+=EsterelParallel?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_IfTest(ISerializationContext context, IfTest semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2929,12 +3027,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelDeclaration returns InputDeclaration
 	 *     InputDeclaration returns InputDeclaration
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* valuedObjects+=Signal valuedObjects+=Signal*)
+	 * </pre>
 	 */
 	protected void sequence_InputDeclaration(ISerializationContext context, InputDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2942,12 +3042,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelDeclaration returns InputOutputDeclaration
 	 *     InputOutputDeclaration returns InputOutputDeclaration
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* valuedObjects+=Signal valuedObjects+=Signal*)
+	 * </pre>
 	 */
 	protected void sequence_InputOutputDeclaration(ISerializationContext context, InputOutputDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2955,6 +3057,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Do
 	 *     EsterelParallel returns Do
@@ -2965,6 +3068,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* statements+=EsterelParallel (delay=DelayExpression | (watching=DelayExpression watchingStatements+=EsterelParallel?)))
+	 * </pre>
 	 */
 	protected void sequence_LegacyDo(ISerializationContext context, Do semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2972,6 +3076,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns LocalSignalDeclaration
 	 *     EsterelParallel returns LocalSignalDeclaration
@@ -2982,6 +3087,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* valuedObjects+=Signal valuedObjects+=Signal* statements+=EsterelParallel)
+	 * </pre>
 	 */
 	protected void sequence_LocalSignalDeclaration(ISerializationContext context, LocalSignalDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2989,6 +3095,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns LocalVariableDeclaration
 	 *     EsterelParallel returns LocalVariableDeclaration
@@ -2999,6 +3106,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* declarations+=EsterelVariableDeclaration declarations+=EsterelVariableDeclaration* statements+=EsterelParallel)
+	 * </pre>
 	 */
 	protected void sequence_LocalVariableDeclaration(ISerializationContext context, LocalVariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3006,6 +3114,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Loop
 	 *     EsterelParallel returns Loop
@@ -3016,6 +3125,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* statements+=EsterelParallel delay=DelayExpression?)
+	 * </pre>
 	 */
 	protected void sequence_Loop(ISerializationContext context, Loop semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3023,11 +3133,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ModuleRenaming returns ModuleRenaming
 	 *
 	 * Constraint:
 	 *     (module=[Module|ID] | (newName=ID module=[Module|ID]))
+	 * </pre>
 	 */
 	protected void sequence_ModuleRenaming(ISerializationContext context, ModuleRenaming semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3035,6 +3147,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Nothing
 	 *     EsterelParallel returns Nothing
@@ -3045,6 +3158,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     annotations+=Annotation*
+	 * </pre>
 	 */
 	protected void sequence_Nothing(ISerializationContext context, Nothing semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3052,12 +3166,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelDeclaration returns OutputDeclaration
 	 *     OutputDeclaration returns OutputDeclaration
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* valuedObjects+=Signal valuedObjects+=Signal*)
+	 * </pre>
 	 */
 	protected void sequence_OutputDeclaration(ISerializationContext context, OutputDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3065,11 +3181,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PresentCase returns PresentCase
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* (expression=SignalExpression | expression=SignalExpression) statements+=EsterelParallel?)
+	 * </pre>
 	 */
 	protected void sequence_PresentCase(ISerializationContext context, PresentCase semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3077,6 +3195,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Present
 	 *     EsterelParallel returns Present
@@ -3091,6 +3210,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (((expression=SignalExpression | expression=SignalExpression) (annotations+=Annotation* statements+=EsterelParallel)?) | cases+=PresentCase+) 
 	 *         elseStatements+=EsterelParallel?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_Present(ISerializationContext context, Present semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3098,6 +3218,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns ProcedureCall
 	 *     EsterelParallel returns ProcedureCall
@@ -3113,6 +3234,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (referenceArguments+=[Variable|ID] referenceArguments+=[Variable|ID]*)? 
 	 *         (valueArguments+=Expression valueArguments+=Expression*)?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ProcedureCall(ISerializationContext context, ProcedureCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3120,12 +3242,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelDeclaration returns ProcedureDeclaration
 	 *     ProcedureDeclaration returns ProcedureDeclaration
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* valuedObjects+=Procedure valuedObjects+=Procedure*)
+	 * </pre>
 	 */
 	protected void sequence_ProcedureDeclaration(ISerializationContext context, ProcedureDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3133,11 +3257,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ProcedureRenaming returns ProcedureRenaming
 	 *
 	 * Constraint:
 	 *     (newName=[Procedure|ID] oldName=[Procedure|ID])
+	 * </pre>
 	 */
 	protected void sequence_ProcedureRenaming(ISerializationContext context, ProcedureRenaming semanticObject) {
 		if (errorAcceptor != null) {
@@ -3154,6 +3280,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Procedure returns Procedure
 	 *
@@ -3163,6 +3290,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (referenceArguments+=TypeIdentifier referenceArguments+=TypeIdentifier*)? 
 	 *         (valueArguments+=TypeIdentifier valueArguments+=TypeIdentifier*)?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_Procedure(ISerializationContext context, Procedure semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3170,12 +3298,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelDeclaration returns RelationDeclaration
 	 *     RelationDeclaration returns RelationDeclaration
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* relations+=Relation relations+=Relation*)
+	 * </pre>
 	 */
 	protected void sequence_RelationDeclaration(ISerializationContext context, RelationDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3183,12 +3313,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Relation returns RelationImplication
 	 *     RelationImplication returns RelationImplication
 	 *
 	 * Constraint:
-	 *     (first=[Signal|ID] type='=>' second=[Signal|ID])
+	 *     (first=[Signal|ID] type='=&gt;' second=[Signal|ID])
+	 * </pre>
 	 */
 	protected void sequence_RelationImplication(ISerializationContext context, RelationImplication semanticObject) {
 		if (errorAcceptor != null) {
@@ -3208,12 +3340,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Relation returns RelationIncompatibility
 	 *     RelationIncompatibility returns RelationIncompatibility
 	 *
 	 * Constraint:
 	 *     (incomp+=[Signal|ID] type='#' incomp+=[Signal|ID] incomp+=[Signal|ID]*)
+	 * </pre>
 	 */
 	protected void sequence_RelationIncompatibility(ISerializationContext context, RelationIncompatibility semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3221,6 +3355,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Renamings returns Renamings
 	 *
@@ -3236,6 +3371,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             (renamings+=SignalRenaming renamings+=SignalRenaming*)
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_Renamings(ISerializationContext context, Renamings semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3243,6 +3379,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Repeat
 	 *     EsterelParallel returns Repeat
@@ -3253,6 +3390,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* positive?='positive'? expression=Expression statements+=EsterelParallel)
+	 * </pre>
 	 */
 	protected void sequence_Repeat(ISerializationContext context, Repeat semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3260,12 +3398,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelDeclaration returns ReturnDeclaration
 	 *     ReturnDeclaration returns ReturnDeclaration
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* valuedObjects+=Signal valuedObjects+=Signal*)
+	 * </pre>
 	 */
 	protected void sequence_ReturnDeclaration(ISerializationContext context, ReturnDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3273,6 +3413,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Run
 	 *     EsterelParallel returns Run
@@ -3286,6 +3427,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         annotations+=Annotation* 
 	 *         ((module=ModuleRenaming (renamings+=Renamings renamings+=Renamings*)?) | (module=ModuleRenaming (renamings+=Renamings renamings+=Renamings*)?))
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_Run(ISerializationContext context, Run semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3293,12 +3435,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelDeclaration returns SensorDeclaration
 	 *     SensorDeclaration returns SensorDeclaration
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* valuedObjects+=Sensor valuedObjects+=Sensor*)
+	 * </pre>
 	 */
 	protected void sequence_SensorDeclaration(ISerializationContext context, SensorDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3306,11 +3450,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Sensor returns Sensor
 	 *
 	 * Constraint:
 	 *     (name=ID (type=TypeIdentifier | type=TypeIdentifier)?)
+	 * </pre>
 	 */
 	protected void sequence_Sensor(ISerializationContext context, Sensor semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3318,6 +3464,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SignalExpression returns OperatorExpression
 	 *     SignalExpression.OperatorExpression_1_0 returns OperatorExpression
@@ -3333,6 +3480,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (operator=EsterelNotOperator subExpressions+=SignalNotExpression) | 
 	 *         (operator=EsterelPreOperator subExpressions+=SignalOrTickReferenceExpression)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_SignalAndExpression_SignalExpression_SignalNotExpression_SignalPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3340,11 +3488,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SignalPreExpression returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     (operator=EsterelPreOperator subExpressions+=SignalOrTickReferenceExpression)
+	 * </pre>
 	 */
 	protected void sequence_SignalPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3352,6 +3502,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SignalExpression returns SignalReference
 	 *     SignalExpression.OperatorExpression_1_0 returns SignalReference
@@ -3364,6 +3515,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     valuedObject=[Signal|ID]
+	 * </pre>
 	 */
 	protected void sequence_SignalReferenceExpression(ISerializationContext context, SignalReference semanticObject) {
 		if (errorAcceptor != null) {
@@ -3377,11 +3529,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SignalRenaming returns SignalRenaming
 	 *
 	 * Constraint:
 	 *     (newName=SignalOrTickReferenceExpression oldName=SignalOrTickReferenceExpression)
+	 * </pre>
 	 */
 	protected void sequence_SignalRenaming(ISerializationContext context, SignalRenaming semanticObject) {
 		if (errorAcceptor != null) {
@@ -3398,6 +3552,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Signal returns Signal
 	 *
@@ -3415,6 +3570,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             )
 	 *         )?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_Signal(ISerializationContext context, Signal semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3422,6 +3578,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Suspend
 	 *     EsterelParallel returns Suspend
@@ -3432,6 +3589,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* weak?='weak'? statements+=EsterelParallel delay=DelayExpression)
+	 * </pre>
 	 */
 	protected void sequence_Suspend(ISerializationContext context, Suspend semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3439,6 +3597,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Sustain
 	 *     EsterelParallel returns Sustain
@@ -3449,6 +3608,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* signal=[Signal|ID] expression=Expression?)
+	 * </pre>
 	 */
 	protected void sequence_Sustain(ISerializationContext context, Sustain semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3456,12 +3616,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelDeclaration returns TaskDeclaration
 	 *     TaskDeclaration returns TaskDeclaration
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* valuedObjects+=Task valuedObjects+=Task*)
+	 * </pre>
 	 */
 	protected void sequence_TaskDeclaration(ISerializationContext context, TaskDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3469,11 +3631,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TaskRenaming returns TaskRenaming
 	 *
 	 * Constraint:
 	 *     (newName=[Task|ID] oldName=[Task|ID])
+	 * </pre>
 	 */
 	protected void sequence_TaskRenaming(ISerializationContext context, TaskRenaming semanticObject) {
 		if (errorAcceptor != null) {
@@ -3490,6 +3654,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Task returns Task
 	 *
@@ -3499,6 +3664,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (referenceArguments+=TypeIdentifier referenceArguments+=TypeIdentifier*)? 
 	 *         (valueArguments+=TypeIdentifier valueArguments+=TypeIdentifier*)?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_Task(ISerializationContext context, Task semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3506,6 +3672,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SignalExpression returns TickReference
 	 *     SignalExpression.OperatorExpression_1_0 returns TickReference
@@ -3518,6 +3685,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     {TickReference}
+	 * </pre>
 	 */
 	protected void sequence_TickSignalExpression(ISerializationContext context, TickReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3525,6 +3693,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TrapExpr returns OperatorExpression
 	 *
@@ -3534,6 +3703,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (subExpressions+=TrapAndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=TrapNotExpression)+) | 
 	 *         (operator=EsterelNotOperator subExpressions+=TrapNotExpression)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_TrapAndExpression_TrapExpr_TrapNotExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3541,6 +3711,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TrapExpr.OperatorExpression_1_0 returns OperatorExpression
 	 *     TrapAndExpression returns OperatorExpression
@@ -3550,6 +3721,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (subExpressions+=TrapAndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=TrapNotExpression)+) | 
 	 *         (operator=EsterelNotOperator subExpressions+=TrapNotExpression)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_TrapAndExpression_TrapNotExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3557,6 +3729,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     AtomicExpression returns TrapExpression
 	 *     TrapExpression returns TrapExpression
@@ -3630,6 +3803,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     trap=[TrapSignal|ID]
+	 * </pre>
 	 */
 	protected void sequence_TrapExpression(ISerializationContext context, TrapExpression semanticObject) {
 		if (errorAcceptor != null) {
@@ -3643,11 +3817,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TrapHandler returns TrapHandler
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* expression=TrapExpr statements+=EsterelParallel)
+	 * </pre>
 	 */
 	protected void sequence_TrapHandler(ISerializationContext context, TrapHandler semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3655,12 +3831,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TrapAndExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     TrapNotExpression returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     (operator=EsterelNotOperator subExpressions+=TrapNotExpression)
+	 * </pre>
 	 */
 	protected void sequence_TrapNotExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3668,6 +3846,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TrapExpr returns TrapReference
 	 *     TrapExpr.OperatorExpression_1_0 returns TrapReference
@@ -3679,6 +3858,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     valuedObject=[TrapSignal|ID]
+	 * </pre>
 	 */
 	protected void sequence_TrapReferenceExpr(ISerializationContext context, TrapReference semanticObject) {
 		if (errorAcceptor != null) {
@@ -3692,6 +3872,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TrapSignal returns TrapSignal
 	 *
@@ -3708,6 +3889,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             ((type=EsterelValueType | idType=ID) (combineFunction=[Function|ID] | combineOperator=EsterelCombineOperator))
 	 *         )?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_TrapSignal(ISerializationContext context, TrapSignal semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3715,6 +3897,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Trap
 	 *     EsterelParallel returns Trap
@@ -3725,6 +3908,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* trapSignals+=TrapSignal trapSignals+=TrapSignal* statements+=EsterelParallel trapHandler+=TrapHandler*)
+	 * </pre>
 	 */
 	protected void sequence_Trap(ISerializationContext context, Trap semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3732,12 +3916,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelDeclaration returns TypeDeclaration
 	 *     TypeDeclaration returns TypeDeclaration
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* valuedObjects+=TypeDefinition valuedObjects+=TypeDefinition*)
+	 * </pre>
 	 */
 	protected void sequence_TypeDeclaration(ISerializationContext context, TypeDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3745,11 +3931,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeDefinition returns TypeDefinition
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_TypeDefinition(ISerializationContext context, TypeDefinition semanticObject) {
 		if (errorAcceptor != null) {
@@ -3763,11 +3951,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeIdentifier returns TypeIdentifier
 	 *
 	 * Constraint:
 	 *     (type=EsterelValueType | ((type=EsterelValueType | idType=ID) operator=EsterelCombineOperator) | idType=ID | esterelType=[TypeDefinition|ID])
+	 * </pre>
 	 */
 	protected void sequence_TypeIdentifier(ISerializationContext context, TypeIdentifier semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3775,11 +3965,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeRenaming returns TypeRenaming
 	 *
 	 * Constraint:
 	 *     ((newName=[TypeDefinition|ID] | newType=EsterelValueType) oldName=[TypeDefinition|ID])
+	 * </pre>
 	 */
 	protected void sequence_TypeRenaming(ISerializationContext context, TypeRenaming semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3787,6 +3979,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ValuedObjectPreExpression returns OperatorExpression
 	 *
@@ -3795,6 +3988,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectPreExpression) | 
 	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3802,11 +3996,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     VariableReference returns VariableReference
 	 *
 	 * Constraint:
 	 *     valuedObject=[Variable|ID]
+	 * </pre>
 	 */
 	protected void sequence_VariableReference(ISerializationContext context, VariableReference semanticObject) {
 		if (errorAcceptor != null) {
@@ -3820,11 +4016,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Variable returns Variable
 	 *
 	 * Constraint:
 	 *     (name=ID initialValue=Expression?)
+	 * </pre>
 	 */
 	protected void sequence_Variable(ISerializationContext context, Variable semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
