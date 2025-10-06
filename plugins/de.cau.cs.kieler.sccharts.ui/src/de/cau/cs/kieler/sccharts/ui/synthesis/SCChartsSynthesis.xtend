@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.ide.klighd.KiCoDiagramViewProperties
@@ -37,6 +36,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterRules
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ActorSkins
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
@@ -46,18 +46,12 @@ import java.util.LinkedHashSet
 import java.util.List
 import org.eclipse.elk.alg.force.options.StressOptions
 import org.eclipse.elk.alg.layered.InteractiveLayeredGraphVisitor
-import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.rectpacking.InteractiveRectPackingGraphVisitor
 import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.service.util.CompoundGraphElementVisitor
 import org.eclipse.elk.core.util.IGraphElementVisitor
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
-import de.cau.cs.kieler.klighd.filtering.SemanticFilterRule
-import de.cau.cs.kieler.klighd.filtering.SemanticFilterTag
-import de.cau.cs.kieler.klighd.KlighdOptions
-import de.cau.cs.kieler.sccharts.ui.synthesis.filtering.SCChartsSemanticFilterRules
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -87,7 +81,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     @Inject CommentSynthesis commentSynthesis
     @Inject MethodSynthesis methodSynthesis
     @Inject PolicySynthesis policySynthesis
-    @Inject SCChartsClassDiagramSynthesis classDiagramSynthesis
+    @Inject ClassDiagramEdgeSynthesis classDiagramEdgeSynthesis
         
     @Inject package SynthesisHooks hooks  
 
@@ -245,10 +239,10 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
 //            }
 
             if (SHOW_INHERITANCE_EDGES.booleanValue) {
-                classDiagramSynthesis.addInheritanceEdges(rootNode, rootStateNodes)
+                classDiagramEdgeSynthesis.addInheritanceEdges(rootNode, rootStateNodes)
             }
             if (SHOW_AGGREGATION_EDGES.booleanValue) {
-                classDiagramSynthesis.addAssociationEdges(rootNode, rootStateNodes, !SHOW_AGGREGATION_REVERSE.booleanValue, SHOW_AGGREGATION_MULTI.booleanValue, SHOW_AGGREGATION_FIELDS.booleanValue)
+                classDiagramEdgeSynthesis.addAssociationEdges(rootNode, rootStateNodes, !SHOW_AGGREGATION_REVERSE.booleanValue, SHOW_AGGREGATION_MULTI.booleanValue, SHOW_AGGREGATION_FIELDS.booleanValue)
             }
         } else {
             hooks.invokeStart(scc.rootStates.head, rootNode)
