@@ -30,6 +30,7 @@ import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
@@ -41,6 +42,7 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.ui.synthesis.KGTLoader
 import de.cau.cs.kieler.kicool.ui.synthesis.colors.AbstractColorStore.GeneralColor
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
@@ -50,7 +52,6 @@ import de.cau.cs.kieler.klighd.krendering.KBackground
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KEllipse
 import de.cau.cs.kieler.klighd.krendering.KForeground
-import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
@@ -97,10 +98,10 @@ import org.eclipse.emf.ecore.EObject
 import static de.cau.cs.kieler.sccharts.ide.synthesis.EquationSynthesisProperties.*
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
+import static extension com.google.common.collect.Iterables.concat
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import static extension com.google.common.collect.Iterables.concat
 
 /**
  * @author ssm
@@ -308,7 +309,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         combineAllDataAccessNodes = COMBINE_ALL_DATA_ACCESS.booleanValue
         showArrows = SHOW_ARROWS.booleanValue
         
-        currentRegion = rootNode.sourceElement as DataflowRegion
+        currentRegions.push(rootNode.sourceElement as DataflowRegion)
         var nodes = <KNode>newLinkedList
         val List<KNode> lastKNodes = newArrayList
         for (assignment : elements) {
@@ -340,6 +341,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         var finalNodes = nodes.reWireInlining
         finalNodes.addMissingReferenceInputs
+	currentRegions.pop
         
         finalNodes.applyColors()
         return finalNodes
@@ -915,7 +917,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                         ]
                         target.ports.add(targetPort)
                     }
-                    edge.setLayoutOption(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
                     edge.source = source
                     edge.sourcePort = sourcePort
                     edge.target = target
@@ -1012,7 +1013,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             ]
             after.ports.add(targetPort)
         }
-        edge.setLayoutOption(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
         edge.source = before
         edge.sourcePort = sourcePort
         edge.target = after
@@ -1146,24 +1146,33 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
                 val inputNames = <String, KNode>newHashMap
                 for (inputNode : child.children.filter(KNode).filter[getProperty(INPUT_FLAG)]) {
-                    val name = inputNode.data.filter(KPolygon).head.children.filter(KText).head.text
-                    inputNames.put(name, inputNode)
+                    val valuedObjectRef = inputNode.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                    // only care for inputs that have a valued object as a reference, ignore others such as constants.
+                    if (valuedObjectRef instanceof ValuedObjectReference) {
+                        val name = valuedObjectRef.valuedObject.name
+                        inputNames.put(name, inputNode)
+                    }
                 }
                 val outputNames = <String, KNode>newHashMap
                 for (outputNode : child.children.filter(KNode).filter[getProperty(OUTPUT_FLAG)]) {
-                    val name = outputNode.data.filter(KPolygon).head.children.filter(KText).head.text
-                    outputNames.put(name, outputNode)
+                    val valuedObjectRef = outputNode.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                    if (valuedObjectRef instanceof ValuedObjectReference) {
+                        val name = valuedObjectRef.valuedObject.name
+                        outputNames.put(name, outputNode)
+                    }
                 }
 
+                // go through all ports, but the non-east ones in reverse. Avoids accitental Swastika in many examples.
                 for (port : node.ports.immutableCopy.reverseView) {
-                    val portName = port.labels.head?.text
                     val portSide = port.portSide
-                    val newPort = port.copy
-
-                    newPort.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0d)
-                    child.ports += newPort
-
                     if (portSide != PortSide.EAST) {
+                        val reference = port.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                        val portName = if(reference instanceof ValuedObjectReference) reference.valuedObject.name else ""
+                        val newPort = port.copy
+    
+                        newPort.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0d)
+                        child.ports += newPort
+
                         for (edge : node.incomingEdges.immutableCopy.filter[targetPort == port]) {
                             edge.target = child
                             edge.targetPort = newPort
@@ -1178,7 +1187,17 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                                 inputNode.remove
                             }
                         }
-                    } else if (portSide == PortSide.EAST) {
+                    }
+                }
+                for (port : node.ports.immutableCopy) {
+                    val portSide = port.portSide
+                    if (portSide == PortSide.EAST) {
+                        val reference = port.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                        val portName = if(reference instanceof ValuedObjectReference) reference.valuedObject.name else ""
+                        val newPort = port.copy
+    
+                        newPort.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0d)
+                        child.ports += newPort
                         for (edge : node.outgoingEdges.immutableCopy.filter[sourcePort == port]) {
                             edge.source = child
                             edge.sourcePort = newPort
@@ -1200,6 +1219,30 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         for (node : inlinedNodes) {
             nodes.betterRemove(node, null)
         }
+        
+        
+        // activate inside self loops on inlined reference nodes that directly connect an input to an output.
+        for (refNode : nodes.filter [properties.get(KlighdInternalProperties.MODEL_ELEMENT) instanceof DataflowRegion]) {
+            // inside self loops go directly from an input to an output.
+            val insideSelfLoops = refNode.outgoingEdges.filter[ 
+                val sourceElement = it.sourcePort.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                val targetElement = it.targetPort.properties.get(KlighdInternalProperties.MODEL_ELEMENT)
+                return refNode.incomingEdges.contains(it) 
+                    && sourceElement instanceof ValuedObjectReference
+                    && targetElement instanceof ValuedObjectReference
+                    && (sourceElement as ValuedObjectReference).valuedObject.eContainer instanceof VariableDeclaration
+                    && (targetElement as ValuedObjectReference).valuedObject.eContainer instanceof VariableDeclaration
+                    && ((sourceElement as ValuedObjectReference).valuedObject.eContainer as VariableDeclaration).isInput
+                    && ((targetElement as ValuedObjectReference).valuedObject.eContainer as VariableDeclaration).isOutput
+            ]
+            insideSelfLoops.forEach [
+                addLayoutParam(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
+            ]
+            if (!insideSelfLoops.empty) {
+                refNode.addLayoutParam(LayeredOptions.INSIDE_SELF_LOOPS_ACTIVATE, true)
+            }
+        }
+        
         return nodes
     }
     
