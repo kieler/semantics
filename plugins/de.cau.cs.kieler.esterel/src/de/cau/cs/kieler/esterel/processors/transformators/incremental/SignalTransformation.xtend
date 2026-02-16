@@ -69,9 +69,9 @@ class  SignalTransformation extends AbstractSCEstDynamicProcessor<Module> {
                 val decl = createDeclaration(ValueType.BOOL, s)
                 voStore.update(s, "signal")
                 var decl2 = createDeclaration(null, null)
-                if (signal.type !== null) {
+                if (signal.type !== null || signal.idType !== null) {
                     module.declarations.add(decl)
-                    if (signal.type == ValueType.PURE) {
+                    if (signal.type == ValueType.PURE && signal.idType === null) {
                         newSignals.put(signal, new NewSignals(s))
                     }
                     else {
@@ -79,8 +79,17 @@ class  SignalTransformation extends AbstractSCEstDynamicProcessor<Module> {
                         decl.valuedObjects.add(s_set)
                         val s_cur = createSignalVariable(null, signal.combineOperator, s.name + "_cur")
                         val s_val = createSignalVariable(signal.initialValue, signal.combineOperator, s.name + "_val")
-                        val tempType = if (signal.type == ValueType.DOUBLE) ValueType.FLOAT else signal.type
+                        val tempType = if (signal.idType !== null) {
+                            ValueType.HOST
+                        } else if (signal.type == ValueType.DOUBLE) {
+                            ValueType.FLOAT
+                        } else {
+                            signal.type
+                        }
                         decl2 = createDeclaration(tempType, null)
+                        if (signal.idType !== null) {
+                            decl2.hostType = signal.idType
+                        }
                         decl2.valuedObjects.add(s_cur)
                         decl2.valuedObjects.add(s_val)
                         newSignals.put(signal, new NewSignals(s, s_set, s_cur, s_val))
@@ -112,13 +121,6 @@ class  SignalTransformation extends AbstractSCEstDynamicProcessor<Module> {
         ]
         model.checkGotos
     }
-    
-    /*
-     *  TODO only the signals with type != null will be transformed
-     *  signals with typeID != null are not handled
-     *  SCL doesn't allow anything else then the predefined types
-     *  see KExt.xtext => Declaration
-    */
     
     def createParallelForSignals(Module module, HashMap<Signal, NewSignals> signalsMap) {
         var necessary = false
