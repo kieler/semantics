@@ -16,6 +16,7 @@ package de.cau.cs.kieler.scl.processors.transformators
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
@@ -78,6 +79,7 @@ import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 
+
 /** 
  * SCL to SCG Transformation 
  * 
@@ -97,6 +99,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
     @Inject extension AnnotationsExtensions
     @Inject extension SCLExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension PragmaExtensions
     static val sCGFactory = ScgFactory.eINSTANCE
     extension ScgFactory = ScgFactory::eINSTANCE
     static val sclFactory = SCLFactory::eINSTANCE
@@ -149,6 +152,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
         // Create new SCG...
         val scgs = createSCGraphs
         creationalTransformation(program, scgs)
+        program.copyPragmas(scgs)
 
         for (module : program.modules) {
             val scg = createSCGraph
