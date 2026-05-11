@@ -1,0 +1,4 @@
+public system de.cau.cs.kieler.sccharts.SCTXToJSON
+    label "JSON Generation"
+
+de.cau.cs.kieler.sccharts.processors.SCTXToJSON
