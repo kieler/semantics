@@ -1,6 +1,8 @@
 
 package de.cau.cs.kieler.sccharts.processors.json;
 
+import java.util.HashMap;
+import java.util.Map;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -32,32 +34,15 @@ public class Transition {
      * (Required)
      * 
      */
-    @SerializedName("isTermination")
+    @SerializedName("preemption")
     @Expose
-    private boolean isTermination;
+    private Transition.Preemption preemption;
     @SerializedName("guard")
     @Expose
     private String guard;
     @SerializedName("action")
     @Expose
     private String action;
-
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
-    public Transition() {
-    }
-
-    public Transition(String label, String targetID, boolean isImmediate, boolean isTermination, String guard, String action) {
-        super();
-        this.label = label;
-        this.targetID = targetID;
-        this.isImmediate = isImmediate;
-        this.isTermination = isTermination;
-        this.guard = guard;
-        this.action = action;
-    }
 
     public String getLabel() {
         return label;
@@ -108,8 +93,8 @@ public class Transition {
      * (Required)
      * 
      */
-    public boolean isIsTermination() {
-        return isTermination;
+    public Transition.Preemption getPreemption() {
+        return preemption;
     }
 
     /**
@@ -117,8 +102,8 @@ public class Transition {
      * (Required)
      * 
      */
-    public void setIsTermination(boolean isTermination) {
-        this.isTermination = isTermination;
+    public void setPreemption(Transition.Preemption preemption) {
+        this.preemption = preemption;
     }
 
     public String getGuard() {
@@ -135,6 +120,48 @@ public class Transition {
 
     public void setAction(String action) {
         this.action = action;
+    }
+
+    @Generated("jsonschema2pojo")
+    public enum Preemption {
+
+        @SerializedName("strong")
+        STRONG("strong"),
+        @SerializedName("weak")
+        WEAK("weak"),
+        @SerializedName("termination")
+        TERMINATION("termination");
+        private final String value;
+        private final static Map<String, Transition.Preemption> CONSTANTS = new HashMap<String, Transition.Preemption>();
+
+        static {
+            for (Transition.Preemption c: values()) {
+                CONSTANTS.put(c.value, c);
+            }
+        }
+
+        Preemption(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return this.value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+
+        public static Transition.Preemption fromValue(String value) {
+            Transition.Preemption constant = CONSTANTS.get(value);
+            if (constant == null) {
+                throw new IllegalArgumentException(value);
+            } else {
+                return constant;
+            }
+        }
+
     }
 
 }

@@ -41,22 +41,6 @@ public class Action {
     @Expose
     private String action;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
-    public Action() {
-    }
-
-    public Action(String label, Action.Type type, boolean isImmediate, String guard, String action) {
-        super();
-        this.label = label;
-        this.type = type;
-        this.isImmediate = isImmediate;
-        this.guard = guard;
-        this.action = action;
-    }
-
     public String getLabel() {
         return label;
     }

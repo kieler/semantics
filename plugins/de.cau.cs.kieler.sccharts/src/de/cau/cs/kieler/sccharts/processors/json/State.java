@@ -20,6 +20,11 @@ public class State {
     @SerializedName("label")
     @Expose
     private String label;
+    /**
+     * 
+     * (Required)
+     * 
+     */
     @SerializedName("actions")
     @Expose
     private List<Action> actions;
@@ -31,6 +36,11 @@ public class State {
     @SerializedName("transitions")
     @Expose
     private List<Transition> transitions;
+    /**
+     * 
+     * (Required)
+     * 
+     */
     @SerializedName("variables")
     @Expose
     private List<Variable> variables;
@@ -60,25 +70,6 @@ public class State {
     private List<Region> regions;
 
     /**
-     * No args constructor for use in serialization
-     * 
-     */
-    public State() {
-    }
-
-    public State(String id, String label, List<Action> actions, List<Transition> transitions, List<Variable> variables, boolean isInitial, boolean isFinal, List<Region> regions) {
-        super();
-        this.id = id;
-        this.label = label;
-        this.actions = actions;
-        this.transitions = transitions;
-        this.variables = variables;
-        this.isInitial = isInitial;
-        this.isFinal = isFinal;
-        this.regions = regions;
-    }
-
-    /**
      * 
      * (Required)
      * 
@@ -104,10 +95,20 @@ public class State {
         this.label = label;
     }
 
+    /**
+     * 
+     * (Required)
+     * 
+     */
     public List<Action> getActions() {
         return actions;
     }
 
+    /**
+     * 
+     * (Required)
+     * 
+     */
     public void setActions(List<Action> actions) {
         this.actions = actions;
     }
@@ -130,10 +131,20 @@ public class State {
         this.transitions = transitions;
     }
 
+    /**
+     * 
+     * (Required)
+     * 
+     */
     public List<Variable> getVariables() {
         return variables;
     }
 
+    /**
+     * 
+     * (Required)
+     * 
+     */
     public void setVariables(List<Variable> variables) {
         this.variables = variables;
     }

@@ -30,20 +30,6 @@ public class Region {
     private List<State> states;
 
     /**
-     * No args constructor for use in serialization
-     * 
-     */
-    public Region() {
-    }
-
-    public Region(String id, String label, List<State> states) {
-        super();
-        this.id = id;
-        this.label = label;
-        this.states = states;
-    }
-
-    /**
      * 
      * (Required)
      * 

@@ -146,7 +146,12 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
         transformed.label = transition.label
         transformed.targetID = transition.targetState.name
         transformed.isImmediate = transition.delay.equals(DelayType.IMMEDIATE)
-        transformed.isTermination = transition.preemption.equals(PreemptionType.TERMINATION)
+        transformed.preemption = switch(transition.preemption) {
+            case PreemptionType.TERMINATION:    de.cau.cs.kieler.sccharts.processors.json.Transition.Preemption.TERMINATION
+            case PreemptionType.STRONG:    de.cau.cs.kieler.sccharts.processors.json.Transition.Preemption.STRONG
+            case PreemptionType.WEAK:    de.cau.cs.kieler.sccharts.processors.json.Transition.Preemption.WEAK
+            case PreemptionType.UNDEFINED:    de.cau.cs.kieler.sccharts.processors.json.Transition.Preemption.WEAK
+        }
         transformed.guard = Optional.ofNullable(transition.trigger).map[expr_serializer.serialize(it)].map[toString].orElse(null)
         transformed.action = String.valueOf(effect_serializer.serialize(transition.effects))       
         

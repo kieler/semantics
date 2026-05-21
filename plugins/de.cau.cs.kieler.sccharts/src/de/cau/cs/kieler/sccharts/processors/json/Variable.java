@@ -27,28 +27,22 @@ public class Variable {
     @SerializedName("initialValue")
     @Expose
     private Object initialValue;
+    /**
+     * 
+     * (Required)
+     * 
+     */
     @SerializedName("isInput")
     @Expose
     private boolean isInput;
+    /**
+     * 
+     * (Required)
+     * 
+     */
     @SerializedName("isOutput")
     @Expose
     private boolean isOutput;
-
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
-    public Variable() {
-    }
-
-    public Variable(String id, String type, Object initialValue, boolean isInput, boolean isOutput) {
-        super();
-        this.id = id;
-        this.type = type;
-        this.initialValue = initialValue;
-        this.isInput = isInput;
-        this.isOutput = isOutput;
-    }
 
     /**
      * 
@@ -94,18 +88,38 @@ public class Variable {
         this.initialValue = initialValue;
     }
 
+    /**
+     * 
+     * (Required)
+     * 
+     */
     public boolean isIsInput() {
         return isInput;
     }
 
+    /**
+     * 
+     * (Required)
+     * 
+     */
     public void setIsInput(boolean isInput) {
         this.isInput = isInput;
     }
 
+    /**
+     * 
+     * (Required)
+     * 
+     */
     public boolean isIsOutput() {
         return isOutput;
     }
 
+    /**
+     * 
+     * (Required)
+     * 
+     */
     public void setIsOutput(boolean isOutput) {
         this.isOutput = isOutput;
     }
