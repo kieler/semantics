@@ -76,6 +76,7 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
 
 import static extension java.lang.String.*
+import de.cau.cs.kieler.core.definitions.Semantics
 
 /**
  * This class contains custom validation rules. 
@@ -134,6 +135,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String CANNOT_BIND_LITERAL_TO_OUTPUT = "You cannot bind a literal to an output object."
     static val String DUPLICATE_VARIABLE = "The variable is declared multiple times in this scope."
     static val String NON_IMMEDIATE_CONNECTOR = "Outgoing transitions of connector states should be marked as immediate."
+    static val String IMMEDIATE_CONNECTOR = "Outgoing transitions of connector states should not be marked as immediate unless legacy semantics are used."
     static val String NO_DEFAULT_TRANSITION = "Connector states should have an outgoing transition without trigger."
     static val String NO_OUTGOING_TRANSITION = "Connector states must have an outgoing transition."
     static val String NON_REACHABLE_TRANSITION = "The transition is not reachable."
@@ -724,9 +726,12 @@ class SCTXValidator extends AbstractSCTXValidator {
         if(state.connector) {
             var Transition lastTransition
             var boolean transitionWithoutTrigger = false
+            val hasLegacySemantics = state.SCCharts.hasPragma(Semantics.PRAGMA_LEGACY_SEMANTICS)
             for(trans : state.outgoingTransitions) {
-                if(!trans.isImmediate) {
+                if(hasLegacySemantics && !trans.isImmediate) {
                     warning(NON_IMMEDIATE_CONNECTOR, trans, null)
+                } else if (!hasLegacySemantics && trans.isImmediate) {
+                    warning(IMMEDIATE_CONNECTOR, trans, null)
                 }
                 if(trans.trigger === null) {
                     transitionWithoutTrigger = true
