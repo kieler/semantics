@@ -47,9 +47,11 @@ import java.util.Map
 import java.util.Set
 
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
+import static extension de.cau.cs.kieler.sccharts.definitions.Semantics.*
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
 import static de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.AbstractStatebasedLeanTemplate.*
 import static de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.c.StatebasedLeanCCodeGenerator.*
+import de.cau.cs.kieler.sccharts.definitions.Semantics
 
 /**
  * @author als
@@ -104,6 +106,9 @@ class StatebasedModernLeanCTemplate extends ExogenousProcessor<SCCharts, CodeCon
         }
         if (structure.scopes.filter(State).exists[!it.connector && it.outgoingTransitions.exists[it.isImmediate || it.implicitlyImmediate]]) {
             level.add("This compilation approach cannot handle immediate transitions!")
+        }
+        if (!model.hasSemantics(Semantics.SCCharts.LEAN)) {
+            level.add("This compilation approach only supports the LeanSCCharts semantics (add '#semantics \"lean\"' to switch semantics)!")
         }
         
         // Generate code
