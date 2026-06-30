@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright ${year} by
@@ -34,6 +34,9 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValueType
 import java.util.HashSet
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import com.google.gson.Strictness
 
 /**
  * 
@@ -41,10 +44,13 @@ import java.util.HashSet
 public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
 
     @Inject
-    private KEffectsSerializeExtensions effect_serializer;
+    extension SCChartsCoreExtensions;
     @Inject
-    private KExpressionsSerializeExtensions expr_serializer;
-
+    extension SCChartsTransitionExtensions;
+    @Inject
+    extension KEffectsSerializeExtensions;
+//    @Inject
+//    extension KExpressionsSerializeExtensions;
     int regionCounter = 0;
     int stateCounter = 0;
 
@@ -79,7 +85,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
     override void process() {
         val cc = new CodeContainer();
 
-        val gson = new GsonBuilder().setPrettyPrinting().create();
+        val gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
         this.sourceModel.rootStates.forEach[renameState]
         val transformedRoots = this.sourceModel.rootStates.map[transformState];
         val fileName = this.sourceModel.name?.hostcodeSafeName ?: "scchart"
@@ -164,7 +170,17 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
         transformed.variables = state.declarations.flatMap[transformDeclaration].toList
         transformed.isInitial = state.isInitial()
         transformed.isFinal = state.isFinal()
+        transformed.isConnector = state.connector
         transformed.regions = state.regions.map[transformRegion]
+
+        if (state.reference !== null) {
+            transformed.reference = new Reference();
+            transformed.reference.targetID = state.reference.target?.name
+            // TODO: maybe add structure to the binding.
+            transformed.reference.parameters = state.reference.parameters.map [
+                it.explicitBinding.serialize + " to " + it.expression.serialize
+            ]
+        }
 
         return transformed
     }
@@ -188,9 +204,8 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
         }
 
         transformed.isImmediate = action.delay.equals(DelayType.IMMEDIATE)
-        transformed.guard = Optional.ofNullable(action.trigger).map[expr_serializer.serialize(it)].map[toString].
-            orElse(null)
-        transformed.action = String.valueOf(effect_serializer.serialize(action.effects))
+        transformed.guard = Optional.ofNullable(action.trigger).map[serialize].map[toString].orElse(null)
+        transformed.action = String.valueOf(action.effects.serialize())
 
         return transformed
     }
@@ -208,9 +223,8 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
             case PreemptionType.WEAK: de.cau.cs.kieler.sccharts.processors.json.Transition.Preemption.WEAK
             case PreemptionType.UNDEFINED: de.cau.cs.kieler.sccharts.processors.json.Transition.Preemption.WEAK
         }
-        transformed.guard = Optional.ofNullable(transition.trigger).map[expr_serializer.serialize(it)].map[toString].
-            orElse(null)
-        transformed.action = String.valueOf(effect_serializer.serialize(transition.effects))
+        transformed.guard = Optional.ofNullable(transition.trigger).map[serialize].map[toString].orElse(null)
+        transformed.action = String.valueOf(transition.effects.serialize)
 
         return transformed
     }
@@ -236,8 +250,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
 
         transformed.id = v.name
         transformed.type = t.literal
-        transformed.initialValue = Optional.ofNullable(v.initialValue).map[expr_serializer.serialize(it)].map[toString].
-            orElse(null)
+        transformed.initialValue = Optional.ofNullable(v.initialValue).map[serialize].map[toString].orElse(null)
         transformed.isInput = isInput
         transformed.isOutput = isOutput
 

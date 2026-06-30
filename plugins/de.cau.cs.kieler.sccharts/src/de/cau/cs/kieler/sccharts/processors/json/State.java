@@ -65,9 +65,20 @@ public class State {
      * (Required)
      * 
      */
+    @SerializedName("isConnector")
+    @Expose
+    private boolean isConnector;
+    /**
+     * 
+     * (Required)
+     * 
+     */
     @SerializedName("regions")
     @Expose
     private List<Region> regions;
+    @SerializedName("reference")
+    @Expose
+    private Reference reference;
 
     /**
      * 
@@ -190,6 +201,24 @@ public class State {
      * (Required)
      * 
      */
+    public boolean isIsConnector() {
+        return isConnector;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    public void setIsConnector(boolean isConnector) {
+        this.isConnector = isConnector;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
     public List<Region> getRegions() {
         return regions;
     }
@@ -201,6 +230,14 @@ public class State {
      */
     public void setRegions(List<Region> regions) {
         this.regions = regions;
+    }
+
+    public Reference getReference() {
+        return reference;
+    }
+
+    public void setReference(Reference reference) {
+        this.reference = reference;
     }
 
 }
