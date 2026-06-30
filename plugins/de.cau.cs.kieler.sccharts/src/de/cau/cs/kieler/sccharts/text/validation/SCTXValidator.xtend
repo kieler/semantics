@@ -55,6 +55,7 @@ import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.ScopeCall
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.definitions.Semantics
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
@@ -75,8 +76,8 @@ import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
 
+import static extension de.cau.cs.kieler.sccharts.definitions.Semantics.*
 import static extension java.lang.String.*
-import de.cau.cs.kieler.core.definitions.Semantics
 
 /**
  * This class contains custom validation rules. 
@@ -726,7 +727,7 @@ class SCTXValidator extends AbstractSCTXValidator {
         if(state.connector) {
             var Transition lastTransition
             var boolean transitionWithoutTrigger = false
-            val hasLegacySemantics = state.SCCharts.hasPragma(Semantics.PRAGMA_LEGACY_SEMANTICS)
+            val hasLegacySemantics = state.SCCharts.hasSemantics(Semantics.SCCharts.CLASSIC)
             for(trans : state.outgoingTransitions) {
                 if(hasLegacySemantics && !trans.isImmediate) {
                     warning(NON_IMMEDIATE_CONNECTOR, trans, null)
