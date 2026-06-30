@@ -91,7 +91,8 @@ class SCChartsProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.sccharts.processors.AbortRegion,
             de.cau.cs.kieler.sccharts.processors.scg.SCGAbortRegionProcessor,
             de.cau.cs.kieler.sccharts.processors.MethodSignaling,
-            de.cau.cs.kieler.sccharts.processors.analyzers.SCChartsModelData
+            de.cau.cs.kieler.sccharts.processors.analyzers.SCChartsModelData,
+            de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.c.StatebasedModernLeanCTemplate
         ]
     }
     
