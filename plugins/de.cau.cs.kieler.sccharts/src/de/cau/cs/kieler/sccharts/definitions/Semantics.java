@@ -42,7 +42,7 @@ public class Semantics {
             }
         }
         if (sem != null) {
-            return EnumSet.copyOf(sem.stream().map(s -> SCCharts.valueOf(s)).toList());
+            return EnumSet.copyOf(sem.stream().map(s -> SCCharts.valueOf(s.toUpperCase())).toList());
         } else {
             return EnumSet.noneOf(SCCharts.class);
         }
