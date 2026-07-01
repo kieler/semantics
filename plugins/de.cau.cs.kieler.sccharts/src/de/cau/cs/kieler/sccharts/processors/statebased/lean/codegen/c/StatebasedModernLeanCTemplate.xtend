@@ -67,7 +67,9 @@ class StatebasedModernLeanCTemplate extends ExogenousProcessor<SCCharts, CodeCon
     @Inject extension StatebasedCCodeSerializeHRExtensions2 serializer
     
     public static val IProperty<Boolean> ONLY_WARN = 
-       new Property<Boolean>("de.cau.cs.kieler.kicool.codegen.statebased.modern.lean.c.onlyWarn", false)      
+       new Property<Boolean>("de.cau.cs.kieler.kicool.codegen.statebased.modern.lean.c.onlyWarn", false)
+    public static val IProperty<Boolean> STRONG_EXIT = 
+       new Property<Boolean>("de.cau.cs.kieler.kicool.codegen.statebased.modern.lean.c.strongExit", true)   
     
     public static val FN_PREFIX = "_scc_"
     public static val STATE_VAR = "_state"
@@ -161,7 +163,7 @@ class StatebasedModernLeanCTemplate extends ExogenousProcessor<SCCharts, CodeCon
             «ENDFOR»
             
             // Entry handling
-            «FOR s : structure.scopes.filter(State).filter[it.requiresTickFunction]»
+            «FOR s : structure.scopes.filter(State).filter[it.hasTickBehavior]»
                 char «structure.uniqueName(s)»_entry;
             «ENDFOR»
         } «FN_PREFIX»«hostcodeSafeName(rootState.name)»_InternalState;
@@ -227,12 +229,12 @@ class StatebasedModernLeanCTemplate extends ExogenousProcessor<SCCharts, CodeCon
         if (state.isSuperstate) {
             return '''
             
-            «IF state.requiresTickFunction || state.hasExitActions»
+            «IF state.hasTickBehavior || state.hasExitActions»
                 /*
                  * State «state.label.nullOrEmpty ? state.name : state.label» «IF state != rootState»(«structure.pathID(state)»)«ENDIF»
                 «IF state != rootState» * «structure.pathInfo(state)»«ENDIF»
                  */
-                «IF state.requiresTickFunction»
+                «IF state.hasTickBehavior»
                 static inline void «FN_PREFIX»«structure.uniqueName(state)»_reset(«naming.get(TICKDATA)» *context) {
                     context->_state.«structure.uniqueName(state)»_entry = 1;
                     «IF state.isHierarchical»
@@ -243,7 +245,7 @@ class StatebasedModernLeanCTemplate extends ExogenousProcessor<SCCharts, CodeCon
                     «ENDIF»
                 }
                 «ENDIF»
-                «IF state.hasExitActions»
+                «IF state.hasExitBehavior»
                 static inline void «FN_PREFIX»«structure.uniqueName(state)»_exit(«naming.get(TICKDATA)» *context) {
                     «FOR a : state.exitActions»
                         «IF a.trigger !== null»
@@ -258,50 +260,74 @@ class StatebasedModernLeanCTemplate extends ExogenousProcessor<SCCharts, CodeCon
                             «ENDFOR»
                         «ENDIF»
                     «ENDFOR»
+                    «IF state.isHierarchical && state.regions.exists[hasExitBehavior]»
+                        // Exit inner states
+                        «FOR r : state.regions.filter[hasExitBehavior]»
+                            «FN_PREFIX»«structure.uniqueName(r)»_exit(context);
+                        «ENDFOR»
+                    «ENDIF»
                 }
                 «ENDIF»
-                «IF state.requiresTickFunction»
+                «IF state.hasTickBehavior»
                 static inline void «FN_PREFIX»«structure.uniqueName(state)»_tick(«naming.get(TICKDATA)» *context) {
-                    «IF state.hasDuringActions»
                     if (context->_state.«structure.uniqueName(state)»_entry) {
-                        // Entry
-                        «FOR a : state.actions.filter[it instanceof EntryAction || (it instanceof DuringAction && (it as DuringAction).immediate)]»
-                            «IF a.trigger !== null»
-                                if («a.trigger.serializeHR») {
+                        «IF state.hasImmediateDuringActions || state.hasEntryActions»
+                            // Entry
+                            «FOR a : state.actions.filter[it instanceof EntryAction || (it instanceof DuringAction && (it as DuringAction).immediate)]»
+                                «IF a.trigger !== null»
+                                    if («a.trigger.serializeHR») {
+                                        «FOR e : a.effects»
+                                            «e.serializeHR»;
+                                        «ENDFOR»
+                                    }
+                                «ELSE»
                                     «FOR e : a.effects»
                                         «e.serializeHR»;
                                     «ENDFOR»
-                                }
-                            «ELSE»
-                                «FOR e : a.effects»
-                                    «e.serializeHR»;
-                                «ENDFOR»
+                                «ENDIF»
+                            «ENDFOR»
+                        «ENDIF»
+                        «IF state.isHierarchical && state.regions.filter(ControlflowRegion).exists[it.initialState.connector || it.initialState.hasTickBehavior]»
+                            «IF state.hasImmediateDuringActions || state.hasEntryActions»
+                            
                             «ENDIF»
-                        «ENDFOR»
+                            // Only execute initial states upon entry to prevent immediate transitioning (except for initial connectors)
+                            «FOR r : state.regions.filter(ControlflowRegion)»
+                                «IF r.initialState.connector»
+                                    «FN_PREFIX»«structure.uniqueName(r)»_tick(context);
+                                «ELSEIF r.initialState.hasTickBehavior»
+                                    «FN_PREFIX»«structure.uniqueName(r.initialState)»_tick(context);
+                                «ENDIF»
+                            «ENDFOR»
+                            
+                        «ENDIF»
                     } else {
-                        // During
-                        «FOR a : state.duringActions»
-                            «IF a.trigger !== null»
-                                if («a.trigger.serializeHR») {
+                        «IF state.hasDuringActions»
+                            // During
+                            «FOR a : state.duringActions»
+                                «IF a.trigger !== null»
+                                    if («a.trigger.serializeHR») {
+                                        «FOR e : a.effects»
+                                            «e.serializeHR»;
+                                        «ENDFOR»
+                                    }
+                                «ELSE»
                                     «FOR e : a.effects»
                                         «e.serializeHR»;
                                     «ENDFOR»
-                                }
-                            «ELSE»
-                                «FOR e : a.effects»
-                                    «e.serializeHR»;
-                                «ENDFOR»
+                                «ENDIF»
+                            «ENDFOR»
+                        «ENDIF»
+                        «IF state.isHierarchical»
+                            «IF state.hasDuringActions»
+                            
                             «ENDIF»
-                        «ENDFOR»
+                            // Regions
+                            «FOR r : state.regions.filter(ControlflowRegion)»
+                                «FN_PREFIX»«structure.uniqueName(r)»_tick(context);
+                            «ENDFOR»
+                        «ENDIF»
                     }
-                    «ENDIF»
-                    «IF state.isHierarchical»
-                        // Regions
-                        «FOR r : state.regions.filter(ControlflowRegion)»
-                        «FN_PREFIX»«structure.uniqueName(r)»_tick(context);
-                        «ENDFOR»
-                        
-                    «ENDIF»
                     // Disable entry behavior
                     context->_state.«structure.uniqueName(state)»_entry = 0;
                 }
@@ -321,12 +347,34 @@ class StatebasedModernLeanCTemplate extends ExogenousProcessor<SCCharts, CodeCon
          */
         static inline void «FN_PREFIX»«structure.uniqueName(region)»_reset(«naming.get(TICKDATA)» *context) {
             context->_state.«structure.uniqueName(region)»_activeState = «structure.uniqueEnumName(region.initialState)»;
-            
-            // Reset states
-            «FOR s : region.states.filter[it.requiresTickFunction]»
-                «FN_PREFIX»«structure.uniqueName(s)»_reset(context);
-            «ENDFOR»
+            «IF region.states.exists[it.hasTickBehavior]»
+                
+                // Reset states
+                «FOR s : region.states.filter[it.hasTickBehavior]»
+                    «FN_PREFIX»«structure.uniqueName(s)»_reset(context);
+                «ENDFOR»
+            «ENDIF»
         }
+        «IF region.hasExitBehavior»
+        static inline void «FN_PREFIX»«structure.uniqueName(region)»_exit(«naming.get(TICKDATA)» *context) {
+            // Exit acitve state
+            switch (context->_state.«structure.uniqueName(region)»_activeState) {
+                «FOR state : region.states.filter[hasExitBehavior]»
+                    case «structure.uniqueEnumName(state)»: // «state.label.nullOrEmpty ? state.name : state.label»
+                        «FN_PREFIX»«structure.uniqueName(state)»_exit(context);
+                        break;
+                «ENDFOR»
+                «IF region.states.exists[!hasExitBehavior]»
+                    «FOR state : region.states.filter[!hasExitBehavior]»
+                        case «structure.uniqueEnumName(state)»: // «state.label.nullOrEmpty ? state.name : state.label»
+                    «ENDFOR»
+                        // Intentional fallthrough
+                        // No exit actions
+                        break;
+                «ENDIF»
+            }
+        }
+        «ENDIF»
         static inline void «FN_PREFIX»«structure.uniqueName(region)»_tick(«naming.get(TICKDATA)» *context) {
             «IF region.states.exists[it.connector]»
             char handle_connector = 0;
@@ -338,41 +386,42 @@ class StatebasedModernLeanCTemplate extends ExogenousProcessor<SCCharts, CodeCon
                         «IF state.outgoingTransitions.exists[isStrongAbort]»
                             // Check preemptive transitions (strong aborts)
                             «FOR t : state.outgoingPreemptiveTransitions»
-                            «IF t.trigger == null»
-                                «IF !t.isFirst(state.outgoingPreemptiveTransitions)»else «ENDIF»if (1) { // Priority «t.priority»
+                            «IF t.trigger === null»
+                                if (1) { // Priority «t.priority»
                             «ELSE»
-                                «IF !t.isFirst(state.outgoingPreemptiveTransitions)»else «ENDIF»if («t.trigger.serializeHR») { // Priority «t.priority»
+                                if («t.trigger.serializeHR») { // Priority «t.priority»
                             «ENDIF»
-«««                                «IF state.hasExitActions»
-«««                                    // Exit state
-«««                                    «FN_PREFIX»«structure.uniqueName(state)»_exit(context);
-«««    
-«««                                «ENDIF»
-                                    «IF !t.effects.empty»
-                                        // Effects
-                                        «FOR e : t.effects»
-                                            «e.serializeHR»;
-                                        «ENDFOR»
-                                        
-                                    «ENDIF»
-                                    «IF t.targetState.connector»
-                                        // Go to connector «t.targetState.name» («structure.pathID(t.targetState)»)
-                                        context->_state.«structure.uniqueName(region)»_activeState = «structure.uniqueEnumName(t.targetState)»;
-                                        handle_connector = 1;
-                                    «ELSE»
-                                        // Go to state «t.targetState.label.nullOrEmpty ? t.targetState.name : t.targetState.label» («structure.pathID(t.targetState)»)
-                                        context->_state.«structure.uniqueName(region)»_activeState = «structure.uniqueEnumName(t.targetState)»;
-                                        «IF t.targetState.requiresTickFunction»
-                                            «IF !t.isHistory»
-                                                «FN_PREFIX»«structure.uniqueName(t.targetState)»_reset(context);
-                                            «ENDIF»
-                                            «FN_PREFIX»«structure.uniqueName(t.targetState)»_tick(context);
+                                «IF state.hasExitBehavior && environment.getProperty(STRONG_EXIT)»
+                                    // Exit state
+                                    «FN_PREFIX»«structure.uniqueName(state)»_exit(context);
+                                    
+                                «ENDIF»
+                                «IF !t.effects.empty»
+                                    // Effects
+                                    «FOR e : t.effects»
+                                        «e.serializeHR»;
+                                    «ENDFOR»
+                                    
+                                «ENDIF»
+                                «IF t.targetState.connector»
+                                    // Go to connector «t.targetState.name» («structure.pathID(t.targetState)»)
+                                    context->_state.«structure.uniqueName(region)»_activeState = «structure.uniqueEnumName(t.targetState)»;
+                                    handle_connector = 1;
+                                «ELSE»
+                                    // Go to state «t.targetState.label.nullOrEmpty ? t.targetState.name : t.targetState.label» («structure.pathID(t.targetState)»)
+                                    context->_state.«structure.uniqueName(region)»_activeState = «structure.uniqueEnumName(t.targetState)»;
+                                    «IF t.targetState.hasTickBehavior»
+                                        «IF !t.isHistory»
+                                            «FN_PREFIX»«structure.uniqueName(t.targetState)»_reset(context);
                                         «ENDIF»
+                                        «FN_PREFIX»«structure.uniqueName(t.targetState)»_tick(context);
                                     «ENDIF»
+                                «ENDIF»
+                                break;
                             }
                             «ENDFOR»
                         «ENDIF»
-                        «IF state.requiresTickFunction»
+                        «IF state.hasTickBehavior»
                             // Execute active state
                             «FN_PREFIX»«structure.uniqueName(state)»_tick(context);
                         «ENDIF»
@@ -383,16 +432,16 @@ class StatebasedModernLeanCTemplate extends ExogenousProcessor<SCCharts, CodeCon
                         «IF state.outgoingTransitions.exists[!isStrongAbort]»
                             // Check non-preemptive transitions
                             «FOR t : state.outgoingNonPreemptiveTransitions»
-                                «IF t.trigger == null && !t.isTermination»
+                                «IF t.trigger === null && !t.isTermination»
                                     «IF !t.isFirst(state.outgoingNonPreemptiveTransitions)»else «ENDIF»if (1) { // Priority «t.priority»
-                                «ELSEIF t.trigger == null && t.isTermination»
+                                «ELSEIF t.trigger === null && t.isTermination»
                                     «IF !t.isFirst(state.outgoingNonPreemptiveTransitions)»else «ENDIF»if («structure.uniqueName(state)»_canTerminate) { // Priority «t.priority»
                                 «ELSEIF t.isTermination»
                                     «IF !t.isFirst(state.outgoingNonPreemptiveTransitions)»else «ENDIF»if («structure.uniqueName(state)»_canTerminate && («t.trigger.serializeHR»)) { // Priority «t.priority»
                                 «ELSE»
                                     «IF !t.isFirst(state.outgoingNonPreemptiveTransitions)»else «ENDIF»if («t.trigger.serializeHR») { // Priority «t.priority»
                                 «ENDIF»
-                                    «IF state.hasExitActions»
+                                    «IF state.hasExitBehavior»
                                         // Exit state
                                         «FN_PREFIX»«structure.uniqueName(state)»_exit(context);
                                         
@@ -411,7 +460,7 @@ class StatebasedModernLeanCTemplate extends ExogenousProcessor<SCCharts, CodeCon
                                     «ELSE»
                                         // Go to state «t.targetState.label.nullOrEmpty ? t.targetState.name : t.targetState.label» («structure.pathID(t.targetState)»)
                                         context->_state.«structure.uniqueName(region)»_activeState = «structure.uniqueEnumName(t.targetState)»;
-                                        «IF t.targetState.requiresTickFunction»
+                                        «IF t.targetState.hasTickBehavior»
                                             «IF !t.isHistory»
                                                 «FN_PREFIX»«structure.uniqueName(t.targetState)»_reset(context);
                                             «ENDIF»
@@ -439,7 +488,7 @@ class StatebasedModernLeanCTemplate extends ExogenousProcessor<SCCharts, CodeCon
                     «FOR state : region.connectorsInTopologicalOrder»
                         if (context->_state.«structure.uniqueName(region)»_activeState == «structure.uniqueEnumName(state)») {  // «state.label.nullOrEmpty ? state.name : state.label»
                             «FOR t : state.outgoingTransitions»
-                                «IF t.trigger == null»
+                                «IF t.trigger === null»
                                     «IF !t.isFirst(state.outgoingTransitions)»else «ENDIF»if (1) { // Priority «t.priority»
                                 «ELSE»
                                     «IF !t.isFirst(state.outgoingTransitions)»else «ENDIF»if («t.trigger.serializeHR») { // Priority «t.priority»
@@ -457,7 +506,7 @@ class StatebasedModernLeanCTemplate extends ExogenousProcessor<SCCharts, CodeCon
                                     «ELSE»
                                         // Go to state «t.targetState.label.nullOrEmpty ? t.targetState.name : t.targetState.label» («structure.pathID(t.targetState)»)
                                         context->_state.«structure.uniqueName(region)»_activeState = «structure.uniqueEnumName(t.targetState)»;
-                                        «IF t.targetState.requiresTickFunction»
+                                        «IF t.targetState.hasTickBehavior»
                                             «FN_PREFIX»«structure.uniqueName(t.targetState)»_reset(context);
                                             «FN_PREFIX»«structure.uniqueName(t.targetState)»_tick(context);
                                         «ENDIF»
@@ -548,8 +597,17 @@ class StatebasedModernLeanCTemplate extends ExogenousProcessor<SCCharts, CodeCon
         return emptyList
     }
     
-    def boolean requiresTickFunction(State s) {
+    def boolean hasTickBehavior(State s) {
         return s.isHierarchical || s.hasDuringActions || s.hasEntryActions
+    }
+      
+    def boolean hasExitBehavior(Scope s) {
+        if (s instanceof State) {
+            return s.hasExitActions || (s.isHierarchical && s.regions.exists[it.hasExitBehavior])
+        } else if (s instanceof ControlflowRegion) {
+            s.states.exists[it.hasExitBehavior]
+        }
+        return false
     }
     
     /**
