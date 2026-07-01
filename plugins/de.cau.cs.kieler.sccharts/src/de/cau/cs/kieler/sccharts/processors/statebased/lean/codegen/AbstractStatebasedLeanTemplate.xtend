@@ -12,12 +12,14 @@
  */
 package de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen
 
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import java.util.List
 import java.util.Map
-import de.cau.cs.kieler.core.properties.Property
+import org.eclipse.xtend.lib.annotations.AccessorType
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Common functionality for Lean State-Based Code Generation using a template.
@@ -31,10 +33,10 @@ abstract class AbstractStatebasedLeanTemplate {
 
     protected State rootState
 
-    protected List<Scope> scopes
-    protected Map<Scope, String> scopeNames
-    protected Map<Scope, String> scopeEnumNames
-    protected Map<Scope, String> contextStructNames
+    @Accessors(AccessorType.PUBLIC_GETTER) protected List<Scope> scopes
+    @Accessors(AccessorType.PUBLIC_GETTER) protected Map<Scope, String> scopeNames
+    @Accessors(AccessorType.PUBLIC_GETTER) protected Map<Scope, String> scopeEnumNames
+    @Accessors(AccessorType.PUBLIC_GETTER) protected Map<Scope, String> contextStructNames
     protected var int regionCounter
     protected var int stateEnumCounter
 
@@ -124,21 +126,21 @@ abstract class AbstractStatebasedLeanTemplate {
     /**
      * Retrieves the unique name of the given {@link Scope} from the name cache.
      */
-    protected def String uniqueName(Scope scope) {
+    def String uniqueName(Scope scope) {
         scopeNames.get(scope)
     }
 
     /**
      * Retrieves the name of the enum literal, created for the given {@link State}, from the name cache.
      */
-    protected def String uniqueEnumName(State state) {
+    def String uniqueEnumName(State state) {
         scopeEnumNames.get(state)
     }
 
     /**
      * Retrieves the name of the context object used in other contexts, created for the given {@link Scope}.
      */
-    protected def String uniqueContextName(Scope scope) {
+    def String uniqueContextName(Scope scope) {
         if (scope instanceof State) {
             if (scope == rootState) {
                 "TickData"
@@ -153,7 +155,7 @@ abstract class AbstractStatebasedLeanTemplate {
     /**
      * Retrieves the name of the context type, created for the given {@link Scope}.
      */
-    protected def String uniqueContextMemberName(Scope scope) {
+    def String uniqueContextMemberName(Scope scope) {
         if (scope instanceof State) {
             if (scope == rootState) {
                 '''TickData'''

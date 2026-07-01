@@ -120,7 +120,28 @@ class KExpressionsValuedObjectExtensions {
 
     def boolean isVariableReference(ValuedObjectReference valuedObjectReference) {
         valuedObjectReference.valuedObject.isVariableReference
-    }    
+    }
+    
+    def boolean isEnumReference(ValuedObject valuedObject) {
+        val decl = valuedObject.declaration
+        if (decl instanceof ReferenceDeclaration) {
+           val refVO = decl.reference
+           if (refVO instanceof ValuedObject) {
+               val refDecl = refVO.declaration
+               if (refDecl instanceof ClassDeclaration) {
+                   return refDecl.type == ValueType.ENUM
+               }
+           }
+        } else if (decl.isEnum) {
+            // check direct enum reference
+            return true
+        }
+        return false
+    }
+
+    def boolean isEnumReference(ValuedObjectReference valuedObjectReference) {
+        valuedObjectReference.valuedObject.isEnumReference
+    }
     
     def boolean isModelReference(ValuedObject valuedObject) {
         valuedObject.declaration instanceof ReferenceDeclaration

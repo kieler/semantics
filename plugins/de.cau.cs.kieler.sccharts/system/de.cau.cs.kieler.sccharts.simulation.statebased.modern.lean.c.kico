@@ -1,0 +1,5 @@
+developer system de.cau.cs.kieler.sccharts.^simulation.statebased.modern.lean.c
+    label "State-based Modern-Lean Simulation (C, No-TTS)"
+
+system de.cau.cs.kieler.sccharts.statebased.modern.lean.c
+system de.cau.cs.kieler.^simulation.c

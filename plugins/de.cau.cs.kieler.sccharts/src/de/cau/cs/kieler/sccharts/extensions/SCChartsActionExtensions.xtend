@@ -148,6 +148,10 @@ class SCChartsActionExtensions {
     def getDuringActions(Scope scope) {
         scope.actions.filter(DuringAction)
     }
+    
+    def getImmediateDuringActions(Scope scope) {
+        scope.actions.filter(DuringAction).filter[immediate]
+    }
 
     def getExitActions(Scope scope) {
         scope.actions.filter(ExitAction)
@@ -167,6 +171,10 @@ class SCChartsActionExtensions {
     
     def hasDuringActions(Scope scope) {
         !scope.duringActions.empty
+    }
+    
+    def hasImmediateDuringActions(Scope scope) {
+        !scope.immediateDuringActions.empty
     }
 
     def hasExitActions(Scope scope) {
