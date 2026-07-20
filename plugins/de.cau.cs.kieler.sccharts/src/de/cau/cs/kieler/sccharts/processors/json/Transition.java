@@ -37,6 +37,14 @@ public class Transition {
     @SerializedName("preemption")
     @Expose
     private Transition.Preemption preemption;
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @SerializedName("history")
+    @Expose
+    private boolean history;
     @SerializedName("guard")
     @Expose
     private String guard;
@@ -104,6 +112,24 @@ public class Transition {
      */
     public void setPreemption(Transition.Preemption preemption) {
         this.preemption = preemption;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    public boolean isHistory() {
+        return history;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    public void setHistory(boolean history) {
+        this.history = history;
     }
 
     public String getGuard() {

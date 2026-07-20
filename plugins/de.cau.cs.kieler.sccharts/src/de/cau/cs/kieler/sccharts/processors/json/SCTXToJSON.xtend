@@ -21,7 +21,6 @@ import de.cau.cs.kieler.sccharts.SCCharts;
 import de.cau.cs.kieler.sccharts.State;
 import com.google.gson.GsonBuilder
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeExtensions
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -36,7 +35,8 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import java.util.HashSet
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import com.google.gson.Strictness
+
+import static extension java.lang.String.format
 
 /**
  * 
@@ -176,6 +176,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
         if (state.reference !== null) {
             transformed.reference = new Reference();
             transformed.reference.targetID = state.reference.target?.name
+            transformed.reference.targetFile = state.reference.target?.eResource()?.URI?.toString
             // TODO: maybe add structure to the binding.
             transformed.reference.parameters = state.reference.parameters.map [
                 it.explicitBinding.serialize + " to " + it.expression.serialize
@@ -222,6 +223,14 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
             case PreemptionType.STRONG: de.cau.cs.kieler.sccharts.processors.json.Transition.Preemption.STRONG
             case PreemptionType.WEAK: de.cau.cs.kieler.sccharts.processors.json.Transition.Preemption.WEAK
             case PreemptionType.UNDEFINED: de.cau.cs.kieler.sccharts.processors.json.Transition.Preemption.WEAK
+        }
+        transformed.history = switch (transition.history) {
+            case RESET: false
+            case DEEP: true
+            case SHALLOW: {
+                environment.errors.add("Shallow history for transition %s is not supported. Changing to deep history.".format(transition.toString()));
+                true
+            }
         }
         transformed.guard = Optional.ofNullable(transition.trigger).map[serialize].map[toString].orElse(null)
         transformed.action = String.valueOf(transition.effects.serialize)
