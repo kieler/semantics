@@ -1,6 +1,8 @@
 
 package de.cau.cs.kieler.sccharts.processors.json;
 
+import java.util.List;
+
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -43,6 +45,29 @@ public class Variable {
     @SerializedName("isOutput")
     @Expose
     private boolean isOutput;
+    
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @SerializedName("cardinalities")
+    @Expose
+    private List<Integer> cardinalities;
+
+    /**
+     * @return the cardinalities
+     */
+    public List<Integer> getCardinalities() {
+        return cardinalities;
+    }
+
+    /**
+     * @param cardinalities the cardinalities to set
+     */
+    public void setCardinalities(List<Integer> cardinalities) {
+        this.cardinalities = cardinalities;
+    }
 
     /**
      * 

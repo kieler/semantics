@@ -83,6 +83,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
      * {@inheritDoc}
      */
     override void process() {
+        
         val cc = new CodeContainer();
 
         val gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
@@ -262,6 +263,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
         transformed.initialValue = Optional.ofNullable(v.initialValue).map[serialize].map[toString].orElse(null)
         transformed.isInput = isInput
         transformed.isOutput = isOutput
+        transformed.cardinalities = v.cardinalities?.map[serialize]?.map[Integer.parseInt(it.toString, 10)] ?: List.of()
 
         return transformed
     }
