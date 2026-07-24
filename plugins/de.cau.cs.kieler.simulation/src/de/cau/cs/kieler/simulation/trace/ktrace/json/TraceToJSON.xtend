@@ -41,6 +41,11 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonParseException
 import com.google.gson.JsonSerializer
 import com.google.gson.JsonSerializationContext
+import de.cau.cs.kieler.kexpressions.keffects.Emission
+import java.util.Map
+import com.google.gson.JsonObject
+import com.google.gson.Gson
+import com.google.gson.JsonPrimitive
 
 /**
  * 
@@ -78,8 +83,8 @@ class TraceToJSON extends Processor<TraceFile, CodeContainer> {
         val cc = new CodeContainer();
 
         // TODO: figure out how to make Explicit Null work.
-        val gson = new GsonBuilder().registerTypeAdapter(ExplicitNull, new JsonNullSerializer).setPrettyPrinting().
-            disableHtmlEscaping().create();
+        val gson = new GsonBuilder().registerTypeAdapter(Tick, new TickSerializer()).setPrettyPrinting().
+            disableHtmlEscaping().serializeNulls().create();
         val transformedRoots = this.sourceModel.traces.map[transformTrace];
         val fileName = "trace"
 
@@ -126,6 +131,27 @@ class TraceToJSON extends Processor<TraceFile, CodeContainer> {
 
                 transformed
             }
+            Emission: {
+                val transformed = new de.cau.cs.kieler.simulation.trace.ktrace.json.Assignment()
+                transformed.variableID = effect.reference?.valuedObject?.name
+                if (transformed.variableID === null) {
+                    environment.errors.add(
+                        "Assignment %s has no target variable.".format(effect.serialize, effect.class.name))
+                }
+                transformed.value = switch (effect.newValue) {
+                    case null:
+                        Map.of("present", true)
+                    default:
+                        Map.of(
+                            "present",
+                            true,
+                            "value",
+                            effect.newValue.serialize.toString
+                        )
+                }
+
+                transformed
+            }
             default: {
                 environment.errors.add(
                     "Cannot handle effect %s of type %s.".format(effect.serialize, effect.class.name))
@@ -151,7 +177,7 @@ class TraceToJSON extends Processor<TraceFile, CodeContainer> {
             VectorValue:
                 assignee.values.map[tryExpressionToValue]
             NullValue:
-                new ExplicitNull()
+                ExplicitNull.INSTANCE
             default: {
                 println("unexpected expression in trace of type " + assignee)
                 assignee.serialize.toString
@@ -162,12 +188,27 @@ class TraceToJSON extends Processor<TraceFile, CodeContainer> {
 }
 
 class ExplicitNull {
+    public static final ExplicitNull INSTANCE = new ExplicitNull();
+    
+    private new() {}
 }
 
-class JsonNullSerializer implements JsonSerializer<ExplicitNull> {
+class TickSerializer implements JsonSerializer<Tick> {
 
-    override serialize(ExplicitNull src, Type typeOfSrc, JsonSerializationContext context) {
-        JsonNull.INSTANCE
+    override serialize(Tick src, Type typeOfSrc, JsonSerializationContext context) {
+        val obj = new JsonObject()
+        
+        obj.add("inputs", context.serialize(src.inputs))
+        obj.add("outputs", context.serialize(src.outputs))
+        
+        if (src.id !== null) {
+            obj.addProperty("id", src.id)
+        }
+        if (src.gotoID !== null) {
+            obj.addProperty("gotoID", src.gotoID)
+        }
+
+        return obj
     }
 
 }
