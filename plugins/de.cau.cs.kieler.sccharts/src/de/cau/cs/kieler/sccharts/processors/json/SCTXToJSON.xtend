@@ -206,7 +206,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
         }
 
         transformed.isImmediate = action.delay.equals(DelayType.IMMEDIATE)
-        transformed.guard = Optional.ofNullable(action.trigger).map[serialize].map[toString].orElse(null)
+        transformed.guard = action.trigger?.serialize?.toString
         transformed.action = String.valueOf(action.effects.serialize())
 
         return transformed
@@ -233,8 +233,8 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
                 true
             }
         }
-        transformed.guard = Optional.ofNullable(transition.trigger).map[serialize].map[toString].orElse(null)
-        transformed.action = String.valueOf(transition.effects.serialize)
+        transformed.guard = transition.trigger?.serialize?.toString
+        transformed.action = if (!transition.effects.isEmpty()) transition.effects.serialize?.toString
 
         return transformed
     }
@@ -260,7 +260,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
 
         transformed.id = v.name
         transformed.type = t.literal
-        transformed.initialValue = Optional.ofNullable(v.initialValue).map[serialize].map[toString].orElse(null)
+        transformed.initialValue = v.initialValue?.serialize?.toString
         transformed.isInput = isInput
         transformed.isOutput = isOutput
         transformed.cardinalities = v.cardinalities?.map[serialize]?.map[Integer.parseInt(it.toString, 10)] ?: List.of()
