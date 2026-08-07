@@ -46,6 +46,8 @@ import java.util.Map
 import com.google.gson.JsonObject
 import com.google.gson.Gson
 import com.google.gson.JsonPrimitive
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import java.util.concurrent.StructuredTaskScope.Subtask.State
 
 /**
  * 
@@ -82,7 +84,6 @@ class TraceToJSON extends Processor<TraceFile, CodeContainer> {
     override process() {
         val cc = new CodeContainer();
 
-        // TODO: figure out how to make Explicit Null work.
         val gson = new GsonBuilder().registerTypeAdapter(Tick, new TickSerializer()).setPrettyPrinting().
             disableHtmlEscaping().serializeNulls().create();
         val transformedRoots = this.sourceModel.traces.map[transformTrace];
@@ -121,7 +122,9 @@ class TraceToJSON extends Processor<TraceFile, CodeContainer> {
             de.cau.cs.kieler.kexpressions.keffects.Assignment: {
                 val transformed = new de.cau.cs.kieler.simulation.trace.ktrace.json.Assignment()
 
-                transformed.variableID = effect.reference?.valuedObject?.name
+                transformed.variableID = effect.reference?.valuedObject?.name + effect.reference?.indices?.map [
+                    "[" + it.serialize + "]"
+                ].join()
                 if (transformed.variableID === null) {
                     environment.errors.add(
                         "Assignment %s has no target variable.".format(effect.serialize, effect.class.name))
@@ -146,7 +149,7 @@ class TraceToJSON extends Processor<TraceFile, CodeContainer> {
                             "present",
                             true,
                             "value",
-                            effect.newValue.serialize.toString
+                            effect.newValue.tryExpressionToValue
                         )
                 }
 
@@ -177,9 +180,70 @@ class TraceToJSON extends Processor<TraceFile, CodeContainer> {
             VectorValue:
                 assignee.values.map[tryExpressionToValue]
             NullValue:
-                ExplicitNull.INSTANCE
+                null
+            OperatorExpression:
+                if (assignee.subExpressions.size != 1) {
+                    environment.warnings.add("unexpected number of expressions in " + assignee)
+                    assignee.serialize.toString
+                } else {
+                    val subexpression = assignee.subExpressions.get(0).tryExpressionToValue
+                    if (subexpression instanceof String) {
+                        assignee.operator.literal + subexpression
+                    } else if (subexpression instanceof Integer) {
+                        switch (assignee.operator) {
+                            case ADD: {
+                                subexpression
+                            }
+                            case BITWISE_NOT: {
+                                subexpression.bitwiseNot
+                            }
+                            case NOT: {
+                                subexpression == 0
+                            }
+                            case SUB: {
+                                - subexpression
+                            }
+                            default: {
+                                environment.warnings.add("unexpected unary expression with operator " +
+                                    assignee.operator.literal)
+                                assignee.operator.literal + subexpression
+                            }
+                        }
+                    } else if (subexpression instanceof Double) {
+                        switch (assignee.operator) {
+                            case ADD: {
+                                subexpression
+                            }
+                            case NOT: {
+                                subexpression == 0.0
+                            }
+                            case SUB: {
+                                - subexpression
+                            }
+                            default: {
+                                environment.warnings.add("unexpected unary expression with operator " +
+                                    assignee.operator.literal)
+                                assignee.operator.literal + subexpression
+                            }
+                        }
+                    } else if (subexpression instanceof Boolean) {
+                        switch (assignee.operator) {
+                            case BITWISE_NOT: {
+                                ! subexpression
+                            }
+                            case NOT: {
+                                ! subexpression
+                            }
+                            default: {
+                                environment.warnings.add("unexpected unary expression with operator " +
+                                    assignee.operator.literal)
+                                assignee.operator.literal + subexpression
+                            }
+                        }
+                    }
+                }
             default: {
-                println("unexpected expression in trace of type " + assignee)
+                environment.warnings.add("unexpected expression in trace of type " + assignee)
                 assignee.serialize.toString
             }
         }
@@ -187,20 +251,14 @@ class TraceToJSON extends Processor<TraceFile, CodeContainer> {
 
 }
 
-class ExplicitNull {
-    public static final ExplicitNull INSTANCE = new ExplicitNull();
-    
-    private new() {}
-}
-
 class TickSerializer implements JsonSerializer<Tick> {
 
     override serialize(Tick src, Type typeOfSrc, JsonSerializationContext context) {
         val obj = new JsonObject()
-        
+
         obj.add("inputs", context.serialize(src.inputs))
         obj.add("outputs", context.serialize(src.outputs))
-        
+
         if (src.id !== null) {
             obj.addProperty("id", src.id)
         }
