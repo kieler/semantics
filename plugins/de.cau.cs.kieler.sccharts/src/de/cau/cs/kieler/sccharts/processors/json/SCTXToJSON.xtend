@@ -12,29 +12,33 @@
  */
 package de.cau.cs.kieler.sccharts.processors.json;
 
-import java.util.Set;
-
-import de.cau.cs.kieler.kicool.compilation.CodeContainer;
-import de.cau.cs.kieler.kicool.compilation.Processor;
-import de.cau.cs.kieler.kicool.compilation.ProcessorType;
-import de.cau.cs.kieler.sccharts.SCCharts;
-import de.cau.cs.kieler.sccharts.State;
 import com.google.gson.GsonBuilder
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeExtensions
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DelayType
+import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.EntryAction
+import de.cau.cs.kieler.sccharts.ExitAction
+import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.sccharts.PreemptionType
-import java.util.Optional
-import java.util.List
-import java.util.LinkedList
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.ValueType
-import java.util.HashSet
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import java.util.HashSet
+import java.util.LinkedList
+import java.util.List
+import java.util.Set
 
 import static extension java.lang.String.format
 
@@ -49,6 +53,9 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
     extension SCChartsTransitionExtensions;
     @Inject
     extension KEffectsSerializeExtensions;
+    @Inject
+    extension SCChartsReferenceExtensions;
+
 //    @Inject
 //    extension KExpressionsSerializeExtensions;
     int regionCounter = 0;
@@ -83,10 +90,11 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
      * {@inheritDoc}
      */
     override void process() {
-        
+
         val cc = new CodeContainer();
 
         val gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+        this.sourceModel.rootStates.forEach[collectNames]
         this.sourceModel.rootStates.forEach[renameState]
         val transformedRoots = this.sourceModel.rootStates.map[transformState];
         val fileName = this.sourceModel.name?.hostcodeSafeName ?: "scchart"
@@ -96,7 +104,38 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
 
     }
 
-    def void renameState(de.cau.cs.kieler.sccharts.State state) {
+    /**
+     * Pre-populate the scopeNames set with names that should not be shadowed
+     * (i.e. everything that is part of the interface, like the referenced state or variable names.
+     */
+    def void collectNames(State state) {
+        if (state.reference !== null) {
+            // TODO: if the target is in the same file as the referencing statement, this causes the target to be renamed
+            // in the renaming step. Not an issue, but weird.
+            scopeNames.add(state.reference.target.name.hostcodeSafeName)
+        }
+
+        for (declaration : state.declarations) {
+            switch (declaration) {
+                VariableDeclaration:
+                    declaration.valuedObjects.forEach [
+                        scopeNames.add(name)
+                    ]
+                default: {
+                    // Do nothing here
+                }
+            }
+        }
+
+        // iterate down the tree
+        for (region : state.regions) {
+            if (region instanceof ControlflowRegion) {
+                region.states.forEach[collectNames]
+            }
+        }
+    }
+
+    def void renameState(State state) {
         val name = if (state.name.nullOrEmpty) {
                 // Generate a name with a running number if no state name is set
                 namePrefix + '_stateS' + (stateCounter++)
@@ -111,12 +150,15 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
             }
         scopeNames.add(name);
 
-        state.name = name
+        if (name != state.name) {
+            state.label = state.name
+            state.name = name
+        }
 
         state.regions.forEach[renameRegion]
     }
 
-    def void renameRegion(de.cau.cs.kieler.sccharts.Region region) {
+    def void renameRegion(Region region) {
         val name = if (region.name.nullOrEmpty) {
                 // Generate a name with a running number if no region name is set
                 namePrefix + '_regionR' + (regionCounter++)
@@ -131,7 +173,10 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
             }
         scopeNames.add(name)
 
-        region.name = name
+        if (name != region.name) {
+            region.label = region.name
+            region.name = name
+        }
 
         switch (region) {
             ControlflowRegion: {
@@ -142,7 +187,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
         }
     }
 
-    def de.cau.cs.kieler.sccharts.processors.json.Region transformRegion(de.cau.cs.kieler.sccharts.Region region) {
+    def de.cau.cs.kieler.sccharts.processors.json.Region transformRegion(Region region) {
 
         switch (region) {
             ControlflowRegion: {
@@ -160,7 +205,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
         }
     }
 
-    def de.cau.cs.kieler.sccharts.processors.json.State transformState(de.cau.cs.kieler.sccharts.State state) {
+    def de.cau.cs.kieler.sccharts.processors.json.State transformState(State state) {
 
         val transformed = new de.cau.cs.kieler.sccharts.processors.json.State();
 
@@ -176,27 +221,30 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
 
         if (state.reference !== null) {
             transformed.reference = new Reference();
+            val bindings = state.createBindings
             transformed.reference.targetID = state.reference.target?.name
             transformed.reference.targetFile = state.reference.target?.eResource()?.URI?.toString
             // TODO: maybe add structure to the binding.
-            transformed.reference.parameters = state.reference.parameters.map [
-                it.explicitBinding.serialize + " to " + it.expression.serialize
+            transformed.reference.parameters = bindings.map [
+                sourceExpression.serialize + " to " + targetValuedObject.serialize + targetIndices?.map [
+                    "[" + it.serialize + "]"
+                ].join()
             ]
         }
 
         return transformed
     }
 
-    def de.cau.cs.kieler.sccharts.processors.json.Action transformAction(de.cau.cs.kieler.sccharts.LocalAction action) {
-        val transformed = new de.cau.cs.kieler.sccharts.processors.json.Action()
+    def Action transformAction(LocalAction action) {
+        val transformed = new Action()
 
         transformed.label = action.label
         transformed.type = switch (action) {
-            de.cau.cs.kieler.sccharts.DuringAction:
+            DuringAction:
                 Action.Type.DURING
-            de.cau.cs.kieler.sccharts.EntryAction:
+            EntryAction:
                 Action.Type.ENTRY
-            de.cau.cs.kieler.sccharts.ExitAction:
+            ExitAction:
                 Action.Type.EXIT
             default: {
                 environment.errors.add("Cannot handle action %s of type %s.".format(action.label, action.class.name))
@@ -212,34 +260,37 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
         return transformed
     }
 
-    def de.cau.cs.kieler.sccharts.processors.json.Transition transformTransition(
-        de.cau.cs.kieler.sccharts.Transition transition) {
-        val transformed = new de.cau.cs.kieler.sccharts.processors.json.Transition()
+    def Transition transformTransition(de.cau.cs.kieler.sccharts.Transition transition) {
+        val transformed = new Transition()
 
         transformed.label = transition.label
         transformed.targetID = transition.targetState.name
         transformed.isImmediate = transition.delay.equals(DelayType.IMMEDIATE)
         transformed.preemption = switch (transition.preemption) {
-            case PreemptionType.TERMINATION: de.cau.cs.kieler.sccharts.processors.json.Transition.Preemption.TERMINATION
-            case PreemptionType.STRONG: de.cau.cs.kieler.sccharts.processors.json.Transition.Preemption.STRONG
-            case PreemptionType.WEAK: de.cau.cs.kieler.sccharts.processors.json.Transition.Preemption.WEAK
-            case PreemptionType.UNDEFINED: de.cau.cs.kieler.sccharts.processors.json.Transition.Preemption.WEAK
+            case PreemptionType.TERMINATION: Transition.Preemption.TERMINATION
+            case PreemptionType.STRONG: Transition.Preemption.STRONG
+            case PreemptionType.WEAK: Transition.Preemption.WEAK
+            case PreemptionType.UNDEFINED: Transition.Preemption.WEAK
         }
         transformed.history = switch (transition.history) {
-            case RESET: false
-            case DEEP: true
+            case RESET:
+                false
+            case DEEP:
+                true
             case SHALLOW: {
-                environment.errors.add("Shallow history for transition %s is not supported. Changing to deep history.".format(transition.toString()));
+                environment.errors.add(
+                    "Shallow history for transition %s is not supported. Changing to deep history.".format(
+                        transition.toString()));
                 true
             }
         }
         transformed.guard = transition.trigger?.serialize?.toString
-        transformed.action = if (!transition.effects.isEmpty()) transition.effects.serialize?.toString
+        transformed.action = if(!transition.effects.isEmpty()) transition.effects.serialize?.toString
 
         return transformed
     }
 
-    def List<de.cau.cs.kieler.sccharts.processors.json.Variable> transformDeclaration(Declaration declaration) {
+    def List<Variable> transformDeclaration(Declaration declaration) {
         switch (declaration) {
             VariableDeclaration:
                 declaration.valuedObjects.map [
@@ -254,9 +305,8 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
 
     }
 
-    def de.cau.cs.kieler.sccharts.processors.json.Variable transformVariable(ValuedObject v, ValueType t,
-        boolean isInput, boolean isOutput) {
-        val transformed = new de.cau.cs.kieler.sccharts.processors.json.Variable()
+    def Variable transformVariable(ValuedObject v, ValueType t, boolean isInput, boolean isOutput) {
+        val transformed = new Variable()
 
         transformed.id = v.name
         transformed.type = t.literal
