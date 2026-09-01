@@ -15,6 +15,8 @@ package de.cau.cs.kieler.sccharts.processors.json;
 import com.google.gson.GsonBuilder
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
@@ -31,28 +33,22 @@ import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import java.util.HashSet
-import java.util.LinkedList
 import java.util.List
 import java.util.Set
+import org.eclipse.emf.ecore.EObject
 
 import static extension java.lang.String.format
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * 
  */
 public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
 
-    @Inject
-    extension SCChartsCoreExtensions;
     @Inject
     extension SCChartsScopeExtensions;
     @Inject
@@ -115,8 +111,11 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
     def void collectNames(State state) {
         if (state.reference !== null) {
             // TODO: if the target is in the same file as the referencing statement, this causes the target to be renamed
-            // in the renaming step. Not an issue, but weird.
-            scopeNames.add(state.reference.target.name.hostcodeSafeName)
+            // in the renaming step. Not directly an issue, but weird.
+            val targetName = state.reference.target?.name
+            if (targetName !== null) {
+                scopeNames.add(targetName.hostcodeSafeName)
+            }
         }
 
         for (declaration : state.declarations) {
@@ -275,7 +274,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
             case DEEP:
                 true
             case SHALLOW: {
-                environment.errors.add(
+                environment.warnings.add(
                     "Shallow history for transition %s is not supported. Changing to deep history.".format(
                         transition.toString()));
                 true
@@ -316,7 +315,15 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
         transformed.initialValue = v.initialValue?.serialize?.toString
         transformed.isInput = isInput
         transformed.isOutput = isOutput
-        transformed.cardinalities = v.cardinalities?.map[serialize]?.map[Integer.parseInt(it.toString, 10)] ?: List.of()
+        transformed.cardinalities = v.cardinalities?.map[
+            switch (it) {
+                IntValue: it.value
+                default: {
+                    environment.warnings.add("Ignoring non-literal cardinality '%s' on %s".format(it.serialize, v.name))
+                    null
+                }
+            }
+        ].filterNull.toList ?: List.of()
 
         return transformed
     }
