@@ -89,7 +89,7 @@ class TraceToJSON extends Processor<TraceFile, CodeContainer> {
         val transformedRoots = this.sourceModel.traces.map[transformTrace];
         val fileName = "trace"
 
-        println("Processing Resource " + this.sourceModel.eResource)
+//        println("Processing Resource " + this.sourceModel.eResource)
 
         cc.add(fileName + ".json", gson.toJson(transformedRoots));
         this.setModel(cc);
@@ -122,12 +122,14 @@ class TraceToJSON extends Processor<TraceFile, CodeContainer> {
             de.cau.cs.kieler.kexpressions.keffects.Assignment: {
                 val transformed = new de.cau.cs.kieler.simulation.trace.ktrace.json.Assignment()
 
-                transformed.variableID = effect.reference?.valuedObject?.name + effect.reference?.indices?.map [
-                    "[" + it.serialize + "]"
-                ].join()
-                if (transformed.variableID === null) {
+                val target = effect.reference?.valuedObject?.name
+                if (target === null) {
                     environment.errors.add(
                         "Assignment %s has no target variable.".format(effect.serialize, effect.class.name))
+                } else {
+                    transformed.variableID = target + (effect.reference?.indices?.map [
+                        "[" + it.serialize + "]"
+                    ].join() ?: "")
                 }
 
                 transformed.value = effect.expression.tryExpressionToValue
@@ -139,7 +141,7 @@ class TraceToJSON extends Processor<TraceFile, CodeContainer> {
                 transformed.variableID = effect.reference?.valuedObject?.name
                 if (transformed.variableID === null) {
                     environment.errors.add(
-                        "Assignment %s has no target variable.".format(effect.serialize, effect.class.name))
+                        "Emission %s has no target variable.".format(effect.serialize, effect.class.name))
                 }
                 transformed.value = switch (effect.newValue) {
                     case null:
@@ -174,9 +176,9 @@ class TraceToJSON extends Processor<TraceFile, CodeContainer> {
             StringValue:
                 assignee.value
             JsonArrayValue:
-                assignee.elements
+                assignee.elements.map[tryExpressionToValue]
             JsonObjectValue:
-                assignee.membersMap
+                assignee.membersMap.entrySet.toMap([key], [value.tryExpressionToValue])
             VectorValue:
                 assignee.values.map[tryExpressionToValue]
             NullValue:
