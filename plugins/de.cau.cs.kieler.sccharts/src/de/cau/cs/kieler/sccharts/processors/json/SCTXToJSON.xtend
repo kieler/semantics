@@ -41,6 +41,10 @@ import java.util.List
 import java.util.Set
 
 import static extension java.lang.String.format
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * 
@@ -50,7 +54,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
     @Inject
     extension SCChartsCoreExtensions;
     @Inject
-    extension SCChartsTransitionExtensions;
+    extension SCChartsScopeExtensions;
     @Inject
     extension KEffectsSerializeExtensions;
     @Inject
@@ -63,7 +67,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
 
     val String namePrefix = ""
 
-    Set<String> scopeNames = new HashSet<String>();
+    Set<String> scopeNames = new HashSet<String>(List.of("State", "Region"));
 
     /**
      * {@inheritDoc}
@@ -94,7 +98,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
         val cc = new CodeContainer();
 
         val gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-        this.sourceModel.rootStates.forEach[collectNames]
+        this.sourceModel.rootStates.flatMap[it.getAllStates.toIterable].forEach[collectNames]
         this.sourceModel.rootStates.forEach[renameState]
         val transformedRoots = this.sourceModel.rootStates.map[transformState];
         val fileName = this.sourceModel.name?.hostcodeSafeName ?: "scchart"
@@ -124,13 +128,6 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
                 default: {
                     // Do nothing here
                 }
-            }
-        }
-
-        // iterate down the tree
-        for (region : state.regions) {
-            if (region instanceof ControlflowRegion) {
-                region.states.forEach[collectNames]
             }
         }
     }
@@ -296,10 +293,16 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
                 declaration.valuedObjects.map [
                     transformVariable(it, declaration.type, declaration.input, declaration.output)
                 ]
+            ScheduleDeclaration: {
+                environment.warnings.add(
+                    "Ignoring schedule declaration on %s.".format(declaration.eContainer.maybeLabel)
+                )
+                List.of()
+            }
             default: {
                 environment.errors.add(
                     "Cannot handle declaration %s of type %s.".format(declaration.toString(), declaration.class.name))
-                new LinkedList()
+                List.of()
             }
         }
 
@@ -321,5 +324,13 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
     protected def hostcodeSafeName(String string) {
         if(string === null) return ""
         string.replaceAll("[\\s-]", "_")
+    }
+
+    private def maybeLabel(EObject obj) {
+        if (obj instanceof Scope) {
+            obj.label
+        } else {
+            obj.toString()
+        }
     }
 }
