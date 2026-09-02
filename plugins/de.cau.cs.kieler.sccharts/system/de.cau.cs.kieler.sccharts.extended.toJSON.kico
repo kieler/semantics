@@ -1,0 +1,13 @@
+public system de.cau.cs.kieler.sccharts.extended.toJSON
+    label "JSON generation with preprocessing"
+
+de.cau.cs.kieler.sccharts.processors.timedautomata
+
+[ label "SyncCharts"    
+    de.cau.cs.kieler.sccharts.processors.^signal
+    de.cau.cs.kieler.sccharts.processors.suspend
+    de.cau.cs.kieler.sccharts.processors.countDelay
+    de.cau.cs.kieler.sccharts.processors.^pre
+]   
+
+de.cau.cs.kieler.sccharts.processors.SCTXToJSON
