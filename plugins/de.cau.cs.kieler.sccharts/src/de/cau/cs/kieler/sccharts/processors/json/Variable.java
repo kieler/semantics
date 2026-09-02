@@ -2,7 +2,6 @@
 package de.cau.cs.kieler.sccharts.processors.json;
 
 import java.util.List;
-
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -45,7 +44,14 @@ public class Variable {
     @SerializedName("isOutput")
     @Expose
     private boolean isOutput;
-    
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @SerializedName("isConst")
+    @Expose
+    private boolean isConst;
     /**
      * 
      * (Required)
@@ -54,20 +60,6 @@ public class Variable {
     @SerializedName("cardinalities")
     @Expose
     private List<Integer> cardinalities;
-
-    /**
-     * @return the cardinalities
-     */
-    public List<Integer> getCardinalities() {
-        return cardinalities;
-    }
-
-    /**
-     * @param cardinalities the cardinalities to set
-     */
-    public void setCardinalities(List<Integer> cardinalities) {
-        this.cardinalities = cardinalities;
-    }
 
     /**
      * 
@@ -147,6 +139,42 @@ public class Variable {
      */
     public void setIsOutput(boolean isOutput) {
         this.isOutput = isOutput;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    public boolean isIsConst() {
+        return isConst;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    public void setIsConst(boolean isConst) {
+        this.isConst = isConst;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    public List<Integer> getCardinalities() {
+        return cardinalities;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    public void setCardinalities(List<Integer> cardinalities) {
+        this.cardinalities = cardinalities;
     }
 
 }

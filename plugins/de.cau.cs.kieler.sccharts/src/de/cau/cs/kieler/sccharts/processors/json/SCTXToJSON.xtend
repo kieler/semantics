@@ -281,6 +281,12 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
             }
         }
         transformed.guard = transition.trigger?.serialize?.toString
+        if (transition.triggerDelay != 1) {
+            environment.errors.add(
+                "Count Delay of %d for transition %s is not supported.".format(transition.triggerDelay,
+                    transition.toString())
+            )
+        }
         transformed.action = if(!transition.effects.isEmpty()) transition.effects.serialize?.toString
 
         return transformed
@@ -290,7 +296,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
         switch (declaration) {
             VariableDeclaration:
                 declaration.valuedObjects.map [
-                    transformVariable(it, declaration.type, declaration.input, declaration.output)
+                    transformVariable(declaration.type, declaration.input, declaration.output, declaration.const)
                 ]
             ScheduleDeclaration: {
                 environment.warnings.add(
@@ -307,7 +313,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
 
     }
 
-    def Variable transformVariable(ValuedObject v, ValueType t, boolean isInput, boolean isOutput) {
+    def Variable transformVariable(ValuedObject v, ValueType t, boolean isInput, boolean isOutput, boolean isConst) {
         val transformed = new Variable()
 
         transformed.id = v.name
@@ -315,9 +321,11 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
         transformed.initialValue = v.initialValue?.serialize?.toString
         transformed.isInput = isInput
         transformed.isOutput = isOutput
-        transformed.cardinalities = v.cardinalities?.map[
+        transformed.isConst = isConst
+        transformed.cardinalities = v.cardinalities?.map [
             switch (it) {
-                IntValue: it.value
+                IntValue:
+                    it.value
                 default: {
                     environment.warnings.add("Ignoring non-literal cardinality '%s' on %s".format(it.serialize, v.name))
                     null
