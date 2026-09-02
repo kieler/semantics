@@ -58,7 +58,10 @@ class RegionDependencySort extends SCChartsProcessor {
             val regionDependencies = <Pair<Region, Region>> newLinkedHashSet
             for (dependency : dependencies) {
                 val cfrs = lcafMap.levelRegions(dependency)
-                if (cfrs.key != cfrs.value) regionDependencies.add(cfrs) 
+                if (cfrs.key != cfrs.value) {
+                    if (cfrs.key instanceof Region && cfrs.value instanceof Region)
+                        regionDependencies.add(new Pair<Region, Region>(cfrs.key as Region, cfrs.value as Region))
+                }
             }
             
             regionDependencies.sortTopologically

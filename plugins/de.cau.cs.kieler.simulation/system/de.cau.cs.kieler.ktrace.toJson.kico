@@ -1,0 +1,4 @@
+public system de.cau.cs.kieler.ktrace.toJSON
+    label "JSON Generation"
+
+de.cau.cs.kieler.ktrace.TraceToJSON

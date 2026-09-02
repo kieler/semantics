@@ -94,6 +94,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import static extension de.cau.cs.kieler.annotations.ide.klighd.CommonSynthesisUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.Linkable
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -573,12 +574,13 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         // Fetch the least common ancestor fork (lcaf) data from the compilation environment. 
         val lcafMap = result.getProperty(RegionDependencies.REGION_LCAF_MAP) 
         val dependencies = state.regions.map[ outgoingLinks ].flatten.filter(Dependency).toList
-        if (dependencies.empty) {
+//        dam: why is this conditional?
+//        if (dependencies.empty) {
             val simpleStates = state.regions.filter(ControlflowRegion).map[ states ].flatten.filter[ !isHierarchical ].toList
             for (simpleState : simpleStates) {
                 dependencies += simpleState.eAllContents.filter(DataDependency).toList
             }
-        }
+//        }
         
         dependencyEdges.clear
         for (dependency : dependencies) {
@@ -595,12 +597,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (dependency.type == DataDependencyType.WRITE_WRITE && dependency.confluent) return;
         if (!dependency.concurrent) return;
         
-        val regionDependency = dependency.eContainer instanceof ControlflowRegion && dependency.target instanceof ControlflowRegion
+        val linkableDependency = dependency.eContainer instanceof Linkable && dependency.target instanceof Linkable
         
         // Elevate the control flow regions to the same hierarchy level. Use the lcaf data for this. 
-        val cfrs = if (regionDependency) regionLCAFMap.levelRegions(dependency) else new Pair<EObject, EObject>(dependency.eContainer, dependency.target)
+        val cfrs = if (linkableDependency) regionLCAFMap.levelRegions(dependency) else new Pair<EObject, EObject>(dependency.eContainer, dependency.target)
         val sourceNode = cfrs.key.node
         val targetNode = cfrs.value.node
+        
+        val regionDependency = cfrs.key instanceof ControlflowRegion && cfrs.value instanceof ControlflowRegion
         
         if (regionDependency) {
             if (isOnCausalLoop(dependency, environment)) {
@@ -609,12 +613,20 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 dependency.createDependencyEdge(sourceNode, targetNode).associateWith(dependency)    
             }
         } else {
-            val source = cfrs.key.getEdgeableParent
-            val target = cfrs.value.getEdgeableParent
-            val edge = createLooseDependencyEdge(dependencyEdges, source.node, source, target, dependency, false)
-//            edge.source = source.node
-//            edge.target = target.node
-            edge.associateWith(dependency)
+            var source = cfrs.key.getEdgeableParent
+            var target = cfrs.value.getEdgeableParent
+            if (source instanceof Action && !(target instanceof Action)) {
+                source = source.eContainer?.getEdgeableParent
+            }
+            if (target instanceof Action && !(source instanceof Action)) {
+                target = target.eContainer?.getEdgeableParent
+            }
+            if (source !== null && target !== null) {
+                val edge = createLooseDependencyEdge(dependencyEdges, source.node, source, target, dependency, false)
+    //            edge.source = source.node
+    //            edge.target = target.node
+                edge.associateWith(dependency)
+            }
         }
     }
     
@@ -651,7 +663,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         } else {
             // Create edge
             dependency.annotations += createTagAnnotation("nolayout")
-            if (source instanceof State && target instanceof State) {
+            if ((source instanceof State || source instanceof Region) && (target instanceof State || target instanceof Region)) {
                 edge = dependency.createDependencyEdge(source.node, target.node)
             }
             
@@ -671,6 +683,9 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     poly.addAction(Trigger::SINGLECLICK, ToggleDependencyAction.ID)
                 ];
                 
+            }
+            if (edge === null) {
+                return null
             }
             
             edges.put(sourceTargetPair, edge);

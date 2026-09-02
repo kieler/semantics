@@ -79,6 +79,7 @@ class SCChartsProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.sccharts.processors.dataflow.ToSimpleDataflow,
             de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencies,
             de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencySort,
+            de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencyCheck,
             de.cau.cs.kieler.sccharts.processors.dataflow.DeLoopRegions,
             de.cau.cs.kieler.sccharts.processors.dataflow.StateDependencies,
             de.cau.cs.kieler.sccharts.processors.dataflow.ControlDependencies,
@@ -91,7 +92,8 @@ class SCChartsProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.sccharts.processors.AbortRegion,
             de.cau.cs.kieler.sccharts.processors.scg.SCGAbortRegionProcessor,
             de.cau.cs.kieler.sccharts.processors.MethodSignaling,
-            de.cau.cs.kieler.sccharts.processors.analyzers.SCChartsModelData
+            de.cau.cs.kieler.sccharts.processors.analyzers.SCChartsModelData,
+            de.cau.cs.kieler.sccharts.processors.json.SCTXToJSON
         ]
     }
     
