@@ -37,7 +37,7 @@
   <repository-reference location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.31.0" enabled="true"/>
   <repository-reference location="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.34.0/" enabled="true"/>
   <repository-reference location="https://kieler.github.io/KLighD/v3.1.0/" enabled="true"/>
-  <repository-reference location="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2025-04" enabled="true"/>
+  <repository-reference location="https://kieler.github.io/pragmatics/release_pragmatics_2025-04" enabled="true"/>
   <repository-reference location="https://download.eclipse.org/elk/updates/releases/0.10.0/" enabled="true"/>
-  <repository-reference location="https://rtsys.informatik.uni-kiel.de/~kieler/updatesite/websocket-mirror/10.0.20/" enabled="true"/>
+  <repository-reference location="https://kieler.github.io/jetty-websocket-mirror/10.0.20/" enabled="true"/>
 </site>
