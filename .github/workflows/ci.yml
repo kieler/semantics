@@ -35,6 +35,14 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+
+      - name: Install Maven
+        run: |
+          MAVEN_VERSION=3.9.16
+          curl -fsSLO "https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz"
+          tar -xzf "apache-maven-${MAVEN_VERSION}-bin.tar.gz"
+          echo "$PWD/apache-maven-${MAVEN_VERSION}/bin" >> "$GITHUB_PATH"
+          rm "apache-maven-${MAVEN_VERSION}-bin.tar.gz"
       
       # Configure maven artifact caching
       - name: Cache local Maven repository
@@ -243,6 +251,14 @@ jobs:
         with:
           java-version: '21'
           distribution: 'adopt'
+
+      - name: Install Maven
+        run: |
+          MAVEN_VERSION=3.9.16
+          curl -fsSLO "https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz"
+          tar -xzf "apache-maven-${MAVEN_VERSION}-bin.tar.gz"
+          echo "$PWD/apache-maven-${MAVEN_VERSION}/bin" >> "$GITHUB_PATH"
+          rm "apache-maven-${MAVEN_VERSION}-bin.tar.gz"
       
       - name: Cache local Maven repository
         uses: actions/cache@v4
@@ -271,6 +287,11 @@ jobs:
         with:
           java-version: '21'
           distribution: 'adopt'
+
+      - name: Install Maven
+        run: |
+          set "MAVEN_VERSION=3.9.16"
+          choco install maven --version=${MAVEN_VERSION} -y
       
       - name: Cache local Maven repository
         uses: actions/cache@v4
