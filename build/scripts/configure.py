@@ -30,68 +30,68 @@ nightlyUpdatesite = 'http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nigh
 
 def main(args):
     if args.release:
-        print '= Configuring RELEASE %s build =' % args.release
+        print('= Configuring RELEASE %s build =' % args.release)
     else:
-        print '= Configuring NIGHTLY build ='
+        print('= Configuring NIGHTLY build =')
 
-    print '\n- Reading target platform -'
+    print('\n- Reading target platform -')
     # check product pom file
     targetplatformFile = join(args.path, 'build/de.cau.cs.kieler.semantics.targetplatform/de.cau.cs.kieler.semantics.targetplatform.target')
     if not isfile(targetplatformFile):
-        print 'Target platform does not exist: ' + targetplatformFile
+        print('Target platform does not exist: ' + targetplatformFile)
         pause(args)
     targetplatformXml = etree.parse(targetplatformFile, parser = etree.XMLParser(remove_comments=False))
     targetplatform = [elem.attrib['location'] for elem in targetplatformXml.findall('./locations/location/repository')]
 
-    print '\n- Updating updatesite facade -'
+    print('\n- Updating updatesite facade -')
     # check updatesite index.html template file
     template = join(args.path, 'build/scripts/template/index.html')
     if not isfile(template):
-        print 'Updatesite index.html template file does not exist: ' + updatesite
+        print('Updatesite index.html template file does not exist: ' + updatesite)
         pause(args)
     else:
         createUpdatesiteFacade(template, args)
 
-    print '\n- Setting category description -'
+    print('\n- Setting category description -')
     # check category file
     category = join(args.path, 'build/de.cau.cs.kieler.semantics.repository/category.xml')
     if not isfile(category):
-        print 'category.xml does not exist: ' + category
+        print('category.xml does not exist: ' + category)
         pause(args)
     else:
         setCategoryDesc(category, targetplatform, args)
 
-    print '\n- Processing Features -'
+    print('\n- Processing Features -')
     # check features path
     features = join(args.path, 'features')
     if not isdir(features):
-        print 'No features directory found in ' + args.path
+        print('No features directory found in ' + args.path)
         pause(args)
     else:
         setFeatureUpdatesite(features, args)
 
-    print '\n- Setting product artifact name -'
+    print('\n- Setting product artifact name -')
     # check product pom file
     product = join(args.path, 'build/de.cau.cs.kieler.semantics.product.repository/pom.xml')
     if not isfile(product):
-        print 'pom.xml does not exist: ' + product
+        print('pom.xml does not exist: ' + product)
         pause(args)
     else:
         setArtifactName(product, args)
 
-    print '\n- Setting product updatesites -'
+    print('\n- Setting product updatesites -')
     # check main pom file
     p2inf = join(args.path, 'build/de.cau.cs.kieler.semantics.product.repository/kieler.p2.inf')
     if not isfile(p2inf):
-        print 'kieler.p2.inf does not exist: ' + pom
+        print('kieler.p2.inf does not exist: ' + pom)
         pause(args)
     else:
         setProductUpdateSites(p2inf, targetplatform, args)
 
-    print '\n- Updating runtime version file -'
+    print('\n- Updating runtime version file -')
     file = join(args.path, 'plugins/de.cau.cs.kieler.core/kieler.version')
     if not isfile(file):
-        print 'Kieler version file does not exist: ' + file
+        print('Kieler version file does not exist: ' + file)
         pause(args)
     else:
         content = []
@@ -104,7 +104,7 @@ def main(args):
         with open(file, 'w') as f:
             f.write('\n'.join(content))
 
-    print '\n= Finished Configuring ='
+    print('\n= Finished Configuring =')
 
 
 def createUpdatesiteFacade(template, args):
@@ -120,7 +120,7 @@ def createUpdatesiteFacade(template, args):
                 settings['description'] = 'Release %s' % args.release
 
             outFile.write(inFile.read().format(**settings))
-            print 'Generated update site index for %s build' % settings['description']
+            print('Generated update site index for %s build' % settings['description'])
 
 
 def setCategoryDesc(category, targetplatform, args):
@@ -138,20 +138,20 @@ def setCategoryDesc(category, targetplatform, args):
             description.attrib['name'] = 'KIELER Semantics (Nightly Builds)'
             description.attrib['url'] = nightlyUpdatesite
             description.text = 'Update site for the KIELER Semantics project nightly builds.'
-        print 'Description set to: %s' % description.attrib['name']
+        print('Description set to: %s' % description.attrib['name'])
     else:
-        print 'Cannot find description element in %s' % product
+        print('Cannot find description element in %s' % product)
         pause(args)
 
     for ref in xml.findall('./repository-reference'):
-        print 'Removed reference to repository: %s' % ref.attrib['location']
+        print('Removed reference to repository: %s' % ref.attrib['location'])
         root.remove(ref)
     for ref in targetplatform:
         refElem = etree.Element('repository-reference')
         refElem.attrib['location'] = ref
         refElem.attrib['enabled'] = 'true'
         root.append(refElem)
-        print 'Added reference to repository: %s' % ref
+        print('Added reference to repository: %s' % ref)
 
     writeXML(xml, category)
          
@@ -170,7 +170,7 @@ def setFeatureUpdatesite(features, args):
                 else:
                     updatesite.attrib['label'] = 'KIELER Nightly Builds'
                     updatesite.attrib['url'] = nightlyUpdatesite
-                print 'Set updatesite url in %s' % featureDir
+                print('Set updatesite url in %s' % featureDir)
             # no else because dependency feature has not url
 
             writeXML(xml, feature, htmlentities=True)
@@ -185,11 +185,11 @@ def setArtifactName(product, args):
             archivename.text = 'sccharts_rca_%s' % args.release
         else:
             archivename.text = 'sccharts_rca_nightly_${buildQualifier}'
-        print 'Artifact name pattern set to: %s' % archivename.text
+        print('Artifact name pattern set to: %s' % archivename.text)
         
         writeXML(xml, product)
     else:
-        print 'Cannot find archiveFileName element in %s' % product
+        print('Cannot find archiveFileName element in %s' % product)
         pause(args)
 
 def setProductUpdateSites(p2inf, targetplatform, args):
@@ -199,12 +199,12 @@ def setProductUpdateSites(p2inf, targetplatform, args):
         updatesites.append(compositeUpdatesite)
     else:
         updatesites.append(nightlyUpdatesite)
-    print 'Registered Updatesites:'
+    print('Registered Updatesites:')
     
     with open(p2inf, 'w') as f:
         f.write('instructions.configure=\\\n')
         for site in updatesites:
-            print site
+            print(site)
             f.write('  addRepository(type:0,location:%s);\\\n' % site.replace(':', '${#58}'))
             f.write('  addRepository(type:1,location:%s);\\\n' % site.replace(':', '${#58}'))
 
@@ -217,5 +217,5 @@ if __name__ == "__main__":
     try:
         main(argParser.parse_args())
     except KeyboardInterrupt:
-        print "\nAbort"
+        print("\nAbort")
         sys.exit(0)
