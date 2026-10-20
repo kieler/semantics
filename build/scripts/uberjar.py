@@ -97,6 +97,7 @@ IGNORE_MERGE = [
     'modeling32.png',
     'icons/*.png', # Assuming icons are always the same if they have the same name or de.* overrides org.*
     'icons/*.gif',
+    'icons/*.svg',
     'epl-v10.html',
     'org/osgi/service/log/*', # known duplicate in org.eclipse.osgi and org.eclipse.osgi.services,
     'META-INF/AL*',
@@ -190,7 +191,7 @@ def extract(args, extracted, merged, klighd):
             # Unpack jar
             check_call([args.jar, 'xf', abspath(join(args.source, jar))], cwd=target)
 
-            if klighd and jar.startswith('org.eclipse.swt.'): # Do not merge swt fragments
+            if klighd and jar.startswith('org.eclipse.swt.') and 'svg' not in jar: # Do not merge swt fragments
                 if 'gtk.linux.x86_64' in jar:
                     klighd_swt['linux'] = target
                 elif 'win32.win32.x86_64' in jar:
@@ -200,7 +201,7 @@ def extract(args, extracted, merged, klighd):
                 elif 'cocoa.macosx.aarch64' in jar:
                     klighd_swt['osx.aarch64'] = target
                 else:
-                    stop('Unknown platform-specific SWT fragment: ', jar)
+                    stop('Unknown platform-specific SWT fragment: ' + jar)
                 # Remove unwanted files from fragment directory
                 for root, dirs, files in os.walk(target):
                     for file in (relpath(join(root, f), target) for f in files):

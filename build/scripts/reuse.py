@@ -28,19 +28,19 @@ entities = {
 def writeXML(xml, file, htmlentities=False):
     """Writes the xml content into the given file.
     IThis includes several adjustments to assure minimal invasive changes to the original file"""
-    with open(file, 'w') as f:
-        f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a ugly xml decl
+    with open(file, 'wb') as f:
+        f.write(b'<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a ugly xml decl
         if htmlentities:
             # replace all entities in text
             for element in xml.getroot().iter():
-                if isinstance(element.tag, basestring) and element.text:
+                if isinstance(element.tag, str) and element.text:
                     for entity in entities:
                         element.text = element.text.replace(entity, entities[entity])
             # serialize xml
             serialized = etree.tostring(xml, encoding='UTF-8', pretty_print=True, xml_declaration=False)
             # fix &amp in entities due to serialization
-            entitiyPattern = re.compile(ur'&amp;[#\w\w\w;|'+'|'.join([e[1:] for e in entities.values()])+ur']', re.UNICODE)
-            serialized = entitiyPattern.sub(lambda x: u'&' + x.group()[5:], serialized.decode('UTF-8'), re.UNICODE).encode('UTF-8')
+            entitiyPattern = re.compile(r'&amp;[#\w\w\w;|'+'|'.join([e[1:] for e in list(entities.values())])+r']', re.UNICODE)
+            serialized = entitiyPattern.sub(lambda x: '&' + x.group()[5:], serialized.decode('UTF-8'), re.UNICODE).encode('UTF-8')
             f.write(serialized)
         else:
             xml.write(f, encoding='UTF-8', pretty_print=True, xml_declaration=False)
@@ -49,7 +49,7 @@ def writeXML(xml, file, htmlentities=False):
 def pause(args):
     """Pauses for user confirmation"""
     if not args.nonstop:
-        raw_input('Press Enter to continue...')
+        input('Press Enter to continue...')
 
 
 def repository(path):

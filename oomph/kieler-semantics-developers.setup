@@ -463,7 +463,7 @@
             versionRange="2.7.0"/>
         <requirement
             name="org.eclipse.xtext.sdk.feature.group"
-            versionRange="[2.36.0,2.37.0)"/>
+            versionRange="[2.44.0,2.45.0)"/>
         <requirement
             name="org.eclipse.emf.mwe2.launcher.feature.group"/>
         <requirement
@@ -519,13 +519,13 @@
         <repositoryList
             name="FixedTarget">
           <repository
-              url="https://download.eclipse.org/releases/2024-09"/>
+              url="https://download.eclipse.org/releases/2026-09"/>
           <repository
-              url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.32.0"/>
+              url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.41.0"/>
           <repository
-              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.36.0/"/>
+              url="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.44.0/"/>
           <repository
-              url="https://download.eclipse.org/elk/updates/releases/0.11.0/"/>
+              url="https://download.eclipse.org/elk/updates/releases/0.12.0/"/>
           <repository
               url="https://kieler.github.io/KLighD/v3.1.0/"/>
           <repository
@@ -539,7 +539,7 @@
         xsi:type="setup.p2:P2Task">
       <requirement
           name="org.eclipse.xtext.sdk.feature.group"
-          versionRange="[2.36.0,2.37.0)"/>
+          versionRange="[2.44.0,2.45.0)"/>
       <repository
           url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
     </setupTask>
