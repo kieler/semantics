@@ -19,6 +19,7 @@ import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * @author mrb
@@ -71,6 +72,9 @@ class SCLTransformation extends Processor<EsterelProgram, SCLProgram> {
     
     def transform(EsterelProgram prog) {
         val sclProg = createSCLProg
+        for (p : prog.pragmas) {
+            sclProg.pragmas += EcoreUtil.copy(p)
+        }
         for (m : prog.modules.filter(Module)) {
             val module = createSCLModule
             sclProg.modules += module

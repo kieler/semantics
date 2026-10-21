@@ -431,10 +431,11 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         reset.code.append(indentation).append(struct.getVariableName).append(struct.separator).append(name).append(" = 0;\n")
         
         // Add the "register save" in the tick function.
-        prePrefix = "_"
+        valuedObjectPrefix = struct.getVariableName + struct.separator
+        prePrefix = ""
         tick.code.append(indentation)
         tick.code.append(struct.getVariableName).append(struct.separator).append(name).append(" = ")
-        tick.code.append(struct.getVariableName).append(struct.separator).append(operatorExpression.serializeHR).append(";\n")
+        tick.code.append(operatorExpression.subExpressions.head.serializeHR).append(";\n")
     }
     
     protected def List<Assignment> splitAssignment(Assignment assignment) {
