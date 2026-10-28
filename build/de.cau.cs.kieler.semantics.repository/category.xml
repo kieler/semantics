@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-  <description name="KIELER Semantics (Release 1.6.0)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-1.6.0/">Update site for the KIELER Semantics release 1.6.0.</description>
+  <description name="KIELER Semantics (Release 1.6.1)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-1.6.1/">Update site for the KIELER Semantics release 1.6.1.</description>
   <!-- CATEGORY DEFINITIONS -->
   <category-def name="kieler-sem" label="KIELER Semantics">
     <description>
@@ -13,22 +13,22 @@
       </description>
   </category-def>
   <!-- KIELER SEMANTICS -->
-  <feature url="features/de.cau.cs.kieler.framework.feature_1.6.0.qualifier.jar" id="de.cau.cs.kieler.framework.feature" version="1.6.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.framework.feature_1.6.1.qualifier.jar" id="de.cau.cs.kieler.framework.feature" version="1.6.1.qualifier">
     <category name="kieler-sem"/>
   </feature>
-  <feature url="features/de.cau.cs.kieler.framework.feature.source_1.6.0.qualifier.jar" id="de.cau.cs.kieler.framework.feature.source" version="1.6.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.framework.feature.source_1.6.1.qualifier.jar" id="de.cau.cs.kieler.framework.feature.source" version="1.6.1.qualifier">
     <category name="kieler-sources"/>
   </feature>
-  <feature url="features/de.cau.cs.kieler.esterel.feature_1.6.0.qualifier.jar" id="de.cau.cs.kieler.esterel.feature" version="1.6.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.esterel.feature_1.6.1.qualifier.jar" id="de.cau.cs.kieler.esterel.feature" version="1.6.1.qualifier">
     <category name="kieler-sem"/>
   </feature>
-  <feature url="features/de.cau.cs.kieler.esterel.feature.source_1.6.0.qualifier.jar" id="de.cau.cs.kieler.esterel.feature.source" version="1.6.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.esterel.feature.source_1.6.1.qualifier.jar" id="de.cau.cs.kieler.esterel.feature.source" version="1.6.1.qualifier">
     <category name="kieler-sources"/>
   </feature>
-  <feature url="features/de.cau.cs.kieler.sccharts.feature_1.6.0.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature" version="1.6.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.sccharts.feature_1.6.1.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature" version="1.6.1.qualifier">
     <category name="kieler-sem"/>
   </feature>
-  <feature url="features/de.cau.cs.kieler.sccharts.feature.source_1.6.0.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature.source" version="1.6.0.qualifier">
+  <feature url="features/de.cau.cs.kieler.sccharts.feature.source_1.6.1.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature.source" version="1.6.1.qualifier">
     <category name="kieler-sources"/>
   </feature>
   <!-- Repository references to associated sites -->
