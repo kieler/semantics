@@ -451,7 +451,7 @@ class KielerCompilerCLI implements Runnable, Observer {
             ProcessorFinished: {
                 val env = event.processorInstance.environment
                 if (env.errors !== null && !env.errors.empty) {
-                    println("Error(s) in compilation")
+                    println("Error(s) in compilation (for model " + env.getProperty(SOURCE_FILE) + ")")
                     for (error : env.errors.get(Environment.REPORT_ROOT)) {
                         println(error.message)
                         if (error.exception !== null) error.exception.printStackTrace
