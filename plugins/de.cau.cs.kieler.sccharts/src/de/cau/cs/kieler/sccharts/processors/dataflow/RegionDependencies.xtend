@@ -34,6 +34,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.sccharts.DuringAction
 
 /**
  * @author ssm
@@ -86,12 +87,20 @@ class RegionDependencies extends AbstractDependencyAnalysis<SCCharts, State> {
     }
     
     override protected Linkable association(EObject eObject) {
-        return eObject.getFirstControlflowRegion
+        var parent = eObject
+        while (parent != null) {
+            if (parent instanceof ControlflowRegion || parent instanceof DuringAction) {
+                return parent as Linkable
+            }
+            parent = parent.eContainer
+        }
+        return null
     } 
     
     override protected DataDependency createDependency(Linkable source, Linkable target) {
-        val scfr = source.getFirstControlflowRegion
-        val tcfr = target.getFirstControlflowRegion
+        // TODO: better name. was getFirstControlflowRegion -> maybe getFirstControlflowRegionOrDuring?
+        val scfr = source.association
+        val tcfr = target.association
         return scfr.createDataDependency(tcfr) => [
             originalSource = source
             originalTarget = target
@@ -130,6 +139,11 @@ class RegionDependencies extends AbstractDependencyAnalysis<SCCharts, State> {
         for (cfr : superstate.regions.filter(ControlflowRegion).toList) {
             cfr.searchDependenciesInControlflowRegion(forkStack, visited, valuedObjectAccessors)
         }
+        for (da : superstate.actions.filter(DuringAction)) {
+            forkStack.push(da)
+            da.processAction(forkStack, valuedObjectAccessors)
+            forkStack.pop
+        }
         
         forkStack.pop                
     }
@@ -149,7 +163,7 @@ class RegionDependencies extends AbstractDependencyAnalysis<SCCharts, State> {
             
             if (state.isSuperstate) {
                 state.searchDependenciesInSuperstate(forkStack, visited, valuedObjectAccessors)
-                for (act : state.actions) {
+                for (act : state.actions.filter[!(it instanceof DuringAction)]) {
                     act.processAction(forkStack, valuedObjectAccessors)            
                 }
             }           
