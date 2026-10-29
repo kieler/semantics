@@ -308,9 +308,9 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 } else {
                     labelRendering.eAllContents.filter(KRendering).toList.forEach[
                         it.associateWith(state)
-                        it.setProperty(KlighdProperties.IS_NODE_TITLE, true)
                         if (it instanceof KText) {
                             it.configureTextLOD(state)
+                            it.setProperty(KlighdProperties.IS_NODE_TITLE, true)
                         } 
                     ]
                 }
