@@ -20,7 +20,6 @@ import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
@@ -41,20 +40,31 @@ import java.util.HashSet
 import java.util.List
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.core.properties.Property
 
 import static extension java.lang.String.format
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.sccharts.processors.statebased.codegen.java.EnhancedStatebasedJavaCodeSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import com.google.inject.Injector
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
 
 /**
  * 
  */
 public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
 
+    public static val EFFECT_SERIALIZATION_TYPE = new Property<String>(
+        "de.cau.cs.kieler.sccharts.processors.json.serializationType", "basic")
+
     @Inject
     extension SCChartsScopeExtensions;
-    @Inject
-    extension KEffectsSerializeExtensions;
+    extension KEffectsSerializeHRExtensions serializeExt;
     @Inject
     extension SCChartsReferenceExtensions;
+
+    @Inject
+    Injector injector;
 
 //    @Inject
 //    extension KExpressionsSerializeExtensions;
@@ -63,7 +73,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
 
     val String namePrefix = ""
 
-    Set<String> scopeNames = new HashSet<String>(List.of("State", "Region"));
+    Set<String> scopeNames = new HashSet<String>(List.of("state", "region"));
 
     /**
      * {@inheritDoc}
@@ -91,6 +101,20 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
      */
     override void process() {
 
+        serializeExt = switch (getProperty(EFFECT_SERIALIZATION_TYPE)) {
+            case "basic":
+                injector.getInstance(KEffectsSerializeHRExtensions)
+            case "enhanced": {
+                val serializer = injector.getInstance(EnhancedStatebasedJavaCodeSerializeHRExtensions)
+                serializer.valuedObjectPrefix = ""
+                serializer
+            }
+            default: {
+                environment.warnings.add("Effect serialization type is unknown. Using default.")
+                injector.getInstance(KEffectsSerializeHRExtensions)
+            }
+        }
+
         val cc = new CodeContainer();
 
         val gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
@@ -114,7 +138,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
             // in the renaming step. Not directly an issue, but weird.
             val targetName = state.reference.target?.name
             if (targetName !== null) {
-                scopeNames.add(targetName.hostcodeSafeName)
+                scopeNames.add(targetName.hostcodeSafeName().toLowerCase())
             }
         }
 
@@ -122,7 +146,7 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
             switch (declaration) {
                 VariableDeclaration:
                     declaration.valuedObjects.forEach [
-                        scopeNames.add(name)
+                        scopeNames.add(name.toLowerCase())
                     ]
                 default: {
                     // Do nothing here
@@ -139,12 +163,12 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
                 var new_name = namePrefix + state.name.hostcodeSafeName
 
                 // Ensure the name is really unique
-                while (scopeNames.contains(new_name)) {
+                while (scopeNames.contains(new_name.toLowerCase())) {
                     new_name = namePrefix + state.name.hostcodeSafeName + (stateCounter++)
                 }
                 new_name
             }
-        scopeNames.add(name);
+        scopeNames.add(name.toLowerCase());
 
         if (name != state.name) {
             state.label = state.name
@@ -162,12 +186,12 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
                 var new_name = namePrefix + region.name.hostcodeSafeName
 
                 // Ensure the name is really unique
-                while (scopeNames.contains(new_name)) {
-                    new_name = namePrefix + region.name.hostcodeSafeName + (regionCounter++)
+                while (scopeNames.contains(new_name.toLowerCase())) {
+                    new_name = namePrefix + region.name.hostcodeSafeName + "_" + (regionCounter++)
                 }
                 new_name
             }
-        scopeNames.add(name)
+        scopeNames.add(name.toLowerCase())
 
         if (name != region.name) {
             region.label = region.name
@@ -222,9 +246,9 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
             transformed.reference.targetFile = state.reference.target?.eResource()?.URI?.toString
             // TODO: maybe add structure to the binding.
             transformed.reference.parameters = bindings.map [
-                sourceExpression.serialize + " to " + targetValuedObject.serialize + targetIndices?.map [
-                    "[" + it.serialize + "]"
-                ].join()
+                sourceExpression.serializeHR + " to " + targetValuedObject.serializeHR + (targetIndices?.map [
+                    "[" + it.serializeHR + "]"
+                ]?.join() ?: "")
             ]
         }
 
@@ -250,8 +274,8 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
         }
 
         transformed.isImmediate = action.delay.equals(DelayType.IMMEDIATE)
-        transformed.guard = action.trigger?.serialize?.toString
-        transformed.action = String.valueOf(action.effects.serialize())
+        transformed.guard = action.trigger?.serializeHR()?.toString
+        transformed.action = String.valueOf(action.effects.serializeHR())
 
         return transformed
     }
@@ -260,7 +284,10 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
         val transformed = new Transition()
 
         transformed.label = transition.label
-        transformed.targetID = transition.targetState.name
+        transformed.targetID = transition.targetState?.name
+        if (transformed.targetID === null) {
+            environment.errors.add("Transition %s has no target state.".format(transition.toString()))
+        }
         transformed.isImmediate = transition.delay.equals(DelayType.IMMEDIATE)
         transformed.preemption = switch (transition.preemption) {
             case PreemptionType.TERMINATION: Transition.Preemption.TERMINATION
@@ -280,14 +307,14 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
                 true
             }
         }
-        transformed.guard = transition.trigger?.serialize?.toString
+        transformed.guard = transition.trigger?.serializeHR()?.toString
         if (transition.triggerDelay != 1) {
             environment.errors.add(
                 "Count Delay of %d for transition %s is not supported.".format(transition.triggerDelay,
                     transition.toString())
             )
         }
-        transformed.action = if(!transition.effects.isEmpty()) transition.effects.serialize?.toString
+        transformed.action = if(!transition.effects.isEmpty()) transition.effects.serializeHR()?.toString
 
         return transformed
     }
@@ -304,6 +331,10 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
                 )
                 List.of()
             }
+            ReferenceDeclaration: {
+//                println("ReferenceDeclaration " + declaration)                
+                List.of()
+            }
             default: {
                 environment.errors.add(
                     "Cannot handle declaration %s of type %s.".format(declaration.toString(), declaration.class.name))
@@ -318,16 +349,19 @@ public class SCTXToJSON extends Processor<SCCharts, CodeContainer> {
 
         transformed.id = v.name
         transformed.type = t.literal
-        transformed.initialValue = v.initialValue?.serialize?.toString
+        transformed.initialValue = v.initialValue?.serializeHR()?.toString()
         transformed.isInput = isInput
         transformed.isOutput = isOutput
         transformed.isConst = isConst
         transformed.cardinalities = v.cardinalities?.map [
             switch (it) {
                 IntValue:
-                    it.value
+                    it.value as Object
+                ValuedObjectReference:
+                    it.valuedObject?.name
                 default: {
-                    environment.warnings.add("Ignoring non-literal cardinality '%s' on %s".format(it.serialize, v.name))
+                    environment.warnings.add(
+                        "Ignoring non-literal cardinality '%s' on %s".format(it.serializeHR, v.name))
                     null
                 }
             }

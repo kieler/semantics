@@ -59,7 +59,7 @@ public class Variable {
      */
     @SerializedName("cardinalities")
     @Expose
-    private List<Integer> cardinalities;
+    private List<Object> cardinalities;
 
     /**
      * 
@@ -164,7 +164,7 @@ public class Variable {
      * (Required)
      * 
      */
-    public List<Integer> getCardinalities() {
+    public List<Object> getCardinalities() {
         return cardinalities;
     }
 
@@ -173,7 +173,7 @@ public class Variable {
      * (Required)
      * 
      */
-    public void setCardinalities(List<Integer> cardinalities) {
+    public void setCardinalities(List<Object> cardinalities) {
         this.cardinalities = cardinalities;
     }
 
