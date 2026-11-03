@@ -47,7 +47,8 @@ class EmitTransformation extends AbstractSCEstDynamicProcessor<Emit> {
         
     override transform(Emit emit) {
         var signal = emit.signal as Signal
-        if (emit.expression === null && signal.type != ValueType.PURE) {
+        val isValued = signal.type != ValueType.PURE || signal.idType !== null
+        if (emit.expression === null && isValued) {
             throw new UnsupportedOperationException("The following signal is a valued signal. 
                                     Thus a non valued emit is invalid! " + signal.toString)
         }
@@ -57,7 +58,7 @@ class EmitTransformation extends AbstractSCEstDynamicProcessor<Emit> {
         val assign = createAssignment(signal.createSignalReference, expr)
         emit.replace(assign)
         if (emit.expression !== null) {
-            if (signal.type != ValueType.PURE) {
+            if (isValued) {
                 var Assignment assign2
                 // if no combineOperator exists, handle valued signal like Karsten Rathlev did in his master thesis
                 if (signal.combineOperator === null || signal.combineOperator == CombineOperator.NONE) {

@@ -58,9 +58,10 @@ class LocalSignalDeclTransformation extends AbstractSCEstDynamicProcessor<LocalS
             var decl = createDeclaration(ValueType.BOOL, s)
             voStore.update(s, "signal")
             var decl2 = createDeclaration(null, null)
-            if (signal.type !== null) {
+            val isValued = signal.type != ValueType.PURE || signal.idType !== null
+            if (signal.type !== null || signal.idType !== null) {
                 scope.declarations.add(decl)
-                if (signal.type == ValueType.PURE) {
+                if (!isValued) {
                     signalsMap.put(signal, new NewSignals(s))
                 }
                 else {
@@ -68,8 +69,11 @@ class LocalSignalDeclTransformation extends AbstractSCEstDynamicProcessor<LocalS
                     decl.valuedObjects.add(s_set)
                     val s_val = createSignalVariable(signal.initialValue, signal.combineOperator, s.name + "_val")
                     val s_cur = createSignalVariable(null, signal.combineOperator, s.name + "_cur")
-                    val tempType = if (signal.type == ValueType.DOUBLE) ValueType.FLOAT else signal.type
+                    val tempType = if (signal.idType !== null) ValueType.HOST
+                        else if (signal.type == ValueType.DOUBLE) ValueType.FLOAT
+                        else signal.type
                     decl2 = createDeclaration(tempType, null)
+                    if (signal.idType !== null) decl2.hostType = signal.idType
                     decl2.valuedObjects.add(s_val)
                     decl2.valuedObjects.add(s_cur)
                     signalsMap.put(signal, new NewSignals(s, s_set, s_cur, s_val))
