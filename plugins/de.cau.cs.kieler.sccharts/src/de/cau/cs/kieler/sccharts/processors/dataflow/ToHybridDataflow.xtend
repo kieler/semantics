@@ -88,8 +88,11 @@ class ToHybridDataflow extends SCChartsProcessor {
             val Multimap<Region, Dependency> lrTargetMap =  HashMultimap.create
             for (d : dependencies) {
                 val lr = lcafMap.levelRegions(d)
-                lrSourceMap.put(lr.key, d)
-                lrTargetMap.put(lr.value, d)
+                // TODO: Check if this works even for non-Region values in lr.
+                if (lr.key instanceof Region && lr.value instanceof Region) {
+                    lrSourceMap.put(lr.key as Region, d)
+                    lrTargetMap.put(lr.value as Region, d)
+                }
             }
             
             subModel.processSuperState(model, lid, lrSourceMap, lrTargetMap)  
