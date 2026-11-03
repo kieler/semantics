@@ -10,4 +10,6 @@ de.cau.cs.kieler.sccharts.processors.timedautomata
     de.cau.cs.kieler.sccharts.processors.^pre
 ]   
 
-de.cau.cs.kieler.sccharts.processors.SCTXToJSON
+de.cau.cs.kieler.sccharts.processors.SCTXToJSON config {
+    "de.cau.cs.kieler.sccharts.processors.json.serializationType": "enhanced"
+}
