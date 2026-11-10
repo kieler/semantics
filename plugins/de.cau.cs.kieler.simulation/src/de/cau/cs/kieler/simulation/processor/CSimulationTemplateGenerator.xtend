@@ -239,6 +239,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                 case UNSIGNED,
                 case INT,
                 case DOUBLE,
+                case ENUM,
                 case FLOAT: '''cJSON_CreateNumber(«access»)'''
                 case STRING: '''((«access» != NULL) ? cJSON_CreateStringReference(«access») : cJSON_CreateNull())'''
                 case CLASS,
@@ -266,6 +267,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                 case UNSIGNED,
                 case INT,
                 case DOUBLE,
+                case ENUM,
                 case FLOAT: '''cJSON_CreateNumber(«access»)'''
                 case STRING: '''cJSON_CreateString((«access» != NULL) ? «access» : "")'''
                 case CLASS,
@@ -321,6 +323,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
         return switch(info.type) {
             case UNSIGNED,
             case BOOL,
+            case ENUM,
             case INT: "->valueint"
             case DOUBLE,
             case FLOAT: "->valuedouble"

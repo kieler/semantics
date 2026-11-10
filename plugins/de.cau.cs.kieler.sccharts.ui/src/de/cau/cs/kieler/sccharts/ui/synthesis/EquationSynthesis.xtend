@@ -526,7 +526,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
      * @param output Should be true if output nodes should be generated
      */
     private def dispatch KNode performTransformation(ValuedObjectReference reference, List<KNode> nodes, boolean output) {
-        if (!reference.isModelReference 
+        if (!reference.isModelReference && !reference.isEnumReference
             && (
                 (
                     reference.isClassReference 
@@ -599,7 +599,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             }
         node.setProperty(output ? OUTPUT_FLAG : INPUT_FLAG, true)
         
-        if (reference.isModelReference) {
+        if (reference.isModelReference && !reference.isEnumReference) {
             // in case of a model reference the subreference should not be in the label of the node
             text = reference.valuedObject.reference.serializeHR.toString
             for (i : reference.indices) {

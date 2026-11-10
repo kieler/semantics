@@ -111,6 +111,17 @@ class StateStyles {
     }
 
     /**
+     * Adds an initial connector figure.
+     */
+    def KRoundedRectangle addInitialConnectorFigure(KNode node) {
+        node.setMinimalNodeSize(0.5f * DEFAULT_FIGURE_MIN_NODE_SIZE, 0.5f * DEFAULT_FIGURE_MIN_NODE_SIZE);
+        node.addRoundedRectangle(DEFAULT_FIGURE_CORNER_RADIUS, DEFAULT_FIGURE_CORNER_RADIUS, baseLineWidth) => [
+            background = STATE_CONNECTOR.color;
+            foreground = STATE_CONNECTOR.color;
+        ]
+    }
+
+    /**
      * Adds a small state figure.
      */
     def KRoundedRectangle addDefaultFigure(KNode node) {

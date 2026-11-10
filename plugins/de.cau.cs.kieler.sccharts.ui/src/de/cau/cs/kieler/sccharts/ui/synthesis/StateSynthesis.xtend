@@ -170,9 +170,15 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
         //pre-evaluate type
         val isConnector = state.isConnector
+        val isInitialConnector = isConnector && state.isInitial;
 
         // Basic state style
         switch state {
+            case isInitialConnector: {
+                node.addInitialConnectorFigure
+                node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(SCChartsSemanticFilterTags.CONNECTOR_STATE)
+                proxy.addInitialConnectorFigure
+            }
             case isConnector: {
                 node.addConnectorFigure
                 node.getProperty(KlighdProperties.SEMANTIC_FILTER_TAGS).add(SCChartsSemanticFilterTags.CONNECTOR_STATE)

@@ -39,6 +39,8 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -67,8 +69,11 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
     @Inject extension TransitionStyles
     @Inject extension ColorStore
     @Inject extension AdaptiveZoom
+    @Inject extension SCChartsCoreExtensions
+    @Inject extension PragmaExtensions
 
     override performTranformation(Transition transition) {
+        val legacySemantics = transition.getSCCharts.hasPragma("LegacySemantics");
         val edge = transition.createEdge().associateWith(transition);
         edge.configureEdgeLOD(transition)
 
@@ -89,7 +94,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         edge.addTransitionSpline();
 
         // Modifiers
-        if (transition.isImplicitlyImmediate) {
+        if (transition.isImplicitlyImmediate && (legacySemantics || !transition.sourceState.isConnector)) {
             edge.setImmediateStyle
         }
         if (transition.nondeterministic) {
