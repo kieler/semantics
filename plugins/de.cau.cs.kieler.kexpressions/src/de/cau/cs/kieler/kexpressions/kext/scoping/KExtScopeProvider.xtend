@@ -14,14 +14,15 @@
 package de.cau.cs.kieler.kexpressions.kext.scoping
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.GenericParameterDeclaration
+import de.cau.cs.kieler.kexpressions.IODeclaration
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.Referenceable
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsAccessVisibilityExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsGenericParameterExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -30,6 +31,7 @@ import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage
 import de.cau.cs.kieler.kexpressions.keffects.scoping.KEffectsScopeProvider
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
+import de.cau.cs.kieler.kexpressions.scoping.OverloadingAwareSimpleScope
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
@@ -66,16 +68,8 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 	}
 	
 	protected def IScope getScopeForValuedObjectReference(EObject context, EReference reference) {
-	    val contextContainer = context.eContainer
-        if (reference.eContainer instanceof ValuedObjectReference) {
-			val parentVOR = reference.eContainer as ValuedObjectReference
-			val declaration = parentVOR.valuedObject.eContainer as Declaration
-			if (declaration instanceof ReferenceDeclaration) {
-				return Scopes.scopeFor(<ValuedObject> newArrayList(declaration.valuedObjects))
-			}
-		} else if (contextContainer instanceof ValuedObjectReference && (contextContainer as ValuedObjectReference).subReference === context) {
-		    // The context is a subreference!
-		    return contextContainer.getScopeForReferencedDeclarationFromSubReference(reference)
+        if (context instanceof ValuedObjectReference && (context as ValuedObjectReference).isSubReference) {// The context is a subreference!
+		    return context.eContainer.getScopeForReferencedDeclarationFromSubReference(reference)
 		}
 		return context.getScopeHierarchical(reference)
 	}
@@ -106,11 +100,11 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 	}
 	
 	protected def IScope getScopeForStruct(ClassDeclaration struct) {
-	    return Scopes.scopeFor(struct.declarations.filter[it.isPublic].map[valuedObjects].flatten)
+	    return new OverloadingAwareSimpleScope(struct.declarations.filter[it.isPublic].map[valuedObjects].flatten)
 	}
 	
 	protected def IScope getScopeForReferencedType(EObject reference, ValuedObjectReference context,
-	    Function1<? super VariableDeclaration, Boolean> predicate) {
+	    Function1<? super IODeclaration, Boolean> predicate) {
 	    if (reference === null) {
 	        // IMPORTANT: This can happen if the resource that should be imported does not exist. 
 	        // In this case, the scope given to the linker was null previously. This causes a NPE. 
@@ -118,12 +112,16 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 	        return IScope.NULLSCOPE
 	    }
 	    
-        if (reference instanceof DeclarationScope) {
+	    if (reference instanceof DeclarationScope) {
             val declarations = (reference as DeclarationScope).declarations
-            val relevantDeclarations = declarations.filter(VariableDeclaration).filter(predicate).toList
-            val candidates = <ValuedObject> newArrayList
-            relevantDeclarations.forEach [ candidates += it.valuedObjects ]
-            return Scopes.scopeFor(candidates)
+            if (context.topmostReference instanceof ScheduleObjectReference) {
+                return Scopes.scopeFor(declarations.filter(ScheduleDeclaration).map[valuedObjects].flatten)
+            } else {
+                val relevantDeclarations = declarations.filter(IODeclaration).filter(predicate).toList
+                val candidates = <ValuedObject> newArrayList
+                relevantDeclarations.forEach [ candidates += it.valuedObjects ]
+                return Scopes.scopeFor(candidates)
+            }
         } else if (reference instanceof ValuedObject) {
             if (reference.isGenericParamter) {
                 return reference.genericParameterDeclaration.type.getScopeForReferencedType(context, predicate)

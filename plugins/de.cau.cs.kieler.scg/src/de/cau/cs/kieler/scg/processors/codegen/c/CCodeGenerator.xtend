@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.scg.processors.codegen.c
 
+import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
@@ -113,6 +114,16 @@ class CCodeGenerator extends AbstractCodeGenerator<SCGraphs, SCGraph> {
             for (m : scg.declarations.filter(MethodDeclaration)) {
                 m.valuedObjects.head.name = scg.name + "_" + m.valuedObjects.head.name
             }
+        }
+        // C has no overloading, hence, rename.
+        val methodOverloadNaming = HashMultimap.create
+        for (scg : rootModel.scgs.filter[method]) {
+            val method = scg.methodDeclaration
+            val originalName = method.valuedObjects.head.name
+            if (methodOverloadNaming.containsKey(originalName)) {
+                method.valuedObjects.head.name = originalName + "_overloaded" + methodOverloadNaming.get(originalName).size
+            }
+            methodOverloadNaming.put(originalName, method)
         }
     }
 

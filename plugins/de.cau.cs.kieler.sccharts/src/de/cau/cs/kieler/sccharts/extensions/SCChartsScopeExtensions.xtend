@@ -262,8 +262,12 @@ class SCChartsScopeExtensions {
         return null
     }
      
-    def List<ValuedObject> genericTypeParameters(Scope scope) {
-        scope.genericParameterDeclarations.filter[isTypeDeclaration].map[valuedObjects.head].toList
+    def List<ValuedObject> genericComplexTypeParameters(Scope scope) {
+        scope.genericParameterDeclarations.filter[isComplexTypeDeclaration].map[valuedObjects.head].toList
+    }
+    
+    def List<ValuedObject> genericPrimitiveTypeParameters(Scope scope) {
+        scope.genericParameterDeclarations.filter[isPrimitiveTypeDeclaration].map[valuedObjects.head].toList
     }
     
     def List<ValuedObject> genericValuedObjectParameters(Scope scope) {

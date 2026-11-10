@@ -4,10 +4,10 @@ knode operator {
     org.eclipse.elk.portLabels.placement = INSIDE
     org.eclipse.elk.portConstraints = FIXED_ORDER
 
-  krectangle {
+  krectangle [
+    de.cau.cs.kieler.sccharts.ui.synthesis.style.sccharts = true
+  ] {
         styles: lineStyle = solid
-              foreground = 190r, 190g, 190b 
-            background = 248r, 249g, 253b, 255a -> 205r, 220g, 243b, 243a (90)
   }
 
   kport in1 {

@@ -25,11 +25,13 @@ import static org.junit.Assert.*
 class DiagramCLITest extends AbstractCLITest {
     
     static val artifact = new File("../../build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/kicodia-" + platformExePostfix )
+    // Must match test architecture because of SWT
+    static val artifactMac = new File("../../build/de.cau.cs.kieler.kicool.klighd.cli/target/exe/kicodia-osx-aarch64")
     static val compiler = new File("./bin/kicodia" + (Platform.isWindows ? ".bat" : "")) // this is needed because if the windows version is used, then the file has to end with .bat
     
     @BeforeClass
     static def void setUpOnce() throws Exception {
-        setupCompiler(artifact, compiler)
+        setupCompiler(Platform.isMac ? artifactMac : artifact, compiler)
     }
 
     @Test

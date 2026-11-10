@@ -26,90 +26,90 @@ from reuse import *
 PROJECT_PREFIX = 'de.cau.cs.kieler'
 
 def main(args):
-    print '- Processing Plugins -'
+    print('- Processing Plugins -')
 
     for pluginFolder in ['plugins', 'test']:
         # check pluging path
         plugins = join(args.path, pluginFolder)
         if not isdir(plugins):
-            print 'No plugins directory found in ' + args.path
+            print('No plugins directory found in ' + args.path)
             pause(args)
         else:
             setProjectVersion(plugins, args, [setMainfestVersion, setPomVersion])
 
-    print '\n- Processing Features -'
+    print('\n- Processing Features -')
     # check features path
     features = join(args.path, 'features')
     if not isdir(features):
-        print 'No features directory found in ' + args.path
+        print('No features directory found in ' + args.path)
         pause(args)
     else:
         setProjectVersion(features, args, [setFeatureVersion, setPomVersion])
         
-    print '\n- Processing Language Server Modules -'
+    print('\n- Processing Language Server Modules -')
     # check LS path
     ls_modules = join(args.path, 'language-server')
     if not isdir(features):
-        print 'No language server directory found in ' + args.path
+        print('No language server directory found in ' + args.path)
         pause(args)
     else:
         setProjectVersion(ls_modules, args, [setPomVersion])
 
-    print '\n- Updating p2 repository -'
+    print('\n- Updating p2 repository -')
     # check category file
     category = join(args.path, 'build/de.cau.cs.kieler.semantics.repository/category.xml')
     if not isfile(category):
-        print 'category.xml does not exist: ' + category
+        print('category.xml does not exist: ' + category)
         pause(args)
     else:
         updateCategory(features, category, args)
     # check pom file
     pom = join(args.path, 'build/de.cau.cs.kieler.semantics.repository/pom.xml')
     if not isfile(pom):
-        print 'pom.xml does not exist: ' + pom
+        print('pom.xml does not exist: ' + pom)
         pause(args)
     else:
         setPomVersion(join(args.path, 'build'), 'de.cau.cs.kieler.semantics.repository', args)
 
-    print '\n- Updating product plugin.xml -'
+    print('\n- Updating product plugin.xml -')
     # check product file
     plugin = join(args.path, 'plugins/de.cau.cs.kieler.core.product/plugin.xml')
     if not isfile(plugin):
-        print 'plugin.xml does not exist: ' + plugin
+        print('plugin.xml does not exist: ' + plugin)
         pause(args)
     else:
         updateProductPlugin(plugin, args)
 
-    print '\n- Updating product -'
+    print('\n- Updating product -')
     # check product file
     product = join(args.path, 'build/de.cau.cs.kieler.semantics.product.repository/kieler.product')
     if not isfile(product):
-        print 'kieler.product does not exist: ' + product
+        print('kieler.product does not exist: ' + product)
         pause(args)
     else:
         updateProduct(product, args)
     # check pom file
     pom = join(args.path, 'build/de.cau.cs.kieler.semantics.product.repository/pom.xml')
     if not isfile(pom):
-        print 'pom.xml does not exist: ' + pom
+        print('pom.xml does not exist: ' + pom)
         pause(args)
     else:
         setPomVersion(join(args.path, 'build'), 'de.cau.cs.kieler.semantics.product.repository', args)
 
-    print '\n- Updating CLI products -'
+    print('\n- Updating CLI products -')
     # check pom files
     for cli in ['de.cau.cs.kieler.kicool.cli','de.cau.cs.kieler.kicool.klighd.cli','de.cau.cs.kieler.sccharts.cli','de.cau.cs.kieler.language.server.cli']:
         pom = join(args.path, 'build', cli, 'pom.xml')
         if not isfile(pom):
-            print 'pom.xml does not exist: ' + pom
+            print('pom.xml does not exist: ' + pom)
             pause(args)
         else:
             setPomVersion(join(args.path, 'build'), cli, args)
 
-    print '\n- Updating runtime version file -'
+    print('\n- Updating runtime version file -')
     file = join(args.path, 'plugins/de.cau.cs.kieler.core/kieler.version')
     if not isfile(file):
-        print 'Kieler version file does not exist: ' + file
+        print('Kieler version file does not exist: ' + file)
         pause(args)
     else:
         content = []
@@ -122,7 +122,7 @@ def main(args):
         with open(file, 'w') as f:
             f.write('\n'.join(content))
 
-    print '\n= Finished Version Update ='
+    print('\n= Finished Version Update =')
 
 
 def setProjectVersion(directory, args, setter):
@@ -130,14 +130,14 @@ def setProjectVersion(directory, args, setter):
     for project in sorted(os.listdir(directory)):
         if project.startswith(PROJECT_PREFIX) and isdir(join(directory, project)) and isfile(join(directory, project, '.project')):
             try:
-                print project
+                print(project)
                 for call in setter:
                     call(directory, project, args)
             except KeyboardInterrupt as ki:
                 raise ki
             except Exception as ex:
-                print '-- Error while updating version information!'
-                print '-- %s' % ex
+                print('-- Error while updating version information!')
+                print('-- %s' % ex)
                 traceback.print_exc()
                 pause(args)
 
@@ -156,7 +156,7 @@ def setMainfestVersion(directory, project, args):
                     line = 'Bundle-Version: %s.qualifier\n' % args.version
                 f.write(line)
     else:
-        print '-- MANIFEST.MF file is missing!'
+        print('-- MANIFEST.MF file is missing!')
         pause(args)
 
 
@@ -169,7 +169,7 @@ def setFeatureVersion(directory, project, args):
 
         writeXML(xml, feature, htmlentities=True)
     else:
-        print '-- feature.xml file is missing!'
+        print('-- feature.xml file is missing!')
         pause(args)
 
 
@@ -182,7 +182,7 @@ def setPomVersion(directory, project, args):
 
         writeXML(xml, pom)
     else:
-        print '-- pom.xml file is missing!'
+        print('-- pom.xml file is missing!')
         pause(args)
 
 
@@ -192,7 +192,7 @@ def updateCategory(features, category, args):
     for feature in xml.findall('feature'):
         feature.attrib['url'] = 'features/%s_%s.qualifier.jar' % (feature.attrib['id'], args.version)
         feature.attrib['version'] = '%s.qualifier' % args.version
-        print "Updated version of %s feature" % feature.attrib['id']
+        print("Updated version of %s feature" % feature.attrib['id'])
     
     writeXML(xml, category)
 
@@ -202,9 +202,9 @@ def updateProductPlugin(product, args):
     version = xml.find("./extension/product/property[@name='version']")
     if version is not None:
         version.attrib['value'] = args.version
-        print 'Set version in product plugin'
+        print('Set version in product plugin')
     else:
-        print 'Cannot find version property element in %s' % version
+        print('Cannot find version property element in %s' % version)
         pause(args)
 
     writeXML(xml, product)
@@ -213,7 +213,7 @@ def updateProduct(product, args):
     """Set version in product definition"""
     xml = etree.parse(product, parser = etree.XMLParser(remove_comments=False))
     xml.getroot().attrib['version'] = '%s.qualifier' % args.version
-    print 'Set version in product definition'
+    print('Set version in product definition')
 
     writeXML(xml, product, htmlentities=True)
 
@@ -226,5 +226,5 @@ if __name__ == "__main__":
     try:
         main(argParser.parse_args())
     except KeyboardInterrupt:
-        print "\nAbort"
+        print("\nAbort")
         sys.exit(0)

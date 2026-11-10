@@ -25,41 +25,41 @@ from reuse import *
 PROJECT_PREFIX = 'de.cau.cs.kieler'
 
 def main(args):
-    print '= Scanning Features ='
+    print('= Scanning Features =')
     features = join(args.path, 'features')
     if not isdir(features):
-        print 'No features directory found in ' + args.path
+        print('No features directory found in ' + args.path)
         pause(args)
     else:
         pluginFeatures = readFeatures(features, args)
-        print 'Done'
+        print('Done')
 
-    print '\n= Checking Plugins ='
+    print('\n= Checking Plugins =')
 
     for pluginFolder in ['plugins', 'test']:
         # check pluging path
         plugins = join(args.path, pluginFolder)
         if not isdir(plugins):
-            print '%s is not an directory' % plugins
+            print('%s is not an directory' % plugins)
             pause(args)
         else:
             for project in sorted(os.listdir(plugins)):
                 project_path = join(plugins, project)
                 if project.startswith(PROJECT_PREFIX) and isdir(project_path) and isfile(join(project_path, '.project')):
                     try:
-                        print project
+                        print(project)
                         checkBuildProperties(project_path, args)
                         checkFeatureContainment(project, pluginFeatures, args)
                     except KeyboardInterrupt as ki:
                         raise ki
                     except Exception as ex:
-                        print '-- An error occuured!'
-                        print '-- %s' % ex
+                        print('-- An error occuured!')
+                        print('-- %s' % ex)
                         traceback.print_exc()
                         pause(args)
-    print 'Done'
+    print('Done')
 
-    print '\n= Finished Sanity Checks ='
+    print('\n= Finished Sanity Checks =')
 
 
 def checkBuildProperties(directory, args):
@@ -68,20 +68,20 @@ def checkBuildProperties(directory, args):
         with open(build_properties, 'r') as f:
             content = f.read()
             if isfile(join(directory, 'plugin.xml')) and 'plugin.xml' not in content:
-                print '- Build properties: Missing include for plugin.xml'
+                print('- Build properties: Missing include for plugin.xml')
                 pause(args)
             else:
-                print '- Build properties: OK'
+                print('- Build properties: OK')
     else: 
-        print '- Build properties: file does not exist'
+        print('- Build properties: file does not exist')
         pause(args)
 
 def checkFeatureContainment(plugin, featurePlugins, args):
     if plugin in featurePlugins:
-        print '- Feature Containment: OK'
-        print '- Contained in %s' % featurePlugins[plugin] 
+        print('- Feature Containment: OK')
+        print('- Contained in %s' % featurePlugins[plugin]) 
     else:
-        print '- Feature Containment: Not contained'
+        print('- Feature Containment: Not contained')
         pause(args)
 
 def readFeatures(features, args):
@@ -109,5 +109,5 @@ if __name__ == "__main__":
     try:
         main(argParser.parse_args())
     except KeyboardInterrupt:
-        print "\nAbort"
+        print("\nAbort")
         sys.exit(0)

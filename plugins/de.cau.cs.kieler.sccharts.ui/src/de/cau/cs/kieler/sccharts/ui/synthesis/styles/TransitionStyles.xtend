@@ -22,8 +22,6 @@ import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.KSpline
-import de.cau.cs.kieler.klighd.krendering.LineCap
-import de.cau.cs.kieler.klighd.krendering.LineJoin
 import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
@@ -31,8 +29,6 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceX
-import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceY
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.List
 
@@ -81,12 +77,14 @@ class TransitionStyles {
      */
     def KSpline addTransitionSpline(KEdge edge) {
         edge.addSpline => [
+            foreground = TRANSITION_FOREGROND.color;
             lineWidth = TRANSITION_LINE_WIDTH;
         ]
     }
     
     def KPolyline addTransitionPolyline(KEdge edge) {
         edge.addPolyline => [
+            foreground = TRANSITION_FOREGROND.color;
             lineWidth = TRANSITION_LINE_WIDTH;
         ]
     }    
@@ -201,6 +199,7 @@ class TransitionStyles {
         }
         edge.line.addEllipse() => [
             lineWidth = 1;
+            foreground = STATE_FOREGROUND.color;
             background = TRANSITION_DEFERRED.color;
             if (isAdditionalArrowHead) {
                 setDecoratorPlacementData(10, 10, -19, 1, false);
@@ -234,7 +233,8 @@ class TransitionStyles {
         edge.line.addEllipse() => [
             setDecoratorPlacementData(10, 10, 4, 0, false);
             lineWidth = 1;
-            background = TRANSITION_ABORT_DECORATOR.color
+            foreground = STATE_FOREGROUND.color;
+            background = TRANSITION_ABORT_DECORATOR.color;
         ]
     }
     
@@ -246,7 +246,8 @@ class TransitionStyles {
         edge.line.drawTriangle() => [
             setDecoratorPlacementData(11, 11, 5, 0, true);
             lineWidth = 1;
-            background = TRANSITION_TERMINATION_DECORATOR.color
+            foreground = STATE_FOREGROUND.color;
+            background = TRANSITION_TERMINATION_DECORATOR.color;
         ]
     }
 
@@ -261,6 +262,7 @@ class TransitionStyles {
     def configureTransitionLabelRendering(KRendering rendering) {
         rendering.fontSize = 11;
         rendering.fontBold = true;
+        rendering.foreground = TRANSITION_LABEL_FOREGROND.color;
     }
     
     def KLabel addLabel(KEdge edge, String text, KColor backgroundColor) {
@@ -269,7 +271,7 @@ class TransitionStyles {
         label.getKRendering => [ // Configure text
             fontSize = 7;
             
-            foreground = COMMENT_FOREGROND_TRANSITION.color
+            foreground = COMMENT_TEXT.color
             background = backgroundColor
         ]
         return label;
@@ -282,7 +284,7 @@ class TransitionStyles {
         //label.selectionFontBold = true
         //label.selectionForeground = SELECTION.color
         return label
-    }    
+    }
     
     def configureTransitionTailLabelRendering(KRendering rendering) {
         rendering.fontSize = 8
@@ -295,28 +297,6 @@ class TransitionStyles {
             foreground = USER_SCHEDULE_COLOR.color
         ]
     }
-    
-    def addAggregationArrowDecorator(KPolyline line) {
-        line.lineCap = LineCap::CAP_FLAT
-        createKPolygon => [
-            line.addChild(it).withCopyOf(line.lineWidth).withCopyOf(line.foreground).setBackground(line.foreground).setLineJoin(LineJoin::JOIN_ROUND)
-            points += createKPosition(PositionReferenceX::LEFT, 0, 0, PositionReferenceY::TOP, 0, 0.5f)
-            points += createKPosition(PositionReferenceX::LEFT, 0, 0.5f, PositionReferenceY::TOP, 0, 0)
-            points += createKPosition(PositionReferenceX::RIGHT, 0, 0, PositionReferenceY::BOTTOM, 0, 0.5f)
-            points += createKPosition(PositionReferenceX::RIGHT, 0, 0.5f, PositionReferenceY::BOTTOM, 0, 0)
-            
-            placementData = createKDecoratorPlacementData => [
-                it.rotateWithLine = true;
-                it.relative = 0f
-                it.absolute = 0f
-                it.width = 16
-                it.height = 10
-                it.setXOffset(0f)
-                it.setYOffset(-5f)
-            ]
-        ]
-    }
-    
     
     /** 
      * Returns the polyline rending of the edge.

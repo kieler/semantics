@@ -29,10 +29,12 @@ import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
+import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
@@ -40,6 +42,7 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import java.util.Comparator
 import java.util.List
+import java.util.Stack
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.PortSide
@@ -64,6 +67,7 @@ class EquationSynthesisHelper {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension TransitionStyles
     @Inject extension KPortExtensions
+    @Inject extension KRenderingExtensions
 
     protected val List<Pair<KNode, KNode>> sequentials = newArrayList
     protected var alignInputOutputs = false
@@ -72,7 +76,11 @@ class EquationSynthesisHelper {
     protected var showWireLabels = false
     protected var combineAllDataAccessNodes = false
     protected var showArrows = false
-    protected var DataflowRegion currentRegion = null
+    /* 
+     * only contains a single element with the current region during transformation. If automatic inline is on, this
+     * is a stack of the processed regions, with the top region being the current one.
+     */
+    protected var Stack<DataflowRegion> currentRegions = new Stack
 
     /**
      * removes a node from the list and from the graph
@@ -334,7 +342,6 @@ class EquationSynthesisHelper {
             return
         }
         val edge = createEdge
-        DiagramSyntheses.setLayoutOption(edge, LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
         edge.source = source.node
         edge.sourcePort = source
         edge.target = target.node
@@ -351,6 +358,28 @@ class EquationSynthesisHelper {
         if (showArrows) {
             edge.addDefaultDecorator
         }
+    }
+    
+    protected def KEdge associateMethodPorts(KPort source, KPort target, boolean output) {
+        if (source === null || target === null) {
+            return null
+        }
+        val edge = createEdge
+        DiagramSyntheses.setLayoutOption(edge, LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
+        DiagramSyntheses.setLayoutOption(edge, LayeredOptions.NO_LAYOUT, true)
+        
+        edge.source = source.node
+        edge.sourcePort = source
+        edge.target = target.node
+        edge.targetPort = target
+        
+        val line = edge.addPolyline(output ? 0.5f : 3)
+        
+        if(output) {
+            line.lineStyle = LineStyle.DOT
+        }
+        
+        return edge
     }
 
     protected def isSequential(KNode before, KNode after) {
