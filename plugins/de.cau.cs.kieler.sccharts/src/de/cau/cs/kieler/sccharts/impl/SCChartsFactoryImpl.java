@@ -90,6 +90,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.POLICY_REGION: return createPolicyRegion();
             case SCChartsPackage.CODE_EFFECT: return createCodeEffect();
             case SCChartsPackage.DATAFLOW_ASSIGNMENT: return createDataflowAssignment();
+            case SCChartsPackage.DATAFLOW_REFERENCE_CALL: return createDataflowReferenceCall();
             case SCChartsPackage.BASE_STATE_REFERENCE: return createBaseStateReference();
             case SCChartsPackage.ODE_ACTION: return createOdeAction();
             case SCChartsPackage.MODULE_SCOPE_CALL: return createModuleScopeCall();
@@ -303,6 +304,17 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public DataflowAssignment createDataflowAssignment() {
         DataflowAssignmentImpl dataflowAssignment = new DataflowAssignmentImpl();
         return dataflowAssignment;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public DataflowReferenceCall createDataflowReferenceCall() {
+        DataflowReferenceCallImpl dataflowReferenceCall = new DataflowReferenceCallImpl();
+        return dataflowReferenceCall;
     }
 
     /**

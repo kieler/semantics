@@ -26,9 +26,11 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -75,6 +77,7 @@ class Const extends SCChartsProcessor implements Traceable {
     @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions
+    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension SCChartsScopeExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
@@ -89,15 +92,28 @@ class Const extends SCChartsProcessor implements Traceable {
         var targetRootState = rootState
 
         // Traverse all states
-        for (scope : targetRootState.getAllScopes.filter[ it.declarations.filter(VariableDeclaration).exists[ isConst ] ].toList) {
+        for (scope : targetRootState.getAllScopes.filter[ it.hasConstant ].toList) {
             scope.evaluateExpressions
             scope.transformConst
         }
         targetRootState;
     }
-
+    
     def void transformConst(Scope scope) {
-        val constObjects = scope.valuedObjects.filter[isConst && initialValue !== null].toList
+        val constObjects = newArrayList
+        for (d : scope.declarations) {
+            if (d instanceof ClassDeclaration) {
+                for (vo : d.allNestedValuedObjects.filter[isConst && initialValue !== null]) {
+                    constObjects += vo
+                }
+            } else if (d instanceof VariableDeclaration) {
+                if (d.isConst) {
+                    for (vo : d.valuedObjects.filter[initialValue !== null]) {
+                        constObjects += vo
+                    }
+                }
+            }
+        }
 
         for (const : constObjects) {
             val replacement = const.initialValue
@@ -135,10 +151,10 @@ class Const extends SCChartsProcessor implements Traceable {
                             }
                         }
                         if (arrayElement !== null) {
-                            vor.replace(arrayElement.copy)
+                            vor.topmostReference.replace(arrayElement.copy)
                         }
                     } else {
-                        vor.replace(replacement.copy)
+                        vor.topmostReference.replace(replacement.copy)
                     }
                     // If replaced size in array cardinality
                     if (container instanceof ValuedObject && coniainingFeature == KExpressionsPackage.Literals.VALUED_OBJECT__CARDINALITIES) {
@@ -176,6 +192,18 @@ class Const extends SCChartsProcessor implements Traceable {
                 par.values.put(vo, vo.initialValue as Value)
             } 
         }
+    }
+    
+    
+    def boolean hasConstant(Scope scope) {
+        return scope.declarations.exists[
+            if (it instanceof ClassDeclaration) {
+                return it.allNestedValuedObjects.filter[it.isVariableReference].exists[it.variableDeclaration.isConst]
+            } else if (it instanceof VariableDeclaration) {
+                return it.isConst
+            }
+            return false
+        ]
     }
 
     def SCCharts transform(SCCharts sccharts) {

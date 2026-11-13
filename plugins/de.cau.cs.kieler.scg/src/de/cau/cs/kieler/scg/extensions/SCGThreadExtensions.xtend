@@ -14,9 +14,11 @@
 package de.cau.cs.kieler.scg.extensions
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
@@ -24,8 +26,7 @@ import de.cau.cs.kieler.scg.Surface
 import java.util.List
 import java.util.Map
 import java.util.Set
-import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import org.eclipse.xtend.lib.annotations.Data
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -141,7 +142,7 @@ class SCGThreadExtensions {
                 if (nextNode !== null)
                     nextNode.allPrevious.filter [
                         (!returnList.contains(it.eContainer)) && (!controlFlows.contains(it)) && (!it.hasAnnotation(
-                            de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION))
+                            SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION))
                     ] => [controlFlows.addAll(it)]
             }
             // Add the exit node.
@@ -254,13 +255,13 @@ class SCGThreadExtensions {
                 nextNode.allNext.filter [
                     (!nodeSet.contains(it.target)) && (!controlFlows.contains(it)) && (!it.target.equals(exit)) &&
                         (!it.hasAnnotation(
-                            de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION))
+                            SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION))
                 ] => [controlFlows.addAll(it)]
         }
 
         // Reverse search outgoing from the exit node
         controlFlows.addAll(exit.allPrevious.filter [
-            !hasAnnotation(de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)
+            !hasAnnotation(SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)
         ])
         while (!controlFlows.empty) {
             var nextNode = controlFlows.head.eContainer as Node
@@ -285,7 +286,7 @@ class SCGThreadExtensions {
             if (nextNode !== null && nextNode != exit.entry) {
                 nextNode.allPrevious.filter [
                     (!nodeSet.contains(it.eContainer)) && (!controlFlows.contains(it)) && (!hasAnnotation(
-                        de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION))
+                        SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION))
                 ] => [controlFlows.addAll(it)]
             }
         }
@@ -352,7 +353,7 @@ class SCGThreadExtensions {
                 nextNode.allNext.filter [
                     (!nodeSet.contains(it.target)) && (!controlFlows.contains(it)) && (!it.target.equals(exit)) &&
                         (!hasAnnotation(
-                            de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION))
+                            SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION))
                 ] => [controlFlows.addAll(it)]
         }
 
@@ -376,7 +377,7 @@ class SCGThreadExtensions {
             if (nextNode !== null && nextNode != exit.entry)
                 nextNode.allPrevious.filter [
                     (!nodeSet.contains(it.eContainer)) && (!controlFlows.contains(it)) && (!hasAnnotation(
-                        de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION))
+                        SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION))
                 ] => [controlFlows.addAll(it)]
         }
 
@@ -385,56 +386,77 @@ class SCGThreadExtensions {
         nodeSet
     }
     
-    def Set<Node> getShallowSurfaceThreadNodes(Entry entry) {
-        // Create a new list of nodes and 
-        // a list of control flows that mark paths within the thread.
-        val nodeSet = <Node>newHashSet
-        val controlFlows = <ControlFlow>newLinkedList
+    /**
+     * Lists all surface and depth nodes in the given thread.
+     */
+    def SurfaceDepth calculateSurfaceDepth(Entry entry) {
+        val sd = new SurfaceDepth()
+        val end = entry.exit
+        val starts = <Node>newLinkedHashSet
+        val processed = <Node>newHashSet
+        
+        starts += entry
 
-        // Add the entry node itself and retrieve the exit of the thread
-        // with aid of the opposite relation in the entry node. 
-        val exit = entry.exit
-
-        // If the exit node follows the entry node directly, exit here.
-        if (entry.next.target == exit) {
-            nodeSet.add(exit)
-            return nodeSet
-        }
-
-        // Now, follow the control flow until the exit node is reached 
-        // and add each node that is not already in the node list.
-        controlFlows.addAll(entry.allNext)
-        while (!controlFlows.empty) {
-            // Next node is the first target in the control flow list.
-            var nextNode = controlFlows.head.targetNode
-
-            // Remove this control flow.
-            controlFlows.remove(0)
-
-            nodeSet.add(nextNode);
-
-            if (nextNode instanceof Fork) {
-                nodeSet.add(nextNode);
-            }
-            else if (nextNode instanceof Surface) {
-                // Since surface node do not have extra control flows to their 
-                // corresponding depth, set the next node manually.
-                nodeSet.add(nextNode);
+        while (!starts.empty) {
+            val start = starts.head
+            val surface = start instanceof Entry
+            if (surface) {
+                sd.surface += start
+            } else {
+                sd.depth += start
             }
 
-            // Now, add all succeeding control flow provided 
-            // - that the flow is not already included in the flow list
-            // - the target of the flow is not already processed
-            // - and the target of the flow is not the exit node.  
-            if (nextNode !== null)
-                nextNode.allNext.filter [
-                    (!nodeSet.contains(it.target)) && (!controlFlows.contains(it)) && (!it.target.equals(exit)) &&
-                        (!hasAnnotation(
-                            de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION))
-                ] => [controlFlows.addAll(it)]
+            val visited = <Node>newHashSet
+            val nextNodes = <Node>newLinkedHashSet
+            
+            visited += start
+            nextNodes += start.allNextNodes
+            
+            while (!nextNodes.empty) {
+                var node = nextNodes.head
+                nextNodes -= node
+                visited += node
+                
+                if (surface) {
+                    sd.surface += node
+                } else {
+                    sd.depth += node
+                }
+
+                if (node instanceof Surface) {
+                    if (!processed.contains(node)) {
+                        starts += node.depth
+                    }
+                } else {
+                    val nextCF = node.allNext
+                    // visit successors
+                    for (cf : nextCF) {
+                        val nextNode = cf.target.asNode
+                        if (nextNode == end) {
+                            if (surface) {
+                                sd.surface += nextNode
+                            } else {
+                                sd.depth += nextNode
+                            }
+                        } else if (
+                            !visited.contains(nextNode) 
+                            && !(
+                                surface && sd.surface.contains(nextNode)
+                                || !surface && sd.depth.contains(nextNode)
+                            )
+                            && !cf.hasAnnotation(SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)
+                        ) {
+                            nextNodes += nextNode
+                        }
+                    }
+                }
+            }
+
+            starts -= start
+            processed += start
         }
 
-        nodeSet
+        return sd
     }
     
 
@@ -742,4 +764,10 @@ class SCGThreadExtensions {
         return ThreadPathType::UNKNOWN;
     }
 
+}
+
+@Data
+class SurfaceDepth {
+    val Set<Node> surface = newHashSet
+    val Set<Node> depth = newHashSet
 }

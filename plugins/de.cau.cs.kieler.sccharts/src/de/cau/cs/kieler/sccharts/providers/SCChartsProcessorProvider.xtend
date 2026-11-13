@@ -65,6 +65,7 @@ class SCChartsProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.sccharts.processors.TimedAutomata,
             de.cau.cs.kieler.sccharts.processors.RegionActionsAndDeclarations,
             de.cau.cs.kieler.sccharts.processors.Inheritance,
+            de.cau.cs.kieler.sccharts.processors.UnpackClasses,
             de.cau.cs.kieler.sccharts.processors.statebased.DebugAnnotations,
             de.cau.cs.kieler.sccharts.processors.statebased.DeSurfaceDepth,
             de.cau.cs.kieler.sccharts.processors.statebased.DeConditionalize,

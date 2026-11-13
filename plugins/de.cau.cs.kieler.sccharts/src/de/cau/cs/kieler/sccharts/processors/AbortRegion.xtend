@@ -263,7 +263,11 @@ class AbortRegion extends SCChartsProcessor implements Traceable {
         
         // Add flags
         if (!flagsDecl.valuedObjects.empty) {
-            state.declarations += flagsDecl
+            if (dispatcher !== null) {
+                state.parentRegion.parentState.declarations += flagsDecl
+            } else {
+                state.declarations += flagsDecl
+            }
         }
     }
     

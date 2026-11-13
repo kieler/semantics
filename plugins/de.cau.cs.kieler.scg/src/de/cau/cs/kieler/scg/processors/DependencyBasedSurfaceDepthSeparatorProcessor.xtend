@@ -44,7 +44,7 @@ import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
  * @kieler.rating 2017-11-13 proposed yellow
  *
  */
-class SurfaceDepthSeparatorProcessor extends InplaceProcessor<SCGraphs> {
+class DependencyBasedSurfaceDepthSeparatorProcessor extends InplaceProcessor<SCGraphs> {
     
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
@@ -53,7 +53,7 @@ class SurfaceDepthSeparatorProcessor extends InplaceProcessor<SCGraphs> {
     @Inject extension SCGMethodExtensions
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.surfaceDepthSeparator"
+        "de.cau.cs.kieler.scg.processors.DependencyBasedSurfaceDepthSeparatorProcessor"
     }
     
     override getName() {

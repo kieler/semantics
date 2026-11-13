@@ -1332,6 +1332,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	}
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     AddExpression returns OperatorExpression
 	 *     AddExpression.OperatorExpression_1_0 returns OperatorExpression
@@ -1411,6 +1412,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *         ) | 
 	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 operator=AddOperator subExpressions+=ProductExpression)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1418,6 +1420,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BitwiseOrExpression returns OperatorExpression
 	 *
@@ -1513,6 +1516,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=ProductExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BitwiseAndExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1520,6 +1524,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BitwiseOrExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     BitwiseXOrExpression returns OperatorExpression
@@ -1610,6 +1615,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=ProductExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BitwiseAndExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1617,6 +1623,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     BitwiseAndExpression returns OperatorExpression
@@ -1701,6 +1708,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=ProductExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BitwiseAndExpression_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1708,6 +1716,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BitwiseNotExpression returns OperatorExpression
 	 *
@@ -1786,6 +1795,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=ProductExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1793,6 +1803,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns OperatorExpression
 	 *
@@ -1873,6 +1884,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *         ) 
 	 *         schedule+=ScheduleObjectReference?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1880,11 +1892,13 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns ValuedObjectString
 	 *
 	 * Constraint:
 	 *     (name=PrimeID schedule+=ScheduleObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_ValuedObjectString(ISerializationContext context, ValuedObjectString semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1892,6 +1906,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns OperatorExpression
 	 *
@@ -1902,6 +1917,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *         subExpressions+=ValuedObjectReference? 
 	 *         schedule+=ScheduleObjectReference?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_ValuedObjectTestExpression(ISerializationContext context, de.cau.cs.kieler.lustre.scade.scade.OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1909,6 +1925,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     DivExpression returns OperatorExpression
 	 *
@@ -1987,6 +2004,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *         ) | 
 	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_DivExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1994,6 +2012,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ModExpression returns OperatorExpression
 	 *
@@ -2072,6 +2091,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *         ) | 
 	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_ModExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2079,6 +2099,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MultExpression returns OperatorExpression
 	 *
@@ -2157,6 +2178,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *         ) | 
 	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2164,6 +2186,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SfbyExpression returns OperatorExpression
 	 *
@@ -2247,6 +2270,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SfbyExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2254,6 +2278,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftExpressions returns OperatorExpression
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns OperatorExpression
@@ -2352,6 +2377,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=ProductExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2359,6 +2385,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftLeftExpression returns OperatorExpression
 	 *
@@ -2442,6 +2469,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=ProductExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftLeftExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2449,6 +2477,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftRightExpression returns OperatorExpression
 	 *
@@ -2532,6 +2561,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=ProductExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftRightExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2539,6 +2569,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftRightUnsignedExpression returns OperatorExpression
 	 *
@@ -2622,6 +2653,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=ProductExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2629,6 +2661,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SubExpression returns OperatorExpression
 	 *     SubExpression.OperatorExpression_1_0 returns OperatorExpression
@@ -2708,6 +2741,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *         ) | 
 	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 operator=SubOperator subExpressions+=ProductExpression)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SubExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2715,6 +2749,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ProductExpression returns OperatorExpression
 	 *     ProductExpression.OperatorExpression_1_0_0 returns OperatorExpression
@@ -2837,6 +2872,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=ProductExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LastExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2844,6 +2880,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ScadeEquation returns ScadeEquation
 	 *
@@ -2857,6 +2894,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *         operator=AssignOperator 
 	 *         expression=Expression
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ScadeEquation(ISerializationContext context, ScadeEquation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2864,11 +2902,13 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ScadeProgram returns ScadeProgram
 	 *
 	 * Constraint:
 	 *     (equations+=ScadeEquation | assertions+=Assertion | automatons+=Automaton)+
+	 * </pre>
 	 */
 	protected void sequence_ScadeProgram(ISerializationContext context, ScadeProgram semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2876,6 +2916,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ValuedObjectString returns ValuedObjectString
 	 *     ValuedObjectTestExpression returns ValuedObjectString
@@ -2949,6 +2990,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *
 	 * Constraint:
 	 *     name=PrimeID
+	 * </pre>
 	 */
 	protected void sequence_ValuedObjectString(ISerializationContext context, ValuedObjectString semanticObject) {
 		if (errorAcceptor != null) {
@@ -2962,6 +3004,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ValuedObjectTestExpression returns OperatorExpression
 	 *     ProductExpression returns OperatorExpression
@@ -3034,6 +3077,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *
 	 * Constraint:
 	 *     ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_ValuedObjectTestExpression(ISerializationContext context, de.cau.cs.kieler.lustre.scade.scade.OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.scg.processors
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
@@ -36,6 +35,7 @@ import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.ExpressionDependency
@@ -43,15 +43,20 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.GuardDependency
 import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import de.cau.cs.kieler.scg.extensions.SCGSequentialForkExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import java.util.Map
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
@@ -68,6 +73,9 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
     @Inject extension SCGDeclarationExtensions
     @Inject extension SCGCacheExtensions
     @Inject extension SCGDependencyExtensions
+    @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGThreadExtensions
+    @Inject extension SCGSequentialForkExtensions
     @Inject extension KExpressionsDeclarationExtensions       
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsComplexCreateExtensions 
@@ -346,7 +354,81 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
         }
         for(exit : mainThreadExits) {
            val exitNode = ScgFactory.eINSTANCE.createExit => [ newSCG.nodes += it ]
-            exit.createControlDependency(exitNode)
+           exit.createControlDependency(exitNode)
+        }
+        
+        // Add control dependencies of sequential forks
+        val forks = scg.nodes.filter(Fork).toList
+        if (forks.exists[it.isNonParallel]) {
+            val nodeGuardNodeMap = newHashMap
+            for (entry : guardSchedulingBlockMap.entrySet) {
+                val guardNode = GAMap.get(entry.key)
+                if (guardNode !== null) {
+                    for (n : entry.value.nodes) {
+                        nodeGuardNodeMap.put(n, guardNode)
+                    }
+                }
+            }
+            for (fork : scg.nodes.filter(Fork).filter[it.isNonParallel]) {
+                val entries = fork.allNextNodes.filter(Entry).toList
+                val sdInfos = entries.map[it.calculateSurfaceDepth].toList
+                for (var i = 0; i < entries.size - 1; i++) { // this one to next thread
+                    val thisEntry = entries.get(i)
+                    val thisSDNodes = sdInfos.get(i)
+                    val nextEntry = entries.get(i + 1)
+                    val nextEntryGuardNode = nodeGuardNodeMap.get(nextEntry)
+                    
+                    // Surface and depth are now handled separately to enables delayed loops
+                    // Only duty nodes get CF dependencies because else the order does not matter anyway
+                    
+                    // Surface
+                    val lastSurfaceNodes = <Node>newHashSet
+                    if (thisSDNodes.surface.contains(thisEntry.exit)) {
+                        lastSurfaceNodes += thisEntry.exit
+                    }
+                    lastSurfaceNodes += thisSDNodes.surface.filter(Surface)
+                    val lastSurfaceDutyNodes = lastSurfaceNodes.map[
+                        it.preceedingDutyNodes(thisEntry)
+                    ].flatten.toSet.filter[
+                        thisSDNodes.surface.contains(it)
+                    ]
+                    
+                    for (lastNode : lastSurfaceDutyNodes) {
+                        val gNode = nodeGuardNodeMap.get(lastNode)
+                        if (thisSDNodes.depth.contains(lastNode)) {
+                            if (fork.join.nodeExistsPath(fork, false)) { // immediate feedback
+                                environment.warnings.add("Imposing a sequential order an a node that is both in the thread's surface and depth will lead to an scheduling issue due to the presence of an immediate feedback loop (thread reincarnation).", gNode, true)
+                            }
+                        }
+                        // Any last surface node must be placed before the entry node of the next thread
+                        gNode.createControlDependency(nextEntryGuardNode).trace(fork)
+                    }
+                    
+                    // Depth
+                    val lastDepthNodes = <Node>newHashSet
+                    if (thisSDNodes.depth.contains(thisEntry.exit)) {
+                        lastDepthNodes += thisEntry.exit
+                    }
+                    lastDepthNodes += thisSDNodes.depth.filter(Surface)
+                    val lastDepthDutyNodes = lastDepthNodes.map[
+                        it.preceedingDutyNodes(thisEntry)
+                    ].flatten.toSet.filter[
+                        thisSDNodes.depth.contains(it)
+                    ]
+                    
+                    for (lastNode : lastDepthDutyNodes) {
+                        val gNode = nodeGuardNodeMap.get(lastNode)
+                        val nextThreadDepthNodes = nextEntry.allThreadNodes.values.flatten.filter(Depth)
+                        val nextThreadFirstDutyNodes = nextThreadDepthNodes.map[it.succeedingDutyNodes(nextEntry.exit)].flatten.toSet
+                        
+                        // Any last node must be placed before all first nodes of the next thread                            
+                        for (firstNode : nextThreadFirstDutyNodes) {
+                            val firstNodeGuardNode = nodeGuardNodeMap.get(firstNode)
+                            gNode.createControlDependency(firstNodeGuardNode).trace(fork)
+                        }
+                    }
+                }
+            }
         }
         
         // Remove Fork Nodes if toggled - WIP

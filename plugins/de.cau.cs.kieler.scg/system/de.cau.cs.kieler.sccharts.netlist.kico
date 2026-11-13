@@ -11,6 +11,7 @@ post process de.cau.cs.kieler.sccharts.scg.processors.abortRegion
 post process de.cau.cs.kieler.scg.processors.str
 post process de.cau.cs.kieler.scg.processors.sfr
 post process de.cau.cs.kieler.scg.processors.methods
+post process de.cau.cs.kieler.scg.processors.sequentialForkSurfaceDepthSeparator
 post process de.cau.cs.kieler.scg.processors.threadAnalyzer
 post process de.cau.cs.kieler.scg.processors.finalThreads
 system de.cau.cs.kieler.scg.netlist

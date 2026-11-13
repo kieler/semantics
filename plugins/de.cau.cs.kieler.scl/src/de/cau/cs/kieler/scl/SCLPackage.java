@@ -975,6 +975,15 @@ public interface SCLPackage extends EPackage {
     int METHOD_IMPLEMENTATION_DECLARATION__SCHEDULE = KExpressionsPackage.METHOD_DECLARATION__SCHEDULE;
 
     /**
+     * The feature id for the '<em><b>Static</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__STATIC = KExpressionsPackage.METHOD_DECLARATION__STATIC;
+
+    /**
      * The feature id for the '<em><b>Override</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -991,6 +1000,33 @@ public interface SCLPackage extends EPackage {
      * @ordered
      */
     int METHOD_IMPLEMENTATION_DECLARATION__RETURN_TYPE = KExpressionsPackage.METHOD_DECLARATION__RETURN_TYPE;
+
+    /**
+     * The feature id for the '<em><b>Return Host Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__RETURN_HOST_TYPE = KExpressionsPackage.METHOD_DECLARATION__RETURN_HOST_TYPE;
+
+    /**
+     * The feature id for the '<em><b>Return Reference</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__RETURN_REFERENCE = KExpressionsPackage.METHOD_DECLARATION__RETURN_REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Return Reference Container</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__RETURN_REFERENCE_CONTAINER = KExpressionsPackage.METHOD_DECLARATION__RETURN_REFERENCE_CONTAINER;
 
     /**
      * The feature id for the '<em><b>Parameter Declarations</b></em>' containment reference list.
@@ -1020,13 +1056,22 @@ public interface SCLPackage extends EPackage {
     int METHOD_IMPLEMENTATION_DECLARATION__STATEMENTS = KExpressionsPackage.METHOD_DECLARATION_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Implemented</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__IMPLEMENTED = KExpressionsPackage.METHOD_DECLARATION_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Method Implementation Declaration</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int METHOD_IMPLEMENTATION_DECLARATION_FEATURE_COUNT = KExpressionsPackage.METHOD_DECLARATION_FEATURE_COUNT + 2;
+    int METHOD_IMPLEMENTATION_DECLARATION_FEATURE_COUNT = KExpressionsPackage.METHOD_DECLARATION_FEATURE_COUNT + 3;
 
 
     /**
@@ -1434,6 +1479,17 @@ public interface SCLPackage extends EPackage {
     EClass getMethodImplementationDeclaration();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.MethodImplementationDeclaration#isImplemented <em>Implemented</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Implemented</em>'.
+     * @see de.cau.cs.kieler.scl.MethodImplementationDeclaration#isImplemented()
+     * @see #getMethodImplementationDeclaration()
+     * @generated
+     */
+    EAttribute getMethodImplementationDeclaration_Implemented();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scl.Loop <em>Loop</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1786,6 +1842,14 @@ public interface SCLPackage extends EPackage {
          * @generated
          */
         EClass METHOD_IMPLEMENTATION_DECLARATION = eINSTANCE.getMethodImplementationDeclaration();
+
+        /**
+         * The meta object literal for the '<em><b>Implemented</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute METHOD_IMPLEMENTATION_DECLARATION__IMPLEMENTED = eINSTANCE.getMethodImplementationDeclaration_Implemented();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scl.impl.LoopImpl <em>Loop</em>}' class.

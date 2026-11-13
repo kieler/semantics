@@ -9,6 +9,7 @@ import de.cau.cs.kieler.annotations.NamedObject;
 
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.IODeclaration;
 import de.cau.cs.kieler.kexpressions.Referenceable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
@@ -144,6 +145,7 @@ public class LustreSwitch<T> extends Switch<T>
         LustreVariableDeclaration lustreVariableDeclaration = (LustreVariableDeclaration)theEObject;
         T result = caseLustreVariableDeclaration(lustreVariableDeclaration);
         if (result == null) result = caseVariableDeclaration(lustreVariableDeclaration);
+        if (result == null) result = caseIODeclaration(lustreVariableDeclaration);
         if (result == null) result = caseDeclaration(lustreVariableDeclaration);
         if (result == null) result = caseAnnotatable(lustreVariableDeclaration);
         if (result == null) result = defaultCase(theEObject);
@@ -471,6 +473,22 @@ public class LustreSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseDeclaration(Declaration object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>IO Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>IO Declaration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseIODeclaration(IODeclaration object)
   {
     return null;
   }

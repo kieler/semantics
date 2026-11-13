@@ -158,7 +158,6 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
   {
     super(eNS_URI, LustreFactory.eINSTANCE);
   }
-
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

@@ -42,7 +42,7 @@ class For extends SCChartsProcessor implements Traceable {
     }
     
     override getName() {
-        "For V2"
+        "For"
     }
     
     override process() {

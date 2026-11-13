@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Simulation IDE
 Bundle-Vendor: Kiel University
-Bundle-Version: 1.6.0.qualifier
+Bundle-Version: 1.7.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.simulation.ide;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtend.lib,
@@ -13,7 +13,8 @@ Require-Bundle: org.eclipse.xtend.lib,
  com.google.gson;bundle-version="2.7.0",
  org.eclipse.elk.core,
  de.cau.cs.kieler.klighd.krendering.extensions;bundle-version="2.0.0",
- de.cau.cs.kieler.klighd.ide;bundle-version="2.0.0"
+ de.cau.cs.kieler.klighd.ide;bundle-version="2.0.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
 Bundle-RequiredExecutionEnvironment: JavaSE-21
 Export-Package: de.cau.cs.kieler.simulation.ide,
  de.cau.cs.kieler.simulation.ide.preferences,

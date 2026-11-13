@@ -1959,6 +1959,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	}
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns OperatorExpression
 	 *
@@ -2010,6 +2011,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *         ) 
 	 *         schedule+=ScheduleObjectReference?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_BitwiseAndExpression_BitwiseOrExpression_BitwiseXOrExpression_BoolScheduleExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2017,6 +2019,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolExpression returns OperatorExpression
 	 *     LogicalOrExpression returns OperatorExpression
@@ -2067,6 +2070,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *             subExpressions+=CompareOperation*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_BitwiseAndExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2074,6 +2078,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LogicalOrExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     LogicalAndExpression returns OperatorExpression
@@ -2117,6 +2122,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *             subExpressions+=CompareOperation*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_BitwiseAndExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_LogicalAndExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2124,6 +2130,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LogicalAndExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     BitwiseOrExpression returns OperatorExpression
@@ -2161,6 +2168,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *             subExpressions+=CompareOperation*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_BitwiseAndExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2168,6 +2176,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BitwiseOrExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     BitwiseXOrExpression returns OperatorExpression
@@ -2199,6 +2208,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *             subExpressions+=CompareOperation*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_BitwiseAndExpression_BitwiseXOrExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2206,6 +2216,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     BitwiseAndExpression returns OperatorExpression
@@ -2231,6 +2242,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *             subExpressions+=CompareOperation*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_BitwiseAndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2238,6 +2250,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BitwiseNotExpression returns OperatorExpression
 	 *
@@ -2257,6 +2270,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_BitwiseNotExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2264,6 +2278,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TernaryOperation returns OperatorExpression
 	 *
@@ -2296,6 +2311,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SfbyExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2303,6 +2319,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InitExpression returns OperatorExpression
 	 *
@@ -2329,6 +2346,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SfbyExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2336,6 +2354,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InitExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     FbyExpression returns OperatorExpression
@@ -2362,6 +2381,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SfbyExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2369,6 +2389,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftExpressions returns OperatorExpression
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns OperatorExpression
@@ -2423,6 +2444,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftExpressions_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2430,6 +2452,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftLeftExpression returns OperatorExpression
 	 *
@@ -2469,6 +2492,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftLeftExpression_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2476,6 +2500,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftRightExpression returns OperatorExpression
 	 *
@@ -2515,6 +2540,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftRightExpression_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2522,6 +2548,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftRightUnsignedExpression returns OperatorExpression
 	 *
@@ -2561,6 +2588,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftRightUnsignedExpression_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2568,6 +2596,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     ShiftRightExpression.OperatorExpression_1_0 returns OperatorExpression
@@ -2606,6 +2635,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2613,6 +2643,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ProductExpression returns OperatorExpression
 	 *     ProductExpression.OperatorExpression_1_0_0 returns OperatorExpression
@@ -2637,6 +2668,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2644,6 +2676,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     FbyExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     SfbyExpression returns OperatorExpression
@@ -2669,6 +2702,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SfbyExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2676,6 +2710,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     AtomicExpression returns OperatorExpression
 	 *     AtomicValuedExpression returns OperatorExpression
@@ -2720,6 +2755,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=EsterelModOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=EsterelSubOperator subExpressions+=NegExpression)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2727,11 +2763,13 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns FunctionCall
 	 *
 	 * Constraint:
 	 *     (functionName=ID (parameters+=Parameter parameters+=Parameter*)? schedule+=ScheduleObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_FunctionCall(ISerializationContext context, FunctionCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2739,11 +2777,13 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns SignalReference
 	 *
 	 * Constraint:
 	 *     (valuedObject=[Signal|ID] schedule+=ScheduleObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_SignalReferenceExpression(ISerializationContext context, SignalReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2751,11 +2791,13 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns StringValue
 	 *
 	 * Constraint:
 	 *     (value=STRING schedule+=ScheduleObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_StringValue(ISerializationContext context, StringValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2763,11 +2805,13 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns TickReference
 	 *
 	 * Constraint:
 	 *     schedule+=ScheduleObjectReference?
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_TickSignalExpression(ISerializationContext context, TickReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2775,11 +2819,13 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     BoolScheduleExpression returns VariableReference
 	 *
 	 * Constraint:
 	 *     (valuedObject=[Variable|ID] schedule+=ScheduleObjectReference?)
+	 * </pre>
 	 */
 	protected void sequence_BoolScheduleExpression_VariableReference(ISerializationContext context, VariableReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2787,6 +2833,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InstructionStatement returns Assignment
 	 *     EsterelThread.EsterelThread_0_1_0 returns Assignment
@@ -2795,6 +2842,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* reference=VariableOrSignalReference expression=Expression)
+	 * </pre>
 	 */
 	protected void sequence_EsterelAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2802,6 +2850,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Statement returns Assignment
 	 *     EsterelThread returns Assignment
@@ -2820,6 +2869,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *             semicolon?=';'?
 	 *         )
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_EsterelAssignment_SclAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2827,11 +2877,13 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelModule returns Module
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* name=ID (declarations+=VariableDeclaration | declarations+=EsterelDeclaration)* statements+=EsterelParallel?)
+	 * </pre>
 	 */
 	protected void sequence_EsterelModule(ISerializationContext context, de.cau.cs.kieler.scl.Module semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2839,11 +2891,13 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EsterelProgram returns EsterelProgram
 	 *
 	 * Constraint:
 	 *     ((pragmas+=Pragma+ modules+=EsterelModule+) | modules+=EsterelModule+)?
+	 * </pre>
 	 */
 	protected void sequence_EsterelProgram(ISerializationContext context, EsterelProgram semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2851,6 +2905,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Statement returns EsterelThread
 	 *     EsterelThread returns EsterelThread
@@ -2862,6 +2917,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *         (statements+=EsterelThread_EsterelThread_0_1_0 statements+=EsterelThread) | 
 	 *         (statements+=EsterelThread_EsterelThread_1_1_0 statements+=EsterelThread)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_EsterelThread(ISerializationContext context, EsterelThread semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2869,6 +2925,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Statement returns Set
 	 *     InstructionStatement returns Set
@@ -2880,6 +2937,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* signal=[Signal|ID] expression=Expression)
+	 * </pre>
 	 */
 	protected void sequence_Set(ISerializationContext context, de.cau.cs.kieler.esterel.Set semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2887,6 +2945,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Statement returns UnEmit
 	 *     InstructionStatement returns UnEmit
@@ -2898,6 +2957,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* signal=[Signal|ID])
+	 * </pre>
 	 */
 	protected void sequence_UnEmit(ISerializationContext context, UnEmit semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2905,6 +2965,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ValuedObjectPreExpression returns OperatorExpression
 	 *
@@ -2913,6 +2974,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectPreExpression) | 
 	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression)
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
