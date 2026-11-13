@@ -89,6 +89,7 @@ class SCChartsDiagramAnalysis extends AbstractModelDataCollector<SCCharts> {
                 scaleLimit = zoomOutScale;
                          
             }
+            data.put("Maximum Required Zoom", scaleLimit);
             // set up z samplers
             val sampleStepSize = Math.min( 1.0 / scaleLimit, scaleLimit);
             
