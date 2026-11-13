@@ -20,15 +20,15 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
 import java.util.EnumSet
+import org.eclipse.elk.alg.rectpacking.options.RectPackingOptions
+import org.eclipse.elk.alg.rectpacking.p3whitespaceelimination.WhiteSpaceEliminationStrategy
 import org.eclipse.elk.core.options.ContentAlignment
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.core.options.TopdownNodeTypes
+import org.eclipse.elk.core.options.TopdownSizeApproximator
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import org.eclipse.elk.core.options.TopdownSizeApproximator
-import org.eclipse.elk.alg.rectpacking.options.RectPackingOptions
-import org.eclipse.elk.alg.rectpacking.p3whitespaceelimination.WhiteSpaceEliminationStrategy
 
 /**
  * Hook that configures SCCharts to be laid out using top-down layout instead of bottom-up layout.
@@ -43,24 +43,20 @@ class TopdownLayoutHook extends SynthesisHook {
     public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.TopdownLayoutHook";
     
     public static final SynthesisOption USE_TOPDOWN_LAYOUT = 
-        SynthesisOption.createCheckOption(TopdownLayoutHook, "Topdown Layout", false)
+        SynthesisOption.createCheckOption(TopdownLayoutHook, "Top-down Layout", false)
             .setCategory(GeneralSynthesisOptions::LAYOUT)
             .description = "Use top-down layout instead of bottom-up layout to generate the diagram."
             
-    public static final SynthesisOption TOPDOWN_HIERARCHICAL_NODE_WIDTH = 
-        SynthesisOption.createRangeOption(TopdownLayoutHook, "Topdown Hierarchical Node Width", 50.0f, 5000.0f, 1.0f, 150.0f)
-            .setCategory(GeneralSynthesisOptions::LAYOUT)
-            .description = "The fixed width to assign to all hierarchical nodes."
             
     public static final SynthesisOption TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO = 
-        SynthesisOption.createRangeOption(TopdownLayoutHook, "Topdown Hierarchical Node Aspect Ratio", 0.2f, 5.0f, 0.01f, 1.41f)
+        SynthesisOption.createRangeOption(TopdownLayoutHook, "Top-down Target Aspect Ratio", 0.2f, 5.0f, 0.01f, 1.41f)
             .setCategory(GeneralSynthesisOptions::LAYOUT)
-            .description = "The aspect ratio all hierarchical nodes should have. Determines the height of the nodes."
+            .description = "The aspect ratio all hierarchical nodes should aim to have."
             
     
     override getDisplayedSynthesisOptions() {
         return #[
-            USE_TOPDOWN_LAYOUT, TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO
+            USE_TOPDOWN_LAYOUT, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO
         ]
     }
     
@@ -72,7 +68,6 @@ class TopdownLayoutHook extends SynthesisHook {
             node.setLayoutOption(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
             node.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.HIERARCHICAL_NODE)
             node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.LAYOUT_NEXT_LEVEL);
-            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
             node.setLayoutOption(RectPackingOptions::WHITE_SPACE_ELIMINATION_STRATEGY, WhiteSpaceEliminationStrategy.TO_ASPECT_RATIO) 
         }
@@ -85,7 +80,6 @@ class TopdownLayoutHook extends SynthesisHook {
             node.setLayoutOption(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
             node.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.HIERARCHICAL_NODE)
             node.setLayoutOption(CoreOptions::TOPDOWN_SIZE_APPROXIMATOR, TopdownSizeApproximator.FIXED_INTEGER_RATIO_BOXES); 
-            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
             node.setLayoutOption(CoreOptions::CONTENT_ALIGNMENT, EnumSet.of(ContentAlignment.V_CENTER, ContentAlignment.H_CENTER))
         }
@@ -96,7 +90,6 @@ class TopdownLayoutHook extends SynthesisHook {
         if (USE_TOPDOWN_LAYOUT.booleanValue) {
             node.setLayoutOption(CoreOptions::NODE_SIZE_FIXED_GRAPH_SIZE, true)
             node.setLayoutOption(CoreOptions::TOPDOWN_NODE_TYPE, TopdownNodeTypes.ROOT_NODE)
-            node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_WIDTH, TOPDOWN_HIERARCHICAL_NODE_WIDTH.floatValue as double)
             node.setLayoutOption(CoreOptions::TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO, TOPDOWN_HIERARCHICAL_NODE_ASPECT_RATIO.floatValue as double)
         }
     }
